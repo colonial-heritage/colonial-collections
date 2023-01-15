@@ -1,23 +1,57 @@
 # Dataset Browser
 
-## Run container
+## Prerequisites
+
+1. Node.js version 18+
+1. NPM version 8+
+
+## Without Docker
+
+### Install packages
+
+    npm install --no-progress
+
+### Run development server
+
+    npm run dev
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Create production build
+
+    npm run build
+
+### Run production server (for testing locally)
+
+    npm run start
+
+## With Docker
+
+### Run container (optional)
 
     docker run --rm -it -v "$PWD":/app -w /app --env-file .env node:18 /bin/bash
 
-## Install packages
+### Install packages
 
     docker run --rm -it -v "$PWD":/app -w /app --env-file .env node:18 npm install --no-progress
 
-## Run development server
+### Run development server
 
     docker run --rm -it -v "$PWD":/app -w /app --env-file .env -p 3000:3000 node:18 npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Create production build
+### Create production build
 
     docker run --rm -it -v "$PWD":/app -w /app --env-file .env node:18 npm run build
 
-## Run production server (for testing locally)
+### Run production server (for testing locally)
 
     docker run --rm -it -v "$PWD":/app -w /app --env-file .env -p 3000:3000 node:18 npm run start
+
+## With Docker, using Development Containers within VS Code
+
+See https://code.visualstudio.com/docs/devcontainers/containers
+
+1. Install the [Dev Containers extension](https://code.visualstudio.com/docs/devcontainers/tutorial#_install-the-extension)
+2. Run the Development Container

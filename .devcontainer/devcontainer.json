@@ -1,0 +1,10 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+	"name": "Next.js Development Container",
+	"image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18-bullseye",
+	"appPort": [3000],
+  "remoteEnv": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  }
+}
