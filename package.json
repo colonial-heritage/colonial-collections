@@ -9,8 +9,8 @@
     "fix": "gts fix",
     "lint": "gts lint",
     "start": "next start",
-    "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test": "jest --passWithNoTests --watch",
+    "test:ci": "jest --passWithNoTests --ci"
   },
   "dependencies": {
     "next": "13.1.2",
