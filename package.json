@@ -13,7 +13,7 @@
     "test:ci": "jest --passWithNoTests --ci"
   },
   "dependencies": {
-    "next": "13.1.2",
+    "next": "13.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
