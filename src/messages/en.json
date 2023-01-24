@@ -1,0 +1,15 @@
+{
+  "Meta": {
+    "title": "Dataset Browser"
+  },
+  "Index": {
+    "title": "Dataset Browser",
+    "description": "This is the home page."
+  },
+  "NotFound": {
+    "title": "This page was not found (404)"
+  },
+  "LocaleSwitcher": {
+    "switchLocale": "Switch to {locale, select, nl {Dutch} en {English} other {Unknown}}"
+  }
+}
