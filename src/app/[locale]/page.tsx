@@ -1,8 +1,8 @@
 import {useTranslations} from 'next-intl';
-import LocaleSwitcher from '../../components/localeSwitcher';
+import LocaleSwitcher from '@/components/locale-switcher';
 
 export default function Home() {
-  const t = useTranslations('Index');
+  const t = useTranslations('Home');
 
   return (
     <main className="grid h-screen place-items-center">
