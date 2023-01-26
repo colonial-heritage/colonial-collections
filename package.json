@@ -13,6 +13,9 @@
     "test:ci": "jest --passWithNoTests --ci"
   },
   "dependencies": {
+    "@headlessui/react": "1.7.7",
+    "@heroicons/react": "2.0.13",
+    "classnames": "2.3.2",
     "next": "13.1.1",
     "next-intl": "2.11.0-beta.4",
     "react": "18.2.0",
