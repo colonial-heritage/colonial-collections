@@ -12,6 +12,13 @@ type Props = {
 };
 
 export default function RootLayout({children, params}: Props) {
+  const locale = useLocale();
+
+  // Show a 404 error for unknown locales
+  if (params.locale !== locale) {
+    notFound();
+  }
+
   const t = useTranslations('Navigation');
 
   // The navigation is a client component, get the labels first in this server component
@@ -23,12 +30,6 @@ export default function RootLayout({children, params}: Props) {
     faq: t('Faq'),
     contact: t('Contact'),
   };
-  const locale = useLocale();
-
-  // Show a 404 error for unknown locales
-  if (params.locale !== locale) {
-    notFound();
-  }
 
   return (
     <html className="h-full" lang={locale}>

@@ -1,14 +1,12 @@
 'use client';
+
 import {Disclosure} from '@headlessui/react';
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import {useUnlocalizedPathname} from 'next-intl/client';
 import Link from 'next/link';
 
-export default function Navigation({
-  locale,
-  navigationLabels,
-}: {
+interface Navigation {
   locale: string;
   navigationLabels: {
     home: string;
@@ -17,7 +15,9 @@ export default function Navigation({
     faq: string;
     contact: string;
   };
-}) {
+}
+
+export default function Navigation({locale, navigationLabels}: Navigation) {
   const pathname = useUnlocalizedPathname();
 
   const navigation = [
