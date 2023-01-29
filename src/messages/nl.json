@@ -9,6 +9,28 @@
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"
   },
+  "Navigation": {
+    "Home": "Dataset browser",
+    "Register": "registreer dataset",
+    "About": "Over",
+    "Faq": "FAQ",
+    "Contact": "Contact"
+  },
+  "About": {
+    "title": "Over het project"
+  },
+  "Contact": {
+    "title": "Contact"
+  },
+  "Details": {
+    "title": "Dataset details"
+  },
+  "Faq": {
+    "title": "Veelgestelde vragen"
+  },
+  "Register": {
+    "title": "Registreer dataset"
+  },
   "LocaleSwitcher": {
     "switchLocale": "Schakel naar {locale, select, nl {nederlands} en {engels} other {onbekend}}"
   }

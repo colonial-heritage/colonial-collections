@@ -6,6 +6,28 @@
     "title": "Dataset Browser",
     "description": "This is the home page."
   },
+  "Navigation": {
+    "Home": "Dataset browser",
+    "Register": "Register dataset",
+    "About": "About",
+    "Faq": "FAQ",
+    "Contact": "Contact"
+  },
+  "About": {
+    "title": "About the Dataset Browser"
+  },
+  "Contact": {
+    "title": "Contact details"
+  },
+  "Details": {
+    "title": "Dataset details"
+  },
+  "Faq": {
+    "title": "FAQ"
+  },
+  "Register": {
+    "title": "Register"
+  },
   "NotFound": {
     "title": "This page was not found (404)"
   },
