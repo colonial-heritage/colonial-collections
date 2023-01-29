@@ -3,8 +3,5 @@
 {
 	"name": "Next.js Development Container",
 	"image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18-bullseye",
-	"appPort": [3000],
-  "remoteEnv": {
-    "NEXT_TELEMETRY_DISABLED": "1"
-  }
+	"appPort": [3000]
 }
