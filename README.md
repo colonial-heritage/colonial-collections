@@ -33,7 +33,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Install packages
 
-    docker run --rm -it -v "$PWD":/app -w /app --env-file .env node:18 npm install --no-progress
+    docker run --rm -it -v "$PWD":/app -w /app node:18 npm install --no-progress
 
 ### Run development server
 
