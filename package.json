@@ -17,14 +17,12 @@
     "test:integration:watch": "npm run test:integration -- --watchAll"
   },
   "dependencies": {
+    "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.8",
-    "@hapi/hoek": "^11.0.2",
-    "@headlessui/react": "1.7.7",
     "@heroicons/react": "2.0.13",
     "classnames": "2.3.2",
     "next": "13.1.6",
     "gaxios": "5.0.2",
-    "next": "13.1.1",
     "next-intl": "2.11.0-beta.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -32,8 +30,7 @@
   },
   "devDependencies": {
     "@jest/globals": "29.4.1",
-    "@jest/globals": "29.3.1",
-    "@next/env": "13.1.1",
+    "@next/env": "13.1.6",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
