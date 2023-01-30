@@ -1,17 +1,18 @@
-import {useTranslations} from 'next-intl';
-import {PageHeader, PageTitle, PageContent} from '@/components/page';
+import ClientPage from './client-page';
+import {DatasetFetcher} from '@/lib/dataset-fetcher';
 
-export default function Home() {
-  const t = useTranslations('Home');
+const datasetFetcher = new DatasetFetcher({
+  endpointUrl: process.env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
+});
+
+export default async function Home() {
+  const initialDataSets = await datasetFetcher.search();
 
   return (
-    <>
-      <PageHeader>
-        <PageTitle>{t('title')}</PageTitle>
-      </PageHeader>
-      <PageContent>
-        <h2>{t('description')}</h2>
-      </PageContent>
-    </>
+    <main className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+      <div className="pb-24 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+        <ClientPage initialDataSets={initialDataSets} />
+      </div>
+    </main>
   );
 }
