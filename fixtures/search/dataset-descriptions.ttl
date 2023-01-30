@@ -1,0 +1,132 @@
+###############################
+# Sample data for testing
+###############################
+
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+###############################
+# Organisations
+###############################
+
+<https://museum.example.org/>
+  a foaf:Organization ;
+  foaf:name "Museum"@nl, "Museum"@en .
+
+<https://archive.example.org/>
+  a foaf:Organization ;
+  foaf:name "Archive" . # No language indicator
+
+<https://library.example.org/>
+  a foaf:Organization ;
+  foaf:name "Library"@en . # Only English
+
+###############################
+# Licenses
+###############################
+
+<http://creativecommons.org/publicdomain/zero/1.0/>
+  a foaf:Document ;
+  foaf:name "Publiek domein"@nl, "Public Domain"@en .
+
+# https version of the above
+<https://creativecommons.org/publicdomain/zero/1.0/>
+  a foaf:Document ;
+  foaf:name "Publiek domein"@nl, "Public Domain"@en .
+
+# Specific Dutch version (bad URI)
+<http://creativecommons.org/publicdomain/zero/1.0/deed.nl>
+  a foaf:Document ;
+  foaf:name "Publiek domein"@nl . # Only Dutch
+
+###############################
+# Datasets
+###############################
+
+<https://museum.example.org/datasets/1>
+  a dcat:Dataset ;
+  dct:title "Dataset 1"@nl, "Dataset 1"@en ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://museum.example.org/> ;
+  dct:description "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis."@nl,
+                  "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+
+<https://museum.example.org/datasets/2>
+  a dcat:Dataset ;
+  dct:title "Dataset 2"@nl ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://museum.example.org/> ;
+  dct:description "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis."@nl .
+
+<https://museum.example.org/datasets/3>
+  a dcat:Dataset ;
+  dct:title "Dataset 3"@en ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://museum.example.org/> ;
+  dct:description "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+
+<https://museum.example.org/datasets/4>
+  a dcat:Dataset ;
+  dct:title "Dataset 4" ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://museum.example.org/> ;
+  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." .
+
+<https://archive.example.org/datasets/5>
+  a dcat:Dataset ;
+  dct:title "Dataset 5"@nl, "Dataset 5"@en ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://archive.example.org/> ;
+  dct:description "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis."@nl,
+                  "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+
+<https://archive.example.org/datasets/6>
+  a dcat:Dataset ;
+  dct:title "Dataset 6"@nl ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://archive.example.org/> ;
+  dct:description "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis."@nl .
+
+<https://archive.example.org/datasets/7>
+  a dcat:Dataset ;
+  dct:title "Dataset 7"@en ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://archive.example.org/> ;
+  dct:description "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+
+<https://archive.example.org/datasets/8>
+  a dcat:Dataset ;
+  dct:title "Dataset 8" ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://archive.example.org/> ;
+  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." .
+
+<https://library.example.org/datasets/9>
+  a dcat:Dataset ;
+  dct:title "Dataset 9"@nl, "Dataset 9"@en ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://library.example.org/> ;
+  dct:description "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis."@nl,
+                  "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+
+<https://library.example.org/datasets/10>
+  a dcat:Dataset ;
+  dct:title "Dataset 10"@nl ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://library.example.org/> ;
+  dct:description "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis."@nl .
+
+<https://library.example.org/datasets/11>
+  a dcat:Dataset ;
+  dct:title "Dataset 11"@en ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://library.example.org/> ;
+  dct:description "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+
+<https://library.example.org/datasets/12>
+  a dcat:Dataset ;
+  dct:title "Dataset 12" ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+  dct:publisher <https://library.example.org/> ;
+  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." .
