@@ -13,7 +13,7 @@
     "test:ci": "jest --passWithNoTests --ci"
   },
   "dependencies": {
-    "@headlessui/react": "1.7.7",
+    "@headlessui/react": "1.7.8",
     "@heroicons/react": "2.0.13",
     "classnames": "2.3.2",
     "next": "13.1.1",
