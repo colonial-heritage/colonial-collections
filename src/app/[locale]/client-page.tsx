@@ -13,7 +13,8 @@ export default function ClientPage({
   const {data: {datasets} = {}}: {data: {datasets?: Array<Dataset>}} = useQuery(
     {
       queryKey: ['Datasets'],
-      queryFn: () => fetch('/api/fetch').then(response => response.json()),
+      queryFn: () =>
+        fetch('/api/fetch-datasets').then(response => response.json()),
       initialData: initialDatasets,
     }
   );
