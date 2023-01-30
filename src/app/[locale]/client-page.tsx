@@ -5,11 +5,12 @@ import {SearchResult} from '@/lib/dataset-fetcher';
 import DatasetCard from '@/components/dataset-card';
 import {Dataset} from '@/lib/dataset-fetcher';
 
-export default function ClientPage({
-  initialDatasets,
-}: {
+interface ClientPageProps {
   initialDatasets: SearchResult;
-}) {
+  locale: string;
+}
+
+export default function ClientPage({initialDatasets, locale}: ClientPageProps) {
   const {data: {datasets} = {}}: {data: {datasets?: Array<Dataset>}} = useQuery(
     {
       queryKey: ['Datasets'],
@@ -29,7 +30,7 @@ export default function ClientPage({
       >
         <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
           {datasets?.map(dataset => (
-            <DatasetCard key={dataset.id} dataset={dataset} />
+            <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
           ))}
         </div>
       </section>

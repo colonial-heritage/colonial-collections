@@ -1,6 +1,12 @@
 import {Dataset} from '@/lib/dataset-fetcher';
+import Link from 'next/link';
 
-export default function DataSetCard({dataset}: {dataset: Dataset}) {
+interface DatasetCardProps {
+  dataset: Dataset;
+  locale: string;
+}
+
+export default function DatasetCard({dataset, locale}: DatasetCardProps) {
   return (
     <div
       key={dataset.id}
@@ -8,10 +14,10 @@ export default function DataSetCard({dataset}: {dataset: Dataset}) {
     >
       <div className="flex flex-1 flex-col space-y-2 p-4">
         <h3 className="text-sm font-medium text-gray-900">
-          <a href={`/dataset/${dataset.id}`}>
+          <Link href={`${locale}/dataset/${dataset.id}`}>
             <span aria-hidden="true" className="absolute inset-0" />
             {dataset.name}
-          </a>
+          </Link>
         </h3>
         <p className="text-sm text-gray-500">{dataset.description}</p>
       </div>
