@@ -1,12 +1,12 @@
 import {useTranslations} from 'next-intl';
 import {PageHeader, PageTitle} from '@/components/page';
 
-interface DetailsProps {
+interface Props {
   params: {id: string};
 }
 
-export default function Details({params: {id: encodedId}}: DetailsProps) {
-  const id = decodeURIComponent(encodedId);
+export default function Details(props: Props) {
+  const id = decodeURIComponent(props.params.id);
   const t = useTranslations('Details');
 
   return (

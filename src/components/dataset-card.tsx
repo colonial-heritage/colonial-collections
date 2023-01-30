@@ -1,12 +1,12 @@
 import {Dataset} from '@/lib/dataset-fetcher';
 import Link from 'next/link';
 
-interface DatasetCardProps {
+interface Props {
   dataset: Dataset;
   locale: string;
 }
 
-export default function DatasetCard({dataset, locale}: DatasetCardProps) {
+export default function DatasetCard({dataset, locale}: Props) {
   return (
     <div
       key={dataset.id}
