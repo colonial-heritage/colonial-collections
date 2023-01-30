@@ -2,6 +2,7 @@
   "name": "@colonial-heritage/dataset-browser",
   "version": "1.0.0",
   "private": true,
+  "files": [],
   "scripts": {
     "build": "next build",
     "compile": "tsc",
@@ -9,20 +10,27 @@
     "fix": "gts fix",
     "lint": "gts lint",
     "start": "next start",
-    "test": "jest --passWithNoTests --watch",
-    "test:ci": "jest --passWithNoTests --ci"
+    "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
+    "test:ci": "npm test -- --ci",
+    "test:watch": "npm test -- --watchAll",
+    "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
+    "test:integration:watch": "npm run test:integration -- --watchAll"
   },
   "dependencies": {
+    "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.8",
     "@heroicons/react": "2.0.13",
     "classnames": "2.3.2",
     "next": "13.1.6",
+    "gaxios": "5.0.2",
     "next-intl": "2.11.0-beta.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "zod": "3.20.2"
   },
   "devDependencies": {
     "@jest/globals": "29.4.1",
+    "@next/env": "13.1.6",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",

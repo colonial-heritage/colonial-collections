@@ -1,0 +1,31 @@
+###############################
+# Query for generating a sample search graph for testing
+###############################
+
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX search: <https://colonialheritage.example.org/search#>
+
+CONSTRUCT {
+  ?dataset a search:Dataset ;
+    search:name ?title ;
+    search:publisherIri ?publisher ;
+    search:publisherName ?publisherName ;
+    search:licenseIri ?license ;
+    search:licenseName ?licenseName ;
+    search:description ?description .
+}
+WHERE {
+  ?dataset a dcat:Dataset ;
+    dct:title ?title ;
+    dct:license ?license ;
+    dct:publisher ?publisher ;
+    dct:description ?description .
+
+  ?license a foaf:Document ;
+    foaf:name ?licenseName .
+
+  ?publisher a foaf:Organization ;
+    foaf:name ?publisherName .
+}
