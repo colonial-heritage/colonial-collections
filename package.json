@@ -12,11 +12,12 @@
     "start": "next start",
     "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
     "test:ci": "npm test -- --ci",
-    "test:watch": "npm test -- --watch",
+    "test:watch": "npm test -- --watchAll",
     "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
-    "test:integration:watch": "npm run test:integration -- --watch"
+    "test:integration:watch": "npm run test:integration -- --watchAll"
   },
   "dependencies": {
+    "@hapi/hoek": "^11.0.2",
     "@headlessui/react": "1.7.7",
     "@heroicons/react": "2.0.13",
     "classnames": "2.3.2",
