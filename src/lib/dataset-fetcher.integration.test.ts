@@ -51,6 +51,10 @@ describe('search', () => {
             id: 'https://archive.example.org/',
             name: 'Archive',
           },
+          license: {
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Public Domain',
+          },
         },
       ],
     });

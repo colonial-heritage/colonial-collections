@@ -29,6 +29,8 @@ enum RawDatasetKeys {
   Description = 'https://colonialheritage example org/search#description',
   PublisherIri = 'https://colonialheritage example org/search#publisherIri',
   PublisherName = 'https://colonialheritage example org/search#publisherName',
+  LicenseIri = 'https://colonialheritage example org/search#licenseIri',
+  LicenseName = 'https://colonialheritage example org/search#licenseName',
 }
 
 const rawDatasetSchema = z
@@ -37,7 +39,9 @@ const rawDatasetSchema = z
   .setKey(RawDatasetKeys.Name, z.array(z.string()).min(1))
   .setKey(RawDatasetKeys.Description, z.array(z.string()).optional())
   .setKey(RawDatasetKeys.PublisherIri, z.array(z.string()).min(1))
-  .setKey(RawDatasetKeys.PublisherName, z.array(z.string()).min(1));
+  .setKey(RawDatasetKeys.PublisherName, z.array(z.string()).min(1))
+  .setKey(RawDatasetKeys.LicenseIri, z.array(z.string()).min(1))
+  .setKey(RawDatasetKeys.LicenseName, z.array(z.string()).min(1));
 
 type RawDataset = z.infer<typeof rawDatasetSchema>;
 
@@ -63,11 +67,17 @@ export type Publisher = {
   name: string;
 };
 
+export type License = {
+  id: string;
+  name: string;
+};
+
 export type Dataset = {
   id: string;
   name: string;
   description?: string;
   publisher: Publisher;
+  license: License;
 };
 
 export type SearchResult = {
@@ -115,12 +125,17 @@ export class DatasetFetcher {
       id: reach(rawDataset, `${RawDatasetKeys.PublisherIri}.0`),
       name: reach(rawDataset, `${RawDatasetKeys.PublisherName}.0`),
     };
+    const license: License = {
+      id: reach(rawDataset, `${RawDatasetKeys.LicenseIri}.0`),
+      name: reach(rawDataset, `${RawDatasetKeys.LicenseName}.0`),
+    };
 
     return {
       id: rawDataset[RawDatasetKeys.Id],
       name,
       description,
       publisher,
+      license,
     };
   }
 
