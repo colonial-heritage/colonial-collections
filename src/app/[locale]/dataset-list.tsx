@@ -2,7 +2,7 @@
 
 import {useQuery} from '@tanstack/react-query';
 import {SearchResult} from '@/lib/dataset-fetcher';
-import DatasetCard from '@/components/dataset-card';
+import DatasetCard from './dataset-card';
 
 interface Props {
   initialSearchResult: SearchResult;
