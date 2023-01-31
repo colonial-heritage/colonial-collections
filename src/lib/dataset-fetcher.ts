@@ -1,26 +1,38 @@
 import {reach} from '@hapi/hoek';
 import {z} from 'zod';
 
-export interface ConstructorOptions {
-  endpointUrl: string;
-}
-
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
 });
 
-export interface SearchOptions {
-  query?: string;
-  offset?: number;
-  limit?: number;
-}
+export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
+
+export type Publisher = {
+  id: string;
+  name: string;
+};
+
+export type License = {
+  id: string;
+  name: string;
+};
+
+export type Dataset = {
+  id: string;
+  name: string;
+  description?: string;
+  publisher: Publisher;
+  license: License;
+};
 
 // TODO: add sorting capabilities
 const searchOptionsSchema = z.object({
-  query: z.string().default('*'), // If no query provided, match all
-  offset: z.number().int().nonnegative().default(0),
-  limit: z.number().int().positive().default(10),
+  query: z.string().optional().default('*'), // If no query provided, match all
+  offset: z.number().int().nonnegative().optional().default(0),
+  limit: z.number().int().positive().optional().default(10),
 });
+
+export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
 enum RawDatasetKeys {
   Id = '@id',
@@ -58,24 +70,6 @@ const rawSearchResponseSchema = z.object({
 });
 
 type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
-
-export type Publisher = {
-  id: string;
-  name: string;
-};
-
-export type License = {
-  id: string;
-  name: string;
-};
-
-export type Dataset = {
-  id: string;
-  name: string;
-  description?: string;
-  publisher: Publisher;
-  license: License;
-};
 
 export type SearchResult = {
   totalCount: number;
@@ -175,8 +169,8 @@ export class DatasetFetcher {
 
     const searchResult: SearchResult = {
       totalCount: searchResponse.hits.total.value,
-      offset: opts.offset,
-      limit: opts.limit,
+      offset: opts.offset!,
+      limit: opts.limit!,
       datasets,
     };
 
