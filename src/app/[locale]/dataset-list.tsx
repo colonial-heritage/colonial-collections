@@ -48,6 +48,24 @@ const dummyOwners = [
   },
 ];
 
+interface SearchDatasets {
+  selectedLicenses: string[];
+  selectedOwners: string[];
+}
+
+const searchDatasets = async ({
+  selectedLicenses,
+  selectedOwners,
+}: SearchDatasets): Promise<SearchResult> => {
+  const response = await fetch('/api/dataset-search', {
+    method: 'POST',
+    // TODO send the correct filter query
+    // The body should have the same interface as SearchOptions
+    body: JSON.stringify({selectedLicenses, selectedOwners}),
+  });
+  return response.json();
+};
+
 interface Props {
   initialSearchResult: SearchResult;
   locale: string;
@@ -61,17 +79,9 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const licenses = dummyLicenses;
   const owners = dummyOwners;
 
-  const queryResponse: {data: SearchResult} = useQuery({
+  const {data, error} = useQuery({
     queryKey: ['Datasets', {selectedLicenses, selectedOwners}],
-    queryFn: async () => {
-      const response = await fetch('/api/dataset-search', {
-        method: 'POST',
-        // TODO send the correct filter query
-        // The body should have the same interface as SearchOptions
-        body: JSON.stringify({}),
-      });
-      return response.json();
-    },
+    queryFn: async () => searchDatasets({selectedLicenses, selectedOwners}),
     initialData: initialSearchResult,
   });
 
@@ -100,11 +110,20 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         aria-labelledby="dataset-heading"
         className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
       >
-        <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
-          {queryResponse.data.datasets.map(dataset => (
-            <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
-          ))}
-        </div>
+        {error instanceof Error ? (
+          <div
+            className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+            role="alert"
+          >
+            <p>There was an error fetching the dataset.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
+            {data.datasets.map(dataset => (
+              <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
+            ))}
+          </div>
+        )}
       </section>
     </>
   );
