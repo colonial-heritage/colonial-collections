@@ -9,7 +9,6 @@ import FilterSet from './filter-set';
 // TODO Replace these two dummy lists with the correct data.
 // Either by an API call if the lists are dynamic.
 // Or if the lists are more static, with a JSON import or getStaticProps.
-
 const dummyLicenses = [
   {
     value: '1',
@@ -29,39 +28,39 @@ const dummyLicenses = [
   },
 ];
 
-const dummyOwners = [
+const dummyPublishers = [
   {
     value: '1',
-    label: 'Owner 1',
+    label: 'Publisher 1',
   },
   {
     value: '2',
-    label: 'Owner 2',
+    label: 'Publisher 2',
   },
   {
     value: '3',
-    label: 'Owner 3',
+    label: 'Publisher 3',
   },
   {
     value: '4',
-    label: 'Owner 4',
+    label: 'Publisher 4',
   },
 ];
 
 interface SearchDatasets {
   selectedLicenses: string[];
-  selectedOwners: string[];
+  selectedPublishers: string[];
 }
 
 const searchDatasets = async ({
   selectedLicenses,
-  selectedOwners,
+  selectedPublishers,
 }: SearchDatasets): Promise<SearchResult> => {
   const response = await fetch('/api/dataset-search', {
     method: 'POST',
     // TODO send the correct filter query
     // The body should have the same interface as SearchOptions
-    body: JSON.stringify({selectedLicenses, selectedOwners}),
+    body: JSON.stringify({selectedLicenses, selectedPublishers}),
   });
   return response.json();
 };
@@ -73,15 +72,15 @@ interface Props {
 
 export default function DatasetList({initialSearchResult, locale}: Props) {
   const [selectedLicenses, setSelectedLicenses] = useState<string[]>([]);
-  const [selectedOwners, setSelectedOwners] = useState<string[]>([]);
+  const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
 
   // replace this with the correct lists
   const licenses = dummyLicenses;
-  const owners = dummyOwners;
+  const publishers = dummyPublishers;
 
   const {data, error} = useQuery({
-    queryKey: ['Datasets', {selectedLicenses, selectedOwners}],
-    queryFn: async () => searchDatasets({selectedLicenses, selectedOwners}),
+    queryKey: ['Datasets', {selectedLicenses, selectedPublishers}],
+    queryFn: async () => searchDatasets({selectedLicenses, selectedPublishers}),
     initialData: initialSearchResult,
   });
 
@@ -91,16 +90,16 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         <div>
           <form className="space-y-10 divide-y divide-gray-200">
             <FilterSet
-              title="License"
+              title="Licenses"
               options={licenses}
               selectedFilters={selectedLicenses}
               setSelectedFilters={setSelectedLicenses}
             />
             <FilterSet
               title="Owners"
-              options={owners}
-              selectedFilters={selectedOwners}
-              setSelectedFilters={setSelectedOwners}
+              options={publishers}
+              selectedFilters={selectedPublishers}
+              setSelectedFilters={setSelectedPublishers}
             />
           </form>
         </div>
