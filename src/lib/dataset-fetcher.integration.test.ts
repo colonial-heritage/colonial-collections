@@ -47,6 +47,10 @@ describe('search', () => {
           name: 'Dataset 7',
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+          publisher: {
+            id: 'https://archive.example.org/',
+            name: 'Archive',
+          },
         },
       ],
     });

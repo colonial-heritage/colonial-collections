@@ -23,6 +23,24 @@ const searchOptionsSchema = z.object({
   limit: z.number().int().positive().default(10),
 });
 
+enum RawDatasetKeys {
+  Id = '@id',
+  Name = 'https://colonialheritage example org/search#name',
+  Description = 'https://colonialheritage example org/search#description',
+  PublisherIri = 'https://colonialheritage example org/search#publisherIri',
+  PublisherName = 'https://colonialheritage example org/search#publisherName',
+}
+
+const rawDatasetSchema = z
+  .object({})
+  .setKey(RawDatasetKeys.Id, z.string())
+  .setKey(RawDatasetKeys.Name, z.array(z.string()).min(1))
+  .setKey(RawDatasetKeys.Description, z.array(z.string()).optional())
+  .setKey(RawDatasetKeys.PublisherIri, z.array(z.string()).min(1))
+  .setKey(RawDatasetKeys.PublisherName, z.array(z.string()).min(1));
+
+type RawDataset = z.infer<typeof rawDatasetSchema>;
+
 const rawSearchResponseSchema = z.object({
   data: z.object({
     hits: z.object({
@@ -31,15 +49,7 @@ const rawSearchResponseSchema = z.object({
       }),
       hits: z.array(
         z.object({
-          _source: z.object({
-            '@id': z.string(),
-            'https://colonialheritage example org/search#name': z
-              .array(z.string())
-              .min(1),
-            'https://colonialheritage example org/search#description': z
-              .array(z.string())
-              .optional(),
-          }),
+          _source: rawDatasetSchema,
         })
       ),
     }),
@@ -48,10 +58,16 @@ const rawSearchResponseSchema = z.object({
 
 type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
 
+export type Publisher = {
+  id: string;
+  name: string;
+};
+
 export type Dataset = {
   id: string;
   name: string;
   description?: string;
+  publisher: Publisher;
 };
 
 export type SearchResult = {
@@ -71,13 +87,13 @@ export class DatasetFetcher {
 
   // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's Elasticsearch instance
   async makeSearchRequest(
-    query: Record<string, unknown>
+    searchParams: Record<string, unknown>
   ): Promise<RawSearchResponse> {
     const rawSearchResponse = await request({
       url: this.endpointUrl,
-      data: query,
+      data: searchParams,
       method: 'POST',
-      timeout: 5000, // Gaxios' default is unlimited -- too much
+      timeout: 5000,
       retryConfig: {
         retry: 3,
         noResponseRetries: 3, // E.g. in case of timeouts
@@ -91,12 +107,29 @@ export class DatasetFetcher {
     return parsedRawSearchResponse;
   }
 
+  // Map the response to our internal model
+  private fromRawDatasetToDataset(rawDataset: RawDataset) {
+    const name = reach(rawDataset, `${RawDatasetKeys.Name}.0`);
+    const description = reach(rawDataset, `${RawDatasetKeys.Description}.0`);
+    const publisher: Publisher = {
+      id: reach(rawDataset, `${RawDatasetKeys.PublisherIri}.0`),
+      name: reach(rawDataset, `${RawDatasetKeys.PublisherName}.0`),
+    };
+
+    return {
+      id: rawDataset[RawDatasetKeys.Id],
+      name,
+      description,
+      publisher,
+    };
+  }
+
   async search(options?: SearchOptions): Promise<SearchResult> {
     const opts = searchOptionsSchema.parse(options ?? {});
 
     // TBD: return documents in a provided locale (e.g. 'nl', 'en')?
     // TODO: add aggregations, to allow for facetting
-    const query = {
+    const searchParams = {
       size: opts.limit,
       from: opts.offset,
       query: {
@@ -109,9 +142,9 @@ export class DatasetFetcher {
               },
             },
           ],
-          // Only return documents of type 'Dataset'
           filter: [
             {
+              // Only return documents of type 'Dataset'
               term: {
                 'http://www w3 org/1999/02/22-rdf-syntax-ns#type.keyword':
                   'https://colonialheritage.example.org/search#Dataset',
@@ -122,23 +155,11 @@ export class DatasetFetcher {
       },
     };
 
-    const searchResponse = await this.makeSearchRequest(query);
+    const searchResponse = await this.makeSearchRequest(searchParams);
 
     const datasets: Dataset[] = searchResponse.data.hits.hits.map(hit => {
-      const name = reach(
-        hit,
-        '_source.https://colonialheritage example org/search#name.0'
-      );
-      const description = reach(
-        hit,
-        '_source.https://colonialheritage example org/search#description.0'
-      );
-
-      return {
-        id: hit._source['@id'],
-        name,
-        description,
-      };
+      const rawDataset = hit._source;
+      return this.fromRawDatasetToDataset(rawDataset);
     });
 
     const searchResult: SearchResult = {
