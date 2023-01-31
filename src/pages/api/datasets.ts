@@ -9,6 +9,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const searchResults = await datasetFetcher.search();
-  res.status(200).json(searchResults);
+  const searchResult = await datasetFetcher.search();
+  res.status(200).json(searchResult);
 }

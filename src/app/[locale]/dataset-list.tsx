@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function DatasetList({initialSearchResult, locale}: Props) {
-  const query: {data: SearchResult} = useQuery({
+  const queryResponse: {data: SearchResult} = useQuery({
     queryKey: ['Datasets'],
     queryFn: async () => {
       const response = await fetch('/api/datasets');
@@ -24,11 +24,11 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
       <aside>{/* place the filters here */}</aside>
 
       <section
-        aria-labelledby="dataSet-heading"
+        aria-labelledby="dataset-heading"
         className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
       >
         <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
-          {query.data.datasets.map(dataset => (
+          {queryResponse.data.datasets.map(dataset => (
             <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
           ))}
         </div>
