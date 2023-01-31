@@ -1,10 +1,6 @@
-import {DatasetFetcher} from '@/lib/dataset-fetcher';
+import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {useLocale} from 'next-intl';
 import DatasetList from './dataset-list';
-
-const datasetFetcher = new DatasetFetcher({
-  endpointUrl: process.env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
-});
 
 export default async function Home() {
   const initialSearchResult = await datasetFetcher.search();

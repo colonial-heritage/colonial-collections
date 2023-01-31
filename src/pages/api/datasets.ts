@@ -1,9 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {DatasetFetcher} from '@/lib/dataset-fetcher';
-
-const datasetFetcher = new DatasetFetcher({
-  endpointUrl: process.env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
-});
+import datasetFetcher from '@/lib/dataset-fetcher-instance';
 
 export default async function handler(
   req: NextApiRequest,
