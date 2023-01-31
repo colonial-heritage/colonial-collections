@@ -1,5 +1,4 @@
 import {reach} from '@hapi/hoek';
-import {request} from 'gaxios';
 import {z} from 'zod';
 
 export interface ConstructorOptions {
@@ -46,17 +45,15 @@ const rawDatasetSchema = z
 type RawDataset = z.infer<typeof rawDatasetSchema>;
 
 const rawSearchResponseSchema = z.object({
-  data: z.object({
-    hits: z.object({
-      total: z.object({
-        value: z.number(),
-      }),
-      hits: z.array(
-        z.object({
-          _source: rawDatasetSchema,
-        })
-      ),
+  hits: z.object({
+    total: z.object({
+      value: z.number(),
     }),
+    hits: z.array(
+      z.object({
+        _source: rawDatasetSchema,
+      })
+    ),
   }),
 });
 
@@ -95,22 +92,21 @@ export class DatasetFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's Elasticsearch instance
   async makeSearchRequest(
     searchParams: Record<string, unknown>
   ): Promise<RawSearchResponse> {
-    const rawSearchResponse = await request({
-      url: this.endpointUrl,
-      data: searchParams,
+    // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's
+    // Elasticsearch instance, so we use the native Fetch API instead
+    const response = await fetch(this.endpointUrl, {
+      body: JSON.stringify(searchParams),
       method: 'POST',
-      timeout: 5000,
-      retryConfig: {
-        retry: 3,
-        noResponseRetries: 3, // E.g. in case of timeouts
-        httpMethodsToRetry: ['POST'],
-      },
     });
 
+    if (!response.ok) {
+      throw new Error('Could not complete search request');
+    }
+
+    const rawSearchResponse = await response.json();
     const parsedRawSearchResponse =
       rawSearchResponseSchema.parse(rawSearchResponse);
 
@@ -172,13 +168,13 @@ export class DatasetFetcher {
 
     const searchResponse = await this.makeSearchRequest(searchParams);
 
-    const datasets: Dataset[] = searchResponse.data.hits.hits.map(hit => {
+    const datasets: Dataset[] = searchResponse.hits.hits.map(hit => {
       const rawDataset = hit._source;
       return this.fromRawDatasetToDataset(rawDataset);
     });
 
     const searchResult: SearchResult = {
-      totalCount: searchResponse.data.hits.total.value,
+      totalCount: searchResponse.hits.total.value,
       offset: opts.offset,
       limit: opts.limit,
       datasets,
