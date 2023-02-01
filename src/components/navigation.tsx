@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import {useUnlocalizedPathname} from 'next-intl/client';
 import Link from 'next/link';
 
-interface Navigation {
+interface Props {
   locale: string;
   navigationLabels: {
     home: string;
@@ -17,7 +17,7 @@ interface Navigation {
   };
 }
 
-export default function Navigation({locale, navigationLabels}: Navigation) {
+export default function Navigation({locale, navigationLabels}: Props) {
   const pathname = useUnlocalizedPathname();
 
   const navigation = [
