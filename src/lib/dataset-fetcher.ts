@@ -1,4 +1,4 @@
-import {reach} from '@hapi/hoek';
+import {merge, reach} from '@hapi/hoek';
 import {request} from 'gaxios';
 import {z} from 'zod';
 
@@ -27,16 +27,24 @@ export type Dataset = {
 };
 
 // TODO: add sorting capabilities
+// TBD: add language option, for returning results in a specific locale (e.g. 'nl', 'en')?
 const searchOptionsSchema = z.object({
   query: z.string().optional().default('*'), // If no query provided, match all
   offset: z.number().int().nonnegative().optional().default(0),
   limit: z.number().int().positive().optional().default(10),
+  filters: z
+    .object({
+      publishers: z.array(z.string()).optional(),
+      licenses: z.array(z.string()).optional(),
+    })
+    .optional(),
 });
 
 export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
 enum RawDatasetKeys {
   Id = '@id',
+  Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
   Name = 'https://colonialheritage example org/search#name',
   Description = 'https://colonialheritage example org/search#description',
   PublisherIri = 'https://colonialheritage example org/search#publisherIri',
@@ -74,11 +82,21 @@ const rawSearchResponseSchema = z.object({
 
 type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
 
+export type SearchResultFilter = {
+  totalCount: number;
+  id: string;
+  name: string;
+};
+
 export type SearchResult = {
   totalCount: number;
   offset: number;
   limit: number;
   datasets: Dataset[];
+  filters?: {
+    publishers: SearchResultFilter[];
+    licenses: SearchResultFilter[];
+  };
 };
 
 export class DatasetFetcher {
@@ -134,11 +152,38 @@ export class DatasetFetcher {
     };
   }
 
+  private buildAggregation(
+    aggregationName: string,
+    id: string,
+    name: string
+  ): object {
+    const aggregation = {
+      [aggregationName]: {
+        terms: {
+          field: `${id}.keyword`,
+        },
+        aggs: {
+          names: {
+            terms: {
+              field: `${name}.keyword`,
+            },
+          },
+        },
+      },
+      [`${aggregationName}_zero`]: {
+        terms: {
+          field: `${name}.keyword`, // TBD: query triplestore to look-up the names based on the IRI?
+          min_doc_count: 0,
+        },
+      },
+    };
+
+    return aggregation;
+  }
+
   async search(options?: SearchOptions): Promise<SearchResult> {
     const opts = searchOptionsSchema.parse(options ?? {});
 
-    // TBD: return documents in a provided locale (e.g. 'nl', 'en')?
-    // TODO: add aggregations, to allow for facetting
     const searchParams = {
       size: opts.limit,
       from: opts.offset,
@@ -155,15 +200,44 @@ export class DatasetFetcher {
           filter: [
             {
               // Only return documents of type 'Dataset'
-              term: {
-                'http://www w3 org/1999/02/22-rdf-syntax-ns#type.keyword':
+              terms: {
+                [`${RawDatasetKeys.Type}.keyword`]: [
                   'https://colonialheritage.example.org/search#Dataset',
+                ],
               },
             },
           ],
         },
       },
+      aggs: merge(
+        this.buildAggregation(
+          'publishers',
+          RawDatasetKeys.PublisherIri,
+          RawDatasetKeys.PublisherName
+        ),
+        this.buildAggregation(
+          'licenses',
+          RawDatasetKeys.LicenseIri,
+          RawDatasetKeys.LicenseName
+        )
+      ),
     };
+
+    if (opts.filters?.publishers) {
+      searchParams.query.bool.filter.push({
+        terms: {
+          [`${RawDatasetKeys.PublisherIri}.keyword`]: opts.filters?.publishers,
+        },
+      });
+    }
+
+    if (opts.filters?.licenses) {
+      searchParams.query.bool.filter.push({
+        terms: {
+          [`${RawDatasetKeys.LicenseIri}.keyword`]: opts.filters?.licenses,
+        },
+      });
+    }
 
     const searchResponse = await this.makeSearchRequest(searchParams);
     const hits = searchResponse.data.hits;
@@ -172,6 +246,8 @@ export class DatasetFetcher {
       const rawDataset = hit._source;
       return this.fromRawDatasetToDataset(rawDataset);
     });
+
+    // TODO: add aggregated response to searchResult
 
     const searchResult: SearchResult = {
       totalCount: hits.total.value,

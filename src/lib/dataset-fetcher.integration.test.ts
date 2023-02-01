@@ -11,7 +11,7 @@ beforeEach(() => {
 });
 
 describe('search', () => {
-  it('finds all datasets if query is not provided', async () => {
+  it('finds all datasets if no options are provided', async () => {
     const results = await datasetFetcher.search();
 
     expect(results).toMatchObject({
@@ -57,6 +57,34 @@ describe('search', () => {
           },
         },
       ],
+    });
+  });
+
+  it('finds datasets if "publishers" filter matches', async () => {
+    const results = await datasetFetcher.search({
+      filters: {
+        publishers: ['https://archive.example.org/'],
+      },
+    });
+
+    expect(results).toMatchObject({
+      totalCount: 5,
+      offset: 0,
+      limit: 10,
+    });
+  });
+
+  it('finds datasets if "licenses" filter matches', async () => {
+    const results = await datasetFetcher.search({
+      filters: {
+        licenses: ['http://creativecommons.org/publicdomain/zero/1.0/'],
+      },
+    });
+
+    expect(results).toMatchObject({
+      totalCount: 12,
+      offset: 0,
+      limit: 10,
     });
   });
 });
