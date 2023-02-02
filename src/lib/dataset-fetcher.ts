@@ -45,12 +45,12 @@ export type SearchOptions = z.input<typeof searchOptionsSchema>;
 enum RawDatasetKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
-  Name = 'https://colonialheritage example org/search#name',
-  Description = 'https://colonialheritage example org/search#description',
-  PublisherIri = 'https://colonialheritage example org/search#publisherIri',
-  PublisherName = 'https://colonialheritage example org/search#publisherName',
-  LicenseIri = 'https://colonialheritage example org/search#licenseIri',
-  LicenseName = 'https://colonialheritage example org/search#licenseName',
+  Name = 'https://colonialcollections nl/search#name',
+  Description = 'https://colonialcollections nl/search#description',
+  PublisherIri = 'https://colonialcollections nl/search#publisherIri',
+  PublisherName = 'https://colonialcollections nl/search#publisherName',
+  LicenseIri = 'https://colonialcollections nl/search#licenseIri',
+  LicenseName = 'https://colonialcollections nl/search#licenseName',
 }
 
 const rawDatasetSchema = z
@@ -182,7 +182,7 @@ export class DatasetFetcher {
       // Include all names, even if these do not match the query, for display to the user
       [`${aggregationName}_all`]: {
         terms: {
-          field: `${name}.keyword`, // TBD: query triplestore to look-up the names based on the ID?
+          field: `${name}.keyword`, // TBD: or query the triplestore to look-up the names based on the ID?
           min_doc_count: 0,
         },
       },
@@ -210,7 +210,7 @@ export class DatasetFetcher {
               // Only return documents of type 'Dataset'
               terms: {
                 [`${RawDatasetKeys.Type}.keyword`]: [
-                  'https://colonialheritage.example.org/search#Dataset',
+                  'https://colonialcollections.nl/search#Dataset',
                 ],
               },
             },

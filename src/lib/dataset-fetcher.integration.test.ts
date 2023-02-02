@@ -12,9 +12,9 @@ beforeEach(() => {
 
 describe('search', () => {
   it('finds all datasets if no options are provided', async () => {
-    const results = await datasetFetcher.search();
+    const result = await datasetFetcher.search();
 
-    expect(results).toMatchObject({
+    expect(result).toMatchObject({
       totalCount: 12,
       offset: 0,
       limit: 10,
@@ -22,11 +22,11 @@ describe('search', () => {
   });
 
   it('does not find datasets if query does not match', async () => {
-    const results = await datasetFetcher.search({
+    const result = await datasetFetcher.search({
       query: 'ThisQueryWillNotReturnResults',
     });
 
-    expect(results).toStrictEqual({
+    expect(result).toStrictEqual({
       totalCount: 0,
       offset: 0,
       limit: 10,
@@ -39,9 +39,9 @@ describe('search', () => {
   });
 
   it('finds datasets if query matches', async () => {
-    const results = await datasetFetcher.search({query: 'maecenas dataset 7'});
+    const result = await datasetFetcher.search({query: 'maecenas dataset 7'});
 
-    expect(results).toMatchObject({
+    expect(result).toMatchObject({
       totalCount: 1,
       offset: 0,
       limit: 10,
@@ -53,7 +53,7 @@ describe('search', () => {
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           publisher: {id: 'https://archive.example.org/', name: 'Archive'},
           license: {
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'Public Domain',
           },
         },
@@ -62,44 +62,44 @@ describe('search', () => {
   });
 
   it('finds datasets if "publishers" filter matches', async () => {
-    const results = await datasetFetcher.search({
+    const result = await datasetFetcher.search({
       filters: {
         publishers: ['https://archive.example.org/'],
       },
     });
 
-    expect(results).toMatchObject({
-      totalCount: 5,
+    expect(result).toMatchObject({
+      totalCount: 4,
       offset: 0,
       limit: 10,
       filters: {
         publishers: [
-          {totalCount: 5, name: 'Archive', id: 'https://archive.example.org/'},
+          {totalCount: 4, name: 'Archive', id: 'https://archive.example.org/'},
         ],
       },
     });
   });
 
   it('finds datasets if "licenses" filter matches', async () => {
-    const results = await datasetFetcher.search({
+    const result = await datasetFetcher.search({
       filters: {
         licenses: ['http://creativecommons.org/publicdomain/zero/1.0/'],
       },
     });
 
-    expect(results).toMatchObject({
-      totalCount: 12,
+    expect(result).toMatchObject({
+      totalCount: 6,
       offset: 0,
       limit: 10,
       filters: {
         licenses: [
           {
-            totalCount: 12,
+            totalCount: 6,
             name: 'Public Domain',
             id: 'http://creativecommons.org/publicdomain/zero/1.0/',
           },
           {
-            totalCount: 12,
+            totalCount: 6,
             name: 'Publiek domein',
             id: 'http://creativecommons.org/publicdomain/zero/1.0/',
           },
