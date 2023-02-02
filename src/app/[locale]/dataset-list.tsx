@@ -59,7 +59,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   }
 
   if (!data?.datasets) {
-    // place a loader here
+    // Place a loader here, this will only show after the user selects a filter
     return <></>;
   }
 
@@ -92,20 +92,11 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         aria-labelledby="dataset-heading"
         className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
       >
-        {error instanceof Error ? (
-          <div
-            className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
-            role="alert"
-          >
-            <p>There was an error fetching the dataset.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
-            {data.datasets.map(dataset => (
-              <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
+          {data.datasets.map(dataset => (
+            <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
+          ))}
+        </div>
       </section>
     </>
   );
