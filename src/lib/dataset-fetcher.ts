@@ -34,8 +34,8 @@ const searchOptionsSchema = z.object({
   limit: z.number().int().positive().optional().default(10),
   filters: z
     .object({
-      publishers: z.array(z.string()).optional(),
-      licenses: z.array(z.string()).optional(),
+      publishers: z.array(z.string()).optional().default([]),
+      licenses: z.array(z.string()).optional().default([]),
     })
     .optional(),
 });
@@ -65,6 +65,17 @@ const rawDatasetSchema = z
 
 type RawDataset = z.infer<typeof rawDatasetSchema>;
 
+const rawBucketSchema = z.object({
+  key: z.array(z.string()),
+  doc_count: z.number(),
+});
+
+type RawBucket = z.infer<typeof rawBucketSchema>;
+
+const rawAggregatedResponseSchema = z.object({
+  buckets: z.array(rawBucketSchema),
+});
+
 const rawSearchResponseSchema = z.object({
   data: z.object({
     hits: z.object({
@@ -77,6 +88,10 @@ const rawSearchResponseSchema = z.object({
         })
       ),
     }),
+    aggregations: z.object({
+      publishers_hits: rawAggregatedResponseSchema,
+      licenses_hits: rawAggregatedResponseSchema,
+    }),
   }),
 });
 
@@ -84,8 +99,8 @@ type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
 
 export type SearchResultFilter = {
   totalCount: number;
-  id: string;
   name: string;
+  id?: string; // TBD: if a filter does not match the query, is there a way to return its ID?
 };
 
 export type SearchResult = {
@@ -158,21 +173,16 @@ export class DatasetFetcher {
     name: string
   ): object {
     const aggregation = {
-      [aggregationName]: {
-        terms: {
-          field: `${id}.keyword`,
-        },
-        aggs: {
-          names: {
-            terms: {
-              field: `${name}.keyword`,
-            },
-          },
+      // Aggregate by ID and name
+      [`${aggregationName}_hits`]: {
+        multi_terms: {
+          terms: [{field: `${id}.keyword`}, {field: `${name}.keyword`}],
         },
       },
-      [`${aggregationName}_zero`]: {
+      // Include all names, even if these do not match the query, for display to the user
+      [`${aggregationName}_all`]: {
         terms: {
-          field: `${name}.keyword`, // TBD: query triplestore to look-up the names based on the IRI?
+          field: `${name}.keyword`, // TBD: query triplestore to look-up the names based on the ID?
           min_doc_count: 0,
         },
       },
@@ -181,18 +191,16 @@ export class DatasetFetcher {
     return aggregation;
   }
 
-  async search(options?: SearchOptions): Promise<SearchResult> {
-    const opts = searchOptionsSchema.parse(options ?? {});
-
+  private buildSearchParams(options: SearchOptions) {
     const searchParams = {
-      size: opts.limit,
-      from: opts.offset,
+      size: options.limit,
+      from: options.offset,
       query: {
         bool: {
           must: [
             {
               simple_query_string: {
-                query: opts.query,
+                query: options.query,
                 default_operator: 'and',
               },
             },
@@ -209,7 +217,7 @@ export class DatasetFetcher {
           ],
         },
       },
-      aggs: merge(
+      aggregations: merge(
         this.buildAggregation(
           'publishers',
           RawDatasetKeys.PublisherIri,
@@ -223,38 +231,73 @@ export class DatasetFetcher {
       ),
     };
 
-    if (opts.filters?.publishers) {
+    if (options.filters?.publishers?.length) {
       searchParams.query.bool.filter.push({
         terms: {
-          [`${RawDatasetKeys.PublisherIri}.keyword`]: opts.filters?.publishers,
+          [`${RawDatasetKeys.PublisherIri}.keyword`]:
+            options.filters?.publishers,
         },
       });
     }
 
-    if (opts.filters?.licenses) {
+    if (options.filters?.licenses?.length) {
       searchParams.query.bool.filter.push({
         terms: {
-          [`${RawDatasetKeys.LicenseIri}.keyword`]: opts.filters?.licenses,
+          [`${RawDatasetKeys.LicenseIri}.keyword`]: options.filters?.licenses,
         },
       });
     }
 
-    const searchResponse = await this.makeSearchRequest(searchParams);
-    const hits = searchResponse.data.hits;
+    return searchParams;
+  }
+
+  private buildSearchResult(
+    options: SearchOptions,
+    rawSearchResponse: RawSearchResponse
+  ) {
+    const hits = rawSearchResponse.data.hits;
 
     const datasets: Dataset[] = hits.hits.map(hit => {
       const rawDataset = hit._source;
       return this.fromRawDatasetToDataset(rawDataset);
     });
 
-    // TODO: add aggregated response to searchResult
+    const aggregations = rawSearchResponse.data.aggregations;
+
+    const toFilter = (bucket: RawBucket): SearchResultFilter => {
+      const [id, name] = bucket.key;
+      const totalCount = bucket.doc_count;
+      return {
+        totalCount,
+        name,
+        id,
+      };
+    };
+
+    const publishersFilters =
+      aggregations.publishers_hits.buckets.map(toFilter);
+    const licenseFilters = aggregations.licenses_hits.buckets.map(toFilter);
 
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
-      offset: opts.offset!,
-      limit: opts.limit!,
+      offset: options.offset!,
+      limit: options.limit!,
       datasets,
+      filters: {
+        publishers: publishersFilters,
+        licenses: licenseFilters,
+      },
     };
+
+    return searchResult;
+  }
+
+  async search(options?: SearchOptions): Promise<SearchResult> {
+    const opts = searchOptionsSchema.parse(options ?? {});
+
+    const searchParams = this.buildSearchParams(opts);
+    const searchResponse = await this.makeSearchRequest(searchParams);
+    const searchResult = this.buildSearchResult(opts, searchResponse);
 
     return searchResult;
   }

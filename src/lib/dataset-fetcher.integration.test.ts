@@ -31,13 +31,17 @@ describe('search', () => {
       offset: 0,
       limit: 10,
       datasets: [],
+      filters: {
+        publishers: [],
+        licenses: [],
+      },
     });
   });
 
   it('finds datasets if query matches', async () => {
     const results = await datasetFetcher.search({query: 'maecenas dataset 7'});
 
-    expect(results).toStrictEqual({
+    expect(results).toMatchObject({
       totalCount: 1,
       offset: 0,
       limit: 10,
@@ -47,10 +51,7 @@ describe('search', () => {
           name: 'Dataset 7',
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
-          publisher: {
-            id: 'https://archive.example.org/',
-            name: 'Archive',
-          },
+          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
           license: {
             id: 'http://creativecommons.org/publicdomain/zero/1.0/',
             name: 'Public Domain',
@@ -71,6 +72,11 @@ describe('search', () => {
       totalCount: 5,
       offset: 0,
       limit: 10,
+      filters: {
+        publishers: [
+          {totalCount: 5, name: 'Archive', id: 'https://archive.example.org/'},
+        ],
+      },
     });
   });
 
@@ -85,6 +91,20 @@ describe('search', () => {
       totalCount: 12,
       offset: 0,
       limit: 10,
+      filters: {
+        licenses: [
+          {
+            totalCount: 12,
+            name: 'Public Domain',
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+          },
+          {
+            totalCount: 12,
+            name: 'Publiek domein',
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+          },
+        ],
+      },
     });
   });
 });
