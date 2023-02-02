@@ -40,6 +40,8 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const {data, error} = useQuery({
     queryKey: ['Datasets', {selectedLicenses, selectedPublishers}],
     queryFn: async () => searchDatasets({selectedLicenses, selectedPublishers}),
+    // keep previous data to prevent flickering after filtering
+    keepPreviousData: true,
     // only show initial data if no filters are set
     initialData:
       selectedLicenses.length === 0 && selectedPublishers.length === 0
@@ -59,8 +61,8 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   }
 
   if (!data?.datasets) {
-    // Place a loader here, this will only show after the user selects a filter
-    return <></>;
+    // This will only show if something went wrong with the initial load.
+    return <>Loading</>;
   }
 
   return (
