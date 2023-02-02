@@ -1,11 +1,9 @@
+import {SearchResultFilter} from '@/lib/dataset-fetcher';
 import {useCallback, Dispatch} from 'react';
 
 interface Props {
   title: string;
-  options: {
-    value: string;
-    label: string;
-  }[];
+  options: SearchResultFilter[];
   selectedFilters: string[];
   setSelectedFilters: Dispatch<string[]>;
 }
@@ -34,22 +32,25 @@ export default function FilterSet({
           {title}
         </legend>
         <div className="space-y-3 pt-6">
-          {options.map((option, optionIdx) => (
-            <div key={option.value} className="flex items-center">
+          {options.map(option => (
+            <div
+              key={`${option.id}${option.name}`}
+              className="flex items-center"
+            >
               <input
-                value={option.value}
-                id={`${title}-${optionIdx}`}
-                name={option.value}
-                checked={selectedFilters.some(i => option.value === i)}
+                value={option.id}
+                id={`${title}-${option.id}`}
+                name={option.id}
+                checked={selectedFilters.some(i => option.id === i)}
                 onChange={handleChange}
                 type="checkbox"
                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
               <label
-                htmlFor={`${title}-${optionIdx}`}
+                htmlFor={`${title}-${option.id}`}
                 className="ml-3 text-sm text-gray-600"
               >
-                {option.label}
+                {option.name}
               </label>
             </div>
           ))}

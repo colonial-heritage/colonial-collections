@@ -2,50 +2,9 @@
 
 import {useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
-import {SearchResult} from '@/lib/dataset-fetcher';
+import {SearchOptions, SearchResult} from '@/lib/dataset-fetcher';
 import DatasetCard from './dataset-card';
 import FilterSet from './filter-set';
-
-// TODO Replace these two dummy lists with the correct data.
-// Either by an API call if the lists are dynamic.
-// Or if the lists are more static, with a JSON import or getStaticProps.
-const dummyLicenses = [
-  {
-    value: '1',
-    label: 'License 1',
-  },
-  {
-    value: '2',
-    label: 'License 2',
-  },
-  {
-    value: '3',
-    label: 'License 3',
-  },
-  {
-    value: '4',
-    label: 'License 4',
-  },
-];
-
-const dummyPublishers = [
-  {
-    value: '1',
-    label: 'Publisher 1',
-  },
-  {
-    value: '2',
-    label: 'Publisher 2',
-  },
-  {
-    value: '3',
-    label: 'Publisher 3',
-  },
-  {
-    value: '4',
-    label: 'Publisher 4',
-  },
-];
 
 interface SearchDatasets {
   selectedLicenses: string[];
@@ -56,11 +15,15 @@ const searchDatasets = async ({
   selectedLicenses,
   selectedPublishers,
 }: SearchDatasets): Promise<SearchResult> => {
+  const options: SearchOptions = {
+    filters: {
+      publishers: selectedPublishers,
+      licenses: selectedLicenses,
+    },
+  };
   const response = await fetch('/api/dataset-search', {
     method: 'POST',
-    // TODO send the correct filter query
-    // The body should have the same interface as SearchOptions
-    body: JSON.stringify({selectedLicenses, selectedPublishers}),
+    body: JSON.stringify(options),
   });
   return response.json();
 };
@@ -74,10 +37,6 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const [selectedLicenses, setSelectedLicenses] = useState<string[]>([]);
   const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
 
-  // replace this with the correct lists
-  const licenses = dummyLicenses;
-  const publishers = dummyPublishers;
-
   const {data, error} = useQuery({
     queryKey: ['Datasets', {selectedLicenses, selectedPublishers}],
     queryFn: async () => searchDatasets({selectedLicenses, selectedPublishers}),
@@ -89,18 +48,22 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
       <aside>
         <div>
           <form className="space-y-10 divide-y divide-gray-200">
-            <FilterSet
-              title="Licenses"
-              options={licenses}
-              selectedFilters={selectedLicenses}
-              setSelectedFilters={setSelectedLicenses}
-            />
-            <FilterSet
-              title="Owners"
-              options={publishers}
-              selectedFilters={selectedPublishers}
-              setSelectedFilters={setSelectedPublishers}
-            />
+            {!!data.filters?.licenses?.length && (
+              <FilterSet
+                title="Licenses"
+                options={data.filters?.licenses}
+                selectedFilters={selectedLicenses}
+                setSelectedFilters={setSelectedLicenses}
+              />
+            )}
+            {!!data.filters?.licenses?.length && (
+              <FilterSet
+                title="Owners"
+                options={data.filters.publishers}
+                selectedFilters={selectedPublishers}
+                setSelectedFilters={setSelectedPublishers}
+              />
+            )}
           </form>
         </div>
       </aside>
