@@ -105,7 +105,7 @@
 <https://library.example.org/datasets/9>
   a dcat:Dataset ;
   dct:title "Dataset 9"@nl, "Dataset 9"@en ;
-  dct:license <<http://creativecommons.org/publicdomain/zero/1.0/deed.nl>> ;
+  dct:license <http://creativecommons.org/publicdomain/zero/1.0/deed.nl> ;
   dct:publisher <https://library.example.org/> ;
   dct:description "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis."@nl,
                   "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
