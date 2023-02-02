@@ -40,8 +40,28 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const {data, error} = useQuery({
     queryKey: ['Datasets', {selectedLicenses, selectedPublishers}],
     queryFn: async () => searchDatasets({selectedLicenses, selectedPublishers}),
-    initialData: initialSearchResult,
+    // only show initial data if no filters are set
+    initialData:
+      selectedLicenses.length === 0 && selectedPublishers.length === 0
+        ? initialSearchResult
+        : undefined,
   });
+
+  if (error instanceof Error) {
+    return (
+      <div
+        className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+        role="alert"
+      >
+        <p>There was an error fetching the dataset.</p>
+      </div>
+    );
+  }
+
+  if (!data?.datasets) {
+    // place a loader here
+    return <></>;
+  }
 
   return (
     <>
