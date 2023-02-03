@@ -3,14 +3,14 @@ import {useCallback, Dispatch} from 'react';
 
 interface Props {
   title: string;
-  options: SearchResultFilter[];
+  searchResultFilters: SearchResultFilter[];
   selectedFilters: string[];
   setSelectedFilters: Dispatch<string[]>;
 }
 
 export default function FilterSet({
   title,
-  options,
+  searchResultFilters,
   selectedFilters,
   setSelectedFilters,
 }: Props) {
@@ -19,7 +19,9 @@ export default function FilterSet({
       if (e.target.checked) {
         setSelectedFilters([...selectedFilters, e.target.value]);
       } else {
-        setSelectedFilters(selectedFilters.filter(i => e.target.value !== i));
+        setSelectedFilters(
+          selectedFilters.filter(filterId => e.target.value !== filterId)
+        );
       }
     },
     [selectedFilters, setSelectedFilters]
@@ -32,7 +34,7 @@ export default function FilterSet({
           {title}
         </legend>
         <div className="space-y-3 pt-6">
-          {options.map(option => (
+          {searchResultFilters.map(option => (
             <div
               key={`${option.id}${option.name}`}
               className="flex items-center"
@@ -41,7 +43,9 @@ export default function FilterSet({
                 value={option.id}
                 id={`${title}-${option.id}`}
                 name={option.id}
-                checked={selectedFilters.some(i => option.id === i)}
+                checked={selectedFilters.some(
+                  filterId => option.id === filterId
+                )}
                 onChange={handleChange}
                 type="checkbox"
                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"

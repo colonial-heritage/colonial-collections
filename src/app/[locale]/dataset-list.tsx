@@ -2,31 +2,10 @@
 
 import {useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
-import {SearchOptions, SearchResult} from '@/lib/dataset-fetcher';
+import {SearchResult} from '@/lib/dataset-fetcher';
 import DatasetCard from './dataset-card';
 import FilterSet from './filter-set';
-
-interface SearchDatasets {
-  selectedLicenses: string[];
-  selectedPublishers: string[];
-}
-
-const searchDatasets = async ({
-  selectedLicenses,
-  selectedPublishers,
-}: SearchDatasets): Promise<SearchResult> => {
-  const options: SearchOptions = {
-    filters: {
-      publishers: selectedPublishers,
-      licenses: selectedLicenses,
-    },
-  };
-  const response = await fetch('/api/dataset-search', {
-    method: 'POST',
-    body: JSON.stringify(options),
-  });
-  return response.json();
-};
+import clientSearchDatasets from './clientSearchDataset';
 
 interface Props {
   initialSearchResult: SearchResult;
@@ -37,9 +16,13 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const [selectedLicenses, setSelectedLicenses] = useState<string[]>([]);
   const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
 
-  const {data, error} = useQuery({
+  const {data, isError} = useQuery({
     queryKey: ['Datasets', {selectedLicenses, selectedPublishers}],
-    queryFn: async () => searchDatasets({selectedLicenses, selectedPublishers}),
+    queryFn: async () =>
+      clientSearchDatasets({
+        licenses: selectedLicenses,
+        publishers: selectedPublishers,
+      }),
     // keep previous data to prevent flickering after filtering
     keepPreviousData: true,
     // only show initial data if no filters are set
@@ -49,7 +32,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         : undefined,
   });
 
-  if (error instanceof Error) {
+  if (isError) {
     return (
       <div
         className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
@@ -73,7 +56,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             {!!data.filters?.licenses?.length && (
               <FilterSet
                 title="Licenses"
-                options={data.filters?.licenses}
+                searchResultFilters={data.filters?.licenses}
                 selectedFilters={selectedLicenses}
                 setSelectedFilters={setSelectedLicenses}
               />
@@ -81,7 +64,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             {!!data.filters?.licenses?.length && (
               <FilterSet
                 title="Owners"
-                options={data.filters.publishers}
+                searchResultFilters={data.filters.publishers}
                 selectedFilters={selectedPublishers}
                 setSelectedFilters={setSelectedPublishers}
               />
