@@ -14,14 +14,17 @@ CONSTRUCT {
     cc:publisherName ?publisherName ;
     cc:licenseIri ?license ;
     cc:licenseName ?licenseName ;
-    cc:description ?description .
+    cc:description ?description ;
+    cc:keyword ?keyword .
 }
 WHERE {
   ?dataset a dcat:Dataset ;
     dct:title ?title ;
     dct:license ?license ;
-    dct:publisher ?publisher ;
-    dct:description ?description .
+    dct:publisher ?publisher .
+
+  OPTIONAL { ?dataset dct:description ?description }
+  OPTIONAL { ?dataset dcat:keyword ?keyword }
 
   ?license a foaf:Document ;
     foaf:name ?licenseName .
