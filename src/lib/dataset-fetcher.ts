@@ -1,3 +1,4 @@
+import {buildFilters} from './dataset-fetcher-result';
 import {reach} from '@hapi/hoek';
 import {request} from 'gaxios';
 import {z} from 'zod';
@@ -70,7 +71,7 @@ const rawBucketSchema = z.object({
   doc_count: z.number(),
 });
 
-type RawBucket = z.infer<typeof rawBucketSchema>;
+export type RawBucket = z.infer<typeof rawBucketSchema>;
 
 const rawAggregationSchema = z.object({
   buckets: z.array(rawBucketSchema),
@@ -220,7 +221,8 @@ export class DatasetFetcher {
       aggregations: {
         all: {
           // Aggregate all filters, regardless of the query
-          // We may need to refine this at some point, e.g if performance needs it
+          // We may need to refine this at some point, if performance needs it,
+          // e.g. by using a separate call and caching the results
           global: {},
           aggregations: {
             publishers: publishersAggegration,
@@ -258,70 +260,21 @@ export class DatasetFetcher {
   ) {
     const {hits, aggregations} = rawSearchResponse.data;
 
-    // Step 1: collect the datasets that have been found
     const datasets: Dataset[] = hits.hits.map(hit => {
       const rawDataset = hit._source;
       return this.fromRawDatasetToDataset(rawDataset);
     });
 
-    // Step 2: collect all filters
-    const toFilter = (bucket: RawBucket): SearchResultFilter => {
-      const totalCount = 0; // Initial count; will be overridden by the matching filter, if any
-      const [id, name] = bucket.key;
-      return {
-        totalCount,
-        id,
-        name,
-      };
-    };
-
-    const allPublisherFilters =
-      aggregations.all.publishers.buckets.map(toFilter);
-    const allLicenseFilters = aggregations.all.licenses.buckets.map(toFilter);
-
-    // Step 3: collect only the filters that matched the query
-    const toMatchingFilter = (bucket: RawBucket): SearchResultFilter => {
-      const totalCount = bucket.doc_count; // Actual count if a filter matched the query
-      const [id, name] = bucket.key;
-      return {
-        totalCount,
-        id,
-        name,
-      };
-    };
-
-    const matchingPublisherFilters =
-      aggregations.publishers.buckets.map(toMatchingFilter);
-    const matchingLicenseFilters =
-      aggregations.licenses.buckets.map(toMatchingFilter);
-
-    // Step 4: combine all filters with the matching filters
-    const combineAllWithMatchingFilters = (
-      allFilters: SearchResultFilter[],
-      matchingFilters: SearchResultFilter[]
-    ) => {
-      const combinedFilters = allFilters.map(filter => {
-        const matchingFilter = matchingFilters.find(
-          matchingFilter => matchingFilter.id === filter.id
-        );
-        return matchingFilter !== undefined ? matchingFilter : filter;
-      });
-
-      // TODO: sort by totalCount, descending + subsort by totalCount, ascending
-      return combinedFilters;
-    };
-
-    const publisherFilters = combineAllWithMatchingFilters(
-      allPublisherFilters,
-      matchingPublisherFilters
+    const publisherFilters = buildFilters(
+      aggregations.all.publishers.buckets,
+      aggregations.publishers.buckets
     );
 
-    const licenseFilters = combineAllWithMatchingFilters(
-      allLicenseFilters,
-      matchingLicenseFilters
+    const licenseFilters = buildFilters(
+      aggregations.all.licenses.buckets,
+      aggregations.licenses.buckets
     );
 
-    // Step 4: construct the overall result
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
