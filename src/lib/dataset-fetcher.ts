@@ -103,8 +103,8 @@ type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
 
 export type SearchResultFilter = {
   totalCount: number;
+  id: string;
   name: string;
-  id?: string; // TBD: if a filter does not match the query, is there a way to return its ID?
 };
 
 export type SearchResult = {
@@ -206,7 +206,6 @@ export class DatasetFetcher {
             },
           ],
           filter: [
-            // TBD: add filter for language?
             {
               // Only return documents of type 'Dataset'
               terms: {
@@ -220,6 +219,8 @@ export class DatasetFetcher {
       },
       aggregations: {
         all: {
+          // Aggregate all filters, regardless of the query
+          // We may need to refine this at some point, e.g if performance needs it
           global: {},
           aggregations: {
             publishers: publishersAggegration,
@@ -255,35 +256,79 @@ export class DatasetFetcher {
     options: SearchOptions,
     rawSearchResponse: RawSearchResponse
   ) {
-    const hits = rawSearchResponse.data.hits;
+    const {hits, aggregations} = rawSearchResponse.data;
 
+    // Step 1: collect the datasets that have been found
     const datasets: Dataset[] = hits.hits.map(hit => {
       const rawDataset = hit._source;
       return this.fromRawDatasetToDataset(rawDataset);
     });
 
-    const aggregations = rawSearchResponse.data.aggregations;
-
+    // Step 2: collect all filters
     const toFilter = (bucket: RawBucket): SearchResultFilter => {
+      const totalCount = 0; // Initial count; will be overridden by the matching filter, if any
       const [id, name] = bucket.key;
-      const totalCount = bucket.doc_count;
       return {
         totalCount,
-        name,
         id,
+        name,
       };
     };
 
-    const publishersFilters = aggregations.publishers.buckets.map(toFilter);
-    const licenseFilters = aggregations.licenses.buckets.map(toFilter);
+    const allPublisherFilters =
+      aggregations.all.publishers.buckets.map(toFilter);
+    const allLicenseFilters = aggregations.all.licenses.buckets.map(toFilter);
 
+    // Step 3: collect only the filters that matched the query
+    const toMatchingFilter = (bucket: RawBucket): SearchResultFilter => {
+      const totalCount = bucket.doc_count; // Actual count if a filter matched the query
+      const [id, name] = bucket.key;
+      return {
+        totalCount,
+        id,
+        name,
+      };
+    };
+
+    const matchingPublisherFilters =
+      aggregations.publishers.buckets.map(toMatchingFilter);
+    const matchingLicenseFilters =
+      aggregations.licenses.buckets.map(toMatchingFilter);
+
+    // Step 4: combine all filters with the matching filters
+    const combineAllWithMatchingFilters = (
+      allFilters: SearchResultFilter[],
+      matchingFilters: SearchResultFilter[]
+    ) => {
+      const combinedFilters = allFilters.map(filter => {
+        const matchingFilter = matchingFilters.find(
+          matchingFilter => matchingFilter.id === filter.id
+        );
+        return matchingFilter !== undefined ? matchingFilter : filter;
+      });
+
+      // TODO: sort by totalCount, descending + subsort by totalCount, ascending
+      return combinedFilters;
+    };
+
+    const publisherFilters = combineAllWithMatchingFilters(
+      allPublisherFilters,
+      matchingPublisherFilters
+    );
+
+    const licenseFilters = combineAllWithMatchingFilters(
+      allLicenseFilters,
+      matchingLicenseFilters
+    );
+
+    // Step 4: construct the overall result
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
       limit: options.limit!,
       datasets,
       filters: {
-        publishers: publishersFilters,
+        publishers: publisherFilters,
         licenses: licenseFilters,
       },
     };

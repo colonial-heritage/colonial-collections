@@ -32,8 +32,50 @@ describe('search', () => {
       limit: 10,
       datasets: [],
       filters: {
-        publishers: [],
-        licenses: [],
+        publishers: [
+          {
+            totalCount: 0,
+            id: 'https://archive.example.org/',
+            name: 'Archive',
+          },
+          {
+            totalCount: 0,
+            id: 'https://library.example.org/',
+            name: 'Library',
+          },
+          {
+            totalCount: 0,
+            id: 'https://museum.example.org/',
+            name: 'Museum',
+          },
+        ],
+        licenses: [
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Public Domain',
+          },
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Publiek domein',
+          },
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: 'Publiek domein',
+          },
+          {
+            totalCount: 0,
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Public Domain',
+          },
+          {
+            totalCount: 0,
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Publiek domein',
+          },
+        ],
       },
     });
   });
@@ -75,6 +117,8 @@ describe('search', () => {
       filters: {
         publishers: [
           {totalCount: 4, name: 'Archive', id: 'https://archive.example.org/'},
+          {totalCount: 0, name: 'Library', id: 'https://library.example.org/'},
+          {totalCount: 0, name: 'Museum', id: 'https://museum.example.org/'},
         ],
       },
     });
@@ -95,13 +139,28 @@ describe('search', () => {
         licenses: [
           {
             totalCount: 6,
-            name: 'Public Domain',
             id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Public Domain',
           },
           {
             totalCount: 6,
-            name: 'Publiek domein',
             id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Public Domain',
+          },
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: 'Publiek domein',
+          },
+          {
+            totalCount: 0,
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Public Domain',
+          },
+          {
+            totalCount: 0,
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Publiek domein',
           },
         ],
       },
