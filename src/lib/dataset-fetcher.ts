@@ -72,7 +72,7 @@ const rawBucketSchema = z.object({
 
 type RawBucket = z.infer<typeof rawBucketSchema>;
 
-const rawAggregatedResponseSchema = z.object({
+const rawAggregationSchema = z.object({
   buckets: z.array(rawBucketSchema),
 });
 
@@ -90,11 +90,11 @@ const rawSearchResponseSchema = z.object({
     }),
     aggregations: z.object({
       all: z.object({
-        publishers: rawAggregatedResponseSchema,
-        licenses: rawAggregatedResponseSchema,
+        publishers: rawAggregationSchema,
+        licenses: rawAggregationSchema,
       }),
-      publishers: rawAggregatedResponseSchema,
-      licenses: rawAggregatedResponseSchema,
+      publishers: rawAggregationSchema,
+      licenses: rawAggregationSchema,
     }),
   }),
 });
