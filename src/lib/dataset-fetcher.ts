@@ -1,3 +1,4 @@
+import {buildAggregation} from './dataset-fetcher-request';
 import {buildFilters} from './dataset-fetcher-result';
 import {reach} from '@hapi/hoek';
 import {request} from 'gaxios';
@@ -22,9 +23,10 @@ export type License = {
 export type Dataset = {
   id: string;
   name: string;
-  description?: string;
   publisher: Publisher;
   license: License;
+  description?: string;
+  keywords?: string[];
 };
 
 // TODO: add sorting capabilities
@@ -52,6 +54,7 @@ enum RawDatasetKeys {
   PublisherName = 'https://colonialcollections nl/search#publisherName',
   LicenseIri = 'https://colonialcollections nl/search#licenseIri',
   LicenseName = 'https://colonialcollections nl/search#licenseName',
+  Keyword = 'https://colonialcollections nl/search#keyword',
 }
 
 const rawDatasetSchema = z
@@ -62,7 +65,8 @@ const rawDatasetSchema = z
   .setKey(RawDatasetKeys.PublisherIri, z.array(z.string()).min(1))
   .setKey(RawDatasetKeys.PublisherName, z.array(z.string()).min(1))
   .setKey(RawDatasetKeys.LicenseIri, z.array(z.string()).min(1))
-  .setKey(RawDatasetKeys.LicenseName, z.array(z.string()).min(1));
+  .setKey(RawDatasetKeys.LicenseName, z.array(z.string()).min(1))
+  .setKey(RawDatasetKeys.Keyword, z.array(z.string()).optional());
 
 type RawDataset = z.infer<typeof rawDatasetSchema>;
 
@@ -128,13 +132,13 @@ export class DatasetFetcher {
   }
 
   async makeSearchRequest(
-    searchParams: Record<string, unknown>
+    searchRequest: Record<string, unknown>
   ): Promise<RawSearchResponse> {
     // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's
     // Elasticsearch instance, so we use pure HTTP calls instead
     const rawSearchResponse = await request({
       url: this.endpointUrl,
-      data: searchParams,
+      data: searchRequest,
       method: 'POST',
       timeout: 5000,
       retryConfig: {
@@ -152,8 +156,11 @@ export class DatasetFetcher {
 
   // Map the response to our internal model
   private fromRawDatasetToDataset(rawDataset: RawDataset) {
+    console.log(rawDataset);
+
     const name = reach(rawDataset, `${RawDatasetKeys.Name}.0`);
     const description = reach(rawDataset, `${RawDatasetKeys.Description}.0`);
+    const keywords = reach(rawDataset, `${RawDatasetKeys.Keyword}`);
     const publisher: Publisher = {
       id: reach(rawDataset, `${RawDatasetKeys.PublisherIri}.0`),
       name: reach(rawDataset, `${RawDatasetKeys.PublisherName}.0`),
@@ -169,31 +176,21 @@ export class DatasetFetcher {
       description,
       publisher,
       license,
+      keywords,
     };
   }
 
-  private buildAggregation(id: string, name: string): object {
-    const aggregation = {
-      // Aggregate the hits by ID and name (for display)
-      multi_terms: {
-        terms: [{field: `${id}.keyword`}, {field: `${name}.keyword`}],
-      },
-    };
-
-    return aggregation;
-  }
-
-  private buildSearchParams(options: SearchOptions) {
-    const publishersAggegration = this.buildAggregation(
+  private buildSearchRequest(options: SearchOptions) {
+    const publishersAggegration = buildAggregation(
       RawDatasetKeys.PublisherIri,
       RawDatasetKeys.PublisherName
     );
-    const licensesAggregation = this.buildAggregation(
+    const licensesAggregation = buildAggregation(
       RawDatasetKeys.LicenseIri,
       RawDatasetKeys.LicenseName
     );
 
-    const searchParams = {
+    const searchRequest = {
       size: options.limit,
       from: options.offset,
       query: {
@@ -235,7 +232,7 @@ export class DatasetFetcher {
     };
 
     if (options.filters?.publishers?.length) {
-      searchParams.query.bool.filter.push({
+      searchRequest.query.bool.filter.push({
         terms: {
           [`${RawDatasetKeys.PublisherIri}.keyword`]:
             options.filters?.publishers,
@@ -244,14 +241,14 @@ export class DatasetFetcher {
     }
 
     if (options.filters?.licenses?.length) {
-      searchParams.query.bool.filter.push({
+      searchRequest.query.bool.filter.push({
         terms: {
           [`${RawDatasetKeys.LicenseIri}.keyword`]: options.filters?.licenses,
         },
       });
     }
 
-    return searchParams;
+    return searchRequest;
   }
 
   private buildSearchResult(
@@ -292,8 +289,8 @@ export class DatasetFetcher {
   async search(options?: SearchOptions): Promise<SearchResult> {
     const opts = searchOptionsSchema.parse(options ?? {});
 
-    const searchParams = this.buildSearchParams(opts);
-    const searchResponse = await this.makeSearchRequest(searchParams);
+    const searchRequest = this.buildSearchRequest(opts);
+    const searchResponse = await this.makeSearchRequest(searchRequest);
     const searchResult = this.buildSearchResult(opts, searchResponse);
 
     return searchResult;

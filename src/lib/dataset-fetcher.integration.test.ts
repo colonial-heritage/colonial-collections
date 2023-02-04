@@ -15,7 +15,7 @@ describe('search', () => {
     const result = await datasetFetcher.search();
 
     expect(result).toMatchObject({
-      totalCount: 12,
+      totalCount: 13,
       offset: 0,
       limit: 10,
     });
@@ -48,13 +48,13 @@ describe('search', () => {
             id: 'https://museum.example.org/',
             name: 'Museum',
           },
-        ],
-        licenses: [
           {
             totalCount: 0,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Public Domain',
+            id: 'https://research.example.org/',
+            name: 'Research Organisation',
           },
+        ],
+        licenses: [
           {
             totalCount: 0,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/',
@@ -72,8 +72,8 @@ describe('search', () => {
           },
           {
             totalCount: 0,
-            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution',
           },
         ],
       },
@@ -81,7 +81,7 @@ describe('search', () => {
   });
 
   it('finds datasets if query matches', async () => {
-    const result = await datasetFetcher.search({query: 'maecenas dataset 7'});
+    const result = await datasetFetcher.search({query: 'placerat dataset 4'});
 
     expect(result).toMatchObject({
       totalCount: 1,
@@ -89,15 +89,16 @@ describe('search', () => {
       limit: 10,
       datasets: [
         {
-          id: 'https://archive.example.org/datasets/7',
-          name: 'Dataset 7',
+          id: 'https://museum.example.org/datasets/4',
+          name: 'Dataset 4',
           description:
-            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
-          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
-            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Public Domain',
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Publiek domein',
           },
+          keywords: ['keyword1', 'keyword2'],
         },
       ],
     });
@@ -106,7 +107,7 @@ describe('search', () => {
   it('finds datasets if "publishers" filter matches', async () => {
     const result = await datasetFetcher.search({
       filters: {
-        publishers: ['https://archive.example.org/'],
+        publishers: ['https://library.example.org/'],
       },
     });
 
@@ -116,9 +117,14 @@ describe('search', () => {
       limit: 10,
       filters: {
         publishers: [
-          {totalCount: 4, name: 'Archive', id: 'https://archive.example.org/'},
-          {totalCount: 0, name: 'Library', id: 'https://library.example.org/'},
+          {totalCount: 0, name: 'Archive', id: 'https://archive.example.org/'},
+          {totalCount: 4, name: 'Library', id: 'https://library.example.org/'},
           {totalCount: 0, name: 'Museum', id: 'https://museum.example.org/'},
+          {
+            totalCount: 0,
+            name: 'Research Organisation',
+            id: 'https://research.example.org/',
+          },
         ],
       },
     });
@@ -140,12 +146,7 @@ describe('search', () => {
           {
             totalCount: 6,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Public Domain',
-          },
-          {
-            totalCount: 6,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Public Domain',
+            name: 'Publiek domein',
           },
           {
             totalCount: 0,
@@ -159,8 +160,8 @@ describe('search', () => {
           },
           {
             totalCount: 0,
-            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution',
           },
         ],
       },
