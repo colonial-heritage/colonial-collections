@@ -1,4 +1,4 @@
-import {merge, reach} from '@hapi/hoek';
+import {reach} from '@hapi/hoek';
 import {request} from 'gaxios';
 import {z} from 'zod';
 
@@ -89,8 +89,12 @@ const rawSearchResponseSchema = z.object({
       ),
     }),
     aggregations: z.object({
-      publishers_hits: rawAggregatedResponseSchema,
-      licenses_hits: rawAggregatedResponseSchema,
+      all: z.object({
+        publishers: rawAggregatedResponseSchema,
+        licenses: rawAggregatedResponseSchema,
+      }),
+      publishers: rawAggregatedResponseSchema,
+      licenses: rawAggregatedResponseSchema,
     }),
   }),
 });
@@ -167,24 +171,11 @@ export class DatasetFetcher {
     };
   }
 
-  private buildAggregation(
-    aggregationName: string,
-    id: string,
-    name: string
-  ): object {
+  private buildAggregation(id: string, name: string): object {
     const aggregation = {
-      // Aggregate by ID and name
-      [`${aggregationName}_hits`]: {
-        multi_terms: {
-          terms: [{field: `${id}.keyword`}, {field: `${name}.keyword`}],
-        },
-      },
-      // Include all names, even if these do not match the query, for display to the user
-      [`${aggregationName}_all`]: {
-        terms: {
-          field: `${name}.keyword`, // TBD: or query the triplestore to look-up the names based on the ID?
-          min_doc_count: 0,
-        },
+      // Aggregate the hits by ID and name (for display)
+      multi_terms: {
+        terms: [{field: `${id}.keyword`}, {field: `${name}.keyword`}],
       },
     };
 
@@ -192,6 +183,15 @@ export class DatasetFetcher {
   }
 
   private buildSearchParams(options: SearchOptions) {
+    const publishersAggegration = this.buildAggregation(
+      RawDatasetKeys.PublisherIri,
+      RawDatasetKeys.PublisherName
+    );
+    const licensesAggregation = this.buildAggregation(
+      RawDatasetKeys.LicenseIri,
+      RawDatasetKeys.LicenseName
+    );
+
     const searchParams = {
       size: options.limit,
       from: options.offset,
@@ -206,6 +206,7 @@ export class DatasetFetcher {
             },
           ],
           filter: [
+            // TBD: add filter for language?
             {
               // Only return documents of type 'Dataset'
               terms: {
@@ -217,18 +218,17 @@ export class DatasetFetcher {
           ],
         },
       },
-      aggregations: merge(
-        this.buildAggregation(
-          'publishers',
-          RawDatasetKeys.PublisherIri,
-          RawDatasetKeys.PublisherName
-        ),
-        this.buildAggregation(
-          'licenses',
-          RawDatasetKeys.LicenseIri,
-          RawDatasetKeys.LicenseName
-        )
-      ),
+      aggregations: {
+        all: {
+          global: {},
+          aggregations: {
+            publishers: publishersAggegration,
+            licenses: licensesAggregation,
+          },
+        },
+        publishers: publishersAggegration,
+        licenses: licensesAggregation,
+      },
     };
 
     if (options.filters?.publishers?.length) {
@@ -274,9 +274,8 @@ export class DatasetFetcher {
       };
     };
 
-    const publishersFilters =
-      aggregations.publishers_hits.buckets.map(toFilter);
-    const licenseFilters = aggregations.licenses_hits.buckets.map(toFilter);
+    const publishersFilters = aggregations.publishers.buckets.map(toFilter);
+    const licenseFilters = aggregations.licenses.buckets.map(toFilter);
 
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
