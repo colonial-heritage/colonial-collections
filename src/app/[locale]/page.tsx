@@ -1,4 +1,4 @@
-import datasetFetcher from '@/lib/dataset-fetcher/instance';
+import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {useLocale} from 'next-intl';
 import DatasetList from './dataset-list';
 
