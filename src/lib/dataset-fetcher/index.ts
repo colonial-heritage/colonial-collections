@@ -10,6 +10,18 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
+enum RawDatasetKeys {
+  Id = '@id',
+  Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
+  Name = 'https://colonialcollections nl/search#name',
+  Description = 'https://colonialcollections nl/search#description',
+  PublisherIri = 'https://colonialcollections nl/search#publisherIri',
+  PublisherName = 'https://colonialcollections nl/search#publisherName',
+  LicenseIri = 'https://colonialcollections nl/search#licenseIri',
+  LicenseName = 'https://colonialcollections nl/search#licenseName',
+  Keyword = 'https://colonialcollections nl/search#keyword',
+}
+
 export type Publisher = {
   id: string;
   name: string;
@@ -29,12 +41,32 @@ export type Dataset = {
   keywords?: string[];
 };
 
-// TODO: add sorting capabilities
+export enum SortBy {
+  Name = 'name',
+  Relevance = 'relevance',
+}
+
+const SortByEnum = z.nativeEnum(SortBy);
+
+const sortByToRawKeys = new Map<string, string>([
+  [SortBy.Name, `${RawDatasetKeys.Name}.keyword`],
+  [SortBy.Relevance, '_score'],
+]);
+
+export enum SortOrder {
+  Ascending = 'asc',
+  Descending = 'desc',
+}
+
+const SortOrderEnum = z.nativeEnum(SortOrder);
+
 // TBD: add language option, for returning results in a specific locale (e.g. 'nl', 'en')?
 const searchOptionsSchema = z.object({
   query: z.string().optional().default('*'), // If no query provided, match all
   offset: z.number().int().nonnegative().optional().default(0),
   limit: z.number().int().positive().optional().default(10),
+  sortBy: SortByEnum.optional().default(SortBy.Relevance),
+  sortOrder: SortOrderEnum.optional().default(SortOrder.Descending),
   filters: z
     .object({
       publishers: z.array(z.string()).optional().default([]),
@@ -44,18 +76,6 @@ const searchOptionsSchema = z.object({
 });
 
 export type SearchOptions = z.input<typeof searchOptionsSchema>;
-
-enum RawDatasetKeys {
-  Id = '@id',
-  Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
-  Name = 'https://colonialcollections nl/search#name',
-  Description = 'https://colonialcollections nl/search#description',
-  PublisherIri = 'https://colonialcollections nl/search#publisherIri',
-  PublisherName = 'https://colonialcollections nl/search#publisherName',
-  LicenseIri = 'https://colonialcollections nl/search#licenseIri',
-  LicenseName = 'https://colonialcollections nl/search#licenseName',
-  Keyword = 'https://colonialcollections nl/search#keyword',
-}
 
 const rawDatasetSchema = z
   .object({})
@@ -116,6 +136,8 @@ export type SearchResult = {
   totalCount: number;
   offset: number;
   limit: number;
+  sortBy: SortBy;
+  sortOrder: SortOrder;
   datasets: Dataset[];
   filters?: {
     publishers: SearchResultFilter[];
@@ -188,9 +210,16 @@ export class DatasetFetcher {
       RawDatasetKeys.LicenseName
     );
 
+    const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
+
     const searchRequest = {
       size: options.limit,
       from: options.offset,
+      sort: [
+        {
+          [sortByRawKey]: options.sortOrder,
+        },
+      ],
       query: {
         bool: {
           must: [
@@ -274,6 +303,8 @@ export class DatasetFetcher {
       totalCount: hits.total.value,
       offset: options.offset!,
       limit: options.limit!,
+      sortBy: options.sortBy!,
+      sortOrder: options.sortOrder!,
       datasets,
       filters: {
         publishers: publisherFilters,

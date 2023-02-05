@@ -1,4 +1,4 @@
-import {DatasetFetcher} from '.';
+import {DatasetFetcher, SortBy, SortOrder} from '.';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 
@@ -18,6 +18,54 @@ describe('search', () => {
       totalCount: 13,
       offset: 0,
       limit: 10,
+      sortBy: SortBy.Relevance,
+      sortOrder: SortOrder.Descending,
+      filters: {
+        publishers: [
+          {
+            totalCount: 4,
+            id: 'https://archive.example.org/',
+            name: 'Archive',
+          },
+          {
+            totalCount: 4,
+            id: 'https://library.example.org/',
+            name: 'Library',
+          },
+          {
+            totalCount: 4,
+            id: 'https://museum.example.org/',
+            name: 'Museum',
+          },
+          {
+            totalCount: 1,
+            id: 'https://research.example.org/',
+            name: 'Research Organisation',
+          },
+        ],
+        licenses: [
+          {
+            totalCount: 6,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Publiek domein',
+          },
+          {
+            totalCount: 3,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: 'Publiek domein',
+          },
+          {
+            totalCount: 3,
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Public Domain',
+          },
+          {
+            totalCount: 1,
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution',
+          },
+        ],
+      },
     });
   });
 
@@ -30,6 +78,8 @@ describe('search', () => {
       totalCount: 0,
       offset: 0,
       limit: 10,
+      sortBy: SortBy.Relevance,
+      sortOrder: SortOrder.Descending,
       datasets: [],
       filters: {
         publishers: [
@@ -85,8 +135,6 @@ describe('search', () => {
 
     expect(result).toMatchObject({
       totalCount: 1,
-      offset: 0,
-      limit: 10,
       datasets: [
         {
           id: 'https://museum.example.org/datasets/4',
@@ -104,6 +152,67 @@ describe('search', () => {
     });
   });
 
+  it('finds datasets, sorted by name in ascending order', async () => {
+    const result = await datasetFetcher.search({
+      query: 'placerat',
+      sortBy: SortBy.Name,
+      sortOrder: SortOrder.Ascending,
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 3,
+      sortBy: SortBy.Name,
+      sortOrder: SortOrder.Ascending,
+      datasets: [
+        {
+          id: 'https://library.example.org/datasets/12',
+          name: 'Dataset 12',
+          description:
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          publisher: {
+            id: 'https://library.example.org/',
+            name: 'Library',
+          },
+          license: {
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Publiek domein',
+          },
+          keywords: ['keyword1', 'keyword3'],
+        },
+        {
+          id: 'https://museum.example.org/datasets/4',
+          name: 'Dataset 4',
+          description:
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          publisher: {
+            id: 'https://museum.example.org/',
+            name: 'Museum',
+          },
+          license: {
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Publiek domein',
+          },
+          keywords: ['keyword1', 'keyword2'],
+        },
+        {
+          id: 'https://archive.example.org/datasets/8',
+          name: 'Dataset 8',
+          description:
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          publisher: {
+            id: 'https://archive.example.org/',
+            name: 'Archive',
+          },
+          license: {
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'Publiek domein',
+          },
+          keywords: ['keyword3', 'keyword4'],
+        },
+      ],
+    });
+  });
+
   it('finds datasets if "publishers" filter matches', async () => {
     const result = await datasetFetcher.search({
       filters: {
@@ -113,8 +222,6 @@ describe('search', () => {
 
     expect(result).toMatchObject({
       totalCount: 4,
-      offset: 0,
-      limit: 10,
       filters: {
         publishers: [
           {totalCount: 0, name: 'Archive', id: 'https://archive.example.org/'},
@@ -139,8 +246,6 @@ describe('search', () => {
 
     expect(result).toMatchObject({
       totalCount: 6,
-      offset: 0,
-      limit: 10,
       filters: {
         licenses: [
           {
