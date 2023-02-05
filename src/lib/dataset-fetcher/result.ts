@@ -20,7 +20,7 @@ function combineUnmatchedWithMatchedFilters(
     const matchedFilter = matchedFilters.find(
       matchedFilter => matchedFilter.id === filter.id
     );
-    return matchedFilter !== undefined ? matchedFilter : filter;
+    return matchedFilter ?? filter;
   });
 
   return combinedFilters;
