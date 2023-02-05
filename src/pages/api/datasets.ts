@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import datasetFetcher from '@/lib/dataset-fetcher-instance';
+import datasetFetcher from '@/lib/dataset-fetcher/instance';
 
 export default async function handler(
   req: NextApiRequest,

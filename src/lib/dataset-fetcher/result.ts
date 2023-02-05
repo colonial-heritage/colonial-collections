@@ -1,4 +1,4 @@
-import {RawBucket, SearchResultFilter} from './dataset-fetcher';
+import type {RawBucket, SearchResultFilter} from '.';
 
 function toUnmatchedFilter(bucket: RawBucket): SearchResultFilter {
   const totalCount = 0; // Initial count; will be overridden by the matching filter, if any
@@ -37,7 +37,7 @@ export function buildFilters(
     matchedFilters
   );
 
-  // TODO: sort by totalCount, descending + subsort by totalCount, ascending
+  // TBD: sort filters by totalCount, descending + subsort by totalCount, ascending?
 
   return combinedFilters;
 }

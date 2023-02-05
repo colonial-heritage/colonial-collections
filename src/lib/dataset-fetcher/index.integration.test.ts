@@ -1,5 +1,5 @@
+import {DatasetFetcher} from '.';
 import {beforeEach, describe, expect, it} from '@jest/globals';
-import {DatasetFetcher} from './dataset-fetcher';
 import {env} from 'node:process';
 
 let datasetFetcher: DatasetFetcher;

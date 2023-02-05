@@ -1,5 +1,5 @@
-import {buildAggregation} from './dataset-fetcher-request';
-import {buildFilters} from './dataset-fetcher-result';
+import {buildAggregation} from './request';
+import {buildFilters} from './result';
 import {reach} from '@hapi/hoek';
 import {request} from 'gaxios';
 import {z} from 'zod';
@@ -156,8 +156,6 @@ export class DatasetFetcher {
 
   // Map the response to our internal model
   private fromRawDatasetToDataset(rawDataset: RawDataset) {
-    console.log(rawDataset);
-
     const name = reach(rawDataset, `${RawDatasetKeys.Name}.0`);
     const description = reach(rawDataset, `${RawDatasetKeys.Description}.0`);
     const keywords = reach(rawDataset, `${RawDatasetKeys.Keyword}`);
