@@ -5,9 +5,9 @@ interface SearchDatasets {
   publishers: string[];
 }
 
-// only use this function for client components
-// For server component use the dataset-fetcher directly
-export default async function clientSearchDatasets({
+// Only use this function for client components.
+// For server component use the dataset-fetcher directly.
+export async function clientSearchDatasets({
   licenses,
   publishers,
 }: SearchDatasets): Promise<SearchResult> {

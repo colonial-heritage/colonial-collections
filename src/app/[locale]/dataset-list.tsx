@@ -5,7 +5,7 @@ import {useQuery} from '@tanstack/react-query';
 import {SearchResult} from '@/lib/dataset-fetcher';
 import DatasetCard from './dataset-card';
 import FilterSet from './filter-set';
-import clientSearchDatasets from './clientSearchDataset';
+import {clientSearchDatasets} from './client-search-dataset';
 
 interface Props {
   initialSearchResult: SearchResult;
@@ -23,9 +23,9 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         licenses: selectedLicenses,
         publishers: selectedPublishers,
       }),
-    // keep previous data to prevent flickering after filtering
+    // Keep the previous data to prevent flickering after filtering.
     keepPreviousData: true,
-    // only show initial data if no filters are set
+    // Only show initial data if no filters are set.
     initialData:
       selectedLicenses.length === 0 && selectedPublishers.length === 0
         ? initialSearchResult
@@ -43,17 +43,12 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
     );
   }
 
-  if (!data?.datasets) {
-    // This will only show if something went wrong with the initial load.
-    return <>Loading</>;
-  }
-
   return (
     <>
       <aside>
         <div>
           <form className="space-y-10 divide-y divide-gray-200">
-            {!!data.filters?.licenses?.length && (
+            {!!data?.filters?.licenses?.length && (
               <FilterSet
                 title="Licenses"
                 searchResultFilters={data.filters?.licenses}
@@ -61,7 +56,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
                 setSelectedFilters={setSelectedLicenses}
               />
             )}
-            {!!data.filters?.licenses?.length && (
+            {!!data?.filters?.licenses?.length && (
               <FilterSet
                 title="Owners"
                 searchResultFilters={data.filters.publishers}
@@ -78,7 +73,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
       >
         <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
-          {data.datasets.map(dataset => (
+          {data?.datasets.map(dataset => (
             <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
           ))}
         </div>
