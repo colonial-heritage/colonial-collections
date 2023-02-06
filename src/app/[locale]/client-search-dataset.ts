@@ -3,6 +3,7 @@ import {SearchResult} from '@/lib/dataset-fetcher';
 interface SearchDatasets {
   licenses: string[];
   publishers: string[];
+  query: string | undefined;
 }
 
 // Only use this function for client components.
@@ -10,8 +11,10 @@ interface SearchDatasets {
 export async function clientSearchDatasets({
   licenses,
   publishers,
+  query,
 }: SearchDatasets): Promise<SearchResult> {
   const searchParams = {
+    query: query || '',
     licenses: licenses.join(','),
     publishers: publishers.join(','),
   };

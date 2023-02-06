@@ -15,7 +15,7 @@ export default function FilterSet({
   setSelectedFilters,
 }: Props) {
   const handleChange = useCallback(
-    (e: {target: {value: string; checked: boolean}}) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.checked) {
         setSelectedFilters([...selectedFilters, e.target.value]);
       } else {
@@ -28,7 +28,7 @@ export default function FilterSet({
   );
 
   return (
-    <div key={title} className="pb-10">
+    <div className="pt-10">
       <fieldset>
         <legend className="block text-sm font-medium text-gray-900">
           {title}

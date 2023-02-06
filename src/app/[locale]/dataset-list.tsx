@@ -15,11 +15,16 @@ interface Props {
 export default function DatasetList({initialSearchResult, locale}: Props) {
   const [selectedLicenses, setSelectedLicenses] = useState<string[]>([]);
   const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
+  const [query, setQuery] = useState('');
 
   const {data, error} = useQuery({
-    queryKey: ['Datasets', {selectedLicenses, selectedPublishers}],
+    queryKey: [
+      'Datasets',
+      {selectedLicenses, selectedPublishers, search: query},
+    ],
     queryFn: async () =>
       clientSearchDatasets({
+        query,
         licenses: selectedLicenses,
         publishers: selectedPublishers,
       }),
@@ -27,7 +32,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
     keepPreviousData: true,
     // Only show initial data if no filters are set.
     initialData:
-      selectedLicenses.length === 0 && selectedPublishers.length === 0
+      selectedLicenses.length === 0 && selectedPublishers.length === 0 && !query
         ? initialSearchResult
         : undefined,
   });
@@ -48,6 +53,22 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
       <aside>
         <div>
           <form className="space-y-10 divide-y divide-gray-200">
+            <div>
+              <label
+                htmlFor="search"
+                className="block text-sm font-medium text-gray-900"
+              >
+                Search
+              </label>
+              <input
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                type="text"
+                name="search"
+                id="search"
+                className="block w-full rounded-full border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
             {!!data?.filters?.licenses?.length && (
               <FilterSet
                 title="Licenses"

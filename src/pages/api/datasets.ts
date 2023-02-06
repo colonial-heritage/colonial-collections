@@ -6,6 +6,7 @@ interface DatasetApiRequest extends NextApiRequest {
   query: {
     publishers: string | undefined;
     licenses: string | undefined;
+    query: string | undefined;
   };
 }
 
@@ -18,7 +19,7 @@ export default async function handler(
     return;
   }
 
-  const {publishers, licenses} = req.query;
+  const {publishers, licenses, query} = req.query;
 
   const options: SearchOptions = {
     filters: {
@@ -26,6 +27,10 @@ export default async function handler(
       licenses: licenses?.split(',').filter(id => !!id),
     },
   };
+
+  if (query) {
+    options.query = query;
+  }
 
   const searchResult = await datasetFetcher.search(options);
 
