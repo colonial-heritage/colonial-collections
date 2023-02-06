@@ -6,6 +6,18 @@ import {SearchResult} from '@/lib/dataset-fetcher';
 import DatasetCard from './dataset-card';
 import FilterSet from './filter-set';
 import {clientSearchDatasets} from './client-search-dataset';
+import Pagination from './pagination';
+// import {SortBy, SortOrder} from '@/lib/dataset-fetcher';
+
+export enum SortBy {
+  Name = 'name',
+  Relevance = 'relevance',
+}
+
+export enum SortOrder {
+  Ascending = 'asc',
+  Descending = 'desc',
+}
 
 interface Props {
   initialSearchResult: SearchResult;
@@ -16,26 +28,42 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const [selectedLicenses, setSelectedLicenses] = useState<string[]>([]);
   const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
   const [query, setQuery] = useState('');
+  const [offset, setOffset] = useState(0);
+  const [sortBy, setSortBy] = useState<string>(SortBy.Relevance);
+  const [sortOrder, setSortOrder] = useState<string>(SortOrder.Ascending);
 
   const {data, error} = useQuery({
     queryKey: [
       'Datasets',
-      {selectedLicenses, selectedPublishers, search: query},
+      {selectedLicenses, selectedPublishers, query, offset, sortBy, sortOrder},
     ],
     queryFn: async () =>
       clientSearchDatasets({
         query,
         licenses: selectedLicenses,
         publishers: selectedPublishers,
+        offset,
+        sortBy,
+        sortOrder,
       }),
     // Keep the previous data to prevent flickering after filtering.
     keepPreviousData: true,
     // Only show initial data if no filters are set.
     initialData:
-      selectedLicenses.length === 0 && selectedPublishers.length === 0 && !query
+      selectedLicenses.length === 0 &&
+      selectedPublishers.length === 0 &&
+      !query &&
+      sortBy === SortBy.Relevance &&
+      sortOrder === SortOrder.Ascending
         ? initialSearchResult
         : undefined,
   });
+
+  function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const [newSortBy, newSortOrder] = e.target.value.split('_');
+    setSortBy(newSortBy);
+    setSortOrder(newSortOrder);
+  }
 
   if (error instanceof Error) {
     return (
@@ -93,11 +121,55 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         aria-labelledby="dataset-heading"
         className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
       >
+        <div className="border-b border-gray-200 bg-white pb-5">
+          <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
+            <div className="ml-4 mt-2">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Dataset browser
+              </h3>
+            </div>
+            <div>
+              <label
+                htmlFor="location"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Sort
+              </label>
+              <select
+                id="location"
+                name="location"
+                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                value={`${sortBy}_${sortOrder}`}
+                onChange={handleSortChange}
+              >
+                <option value={`${SortBy.Relevance}_${SortOrder.Ascending}`}>
+                  Relevance
+                </option>
+                <option value={`${SortBy.Name}_${SortOrder.Ascending}`}>
+                  Name - Ascending
+                </option>
+                <option value={`${SortBy.Name}_${SortOrder.Descending}`}>
+                  Name - Descending
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
           {data?.datasets.map(dataset => (
             <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
           ))}
         </div>
+        {data?.totalCount && data?.totalCount > 0 ? (
+          <Pagination
+            totalCount={data?.totalCount}
+            offset={offset}
+            setOffset={setOffset}
+            limit={data?.limit}
+          />
+        ) : (
+          <div>There are no results</div>
+        )}
       </section>
     </>
   );

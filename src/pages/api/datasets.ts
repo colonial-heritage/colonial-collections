@@ -1,12 +1,15 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
-import {SearchOptions} from '@/lib/dataset-fetcher';
+import {SearchOptions, SortBy, SortOrder} from '@/lib/dataset-fetcher';
 
 interface DatasetApiRequest extends NextApiRequest {
   query: {
-    publishers: string | undefined;
-    licenses: string | undefined;
-    query: string | undefined;
+    publishers?: string;
+    licenses?: string;
+    query?: string;
+    offset?: string;
+    sortBy?: SortBy;
+    sortOrder?: SortOrder;
   };
 }
 
@@ -19,13 +22,23 @@ export default async function handler(
     return;
   }
 
-  const {publishers, licenses, query} = req.query;
+  const {
+    publishers,
+    licenses,
+    query,
+    offset = 0,
+    sortBy,
+    sortOrder,
+  } = req.query;
 
   const options: SearchOptions = {
+    offset: +offset,
     filters: {
       publishers: publishers?.split(',').filter(id => !!id),
       licenses: licenses?.split(',').filter(id => !!id),
     },
+    sortBy,
+    sortOrder,
   };
 
   if (query) {

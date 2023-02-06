@@ -4,6 +4,9 @@ interface SearchDatasets {
   licenses: string[];
   publishers: string[];
   query: string | undefined;
+  offset: number;
+  sortOrder: string;
+  sortBy: string;
 }
 
 // Only use this function for client components.
@@ -12,11 +15,17 @@ export async function clientSearchDatasets({
   licenses,
   publishers,
   query,
+  offset,
+  sortBy,
+  sortOrder,
 }: SearchDatasets): Promise<SearchResult> {
   const searchParams = {
     query: query || '',
     licenses: licenses.join(','),
     publishers: publishers.join(','),
+    offset: `${offset}`,
+    sortBy,
+    sortOrder,
   };
 
   const response = await fetch(
