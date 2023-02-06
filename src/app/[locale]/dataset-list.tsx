@@ -16,7 +16,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const [selectedLicenses, setSelectedLicenses] = useState<string[]>([]);
   const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
 
-  const {data, isError} = useQuery({
+  const {data, error} = useQuery({
     queryKey: ['Datasets', {selectedLicenses, selectedPublishers}],
     queryFn: async () =>
       clientSearchDatasets({
@@ -32,13 +32,13 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         : undefined,
   });
 
-  if (isError) {
+  if (error instanceof Error) {
     return (
       <div
         className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
         role="alert"
       >
-        <p>There was an error fetching the dataset.</p>
+        <p>{error.message}</p>
       </div>
     );
   }
