@@ -139,7 +139,7 @@ export type SearchResult = {
   sortBy: SortBy;
   sortOrder: SortOrder;
   datasets: Dataset[];
-  filters?: {
+  filters: {
     publishers: SearchResultFilter[];
     licenses: SearchResultFilter[];
   };
@@ -244,7 +244,7 @@ export class DatasetFetcher {
       },
       aggregations: {
         all: {
-          // Aggregate all filters, regardless of the query
+          // Aggregate all filters, regardless of the query.
           // We may need to refine this at some point, if performance needs it,
           // e.g. by using a separate call and caching the results
           global: {},
