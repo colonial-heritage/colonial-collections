@@ -2,7 +2,7 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {SearchOptions} from '@/lib/dataset-fetcher';
 
-interface ExtendedNextApiRequest extends NextApiRequest {
+interface DatasetApiRequest extends NextApiRequest {
   query: {
     publishers: string | undefined;
     licenses: string | undefined;
@@ -10,7 +10,7 @@ interface ExtendedNextApiRequest extends NextApiRequest {
 }
 
 export default async function handler(
-  req: ExtendedNextApiRequest,
+  req: DatasetApiRequest,
   res: NextApiResponse
 ) {
   if (req.method !== 'GET') {
