@@ -7,6 +7,12 @@ import DatasetCard from './dataset-card';
 import FilterSet from './filter-set';
 import {clientSearchDatasets} from './client-search-dataset';
 import Pagination from './pagination';
+import {
+  PageSidebar,
+  PageContent,
+  PageTitle,
+  PageHeader,
+} from '@/components/page';
 // import {SortBy, SortOrder} from '@/lib/dataset-fetcher';
 
 export enum SortBy {
@@ -78,63 +84,48 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
 
   return (
     <>
-      <aside>
+      <PageSidebar>
         <div>
-          <form className="space-y-10 divide-y divide-gray-200">
-            <div>
-              <label
-                htmlFor="search"
-                className="block text-sm font-medium text-gray-900"
-              >
-                Search
-              </label>
-              <input
-                value={query}
-                onChange={e => setQuery(e.target.value)}
-                type="text"
-                name="search"
-                id="search"
-                className="block w-full rounded-full border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-            {!!data?.filters?.licenses?.length && (
-              <FilterSet
-                title="Licenses"
-                searchResultFilters={data.filters?.licenses}
-                selectedFilters={selectedLicenses}
-                setSelectedFilters={setSelectedLicenses}
-              />
-            )}
-            {!!data?.filters?.licenses?.length && (
-              <FilterSet
-                title="Owners"
-                searchResultFilters={data.filters.publishers}
-                selectedFilters={selectedPublishers}
-                setSelectedFilters={setSelectedPublishers}
-              />
-            )}
-          </form>
+          <label
+            htmlFor="search"
+            className="block text-sm font-medium text-gray-900"
+          >
+            Search
+          </label>
+          <input
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            type="text"
+            name="search"
+            id="search"
+            className="block w-full rounded-full border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
         </div>
-      </aside>
+        {!!data?.filters?.licenses?.length && (
+          <FilterSet
+            title="Licenses"
+            searchResultFilters={data.filters?.licenses}
+            selectedFilters={selectedLicenses}
+            setSelectedFilters={setSelectedLicenses}
+          />
+        )}
+        {!!data?.filters?.licenses?.length && (
+          <FilterSet
+            title="Owners"
+            searchResultFilters={data.filters.publishers}
+            selectedFilters={selectedPublishers}
+            setSelectedFilters={setSelectedPublishers}
+          />
+        )}
+      </PageSidebar>
 
-      <section
-        aria-labelledby="dataset-heading"
-        className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
-      >
-        <div className="border-b border-gray-200 bg-white pb-5">
+      <PageContent>
+        <PageHeader>
           <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
             <div className="ml-4 mt-2">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Dataset browser
-              </h3>
+              <PageTitle>Dataset browser</PageTitle>
             </div>
             <div>
-              <label
-                htmlFor="location"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Sort
-              </label>
               <select
                 id="location"
                 name="location"
@@ -154,7 +145,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
               </select>
             </div>
           </div>
-        </div>
+        </PageHeader>
         <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
           {data?.datasets.map(dataset => (
             <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
@@ -170,7 +161,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         ) : (
           <div>There are no results</div>
         )}
-      </section>
+      </PageContent>
     </>
   );
 }
