@@ -12,15 +12,19 @@
 
 <https://museum.example.org/>
   a foaf:Organization ;
-  foaf:name "Museum"@nl, "Museum"@en .
+  foaf:name "Museum"@nl . # Only in Dutch
 
 <https://archive.example.org/>
   a foaf:Organization ;
-  foaf:name "Archive" . # No language indicator
+  foaf:name "Archive"@en . # Only English
 
 <https://library.example.org/>
   a foaf:Organization ;
-  foaf:name "Library"@en . # Only English
+  foaf:name "Library" . # No language indicator
+
+<https://research.example.org/>
+  a foaf:Organization ;
+  foaf:name "Research Organisation" . # No language indicator
 
 ###############################
 # Licenses
@@ -28,17 +32,21 @@
 
 <http://creativecommons.org/publicdomain/zero/1.0/>
   a foaf:Document ;
-  foaf:name "Publiek domein"@nl, "Public Domain"@en .
+  foaf:name "Publiek domein" . # No language indicator
 
-# https version of the above
+# HTTPS version of the above
 <https://creativecommons.org/publicdomain/zero/1.0/>
   a foaf:Document ;
-  foaf:name "Publiek domein"@nl, "Public Domain"@en .
+  foaf:name "Public Domain"@en . # Only in English
 
-# Specific Dutch version (bad URI)
+# Specific Dutch version
 <http://creativecommons.org/publicdomain/zero/1.0/deed.nl>
   a foaf:Document ;
-  foaf:name "Publiek domein"@nl . # Only Dutch
+  foaf:name "Publiek domein"@nl . # Only in Dutch
+
+<http://opendatacommons.org/licenses/by/1.0/>
+  a foaf:Document ;
+  foaf:name "Open Data Commons Attribution" . # No language indicator
 
 ###############################
 # Datasets
@@ -63,15 +71,15 @@
   a dcat:Dataset ;
   dct:title "Dataset 3"@en ;
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-  dct:publisher <https://museum.example.org/> ;
-  dct:description "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+  dct:publisher <https://museum.example.org/> .
 
 <https://museum.example.org/datasets/4>
   a dcat:Dataset ;
   dct:title "Dataset 4" ;
   dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://museum.example.org/> ;
-  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." .
+  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." ;
+  dcat:keyword "keyword1", "keyword2" .
 
 <https://archive.example.org/datasets/5>
   a dcat:Dataset ;
@@ -92,15 +100,15 @@
   a dcat:Dataset ;
   dct:title "Dataset 7"@en ;
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-  dct:publisher <https://archive.example.org/> ;
-  dct:description "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+  dct:publisher <https://archive.example.org/> .
 
 <https://archive.example.org/datasets/8>
   a dcat:Dataset ;
   dct:title "Dataset 8" ;
   dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://archive.example.org/> ;
-  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." .
+  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." ;
+  dcat:keyword "keyword3", "keyword4" .
 
 <https://library.example.org/datasets/9>
   a dcat:Dataset ;
@@ -121,12 +129,20 @@
   a dcat:Dataset ;
   dct:title "Dataset 11"@en ;
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-  dct:publisher <https://library.example.org/> ;
-  dct:description "Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam."@en .
+  dct:publisher <https://library.example.org/> .
 
 <https://library.example.org/datasets/12>
   a dcat:Dataset ;
   dct:title "Dataset 12" ;
   dct:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://library.example.org/> ;
-  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." .
+  dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." ;
+  dcat:keyword "keyword1", "keyword3" .
+
+<https://research.example.org/datasets/13>
+  a dcat:Dataset ;
+  dct:title "Dataset 13" ;
+  dct:license <http://opendatacommons.org/licenses/by/1.0/> ;
+  dct:publisher <https://research.example.org/> ;
+  dct:description "Cras erat elit, finibus eget ipsum vel, gravida dapibus leo. Etiam sem erat, suscipit id eros sit amet, scelerisque ornare sem. Aenean commodo elementum neque ac accumsan." ;
+  dcat:keyword "keyword5" .
