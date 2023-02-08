@@ -6,7 +6,10 @@ import {createIntlMiddleware} from 'next-intl/server';
 // locale of the last page that the user has visited.
 // The middleware furthermore passes the resolved locale
 // to components in your app.
-export default createIntlMiddleware();
+export default createIntlMiddleware({
+  locales: ['en', 'nl'],
+  defaultLocale: 'en',
+});
 
 export const config = {
   // Skip all internal paths
