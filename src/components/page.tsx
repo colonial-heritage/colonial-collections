@@ -20,7 +20,7 @@ export function PageContent({children}: {children: ReactNode}) {
   );
 }
 
-export function PageSidebarContainer({children}: {children: ReactNode}) {
+export function PageWithSidebarContainer({children}: {children: ReactNode}) {
   return (
     <div className="pb-24 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
       {children}
