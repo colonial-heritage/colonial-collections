@@ -127,7 +127,6 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             </div>
             <div>
               <select
-                id="location"
                 name="location"
                 className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 value={`${sortBy}_${sortOrder}`}
@@ -146,18 +145,24 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             </div>
           </div>
         </PageHeader>
-        <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
-          {data?.datasets.map(dataset => (
-            <DatasetCard key={dataset.id} dataset={dataset} locale={locale} />
-          ))}
-        </div>
         {data?.totalCount && data?.totalCount > 0 ? (
-          <Pagination
-            totalCount={data?.totalCount}
-            offset={offset}
-            setOffset={setOffset}
-            limit={data?.limit}
-          />
+          <>
+            <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
+              {data?.datasets.map(dataset => (
+                <DatasetCard
+                  key={dataset.id}
+                  dataset={dataset}
+                  locale={locale}
+                />
+              ))}
+            </div>
+            <Pagination
+              totalCount={data?.totalCount}
+              offset={offset}
+              setOffset={setOffset}
+              limit={data?.limit}
+            />
+          </>
         ) : (
           <div>There are no results</div>
         )}
