@@ -7,7 +7,7 @@ interface Props {
   setOffset: Dispatch<number>;
 }
 
-export default function Pagination({
+export default function Paginator({
   totalCount,
   offset,
   setOffset,

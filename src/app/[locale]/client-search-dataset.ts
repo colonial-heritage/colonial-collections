@@ -3,7 +3,7 @@ import {SearchResult} from '@/lib/dataset-fetcher';
 interface SearchDatasets {
   licenses: string[];
   publishers: string[];
-  query: string | undefined;
+  query?: string;
   offset: number;
   sortOrder: string;
   sortBy: string;
@@ -19,6 +19,7 @@ export async function clientSearchDatasets({
   sortBy,
   sortOrder,
 }: SearchDatasets): Promise<SearchResult> {
+  // Convert all values to strings, before using it in URLSearchParams.
   const searchParams = {
     query: query || '',
     licenses: licenses.join(','),

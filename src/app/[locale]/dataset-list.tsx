@@ -6,7 +6,7 @@ import {SearchResult} from '@/lib/dataset-fetcher';
 import DatasetCard from './dataset-card';
 import FilterSet from './filter-set';
 import {clientSearchDatasets} from './client-search-dataset';
-import Pagination from './pagination';
+import Paginator from './paginator';
 import {
   PageSidebar,
   PageContent,
@@ -156,7 +156,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
                 />
               ))}
             </div>
-            <Pagination
+            <Paginator
               totalCount={data?.totalCount}
               offset={offset}
               setOffset={setOffset}
