@@ -1,23 +1,21 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
-import {
-  SearchOptions,
-  SortBy as DataFetcherSortBy,
-  SortOrder as DataFetcherSortOrder,
-} from '@/lib/dataset-fetcher';
-import {
-  SortBy as AppSortBy,
-  SortOrder as AppSortOrder,
-} from '@/app/[locale]/dataset-list';
+import {SearchOptions, SortBy, SortOrder} from '@/lib/dataset-fetcher';
+import {Sort} from '@/app/[locale]/dataset-list';
 
-const sortByMapping = {
-  [AppSortBy.Name]: DataFetcherSortBy.Name,
-  [AppSortBy.Relevance]: DataFetcherSortBy.Relevance,
-};
-
-const sortOrderMapping = {
-  [AppSortOrder.Ascending]: DataFetcherSortOrder.Ascending,
-  [AppSortOrder.Descending]: DataFetcherSortOrder.Descending,
+const sortMapping = {
+  [Sort.RelevanceAsc]: {
+    sortBy: SortBy.Relevance,
+    sortOrder: SortOrder.Ascending,
+  },
+  [Sort.NameAsc]: {
+    sortBy: SortBy.Name,
+    sortOrder: SortOrder.Ascending,
+  },
+  [Sort.NameDesc]: {
+    sortBy: SortBy.Name,
+    sortOrder: SortOrder.Descending,
+  },
 };
 
 interface DatasetApiRequest extends NextApiRequest {
@@ -26,8 +24,7 @@ interface DatasetApiRequest extends NextApiRequest {
     licenses?: string;
     query?: string;
     offset?: string;
-    sortBy?: AppSortBy;
-    sortOrder?: AppSortOrder;
+    sort?: Sort;
   };
 }
 
@@ -45,9 +42,10 @@ export default async function handler(
     licenses,
     query,
     offset = '0',
-    sortBy = AppSortBy.Relevance,
-    sortOrder = AppSortOrder.Descending,
+    sort = Sort.RelevanceAsc,
   } = req.query;
+
+  const {sortBy, sortOrder} = sortMapping[sort] || {};
 
   // Transform the string values from the query string to SearchOptions
   const options = {
@@ -56,12 +54,12 @@ export default async function handler(
       publishers: publishers?.split(',').filter(id => !!id),
       licenses: licenses?.split(',').filter(id => !!id),
     },
-    sortBy: sortByMapping[sortBy],
-    sortOrder: sortOrderMapping[sortOrder],
+    sortBy: sortBy,
+    sortOrder: sortOrder,
   };
 
   if (!options.sortBy || !options.sortOrder || isNaN(options.offset)) {
-    res.status(422).send({message: 'Invalid options'});
+    res.status(400).send({message: 'Invalid options'});
     return;
   }
 
