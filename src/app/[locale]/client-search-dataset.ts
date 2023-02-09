@@ -1,8 +1,12 @@
 import {SearchResult} from '@/lib/dataset-fetcher';
+import {Sort} from './dataset-list';
 
 interface SearchDatasets {
   licenses: string[];
   publishers: string[];
+  query?: string;
+  offset: number;
+  sort: Sort;
 }
 
 // Only use this function for client components.
@@ -10,10 +14,17 @@ interface SearchDatasets {
 export async function clientSearchDatasets({
   licenses,
   publishers,
+  query,
+  offset,
+  sort,
 }: SearchDatasets): Promise<SearchResult> {
+  // Convert all values to strings, before using it in URLSearchParams.
   const searchParams = {
+    query: query || '',
     licenses: licenses.join(','),
     publishers: publishers.join(','),
+    offset: `${offset}`,
+    sort,
   };
 
   const response = await fetch(

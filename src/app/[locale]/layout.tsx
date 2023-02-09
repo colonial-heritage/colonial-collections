@@ -39,7 +39,11 @@ export default function RootLayout({children, params}: Props) {
           <Navigation navigationLabels={navigationLabels} locale={locale} />
 
           <div className="p-10">
-            <Providers>{children}</Providers>
+            <Providers>
+              <main className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+                {children}
+              </main>
+            </Providers>
           </div>
         </div>
         <footer className="p-10 mt-auto">
