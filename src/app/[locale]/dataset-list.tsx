@@ -15,7 +15,7 @@ import {
 } from '@/components/page';
 
 export enum Sort {
-  RelevanceAsc = 'relevanceAsc',
+  RelevanceDesc = 'relevanceDesc',
   NameAsc = 'nameAsc',
   NameDesc = 'nameDesc',
 }
@@ -30,7 +30,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
-  const [sort, setSort] = useState<Sort>(Sort.RelevanceAsc);
+  const [sort, setSort] = useState<Sort>(Sort.RelevanceDesc);
 
   const {data, error} = useQuery({
     queryKey: [
@@ -52,7 +52,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
       selectedLicenses.length === 0 &&
       selectedPublishers.length === 0 &&
       !query &&
-      sort === Sort.RelevanceAsc
+      sort === Sort.RelevanceDesc
         ? initialSearchResult
         : undefined,
   });
@@ -122,7 +122,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
                 value={sort}
                 onChange={handleSortChange}
               >
-                <option value={Sort.RelevanceAsc}>Relevance</option>
+                <option value={Sort.RelevanceDesc}>Relevance</option>
                 <option value={Sort.NameAsc}>Name - Ascending</option>
                 <option value={Sort.NameDesc}>Name - Descending</option>
               </select>

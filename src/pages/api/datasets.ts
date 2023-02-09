@@ -4,9 +4,9 @@ import {SearchOptions, SortBy, SortOrder} from '@/lib/dataset-fetcher';
 import {Sort} from '@/app/[locale]/dataset-list';
 
 const sortMapping = {
-  [Sort.RelevanceAsc]: {
+  [Sort.RelevanceDesc]: {
     sortBy: SortBy.Relevance,
-    sortOrder: SortOrder.Ascending,
+    sortOrder: SortOrder.Descending,
   },
   [Sort.NameAsc]: {
     sortBy: SortBy.Name,
@@ -42,7 +42,7 @@ export default async function handler(
     licenses,
     query,
     offset = '0',
-    sort = Sort.RelevanceAsc,
+    sort = Sort.RelevanceDesc,
   } = req.query;
 
   const {sortBy, sortOrder} = sortMapping[sort] || {};
