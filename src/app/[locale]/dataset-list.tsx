@@ -113,7 +113,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         <PageHeader>
           <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
             <div className="ml-4 mt-2">
-              <PageTitle>Dataset browser</PageTitle>
+              <PageTitle>{data?.totalCount} Dataset(s)</PageTitle>
             </div>
             <div>
               <select
