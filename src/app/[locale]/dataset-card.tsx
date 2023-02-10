@@ -19,7 +19,22 @@ export default function DatasetCard({dataset, locale}: Props) {
             {dataset.name}
           </Link>
         </h3>
+        <div className="mt-2 flex">
+          <p className="text-xs text-gray-500 mr-10">
+            Owner: {dataset.publisher.name}
+          </p>
+          <p className="text-xs text-gray-500">
+            License: {dataset.license.name}
+          </p>
+        </div>
         <p className="text-sm text-gray-500">{dataset.description}</p>
+        <div className="mt-2 flex">
+          {dataset.keywords?.map(keyword => (
+            <p key={keyword} className="text-xs text-gray-500 mr-10">
+              {keyword}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   );
