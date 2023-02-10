@@ -102,17 +102,22 @@ const rawAggregationSchema = z.object({
 });
 
 const rawSearchResponseSchema = z.object({
-  data: z.object({
-    hits: z.object({
-      total: z.object({
-        value: z.number(),
-      }),
-      hits: z.array(
-        z.object({
-          _source: rawDatasetSchema,
-        })
-      ),
+  hits: z.object({
+    total: z.object({
+      value: z.number(),
     }),
+    hits: z.array(
+      z.object({
+        _source: rawDatasetSchema,
+      })
+    ),
+  }),
+});
+
+type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
+
+const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
+  z.object({
     aggregations: z.object({
       all: z.object({
         publishers: rawAggregationSchema,
@@ -121,10 +126,12 @@ const rawSearchResponseSchema = z.object({
       publishers: rawAggregationSchema,
       licenses: rawAggregationSchema,
     }),
-  }),
-});
+  })
+);
 
-type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
+type RawSearchResponseWithAggregations = z.infer<
+  typeof rawSearchResponseWithAggregationsSchema
+>;
 
 export type SearchResultFilter = {
   totalCount: number;
@@ -145,6 +152,12 @@ export type SearchResult = {
   };
 };
 
+const getByIdOptionsSchema = z.object({
+  id: z.string(),
+});
+
+export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
+
 export class DatasetFetcher {
   private endpointUrl: string;
 
@@ -153,12 +166,10 @@ export class DatasetFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  async makeSearchRequest(
-    searchRequest: Record<string, unknown>
-  ): Promise<RawSearchResponse> {
+  async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
     // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's
     // Elasticsearch instance, so we use pure HTTP calls instead
-    const rawSearchResponse = await request({
+    const response = await request<T>({
       url: this.endpointUrl,
       data: searchRequest,
       method: 'POST',
@@ -170,10 +181,8 @@ export class DatasetFetcher {
       },
     });
 
-    const parsedRawSearchResponse =
-      rawSearchResponseSchema.parse(rawSearchResponse);
-
-    return parsedRawSearchResponse;
+    const responseData = response.data;
+    return responseData;
   }
 
   // Map the response to our internal model
@@ -280,9 +289,9 @@ export class DatasetFetcher {
 
   private buildSearchResult(
     options: SearchOptions,
-    rawSearchResponse: RawSearchResponse
+    rawSearchResponse: RawSearchResponseWithAggregations
   ) {
-    const {hits, aggregations} = rawSearchResponse.data;
+    const {hits, aggregations} = rawSearchResponse;
 
     const datasets: Dataset[] = hits.hits.map(hit => {
       const rawDataset = hit._source;
@@ -319,9 +328,40 @@ export class DatasetFetcher {
     const opts = searchOptionsSchema.parse(options ?? {});
 
     const searchRequest = this.buildSearchRequest(opts);
-    const searchResponse = await this.makeSearchRequest(searchRequest);
+    const rawResponse =
+      await this.makeRequest<RawSearchResponseWithAggregations>(searchRequest);
+    const searchResponse =
+      rawSearchResponseWithAggregationsSchema.parse(rawResponse);
     const searchResult = this.buildSearchResult(opts, searchResponse);
 
     return searchResult;
+  }
+
+  async getById(options: GetByIdOptions): Promise<Dataset | undefined> {
+    const opts = getByIdOptionsSchema.parse(options);
+
+    // We cannot use Elasticsearch's Get API: TriplyDB only supports the Search API.
+    // TBD: should we query the triplestore instead?
+    const searchRequest = {
+      query: {
+        term: {
+          '@id.keyword': opts.id,
+        },
+      },
+    };
+
+    const rawResponse = await this.makeRequest<RawSearchResponse>(
+      searchRequest
+    );
+    const searchResponse = rawSearchResponseSchema.parse(rawResponse);
+
+    if (searchResponse.hits.hits.length !== 1) {
+      return undefined;
+    }
+
+    const rawDataset = searchResponse.hits.hits[0]._source;
+    const dataset = this.fromRawDatasetToDataset(rawDataset);
+
+    return dataset;
   }
 }
