@@ -273,3 +273,30 @@ describe('search', () => {
     });
   });
 });
+
+describe('getById', () => {
+  it('returns undefined if no dataset matches the ID', async () => {
+    const dataset = await datasetFetcher.getById({id: 'AnIdThatDoesNotExist'});
+
+    expect(dataset).toBeUndefined();
+  });
+
+  it('returns the dataset that matches the ID', async () => {
+    const dataset = await datasetFetcher.getById({
+      id: 'https://museum.example.org/datasets/4',
+    });
+
+    expect(dataset).toStrictEqual({
+      id: 'https://museum.example.org/datasets/4',
+      name: 'Dataset 4',
+      description:
+        'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+      publisher: {id: 'https://museum.example.org/', name: 'Museum'},
+      license: {
+        id: 'http://creativecommons.org/publicdomain/zero/1.0/',
+        name: 'Publiek domein',
+      },
+      keywords: ['keyword1', 'keyword2'],
+    });
+  });
+});
