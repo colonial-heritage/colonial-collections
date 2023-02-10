@@ -54,7 +54,7 @@ export default function FilterSet({
                 htmlFor={`${title}-${option.id}`}
                 className="ml-3 text-sm text-gray-600"
               >
-                {option.name} ({option.totalCount})
+                {option.name}
               </label>
             </div>
           ))}
