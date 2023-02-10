@@ -1,7 +1,6 @@
 import {buildAggregation} from './request';
 import {buildFilters} from './result';
 import {reach} from '@hapi/hoek';
-import {request} from 'gaxios';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -169,19 +168,20 @@ export class DatasetFetcher {
   async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
     // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's
     // Elasticsearch instance, so we use pure HTTP calls instead
-    const response = await request<T>({
-      url: this.endpointUrl,
-      data: searchRequest,
+    const response = await fetch(this.endpointUrl, {
       method: 'POST',
-      timeout: 5000,
-      retryConfig: {
-        retry: 3,
-        noResponseRetries: 3, // E.g. in case of timeouts
-        httpMethodsToRetry: ['POST'],
-      },
+      body: JSON.stringify(searchRequest),
+      headers: {'Content-Type': 'application/json'},
     });
 
-    const responseData = response.data;
+    if (!response.ok) {
+      throw new Error(
+        `Failed to retrieve datasets: ${response.statusText} (${response.status})`
+      );
+    }
+
+    const responseData: T = await response.json();
+
     return responseData;
   }
 
