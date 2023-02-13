@@ -10,7 +10,10 @@
     "noResults": "There are no results",
     "sortRelevanceDesc": "Relevance",
     "sortNameAsc": "Name - Ascending",
-    "sortNameDesc": "Name - Descending"
+    "sortNameDesc": "Name - Descending",
+    "paginatorText": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
+    "previous": "Previous",
+    "next": "Next"
   },
   "Navigation": {
     "Home": "Dataset browser",

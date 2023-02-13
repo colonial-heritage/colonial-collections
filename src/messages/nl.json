@@ -10,7 +10,10 @@
     "noResults": "Er zijn geen resultaten",
     "sortRelevanceDesc": "Relevantie",
     "sortNameAsc": "Naam - oplopend",
-    "sortNameDesc": "Naam - Aflopend"
+    "sortNameDesc": "Naam - Aflopend",
+    "paginatorText": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
+    "previous": "Vorige",
+    "next": "Volgende"
   },
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"
