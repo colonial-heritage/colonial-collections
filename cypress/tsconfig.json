@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
+    "isolatedModules": false,
     "target": "es5",
     "lib": ["es5", "dom"],
     "types": ["cypress", "node"],
     "jsx": "preserve",
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx", "../src/**/*.cy.tsx"]
 }

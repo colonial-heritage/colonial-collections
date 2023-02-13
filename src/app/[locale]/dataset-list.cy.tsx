@@ -1,4 +1,3 @@
-import React from 'react';
 import DatasetList from './dataset-list';
 
 describe('<DatasetList />', () => {
