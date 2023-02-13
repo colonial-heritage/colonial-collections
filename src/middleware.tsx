@@ -1,4 +1,4 @@
-import {createIntlMiddleware} from 'next-intl/server';
+import createIntlMiddleware from 'next-intl/middleware';
 
 // The middleware intercepts requests to `/` and will redirect
 // to one of the configured locales instead (e.g. `/en`).
@@ -13,5 +13,5 @@ export default createIntlMiddleware({
 
 export const config = {
   // Skip all internal paths
-  matcher: ['/((?!_next).*)'],
+  matcher: ['/((?!api|_next|favicon.ico).*)'],
 };

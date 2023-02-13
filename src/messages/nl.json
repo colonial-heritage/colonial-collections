@@ -3,8 +3,14 @@
     "title": "Dataset Browser"
   },
   "Home": {
-    "title": "Dataset Browser",
-    "description": "Dit is de homepage."
+    "title": "{numDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
+    "search": "Zoeken",
+    "licenseFilter": "Licenties",
+    "ownerFilter": "Eigenaren",
+    "noResults": "Er zijn geen resultaten",
+    "sortRelevanceDesc": "Relevantie",
+    "sortNameAsc": "Naam - oplopend",
+    "sortNameDesc": "Naam - Aflopend"
   },
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"
