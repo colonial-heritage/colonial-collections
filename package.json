@@ -17,7 +17,8 @@
     "test:ci": "npm test -- --ci",
     "test:watch": "npm test -- --watchAll",
     "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
-    "test:integration:watch": "npm run test:integration -- --watchAll"
+    "test:integration:watch": "npm run test:integration -- --watchAll",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@hapi/hoek": "11.0.2",
@@ -39,6 +40,7 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
     "autoprefixer": "10.4.13",
+    "cypress": "12.5.1",
     "eslint-config-next": "13.1.6",
     "gts": "3.1.1",
     "jest": "29.4.1",
