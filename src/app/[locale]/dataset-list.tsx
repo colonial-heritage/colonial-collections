@@ -148,7 +148,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             />
           </>
         ) : (
-          <div>There are no results</div>
+          <div data-test="no-results">There are no results</div>
         )}
       </PageContent>
     </>
