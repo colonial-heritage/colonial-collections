@@ -6,7 +6,7 @@ declare namespace Cypress {
      */
     getBySel(
       dataTestAttribute: string,
-      args?: any
+      args?: Partial<Loggable & Timeoutable & Withinable & Shadow>
     ): Chainable<JQuery<HTMLElement>>;
   }
 }
