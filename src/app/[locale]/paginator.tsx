@@ -17,7 +17,7 @@ export default function Paginator({
   const endMax = offset + limit;
   const start = offset + 1;
   const end = endMax < totalCount ? endMax : totalCount;
-  const t = useTranslations('Home');
+  const t = useTranslations('Paginator');
 
   function setPage(direction: -1 | 1) {
     let newOffset = start - 1 + direction * limit;
@@ -37,7 +37,7 @@ export default function Paginator({
       <div className="sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            {t.rich('paginatorText', {
+            {t.rich('results', {
               start,
               end,
               totalCount,

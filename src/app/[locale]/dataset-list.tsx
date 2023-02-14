@@ -116,7 +116,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
           <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
             <div className="ml-4 mt-2">
               <PageTitle>
-                {t('title', {numDatasets: data?.totalCount})}
+                {t('title', {totalDatasets: data?.totalCount})}
               </PageTitle>
             </div>
             <div>

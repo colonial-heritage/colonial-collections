@@ -9,7 +9,10 @@ export default async function Home() {
   const messages = (await import(`@/messages/${locale}.json`)).default;
   return (
     <PageWithSidebarContainer>
-      <NextIntlClientProvider locale={locale} messages={{Home: messages.Home}}>
+      <NextIntlClientProvider
+        locale={locale}
+        messages={{Home: messages.Home, Paginator: messages.Paginator}}
+      >
         <DatasetList
           initialSearchResult={initialSearchResult}
           locale={locale}

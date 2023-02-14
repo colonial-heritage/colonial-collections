@@ -3,15 +3,17 @@
     "title": "Dataset Browser"
   },
   "Home": {
-    "title": "{numDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
+    "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
     "search": "Search",
     "licenseFilter": "Licenses",
     "ownerFilter": "Owners",
     "noResults": "There are no results",
     "sortRelevanceDesc": "Relevance",
     "sortNameAsc": "Name - Ascending",
-    "sortNameDesc": "Name - Descending",
-    "paginatorText": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
+    "sortNameDesc": "Name - Descending"
+  },
+  "Paginator": {
+    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
     "previous": "Previous",
     "next": "Next"
   },
