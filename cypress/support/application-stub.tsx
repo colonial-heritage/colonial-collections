@@ -6,7 +6,7 @@ export default function ApplicationStub({children}: {children: ReactNode}) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        // turns retries off
+        // Turns retries off
         retry: false,
       },
     },

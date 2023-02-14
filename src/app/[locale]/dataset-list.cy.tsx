@@ -2,7 +2,7 @@ import DatasetList from './dataset-list';
 
 describe('<DatasetList />', () => {
   context('List rendering', () => {
-    it('Shows a dataset card if one dataset is returned in the search result', () => {
+    it('Shows 1 dataset card if one dataset is returned in the search result', () => {
       cy.fixture('search-results/one-dataset.json').then(searchResult => {
         cy.intercept({method: 'GET', url: '/api/datasets*'}, searchResult);
         cy.mount(
@@ -12,7 +12,7 @@ describe('<DatasetList />', () => {
       });
     });
 
-    it('Shows 3 dataset card if 3 datasets are returned in the search result', () => {
+    it('Shows 3 dataset cards if 3 datasets are returned in the search result', () => {
       cy.fixture('search-results/multiple-datasets.json').then(searchResult => {
         cy.intercept({method: 'GET', url: '/api/datasets*'}, searchResult);
         cy.mount(
@@ -22,7 +22,7 @@ describe('<DatasetList />', () => {
       });
     });
 
-    it('Shows an empty list if 0 datasets are returned in the search result', () => {
+    it('Shows 0 dataset cards if 0 datasets are returned in the search result', () => {
       cy.fixture('search-results/no-datasets.json').then(searchResult => {
         cy.intercept({method: 'GET', url: '/api/datasets*'}, searchResult);
         cy.mount(
