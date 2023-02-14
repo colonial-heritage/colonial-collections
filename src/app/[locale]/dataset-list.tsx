@@ -46,6 +46,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         publishers: selectedPublishers,
         offset,
         sort,
+        fetchErrorText: t('fetchError'),
       }),
     // Keep the previous data to prevent flickering after filtering.
     keepPreviousData: true,

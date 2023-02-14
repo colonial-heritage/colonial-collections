@@ -10,7 +10,8 @@
     "noResults": "Er zijn geen resultaten",
     "sortRelevanceDesc": "Relevantie",
     "sortNameAsc": "Naam - oplopend",
-    "sortNameDesc": "Naam - Aflopend"
+    "sortNameDesc": "Naam - Aflopend",
+    "fetchError": "Er is een probleem opgetreden bij het ophalen van de datasets. Laad de pagina opnieuw om het opnieuw te proberen."
   },
   "Paginator": {
     "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",

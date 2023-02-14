@@ -10,7 +10,8 @@
     "noResults": "There are no results",
     "sortRelevanceDesc": "Relevance",
     "sortNameAsc": "Name - Ascending",
-    "sortNameDesc": "Name - Descending"
+    "sortNameDesc": "Name - Descending",
+    "fetchError": "There was a problem fetching the datasets. Please reload the page to try again."
   },
   "Paginator": {
     "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
