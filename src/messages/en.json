@@ -5,8 +5,8 @@
   "Home": {
     "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
     "search": "Search",
-    "licenseFilter": "Licenses",
-    "ownerFilter": "Owners",
+    "licensesFilter": "Licenses",
+    "ownersFilter": "Owners",
     "noResults": "There are no results",
     "sortRelevanceDesc": "Relevance",
     "sortNameAsc": "Name - Ascending",
@@ -16,6 +16,10 @@
     "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
     "previous": "Previous",
     "next": "Next"
+  },
+  "DatasetCard": {
+    "license": "License",
+    "owner": "Owner"
   },
   "Navigation": {
     "Home": "Dataset browser",

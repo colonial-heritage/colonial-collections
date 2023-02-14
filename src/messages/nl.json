@@ -5,8 +5,8 @@
   "Home": {
     "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
     "search": "Zoeken",
-    "licenseFilter": "Licenties",
-    "ownerFilter": "Eigenaren",
+    "licensesFilter": "Licenties",
+    "ownersFilter": "Eigenaren",
     "noResults": "Er zijn geen resultaten",
     "sortRelevanceDesc": "Relevantie",
     "sortNameAsc": "Naam - oplopend",
@@ -16,6 +16,10 @@
     "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
     "previous": "Vorige",
     "next": "Volgende"
+  },
+  "DatasetCard": {
+    "license": "Licentie",
+    "owner": "Eigenaar"
   },
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"

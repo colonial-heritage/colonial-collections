@@ -95,7 +95,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         </div>
         {!!data?.filters?.licenses?.length && (
           <FilterSet
-            title={t('licenseFilter')}
+            title={t('licensesFilter')}
             searchResultFilters={data.filters?.licenses}
             selectedFilters={selectedLicenses}
             setSelectedFilters={setSelectedLicenses}
@@ -103,7 +103,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         )}
         {!!data?.filters?.licenses?.length && (
           <FilterSet
-            title={t('ownerFilter')}
+            title={t('ownersFilter')}
             searchResultFilters={data.filters.publishers}
             selectedFilters={selectedPublishers}
             setSelectedFilters={setSelectedPublishers}
