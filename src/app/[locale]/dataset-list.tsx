@@ -21,7 +21,7 @@ export enum Sort {
   NameDesc = 'nameDesc',
 }
 
-interface Props {
+export interface Props {
   initialSearchResult: SearchResult;
   locale: string;
 }
@@ -68,6 +68,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
       <div
         className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
         role="alert"
+        data-test="fetch-error"
       >
         <p>{t('fetchError')}</p>
       </div>
