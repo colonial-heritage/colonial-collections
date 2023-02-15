@@ -25,7 +25,7 @@ export default function DatasetCard({dataset, locale}: Props) {
         </h3>
         <div className="mt-2 flex">
           <p className="text-xs text-gray-500 mr-10">
-            {t('owner')}: {dataset.publisher.name}
+            {t('publisher')}: {dataset.publisher.name}
           </p>
           <p className="text-xs text-gray-500">
             {t('license')}: {dataset.license.name}

@@ -11,7 +11,11 @@ export default async function Home() {
     <PageWithSidebarContainer>
       <NextIntlClientProvider
         locale={locale}
-        messages={{Home: messages.Home, Paginator: messages.Paginator}}
+        messages={{
+          Home: messages.Home,
+          Paginator: messages.Paginator,
+          DatasetCard: messages.DatasetCard,
+        }}
       >
         <DatasetList
           initialSearchResult={initialSearchResult}

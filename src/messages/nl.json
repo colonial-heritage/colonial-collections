@@ -6,7 +6,7 @@
     "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
     "search": "Zoeken",
     "licensesFilter": "Licenties",
-    "ownersFilter": "Eigenaren",
+    "publishersFilter": "Eigenaren",
     "noResults": "Er zijn geen resultaten",
     "sortRelevanceDesc": "Relevantie",
     "sortNameAsc": "Naam - oplopend",
@@ -20,7 +20,7 @@
   },
   "DatasetCard": {
     "license": "Licentie",
-    "owner": "Eigenaar"
+    "publisher": "Eigenaar"
   },
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"

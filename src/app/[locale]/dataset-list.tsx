@@ -104,7 +104,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         )}
         {!!data?.filters?.licenses?.length && (
           <FilterSet
-            title={t('ownersFilter')}
+            title={t('publishersFilter')}
             searchResultFilters={data.filters.publishers}
             selectedFilters={selectedPublishers}
             setSelectedFilters={setSelectedPublishers}
