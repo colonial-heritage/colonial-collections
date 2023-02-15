@@ -7,7 +7,6 @@ interface SearchDatasets {
   query?: string;
   offset: number;
   sort: Sort;
-  fetchErrorText: string;
 }
 
 // Only use this function for client components.
@@ -18,7 +17,6 @@ export async function clientSearchDatasets({
   query,
   offset,
   sort,
-  fetchErrorText,
 }: SearchDatasets): Promise<SearchResult> {
   // Convert all values to strings, before using it in URLSearchParams.
   const searchParams = {
@@ -34,7 +32,7 @@ export async function clientSearchDatasets({
   );
 
   if (!response.ok) {
-    throw new Error(fetchErrorText);
+    throw new Error('There was a problem fetching the datasets.');
   }
   return response.json();
 }

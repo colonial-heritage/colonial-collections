@@ -46,7 +46,6 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         publishers: selectedPublishers,
         offset,
         sort,
-        fetchErrorText: t('fetchError'),
       }),
     // Keep the previous data to prevent flickering after filtering.
     keepPreviousData: true,
@@ -67,10 +66,10 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   if (error instanceof Error) {
     return (
       <div
-        className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+        className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
         role="alert"
       >
-        <p>{error.message}</p>
+        <p>{t('fetchError')}</p>
       </div>
     );
   }
