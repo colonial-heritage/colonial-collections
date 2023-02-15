@@ -39,7 +39,7 @@
     "title": "Contact"
   },
   "Details": {
-    "title": "Dataset details"
+    "noDataset": "Dataset kon niet gevonden worden."
   },
   "Faq": {
     "title": "Veelgestelde vragen"

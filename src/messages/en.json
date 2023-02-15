@@ -36,7 +36,7 @@
     "title": "Contact details"
   },
   "Details": {
-    "title": "Dataset details"
+    "noDataset": "Dataset could not be found."
   },
   "Faq": {
     "title": "FAQ"
