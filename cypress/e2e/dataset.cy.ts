@@ -15,7 +15,7 @@ describe('Dataset details page', () => {
       });
   });
 
-  it('will show an error message if no datasets can be found', () => {
+  it('shows an error message if no dataset can be found', () => {
     cy.visit('/en/dataset/anIdThatDoesNotExist');
     cy.getBySel('no-dataset').should('exist');
     cy.getBySel('dataset-name').should('not.exist');

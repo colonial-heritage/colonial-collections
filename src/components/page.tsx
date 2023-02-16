@@ -6,7 +6,7 @@ export function PageHeader({children}: {children: ReactNode}) {
 
 interface PageTitleProps {
   children: ReactNode;
-  'data-test'?: string;
+  'data-test'?: string; // Can be used for Cypress tests
 }
 
 export function PageTitle({children, 'data-test': dataTest}: PageTitleProps) {
