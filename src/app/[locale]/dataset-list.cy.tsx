@@ -25,7 +25,7 @@ describe('List rendering', () => {
   });
 
   it('shows 3 dataset cards if 3 datasets are returned in the search result', () => {
-    cy.fixture('search-results/multiple-datasets.json').then(searchResult => {
+    cy.fixture('search-results/three-datasets.json').then(searchResult => {
       cy.intercept({method: 'GET', url: '/api/datasets*'}, searchResult);
       cy.mount(
         <DatasetListWithTranslation
@@ -53,7 +53,7 @@ describe('List rendering', () => {
   });
 
   it('shows an error message if the search action fails', () => {
-    cy.fixture('search-results/multiple-datasets.json').then(searchResult => {
+    cy.fixture('search-results/three-datasets.json').then(searchResult => {
       cy.intercept(
         {method: 'GET', url: '/api/datasets*'},
         {forceNetworkError: true}
