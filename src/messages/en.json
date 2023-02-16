@@ -6,7 +6,7 @@
     "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
     "search": "Search",
     "licensesFilter": "Licenses",
-    "publishersFilter": "Owners",
+    "publishersFilter": "Publishers",
     "noResults": "There are no results",
     "sortRelevanceDesc": "Relevance",
     "sortNameAsc": "Name - Ascending",
@@ -20,10 +20,10 @@
   },
   "DatasetCard": {
     "license": "License",
-    "publisher": "Owner"
+    "publisher": "Publisher"
   },
   "Navigation": {
-    "Home": "Dataset browser",
+    "Home": "Dataset Browser",
     "Register": "Register dataset",
     "About": "About",
     "Faq": "FAQ",

@@ -11,7 +11,7 @@ function DatasetListWithTranslation(props: Props) {
 }
 
 describe('List rendering', () => {
-  it('Shows 1 dataset card if one dataset is returned in the search result', () => {
+  it('shows 1 dataset card if one dataset is returned in the search result', () => {
     cy.fixture('search-results/one-dataset.json').then(searchResult => {
       cy.intercept({method: 'GET', url: '/api/datasets*'}, searchResult);
       cy.mount(
@@ -24,7 +24,7 @@ describe('List rendering', () => {
     });
   });
 
-  it('Shows 3 dataset cards if 3 datasets are returned in the search result', () => {
+  it('shows 3 dataset cards if 3 datasets are returned in the search result', () => {
     cy.fixture('search-results/multiple-datasets.json').then(searchResult => {
       cy.intercept({method: 'GET', url: '/api/datasets*'}, searchResult);
       cy.mount(
@@ -37,7 +37,7 @@ describe('List rendering', () => {
     });
   });
 
-  it('Shows 0 dataset cards if 0 datasets are returned in the search result', () => {
+  it('shows 0 dataset cards if 0 datasets are returned in the search result', () => {
     cy.fixture('search-results/no-datasets.json').then(searchResult => {
       cy.intercept({method: 'GET', url: '/api/datasets*'}, searchResult);
       cy.mount(
@@ -52,7 +52,7 @@ describe('List rendering', () => {
     });
   });
 
-  it('Shows an error message if the search result fetch returns an error', () => {
+  it('shows an error message if the search action fails', () => {
     cy.fixture('search-results/multiple-datasets.json').then(searchResult => {
       cy.intercept(
         {method: 'GET', url: '/api/datasets*'},
