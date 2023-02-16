@@ -32,9 +32,7 @@ export async function clientSearchDatasets({
   );
 
   if (!response.ok) {
-    throw new Error(
-      'There was a problem fetching the datasets. Please reload the page to try again.'
-    );
+    throw new Error('There was a problem fetching the datasets.');
   }
   return response.json();
 }

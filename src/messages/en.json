@@ -3,11 +3,27 @@
     "title": "Dataset Browser"
   },
   "Home": {
-    "title": "Dataset Browser",
-    "description": "This is the home page."
+    "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
+    "search": "Search",
+    "licensesFilter": "Licenses",
+    "publishersFilter": "Publishers",
+    "noResults": "There are no results",
+    "sortRelevanceDesc": "Relevance",
+    "sortNameAsc": "Name - Ascending",
+    "sortNameDesc": "Name - Descending",
+    "fetchError": "There was a problem fetching the datasets. Please reload the page to try again."
+  },
+  "Paginator": {
+    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "DatasetCard": {
+    "license": "License",
+    "publisher": "Publisher"
   },
   "Navigation": {
-    "Home": "Dataset browser",
+    "Home": "Dataset Browser",
     "Register": "Register dataset",
     "About": "About",
     "Faq": "FAQ",

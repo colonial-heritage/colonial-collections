@@ -13,6 +13,7 @@ import {
   PageTitle,
   PageHeader,
 } from '@/components/page';
+import {useTranslations} from 'next-intl';
 
 export enum Sort {
   RelevanceDesc = 'relevanceDesc',
@@ -20,7 +21,7 @@ export enum Sort {
   NameDesc = 'nameDesc',
 }
 
-interface Props {
+export interface Props {
   initialSearchResult: SearchResult;
   locale: string;
 }
@@ -31,6 +32,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
   const [sort, setSort] = useState<Sort>(Sort.RelevanceDesc);
+  const t = useTranslations('Home');
 
   const {data, error} = useQuery({
     queryKey: [
@@ -64,10 +66,11 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
   if (error instanceof Error) {
     return (
       <div
-        className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+        className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
         role="alert"
+        data-test="fetch-error"
       >
-        <p>{error.message}</p>
+        <p>{t('fetchError')}</p>
       </div>
     );
   }
@@ -80,7 +83,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             htmlFor="search"
             className="block text-sm font-medium text-gray-900"
           >
-            Search
+            {t('search')}
           </label>
           <input
             value={query}
@@ -93,7 +96,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         </div>
         {!!data?.filters?.licenses?.length && (
           <FilterSet
-            title="Licenses"
+            title={t('licensesFilter')}
             searchResultFilters={data.filters?.licenses}
             selectedFilters={selectedLicenses}
             setSelectedFilters={setSelectedLicenses}
@@ -101,7 +104,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         )}
         {!!data?.filters?.licenses?.length && (
           <FilterSet
-            title="Owners"
+            title={t('publishersFilter')}
             searchResultFilters={data.filters.publishers}
             selectedFilters={selectedPublishers}
             setSelectedFilters={setSelectedPublishers}
@@ -113,7 +116,9 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
         <PageHeader>
           <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
             <div className="ml-4 mt-2">
-              <PageTitle>{data?.totalCount} Dataset(s)</PageTitle>
+              <PageTitle>
+                {t('title', {totalDatasets: data?.totalCount})}
+              </PageTitle>
             </div>
             <div>
               <select
@@ -122,9 +127,11 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
                 value={sort}
                 onChange={handleSortChange}
               >
-                <option value={Sort.RelevanceDesc}>Relevance</option>
-                <option value={Sort.NameAsc}>Name - Ascending</option>
-                <option value={Sort.NameDesc}>Name - Descending</option>
+                <option value={Sort.RelevanceDesc}>
+                  {t('sortRelevanceDesc')}
+                </option>
+                <option value={Sort.NameAsc}>{t('sortNameAsc')}</option>
+                <option value={Sort.NameDesc}>{t('sortNameDesc')}</option>
               </select>
             </div>
           </div>
@@ -148,7 +155,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             />
           </>
         ) : (
-          <div data-test="no-results">There are no results</div>
+          <div data-test="no-results">{t('noResults')}</div>
         )}
       </PageContent>
     </>

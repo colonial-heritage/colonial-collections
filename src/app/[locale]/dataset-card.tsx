@@ -1,5 +1,6 @@
-import {Dataset} from '@/lib/dataset-fetcher';
 import Link from 'next/link';
+import {useTranslations} from 'next-intl';
+import {Dataset} from '@/lib/dataset-fetcher';
 
 interface Props {
   dataset: Dataset;
@@ -7,6 +8,8 @@ interface Props {
 }
 
 export default function DatasetCard({dataset, locale}: Props) {
+  const t = useTranslations('DatasetCard');
+
   return (
     <div
       key={dataset.id}
@@ -22,10 +25,10 @@ export default function DatasetCard({dataset, locale}: Props) {
         </h3>
         <div className="mt-2 flex">
           <p className="text-xs text-gray-500 mr-10">
-            Owner: {dataset.publisher.name}
+            {t('publisher')}: {dataset.publisher.name}
           </p>
           <p className="text-xs text-gray-500">
-            License: {dataset.license.name}
+            {t('license')}: {dataset.license.name}
           </p>
         </div>
         <p className="text-sm text-gray-500">{dataset.description}</p>
