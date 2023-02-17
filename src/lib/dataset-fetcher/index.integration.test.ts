@@ -24,7 +24,7 @@ describe('search', () => {
         {
           id: 'https://example.org/datasets/1',
           name: 'Dataset 1',
-          publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
@@ -84,7 +84,7 @@ describe('search', () => {
           publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            name: '(Unknown)',
           },
           description:
             'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
@@ -93,7 +93,7 @@ describe('search', () => {
         {
           id: 'https://example.org/datasets/2',
           name: '(No name)',
-          publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
@@ -111,7 +111,7 @@ describe('search', () => {
         {
           id: 'https://example.org/datasets/4',
           name: 'Dataset 4',
-          publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
             id: 'http://opendatacommons.org/licenses/by/1.0/',
             name: 'Open Data Commons Attribution License (ODC-By) v1.0',
@@ -137,7 +137,7 @@ describe('search', () => {
         publishers: [
           {totalCount: 5, id: 'https://archive.example.org/', name: 'Archive'},
           {totalCount: 5, id: 'https://library.example.org/', name: 'Library'},
-          {totalCount: 3, id: 'https://museum.example.org/', name: '(No name)'},
+          {totalCount: 3, id: 'https://museum.example.org/', name: 'Museum'},
           {
             totalCount: 1,
             id: 'https://research.example.org/',
@@ -163,7 +163,7 @@ describe('search', () => {
           {
             totalCount: 1,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            name: '(Unknown)',
           },
           {
             totalCount: 1,
@@ -196,7 +196,7 @@ describe('search', () => {
         publishers: [
           {totalCount: 0, id: 'https://archive.example.org/', name: 'Archive'},
           {totalCount: 0, id: 'https://library.example.org/', name: 'Library'},
-          {totalCount: 0, id: 'https://museum.example.org/', name: '(No name)'},
+          {totalCount: 0, id: 'https://museum.example.org/', name: 'Museum'},
           {
             totalCount: 0,
             id: 'https://research.example.org/',
@@ -222,7 +222,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            name: '(Unknown)',
           },
           {
             totalCount: 0,
@@ -266,7 +266,7 @@ describe('search', () => {
         publishers: [
           {totalCount: 1, id: 'https://archive.example.org/', name: 'Archive'},
           {totalCount: 0, id: 'https://library.example.org/', name: 'Library'},
-          {totalCount: 0, id: 'https://museum.example.org/', name: '(No name)'},
+          {totalCount: 0, id: 'https://museum.example.org/', name: 'Museum'},
           {
             totalCount: 0,
             id: 'https://research.example.org/',
@@ -292,7 +292,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            name: '(Unknown)',
           },
           {
             totalCount: 0,
@@ -388,7 +388,7 @@ describe('search', () => {
           publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            name: '(Unknown)',
           },
           keywords: ['Hendrerit', 'Suspendisse'],
         },
@@ -408,7 +408,7 @@ describe('search', () => {
         publishers: [
           {totalCount: 0, id: 'https://archive.example.org/', name: 'Archive'},
           {totalCount: 5, id: 'https://library.example.org/', name: 'Library'},
-          {totalCount: 0, id: 'https://museum.example.org/', name: '(No name)'},
+          {totalCount: 0, id: 'https://museum.example.org/', name: 'Museum'},
           {
             totalCount: 0,
             id: 'https://research.example.org/',
@@ -434,7 +434,7 @@ describe('search', () => {
           name: 'Dataset 1',
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
-          publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
@@ -485,7 +485,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            name: '(Unknown)',
           },
           {
             totalCount: 0,
@@ -520,7 +520,7 @@ describe('getById', () => {
       name: 'Dataset 1',
       description:
         'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
-      publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+      publisher: {id: 'https://museum.example.org/', name: 'Museum'},
       license: {
         id: 'https://creativecommons.org/licenses/by/4.0/',
         name: 'Attribution 4.0 International (CC BY 4.0)',
