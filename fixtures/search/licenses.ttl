@@ -10,15 +10,15 @@
 
 <http://creativecommons.org/licenses/by-sa/4.0/deed.nl>
   a foaf:Document;
-  foaf:name "Naamsvermelding-GelijkDelen 4.0 Internationaal (CC BY-SA 4.0)"@nl .
+  foaf:name "Naamsvermelding-GelijkDelen 4.0 Internationaal (CC BY-SA 4.0)" .
 
 <http://creativecommons.org/licenses/by/4.0/deed.nl>
   a foaf:Document;
-  foaf:name "Naamsvermelding 4.0 Internationaal (CC BY 4.0)"@nl .
+  foaf:name "Naamsvermelding 4.0 Internationaal (CC BY 4.0)" .
 
 <http://creativecommons.org/publicdomain/zero/1.0/deed.nl>
   a foaf:Document;
-  foaf:name "CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring"@nl .
+  foaf:name "CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring" .
 
 <http://creativecommons.org/licenses/by-sa/3.0/>
   a foaf:Document;
