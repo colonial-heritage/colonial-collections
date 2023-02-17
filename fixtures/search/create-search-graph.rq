@@ -43,7 +43,10 @@ WHERE {
   ####################
 
   # Required property, but the license name may not exist in a specific language
-  ?dataset dct:license ?license .
+  ?dataset dct:license ?tmpLicense .
+
+  # Some licenses are provided as strings (!), not IRIs - convert
+  BIND(IRI(?tmpLicense) AS ?license)
 
   OPTIONAL {
     ?license a foaf:Document ;
@@ -52,7 +55,7 @@ WHERE {
   }
 
   # TBD: add multi-language support?
-  BIND(COALESCE(?tmpLicenseName, "(Unknown)"@en) AS ?licenseName)
+  BIND(COALESCE(?tmpLicenseName, "(No name)"@en) AS ?licenseName)
 
   ####################
   # Publisher
