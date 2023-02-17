@@ -19,6 +19,10 @@ enum RawDatasetKeys {
   LicenseIri = 'https://colonialcollections nl/search#licenseIri',
   LicenseName = 'https://colonialcollections nl/search#licenseName',
   Keyword = 'https://colonialcollections nl/search#keyword',
+  MainEntityOfPage = 'https://colonialcollections nl/search#mainEntityOfPage',
+  DateCreated = 'https://colonialcollections nl/search#dateCreated',
+  DateModified = 'https://colonialcollections nl/search#dateModified',
+  DatePublished = 'https://colonialcollections nl/search#datePublished',
 }
 
 export type Publisher = {
@@ -38,6 +42,10 @@ export type Dataset = {
   license: License;
   description?: string;
   keywords?: string[];
+  mainEntityOfPage?: string[];
+  dateCreated?: Date;
+  dateModified?: Date;
+  datePublished?: Date;
 };
 
 export enum SortBy {
@@ -76,6 +84,8 @@ const searchOptionsSchema = z.object({
 
 export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
+const dateSchema = z.coerce.date();
+
 const rawDatasetSchema = z
   .object({})
   .setKey(RawDatasetKeys.Id, z.string())
@@ -85,7 +95,11 @@ const rawDatasetSchema = z
   .setKey(RawDatasetKeys.PublisherName, z.array(z.string()).min(1))
   .setKey(RawDatasetKeys.LicenseIri, z.array(z.string()).min(1))
   .setKey(RawDatasetKeys.LicenseName, z.array(z.string()).min(1))
-  .setKey(RawDatasetKeys.Keyword, z.array(z.string()).optional());
+  .setKey(RawDatasetKeys.Keyword, z.array(z.string()).optional())
+  .setKey(RawDatasetKeys.MainEntityOfPage, z.array(z.string()).optional())
+  .setKey(RawDatasetKeys.DateCreated, z.array(dateSchema).optional())
+  .setKey(RawDatasetKeys.DateModified, z.array(dateSchema).optional())
+  .setKey(RawDatasetKeys.DatePublished, z.array(dateSchema).optional());
 
 type RawDataset = z.infer<typeof rawDatasetSchema>;
 
@@ -190,6 +204,16 @@ export class DatasetFetcher {
     const name = reach(rawDataset, `${RawDatasetKeys.Name}.0`);
     const description = reach(rawDataset, `${RawDatasetKeys.Description}.0`);
     const keywords = reach(rawDataset, `${RawDatasetKeys.Keyword}`);
+    const mainEntityOfPage = reach(
+      rawDataset,
+      `${RawDatasetKeys.MainEntityOfPage}`
+    );
+    const dateCreated = reach(rawDataset, `${RawDatasetKeys.DateCreated}.0`);
+    const dateModified = reach(rawDataset, `${RawDatasetKeys.DateModified}.0`);
+    const datePublished = reach(
+      rawDataset,
+      `${RawDatasetKeys.DatePublished}.0`
+    );
     const publisher: Publisher = {
       id: reach(rawDataset, `${RawDatasetKeys.PublisherIri}.0`),
       name: reach(rawDataset, `${RawDatasetKeys.PublisherName}.0`),
@@ -199,20 +223,24 @@ export class DatasetFetcher {
       name: reach(rawDataset, `${RawDatasetKeys.LicenseName}.0`),
     };
 
-    const dataset: Dataset = {
+    const datasetWithUndefinedValues: Dataset = {
       id: rawDataset[RawDatasetKeys.Id],
       name,
       publisher,
       license,
       description,
       keywords,
+      mainEntityOfPage,
+      dateCreated,
+      dateModified,
+      datePublished,
     };
 
-    const datasetWithoutUndefinedValues = merge({}, dataset, {
+    const dataset = merge({}, datasetWithUndefinedValues, {
       nullOverride: false,
     });
 
-    return datasetWithoutUndefinedValues;
+    return dataset;
   }
 
   private buildSearchRequest(options: SearchOptions) {
