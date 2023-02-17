@@ -14,29 +14,130 @@ describe('search', () => {
   it('finds all datasets if no options are provided', async () => {
     const result = await datasetFetcher.search();
 
-    expect(result).toMatchObject({
-      totalCount: 13,
+    expect(result).toStrictEqual({
+      totalCount: 14,
       offset: 0,
       limit: 10,
-      sortBy: SortBy.Relevance,
-      sortOrder: SortOrder.Descending,
+      sortBy: 'relevance',
+      sortOrder: 'desc',
+      datasets: [
+        {
+          id: 'https://example.org/datasets/1',
+          name: 'Dataset 1',
+          publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+          license: {
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+          description:
+            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+          keywords: ['Hendrerit', 'Suspendisse'],
+        },
+        {
+          id: 'https://example.org/datasets/10',
+          name: '(No name)',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+          },
+        },
+        {
+          id: 'https://example.org/datasets/11',
+          name: 'Dataset 11',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+        },
+        {
+          id: 'https://example.org/datasets/12',
+          name: 'Dataset 12',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+          description:
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          keywords: ['Hendrerit', 'Vestibulum'],
+        },
+        {
+          id: 'https://example.org/datasets/13',
+          name: 'Dataset 13',
+          publisher: {
+            id: 'https://research.example.org/',
+            name: 'Research Organisation',
+          },
+          license: {
+            id: 'http://rightsstatements.org/vocab/UND/1.0/',
+            name: 'Copyright Undetermined',
+          },
+          description:
+            'Cras erat elit, finibus eget ipsum vel, gravida dapibus leo. Etiam sem erat, suscipit id eros sit amet, scelerisque ornare sem. Aenean commodo elementum neque ac accumsan.',
+          keywords: ['Fringilla'],
+        },
+        {
+          id: 'https://example.org/datasets/14',
+          name: 'Dataset 14',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: '(No name)',
+          },
+          description:
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          keywords: ['Hendrerit', 'Suspendisse'],
+        },
+        {
+          id: 'https://example.org/datasets/2',
+          name: '(No name)',
+          publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+          license: {
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+        },
+        {
+          id: 'https://example.org/datasets/3',
+          name: 'Dataset 3',
+          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
+          license: {
+            id: 'http://opendatacommons.org/licenses/odbl/1.0/',
+            name: 'Open Data Commons Open Database License (ODbL) v1.0',
+          },
+        },
+        {
+          id: 'https://example.org/datasets/4',
+          name: 'Dataset 4',
+          publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+          license: {
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+          },
+          description:
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          keywords: ['Hendrerit', 'Suspendisse'],
+        },
+        {
+          id: 'https://example.org/datasets/5',
+          name: 'Dataset 5',
+          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
+          license: {
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+          description:
+            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+          keywords: ['Keyword'],
+        },
+      ],
       filters: {
         publishers: [
-          {
-            totalCount: 4,
-            id: 'https://archive.example.org/',
-            name: 'Archive',
-          },
-          {
-            totalCount: 4,
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
-          {
-            totalCount: 4,
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
+          {totalCount: 5, id: 'https://archive.example.org/', name: 'Archive'},
+          {totalCount: 5, id: 'https://library.example.org/', name: 'Library'},
+          {totalCount: 3, id: 'https://museum.example.org/', name: '(No name)'},
           {
             totalCount: 1,
             id: 'https://research.example.org/',
@@ -46,23 +147,33 @@ describe('search', () => {
         licenses: [
           {
             totalCount: 6,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
-          },
-          {
-            totalCount: 3,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: 'Publiek domein',
-          },
-          {
-            totalCount: 3,
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Public Domain',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+          {
+            totalCount: 3,
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+          {
+            totalCount: 2,
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
           },
           {
             totalCount: 1,
-            id: 'http://opendatacommons.org/licenses/by/1.0/',
-            name: 'Open Data Commons Attribution',
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: '(No name)',
+          },
+          {
+            totalCount: 1,
+            id: 'http://opendatacommons.org/licenses/odbl/1.0/',
+            name: 'Open Data Commons Open Database License (ODbL) v1.0',
+          },
+          {
+            totalCount: 1,
+            id: 'http://rightsstatements.org/vocab/UND/1.0/',
+            name: 'Copyright Undetermined',
           },
         ],
       },
@@ -78,26 +189,14 @@ describe('search', () => {
       totalCount: 0,
       offset: 0,
       limit: 10,
-      sortBy: SortBy.Relevance,
-      sortOrder: SortOrder.Descending,
+      sortBy: 'relevance',
+      sortOrder: 'desc',
       datasets: [],
       filters: {
         publishers: [
-          {
-            totalCount: 0,
-            id: 'https://archive.example.org/',
-            name: 'Archive',
-          },
-          {
-            totalCount: 0,
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
-          {
-            totalCount: 0,
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
+          {totalCount: 0, id: 'https://archive.example.org/', name: 'Archive'},
+          {totalCount: 0, id: 'https://library.example.org/', name: 'Library'},
+          {totalCount: 0, id: 'https://museum.example.org/', name: '(No name)'},
           {
             totalCount: 0,
             id: 'https://research.example.org/',
@@ -107,23 +206,33 @@ describe('search', () => {
         licenses: [
           {
             totalCount: 0,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
-          },
-          {
-            totalCount: 0,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: 'Publiek domein',
-          },
-          {
-            totalCount: 0,
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Public Domain',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+          {
+            totalCount: 0,
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
           },
           {
             totalCount: 0,
             id: 'http://opendatacommons.org/licenses/by/1.0/',
-            name: 'Open Data Commons Attribution',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+          },
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: '(No name)',
+          },
+          {
+            totalCount: 0,
+            id: 'http://opendatacommons.org/licenses/odbl/1.0/',
+            name: 'Open Data Commons Open Database License (ODbL) v1.0',
+          },
+          {
+            totalCount: 0,
+            id: 'http://rightsstatements.org/vocab/UND/1.0/',
+            name: 'Copyright Undetermined',
           },
         ],
       },
@@ -131,24 +240,72 @@ describe('search', () => {
   });
 
   it('finds datasets if query matches', async () => {
-    const result = await datasetFetcher.search({query: 'placerat dataset 4'});
+    const result = await datasetFetcher.search({query: 'Vestibulum dataset 5'});
 
-    expect(result).toMatchObject({
+    expect(result).toStrictEqual({
       totalCount: 1,
+      offset: 0,
+      limit: 10,
+      sortBy: 'relevance',
+      sortOrder: 'desc',
       datasets: [
         {
-          id: 'https://museum.example.org/datasets/4',
-          name: 'Dataset 4',
+          id: 'https://example.org/datasets/5',
+          name: 'Dataset 5',
           description:
-            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
-          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
+            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
           license: {
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
           },
-          keywords: ['keyword1', 'keyword2'],
+          keywords: ['Keyword'],
         },
       ],
+      filters: {
+        publishers: [
+          {totalCount: 1, id: 'https://archive.example.org/', name: 'Archive'},
+          {totalCount: 0, id: 'https://library.example.org/', name: 'Library'},
+          {totalCount: 0, id: 'https://museum.example.org/', name: '(No name)'},
+          {
+            totalCount: 0,
+            id: 'https://research.example.org/',
+            name: 'Research Organisation',
+          },
+        ],
+        licenses: [
+          {
+            totalCount: 0,
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+          {
+            totalCount: 1,
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+          {
+            totalCount: 0,
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+          },
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: '(No name)',
+          },
+          {
+            totalCount: 0,
+            id: 'http://opendatacommons.org/licenses/odbl/1.0/',
+            name: 'Open Data Commons Open Database License (ODbL) v1.0',
+          },
+          {
+            totalCount: 0,
+            id: 'http://rightsstatements.org/vocab/UND/1.0/',
+            name: 'Copyright Undetermined',
+          },
+        ],
+      },
     });
   });
 
@@ -160,54 +317,24 @@ describe('search', () => {
     });
 
     expect(result).toMatchObject({
-      totalCount: 3,
-      sortBy: SortBy.Name,
-      sortOrder: SortOrder.Ascending,
+      sortBy: 'name',
+      sortOrder: 'asc',
       datasets: [
         {
-          id: 'https://library.example.org/datasets/12',
+          id: 'https://example.org/datasets/12',
           name: 'Dataset 12',
-          description:
-            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
-          license: {
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
-          },
-          keywords: ['keyword1', 'keyword3'],
         },
         {
-          id: 'https://museum.example.org/datasets/4',
+          id: 'https://example.org/datasets/14',
+          name: 'Dataset 14',
+        },
+        {
+          id: 'https://example.org/datasets/4',
           name: 'Dataset 4',
-          description:
-            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
-          publisher: {
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
-          license: {
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
-          },
-          keywords: ['keyword1', 'keyword2'],
         },
         {
-          id: 'https://archive.example.org/datasets/8',
+          id: 'https://example.org/datasets/8',
           name: 'Dataset 8',
-          description:
-            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
-          publisher: {
-            id: 'https://archive.example.org/',
-            name: 'Archive',
-          },
-          license: {
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
-          },
-          keywords: ['keyword3', 'keyword4'],
         },
       ],
     });
@@ -221,16 +348,71 @@ describe('search', () => {
     });
 
     expect(result).toMatchObject({
-      totalCount: 4,
+      totalCount: 5,
+      datasets: [
+        {
+          id: 'https://example.org/datasets/10',
+          name: '(No name)',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+          },
+        },
+        {
+          id: 'https://example.org/datasets/11',
+          name: 'Dataset 11',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+        },
+        {
+          id: 'https://example.org/datasets/12',
+          name: 'Dataset 12',
+          description:
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+          keywords: ['Hendrerit', 'Vestibulum'],
+        },
+        {
+          id: 'https://example.org/datasets/14',
+          name: 'Dataset 14',
+          description:
+            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: '(No name)',
+          },
+          keywords: ['Hendrerit', 'Suspendisse'],
+        },
+        {
+          id: 'https://example.org/datasets/9',
+          name: 'Dataset 9',
+          description:
+            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+        },
+      ],
       filters: {
         publishers: [
-          {totalCount: 0, name: 'Archive', id: 'https://archive.example.org/'},
-          {totalCount: 4, name: 'Library', id: 'https://library.example.org/'},
-          {totalCount: 0, name: 'Museum', id: 'https://museum.example.org/'},
+          {totalCount: 0, id: 'https://archive.example.org/', name: 'Archive'},
+          {totalCount: 5, id: 'https://library.example.org/', name: 'Library'},
+          {totalCount: 0, id: 'https://museum.example.org/', name: '(No name)'},
           {
             totalCount: 0,
-            name: 'Research Organisation',
             id: 'https://research.example.org/',
+            name: 'Research Organisation',
           },
         ],
       },
@@ -240,33 +422,80 @@ describe('search', () => {
   it('finds datasets if "licenses" filter matches', async () => {
     const result = await datasetFetcher.search({
       filters: {
-        licenses: ['http://creativecommons.org/publicdomain/zero/1.0/'],
+        licenses: ['https://creativecommons.org/licenses/by/4.0/'],
       },
     });
 
     expect(result).toMatchObject({
-      totalCount: 6,
+      totalCount: 3,
+      datasets: [
+        {
+          id: 'https://example.org/datasets/1',
+          name: 'Dataset 1',
+          description:
+            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+          publisher: {id: 'https://museum.example.org/', name: '(No name)'},
+          license: {
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+          keywords: ['Hendrerit', 'Suspendisse'],
+        },
+        {
+          id: 'https://example.org/datasets/5',
+          name: 'Dataset 5',
+          description:
+            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
+          license: {
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+          keywords: ['Keyword'],
+        },
+        {
+          id: 'https://example.org/datasets/9',
+          name: 'Dataset 9',
+          description:
+            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
+          license: {
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+        },
+      ],
       filters: {
         licenses: [
           {
-            totalCount: 6,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Publiek domein',
-          },
-          {
-            totalCount: 0,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: 'Publiek domein',
-          },
-          {
             totalCount: 0,
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'Public Domain',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
+          {
+            totalCount: 3,
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
           },
           {
             totalCount: 0,
             id: 'http://opendatacommons.org/licenses/by/1.0/',
-            name: 'Open Data Commons Attribution',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+          },
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: '(No name)',
+          },
+          {
+            totalCount: 0,
+            id: 'http://opendatacommons.org/licenses/odbl/1.0/',
+            name: 'Open Data Commons Open Database License (ODbL) v1.0',
+          },
+          {
+            totalCount: 0,
+            id: 'http://rightsstatements.org/vocab/UND/1.0/',
+            name: 'Copyright Undetermined',
           },
         ],
       },
@@ -283,20 +512,20 @@ describe('getById', () => {
 
   it('returns the dataset that matches the ID', async () => {
     const dataset = await datasetFetcher.getById({
-      id: 'https://museum.example.org/datasets/4',
+      id: 'https://example.org/datasets/1',
     });
 
     expect(dataset).toStrictEqual({
-      id: 'https://museum.example.org/datasets/4',
-      name: 'Dataset 4',
+      id: 'https://example.org/datasets/1',
+      name: 'Dataset 1',
       description:
-        'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
-      publisher: {id: 'https://museum.example.org/', name: 'Museum'},
+        'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
+      publisher: {id: 'https://museum.example.org/', name: '(No name)'},
       license: {
-        id: 'http://creativecommons.org/publicdomain/zero/1.0/',
-        name: 'Publiek domein',
+        id: 'https://creativecommons.org/licenses/by/4.0/',
+        name: 'Attribution 4.0 International (CC BY 4.0)',
       },
-      keywords: ['keyword1', 'keyword2'],
+      keywords: ['Hendrerit', 'Suspendisse'],
     });
   });
 });
