@@ -1,7 +1,7 @@
 import {SearchResult} from '@/lib/dataset-fetcher';
-import {Sort} from './dataset-list';
+import {Sort, defaultSort} from './dataset-list';
 
-interface SearchDatasets {
+interface Props {
   licenses: string[];
   publishers: string[];
   query?: string;
@@ -17,15 +17,30 @@ export async function clientSearchDatasets({
   query,
   offset,
   sort,
-}: SearchDatasets): Promise<SearchResult> {
+}: Props): Promise<SearchResult> {
+  const searchParams: {[key: string]: string} = {};
+
   // Convert all values to strings, before using it in URLSearchParams.
-  const searchParams = {
-    query: query || '',
-    licenses: licenses.join(','),
-    publishers: publishers.join(','),
-    offset: `${offset}`,
-    sort,
-  };
+  // And only add to searchParams if needed.
+  if (query) {
+    searchParams.query = query;
+  }
+
+  if (licenses.length) {
+    searchParams.licenses = licenses.join(',');
+  }
+
+  if (publishers.length) {
+    searchParams.publishers = publishers.join(',');
+  }
+
+  if (offset) {
+    searchParams.offset = `${offset}`;
+  }
+
+  if (sort !== defaultSort) {
+    searchParams.sort = sort;
+  }
 
   const response = await fetch(
     '/api/datasets?' + new URLSearchParams(searchParams)
