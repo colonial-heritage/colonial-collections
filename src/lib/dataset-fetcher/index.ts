@@ -1,6 +1,6 @@
 import {buildAggregation} from './request';
 import {buildFilters} from './result';
-import {reach} from '@hapi/hoek';
+import {merge, reach} from '@hapi/hoek';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -186,7 +186,7 @@ export class DatasetFetcher {
   }
 
   // Map the response to our internal model
-  private fromRawDatasetToDataset(rawDataset: RawDataset) {
+  private fromRawDatasetToDataset(rawDataset: RawDataset): Dataset {
     const name = reach(rawDataset, `${RawDatasetKeys.Name}.0`);
     const description = reach(rawDataset, `${RawDatasetKeys.Description}.0`);
     const keywords = reach(rawDataset, `${RawDatasetKeys.Keyword}`);
@@ -199,14 +199,20 @@ export class DatasetFetcher {
       name: reach(rawDataset, `${RawDatasetKeys.LicenseName}.0`),
     };
 
-    return {
+    const dataset: Dataset = {
       id: rawDataset[RawDatasetKeys.Id],
       name,
-      description,
       publisher,
       license,
+      description,
       keywords,
     };
+
+    const datasetWithoutUndefinedValues = merge({}, dataset, {
+      nullOverride: false,
+    });
+
+    return datasetWithoutUndefinedValues;
   }
 
   private buildSearchRequest(options: SearchOptions) {
