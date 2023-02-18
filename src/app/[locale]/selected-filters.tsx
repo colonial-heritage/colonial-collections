@@ -82,17 +82,17 @@ export default function SelectedFilters({filters, query}: Props) {
         {filters.map(
           ({selectedFilters, searchResultFilters, setSelectedFilters}) =>
             !!selectedFilters.length &&
-            selectedFilters.map(item => (
+            selectedFilters.map(id => (
               <Tag
-                key={item}
+                key={id}
                 name={
                   searchResultFilters.find(
-                    searchResultFilter => searchResultFilter.id === item
+                    searchResultFilter => searchResultFilter.id === id
                   )?.name
                 }
                 remove={() =>
                   removeListItem({
-                    id: item,
+                    id,
                     selectedFilters: selectedFilters,
                     setSelectedFilters: setSelectedFilters,
                   })
