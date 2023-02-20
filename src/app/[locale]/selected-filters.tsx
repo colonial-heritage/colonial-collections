@@ -1,30 +1,7 @@
 import {SearchResultFilter} from '@/lib/dataset-fetcher';
 import {Dispatch} from 'react';
 import {useTranslations} from 'next-intl';
-import {XMarkIcon} from '@heroicons/react/24/solid';
-
-interface TagProps {
-  name?: string;
-  remove: () => void;
-}
-
-function Tag({name, remove}: TagProps) {
-  return (
-    <span className="flex items-center" data-test="selectedFilterTag">
-      <span className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-xs font-medium text-gray-900">
-        <span>{name}</span>
-        <button
-          data-test="removeSelectedFilter"
-          type="button"
-          className="ml-1 inline-flex flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500"
-          onClick={remove}
-        >
-          <XMarkIcon className="h-3 w-3" />
-        </button>
-      </span>
-    </span>
-  );
-}
+import Badge from '@/components/badge';
 
 interface Props {
   filters: {
@@ -86,24 +63,30 @@ export default function SelectedFilters({filters, query}: Props) {
           ({selectedFilters, searchResultFilters, setSelectedFilters}) =>
             !!selectedFilters.length &&
             selectedFilters.map(id => (
-              <Tag
-                key={id}
-                name={
+              <Badge key={id} data-test="selectedFilter">
+                {
                   searchResultFilters.find(
                     searchResultFilter => searchResultFilter.id === id
                   )?.name
                 }
-                remove={() =>
-                  removeSelectedFilter({
-                    id,
-                    selectedFilters: selectedFilters,
-                    setSelectedFilters: setSelectedFilters,
-                  })
-                }
-              />
+                <Badge.Action
+                  onClick={() =>
+                    removeSelectedFilter({
+                      id,
+                      selectedFilters: selectedFilters,
+                      setSelectedFilters: setSelectedFilters,
+                    })
+                  }
+                />
+              </Badge>
             ))
         )}
-        {query.value && <Tag remove={clearQuery} name={query.value} />}
+        {query.value && (
+          <Badge data-test="selectedFilter">
+            {query.value}
+            <Badge.Action onClick={clearQuery} />
+          </Badge>
+        )}
       </div>
       <button
         type="button"

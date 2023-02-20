@@ -107,8 +107,8 @@ describe('Dataset list filters', () => {
       });
 
       cy.get('@filterRequest').should('have.been.called');
-      cy.getBySel('selectedFilterTag').should('have.length', 1);
-      cy.getBySel('selectedFilterTag').should(
+      cy.getBySel('selectedFilter').should('have.length', 1);
+      cy.getBySel('selectedFilter').should(
         'have.text',
         searchResult.filters.licenses[0].name
       );
@@ -139,11 +139,11 @@ describe('Dataset list filters', () => {
       });
 
       cy.get('@filterRequest').should('have.been.called');
-      cy.getBySel('selectedFilterTag').should('have.length', 2);
-      cy.getBySel('selectedFilterTag')
+      cy.getBySel('selectedFilter').should('have.length', 2);
+      cy.getBySel('selectedFilter')
         .eq(0)
         .should('have.text', searchResult.filters.licenses[0].name);
-      cy.getBySel('selectedFilterTag')
+      cy.getBySel('selectedFilter')
         .eq(1)
         .should('have.text', searchResult.filters.licenses[1].name);
     });
@@ -167,7 +167,7 @@ describe('Dataset list filters', () => {
     });
 
     cy.get('@filterRequest').should('have.been.called');
-    cy.getBySel('selectedFilterTag').should('have.length', 0);
+    cy.getBySel('selectedFilter').should('have.length', 0);
   });
 
   it('removes a license filter by deselecting it in the selected filter bar', () => {
@@ -183,10 +183,12 @@ describe('Dataset list filters', () => {
       cy.spy().as('filterRequest')
     );
 
-    cy.getBySel('removeSelectedFilter').click();
+    cy.getBySel('selectedFilter').within(() => {
+      cy.get('button').click();
+    });
 
     cy.get('@filterRequest').should('have.been.called');
-    cy.getBySel('selectedFilterTag').should('have.length', 0);
+    cy.getBySel('selectedFilter').should('have.length', 0);
   });
 
   it('filters by one publisher', () => {
@@ -209,8 +211,8 @@ describe('Dataset list filters', () => {
       });
 
       cy.get('@filterRequest').should('have.been.called');
-      cy.getBySel('selectedFilterTag').should('have.length', 1);
-      cy.getBySel('selectedFilterTag').should(
+      cy.getBySel('selectedFilter').should('have.length', 1);
+      cy.getBySel('selectedFilter').should(
         'have.text',
         searchResult.filters.publishers[0].name
       );
@@ -235,8 +237,8 @@ describe('Dataset list filters', () => {
     cy.getBySel('searchQuery').type(searchText);
 
     cy.get('@filterRequest').should('have.been.called');
-    cy.getBySel('selectedFilterTag').should('have.length', 1);
-    cy.getBySel('selectedFilterTag').should('have.text', searchText);
+    cy.getBySel('selectedFilter').should('have.length', 1);
+    cy.getBySel('selectedFilter').should('have.text', searchText);
   });
 
   it('filters all categories together (query, license and publisher)', () => {
@@ -266,7 +268,7 @@ describe('Dataset list filters', () => {
       });
 
       cy.get('@filterRequest').should('have.been.called');
-      cy.getBySel('selectedFilterTag').should('have.length', 3);
+      cy.getBySel('selectedFilter').should('have.length', 3);
     });
   });
 });
