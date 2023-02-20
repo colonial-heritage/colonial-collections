@@ -89,12 +89,15 @@ describe('Dataset list filters', () => {
 
   it('filters by one license', () => {
     cy.get<SearchResult>('@searchResult').then(searchResult => {
+      const filterRequestUrl =
+        '/api/datasets?' +
+        new URLSearchParams({
+          licenses: searchResult.filters.licenses[0].id,
+        });
       cy.intercept(
         {
           method: 'GET',
-          url: `/api/datasets?licenses=${encodeURIComponent(
-            searchResult.filters.licenses[0].id
-          )}`,
+          url: filterRequestUrl,
         },
         cy.spy().as('filterRequest')
       );
@@ -114,15 +117,18 @@ describe('Dataset list filters', () => {
 
   it('filters by two licenses', () => {
     cy.get<SearchResult>('@searchResult').then(searchResult => {
+      const filterRequestUrl =
+        '/api/datasets?' +
+        new URLSearchParams({
+          licenses: [
+            searchResult.filters.licenses[0].id,
+            searchResult.filters.licenses[1].id,
+          ].join(),
+        });
       cy.intercept(
         {
           method: 'GET',
-          url: `/api/datasets?licenses=${encodeURIComponent(
-            [
-              searchResult.filters.licenses[0].id,
-              searchResult.filters.licenses[1].id,
-            ].join()
-          )}`,
+          url: filterRequestUrl,
         },
         cy.spy().as('filterRequest')
       );
@@ -185,12 +191,15 @@ describe('Dataset list filters', () => {
 
   it('filters by one publisher', () => {
     cy.get<SearchResult>('@searchResult').then(searchResult => {
+      const filterRequestUrl =
+        '/api/datasets?' +
+        new URLSearchParams({
+          publishers: searchResult.filters.publishers[0].id,
+        });
       cy.intercept(
         {
           method: 'GET',
-          url: `/api/datasets?publishers=${encodeURIComponent(
-            searchResult.filters.publishers[0].id
-          )}`,
+          url: filterRequestUrl,
         },
         cy.spy().as('filterRequest')
       );
@@ -209,31 +218,41 @@ describe('Dataset list filters', () => {
   });
 
   it('filters based on the search query', () => {
+    const searchText = 'My query';
+    const filterRequestUrl =
+      '/api/datasets?' +
+      new URLSearchParams({
+        query: searchText,
+      });
     cy.intercept(
       {
         method: 'GET',
-        url: '/api/datasets?query=My+query',
+        url: filterRequestUrl,
       },
       cy.spy().as('filterRequest')
     );
 
-    cy.getBySel('searchQuery').type('My query');
+    cy.getBySel('searchQuery').type(searchText);
 
     cy.get('@filterRequest').should('have.been.called');
     cy.getBySel('selectedFilterTag').should('have.length', 1);
-    cy.getBySel('selectedFilterTag').should('have.text', 'My query');
+    cy.getBySel('selectedFilterTag').should('have.text', searchText);
   });
 
   it('filters all categories together (query, license and publisher)', () => {
     cy.get<SearchResult>('@searchResult').then(searchResult => {
+      const searchText = 'My query';
+      const filterRequestUrl =
+        '/api/datasets?' +
+        new URLSearchParams({
+          query: searchText,
+          licenses: searchResult.filters.licenses[0].id,
+          publishers: searchResult.filters.publishers[0].id,
+        });
       cy.intercept(
         {
           method: 'GET',
-          url: `/api/datasets?query=My+query&licenses=${encodeURIComponent(
-            searchResult.filters.licenses[0].id
-          )}&publishers=${encodeURIComponent(
-            searchResult.filters.publishers[0].id
-          )}`,
+          url: filterRequestUrl,
         },
         cy.spy().as('filterRequest')
       );
