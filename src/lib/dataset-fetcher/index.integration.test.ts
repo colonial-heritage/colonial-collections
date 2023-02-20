@@ -32,6 +32,10 @@ describe('search', () => {
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           keywords: ['Hendrerit', 'Suspendisse'],
+          mainEntityOfPages: ['https://example.org/'],
+          dateCreated: new Date('2019-03-12T00:00:00.000Z'),
+          dateModified: new Date('2023-02-17T00:00:00.000Z'),
+          datePublished: new Date('2023-02-17T00:00:00.000Z'),
         },
         {
           id: 'https://example.org/datasets/10',
@@ -50,6 +54,7 @@ describe('search', () => {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
           },
+          dateCreated: new Date('2019-03-12T00:00:00.000Z'),
         },
         {
           id: 'https://example.org/datasets/12',
@@ -77,6 +82,7 @@ describe('search', () => {
           description:
             'Cras erat elit, finibus eget ipsum vel, gravida dapibus leo. Etiam sem erat, suscipit id eros sit amet, scelerisque ornare sem. Aenean commodo elementum neque ac accumsan.',
           keywords: ['Fringilla'],
+          dateCreated: new Date('2022-10-01T09:01:02.000Z'),
         },
         {
           id: 'https://example.org/datasets/14',
@@ -98,6 +104,9 @@ describe('search', () => {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
           },
+          dateCreated: new Date('2019-03-12T00:00:00.000Z'),
+          dateModified: new Date('2023-02-17T00:00:00.000Z'),
+          datePublished: new Date('2023-02-17T00:00:00.000Z'),
         },
         {
           id: 'https://example.org/datasets/3',
@@ -119,6 +128,7 @@ describe('search', () => {
           description:
             'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
           keywords: ['Hendrerit', 'Suspendisse'],
+          dateModified: new Date('2023-02-01T00:00:00.000Z'),
         },
         {
           id: 'https://example.org/datasets/5',
@@ -352,56 +362,23 @@ describe('search', () => {
       datasets: [
         {
           id: 'https://example.org/datasets/10',
-          name: '(No name)',
           publisher: {id: 'https://library.example.org/', name: 'Library'},
-          license: {
-            id: 'http://opendatacommons.org/licenses/by/1.0/',
-            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
-          },
         },
         {
           id: 'https://example.org/datasets/11',
-          name: 'Dataset 11',
           publisher: {id: 'https://library.example.org/', name: 'Library'},
-          license: {
-            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
-          },
         },
         {
           id: 'https://example.org/datasets/12',
-          name: 'Dataset 12',
-          description:
-            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
           publisher: {id: 'https://library.example.org/', name: 'Library'},
-          license: {
-            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
-          },
-          keywords: ['Hendrerit', 'Vestibulum'],
         },
         {
           id: 'https://example.org/datasets/14',
-          name: 'Dataset 14',
-          description:
-            'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
           publisher: {id: 'https://library.example.org/', name: 'Library'},
-          license: {
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(Unknown)',
-          },
-          keywords: ['Hendrerit', 'Suspendisse'],
         },
         {
           id: 'https://example.org/datasets/9',
-          name: 'Dataset 9',
-          description:
-            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           publisher: {id: 'https://library.example.org/', name: 'Library'},
-          license: {
-            id: 'https://creativecommons.org/licenses/by/4.0/',
-            name: 'Attribution 4.0 International (CC BY 4.0)',
-          },
         },
       ],
       filters: {
@@ -431,34 +408,20 @@ describe('search', () => {
       datasets: [
         {
           id: 'https://example.org/datasets/1',
-          name: 'Dataset 1',
-          description:
-            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
-          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
           },
-          keywords: ['Hendrerit', 'Suspendisse'],
         },
         {
           id: 'https://example.org/datasets/5',
-          name: 'Dataset 5',
-          description:
-            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
-          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
           license: {
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
           },
-          keywords: ['Keyword'],
         },
         {
           id: 'https://example.org/datasets/9',
-          name: 'Dataset 9',
-          description:
-            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
-          publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
@@ -526,6 +489,10 @@ describe('getById', () => {
         name: 'Attribution 4.0 International (CC BY 4.0)',
       },
       keywords: ['Hendrerit', 'Suspendisse'],
+      mainEntityOfPages: ['https://example.org/'],
+      dateCreated: new Date('2019-03-12T00:00:00.000Z'),
+      dateModified: new Date('2023-02-17T00:00:00.000Z'),
+      datePublished: new Date('2023-02-17T00:00:00.000Z'),
     });
   });
 });
