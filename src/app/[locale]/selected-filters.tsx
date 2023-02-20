@@ -47,30 +47,33 @@ interface RemoveListItem {
 export default function SelectedFilters({filters, query}: Props) {
   const t = useTranslations('Home');
 
-  function removeListItem({
-    id,
-    selectedFilters,
-    setSelectedFilters,
-  }: RemoveListItem) {
-    setSelectedFilters(selectedFilters.filter(filterId => id !== filterId));
-  }
-  function removeQuery() {
-    query.setQuery('');
-  }
-
-  function clearAllFilters() {
-    removeQuery();
-    filters.forEach(filter => {
-      filter.setSelectedFilters([]);
-    });
-  }
-
+  // Only show this component if there are active filters.
   if (
     !query.value &&
     !filters.filter(filter => filter.selectedFilters.length).length
   ) {
     return null;
   }
+
+  function removeSelectedFilter({
+    id,
+    selectedFilters,
+    setSelectedFilters,
+  }: RemoveListItem) {
+    setSelectedFilters(selectedFilters.filter(filterId => id !== filterId));
+  }
+
+  function clearQuery() {
+    query.setQuery('');
+  }
+
+  function clearAllFilters() {
+    clearQuery();
+    filters.forEach(filter => {
+      filter.setSelectedFilters([]);
+    });
+  }
+
   return (
     <div className="mt-3 flex items-center">
       <h3 className="text-xs font-medium text-gray-500">{t('filters')}</h3>
@@ -91,7 +94,7 @@ export default function SelectedFilters({filters, query}: Props) {
                   )?.name
                 }
                 remove={() =>
-                  removeListItem({
+                  removeSelectedFilter({
                     id,
                     selectedFilters: selectedFilters,
                     setSelectedFilters: setSelectedFilters,
@@ -100,7 +103,7 @@ export default function SelectedFilters({filters, query}: Props) {
               />
             ))
         )}
-        {query.value && <Tag remove={removeQuery} name={query.value} />}
+        {query.value && <Tag remove={clearQuery} name={query.value} />}
       </div>
       <button
         type="button"
