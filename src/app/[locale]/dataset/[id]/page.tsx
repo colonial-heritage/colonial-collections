@@ -25,7 +25,7 @@ export default async function Details({params}: Props) {
       <PageSidebar>{/* Place sidebar content here */}</PageSidebar>
       <PageContent>
         <PageHeader>
-          <PageTitle data-test="dataset-name">{dataset.name}</PageTitle>
+          <PageTitle>{dataset.name}</PageTitle>
         </PageHeader>
         <div>{dataset.description}</div>
       </PageContent>

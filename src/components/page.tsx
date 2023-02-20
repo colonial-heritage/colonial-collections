@@ -4,15 +4,10 @@ export function PageHeader({children}: {children: ReactNode}) {
   return <header className="mb-5">{children}</header>;
 }
 
-interface PageTitleProps {
-  children: ReactNode;
-  'data-test'?: string; // Can be used for Cypress tests
-}
-
-export function PageTitle({children, 'data-test': dataTest}: PageTitleProps) {
+export function PageTitle({children}: {children: ReactNode}) {
   return (
     <h1
-      data-test={dataTest}
+      data-test="page-title"
       className="text-3xl font-bold leading-tight tracking-tight text-gray-900"
     >
       {children}
