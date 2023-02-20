@@ -42,7 +42,7 @@ export type Dataset = {
   license: License;
   description?: string;
   keywords?: string[];
-  mainEntityOfPage?: string[];
+  mainEntityOfPages?: string[];
   dateCreated?: Date;
   dateModified?: Date;
   datePublished?: Date;
@@ -204,7 +204,7 @@ export class DatasetFetcher {
     const name = reach(rawDataset, `${RawDatasetKeys.Name}.0`);
     const description = reach(rawDataset, `${RawDatasetKeys.Description}.0`);
     const keywords = reach(rawDataset, `${RawDatasetKeys.Keyword}`);
-    const mainEntityOfPage = reach(
+    const mainEntityOfPages = reach(
       rawDataset,
       `${RawDatasetKeys.MainEntityOfPage}`
     );
@@ -230,7 +230,7 @@ export class DatasetFetcher {
       license,
       description,
       keywords,
-      mainEntityOfPage,
+      mainEntityOfPages,
       dateCreated,
       dateModified,
       datePublished,

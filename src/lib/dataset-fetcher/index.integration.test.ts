@@ -32,7 +32,7 @@ describe('search', () => {
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           keywords: ['Hendrerit', 'Suspendisse'],
-          mainEntityOfPage: ['https://example.org/'],
+          mainEntityOfPages: ['https://example.org/'],
           dateCreated: new Date('2019-03-12T00:00:00.000Z'),
           dateModified: new Date('2023-02-17T00:00:00.000Z'),
           datePublished: new Date('2023-02-17T00:00:00.000Z'),
@@ -489,7 +489,7 @@ describe('getById', () => {
         name: 'Attribution 4.0 International (CC BY 4.0)',
       },
       keywords: ['Hendrerit', 'Suspendisse'],
-      mainEntityOfPage: ['https://example.org/'],
+      mainEntityOfPages: ['https://example.org/'],
       dateCreated: new Date('2019-03-12T00:00:00.000Z'),
       dateModified: new Date('2023-02-17T00:00:00.000Z'),
       datePublished: new Date('2023-02-17T00:00:00.000Z'),
