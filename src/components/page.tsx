@@ -6,7 +6,10 @@ export function PageHeader({children}: {children: ReactNode}) {
 
 export function PageTitle({children}: {children: ReactNode}) {
   return (
-    <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
+    <h1
+      data-test="page-title"
+      className="text-3xl font-bold leading-tight tracking-tight text-gray-900"
+    >
       {children}
     </h1>
   );

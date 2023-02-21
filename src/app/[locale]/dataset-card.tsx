@@ -17,7 +17,10 @@ export default function DatasetCard({dataset, locale}: Props) {
       data-test="dataset-card"
     >
       <div className="flex flex-1 flex-col space-y-2 p-4">
-        <h3 className="text-sm font-medium text-gray-900">
+        <h3
+          className="text-sm font-medium text-gray-900"
+          data-test="dataset-card-name"
+        >
           <Link href={`${locale}/dataset/${encodeURIComponent(dataset.id)}`}>
             <span aria-hidden="true" className="absolute inset-0" />
             {dataset.name}
