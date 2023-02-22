@@ -17,12 +17,12 @@ export default function Badge({children, 'data-test': dataTest}: Props) {
   );
 }
 
-interface TagActionProps {
+interface BadgeActionProps {
   Icon?: React.ElementType;
   onClick: () => void;
 }
 
-function BadgeAction({Icon = XMarkIcon, onClick}: TagActionProps) {
+function BadgeAction({Icon = XMarkIcon, onClick}: BadgeActionProps) {
   return (
     <button
       type="button"

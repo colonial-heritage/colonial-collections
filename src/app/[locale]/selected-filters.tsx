@@ -15,7 +15,7 @@ interface Props {
   };
 }
 
-interface RemoveListItem {
+interface ClearSelectedFilterProps {
   id: string;
   selectedFilters: string[];
   setSelectedFilters: Dispatch<string[]>;
@@ -32,11 +32,11 @@ export default function SelectedFilters({filters, query}: Props) {
     return null;
   }
 
-  function removeSelectedFilter({
+  function clearSelectedFilter({
     id,
     selectedFilters,
     setSelectedFilters,
-  }: RemoveListItem) {
+  }: ClearSelectedFilterProps) {
     setSelectedFilters(selectedFilters.filter(filterId => id !== filterId));
   }
 
@@ -46,9 +46,7 @@ export default function SelectedFilters({filters, query}: Props) {
 
   function clearAllFilters() {
     clearQuery();
-    filters.forEach(filter => {
-      filter.setSelectedFilters([]);
-    });
+    filters.forEach(filter => filter.setSelectedFilters([]));
   }
 
   return (
