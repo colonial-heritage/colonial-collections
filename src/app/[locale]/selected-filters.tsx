@@ -65,11 +65,11 @@ export default function SelectedFilters({filters, query}: Props) {
                 {
                   searchResultFilters.find(
                     searchResultFilter => searchResultFilter.id === id
-                  )?.name
+                  )!.name
                 }
                 <Badge.Action
                   onClick={() =>
-                    removeSelectedFilter({
+                    clearSelectedFilter({
                       id,
                       selectedFilters: selectedFilters,
                       setSelectedFilters: setSelectedFilters,
