@@ -61,7 +61,7 @@ export default function SelectedFilters({filters, query}: Props) {
           ({selectedFilters, searchResultFilters, setSelectedFilters}) =>
             !!selectedFilters.length &&
             selectedFilters.map(id => (
-              <Badge key={id} data-test="selectedFilter">
+              <Badge key={id} data-testid="selectedFilter">
                 {
                   searchResultFilters.find(
                     searchResultFilter => searchResultFilter.id === id
@@ -80,7 +80,7 @@ export default function SelectedFilters({filters, query}: Props) {
             ))
         )}
         {query.value && (
-          <Badge data-test="selectedFilter">
+          <Badge data-testid="selectedFilter">
             {query.value}
             <Badge.Action onClick={clearQuery} />
           </Badge>

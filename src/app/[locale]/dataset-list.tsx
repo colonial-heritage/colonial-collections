@@ -71,7 +71,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
       <div
         className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
         role="alert"
-        data-test="fetch-error"
+        data-testid="fetch-error"
       >
         <p>{t('fetchError')}</p>
       </div>
@@ -89,7 +89,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             {t('search')}
           </label>
           <input
-            data-test="searchQuery"
+            data-testid="searchQuery"
             value={query}
             onChange={e => setQuery(e.target.value)}
             type="text"
@@ -104,7 +104,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             searchResultFilters={data.filters.licenses}
             selectedFilters={selectedLicenses}
             setSelectedFilters={setSelectedLicenses}
-            data-test="licensesFilter"
+            data-testid="licensesFilter"
           />
         )}
         {!!data?.filters?.licenses?.length && (
@@ -113,7 +113,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             searchResultFilters={data.filters.publishers}
             selectedFilters={selectedPublishers}
             setSelectedFilters={setSelectedPublishers}
-            data-test="publishersFilter"
+            data-testid="publishersFilter"
           />
         )}
       </PageSidebar>
@@ -179,7 +179,7 @@ export default function DatasetList({initialSearchResult, locale}: Props) {
             />
           </>
         ) : (
-          <div data-test="no-results">{t('noResults')}</div>
+          <div data-testid="no-results">{t('noResults')}</div>
         )}
       </PageContent>
     </>

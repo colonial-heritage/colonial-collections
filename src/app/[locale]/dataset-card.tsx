@@ -14,7 +14,7 @@ export default function DatasetCard({dataset, locale}: Props) {
     <div
       key={dataset.id}
       className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white"
-      data-test="dataset-card"
+      data-testid="dataset-card"
     >
       <div className="flex flex-1 flex-col space-y-2 p-4">
         <h3 className="text-sm font-medium text-gray-900">

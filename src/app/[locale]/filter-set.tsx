@@ -6,7 +6,7 @@ interface Props {
   searchResultFilters: SearchResultFilter[];
   selectedFilters: string[];
   setSelectedFilters: Dispatch<string[]>;
-  'data-test'?: string;
+  testId?: string;
 }
 
 export default function FilterSet({
@@ -14,7 +14,7 @@ export default function FilterSet({
   searchResultFilters,
   selectedFilters,
   setSelectedFilters,
-  'data-test': dataTest,
+  testId,
 }: Props) {
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +30,7 @@ export default function FilterSet({
   );
 
   return (
-    <div className="pt-10" data-test={dataTest}>
+    <div className="pt-10" data-testid={testId}>
       <fieldset>
         <legend className="block text-sm font-medium text-gray-900">
           {title}

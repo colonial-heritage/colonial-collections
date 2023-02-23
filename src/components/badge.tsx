@@ -3,13 +3,13 @@ import {XMarkIcon} from '@heroicons/react/24/solid';
 
 interface Props {
   children: ReactNode;
-  'data-test'?: string;
+  testId?: string;
 }
 
-export default function Badge({children, 'data-test': dataTest}: Props) {
+export default function Badge({children, testId}: Props) {
   return (
     <span
-      data-test={dataTest}
+      data-testid={testId}
       className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-xs font-medium text-gray-900"
     >
       {children}
