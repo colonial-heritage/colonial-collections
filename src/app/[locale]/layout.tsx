@@ -4,7 +4,6 @@ import {notFound} from 'next/navigation';
 import {ReactNode} from 'react';
 import Navigation from '@/components/navigation';
 import {useTranslations} from 'next-intl';
-import LocaleSwitcher from '@/components/locale-switcher';
 import Providers from '@/app/providers';
 
 type Props = {
@@ -46,11 +45,6 @@ export default function RootLayout({children, params}: Props) {
             </Providers>
           </div>
         </div>
-        <footer className="p-10 mt-auto">
-          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 text-gray-400">
-            <LocaleSwitcher />
-          </div>
-        </footer>
       </body>
     </html>
   );
