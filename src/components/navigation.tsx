@@ -22,9 +22,17 @@ interface Props {
     faq: string;
     contact: string;
   };
+  languageLabels: {
+    dutch: string;
+    english: string;
+  };
 }
 
-export default function Navigation({locale, navigationLabels}: Props) {
+export default function Navigation({
+  locale,
+  navigationLabels,
+  languageLabels,
+}: Props) {
   const pathname = usePathname();
 
   const navigation = [
@@ -36,8 +44,8 @@ export default function Navigation({locale, navigationLabels}: Props) {
   ];
 
   const languages = [
-    {name: 'Nederlands', value: 'nl'},
-    {name: 'English', value: 'en'},
+    {name: languageLabels.dutch, value: 'nl'},
+    {name: languageLabels.english, value: 'en'},
   ];
 
   return (

@@ -24,18 +24,27 @@ export default function RootLayout({children, params}: Props) {
   // The navigation is a client component, get the labels first in this server component
   // See: https://next-intl-docs.vercel.app/docs/next-13/server-components#switching-to-client-components
   const navigationLabels = {
-    home: t('Home'),
-    register: t('Register'),
-    about: t('About'),
-    faq: t('Faq'),
-    contact: t('Contact'),
+    home: t('home'),
+    register: t('register'),
+    about: t('about'),
+    faq: t('faq'),
+    contact: t('contact'),
+  };
+
+  const languageLabels = {
+    dutch: t('languages.dutch'),
+    english: t('languages.english'),
   };
 
   return (
     <html className="h-full" lang={locale}>
       <body className="flex flex-col min-h-screen">
         <div className="min-h-full">
-          <Navigation navigationLabels={navigationLabels} locale={locale} />
+          <Navigation
+            navigationLabels={navigationLabels}
+            languageLabels={languageLabels}
+            locale={locale}
+          />
 
           <div className="p-10">
             <Providers>

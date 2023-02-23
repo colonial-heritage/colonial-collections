@@ -23,11 +23,15 @@
     "publisher": "Publisher"
   },
   "Navigation": {
-    "Home": "Dataset Browser",
-    "Register": "Register dataset",
-    "About": "About",
-    "Faq": "FAQ",
-    "Contact": "Contact"
+    "home": "Dataset Browser",
+    "register": "Register dataset",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "languages": {
+      "dutch": "Nederlands",
+      "english": "English"
+    }
   },
   "About": {
     "title": "About the Dataset Browser"
