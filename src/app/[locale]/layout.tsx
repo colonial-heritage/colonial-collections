@@ -5,6 +5,7 @@ import {ReactNode} from 'react';
 import Navigation from '@/components/navigation';
 import {useTranslations} from 'next-intl';
 import Providers from '@/app/providers';
+import {locales} from '@/middleware';
 
 interface Props {
   children: ReactNode;
@@ -31,10 +32,11 @@ export default function RootLayout({children, params}: Props) {
     contact: t('contact'),
   };
 
-  const localeLabels = {
-    nl: t('languages.nl'),
-    en: t('languages.en'),
-  };
+  const localeLabels: {[locale: string]: string} = {};
+
+  locales.forEach(locale => {
+    localeLabels[locale] = t(`languages.${locale}`);
+  });
 
   return (
     <html className="h-full" lang={locale}>

@@ -12,6 +12,7 @@ import classNames from 'classnames';
 import {usePathname} from 'next-intl/client';
 import {Link} from 'next-intl';
 import {Fragment} from 'react';
+import {locales} from '@/middleware';
 
 interface Props {
   locale: string;
@@ -22,10 +23,7 @@ interface Props {
     faq: string;
     contact: string;
   };
-  localeLabels: {
-    nl: string;
-    en: string;
-  };
+  localeLabels: {[locale: string]: string};
 }
 
 export default function Navigation({
@@ -41,11 +39,6 @@ export default function Navigation({
     {name: navigationLabels.about, href: '/about'},
     {name: navigationLabels.faq, href: '/faq'},
     {name: navigationLabels.contact, href: '/contact'},
-  ];
-
-  const languages = [
-    {name: localeLabels.nl, value: 'nl'},
-    {name: localeLabels.en, value: 'en'},
   ];
 
   return (
@@ -64,11 +57,7 @@ export default function Navigation({
                         <span className="flex justify-end items-center">
                           <LanguageIcon className="w-4 h-4" />
                           <span className="ml-3 block truncate text-right">
-                            {
-                              languages.find(
-                                language => language.value === locale
-                              )!.name
-                            }
+                            {localeLabels[locale]}
                           </span>
                         </span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
@@ -87,11 +76,11 @@ export default function Navigation({
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                          {languages.map(language => (
+                          {locales.map(localeKey => (
                             <Link
-                              key={language.value}
+                              key={localeKey}
                               href={pathname ?? '/'}
-                              locale={language.value}
+                              locale={localeKey}
                             >
                               <Listbox.Option
                                 className={({active}) =>
@@ -102,7 +91,7 @@ export default function Navigation({
                                     'relative select-none py-2 pl-3 pr-9'
                                   )
                                 }
-                                value={language}
+                                value={localeKey}
                               >
                                 {({selected, active}) => (
                                   <>
@@ -115,7 +104,7 @@ export default function Navigation({
                                           'ml-3 block truncate'
                                         )}
                                       >
-                                        {language.name}
+                                        {localeLabels[localeKey]}
                                       </span>
                                     </div>
 
