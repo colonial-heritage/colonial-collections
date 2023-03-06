@@ -6,10 +6,10 @@ import Navigation from '@/components/navigation';
 import {useTranslations} from 'next-intl';
 import Providers from '@/app/providers';
 
-type Props = {
+interface Props {
   children: ReactNode;
   params: {locale: string};
-};
+}
 
 export default function RootLayout({children, params}: Props) {
   const locale = useLocale();
