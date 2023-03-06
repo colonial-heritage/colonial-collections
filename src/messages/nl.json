@@ -32,8 +32,8 @@
     "faq": "FAQ",
     "contact": "Contact",
     "languages": {
-      "dutch": "Nederlands",
-      "english": "English"
+      "nl": "Nederlands",
+      "en": "English"
     }
   },
   "About": {

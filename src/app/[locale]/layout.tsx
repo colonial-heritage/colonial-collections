@@ -31,9 +31,9 @@ export default function RootLayout({children, params}: Props) {
     contact: t('contact'),
   };
 
-  const languageLabels = {
-    dutch: t('languages.dutch'),
-    english: t('languages.english'),
+  const localeLabels = {
+    nl: t('languages.nl'),
+    en: t('languages.en'),
   };
 
   return (
@@ -42,7 +42,7 @@ export default function RootLayout({children, params}: Props) {
         <div className="min-h-full">
           <Navigation
             navigationLabels={navigationLabels}
-            languageLabels={languageLabels}
+            localeLabels={localeLabels}
             locale={locale}
           />
 

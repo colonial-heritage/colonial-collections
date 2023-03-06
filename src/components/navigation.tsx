@@ -22,16 +22,16 @@ interface Props {
     faq: string;
     contact: string;
   };
-  languageLabels: {
-    dutch: string;
-    english: string;
+  localeLabels: {
+    nl: string;
+    en: string;
   };
 }
 
 export default function Navigation({
   locale,
   navigationLabels,
-  languageLabels,
+  localeLabels,
 }: Props) {
   const pathname = usePathname();
 
@@ -44,8 +44,8 @@ export default function Navigation({
   ];
 
   const languages = [
-    {name: languageLabels.dutch, value: 'nl'},
-    {name: languageLabels.english, value: 'en'},
+    {name: localeLabels.nl, value: 'nl'},
+    {name: localeLabels.en, value: 'en'},
   ];
 
   return (
@@ -160,18 +160,18 @@ export default function Navigation({
                 <div className="flex">
                   <div className="hidden sm:-my-px sm:flex sm:space-x-8">
                     {navigation.map(item => {
-                      const current = item.href === pathname;
+                      const isCurrentPathname = item.href === pathname;
                       return (
                         <Link
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            current
+                            isCurrentPathname
                               ? 'border-indigo-500 text-gray-900'
                               : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
                             'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium'
                           )}
-                          aria-current={current ? 'page' : undefined}
+                          aria-current={isCurrentPathname ? 'page' : undefined}
                         >
                           {item.name}
                         </Link>
