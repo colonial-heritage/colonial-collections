@@ -1,13 +1,8 @@
-import Link from 'next/link';
+import {Link} from 'next-intl';
 import {useTranslations} from 'next-intl';
 import {Dataset} from '@/lib/dataset-fetcher';
 
-interface Props {
-  dataset: Dataset;
-  locale: string;
-}
-
-export default function DatasetCard({dataset, locale}: Props) {
+export default function DatasetCard({dataset}: {dataset: Dataset}) {
   const t = useTranslations('DatasetCard');
 
   return (
@@ -21,7 +16,7 @@ export default function DatasetCard({dataset, locale}: Props) {
           className="text-sm font-medium text-gray-900"
           data-test="dataset-card-name"
         >
-          <Link href={`${locale}/dataset/${encodeURIComponent(dataset.id)}`}>
+          <Link href={`/dataset/${encodeURIComponent(dataset.id)}`}>
             <span aria-hidden="true" className="absolute inset-0" />
             {dataset.name}
           </Link>
