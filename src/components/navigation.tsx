@@ -185,19 +185,19 @@ export default function Navigation({
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 pt-2 pb-3">
                 {navigation.map(item => {
-                  const current = item.href === pathname;
+                  const isCurrentPathname = item.href === pathname;
                   return (
                     <Disclosure.Button
                       key={item.name}
                       as={Link}
                       href={item.href}
                       className={classNames(
-                        current
+                        isCurrentPathname
                           ? 'bg-indigo-50 border-indigo-500 text-indigo-700'
                           : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800',
                         'block pl-3 pr-4 py-2 border-l-4 text-base font-medium'
                       )}
-                      aria-current={current ? 'page' : undefined}
+                      aria-current={isCurrentPathname ? 'page' : undefined}
                     >
                       {item.name}
                     </Disclosure.Button>
