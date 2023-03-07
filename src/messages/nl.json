@@ -28,11 +28,15 @@
     "title": "Pagina kon niet gevonden worden (404)"
   },
   "Navigation": {
-    "Home": "Dataset Browser",
-    "Register": "registreer dataset",
-    "About": "Over",
-    "Faq": "FAQ",
-    "Contact": "Contact"
+    "home": "Dataset Browser",
+    "register": "registreer dataset",
+    "about": "Over",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "languages": {
+      "nl": "Nederlands",
+      "en": "English"
+    }
   },
   "About": {
     "title": "Over het project"
@@ -48,8 +52,5 @@
   },
   "Register": {
     "title": "Registreer dataset"
-  },
-  "LocaleSwitcher": {
-    "switchLocale": "Schakel naar {locale, select, nl {nederlands} en {engels} other {onbekend}}"
   }
 }

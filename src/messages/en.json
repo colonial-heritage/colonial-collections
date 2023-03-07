@@ -25,11 +25,15 @@
     "publisher": "Publisher"
   },
   "Navigation": {
-    "Home": "Dataset Browser",
-    "Register": "Register dataset",
-    "About": "About",
-    "Faq": "FAQ",
-    "Contact": "Contact"
+    "home": "Dataset Browser",
+    "register": "Register dataset",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "languages": {
+      "nl": "Nederlands",
+      "en": "English"
+    }
   },
   "About": {
     "title": "About the Dataset Browser"
@@ -48,8 +52,5 @@
   },
   "NotFound": {
     "title": "This page was not found (404)"
-  },
-  "LocaleSwitcher": {
-    "switchLocale": "Switch to {locale, select, nl {Dutch} en {English} other {Unknown}}"
   }
 }
