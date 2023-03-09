@@ -1,9 +1,15 @@
 import {PageWithSidebarContainer} from '@/components/page';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
+import {getTranslations} from 'next-intl/server';
 import ClientFilters from './client-filters';
 import DatasetList, {Sort, defaultSort} from './dataset-list';
-import {SearchOptions, SortBy, SortOrder} from '@/lib/dataset-fetcher';
+import {
+  SearchOptions,
+  SearchResult,
+  SortBy,
+  SortOrder,
+} from '@/lib/dataset-fetcher';
 
 const sortMapping = {
   [Sort.RelevanceDesc]: {
@@ -21,7 +27,7 @@ const sortMapping = {
 };
 
 interface Props {
-  searchParams: {
+  searchParams?: {
     publishers?: string;
     licenses?: string;
     query?: string;
@@ -29,7 +35,19 @@ interface Props {
     sort?: Sort;
   };
 }
-async function getData({searchParams}: Props) {
+
+interface ErrorResponse {
+  hasError: true;
+  errorMessage: string;
+  searchResult: null;
+}
+interface SearchResultResponse {
+  hasError: false;
+  searchResult: SearchResult;
+}
+type Response = ErrorResponse | SearchResultResponse;
+
+async function getData({searchParams = {}}: Props): Promise<Response> {
   const {
     publishers,
     licenses,
@@ -51,11 +69,13 @@ async function getData({searchParams}: Props) {
     sortOrder: sortOrder,
   };
 
-  // TODO
-  // if (!options.sortBy || !options.sortOrder || isNaN(options.offset)) {
-  //   res.status(400).send({message: 'Invalid options'});
-  //   return;
-  // }
+  if (!options.sortBy || !options.sortOrder || isNaN(options.offset)) {
+    return {
+      hasError: true,
+      errorMessage: 'Invalid options',
+      searchResult: null,
+    };
+  }
 
   const validOptions: SearchOptions = options;
 
@@ -64,26 +84,19 @@ async function getData({searchParams}: Props) {
     validOptions.query = query;
   }
 
-  return await datasetFetcher.search(validOptions);
+  try {
+    const searchResult = await datasetFetcher.search(validOptions);
+    return {searchResult, hasError: false};
+  } catch (error) {
+    return {hasError: true, errorMessage: 'Fetch error', searchResult: null};
+  }
 }
 
 export default async function Home({searchParams}: Props) {
-  const searchResult = await getData({searchParams});
+  const {searchResult, hasError} = await getData({searchParams});
   const locale = useLocale();
   const messages = (await import(`@/messages/${locale}.json`)).default;
-
-  // TODO;
-  // if (error instanceof Error) {
-  //   return (
-  //     <div
-  //       className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
-  //       role="alert"
-  //       data-testid="fetch-error"
-  //     >
-  //       <p>{t('fetchError')}</p>
-  //     </div>
-  //   );
-  // }
+  const t = await getTranslations('Home');
 
   return (
     <PageWithSidebarContainer>
@@ -94,16 +107,26 @@ export default async function Home({searchParams}: Props) {
           Paginator: messages.Paginator,
         }}
       >
-        <ClientFilters
-          filters={searchResult.filters}
-          limit={searchResult.limit}
-          totalCount={searchResult.totalCount}
-        >
-          <DatasetList
-            datasets={searchResult.datasets}
+        {hasError ? (
+          <div
+            className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
+            role="alert"
+            data-testid="fetch-error"
+          >
+            <p>{t('fetchError')}</p>
+          </div>
+        ) : (
+          <ClientFilters
+            filters={searchResult.filters}
+            limit={searchResult.limit}
             totalCount={searchResult.totalCount}
-          />
-        </ClientFilters>
+          >
+            <DatasetList
+              datasets={searchResult.datasets}
+              totalCount={searchResult.totalCount}
+            />
+          </ClientFilters>
+        )}
       </NextIntlClientProvider>
     </PageWithSidebarContainer>
   );
