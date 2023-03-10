@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, ReactNode, useEffect} from 'react';
+import {useState, ReactNode, useEffect, useTransition} from 'react';
 import {SearchResult} from '@/lib/dataset-fetcher';
 import FilterSet from './filter-set';
 import Paginator from './paginator';
@@ -35,6 +35,8 @@ export default function ClientFilters({
   const [sort, setSort] = useState<Sort>(defaultSort);
   const t = useTranslations('Home');
   const router = useRouter();
+  // Use the first param `isPending` of `useTransition` for a loading state.
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     const searchParams: {[key: string]: string} = {};
@@ -59,11 +61,13 @@ export default function ClientFilters({
       searchParams.sort = sort;
     }
     const encodedSearchParams = new URLSearchParams(searchParams).toString();
-    if (encodedSearchParams) {
-      router.replace('/?' + encodedSearchParams);
-    } else {
-      router.replace('/' + encodedSearchParams);
-    }
+    startTransition(() => {
+      if (encodedSearchParams) {
+        router.replace('/?' + encodedSearchParams);
+      } else {
+        router.replace('/' + encodedSearchParams);
+      }
+    });
   }, [query, offset, sort, selectedLicenses, selectedPublishers, router]);
 
   function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
