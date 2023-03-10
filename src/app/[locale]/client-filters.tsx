@@ -96,7 +96,7 @@ export default function ClientFilters({
             searchResultFilters={filters.licenses}
             selectedFilters={selectedLicenses}
             setSelectedFilters={setSelectedLicenses}
-            data-testid="licensesFilter"
+            testId="licensesFilter"
           />
         )}
         {!!filters.licenses?.length && (
@@ -105,7 +105,7 @@ export default function ClientFilters({
             searchResultFilters={filters.publishers}
             selectedFilters={selectedPublishers}
             setSelectedFilters={setSelectedPublishers}
-            data-testid="publishersFilter"
+            testId="publishersFilter"
           />
         )}
       </PageSidebar>
