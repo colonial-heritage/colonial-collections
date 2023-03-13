@@ -25,7 +25,7 @@
     "@headlessui/react": "1.7.9",
     "@heroicons/react": "2.0.16",
     "@tailwindcss/forms": "0.5.3",
-    "@tanstack/react-query": "4.26.0",
+    "@tanstack/react-query": "4.26.1",
     "classnames": "2.3.2",
     "next": "13.2.3",
     "next-intl": "2.12.0-beta.1",
