@@ -4,9 +4,15 @@ export function PageHeader({children}: {children: ReactNode}) {
   return <header className="mb-5">{children}</header>;
 }
 
-export function PageTitle({children}: {children: ReactNode}) {
+interface PageTitleProps {
+  children: ReactNode;
+  id?: string;
+}
+
+export function PageTitle({children, id}: PageTitleProps) {
   return (
     <h1
+      id={id}
       data-testid="page-title"
       className="text-3xl font-bold leading-tight tracking-tight text-gray-900"
     >

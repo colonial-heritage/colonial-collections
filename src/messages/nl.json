@@ -45,7 +45,21 @@
     "title": "Contact"
   },
   "Details": {
-    "noDataset": "Dataset kon niet gevonden worden."
+    "noDataset": "Dataset kon niet gevonden worden.",
+    "back": "Terug naar datasets",
+    "navigation": {
+      "about": "Over",
+      "metadata": "Metadata"
+    },
+    "metadata": {
+      "title": "Metadata",
+      "license": "Licentie",
+      "publisher": "Eigenaar",
+      "datePublished": "Datum gepubliceerd",
+      "dateCreated": "Datum gecreeërd",
+      "dateModified": "Datum gewijzigd",
+      "keywords": "Trefwoorden"
+    }
   },
   "Faq": {
     "title": "Veelgestelde vragen"
