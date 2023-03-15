@@ -1,12 +1,12 @@
 # Components
 
-We divided the components into generic components and page-specific components.
+We divide the components into page-specific and generic components.
 
 ## Page-specific components
-Place the page-specific components in the app folder at the same level as the page that uses the component.
+Place the page-specific components in the `/app` folder at the same level as the page that uses the component.
 
 ## Generic components
-Components are generic if it's being used on multiple pages. Place these components in the `/components` folder.
+Components are generic if they are being used on multiple pages. Place these components in the `/components` folder.
 
 You can write generic components as *compound components* with a *dot notation*.
 

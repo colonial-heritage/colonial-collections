@@ -1,13 +1,13 @@
 # Testing
-This project has different tests. All tests run in GitHub CI after creating a pull request. Therefore, pull requests can only be merged on successful tests.
+This application has different tests. All tests run in CI after creating a pull request. Therefore, pull requests can only be merged if all tests have passed.
 
-## Unit testing with Jest
-We use [Jest](https://jestjs.io/) for our unit tests. You can run the tests with the following:
+## Integration tests with Jest
+We use [Jest](https://jestjs.io/) for our integration tests. You can run the tests with the following command:
 
   npm run test
 
-## End-to-end testing with Cypress
-For end-to-end testing, we use [Cypress](https://www.cypress.io/). You can run the tests with the following:
+## End-to-end tests with Cypress
+For end-to-end testing, we use [Cypress](https://www.cypress.io/). You can run the tests with the following command:
 
   npm run cypress
 
