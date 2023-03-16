@@ -90,7 +90,7 @@ describe('search', () => {
           publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(Unknown)',
+            name: '(No name)',
           },
           description:
             'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
@@ -173,7 +173,7 @@ describe('search', () => {
           {
             totalCount: 1,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(Unknown)',
+            name: '(No name)',
           },
           {
             totalCount: 1,
@@ -232,7 +232,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(Unknown)',
+            name: '(No name)',
           },
           {
             totalCount: 0,
@@ -302,7 +302,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(Unknown)',
+            name: '(No name)',
           },
           {
             totalCount: 0,
@@ -448,7 +448,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(Unknown)',
+            name: '(No name)',
           },
           {
             totalCount: 0,
