@@ -43,7 +43,7 @@ export default function Navigation({
 
   return (
     <>
-      <header className="relative">
+      <header className="relative bg-white">
         <nav aria-label="Top">
           {/* Top navigation */}
           <div>

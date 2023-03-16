@@ -42,7 +42,21 @@
     "title": "Contact details"
   },
   "Details": {
-    "noDataset": "Dataset could not be found."
+    "noDataset": "Dataset could not be found.",
+    "back": "Back to datasets",
+    "navigation": {
+      "about": "About",
+      "metadata": "Metadata"
+    },
+    "metadata": {
+      "title": "Metadata",
+      "license": "License",
+      "publisher": "Publisher",
+      "datePublished": "Date published",
+      "dateCreated": "Date created",
+      "dateModified": "Date modified",
+      "keywords": "Keywords"
+    }
   },
   "Faq": {
     "title": "FAQ"

@@ -40,7 +40,7 @@ export default function RootLayout({children, params}: Props) {
 
   return (
     <html className="h-full" lang={locale}>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen bg-gray-light">
         <div className="min-h-full">
           <Navigation
             navigationLabels={navigationLabels}
