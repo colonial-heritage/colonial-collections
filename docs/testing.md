@@ -11,6 +11,7 @@ For end-to-end testing, we use [Cypress](https://www.cypress.io/). You can run t
 
   npm run cypress
 
+### Writing Cypress tests
 [As recommended in the Cypress documentation](https://docs.cypress.io/guides/references/best-practices#Selecting-Elements), we use the attribute **data-testid** to make it easier to target elements.
 
 Select this attribute with the custom selector `getBySel`, for example:

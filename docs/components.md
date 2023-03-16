@@ -10,7 +10,7 @@ Components are generic if they are being used on multiple pages. Place these com
 
 You can write generic components as *compound components* with a *dot notation*.
 
-Writing components in little parts that work together to accomplish one task is called compound components. You can read about compound components here:
+Components divided into little parts that work together to accomplish one task are called compound components. You can read about compound components here:
 
 - https://betterprogramming.pub/compound-component-design-pattern-in-react-34b50e32dea0
 
