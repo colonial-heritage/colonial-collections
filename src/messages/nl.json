@@ -22,7 +22,7 @@
   },
   "DatasetCard": {
     "license": "Licentie",
-    "publisher": "Eigenaar"
+    "publisher": "Uitgever"
   },
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"
@@ -54,9 +54,9 @@
     "metadata": {
       "title": "Metadata",
       "license": "Licentie",
-      "publisher": "Eigenaar",
+      "publisher": "Uitgever",
       "datePublished": "Datum gepubliceerd",
-      "dateCreated": "Datum gecreeërd",
+      "dateCreated": "Datum gecreëerd",
       "dateModified": "Datum gewijzigd",
       "keywords": "Trefwoorden"
     }

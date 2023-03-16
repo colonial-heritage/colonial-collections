@@ -30,7 +30,7 @@ export default async function Details({params}: Props) {
     {name: t('navigation.metadata'), href: '#metadata'},
   ];
 
-  const metaData = [
+  const datasetProperties = [
     {
       name: t('metadata.license'),
       value: (
@@ -99,13 +99,13 @@ export default async function Details({params}: Props) {
           </div>
           <div className="py-10">
             <h2 className="font-bold leading-6 text-lg mb-6" id="metadata">
-              Metadata
+              {t('metadata.title')}
             </h2>
-            {metaData.map(meta => (
-              <Fragment key={meta.name}>
-                <h3 className="font-bold">{meta.name}</h3>
+            {datasetProperties.map(property => (
+              <Fragment key={property.name}>
+                <h3 className="font-bold">{property.name}</h3>
                 <div className="mt-1 text-gray-900 sm:col-span-3 sm:mt-0 mb-4">
-                  {meta.value}
+                  {property.value}
                 </div>
               </Fragment>
             ))}
