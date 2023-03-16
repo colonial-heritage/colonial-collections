@@ -17,7 +17,7 @@ export default async function Details({params}: Props) {
   const t = await getTranslations('Details');
 
   if (!dataset) {
-    return <div data-test="no-dataset">{t('noDataset')}</div>;
+    return <div data-testid="no-dataset">{t('noDataset')}</div>;
   }
 
   return (
