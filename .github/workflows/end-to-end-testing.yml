@@ -1,0 +1,14 @@
+name: End-to-end testing
+on: [deployment_status]
+jobs:
+  run-end-to-end-tests:
+    # Only runs this job on successful deploy
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Cypress 🌲
+        uses: cypress-io/github-action@v5
+        env:
+          CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
