@@ -40,22 +40,17 @@ export default function RootLayout({children, params}: Props) {
 
   return (
     <html className="h-full" lang={locale}>
-      <body className="flex flex-col min-h-screen bg-gray-light">
-        <div className="min-h-full">
+      <body className="flex flex-col min-h-screen">
+        <header className="max-w-7xl container mx-auto px-8 py-8">
           <Navigation
             navigationLabels={navigationLabels}
             localeLabels={localeLabels}
             locale={locale}
           />
-
-          <div className="p-10">
-            <Providers>
-              <main className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-                {children}
-              </main>
-            </Providers>
-          </div>
-        </div>
+        </header>
+        <main className="bg-gray-light">
+          <Providers>{children}</Providers>
+        </main>
       </body>
     </html>
   );
