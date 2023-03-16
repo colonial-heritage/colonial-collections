@@ -32,6 +32,18 @@ export default async function Details({params}: Props) {
 
   const datasetProperties = [
     {
+      name: t('metadata.moreInfo'),
+      value: dataset.mainEntityOfPages?.length && (
+        <div className="flex flex-col">
+          {dataset.mainEntityOfPages.map(url => (
+            <a key={url} href={url} target="_blank" rel="noreferrer">
+              {url}
+            </a>
+          ))}
+        </div>
+      ),
+    },
+    {
       name: t('metadata.license'),
       value: (
         <a href={dataset.license.id} target="_blank" rel="noreferrer">
