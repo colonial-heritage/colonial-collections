@@ -17,7 +17,11 @@
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Create production build
+### Create production build (for testing locally)
+
+First append the Elasticsearch endpoint URL to `SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=` in `.env`.
+
+Then run:
 
     npm run build
 
