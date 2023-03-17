@@ -41,7 +41,7 @@ export default function RootLayout({children, params}: Props) {
   return (
     <html className="h-full" lang={locale}>
       <body className="flex flex-col min-h-screen">
-        <header className="max-w-7xl container mx-auto px-8 py-8">
+        <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">
           <Navigation
             navigationLabels={navigationLabels}
             localeLabels={localeLabels}

@@ -30,16 +30,16 @@ export default function FilterSet({
   );
 
   return (
-    <div className="pt-10" data-testid={testId}>
+    <div className="pt-6 pr-4 max-w-[350px]" data-testid={testId}>
       <fieldset>
-        <legend className="block text-sm font-medium text-gray-900">
+        <legend className="block font-bold text-gray-900">
           {title}
         </legend>
-        <div className="space-y-3 pt-6">
+        <div className="space-y-3 pt-2">
           {searchResultFilters.map(option => (
             <div
               key={`${option.id}${option.name}`}
-              className="flex items-center"
+              className="flex "
             >
               <input
                 value={option.id}

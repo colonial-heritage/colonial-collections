@@ -8,7 +8,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
   return (
     <div
       key={dataset.id}
-      className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white"
+      className="group relative flex flex-col overflow-hidden  drop-shadow-md bg-white"
       data-testid="dataset-card"
     >
       <div className="flex flex-1 flex-col space-y-2 p-4">

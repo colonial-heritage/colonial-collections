@@ -88,10 +88,10 @@ export default function ClientFilters({
   const renderFilters = useMemo(
     () => (
       <>
-        <div>
+        <div className="pr-4 max-w-[350px]">
           <label
             htmlFor="search"
-            className="block text-sm font-medium text-gray-900"
+            className="block font-bold text-gray-900"
           >
             {t('search')}
           </label>
@@ -102,7 +102,7 @@ export default function ClientFilters({
             type="text"
             name="search"
             id="search"
-            className="block w-full rounded-full border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
         </div>
         {!!filters.licenses?.length && (
