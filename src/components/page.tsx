@@ -14,7 +14,7 @@ export function PageTitle({children, id}: PageTitleProps) {
     <h1
       id={id}
       data-testid="page-title"
-      className="text-3xl font-bold leading-tight tracking-tight text-gray-900"
+      className="text-2xl font-bold leading-tight tracking-tight text-gray-900"
     >
       {children}
     </h1>
@@ -39,7 +39,7 @@ export function PageWithSidebarContainer({children}: {children: ReactNode}) {
 
 export function PageSidebar({children}: {children: ReactNode}) {
   return (
-    <aside className="hidden md:flex md:h-full w-full md:w-1/3 flex flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2 py-8">
+    <aside className="self-stretch hidden md:flex md:h-full w-full md:w-1/3 flex flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2 py-8">
       {children}
     </aside>
   );

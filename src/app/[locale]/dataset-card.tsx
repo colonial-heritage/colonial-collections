@@ -12,15 +12,16 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
       data-testid="dataset-card"
     >
       <div className="flex flex-1 flex-col space-y-2 p-4">
-        <h3
-          className="text-sm font-medium text-gray-900"
+        <h2
+          className="text-lg font-bold text-gray-900"
           data-testid="dataset-card-name"
         >
           <Link href={`/dataset/${encodeURIComponent(dataset.id)}`}>
             <span aria-hidden="true" className="absolute inset-0" />
             {dataset.name}
           </Link>
-        </h3>
+        </h2>
+        <p className="text-base text-gray-900">{dataset.description}</p>
         <div className="mt-2 flex">
           <p className="text-xs text-gray-500 mr-10">
             {t('publisher')}: {dataset.publisher.name}
@@ -29,7 +30,6 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
             {t('license')}: {dataset.license.name}
           </p>
         </div>
-        <p className="text-sm text-gray-500">{dataset.description}</p>
         <div className="mt-2 flex">
           {dataset.keywords?.map(keyword => (
             <p key={keyword} className="text-xs text-gray-500 mr-10">

@@ -10,7 +10,7 @@ export default function Badge({children, testId}: Props) {
   return (
     <span
       data-testid={testId}
-      className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-xs font-medium text-gray-900"
+      className="m-1 inline-flex items-center rounded-md bg-gray-medium py-1.5 pl-3 pr-2 text-xs text-gray-900"
     >
       {children}
     </span>

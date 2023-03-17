@@ -23,7 +23,7 @@ import {useRouter} from 'next/navigation';
 import {Sort, defaultSort} from './dataset-list';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
-import {PlusIcon} from '@heroicons/react/20/solid';
+import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 
 export interface Props {
   filters: SearchResult['filters'];
@@ -88,7 +88,7 @@ export default function ClientFilters({
   const renderFilters = useMemo(
     () => (
       <>
-        <div className="pr-4 max-w-[350px]">
+        <div className="pr-4 max-w-[350px]" >
           <label
             htmlFor="search"
             className="block font-bold text-gray-900"
@@ -103,6 +103,7 @@ export default function ClientFilters({
             name="search"
             id="search"
             className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            aria-label="Type to filter on text."
           />
         </div>
         {!!filters.licenses?.length && (
@@ -166,8 +167,8 @@ export default function ClientFilters({
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
-                <div className="flex items-center justify-between px-4">
+              <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white px-4 py-4 pb-6 shadow-xl">
+                <div className="flex items-center justify-between">
                   <h2 className="text-lg font-medium text-gray-900">
                     {t('filters')}
                   </h2>
@@ -191,14 +192,14 @@ export default function ClientFilters({
       <PageContent>
         <button
           type="button"
-          className="inline-flex items-center lg:hidden"
+          className="inline-flex items-center md:hidden"
           onClick={() => setMobileFiltersOpen(true)}
         >
-          <span className="text-sm font-medium text-gray-700">
+          <span className="text-base font-medium text-gray-900">
             {t('filters')}
           </span>
-          <PlusIcon
-            className="ml-1 h-5 w-5 flex-shrink-0 text-gray-400"
+          <AdjustmentsHorizontalIcon
+            className="ml-1 h-5 w-5 flex-shrink-0 text-gray-900"
             aria-hidden="true"
           />
         </button>
@@ -210,9 +211,10 @@ export default function ClientFilters({
             <div>
               <select
                 name="location"
-                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                 value={sort}
                 onChange={handleSortChange}
+                aria-label="Select to change the ordering of the result"
               >
                 <option value={Sort.RelevanceDesc}>
                   {t('sortRelevanceDesc')}

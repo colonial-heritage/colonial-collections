@@ -30,7 +30,7 @@ export default function FilterSet({
   );
 
   return (
-    <div className="pt-6 pr-4 max-w-[350px]" data-testid={testId}>
+    <div className="pt-6 pr-4 max-w-[350px]" data-testid={testId} aria-label="Select a checkbox to filter">
       <fieldset>
         <legend className="block font-bold text-gray-900">
           {title}
@@ -50,11 +50,11 @@ export default function FilterSet({
                 )}
                 onChange={handleChange}
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
               />
               <label
                 htmlFor={`${title}-${option.id}`}
-                className="ml-3 text-sm text-gray-600"
+                className="ml-3 text-sm text-gray-900"
               >
                 {option.name}
               </label>

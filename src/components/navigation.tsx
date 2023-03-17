@@ -54,7 +54,7 @@ export default function Navigation({
                 {({open}) => (
                   <>
                     <div className="relative mt-1 w-44">
-                      <Listbox.Button className="relative w-full py-2 pl-3 pr-8 text-left">
+                      <Listbox.Button className="relative w-full py-2 pl-3 pr-8 text-left" aria-label="Select to change the language of the site. The current language is ...">
                         <span className="flex justify-end items-center">
                           <LanguageIcon className="w-4 h-4" />
                           <span className="ml-3 block truncate text-right">
