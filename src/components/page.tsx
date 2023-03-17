@@ -39,7 +39,7 @@ export function PageWithSidebarContainer({children}: {children: ReactNode}) {
 
 export function PageSidebar({children}: {children: ReactNode}) {
   return (
-    <aside className="md:h-full w-full md:w-1/3 flex flex-row md:flex-col gap-8 overscroll-x-auto flex-nowrap border-white border-r-4 py-8">
+    <aside className="hidden md:flex md:h-full w-full md:w-1/3 flex flex-row md:flex-col gap-8 overscroll-x-auto flex-nowrap border-white border-r-4 py-8">
       {children}
     </aside>
   );

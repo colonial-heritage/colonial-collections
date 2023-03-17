@@ -12,7 +12,7 @@
     "sortNameAsc": "Naam - Oplopend",
     "sortNameDesc": "Naam - Aflopend",
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de datasets. Laad de pagina opnieuw om het opnieuw te proberen.",
-    "filters": "filters",
+    "filters": "Filters",
     "clearAllFilters": "Alles verwijderen"
   },
   "Paginator": {

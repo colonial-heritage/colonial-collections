@@ -12,7 +12,7 @@
     "sortNameAsc": "Name - Ascending",
     "sortNameDesc": "Name - Descending",
     "fetchError": "There was a problem fetching the datasets. Please reload the page to try again.",
-    "filters": "filters",
+    "filters": "Filters",
     "clearAllFilters": "Clear all"
   },
   "Paginator": {
