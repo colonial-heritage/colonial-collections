@@ -4,7 +4,6 @@ import {notFound} from 'next/navigation';
 import {ReactNode} from 'react';
 import Navigation from '@/components/navigation';
 import {useTranslations} from 'next-intl';
-import Providers from '@/app/providers';
 import {locales} from '@/middleware';
 
 interface Props {
@@ -49,11 +48,9 @@ export default function RootLayout({children, params}: Props) {
           />
 
           <div className="p-10">
-            <Providers>
-              <main className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-                {children}
-              </main>
-            </Providers>
+            <main className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+              {children}
+            </main>
           </div>
         </div>
       </body>
