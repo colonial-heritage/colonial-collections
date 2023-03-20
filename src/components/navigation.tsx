@@ -52,7 +52,7 @@ export default function Navigation({
         <div>
           {/* Top navigation */}
           <div>
-            <div className="mx-auto flex h-10 max-w-7xl items-center justify justify-end	">
+            <div className="mx-auto flex h-10 max-w-7xl items-center justify justify-end">
               {/* Language selector */}
               <Listbox value={locale}>
                 {({open}) => (

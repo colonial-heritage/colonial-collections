@@ -43,7 +43,8 @@ export default function ClientFilters({
   const [query, setQuery] = useState('');
   const [offset, setOffset] = useState(0);
   const [sort, setSort] = useState<Sort>(defaultSort);
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [showFiltersSidebarOnSmallScreen, setShowFiltersSidebarOnSmallScreen] =
+    useState(false);
   const t = useTranslations('Home');
   const router = useRouter();
   // Use the first param `isPending` of `useTransition` for a loading state.
@@ -136,11 +137,11 @@ export default function ClientFilters({
   return (
     <>
       {/* Mobile filter dialog */}
-      <Transition.Root show={mobileFiltersOpen} as={Fragment}>
+      <Transition.Root show={showFiltersSidebarOnSmallScreen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-40 lg:hidden"
-          onClose={setMobileFiltersOpen}
+          onClose={setShowFiltersSidebarOnSmallScreen}
         >
           <Transition.Child
             as={Fragment}
@@ -172,7 +173,7 @@ export default function ClientFilters({
                   <button
                     type="button"
                     className="-mr-2 flex h-10 w-10 items-center justify-center p-2 text-gray-400 hover:text-gray-500"
-                    onClick={() => setMobileFiltersOpen(false)}
+                    onClick={() => setShowFiltersSidebarOnSmallScreen(false)}
                   >
                     <span className="sr-only">Close menu</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -190,7 +191,7 @@ export default function ClientFilters({
         <button
           type="button"
           className="inline-flex items-center md:hidden"
-          onClick={() => setMobileFiltersOpen(true)}
+          onClick={() => setShowFiltersSidebarOnSmallScreen(true)}
         >
           <span className="text-base font-medium text-gray-900">
             {t('filters')}
