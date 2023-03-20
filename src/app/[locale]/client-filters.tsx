@@ -88,11 +88,8 @@ export default function ClientFilters({
   const renderFilters = useMemo(
     () => (
       <>
-        <div className="pr-4 max-w-[350px]" >
-          <label
-            htmlFor="search"
-            className="block font-bold text-gray-900"
-          >
+        <div className="pr-4 max-w-[350px]">
+          <label htmlFor="search" className="block font-bold text-gray-900">
             {t('search')}
           </label>
           <input

@@ -30,17 +30,16 @@ export default function FilterSet({
   );
 
   return (
-    <div className="pt-6 pr-4 max-w-[350px]" data-testid={testId} aria-label="Select a checkbox to filter">
+    <div
+      className="pt-6 pr-4 max-w-[350px]"
+      data-testid={testId}
+      aria-label="Select a checkbox to filter"
+    >
       <fieldset>
-        <legend className="block font-bold text-gray-900">
-          {title}
-        </legend>
+        <legend className="block font-bold text-gray-900">{title}</legend>
         <div className="space-y-3 pt-2">
           {searchResultFilters.map(option => (
-            <div
-              key={`${option.id}${option.name}`}
-              className="flex "
-            >
+            <div key={`${option.id}${option.name}`} className="flex ">
               <input
                 value={option.id}
                 id={`${title}-${option.id}`}
