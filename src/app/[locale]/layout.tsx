@@ -4,7 +4,6 @@ import {notFound} from 'next/navigation';
 import {ReactNode} from 'react';
 import Navigation from '@/components/navigation';
 import {useTranslations} from 'next-intl';
-import Providers from '@/app/providers';
 import {locales} from '@/middleware';
 
 interface Props {
@@ -53,9 +52,7 @@ export default function RootLayout({children, params}: Props) {
             locale={locale}
           />
         </header>
-        <main className="bg-gray-light">
-          <Providers>{children}</Providers>
-        </main>
+        <main className="bg-gray-light">{children}</main>
       </body>
     </html>
   );
