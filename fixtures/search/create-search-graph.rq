@@ -1,12 +1,15 @@
 ###############################
 # Query for generating a search graph with dataset descriptions for testing
-# See also: https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Full%20dataset%20descriptions%20for%20publisher&owner=admin&execute
+# Source of the query: https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Full%20dataset%20descriptions%20for%20publisher&owner=admin&execute
+# Publish the query to https://colonial-heritage.triply.cc/data-hub/-/queries/create-search-graph/ for use in production
 ###############################
 
 PREFIX cc: <https://colonialcollections.nl/search#> # Internal, undocumented ontology
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skolem: <https://triplydb.com/.well-known/genid/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 CONSTRUCT {
   ?dataset a cc:Dataset ;
@@ -20,7 +23,14 @@ CONSTRUCT {
     cc:mainEntityOfPage ?landingPage ;
     cc:dateCreated ?created ;
     cc:dateModified ?modified ;
-    cc:datePublished ?issued .
+    cc:datePublished ?issued ;
+    cc:spatialCoverage ?place ;
+    cc:placeName ?placeName ; # To allow for search actions based on name
+    cc:placeName ?placeAlternateName . # To allow for search actions based on name
+
+  ?place a cc:Place ;
+    cc:name ?placeName ;
+    cc:alternateName ?placeAlternateName .
 }
 WHERE {
   ?dataset a dcat:Dataset .
@@ -91,8 +101,31 @@ WHERE {
     FILTER(LANG(?keyword) = "" || LANGMATCHES(LANG(?keyword), "en"))
   }
 
-  OPTIONAL { ?dataset dcat:landingPage ?landingPage }
+  ####################
+  # Landing page
+  ####################
+
+  OPTIONAL {
+    ?dataset dcat:landingPage ?landingPage
+    # The NDE Dataset Register allows blank nodes for the landing page.
+    # TriplyDB turns these into skolemized IRIs. Remove these for Elasticsearch
+    FILTER(!STRSTARTS(STR(?landingPage), STR(skolem:)))
+  }
+
   OPTIONAL { ?dataset dct:created ?created }
   OPTIONAL { ?dataset dct:modified ?modified }
   OPTIONAL { ?dataset dct:issued ?issued }
+
+  ####################
+  # Place / spatial coverage / location
+  ####################
+
+  OPTIONAL {
+    ?dataset dct:spatial ?place .
+    ?place a skos:Concept ;
+      skos:prefLabel ?placeName ;
+      skos:inScheme "Geografie" . # The NMVW thesaurus doesn't have a IRI to identify the scheme
+
+    OPTIONAL { ?place skos:altLabel ?placeAlternateName }
+  }
 }

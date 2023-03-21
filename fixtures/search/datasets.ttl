@@ -19,7 +19,8 @@
   dcat:landingPage <https://example.org/> ;
   dct:created "2019-03-12"^^xsd:date ;
   dct:modified "2023-02-17"^^xsd:date ;
-  dct:issued "2023-02-17"^^xsd:date .
+  dct:issued "2023-02-17"^^xsd:date ;
+  dct:spatial <https://hdl.handle.net/20.500.11840/termmaster10063182> .
 
 <https://example.org/datasets/2>
   a dcat:Dataset ;
@@ -29,7 +30,8 @@
   dct:description "Vivamus vitae elit eget ligula efficitur rhoncus. Donec ut urna consequat, tempor leo sed, iaculis erat. Fusce at quam nisi. Ut convallis quam pellentesque, euismod augue at, finibus nibh."@nl ;
   dct:created "2019-03-12"^^schema:Date ;
   dct:modified "2023-02-17"^^schema:Date ;
-  dct:issued "2023-02-17"^^schema:Date .
+  dct:issued "2023-02-17"^^schema:Date ;
+  dct:spatial <https://hdl.handle.net/20.500.11840/termmaster10055279> .
 
 <https://example.org/datasets/3>
   a dcat:Dataset ;
@@ -44,7 +46,8 @@
   dct:publisher <https://museum.example.org/> ;
   dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." ;
   dcat:keyword "Hendrerit", "Suspendisse" ;
-  dct:modified "2023-02-01"^^xsd:date .
+  dct:modified "2023-02-01"^^xsd:date ;
+  dct:spatial <https://hdl.handle.net/20.500.11840/termmaster10058074> .
 
 <https://example.org/datasets/5>
   a dcat:Dataset ;
@@ -69,7 +72,8 @@
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://archive.example.org/> ;
   dcat:landingPage <https://example.org/> ;
-  dct:modified "2023-02-01T23:01:02Z"^^xsd:dateTime .
+  dct:modified "2023-02-01T23:01:02Z"^^xsd:dateTime ;
+  dct:spatial <https://hdl.handle.net/20.500.11840/termmaster10058074> .
 
 <https://example.org/datasets/8>
   a dcat:Dataset ;
@@ -77,7 +81,8 @@
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://archive.example.org/> ;
   dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." ;
-  dcat:keyword "Vestibulum", "Phasellus" .
+  dcat:keyword "Vestibulum", "Phasellus" ;
+  dct:spatial <https://hdl.handle.net/20.500.11840/termmaster10063351> .
 
 <https://example.org/datasets/9>
   a dcat:Dataset ;
@@ -99,7 +104,10 @@
   dct:title "Dataset 11"@en ;
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://library.example.org/> ;
-  dct:created "2019-03-12"^^xsd:date .
+  dct:created "2019-03-12"^^xsd:date ;
+  dct:spatial <https://hdl.handle.net/20.500.11840/termmaster10063401> ,
+              <https://hdl.handle.net/20.500.11840/termmaster10063351> ,
+              <https://hdl.handle.net/20.500.11840/termmaster10061190> .
 
 <https://example.org/datasets/12>
   a dcat:Dataset ;
@@ -107,7 +115,9 @@
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://library.example.org/> ;
   dct:description "Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac." ;
-  dcat:keyword "Hendrerit", "Vestibulum" .
+  dcat:keyword "Hendrerit", "Vestibulum" ;
+  dct:spatial <https://hdl.handle.net/20.500.11840/termmaster10054875> ,
+              <https://hdl.handle.net/20.500.11840/termmaster10055279> .
 
 <https://example.org/datasets/13>
   a dcat:Dataset ;
@@ -116,7 +126,8 @@
   dct:publisher <https://research.example.org/> ;
   dct:description "Cras erat elit, finibus eget ipsum vel, gravida dapibus leo. Etiam sem erat, suscipit id eros sit amet, scelerisque ornare sem. Aenean commodo elementum neque ac accumsan." ;
   dcat:keyword "Fringilla" ;
-  dct:created "2022-10-01T09:01:02Z"^^xsd:dateTime .
+  dct:created "2022-10-01T09:01:02Z"^^xsd:dateTime ;
+  dct:spatial <https://hdl.handle.net/20.500.11840/termmaster10058073> .
 
 <https://example.org/datasets/14>
   a dcat:Dataset ;

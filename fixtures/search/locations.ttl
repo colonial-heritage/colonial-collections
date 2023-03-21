@@ -1,0 +1,55 @@
+###############################
+# Sample data for testing
+# Extracted from https://collectie.wereldculturen.nl/thesaurus/
+###############################
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://hdl.handle.net/20.500.11840/termmaster10063182>
+  rdf:type skos:Concept ;
+  skos:prefLabel "Jakarta" ;
+  skos:altLabel "Batavia" ;
+  skos:inScheme "Geografie" .
+
+<https://hdl.handle.net/20.500.11840/termmaster10058074>
+  rdf:type skos:Concept ;
+  skos:prefLabel "Suriname" ;
+  skos:inScheme "Geografie" .
+
+<https://hdl.handle.net/20.500.11840/termmaster10063351>
+  rdf:type skos:Concept ;
+  skos:prefLabel "Bali" ;
+  skos:inScheme "Geografie" .
+
+<https://hdl.handle.net/20.500.11840/termmaster10063401>
+  rdf:type skos:Concept ;
+  skos:prefLabel "Ubud" ;
+  skos:altLabel "Oeboed" ;
+  skos:inScheme "Geografie" .
+
+<https://hdl.handle.net/20.500.11840/termmaster10061190>
+  rdf:type skos:Concept ;
+  skos:prefLabel "Indonesië" ;
+  skos:altLabel "Nederlands-Indië" ;
+  skos:altLabel "Indonesia" ;
+  skos:inScheme "Geografie" .
+
+<https://hdl.handle.net/20.500.11840/termmaster10058073>
+  rdf:type skos:Concept ;
+  skos:prefLabel "Zuid-Amerika" ;
+  skos:altLabel "South America" ;
+  skos:inScheme "Geografie" .
+
+<https://hdl.handle.net/20.500.11840/termmaster10055279>
+  rdf:type skos:Concept ;
+  skos:prefLabel "Zuid-Afrika" ;
+  skos:altLabel "Kaapkolonie" ;
+  skos:altLabel "South Africa" ;
+  skos:inScheme "Geografie" .
+
+<https://hdl.handle.net/20.500.11840/termmaster10054875>
+  rdf:type skos:Concept ;
+  skos:prefLabel "Ghana" ;
+  skos:altLabel "Goudkust" ;
+  skos:inScheme "Geografie" .
