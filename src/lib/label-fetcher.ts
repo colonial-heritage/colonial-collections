@@ -17,7 +17,7 @@ export type SearchOptions = z.infer<typeof searchOptionsSchema>;
 
 export type Labels = Map<string, string | undefined>;
 
-// Fetches labels of IDs from a SPARQL endpoint, for display to users
+// Fetches labels of IDs from a SPARQL endpoint
 export class LabelFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
