@@ -7,10 +7,6 @@ const labelFetcher = new LabelFetcher({
   endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
 });
 
-afterEach(() => {
-  jest.restoreAllMocks();
-});
-
 describe('getLabels', () => {
   it('does not return labels if no IDs were provided', async () => {
     const labels = await labelFetcher.getLabels({
