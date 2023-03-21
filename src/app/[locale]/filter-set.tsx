@@ -1,5 +1,6 @@
 import {SearchResultFilter} from '@/lib/dataset-fetcher';
 import {useCallback, Dispatch} from 'react';
+import {useTranslations} from 'next-intl';
 
 interface Props {
   title: string;
@@ -16,6 +17,7 @@ export default function FilterSet({
   setSelectedFilters,
   testId,
 }: Props) {
+  const t = useTranslations('Home');
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.checked) {
@@ -33,7 +35,7 @@ export default function FilterSet({
     <div
       className="pt-6 pr-4 max-w-[350px]"
       data-testid={testId}
-      aria-label="Select a checkbox to filter"
+      aria-label={t('aria.selectToFilter')}
     >
       <fieldset>
         <legend className="block font-bold text-gray-900">{title}</legend>

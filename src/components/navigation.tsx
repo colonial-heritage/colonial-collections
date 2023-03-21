@@ -22,6 +22,9 @@ interface Props {
     about: string;
     faq: string;
     contact: string;
+    aria: {
+      languageSelector: string;
+    };
   };
   localeLabels: {[locale: string]: string};
 }
@@ -60,7 +63,7 @@ export default function Navigation({
                     <div className="relative mt-1 w-44">
                       <Listbox.Button
                         className="relative w-full py-2 pl-3 pr-8 text-left"
-                        aria-label="Select to change the language of the site. The current language is ..."
+                        aria-label={navigationLabels.aria.languageSelector}
                       >
                         <span className="flex justify-end items-center">
                           <LanguageIcon className="w-4 h-4" />

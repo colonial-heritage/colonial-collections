@@ -30,6 +30,11 @@ export default function RootLayout({children, params}: Props) {
     about: t('about'),
     faq: t('faq'),
     contact: t('contact'),
+    aria: {
+      languageSelector: t('aria.languageSelector', {
+        language: t(`languages.${locale}`),
+      }),
+    },
   };
 
   const localeLabels: {[locale: string]: string} = {};

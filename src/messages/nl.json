@@ -13,7 +13,12 @@
     "sortNameDesc": "Naam - Aflopend",
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de datasets. Laad de pagina opnieuw om het opnieuw te proberen.",
     "filters": "Filters",
-    "clearAllFilters": "Alles verwijderen"
+    "clearAllFilters": "Alles verwijderen",
+    "aria": {
+      "typeToFilter": "Typ om op tekst te filteren",
+      "selectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen",
+      "selectToFilter": "Selecteer een selectievakje om te filteren"
+    }
   },
   "Paginator": {
     "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
@@ -36,6 +41,9 @@
     "languages": {
       "nl": "Nederlands",
       "en": "English"
+    },
+    "aria": {
+      "languageSelector": "Selecteer om de taal van de site te wijzigen. De huidige taal is {language}"
     }
   },
   "About": {
