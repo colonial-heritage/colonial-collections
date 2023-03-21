@@ -136,7 +136,7 @@ export default function ClientFilters({
 
   return (
     <>
-      {/* Mobile filter dialog */}
+      {/* Small screen filter dialog */}
       <Transition.Root show={showFiltersSidebarOnSmallScreen} as={Fragment}>
         <Dialog
           as="div"

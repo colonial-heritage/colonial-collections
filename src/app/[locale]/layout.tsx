@@ -24,6 +24,7 @@ export default function RootLayout({children, params}: Props) {
   // The navigation is a client component, get the labels first in this server component
   // See: https://next-intl-docs.vercel.app/docs/next-13/server-components#switching-to-client-components
   const navigationLabels = {
+    logo: t('logo'),
     home: t('home'),
     register: t('register'),
     about: t('about'),
@@ -33,6 +34,7 @@ export default function RootLayout({children, params}: Props) {
       languageSelector: t('aria.languageSelector', {
         language: t(`languages.${locale}`),
       }),
+      openMenu: t('aria.openMenu'),
     },
   };
 

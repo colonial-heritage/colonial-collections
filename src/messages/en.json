@@ -1,6 +1,6 @@
 {
   "Meta": {
-    "title": "Dataset Browser"
+    "title": "Dataset browser"
   },
   "Home": {
     "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
@@ -30,7 +30,8 @@
     "publisher": "Publisher"
   },
   "Navigation": {
-    "home": "Dataset Browser",
+    "logo": "Dataset browser",
+    "home": "Dataset browser",
     "register": "Register dataset",
     "about": "About",
     "faq": "FAQ",
@@ -40,11 +41,12 @@
       "en": "English"
     },
     "aria": {
-      "languageSelector": "Select to change the language of the site. The current language is {name}"
+      "languageSelector": "Select to change the language of the site. The current language is {name}",
+      "openMenu": "Open menu"
     }
   },
   "About": {
-    "title": "About the Dataset Browser"
+    "title": "About the Dataset browser"
   },
   "Contact": {
     "title": "Contact details"

@@ -17,6 +17,7 @@ import {locales} from '@/middleware';
 interface Props {
   locale: string;
   navigationLabels: {
+    logo: string;
     home: string;
     register: string;
     about: string;
@@ -24,6 +25,7 @@ interface Props {
     contact: string;
     aria: {
       languageSelector: string;
+      openMenu: string;
     };
   };
   localeLabels: {[locale: string]: string};
@@ -151,16 +153,13 @@ export default function Navigation({
       </div>
       <div className="flex flex-row justify-between ">
         <div className="flex items-center justify font-bold text-sky-700">
-          Dataset browser
+          {navigationLabels.logo}
         </div>
         <Disclosure as="nav" className="">
           {({open}) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-12 justify-between">
-                  <div className="inline-flex items-center px-1 pt-1">
-                    {/* TODO: Dataset Browser logo */}
-                  </div>
                   <div className="flex">
                     <div className="hidden sm:-my-px sm:flex sm:space-x-8">
                       {navigation.map(item => {
@@ -186,9 +185,11 @@ export default function Navigation({
                     </div>
                   </div>
                   <div className="-mr-2 flex items-center sm:hidden ">
-                    {/* Mobile menu button */}
+                    {/* small screen menu button */}
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
-                      <span className="sr-only">Open main menu</span>
+                      <span className="sr-only">
+                        {navigationLabels.aria.openMenu}
+                      </span>
                       {open ? (
                         <XMarkIcon
                           className="block h-6 w-6"
