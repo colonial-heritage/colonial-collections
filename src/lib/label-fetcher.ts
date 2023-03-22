@@ -17,7 +17,7 @@ export type SearchOptions = z.infer<typeof searchOptionsSchema>;
 
 export type Labels = Map<string, string | undefined>;
 
-// Fetches labels of IDs from a SPARQL endpoint
+// Fetches labels of IDs (= URIs) from a SPARQL endpoint
 export class LabelFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
@@ -40,7 +40,6 @@ export class LabelFetcher {
     return uniqueAndUncachedIds;
   }
 
-  // TBD: call this repeatedly if the endpoint limits its results?
   private async queryAndCacheLabels(ids: string[]) {
     if (ids.length === 0) {
       return; // No IDs to query
@@ -72,12 +71,17 @@ export class LabelFetcher {
   async getLabels(options: SearchOptions): Promise<Labels> {
     const opts = searchOptionsSchema.parse(options);
 
+    // TBD: the endpoint could limit its results if we request
+    // a large number of IDs at once. Split the IDs into chunks
+    // of e.g. 1000 IDs and call the endpoint per chunk?
     const ids = this.getIdsToQuery(opts.ids);
     await this.queryAndCacheLabels(ids);
 
-    // Return only the labels of the requested IDs
+    // Return only the labels of the requested IDs, not all cached labels
     const labels: Labels = new Map();
-    opts.ids.forEach((id: string) => labels.set(id, this.cache.get(id)));
+    for (const id of opts.ids) {
+      labels.set(id, this.cache.get(id));
+    }
 
     return labels;
   }

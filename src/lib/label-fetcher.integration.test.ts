@@ -43,6 +43,7 @@ describe('getLabels', () => {
   });
 });
 
+// TBD: consider moving this to a unit test as soon as we're happy with this functionality
 describe('getLabels', () => {
   let sparqlEndpointFetcherSpy: jest.SpiedFunction<
     SparqlEndpointFetcher['fetchBindings']
