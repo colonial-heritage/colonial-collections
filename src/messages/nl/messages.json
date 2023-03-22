@@ -38,12 +38,6 @@
       "en": "English"
     }
   },
-  "About": {
-    "title": "Over het project"
-  },
-  "Contact": {
-    "title": "Contact"
-  },
   "Details": {
     "noDataset": "Dataset kon niet gevonden worden.",
     "back": "Terug naar datasets",
@@ -61,9 +55,6 @@
       "dateModified": "Datum gewijzigd",
       "keywords": "Trefwoorden"
     }
-  },
-  "Faq": {
-    "title": "Veelgestelde vragen"
   },
   "Register": {
     "title": "Registreer dataset"

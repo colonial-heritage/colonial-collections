@@ -1,12 +1,9 @@
-import {useTranslations} from 'next-intl';
-import {PageHeader, PageTitle} from '@/components/page';
+import {useLocale} from 'next-intl';
 
-export default function Contact() {
-  const t = useTranslations('Contact');
+export default async function Contact() {
+  const locale = useLocale();
+  const ContactPage = (await import(`@/messages/${locale}/contact.mdx`))
+    .default;
 
-  return (
-    <PageHeader>
-      <PageTitle>{t('title')}</PageTitle>
-    </PageHeader>
-  );
+  return <ContactPage />;
 }
