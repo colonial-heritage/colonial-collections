@@ -9,14 +9,13 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
     <div
       key={dataset.id}
       className="group relative flex flex-col overflow-hidden  drop-shadow-md bg-white"
-      data-testid="dataset-card"
     >
       <div className="flex flex-1 flex-col space-y-2 p-4">
-        <h2
-          className="text-lg font-bold text-gray-900"
-          data-testid="dataset-card-name"
-        >
-          <Link href={`/dataset/${encodeURIComponent(dataset.id)}`}>
+        <h2 className="text-lg font-bold text-gray-900">
+          <Link
+            href={`/dataset/${encodeURIComponent(dataset.id)}`}
+            data-testid="dataset-card-name"
+          >
             <span aria-hidden="true" className="absolute inset-0" />
             {dataset.name}
           </Link>

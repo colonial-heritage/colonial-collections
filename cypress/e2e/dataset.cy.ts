@@ -6,7 +6,7 @@ describe('Dataset details page', () => {
       .first()
       .then($cardName => {
         // Navigate to the first dataset details page.
-        cy.getBySel('dataset-card').first().click();
+        cy.getBySel('dataset-card-name').first().click();
         cy.location('pathname').should('include', '/dataset');
         // On the details page.
         cy.getBySel('page-title').then($detailsName => {
