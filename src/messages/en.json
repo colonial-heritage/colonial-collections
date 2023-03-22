@@ -41,7 +41,7 @@
       "en": "English"
     },
     "aria": {
-      "languageSelector": "Select to change the language of the site. The current language is {name}",
+      "languageSelector": "Select to change the language of the site. The current language is {language}",
       "openMenu": "Open menu"
     }
   },
