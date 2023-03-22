@@ -28,7 +28,7 @@ export class LabelFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private getIdsToQuery(ids: string[]) {
+  private getFetchableIds(ids: string[]) {
     // Remove duplicate IDs
     const uniqueIds = [...new Set(ids)];
 
@@ -71,12 +71,12 @@ export class LabelFetcher {
   async getByIds(options: GetByIdsOptions): Promise<Labels> {
     const opts = getByIdsOptionsSchema.parse(options);
 
-    const ids = this.getIdsToQuery(opts.ids);
+    const fetchableIds = this.getFetchableIds(opts.ids);
 
     // TBD: the endpoint could limit its results if we request
     // a large number of IDs at once. Split the IDs into chunks
     // of e.g. 1000 IDs and call the endpoint per chunk?
-    await this.fetchAndCacheLabels(ids);
+    await this.fetchAndCacheLabels(fetchableIds);
 
     // Return only the labels of the requested IDs, not all cached labels
     const labels: Labels = new Map();
