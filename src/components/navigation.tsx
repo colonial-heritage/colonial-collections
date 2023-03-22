@@ -152,9 +152,12 @@ export default function Navigation({
         </div>
       </div>
       <div className="flex flex-row justify-between ">
-        <div className="flex items-center justify font-bold text-sky-700">
+        <Link
+          href="/"
+          className="flex items-center justify font-bold text-sky-700"
+        >
           {navigationLabels.logo}
-        </div>
+        </Link>
         <Disclosure as="nav" className="">
           {({open}) => (
             <>
