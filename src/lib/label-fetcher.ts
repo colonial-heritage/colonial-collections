@@ -9,11 +9,11 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
-const searchOptionsSchema = z.object({
+const getByIdsOptionsSchema = z.object({
   ids: z.array(z.string().url()),
 });
 
-export type SearchOptions = z.infer<typeof searchOptionsSchema>;
+export type GetByIdsOptions = z.infer<typeof getByIdsOptionsSchema>;
 
 export type Labels = Map<string, string | undefined>;
 
@@ -40,9 +40,9 @@ export class LabelFetcher {
     return uniqueAndUncachedIds;
   }
 
-  private async queryAndCacheLabels(ids: string[]) {
+  private async fetchAndCacheLabels(ids: string[]) {
     if (ids.length === 0) {
-      return; // No IDs to query
+      return; // No IDs to fetch
     }
 
     const queryConditions = ids.map((id: string) => {
@@ -68,14 +68,15 @@ export class LabelFetcher {
     }
   }
 
-  async getLabels(options: SearchOptions): Promise<Labels> {
-    const opts = searchOptionsSchema.parse(options);
+  async getByIds(options: GetByIdsOptions): Promise<Labels> {
+    const opts = getByIdsOptionsSchema.parse(options);
+
+    const ids = this.getIdsToQuery(opts.ids);
 
     // TBD: the endpoint could limit its results if we request
     // a large number of IDs at once. Split the IDs into chunks
     // of e.g. 1000 IDs and call the endpoint per chunk?
-    const ids = this.getIdsToQuery(opts.ids);
-    await this.queryAndCacheLabels(ids);
+    await this.fetchAndCacheLabels(ids);
 
     // Return only the labels of the requested IDs, not all cached labels
     const labels: Labels = new Map();

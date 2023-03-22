@@ -7,9 +7,9 @@ const labelFetcher = new LabelFetcher({
   endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
 });
 
-describe('getLabels', () => {
+describe('getByIds', () => {
   it('does not return labels if no IDs were provided', async () => {
-    const labels = await labelFetcher.getLabels({
+    const labels = await labelFetcher.getByIds({
       ids: [],
     });
 
@@ -17,7 +17,7 @@ describe('getLabels', () => {
   });
 
   it('returns undefined if the label of the provided ID does not exist', async () => {
-    const labels = await labelFetcher.getLabels({
+    const labels = await labelFetcher.getByIds({
       ids: ['https://example.org'],
     });
 
@@ -26,7 +26,7 @@ describe('getLabels', () => {
   });
 
   it('gets the labels of the provided IDs', async () => {
-    const labels = await labelFetcher.getLabels({
+    const labels = await labelFetcher.getByIds({
       ids: [
         'https://hdl.handle.net/20.500.11840/termmaster10063182',
         'https://hdl.handle.net/20.500.11840/termmaster10063351',
@@ -44,7 +44,7 @@ describe('getLabels', () => {
 });
 
 // TBD: consider moving this to a unit test as soon as we're happy with this functionality
-describe('getLabels', () => {
+describe('getByIds', () => {
   let sparqlEndpointFetcherSpy: jest.SpiedFunction<
     SparqlEndpointFetcher['fetchBindings']
   >;
@@ -62,7 +62,7 @@ describe('getLabels', () => {
   });
 
   it('gets the labels of the provided IDs from the SPARQL endpoint', async () => {
-    await labelFetcher.getLabels({
+    await labelFetcher.getByIds({
       ids: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
     });
 
@@ -70,12 +70,12 @@ describe('getLabels', () => {
   });
 
   it('gets the labels of the provided IDs from the cache', async () => {
-    await labelFetcher.getLabels({
+    await labelFetcher.getByIds({
       ids: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
     });
 
     // Request the labels again; should not trigger a call to the SPARQL endpoint
-    await labelFetcher.getLabels({
+    await labelFetcher.getByIds({
       ids: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
     });
 
