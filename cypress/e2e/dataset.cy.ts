@@ -7,7 +7,7 @@ describe('Dataset details page', () => {
       .then($cardName => {
         // Navigate to the first dataset details page.
         cy.getBySel('dataset-card-name').first().click();
-        // Wait for the page to load
+        // Wait for the page to load.
         cy.location('pathname', {timeout: 60000}).should('include', '/dataset');
         // On the details page.
         cy.getBySel('page-title').then($detailsName => {
