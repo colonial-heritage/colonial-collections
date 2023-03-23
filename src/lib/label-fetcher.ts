@@ -45,6 +45,7 @@ export class LabelFetcher {
       return; // No IDs to fetch
     }
 
+    // TBD: make the predicates configurable
     const queryConditions = ids.map((id: string) => {
       return `{
         BIND(<${id}> AS ?id)
@@ -64,6 +65,7 @@ export class LabelFetcher {
 
     const bindings = await arrayifyStream(bindingsStream);
     for (const binding of bindings) {
+      // TBD: set a TTL for each entry
       this.cache.set(binding.id.value, binding.label.value);
     }
   }
