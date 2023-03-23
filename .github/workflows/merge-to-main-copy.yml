@@ -1,0 +1,20 @@
+# Branch main-copy is a copy of main to allow for deployment to a separate environment
+# with the same codebase but a different configuration (e.g. env vars)
+name: Merge main into main-copy
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  merge-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Merge main
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          type: now
+          target_branch: main-copy
+          message: Merge main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
