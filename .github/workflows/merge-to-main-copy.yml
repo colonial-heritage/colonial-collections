@@ -16,5 +16,4 @@ jobs:
         with:
           type: now
           target_branch: main-copy
-          message: Merge main
           github_token: ${{ secrets.GITHUB_TOKEN }}
