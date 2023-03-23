@@ -188,7 +188,7 @@ export default function Navigation({
                     </div>
                   </div>
                   <div className="-mr-2 flex items-center sm:hidden ">
-                    {/* small screen menu button */}
+                    {/* Small screen menu button */}
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
                       <span className="sr-only">
                         {navigationLabels.aria.openMenu}
