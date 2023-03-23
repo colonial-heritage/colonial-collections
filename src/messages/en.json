@@ -1,6 +1,6 @@
 {
   "Meta": {
-    "title": "Dataset browser"
+    "title": "Dataset Browser"
   },
   "Home": {
     "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
@@ -30,8 +30,8 @@
     "publisher": "Publisher"
   },
   "Navigation": {
-    "logo": "Dataset browser",
-    "home": "Dataset browser",
+    "logo": "Dataset Browser",
+    "home": "Dataset Browser",
     "register": "Register dataset",
     "about": "About",
     "faq": "FAQ",
@@ -46,7 +46,7 @@
     }
   },
   "About": {
-    "title": "About the Dataset browser"
+    "title": "About the Dataset Browser"
   },
   "Contact": {
     "title": "Contact details"
