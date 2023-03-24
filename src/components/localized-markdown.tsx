@@ -20,4 +20,4 @@ async function LocalizedMarkdown({name}: Props) {
 // More info:
 //  - Next.js issue: https://github.com/vercel/next.js/issues/42292
 //  - Typescript pull request: https://github.com/microsoft/TypeScript/pull/51328
-export default LocalizedMarkdown as unknown as ({name}: Props) => JSX.Element;
+export default LocalizedMarkdown as unknown as (props: Props) => JSX.Element;
