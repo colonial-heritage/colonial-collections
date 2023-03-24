@@ -1,4 +1,3 @@
-import {PageWithSidebarContainer} from '@/components/page';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
@@ -99,7 +98,7 @@ export default async function Home({searchParams}: Props) {
   const t = await getTranslations('Home');
 
   return (
-    <PageWithSidebarContainer>
+    <div className="flex flex-col md:flex-row justify-between gap-6">
       <NextIntlClientProvider
         locale={locale}
         messages={{
@@ -128,6 +127,6 @@ export default async function Home({searchParams}: Props) {
           </ClientFilters>
         )}
       </NextIntlClientProvider>
-    </PageWithSidebarContainer>
+    </div>
   );
 }

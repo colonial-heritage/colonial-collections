@@ -11,12 +11,7 @@ import {
 import {SearchResult} from '@/lib/dataset-fetcher';
 import FilterSet from './filter-set';
 import Paginator from './paginator';
-import {
-  PageSidebar,
-  PageContent,
-  PageTitle,
-  PageHeader,
-} from '@/components/page';
+import {PageTitle, PageHeader} from '@/components/page';
 import {useTranslations} from 'next-intl';
 import SelectedFilters from './selected-filters';
 import {useRouter} from 'next/navigation';
@@ -184,9 +179,11 @@ export default function ClientFilters({
           </div>
         </Dialog>
       </Transition.Root>
-      <PageSidebar>{renderFilters}</PageSidebar>
+      <aside className="self-stretch hidden md:flex md:h-full w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2">
+        {renderFilters}
+      </aside>
 
-      <PageContent>
+      <section className="w-full md:w-2/3 gap-6 flex flex-col">
         <button
           type="button"
           className="inline-flex items-center md:hidden"
@@ -250,7 +247,7 @@ export default function ClientFilters({
             limit={limit}
           />
         ) : null}
-      </PageContent>
+      </section>
     </>
   );
 }
