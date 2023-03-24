@@ -1,9 +1,5 @@
-import {useLocale} from 'next-intl';
+import LocalizedMarkdown from '@/components/localized-markdown';
 
-export default async function Contact() {
-  const locale = useLocale();
-  const ContactPage = (await import(`@/messages/${locale}/contact.mdx`))
-    .default;
-
-  return <ContactPage />;
+export default function Contact() {
+  return <LocalizedMarkdown name="contact" />;
 }

@@ -1,8 +1,5 @@
-import {useLocale} from 'next-intl';
+import LocalizedMarkdown from '@/components/localized-markdown';
 
-export default async function Faq() {
-  const locale = useLocale();
-  const FaqPage = (await import(`@/messages/${locale}/faq.mdx`)).default;
-
-  return <FaqPage />;
+export default function Faq() {
+  return <LocalizedMarkdown name="faq" />;
 }

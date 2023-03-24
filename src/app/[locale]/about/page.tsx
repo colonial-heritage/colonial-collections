@@ -1,8 +1,5 @@
-import {useLocale} from 'next-intl';
+import LocalizedMarkdown from '@/components/localized-markdown';
 
-export default async function About() {
-  const locale = useLocale();
-  const AboutPage = (await import(`@/messages/${locale}/about.mdx`)).default;
-
-  return <AboutPage />;
+export default function About() {
+  return <LocalizedMarkdown name="about" />;
 }
