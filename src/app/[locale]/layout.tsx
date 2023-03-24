@@ -27,7 +27,6 @@ export default function RootLayout({children, params}: Props) {
   const navigationLabels = {
     name: tNavigation('name'),
     home: tNavigation('home'),
-    register: tNavigation('register'),
     about: tNavigation('about'),
     faq: tNavigation('faq'),
     contact: tNavigation('contact'),
