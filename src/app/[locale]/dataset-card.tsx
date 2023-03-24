@@ -9,6 +9,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
     <div
       key={dataset.id}
       className="group relative flex flex-col overflow-hidden  drop-shadow-md bg-white"
+      aria-label="Dataset"
     >
       <div className="flex flex-1 flex-col space-y-2 p-4">
         <h2 className="text-lg font-bold text-gray-900">

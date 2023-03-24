@@ -89,7 +89,7 @@ export default function ClientFilters({
   const renderFilters = useMemo(
     () => (
       <>
-        <div className="pr-4 max-w-[350px]">
+        <div className="pr-4 max-w-[350px]" id="facets">
           <label htmlFor="search" className="block font-bold text-gray-900">
             {t('search')}
           </label>
@@ -100,7 +100,7 @@ export default function ClientFilters({
             type="text"
             name="search"
             id="search"
-            className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm"
             aria-label={t('accessibilityTypeToFilter')}
           />
         </div>
@@ -201,7 +201,10 @@ export default function ClientFilters({
           />
         </button>
         <PageHeader>
-          <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
+          <div
+            className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap"
+            id="search-results"
+          >
             <div className="ml-4 mt-2">
               <PageTitle>{t('title', {totalDatasets: totalCount})}</PageTitle>
             </div>
