@@ -19,7 +19,6 @@ interface Props {
   navigationLabels: {
     name: string;
     home: string;
-    register: string;
     about: string;
     faq: string;
     contact: string;
@@ -41,7 +40,6 @@ export default function Navigation({
 
   const navigation = [
     {name: navigationLabels.home, href: '/'},
-    {name: navigationLabels.register, href: '/register'},
     {name: navigationLabels.about, href: '/about'},
     {name: navigationLabels.faq, href: '/faq'},
     {name: navigationLabels.contact, href: '/contact'},
