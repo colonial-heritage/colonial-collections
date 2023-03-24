@@ -45,12 +45,6 @@
       "openMenu": "Open menu"
     }
   },
-  "About": {
-    "title": "About the Dataset Browser"
-  },
-  "Contact": {
-    "title": "Contact details"
-  },
   "Details": {
     "noDataset": "Dataset could not be found.",
     "back": "Back to datasets",
@@ -68,9 +62,6 @@
       "dateModified": "Date modified",
       "keywords": "Keywords"
     }
-  },
-  "Faq": {
-    "title": "FAQ"
   },
   "Register": {
     "title": "Register"

@@ -95,7 +95,7 @@ async function getData({searchParams = {}}: Props): Promise<Response> {
 export default async function Home({searchParams}: Props) {
   const {searchResult, hasError} = await getData({searchParams});
   const locale = useLocale();
-  const messages = (await import(`@/messages/${locale}.json`)).default;
+  const messages = (await import(`@/messages/${locale}/messages.json`)).default;
   const t = await getTranslations('Home');
 
   return (

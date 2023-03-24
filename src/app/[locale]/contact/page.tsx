@@ -1,12 +1,5 @@
-import {useTranslations} from 'next-intl';
-import {PageHeader, PageTitle} from '@/components/page';
+import LocalizedMarkdown from '@/components/localized-markdown';
 
 export default function Contact() {
-  const t = useTranslations('Contact');
-
-  return (
-    <PageHeader>
-      <PageTitle>{t('title')}</PageTitle>
-    </PageHeader>
-  );
+  return <LocalizedMarkdown name="contact" />;
 }
