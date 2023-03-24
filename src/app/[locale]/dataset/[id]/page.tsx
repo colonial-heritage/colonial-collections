@@ -1,10 +1,5 @@
 import {getTranslations} from 'next-intl/server';
 import {PageHeader, PageTitle} from '@/components/page';
-import {
-  PageWithSidebarContainer,
-  PageSidebar,
-  PageContent,
-} from '@/components/page';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {Link} from 'next-intl';
@@ -78,8 +73,8 @@ export default async function Details({params}: Props) {
   ];
 
   return (
-    <PageWithSidebarContainer>
-      <PageSidebar>
+    <div className="flex flex-col md:flex-row justify-between gap-6">
+      <aside className="md:h-full w-full sm:w-1/5 flex flex-row md:flex-col border-r-2 border-white">
         <div>
           <Link
             href="/"
@@ -100,10 +95,10 @@ export default async function Details({params}: Props) {
             ))}
           </nav>
         </div>
-      </PageSidebar>
-      <PageContent>
+      </aside>
+      <section className="w-full sm:w-4/5 gap-6 flex flex-col">
         <div className="divide-y-4 divide-white flex flex-col">
-          <div className="py-10">
+          <div className="pb-10">
             <PageHeader>
               <PageTitle id="about">{dataset.name}</PageTitle>
             </PageHeader>
@@ -123,7 +118,7 @@ export default async function Details({params}: Props) {
             ))}
           </div>
         </div>
-      </PageContent>
-    </PageWithSidebarContainer>
+      </section>
+    </div>
   );
 }
