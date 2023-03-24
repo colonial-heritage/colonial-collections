@@ -50,9 +50,7 @@ export default function Navigation({
     <>
       <div className="flex text-sm flex-row justify-between items-center">
         <div>
-          <a href="http://www.colonialcollections.nl" className="text-grey-500">
-            Colonialcollections.nl
-          </a>
+          <div className="text-grey-500">Colonialcollections.nl</div>
         </div>
         <div>
           {/* Top navigation */}
