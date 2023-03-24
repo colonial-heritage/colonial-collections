@@ -19,40 +19,48 @@ export default function RootLayout({children, params}: Props) {
     notFound();
   }
 
-  const t = useTranslations('Navigation');
+  const tNavigation = useTranslations('Navigation');
+  const tLanguageSelector = useTranslations('LanguageSelector');
 
   // The navigation is a client component, get the labels first in this server component
   // See: https://next-intl-docs.vercel.app/docs/next-13/server-components#switching-to-client-components
   const navigationLabels = {
-    home: t('home'),
-    register: t('register'),
-    about: t('about'),
-    faq: t('faq'),
-    contact: t('contact'),
+    name: tNavigation('name'),
+    home: tNavigation('home'),
+    register: tNavigation('register'),
+    about: tNavigation('about'),
+    faq: tNavigation('faq'),
+    contact: tNavigation('contact'),
+  };
+
+  const languageSelectorLabels = {
+    accessibilityOpenMenu: tLanguageSelector('accessibilityOpenMenu'),
+    accessibilityLanguageSelector: tLanguageSelector(
+      'accessibilityLanguageSelector',
+      {
+        language: tLanguageSelector(`${locale}`),
+      }
+    ),
   };
 
   const localeLabels: {[locale: string]: string} = {};
 
   locales.forEach(locale => {
-    localeLabels[locale] = t(`languages.${locale}`);
+    localeLabels[locale] = tLanguageSelector(`${locale}`);
   });
 
   return (
     <html className="h-full" lang={locale}>
-      <body className="flex flex-col min-h-screen bg-gray-light">
-        <div className="min-h-full">
+      <body className="flex flex-col min-h-screen">
+        <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">
           <Navigation
             navigationLabels={navigationLabels}
+            languageSelectorLabels={languageSelectorLabels}
             localeLabels={localeLabels}
             locale={locale}
           />
-
-          <div className="p-10">
-            <main className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-              {children}
-            </main>
-          </div>
-        </div>
+        </header>
+        <main className="bg-gray-light">{children}</main>
       </body>
     </html>
   );

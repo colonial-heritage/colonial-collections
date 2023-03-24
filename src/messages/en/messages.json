@@ -12,8 +12,11 @@
     "sortNameAsc": "Name - Ascending",
     "sortNameDesc": "Name - Descending",
     "fetchError": "There was a problem fetching the datasets. Please reload the page to try again.",
-    "filters": "filters",
-    "clearAllFilters": "Clear all"
+    "filters": "Filters",
+    "clearAllFilters": "Clear all",
+    "accessibilityTypeToFilter": "Type to filter on text.",
+    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result",
+    "accessibilitySelectToFilter": "Select a checkbox to filter"
   },
   "Paginator": {
     "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
@@ -25,15 +28,18 @@
     "publisher": "Publisher"
   },
   "Navigation": {
+    "name": "Dataset Browser",
     "home": "Dataset Browser",
     "register": "Register dataset",
     "about": "About",
     "faq": "FAQ",
-    "contact": "Contact",
-    "languages": {
-      "nl": "Nederlands",
-      "en": "English"
-    }
+    "contact": "Contact"
+  },
+  "LanguageSelector": {
+    "nl": "Nederlands",
+    "en": "English",
+    "accessibilityLanguageSelector": "Select to change the language of the site. The current language is {language}",
+    "accessibilityOpenMenu": "Open menu"
   },
   "Details": {
     "noDataset": "Dataset could not be found.",

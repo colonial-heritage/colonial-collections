@@ -1,7 +1,7 @@
 import {defineConfig} from 'cypress';
 
 export default defineConfig({
-  // desktop
+  // Desktop
   viewportWidth: 1536,
   viewportHeight: 960,
   e2e: {

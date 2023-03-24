@@ -21,11 +21,9 @@ export default function DatasetList({datasets, totalCount}: Props) {
   if (totalCount && totalCount > 0) {
     return (
       <>
-        <div className="grid grid-cols-1 gap-y-4 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8">
-          {datasets.map(dataset => (
-            <DatasetCard key={dataset.id} dataset={dataset} />
-          ))}
-        </div>
+        {datasets.map(dataset => (
+          <DatasetCard key={dataset.id} dataset={dataset} />
+        ))}
       </>
     );
   }

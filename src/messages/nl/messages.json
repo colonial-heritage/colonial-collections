@@ -12,8 +12,11 @@
     "sortNameAsc": "Naam - Oplopend",
     "sortNameDesc": "Naam - Aflopend",
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de datasets. Laad de pagina opnieuw om het opnieuw te proberen.",
-    "filters": "filters",
-    "clearAllFilters": "Alles verwijderen"
+    "filters": "Filters",
+    "clearAllFilters": "Alles verwijderen",
+    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
+    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen",
+    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
   },
   "Paginator": {
     "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
@@ -28,15 +31,18 @@
     "title": "Pagina kon niet gevonden worden (404)"
   },
   "Navigation": {
+    "name": "Dataset Browser",
     "home": "Dataset Browser",
     "register": "registreer dataset",
     "about": "Over",
     "faq": "FAQ",
-    "contact": "Contact",
-    "languages": {
-      "nl": "Nederlands",
-      "en": "English"
-    }
+    "contact": "Contact"
+  },
+  "LanguageSelector": {
+    "nl": "Nederlands",
+    "en": "English",
+    "accessibilityLanguageSelector": "Selecteer om de taal van de site te wijzigen. De huidige taal is {language}",
+    "accessibilityOpenMenu": "Open menu"
   },
   "Details": {
     "noDataset": "Dataset kon niet gevonden worden.",

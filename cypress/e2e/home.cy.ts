@@ -1,7 +1,7 @@
-describe('Dataset browser homepage', () => {
+describe('Dataset Browser homepage', () => {
   it('loads a dataset list', () => {
     cy.visit('/en');
-    cy.getBySel('dataset-card').its('length').should('be.gt', 0);
+    cy.getBySel('dataset-card-name').its('length').should('be.gt', 0);
   });
 });
 
