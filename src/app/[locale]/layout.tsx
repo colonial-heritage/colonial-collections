@@ -19,29 +19,34 @@ export default function RootLayout({children, params}: Props) {
     notFound();
   }
 
-  const t = useTranslations('Navigation');
+  const tNavigation = useTranslations('Navigation');
+  const tLanguageSelector = useTranslations('LanguageSelector');
 
   // The navigation is a client component, get the labels first in this server component
   // See: https://next-intl-docs.vercel.app/docs/next-13/server-components#switching-to-client-components
   const navigationLabels = {
-    logo: t('logo'),
-    home: t('home'),
-    register: t('register'),
-    about: t('about'),
-    faq: t('faq'),
-    contact: t('contact'),
-    aria: {
-      languageSelector: t('aria.languageSelector', {
-        language: t(`languages.${locale}`),
-      }),
-      openMenu: t('aria.openMenu'),
-    },
+    name: tNavigation('name'),
+    home: tNavigation('home'),
+    register: tNavigation('register'),
+    about: tNavigation('about'),
+    faq: tNavigation('faq'),
+    contact: tNavigation('contact'),
+  };
+
+  const languageSelectorLabels = {
+    accessibilityOpenMenu: tLanguageSelector('accessibilityOpenMenu'),
+    accessibilityLanguageSelector: tLanguageSelector(
+      'accessibilityLanguageSelector',
+      {
+        language: tLanguageSelector(`${locale}`),
+      }
+    ),
   };
 
   const localeLabels: {[locale: string]: string} = {};
 
   locales.forEach(locale => {
-    localeLabels[locale] = t(`languages.${locale}`);
+    localeLabels[locale] = tLanguageSelector(`${locale}`);
   });
 
   return (
@@ -50,6 +55,7 @@ export default function RootLayout({children, params}: Props) {
         <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">
           <Navigation
             navigationLabels={navigationLabels}
+            languageSelectorLabels={languageSelectorLabels}
             localeLabels={localeLabels}
             locale={locale}
           />

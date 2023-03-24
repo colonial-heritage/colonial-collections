@@ -17,16 +17,16 @@ import {locales} from '@/middleware';
 interface Props {
   locale: string;
   navigationLabels: {
-    logo: string;
+    name: string;
     home: string;
     register: string;
     about: string;
     faq: string;
     contact: string;
-    aria: {
-      languageSelector: string;
-      openMenu: string;
-    };
+  };
+  languageSelectorLabels: {
+    accessibilityLanguageSelector: string;
+    accessibilityOpenMenu: string;
   };
   localeLabels: {[locale: string]: string};
 }
@@ -34,6 +34,7 @@ interface Props {
 export default function Navigation({
   locale,
   navigationLabels,
+  languageSelectorLabels,
   localeLabels,
 }: Props) {
   const pathname = usePathname();
@@ -63,7 +64,9 @@ export default function Navigation({
                     <div className="relative mt-1 w-44">
                       <Listbox.Button
                         className="relative w-full py-2 pl-3 pr-8 text-left"
-                        aria-label={navigationLabels.aria.languageSelector}
+                        aria-label={
+                          languageSelectorLabels.accessibilityLanguageSelector
+                        }
                       >
                         <span className="flex justify-end items-center">
                           <LanguageIcon className="w-4 h-4" />
@@ -154,7 +157,7 @@ export default function Navigation({
           href="/"
           className="flex items-center justify font-bold text-sky-700"
         >
-          {navigationLabels.logo}
+          {navigationLabels.name}
         </Link>
         <Disclosure as="nav" className="">
           {({open}) => (
@@ -189,7 +192,7 @@ export default function Navigation({
                     {/* Small screen menu button */}
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
                       <span className="sr-only">
-                        {navigationLabels.aria.openMenu}
+                        {languageSelectorLabels.accessibilityOpenMenu}
                       </span>
                       {open ? (
                         <XMarkIcon

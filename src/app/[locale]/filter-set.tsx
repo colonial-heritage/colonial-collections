@@ -35,7 +35,7 @@ export default function FilterSet({
     <div
       className="pt-6 pr-4 max-w-[350px]"
       data-testid={testId}
-      aria-label={t('aria.selectToFilter')}
+      aria-label={t('accessibilitySelectToFilter')}
     >
       <fieldset>
         <legend className="block font-bold text-gray-900">{title}</legend>

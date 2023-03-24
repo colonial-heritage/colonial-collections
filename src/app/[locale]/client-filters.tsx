@@ -101,7 +101,7 @@ export default function ClientFilters({
             name="search"
             id="search"
             className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            aria-label={t('aria.typeToFilter')}
+            aria-label={t('accessibilityTypeToFilter')}
           />
         </div>
         {!!filters.licenses?.length && (
@@ -154,7 +154,6 @@ export default function ClientFilters({
           >
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
-
           <div className="fixed inset-0 z-40 flex">
             <Transition.Child
               as={Fragment}
@@ -212,7 +211,7 @@ export default function ClientFilters({
                 className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
                 value={sort}
                 onChange={handleSortChange}
-                aria-label={t('aria.selectToChangeOrder')}
+                aria-label={t('accessibilitySelectToChangeOrder')}
               >
                 <option value={Sort.RelevanceDesc}>
                   {t('sortRelevanceDesc')}

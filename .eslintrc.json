@@ -1,7 +1,7 @@
 {
   "extends": ["next/core-web-vitals", "./node_modules/gts/"],
   "rules": {
-    "capitalized-comments":["error", "always", {
+    "capitalized-comments": ["error", "always", {
       "ignoreConsecutiveComments": true
     }]
   }
