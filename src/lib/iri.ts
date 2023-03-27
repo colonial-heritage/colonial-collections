@@ -22,7 +22,7 @@ export function getIrisFromObject<T>(rootObject: T) {
   while (stack.length > 0) {
     const lastObject = stack.pop();
     if (lastObject === undefined) {
-      return iris;
+      break;
     }
 
     const currentObject = lastObject as object;
