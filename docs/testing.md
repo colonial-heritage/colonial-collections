@@ -1,20 +1,26 @@
 # Testing
 
-This application has different tests. The end-to-end tests run in CI after creating a pull request. Therefore, pull requests can only be merged if all tests have passed.
+This application has different tests. The unit tests and end-to-end tests run in CI after creating a pull request. Therefore, pull requests can only be merged if all tests have passed.
 
-## Integration testing with Jest
+## Unit testing
+
+For unit testing we use [Jest](https://jestjs.io/). You can run the tests with the following command:
+
+    npm run test
+
+## Integration testing
 
 For integration testing we use [Jest](https://jestjs.io/). You can run the tests with the following command:
 
-  npm run test:integration
+    npm run test:integration
 
-Beware: the integration tests are not run in CI. The application does not have its own, isolated Elasticsearch API to test against, so test runs on CI could fail due to e.g. connectivity issues with the external Elasticsearch.
+Beware: the integration tests are not run in CI. The application does not have its own, isolated search APIs to test against, so test runs on CI could fail due to e.g. connectivity issues with the external search APIs.
 
-## End-to-end testing with Cypress
+## End-to-end testing
 
 For end-to-end testing we use [Cypress](https://www.cypress.io/). You can run the tests with the following command:
 
-  npm run cypress
+    npm run cypress
 
 ### Writing Cypress tests
 
