@@ -19,7 +19,7 @@ describe('isIri', () => {
 });
 
 describe('getIrisFromObject', () => {
-  it('returns IRIs from an object', () => {
+  it('gets IRIs from an object', () => {
     const iris = getIrisFromObject({
       a: 'b',
       c: {
@@ -34,20 +34,27 @@ describe('getIrisFromObject', () => {
     expect(iris).toStrictEqual(['http://example.org', 'https://example.org']);
   });
 
-  it('returns IRIs from an array', () => {
+  it('gets IRIs from an array', () => {
     const iris = getIrisFromObject(['https://example.org']);
 
     expect(iris).toStrictEqual(['https://example.org']);
   });
 
-  it('does not return IRIs that are not RFC 3987-compliant', () => {
-    const iris = getIrisFromObject(['https://example.org/|']);
+  it('does not get IRIs if input is empty', () => {
+    // @ts-expect-error:TS2553
+    const iris = getIrisFromObject();
 
     expect(iris).toStrictEqual([]);
   });
 
-  it('does not return IRIs if input is not an object or array', () => {
+  it('does not get IRIs if input is not an object or array', () => {
     const iris = getIrisFromObject('https://example.org');
+
+    expect(iris).toStrictEqual([]);
+  });
+
+  it('does not get IRIs that are not RFC 3987-compliant', () => {
+    const iris = getIrisFromObject(['https://example.org/|']);
 
     expect(iris).toStrictEqual([]);
   });
