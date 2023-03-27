@@ -1,5 +1,5 @@
 import {validateIri} from 'validate-iri';
-import {object, z} from 'zod';
+import {z} from 'zod';
 
 export function isIri(value: string) {
   const result = z
@@ -27,7 +27,7 @@ export function getIrisFromObject<T>(rootObject: T) {
 
     const currentObject = lastObject as object;
     Object.keys(currentObject).forEach(key => {
-      const value = currentObject[key as keyof typeof object];
+      const value = currentObject[key as keyof typeof currentObject];
       if (typeof value === 'string' && isIri(value)) {
         iris.push(value);
       } else if (typeof value === 'object' && value !== null) {
