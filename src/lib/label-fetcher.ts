@@ -1,5 +1,5 @@
-import arrayifyStream from 'arrayify-stream';
-import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
+import {IBindings, SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
+import {isIri} from './iri';
 import LRUCache from 'lru-cache';
 import {z} from 'zod';
 
@@ -9,15 +9,20 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
-const getByIdsOptionsSchema = z.object({
-  ids: z.array(z.string().url()),
+const loadByIrisOptionsSchema = z.object({
+  iris: z.array(z.string()),
+  predicates: z.array(z.string()),
 });
 
-export type GetByIdsOptions = z.infer<typeof getByIdsOptionsSchema>;
+export type LoadByIrisOptions = z.infer<typeof loadByIrisOptionsSchema>;
 
-export type Labels = Map<string, string | undefined>;
+const getByIriOptionsSchema = z.object({
+  iri: z.string(),
+});
 
-// Fetches labels of IDs (= URIs) from a SPARQL endpoint
+export type GetByIriOptions = z.infer<typeof getByIriOptionsSchema>;
+
+// Fetches labels of IRIs from a SPARQL endpoint
 export class LabelFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
@@ -28,64 +33,73 @@ export class LabelFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private getFetchableIds(ids: string[]) {
-    // Remove duplicate IDs
-    const uniqueIds = [...new Set(ids)];
+  private getFetchableIris(iris: string[]) {
+    // Remove duplicate IRIs
+    const uniqueIris = [...new Set(iris)];
 
-    // Remove IDs already cached
-    const uniqueAndUncachedIds = uniqueIds.filter(
-      (id: string) => !this.cache.has(id)
+    // Remove invalid IRIs and IRIs already cached
+    const validAndUncachedIris = uniqueIris.filter(
+      (iri: string) => isIri(iri) && !this.cache.has(iri)
     );
 
-    return uniqueAndUncachedIds;
+    return validAndUncachedIris;
   }
 
-  private async fetchAndCacheLabels(ids: string[]) {
-    if (ids.length === 0) {
-      return; // No IDs to fetch
+  private async fetchAndCacheLabels(options: LoadByIrisOptions) {
+    const {iris, predicates} = options;
+
+    if (iris.length === 0) {
+      return; // No IRIs to fetch
     }
 
-    // TBD: make the predicates configurable
-    const queryConditions = ids.map((id: string) => {
+    // This returns multiple labels per IRI if multiple predicates match
+    const predicate = predicates.map(predicate => `<${predicate}>`).join('|');
+
+    // TBD: add an option for a locale, for filtering the labels in a specific language?
+    const queryConditions = iris.map((iri: string) => {
       return `{
-        BIND(<${id}> AS ?id)
-        ?id cc:name ?label
+        BIND(<${iri}> AS ?iri)
+        ?iri ${predicate} ?label
       }`;
     });
 
-    const query = `PREFIX cc: <https://colonialcollections.nl/search#>
-      SELECT ?id ?label WHERE {
+    const query = `
+      SELECT ?iri ?label WHERE {
         ${queryConditions.join(' UNION ')}
       }`;
 
+    // The endpoint throws an error if an IRI is not valid
     const bindingsStream = await this.fetcher.fetchBindings(
       this.endpointUrl,
       query
     );
 
-    const bindings = await arrayifyStream(bindingsStream);
-    for (const binding of bindings) {
-      // TBD: set a TTL for each entry
-      this.cache.set(binding.id.value, binding.label.value);
+    for await (const rawBindings of bindingsStream) {
+      const bindings = rawBindings as unknown as IBindings; // TS assumes it's a string or Buffer
+      this.cache.set(bindings.iri.value, bindings.label.value);
     }
   }
 
-  async getByIds(options: GetByIdsOptions): Promise<Labels> {
-    const opts = getByIdsOptionsSchema.parse(options);
+  async loadByIris(options: LoadByIrisOptions) {
+    const opts = loadByIrisOptionsSchema.parse(options);
 
-    const fetchableIds = this.getFetchableIds(opts.ids);
+    const fetchableIris = this.getFetchableIris(opts.iris);
 
     // TBD: the endpoint could limit its results if we request
-    // a large number of IDs at once. Split the IDs into chunks
-    // of e.g. 1000 IDs and call the endpoint per chunk?
-    await this.fetchAndCacheLabels(fetchableIds);
-
-    // Return only the labels of the requested IDs, not all cached labels
-    const labels: Labels = new Map();
-    for (const id of opts.ids) {
-      labels.set(id, this.cache.get(id));
+    // a large number of IRIs at once. Split the IRIs into chunks
+    // of e.g. 1000 IRIs and call the endpoint per chunk?
+    try {
+      await this.fetchAndCacheLabels({
+        iris: fetchableIris,
+        predicates: opts.predicates,
+      });
+    } catch (err) {
+      console.error(err); // TODO: add logger
     }
+  }
 
-    return labels;
+  getByIri(options: GetByIriOptions) {
+    const opts = getByIriOptionsSchema.parse(options);
+    return this.cache.get(opts.iri);
   }
 }
