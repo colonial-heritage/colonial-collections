@@ -26,7 +26,6 @@
     "@heroicons/react": "2.0.16",
     "@next/mdx": "13.2.4",
     "@tailwindcss/forms": "0.5.3",
-    "arrayify-stream": "2.0.1",
     "classnames": "2.3.2",
     "fetch-sparql-endpoint": "3.2.1",
     "lru-cache": "8.0.4",
