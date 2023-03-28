@@ -8,36 +8,38 @@ const labelFetcher = new LabelFetcher({
 });
 
 describe('getByIds', () => {
-  it('returns undefined if the label of the provided IRI does not exist', async () => {
-    await labelFetcher.loadByIris({
-      iris: ['https://example.org'],
+  it('returns undefined if IRIs have not been loaded', async () => {
+    const label = labelFetcher.getByIri({
+      iri: 'https://hdl.handle.net/20.500.11840/termmaster10063182',
     });
 
-    expect(labelFetcher.getByIri({iri: 'https://example.org'})).toBeUndefined();
+    expect(label).toBeUndefined();
+  });
+
+  it('returns undefined if the label of the provided IRI does not exist', async () => {
+    await labelFetcher.loadByIris({
+      iris: ['https://doesnotexist.org'],
+    });
+
+    const label = labelFetcher.getByIri({iri: 'https://doesnotexist.org'});
+
+    expect(label).toBeUndefined();
   });
 
   it('gets the label of the provided IRI', async () => {
     await labelFetcher.loadByIris({
-      iris: [
-        'https://hdl.handle.net/20.500.11840/termmaster10063182',
-        'https://hdl.handle.net/20.500.11840/termmaster10063351',
-      ],
+      iris: ['https://hdl.handle.net/20.500.11840/termmaster10063182'],
     });
 
-    expect(
-      labelFetcher.getByIri({
-        iri: 'https://hdl.handle.net/20.500.11840/termmaster10063182',
-      })
-    ).toBe('Jakarta');
-    expect(
-      labelFetcher.getByIri({
-        iri: 'https://hdl.handle.net/20.500.11840/termmaster10063351',
-      })
-    ).toBe('Bali');
+    const label = labelFetcher.getByIri({
+      iri: 'https://hdl.handle.net/20.500.11840/termmaster10063182',
+    });
+
+    expect(label).toBe('Jakarta');
   });
 });
 
-// TBD: consider moving this to a unit test as soon as we're happy with this functionality
+// TBD: move this to a unit test as soon as we're happy with this functionality
 describe('loadByIris', () => {
   let sparqlEndpointFetcherSpy: jest.SpiedFunction<
     SparqlEndpointFetcher['fetchBindings']

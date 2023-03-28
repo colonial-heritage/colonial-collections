@@ -55,7 +55,8 @@ export class LabelFetcher {
       return; // No IRIs to fetch
     }
 
-    // TODO: make the predicates configurable
+    // TBD: make the predicates configurable?
+    // TBD: add an option for a locale, for filtering the labels in a specific language?
     const queryConditions = iris.map((iri: string) => {
       return `{
         BIND(<${iri}> AS ?iri)
