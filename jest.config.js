@@ -7,6 +7,9 @@ const customJestConfig = {
   testMatch: ['**/*.test.ts(x)?'],
   collectCoverage: true,
   setupFiles: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
 };
 
 module.exports = createJestConfig(customJestConfig);

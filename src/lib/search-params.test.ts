@@ -1,0 +1,172 @@
+import {
+  getUrlWithSearchParams,
+  fromSearchParamsToSearchOptions,
+  defaultSortBy,
+  SortBy,
+} from './search-params';
+import {describe, expect, it} from '@jest/globals';
+
+describe('getUrlWithSearchParams', () => {
+  it('returns "/" if there are no options', () => {
+    expect(getUrlWithSearchParams({filters: {}})).toBe('/');
+  });
+
+  it('returns "/" with only default values', () => {
+    const options = {
+      offset: 0,
+      sortBy: defaultSortBy,
+      filters: {},
+    };
+    expect(getUrlWithSearchParams(options)).toBe('/');
+  });
+
+  it('returns "/" with an empty query string', () => {
+    const options = {
+      query: '',
+      filters: {},
+    };
+    expect(getUrlWithSearchParams(options)).toBe('/');
+  });
+
+  it('returns "/" with empty filter arrays', () => {
+    const options = {
+      query: '',
+      filters: {
+        licenses: [],
+        publishers: [],
+      },
+    };
+    expect(getUrlWithSearchParams(options)).toBe('/');
+  });
+
+  it('adds "query" to the search params if `query` is not empty', () => {
+    const options = {
+      query: 'my query',
+      filters: {},
+    };
+    expect(getUrlWithSearchParams(options)).toBe('/?query=my+query');
+  });
+
+  it('adds "offset" to the search params if `offset` is not 0', () => {
+    const options = {
+      offset: 10,
+      filters: {},
+    };
+    expect(getUrlWithSearchParams(options)).toBe('/?offset=10');
+  });
+
+  it('adds "sortBy" to the search params if `sortBy` is not the default', () => {
+    const options = {
+      sortBy: SortBy.NameAsc,
+      filters: {},
+    };
+    expect(getUrlWithSearchParams(options)).toBe('/?sortBy=nameAsc');
+  });
+
+  it('adds "filters" to the search params if the filter arrays are not empty', () => {
+    const options = {
+      filters: {
+        licenses: ['filter1'],
+        publishers: ['filter2'],
+      },
+    };
+    expect(getUrlWithSearchParams(options)).toBe(
+      '/?licenses=filter1&publishers=filter2'
+    );
+  });
+
+  it('adds all the params to the search params if present', () => {
+    const options = {
+      query: 'my query',
+      offset: 20,
+      sortBy: SortBy.NameDesc,
+      filters: {
+        licenses: ['filter1', 'filter2'],
+        publishers: ['filter3'],
+      },
+    };
+    expect(getUrlWithSearchParams(options)).toBe(
+      '/?query=my+query&licenses=filter1%2Cfilter2&publishers=filter3&offset=20&sortBy=nameDesc'
+    );
+  });
+});
+
+describe('fromSearchParamsToSearchOptions', () => {
+  it('returns default search options if there are no search params', () => {
+    expect(fromSearchParamsToSearchOptions({})).toStrictEqual({
+      searchOptions: {
+        filters: {
+          licenses: undefined,
+          publishers: undefined,
+        },
+        offset: 0,
+        sortBy: 'relevance',
+        sortOrder: 'desc',
+      },
+      sortBy: 'relevanceDesc',
+    });
+  });
+
+  it('returns default search options if the search params contain defaults', () => {
+    const searchParams = {
+      offset: '0',
+      sortBy: defaultSortBy,
+    };
+    expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
+      searchOptions: {
+        filters: {
+          licenses: undefined,
+          publishers: undefined,
+        },
+        offset: 0,
+        sortBy: 'relevance',
+        sortOrder: 'desc',
+      },
+      sortBy: 'relevanceDesc',
+    });
+  });
+
+  it('returns default search options if there are invalid search params', () => {
+    const searchParams = {
+      offset: 'string',
+      sortBy: 'color',
+      notValidParam: 'notValid',
+    };
+    // @ts-expect-error:TS2553
+    expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
+      searchOptions: {
+        filters: {
+          licenses: undefined,
+          publishers: undefined,
+        },
+        offset: 0,
+        sortBy: 'relevance',
+        sortOrder: 'desc',
+      },
+      sortBy: 'relevanceDesc',
+    });
+  });
+
+  it('converts valid search params to search options', () => {
+    const searchParams = {
+      query: 'My query',
+      offset: '10',
+      sortBy: SortBy.NameAsc,
+      licenses: 'license1,license2',
+      publishers: 'publisher',
+    };
+    expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
+      searchOptions: {
+        query: 'My query',
+        filters: {
+          licenses: ['license1', 'license2'],
+          publishers: ['publisher'],
+        },
+        offset: 10,
+        sortBy: 'name',
+        sortOrder: 'asc',
+      },
+      sortBy: 'nameAsc',
+    });
+  });
+});
