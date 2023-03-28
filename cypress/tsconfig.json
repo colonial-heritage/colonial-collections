@@ -1,6 +1,8 @@
 {
   "extends": "../tsconfig",
   "compilerOptions": {
+    "noEmit": false,
+    "sourceMap": false,
     "isolatedModules": false,
     "types": ["cypress", "node"],
   },
