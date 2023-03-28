@@ -1,16 +1,15 @@
 import {LabelFetcher} from './label-fetcher';
 import {afterEach, describe, expect, it, jest} from '@jest/globals';
-import {env} from 'node:process';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 
 const labelFetcher = new LabelFetcher({
-  endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
+  endpointUrl: 'https://query.wikidata.org/sparql',
 });
 
 describe('getByIds', () => {
   it('returns undefined if IRIs have not been loaded', async () => {
     const label = labelFetcher.getByIri({
-      iri: 'https://hdl.handle.net/20.500.11840/termmaster10063182',
+      iri: 'http://www.wikidata.org/entity/Q33432813',
     });
 
     expect(label).toBeUndefined();
@@ -19,6 +18,7 @@ describe('getByIds', () => {
   it('returns undefined if the label of the provided IRI does not exist', async () => {
     await labelFetcher.loadByIris({
       iris: ['https://doesnotexist.org'],
+      predicates: ['http://www.w3.org/2000/01/rdf-schema#label'],
     });
 
     const label = labelFetcher.getByIri({iri: 'https://doesnotexist.org'});
@@ -26,16 +26,30 @@ describe('getByIds', () => {
     expect(label).toBeUndefined();
   });
 
-  it('gets the label of the provided IRI', async () => {
+  it('returns undefined if the provided predicate does not match', async () => {
     await labelFetcher.loadByIris({
-      iris: ['https://hdl.handle.net/20.500.11840/termmaster10063182'],
+      iris: ['http://www.wikidata.org/entity/Q33432813'],
+      predicates: ['http://www.w3.org/2004/02/skos/core#prefLabel'],
     });
 
     const label = labelFetcher.getByIri({
-      iri: 'https://hdl.handle.net/20.500.11840/termmaster10063182',
+      iri: 'http://www.wikidata.org/entity/Q33432813',
     });
 
-    expect(label).toBe('Jakarta');
+    expect(label).toBeUndefined();
+  });
+
+  it('gets the label of the provided IRI', async () => {
+    await labelFetcher.loadByIris({
+      iris: ['http://www.wikidata.org/entity/Q33432813'],
+      predicates: ['http://www.w3.org/2000/01/rdf-schema#label'],
+    });
+
+    const label = labelFetcher.getByIri({
+      iri: 'http://www.wikidata.org/entity/Q33432813',
+    });
+
+    expect(label).toBe('Delft');
   });
 });
 
@@ -59,7 +73,8 @@ describe('loadByIris', () => {
 
   it('loads the labels of the provided IRIs from the SPARQL endpoint', async () => {
     await labelFetcher.loadByIris({
-      iris: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
+      iris: ['http://www.wikidata.org/entity/Q33421377'],
+      predicates: ['http://www.w3.org/2000/01/rdf-schema#label'],
     });
 
     expect(sparqlEndpointFetcherSpy).toHaveBeenCalledTimes(1);
@@ -67,14 +82,18 @@ describe('loadByIris', () => {
 
   it('loads the labels of the provided IRIs from the cache', async () => {
     await labelFetcher.loadByIris({
-      iris: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
+      iris: ['http://www.wikidata.org/entity/Q749'],
+      predicates: ['http://www.w3.org/2000/01/rdf-schema#label'],
     });
+
+    expect(sparqlEndpointFetcherSpy).toHaveBeenCalledTimes(1);
 
     // Request the labels again; should not trigger a call to the SPARQL endpoint
     await labelFetcher.loadByIris({
-      iris: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
+      iris: ['http://www.wikidata.org/entity/Q749'],
+      predicates: ['http://www.w3.org/2000/01/rdf-schema#label'],
     });
 
-    expect(sparqlEndpointFetcherSpy).not.toHaveBeenCalled();
+    expect(sparqlEndpointFetcherSpy).toHaveBeenCalledTimes(1);
   });
 });

@@ -11,6 +11,7 @@ export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
 const loadByIrisOptionsSchema = z.object({
   iris: z.array(z.string()),
+  predicates: z.array(z.string()),
 });
 
 export type LoadByIrisOptions = z.infer<typeof loadByIrisOptionsSchema>;
@@ -21,13 +22,7 @@ const getByIriOptionsSchema = z.object({
 
 export type GetByIriOptions = z.infer<typeof getByIriOptionsSchema>;
 
-/*
-  Fetches labels of IRIs from a SPARQL endpoint. Usage example:
-
-  const labelFetcher = new LabelFetcher({endpointUrl: 'https://...'});
-  await labelFetcher.loadByIris({iris: ['https://example.org/123']});
-  const label = labelFetcher.getByIri({iri: ['https://example.org/123']});
-*/
+// Fetches labels of IRIs from a SPARQL endpoint
 export class LabelFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
@@ -50,26 +45,30 @@ export class LabelFetcher {
     return validAndUncachedIris;
   }
 
-  private async fetchAndCacheLabels(iris: string[]) {
+  private async fetchAndCacheLabels(options: LoadByIrisOptions) {
+    const {iris, predicates} = options;
+
     if (iris.length === 0) {
       return; // No IRIs to fetch
     }
 
-    // TBD: make the predicates configurable?
+    // This returns multiple labels per IRI if multiple predicates match
+    const predicate = predicates.map(predicate => `<${predicate}>`).join('|');
+
     // TBD: add an option for a locale, for filtering the labels in a specific language?
     const queryConditions = iris.map((iri: string) => {
       return `{
         BIND(<${iri}> AS ?iri)
-        ?iri cc:name ?label
+        ?iri ${predicate} ?label
       }`;
     });
 
-    const query = `PREFIX cc: <https://colonialcollections.nl/search#>
+    const query = `
       SELECT ?iri ?label WHERE {
         ${queryConditions.join(' UNION ')}
       }`;
 
-    // The endpoint throws a 400 error if an IRI is not valid
+    // The endpoint throws an error if an IRI is not valid
     const bindingsStream = await this.fetcher.fetchBindings(
       this.endpointUrl,
       query
@@ -81,23 +80,24 @@ export class LabelFetcher {
     }
   }
 
-  // TBD: add an option for a locale, for loading the labels in a specific language?
   async loadByIris(options: LoadByIrisOptions) {
     const opts = loadByIrisOptionsSchema.parse(options);
 
-    const fetchableIRIs = this.getFetchableIris(opts.iris);
+    const fetchableIris = this.getFetchableIris(opts.iris);
 
     // TBD: the endpoint could limit its results if we request
     // a large number of IRIs at once. Split the IRIs into chunks
     // of e.g. 1000 IRIs and call the endpoint per chunk?
     try {
-      await this.fetchAndCacheLabels(fetchableIRIs);
+      await this.fetchAndCacheLabels({
+        iris: fetchableIris,
+        predicates: opts.predicates,
+      });
     } catch (err) {
       console.error(err); // TODO: add logger
     }
   }
 
-  // TBD: add an option for a locale, for getting the label in a specific language?
   getByIri(options: GetByIriOptions) {
     const opts = getByIriOptionsSchema.parse(options);
     return this.cache.get(opts.iri);
