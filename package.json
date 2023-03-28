@@ -21,7 +21,7 @@
     "cypress": "cypress open"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.22.0",
+    "@floating-ui/react": "0.22.0",
     "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.13",
     "@heroicons/react": "2.0.16",
@@ -40,8 +40,8 @@
   "devDependencies": {
     "@jest/globals": "29.5.0",
     "@next/env": "13.2.4",
-    "@types/node": "18.15.10",
     "@types/mdx": "2.0.3",
+    "@types/node": "18.15.10",
     "@types/react": "18.0.29",
     "@types/react-dom": "18.0.11",
     "autoprefixer": "10.4.14",
