@@ -28,16 +28,16 @@ type FilterOptionProps = Pick<
 
 type HeaderProps = Pick<Props, 'title' | 'searchResultFilters'> & {
   setIsExpanded: Dispatch<React.SetStateAction<boolean>>;
-  setSearchText: Dispatch<React.SetStateAction<string>>;
-  searchText: string;
+  setQuery: Dispatch<React.SetStateAction<string>>;
+  query: string;
 };
 
 function Header({
   searchResultFilters,
   title,
   setIsExpanded,
-  searchText,
-  setSearchText,
+  query,
+  setQuery,
 }: HeaderProps) {
   const t = useTranslations('Home');
 
@@ -50,14 +50,16 @@ function Header({
             placeholder={t('filterSearchPlaceholder', {
               filterName: title.toLocaleLowerCase(),
             })}
-            value={searchText}
-            onChange={e => setSearchText(e.target.value)}
+            value={query}
+            onChange={e => setQuery(e.target.value)}
             type="text"
             className="block rounded-md grow border-gray-300 px-4 py-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           ></input>
           <button
             className="ml-3 inline-flex items-center text-blue-link"
-            onClick={() => setIsExpanded((bool: boolean): boolean => !bool)}
+            onClick={() =>
+              setIsExpanded((isExpanded: boolean): boolean => !isExpanded)
+            }
           >
             <span>{t('expandFilter')}</span>
             <ChevronDoubleRightIcon className="ml-1 h-5 w-5 flex-shrink-0" />
@@ -136,14 +138,14 @@ export default function FilterSet({
   const {getReferenceProps, getFloatingProps} = useInteractions([
     useDismiss(context),
   ]);
-  const [searchText, setSearchText] = useState('');
+  const [query, setQuery] = useState('');
   const filteredSearchResultFilters: SearchResultFilter[] = useMemo(() => {
     return searchResultFilters.filter(searchResultFilter =>
       searchResultFilter.name
         .toLocaleLowerCase()
-        .includes(searchText.toLocaleLowerCase())
+        .includes(query.toLocaleLowerCase())
     );
-  }, [searchText, searchResultFilters]);
+  }, [query, searchResultFilters]);
 
   return (
     <div
@@ -162,8 +164,8 @@ export default function FilterSet({
             searchResultFilters,
             title,
             setIsExpanded,
-            setSearchText,
-            searchText: searchText,
+            setQuery,
+            query: query,
           }}
         />
         <div className="space-y-3 pt-2">
@@ -198,8 +200,8 @@ export default function FilterSet({
                 searchResultFilters,
                 title,
                 setIsExpanded,
-                setSearchText,
-                searchText: searchText,
+                setQuery,
+                query: query,
               }}
             />
             <div className="md:flex pt-2">
