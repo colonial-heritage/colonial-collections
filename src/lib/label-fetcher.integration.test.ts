@@ -8,43 +8,37 @@ const labelFetcher = new LabelFetcher({
 });
 
 describe('getByIds', () => {
-  it('does not return labels if no IDs were provided', async () => {
-    const labels = await labelFetcher.getByIds({
-      ids: [],
+  it('returns undefined if the label of the provided IRI does not exist', async () => {
+    await labelFetcher.loadByIris({
+      iris: ['https://example.org'],
     });
 
-    expect(labels.size).toBe(0);
+    expect(labelFetcher.getByIri({iri: 'https://example.org'})).toBeUndefined();
   });
 
-  it('returns undefined if the label of the provided ID does not exist', async () => {
-    const labels = await labelFetcher.getByIds({
-      ids: ['https://example.org'],
-    });
-
-    expect(labels.size).toBe(1);
-    expect(labels.get('https://example.org')).toBeUndefined();
-  });
-
-  it('gets the labels of the provided IDs', async () => {
-    const labels = await labelFetcher.getByIds({
-      ids: [
+  it('gets the label of the provided IRI', async () => {
+    await labelFetcher.loadByIris({
+      iris: [
         'https://hdl.handle.net/20.500.11840/termmaster10063182',
         'https://hdl.handle.net/20.500.11840/termmaster10063351',
       ],
     });
 
-    expect(labels.size).toBe(2);
     expect(
-      labels.get('https://hdl.handle.net/20.500.11840/termmaster10063182')
+      labelFetcher.getByIri({
+        iri: 'https://hdl.handle.net/20.500.11840/termmaster10063182',
+      })
     ).toBe('Jakarta');
     expect(
-      labels.get('https://hdl.handle.net/20.500.11840/termmaster10063351')
+      labelFetcher.getByIri({
+        iri: 'https://hdl.handle.net/20.500.11840/termmaster10063351',
+      })
     ).toBe('Bali');
   });
 });
 
 // TBD: consider moving this to a unit test as soon as we're happy with this functionality
-describe('getByIds', () => {
+describe('loadByIris', () => {
   let sparqlEndpointFetcherSpy: jest.SpiedFunction<
     SparqlEndpointFetcher['fetchBindings']
   >;
@@ -61,22 +55,22 @@ describe('getByIds', () => {
     jest.restoreAllMocks();
   });
 
-  it('gets the labels of the provided IDs from the SPARQL endpoint', async () => {
-    await labelFetcher.getByIds({
-      ids: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
+  it('loads the labels of the provided IRIs from the SPARQL endpoint', async () => {
+    await labelFetcher.loadByIris({
+      iris: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
     });
 
     expect(sparqlEndpointFetcherSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('gets the labels of the provided IDs from the cache', async () => {
-    await labelFetcher.getByIds({
-      ids: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
+  it('loads the labels of the provided IRIs from the cache', async () => {
+    await labelFetcher.loadByIris({
+      iris: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
     });
 
     // Request the labels again; should not trigger a call to the SPARQL endpoint
-    await labelFetcher.getByIds({
-      ids: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
+    await labelFetcher.loadByIris({
+      iris: ['https://hdl.handle.net/20.500.11840/termmaster10058074'],
     });
 
     expect(sparqlEndpointFetcherSpy).not.toHaveBeenCalled();
