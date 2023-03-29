@@ -6,15 +6,8 @@ function toUnmatchedFilter(
   labelFetcher: LabelFetcher
 ): SearchResultFilter {
   const totalCount = 0; // Initial count; will be overridden by the matching filter, if any
-
-  let id, name;
-  if (typeof bucket.key === 'string') {
-    id = bucket.key;
-    name = labelFetcher.getByIri({iri: id});
-  } else {
-    // Array
-    [id, name] = bucket.key;
-  }
+  const id = bucket.key;
+  const name = labelFetcher.getByIri({iri: id});
 
   return {totalCount, id, name};
 }
@@ -24,15 +17,8 @@ function toMatchedFilter(
   labelFetcher: LabelFetcher
 ): SearchResultFilter {
   const totalCount = bucket.doc_count; // Actual count if a filter matched the query
-
-  let id, name;
-  if (typeof bucket.key === 'string') {
-    id = bucket.key;
-    name = labelFetcher.getByIri({iri: id});
-  } else {
-    // Array
-    [id, name] = bucket.key;
-  }
+  const id = bucket.key;
+  const name = labelFetcher.getByIri({iri: id});
 
   return {totalCount, id, name};
 }
