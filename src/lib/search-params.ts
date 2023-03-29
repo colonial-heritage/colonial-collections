@@ -2,7 +2,9 @@ import {
   SearchOptions,
   SortBy as SortBySearchOption,
   SortOrder,
+  searchOptionsSchema,
 } from '@/lib/dataset-fetcher';
+import {any, z} from 'zod';
 
 export enum SortBy {
   RelevanceDesc = 'relevanceDesc',
@@ -82,6 +84,24 @@ export interface SearchParams {
   sortBy?: SortBy;
 }
 
+// Based on https://github.com/colinhacks/zod/issues/316#issuecomment-1024793482
+export function fallback<T>(value: T) {
+  return any().transform(() => value);
+}
+
+// Always return a valid SearchOptions object, even if the search params aren't correct,
+// so the application doesn't fail on invalid search params.
+const searchOptionsWithFallbackSchema = searchOptionsSchema.extend({
+  offset: searchOptionsSchema.shape.offset.or(fallback(0)),
+  sortBy: searchOptionsSchema.shape.sortBy.or(
+    fallback(SortBySearchOption.Relevance)
+  ),
+  sortOrder: searchOptionsSchema.shape.sortOrder.or(
+    fallback(SortOrder.Descending)
+  ),
+  query: z.string().optional(), // Don't default to "*"
+});
+
 // Always return the sort values so the client knows how to sort.
 interface SearchOptionsWithRequiredSort extends SearchOptions {
   sortBy: NonNullable<SearchOptions['sortBy']>;
@@ -90,8 +110,6 @@ interface SearchOptionsWithRequiredSort extends SearchOptions {
 
 // This function translates the search params to valid search options.
 // Next.js already separate the search query string into separates properties with string values.
-// Always return a valid SearchOptions object, even if the search params aren't correct,
-// so the application doesn't fail on invalid search params.
 export function fromSearchParamsToSearchOptions({
   publishers,
   licenses,
@@ -110,24 +128,11 @@ export function fromSearchParamsToSearchOptions({
     },
     sortBy: sortBySearchOption,
     sortOrder: sortOrder,
+    query: query,
   };
 
-  if (!options.sortBy || !options.sortOrder) {
-    const defaultSortMap = sortMapping[defaultSortBy];
-    options.sortBy = defaultSortMap.sortBy;
-    options.sortOrder = defaultSortMap.sortOrder;
-  }
-
-  if (isNaN(options.offset)) {
-    options.offset = 0;
-  }
-
-  const validOptions: SearchOptionsWithRequiredSort = options;
-
-  // Only add a search query if provided
-  if (query) {
-    validOptions.query = query;
-  }
+  const validOptions: SearchOptionsWithRequiredSort =
+    searchOptionsWithFallbackSchema.parse(options);
 
   return validOptions;
 }

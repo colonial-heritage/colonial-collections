@@ -97,12 +97,14 @@ describe('fromSearchParamsToSearchOptions', () => {
   it('returns default search options if there are no search params', () => {
     expect(fromSearchParamsToSearchOptions({})).toStrictEqual({
       filters: {
-        licenses: undefined,
-        publishers: undefined,
+        licenses: [],
+        publishers: [],
       },
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
+      limit: 10,
+      query: undefined,
     });
   });
 
@@ -113,12 +115,14 @@ describe('fromSearchParamsToSearchOptions', () => {
     };
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
       filters: {
-        licenses: undefined,
-        publishers: undefined,
+        licenses: [],
+        publishers: [],
       },
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
+      limit: 10,
+      query: undefined,
     });
   });
 
@@ -131,12 +135,14 @@ describe('fromSearchParamsToSearchOptions', () => {
     // @ts-expect-error:TS2553
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
       filters: {
-        licenses: undefined,
-        publishers: undefined,
+        licenses: [],
+        publishers: [],
       },
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
+      limit: 10,
+      query: undefined,
     });
   });
 
@@ -157,6 +163,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       offset: 10,
       sortBy: 'name',
       sortOrder: 'asc',
+      limit: 10,
     });
   });
 });

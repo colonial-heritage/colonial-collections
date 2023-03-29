@@ -68,7 +68,7 @@ export enum SortOrder {
 const SortOrderEnum = z.nativeEnum(SortOrder);
 
 // TBD: add language option, for returning results in a specific locale (e.g. 'nl', 'en')
-const searchOptionsSchema = z.object({
+export const searchOptionsSchema = z.object({
   query: z.string().optional().default('*'), // If no query provided, match all
   offset: z.number().int().nonnegative().optional().default(0),
   limit: z.number().int().positive().optional().default(10),
