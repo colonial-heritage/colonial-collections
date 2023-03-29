@@ -153,11 +153,7 @@ type RawSearchResponseWithAggregations = z.infer<
   typeof rawSearchResponseWithAggregationsSchema
 >;
 
-export type SearchResultFilter = {
-  totalCount: number;
-  id: string;
-  name?: string; // Name may not exist (e.g. in a specific locale)
-};
+export type SearchResultFilter = Thing & {totalCount: number};
 
 export type SearchResult = {
   totalCount: number;
