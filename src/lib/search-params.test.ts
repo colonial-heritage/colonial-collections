@@ -2,8 +2,10 @@ import {
   getUrlWithSearchParams,
   fromSearchParamsToSearchOptions,
   defaultSortBy,
+  getClientSortBy,
   SortBy,
 } from './search-params';
+import {SortBy as SortBySearchOption, SortOrder} from '@/lib/dataset-fetcher';
 import {describe, expect, it} from '@jest/globals';
 
 describe('getUrlWithSearchParams', () => {
@@ -94,16 +96,13 @@ describe('getUrlWithSearchParams', () => {
 describe('fromSearchParamsToSearchOptions', () => {
   it('returns default search options if there are no search params', () => {
     expect(fromSearchParamsToSearchOptions({})).toStrictEqual({
-      searchOptions: {
-        filters: {
-          licenses: undefined,
-          publishers: undefined,
-        },
-        offset: 0,
-        sortBy: 'relevance',
-        sortOrder: 'desc',
+      filters: {
+        licenses: undefined,
+        publishers: undefined,
       },
-      sortBy: 'relevanceDesc',
+      offset: 0,
+      sortBy: 'relevance',
+      sortOrder: 'desc',
     });
   });
 
@@ -113,16 +112,13 @@ describe('fromSearchParamsToSearchOptions', () => {
       sortBy: defaultSortBy,
     };
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
-      searchOptions: {
-        filters: {
-          licenses: undefined,
-          publishers: undefined,
-        },
-        offset: 0,
-        sortBy: 'relevance',
-        sortOrder: 'desc',
+      filters: {
+        licenses: undefined,
+        publishers: undefined,
       },
-      sortBy: 'relevanceDesc',
+      offset: 0,
+      sortBy: 'relevance',
+      sortOrder: 'desc',
     });
   });
 
@@ -134,16 +130,13 @@ describe('fromSearchParamsToSearchOptions', () => {
     };
     // @ts-expect-error:TS2553
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
-      searchOptions: {
-        filters: {
-          licenses: undefined,
-          publishers: undefined,
-        },
-        offset: 0,
-        sortBy: 'relevance',
-        sortOrder: 'desc',
+      filters: {
+        licenses: undefined,
+        publishers: undefined,
       },
-      sortBy: 'relevanceDesc',
+      offset: 0,
+      sortBy: 'relevance',
+      sortOrder: 'desc',
     });
   });
 
@@ -156,17 +149,35 @@ describe('fromSearchParamsToSearchOptions', () => {
       publishers: 'publisher',
     };
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
-      searchOptions: {
-        query: 'My query',
-        filters: {
-          licenses: ['license1', 'license2'],
-          publishers: ['publisher'],
-        },
-        offset: 10,
-        sortBy: 'name',
-        sortOrder: 'asc',
+      query: 'My query',
+      filters: {
+        licenses: ['license1', 'license2'],
+        publishers: ['publisher'],
       },
-      sortBy: 'nameAsc',
+      offset: 10,
+      sortBy: 'name',
+      sortOrder: 'asc',
     });
+  });
+});
+
+describe('getClientSortBy', () => {
+  it('finds the client SortBy', () => {
+    expect(
+      getClientSortBy({
+        sortBy: SortBySearchOption.Relevance,
+        sortOrder: SortOrder.Descending,
+      })
+    ).toBe(SortBy.RelevanceDesc);
+  });
+
+  it('throws an error with an invalid sortPair', () => {
+    expect(() =>
+      getClientSortBy({
+        // @ts-expect-error:TS2553
+        sortBy: 'invalid',
+        sortOrder: SortOrder.Descending,
+      })
+    ).toThrow();
   });
 });

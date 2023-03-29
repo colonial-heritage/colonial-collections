@@ -27,7 +27,7 @@ const sortMapping = {
   },
 };
 
-interface ToSearchParamsProps {
+interface ClientSearchOptions {
   query?: SearchOptions['query'];
   offset?: SearchOptions['offset'];
   filters: {
@@ -42,7 +42,7 @@ export function getUrlWithSearchParams({
   offset,
   filters: {licenses, publishers},
   sortBy,
-}: ToSearchParamsProps) {
+}: ClientSearchOptions): string {
   const searchParams: {[key: string]: string} = {};
 
   if (query) {
@@ -74,7 +74,7 @@ export function getUrlWithSearchParams({
   }
 }
 
-interface FromSearchParamsToSearchOptionsProps {
+export interface SearchParams {
   publishers?: string;
   licenses?: string;
   query?: string;
@@ -82,13 +82,14 @@ interface FromSearchParamsToSearchOptionsProps {
   sortBy?: SortBy;
 }
 
-interface Response {
-  searchOptions: SearchOptions;
-  sortBy: SortBy;
+// Always return the sort values so the client knows how to sort.
+interface SearchOptionsWithRequiredSort extends SearchOptions {
+  sortBy: NonNullable<SearchOptions['sortBy']>;
+  sortOrder: NonNullable<SearchOptions['sortOrder']>;
 }
 
 // This function translates the search params to valid search options.
-// Next.js already separate the search query string into separate properties with string values.
+// Next.js already separate the search query string into separates properties with string values.
 // Always return a valid SearchOptions object, even if the search params aren't correct,
 // so the application doesn't fail on invalid search params.
 export function fromSearchParamsToSearchOptions({
@@ -97,8 +98,7 @@ export function fromSearchParamsToSearchOptions({
   query,
   offset = '0',
   sortBy = defaultSortBy,
-}: FromSearchParamsToSearchOptionsProps): Response {
-  let sortByResponse = sortBy;
+}: SearchParams): SearchOptionsWithRequiredSort {
   const {sortBy: sortBySearchOption, sortOrder} = sortMapping[sortBy] || {};
 
   // Transform the string values from the search params to SearchOptions
@@ -116,22 +116,30 @@ export function fromSearchParamsToSearchOptions({
     const defaultSortMap = sortMapping[defaultSortBy];
     options.sortBy = defaultSortMap.sortBy;
     options.sortOrder = defaultSortMap.sortOrder;
-    sortByResponse = defaultSortBy;
   }
 
   if (isNaN(options.offset)) {
     options.offset = 0;
   }
 
-  const validOptions: SearchOptions = options;
+  const validOptions: SearchOptionsWithRequiredSort = options;
 
   // Only add a search query if provided
   if (query) {
     validOptions.query = query;
   }
 
-  return {
-    searchOptions: validOptions,
-    sortBy: sortByResponse,
-  };
+  return validOptions;
+}
+
+interface sortPairProps {
+  sortBy: SortBySearchOption;
+  sortOrder: SortOrder;
+}
+
+export function getClientSortBy(sortPair: sortPairProps): SortBy {
+  return Object.entries(sortMapping).find(
+    ([, {sortBy, sortOrder}]) =>
+      sortPair.sortBy === sortBy && sortPair.sortOrder === sortOrder
+  )![0] as SortBy;
 }

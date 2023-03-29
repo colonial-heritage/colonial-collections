@@ -18,11 +18,7 @@ import {useRouter} from 'next/navigation';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import {
-  getUrlWithSearchParams,
-  SortBy,
-  defaultSortBy,
-} from '@/lib/search-params';
+import {getUrlWithSearchParams, SortBy} from '@/lib/search-params';
 
 export interface Props {
   filters: SearchResult['filters'];
@@ -49,7 +45,7 @@ export default function ClientFilters({
   );
   const [query, setQuery] = useState(searchOptions?.query ?? '');
   const [offset, setOffset] = useState(searchOptions?.offset ?? 0);
-  const [sortBy, setSortBy] = useState<SortBy>(initialSortBy ?? defaultSortBy);
+  const [sortBy, setSortBy] = useState<SortBy>(initialSortBy);
   const [showFiltersSidebarOnSmallScreen, setShowFiltersSidebarOnSmallScreen] =
     useState(false);
   const t = useTranslations('Home');

@@ -3,21 +3,28 @@ import {useLocale, NextIntlClientProvider} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import ClientFilters from './client-filters';
 import DatasetList from './dataset-list';
-import {fromSearchParamsToSearchOptions} from '@/lib/search-params';
+import {
+  fromSearchParamsToSearchOptions,
+  getClientSortBy,
+  SearchParams,
+} from '@/lib/search-params';
 
 interface Props {
-  searchParams?: object;
+  searchParams?: SearchParams;
 }
 export default async function Home({searchParams}: Props) {
-  const {searchOptions, sortBy} = fromSearchParamsToSearchOptions(
-    searchParams ?? {}
-  );
+  const searchOptions = fromSearchParamsToSearchOptions(searchParams ?? {});
+  const sortBy = getClientSortBy({
+    sortBy: searchOptions.sortBy,
+    sortOrder: searchOptions.sortOrder,
+  });
 
   let hasError, searchResult;
   try {
     searchResult = await datasetFetcher.search(searchOptions);
-  } catch {
+  } catch (error) {
     hasError = true;
+    console.error(error);
   }
   const locale = useLocale();
   const messages = (await import(`@/messages/${locale}/messages.json`)).default;
