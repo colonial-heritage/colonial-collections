@@ -1,10 +1,16 @@
-import {buildAggregation} from './request';
+import {LabelFetcher} from '../label-fetcher';
+import {getIrisFromObject} from '../iri';
+import {
+  buildMultiTermsAggregation,
+  buildSingleTermAggregation,
+} from './request';
 import {buildFilters} from './result';
 import {merge, reach} from '@hapi/hoek';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
+  labelFetcher: z.instanceof(LabelFetcher),
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
@@ -23,7 +29,11 @@ enum RawDatasetKeys {
   DateCreated = 'https://colonialcollections nl/search#dateCreated',
   DateModified = 'https://colonialcollections nl/search#dateModified',
   DatePublished = 'https://colonialcollections nl/search#datePublished',
+  SpatialCoverage = 'https://colonialcollections nl/search#spatialCoverage',
 }
+
+// For fetching the labels of IRIs, for display in filters
+const predicates = ['https://colonialcollections.nl/search#name'];
 
 export type Publisher = {
   id: string;
@@ -33,6 +43,11 @@ export type Publisher = {
 export type License = {
   id: string;
   name: string;
+};
+
+export type Place = {
+  id: string;
+  name?: string; // Name may not exist (e.g. in a specific locale)
 };
 
 export type Dataset = {
@@ -46,6 +61,7 @@ export type Dataset = {
   dateCreated?: Date;
   dateModified?: Date;
   datePublished?: Date;
+  spatialCoverages?: Place[];
 };
 
 export enum SortBy {
@@ -78,6 +94,7 @@ const searchOptionsSchema = z.object({
     .object({
       publishers: z.array(z.string()).optional().default([]),
       licenses: z.array(z.string()).optional().default([]),
+      spatialCoverages: z.array(z.string()).optional().default([]),
     })
     .optional(),
 });
@@ -99,12 +116,13 @@ const rawDatasetSchema = z
   .setKey(RawDatasetKeys.MainEntityOfPage, z.array(z.string()).optional())
   .setKey(RawDatasetKeys.DateCreated, z.array(dateSchema).optional())
   .setKey(RawDatasetKeys.DateModified, z.array(dateSchema).optional())
-  .setKey(RawDatasetKeys.DatePublished, z.array(dateSchema).optional());
+  .setKey(RawDatasetKeys.DatePublished, z.array(dateSchema).optional())
+  .setKey(RawDatasetKeys.SpatialCoverage, z.array(z.string()).optional());
 
 type RawDataset = z.infer<typeof rawDatasetSchema>;
 
 const rawBucketSchema = z.object({
-  key: z.array(z.string()),
+  key: z.string().or(z.array(z.string())),
   doc_count: z.number(),
 });
 
@@ -135,9 +153,11 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
       all: z.object({
         publishers: rawAggregationSchema,
         licenses: rawAggregationSchema,
+        spatialCoverages: rawAggregationSchema,
       }),
       publishers: rawAggregationSchema,
       licenses: rawAggregationSchema,
+      spatialCoverages: rawAggregationSchema,
     }),
   })
 );
@@ -149,7 +169,7 @@ type RawSearchResponseWithAggregations = z.infer<
 export type SearchResultFilter = {
   totalCount: number;
   id: string;
-  name: string;
+  name?: string; // Name may not exist (e.g. in a specific locale)
 };
 
 export type SearchResult = {
@@ -162,6 +182,7 @@ export type SearchResult = {
   filters: {
     publishers: SearchResultFilter[];
     licenses: SearchResultFilter[];
+    spatialCoverages: SearchResultFilter[];
   };
 };
 
@@ -173,10 +194,13 @@ export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 
 export class DatasetFetcher {
   private endpointUrl: string;
+  private labelFetcher: LabelFetcher;
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
+
     this.endpointUrl = opts.endpointUrl;
+    this.labelFetcher = opts.labelFetcher;
   }
 
   async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
@@ -195,6 +219,11 @@ export class DatasetFetcher {
     }
 
     const responseData: T = await response.json();
+
+    // Extract the IRIs, if any, from the response.
+    // The IRIs are necessary for fetching their labels later on
+    const iris = getIrisFromObject(responseData);
+    await this.labelFetcher.loadByIris({iris, predicates});
 
     return responseData;
   }
@@ -223,6 +252,21 @@ export class DatasetFetcher {
       name: reach(rawDataset, `${RawDatasetKeys.LicenseName}.0`),
     };
 
+    let places: Place[] | undefined;
+    const placeIris: string[] = reach(
+      rawDataset,
+      `${RawDatasetKeys.SpatialCoverage}`
+    );
+    if (placeIris !== undefined) {
+      places = placeIris.map((placeIri: string) => {
+        const place: Place = {
+          id: placeIri,
+          name: this.labelFetcher.getByIri({iri: placeIri}),
+        };
+        return place;
+      });
+    }
+
     const datasetWithUndefinedValues: Dataset = {
       id: rawDataset[RawDatasetKeys.Id],
       name,
@@ -234,6 +278,7 @@ export class DatasetFetcher {
       dateCreated,
       dateModified,
       datePublished,
+      spatialCoverages: places,
     };
 
     const dataset = merge({}, datasetWithUndefinedValues, {
@@ -244,13 +289,16 @@ export class DatasetFetcher {
   }
 
   private buildSearchRequest(options: SearchOptions) {
-    const publishersAggegration = buildAggregation(
+    const publishersAggegration = buildMultiTermsAggregation(
       RawDatasetKeys.PublisherIri,
       RawDatasetKeys.PublisherName
     );
-    const licensesAggregation = buildAggregation(
+    const licensesAggregation = buildMultiTermsAggregation(
       RawDatasetKeys.LicenseIri,
       RawDatasetKeys.LicenseName
+    );
+    const spatialCoveragesAggregation = buildSingleTermAggregation(
+      RawDatasetKeys.SpatialCoverage
     );
 
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
@@ -294,10 +342,12 @@ export class DatasetFetcher {
           aggregations: {
             publishers: publishersAggegration,
             licenses: licensesAggregation,
+            spatialCoverages: spatialCoveragesAggregation,
           },
         },
         publishers: publishersAggegration,
         licenses: licensesAggregation,
+        spatialCoverages: spatialCoveragesAggregation,
       },
     };
 
@@ -318,10 +368,19 @@ export class DatasetFetcher {
       });
     }
 
+    if (options.filters?.spatialCoverages?.length) {
+      searchRequest.query.bool.filter.push({
+        terms: {
+          [`${RawDatasetKeys.SpatialCoverage}.keyword`]:
+            options.filters?.spatialCoverages,
+        },
+      });
+    }
+
     return searchRequest;
   }
 
-  private buildSearchResult(
+  private async buildSearchResult(
     options: SearchOptions,
     rawSearchResponse: RawSearchResponseWithAggregations
   ) {
@@ -334,12 +393,20 @@ export class DatasetFetcher {
 
     const publisherFilters = buildFilters(
       aggregations.all.publishers.buckets,
-      aggregations.publishers.buckets
+      aggregations.publishers.buckets,
+      this.labelFetcher
     );
 
     const licenseFilters = buildFilters(
       aggregations.all.licenses.buckets,
-      aggregations.licenses.buckets
+      aggregations.licenses.buckets,
+      this.labelFetcher
+    );
+
+    const spatialCoverageFilters = buildFilters(
+      aggregations.all.spatialCoverages.buckets,
+      aggregations.spatialCoverages.buckets,
+      this.labelFetcher
     );
 
     const searchResult: SearchResult = {
@@ -352,6 +419,7 @@ export class DatasetFetcher {
       filters: {
         publishers: publisherFilters,
         licenses: licenseFilters,
+        spatialCoverages: spatialCoverageFilters,
       },
     };
 
@@ -362,11 +430,13 @@ export class DatasetFetcher {
     const opts = searchOptionsSchema.parse(options ?? {});
 
     const searchRequest = this.buildSearchRequest(opts);
+
     const rawResponse =
       await this.makeRequest<RawSearchResponseWithAggregations>(searchRequest);
     const searchResponse =
       rawSearchResponseWithAggregationsSchema.parse(rawResponse);
-    const searchResult = this.buildSearchResult(opts, searchResponse);
+
+    const searchResult = await this.buildSearchResult(opts, searchResponse);
 
     return searchResult;
   }
