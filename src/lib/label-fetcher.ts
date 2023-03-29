@@ -22,11 +22,14 @@ const getByIriOptionsSchema = z.object({
 
 export type GetByIriOptions = z.infer<typeof getByIriOptionsSchema>;
 
+const cacheValueIfIriNotFound = Symbol('cacheValueIfIriNotFound');
+
 // Fetches labels of IRIs from a SPARQL endpoint
 export class LabelFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
-  private cache: LRUCache<string, string> = new LRUCache({max: 10000});
+  private cache: LRUCache<string, string | typeof cacheValueIfIriNotFound> =
+    new LRUCache({max: 10000});
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -51,6 +54,11 @@ export class LabelFetcher {
     if (iris.length === 0) {
       return; // No IRIs to fetch
     }
+
+    // Cache all IRIs, regardless whether they're found by the fetch underneath;
+    // otherwise IRIs that aren't found will be fetched again and again on
+    // subsequent requests
+    iris.forEach(iri => this.cache.set(iri, cacheValueIfIriNotFound));
 
     // This returns multiple labels per IRI if multiple predicates match
     const predicate = predicates.map(predicate => `<${predicate}>`).join('|');
@@ -100,6 +108,7 @@ export class LabelFetcher {
 
   getByIri(options: GetByIriOptions) {
     const opts = getByIriOptionsSchema.parse(options);
-    return this.cache.get(opts.iri);
+    const label = this.cache.get(opts.iri);
+    return label !== cacheValueIfIriNotFound ? label : undefined;
   }
 }
