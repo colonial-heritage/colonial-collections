@@ -4,7 +4,7 @@ import {
   SortOrder,
   searchOptionsSchema,
 } from '@/lib/dataset-fetcher';
-import {any, z} from 'zod';
+import {z} from 'zod';
 
 export enum SortBy {
   RelevanceDesc = 'relevanceDesc',
@@ -86,7 +86,7 @@ export interface SearchParams {
 
 // Based on https://github.com/colinhacks/zod/issues/316#issuecomment-1024793482
 export function fallback<T>(value: T) {
-  return any().transform(() => value);
+  return z.any().transform(() => value);
 }
 
 // Always return a valid SearchOptions object, even if the search params aren't correct,
@@ -137,12 +137,12 @@ export function fromSearchParamsToSearchOptions({
   return validOptions;
 }
 
-interface sortPairProps {
+interface SortPairProps {
   sortBy: SortBySearchOption;
   sortOrder: SortOrder;
 }
 
-export function getClientSortBy(sortPair: sortPairProps): SortBy {
+export function getClientSortBy(sortPair: SortPairProps): SortBy {
   return Object.entries(sortMapping).find(
     ([, {sortBy, sortOrder}]) =>
       sortPair.sortBy === sortBy && sortPair.sortOrder === sortOrder

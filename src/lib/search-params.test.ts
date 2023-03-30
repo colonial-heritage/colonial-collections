@@ -178,13 +178,13 @@ describe('getClientSortBy', () => {
     ).toBe(SortBy.RelevanceDesc);
   });
 
-  it('throws an error with an invalid sortPair', () => {
+  it('throws an error with an invalid sort pair', () => {
     expect(() =>
       getClientSortBy({
         // @ts-expect-error:TS2553
         sortBy: 'invalid',
         sortOrder: SortOrder.Descending,
       })
-    ).toThrow();
+    ).toThrow("Cannot read properties of undefined (reading '0')");
   });
 });
