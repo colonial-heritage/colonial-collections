@@ -21,8 +21,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Create the file `.env.production.local` in the root and set the endpoint URLs:
 
-  SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=
-  SEARCH_PLATFORM_SPARQL_ENDPOINT_URL=
+    SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=
+    SEARCH_PLATFORM_SPARQL_ENDPOINT_URL=
 
 Then run:
 
@@ -52,8 +52,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Create the file `.env.production.local` in the root and set the endpoint URLs:
 
-  SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=
-  SEARCH_PLATFORM_SPARQL_ENDPOINT_URL=
+    SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=
+    SEARCH_PLATFORM_SPARQL_ENDPOINT_URL=
 
 Then run:
 
