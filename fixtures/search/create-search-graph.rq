@@ -14,10 +14,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 CONSTRUCT {
   ?dataset a cc:Dataset ;
     cc:name ?title ;
-    cc:publisherIri ?publisher ;
-    cc:publisherName ?publisherName ;
-    cc:licenseIri ?license ;
-    cc:licenseName ?licenseName ;
+    cc:publisher ?publisher ;
+    cc:license ?license ;
     cc:description ?description ;
     cc:keyword ?keyword ;
     cc:mainEntityOfPage ?landingPage ;
@@ -25,12 +23,19 @@ CONSTRUCT {
     cc:dateModified ?modified ;
     cc:datePublished ?issued ;
     cc:spatialCoverage ?place ;
+    cc:publisherName ?publisherName ; # To allow for search actions based on name
+    cc:licenseName ?licenseName ; # To allow for search actions based on name
     cc:placeName ?placeName ; # To allow for search actions based on name
     cc:placeName ?placeAlternateName . # To allow for search actions based on name
 
+  ?publisher a cc:Organization ;
+    cc:name ?publisherName .
+
+  ?license a cc:License ;
+    cc:name ?licenseName .
+
   ?place a cc:Place ;
-    cc:name ?placeName ;
-    cc:alternateName ?placeAlternateName .
+    cc:name ?placeName .
 }
 WHERE {
   ?dataset a dcat:Dataset .

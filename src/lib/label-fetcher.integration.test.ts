@@ -9,7 +9,20 @@ const labelFetcher = new LabelFetcher({
 describe('getByIds', () => {
   it('returns undefined if IRIs have not been loaded', async () => {
     const label = labelFetcher.getByIri({
-      iri: 'http://www.wikidata.org/entity/Q33432813',
+      iri: 'http://www.wikidata.org/entity/Q727',
+    });
+
+    expect(label).toBeUndefined();
+  });
+
+  it('returns undefined if the provided predicate does not match', async () => {
+    await labelFetcher.loadByIris({
+      iris: ['http://www.wikidata.org/entity/Q727'],
+      predicates: ['http://www.w3.org/2004/02/skos/core#prefLabel'],
+    });
+
+    const label = labelFetcher.getByIri({
+      iri: 'http://www.wikidata.org/entity/Q727',
     });
 
     expect(label).toBeUndefined();
@@ -26,20 +39,7 @@ describe('getByIds', () => {
     expect(label).toBeUndefined();
   });
 
-  it('returns undefined if the provided predicate does not match', async () => {
-    await labelFetcher.loadByIris({
-      iris: ['http://www.wikidata.org/entity/Q33432813'],
-      predicates: ['http://www.w3.org/2004/02/skos/core#prefLabel'],
-    });
-
-    const label = labelFetcher.getByIri({
-      iri: 'http://www.wikidata.org/entity/Q33432813',
-    });
-
-    expect(label).toBeUndefined();
-  });
-
-  it('gets the label of the provided IRI', async () => {
+  it('returns the label of the provided IRI', async () => {
     await labelFetcher.loadByIris({
       iris: ['http://www.wikidata.org/entity/Q33432813'],
       predicates: ['http://www.w3.org/2000/01/rdf-schema#label'],
