@@ -27,9 +27,6 @@ enum RawDatasetKeys {
   SpatialCoverage = 'https://colonialcollections nl/search#spatialCoverage',
 }
 
-// For fetching the labels of IRIs, for display in filters
-const predicates = ['https://colonialcollections.nl/search#name'];
-
 type Thing = {
   id: string;
   name?: string; // Name may not exist (e.g. in a specific locale)
@@ -206,6 +203,7 @@ export class DatasetFetcher {
     // Extract the IRIs, if any, from the response.
     // The IRIs are necessary for fetching their labels later on
     const iris = getIrisFromObject(responseData);
+    const predicates = ['https://colonialcollections.nl/search#name'];
     await this.labelFetcher.loadByIris({iris, predicates});
 
     return responseData;
