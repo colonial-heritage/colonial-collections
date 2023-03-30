@@ -59,7 +59,7 @@ export default function RootLayout({children, params}: Props) {
             locale={locale}
           />
         </header>
-        <main className="bg-gray-light">
+        <main className="bg-gray-light pb-32">
           <div className="max-w-7xl container mx-auto p-8">{children}</div>
         </main>
       </body>

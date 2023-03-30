@@ -172,8 +172,8 @@ export default function Navigation({
                             href={item.href}
                             className={classNames(
                               isCurrentPathname
-                                ? 'font-bold border-sky-700'
-                                : 'border-transparent hover:border-blue-300 hover:text-gray-700',
+                                ? 'font-semibold border-white text-gray-900'
+                                : 'border-transparent hover:border-white hover:font-semibold text-gray-900 ',
                               'inline-flex items-center px-1 pt-1 border-b-2'
                             )}
                             aria-current={

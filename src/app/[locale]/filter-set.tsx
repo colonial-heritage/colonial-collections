@@ -43,7 +43,7 @@ function Header({
 
   return (
     <>
-      <legend className="block font-bold text-gray-900">{title}</legend>
+      <legend className="block font-semibold text-gray-900">{title}</legend>
       {searchResultFilters.length > 5 && (
         <div className="flex items-center md:max-w-[350px] w-full">
           <input
@@ -53,10 +53,10 @@ function Header({
             value={query}
             onChange={e => setQuery(e.target.value)}
             type="text"
-            className="block rounded-md grow border-gray-300 px-4 py-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block rounded-md grow border-gray-300 px-4 py-1 shadow-sm focus:border-sky-700 focus:ring-sky-700 sm:text-sm"
           ></input>
           <button
-            className="ml-3 inline-flex items-center text-blue-link"
+            className="ml-3 inline-flex items-center text-sky-700"
             onClick={() =>
               setIsExpanded((isExpanded: boolean): boolean => !isExpanded)
             }
@@ -100,7 +100,7 @@ function FilterOption({
         )}
         onChange={handleChange}
         type="checkbox"
-        className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
+        className="h-4 w-4 rounded border-gray-300 text-sky-700 focus:ring-sky-700"
       />
       <label
         htmlFor={`${title}-${searchResultFilter.id}`}
