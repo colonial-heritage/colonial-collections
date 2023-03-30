@@ -14,6 +14,8 @@
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de datasets. Laad de pagina opnieuw om het opnieuw te proberen.",
     "filters": "Filters",
     "clearAllFilters": "Alles verwijderen",
+    "expandFilter": "Uitklappen",
+    "filterSearchPlaceholder": "Filteren op {filterName}",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
     "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen",
     "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
