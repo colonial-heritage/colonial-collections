@@ -23,10 +23,13 @@ CONSTRUCT {
     cc:dateModified ?modified ;
     cc:datePublished ?issued ;
     cc:spatialCoverage ?place ;
-    cc:publisherName ?publisherName ; # To allow for search actions based on name
-    cc:licenseName ?licenseName ; # To allow for search actions based on name
-    cc:placeName ?placeName ; # To allow for search actions based on name
-    cc:placeName ?placeAlternateName . # To allow for search actions based on name
+    cc:genre ?genre ;
+    # To allow for search actions based on name
+    cc:publisherName ?publisherName ;
+    cc:licenseName ?licenseName ;
+    cc:placeName ?placeName ;
+    cc:placeName ?placeAlternateName ;
+    cc:genreName ?genreName .
 
   ?publisher a cc:Organization ;
     cc:name ?publisherName .
@@ -36,6 +39,9 @@ CONSTRUCT {
 
   ?place a cc:Place ;
     cc:name ?placeName .
+
+  ?genre a cc:DefinedTerm ;
+    cc:name ?genreName .
 }
 WHERE {
   ?dataset a dcat:Dataset .
@@ -132,5 +138,17 @@ WHERE {
       skos:inScheme "Geografie" . # The NMVW thesaurus doesn't have a IRI to identify the scheme
 
     OPTIONAL { ?place skos:altLabel ?placeAlternateName }
+  }
+
+  ####################
+  # Genre
+  ####################
+
+  OPTIONAL {
+    ?dataset dct:type ?genre .
+    ?genre a skos:Concept ;
+      skos:prefLabel ?genreName ;
+      skos:inScheme <http://vocab.getty.edu/aat/> .
+    FILTER(LANG(?genreName) = "" || LANGMATCHES(LANG(?genreName), "en")) # TBD: which languages to support?
   }
 }
