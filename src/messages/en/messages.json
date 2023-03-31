@@ -26,8 +26,7 @@
     "next": "Next"
   },
   "DatasetCard": {
-    "license": "License",
-    "publisher": "Publisher"
+    "keywords": "Keywords"
   },
   "Navigation": {
     "name": "Dataset Browser",

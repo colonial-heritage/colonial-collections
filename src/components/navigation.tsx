@@ -157,7 +157,7 @@ export default function Navigation({
         >
           {navigationLabels.name}
         </Link>
-        <Disclosure as="nav" className="">
+        <Disclosure as="nav">
           {({open}) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

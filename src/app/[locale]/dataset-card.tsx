@@ -31,7 +31,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
           </span>
         </div>
         <div className="mt-2 flex text-sm">
-          <span className="mr-3">Keywords: </span>
+          <span className="mr-3">{t('keywords')}</span>
           {dataset.keywords?.map(keyword => (
             <span key={keyword} className="mr-3">
               {keyword}

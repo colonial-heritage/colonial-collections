@@ -36,7 +36,7 @@ export default function Paginator({
     <div className="flex items-center justify-between py-3">
       <div className="sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p className="">
+          <p>
             {t.rich('results', {
               start,
               end,
