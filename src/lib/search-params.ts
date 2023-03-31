@@ -35,6 +35,7 @@ interface ClientSearchOptions {
   filters: {
     licenses?: string[];
     publishers?: string[];
+    spatialCoverages?: string[];
   };
   sortBy?: SortBy;
 }
@@ -42,7 +43,7 @@ interface ClientSearchOptions {
 export function getUrlWithSearchParams({
   query,
   offset,
-  filters: {licenses, publishers},
+  filters: {licenses, publishers, spatialCoverages},
   sortBy,
 }: ClientSearchOptions): string {
   const searchParams: {[key: string]: string} = {};
@@ -57,6 +58,10 @@ export function getUrlWithSearchParams({
 
   if (publishers?.length) {
     searchParams.publishers = publishers.join(',');
+  }
+
+  if (spatialCoverages?.length) {
+    searchParams.spatialCoverages = spatialCoverages.join(',');
   }
 
   if (offset) {
@@ -79,6 +84,7 @@ export function getUrlWithSearchParams({
 export interface SearchParams {
   publishers?: string;
   licenses?: string;
+  spatialCoverages?: string;
   query?: string;
   offset?: string;
   sortBy?: SortBy;
@@ -113,6 +119,7 @@ interface SearchOptionsWithRequiredSort extends SearchOptions {
 export function fromSearchParamsToSearchOptions({
   publishers,
   licenses,
+  spatialCoverages,
   query,
   offset = '0',
   sortBy = defaultSortBy,
@@ -125,6 +132,7 @@ export function fromSearchParamsToSearchOptions({
     filters: {
       publishers: publishers?.split(',').filter(id => !!id),
       licenses: licenses?.split(',').filter(id => !!id),
+      spatialCoverages: spatialCoverages?.split(',').filter(id => !!id),
     },
     sortBy: sortBySearchOption,
     sortOrder: sortOrder,

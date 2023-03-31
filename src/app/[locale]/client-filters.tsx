@@ -43,6 +43,9 @@ export default function ClientFilters({
   const [selectedPublishers, setSelectedPublishers] = useState<string[]>(
     searchOptions?.filters?.publishers ?? []
   );
+  const [selectedSpatialCoverages, setSelectedSpatialCoverages] = useState<
+    string[]
+  >(searchOptions?.filters?.spatialCoverages ?? []);
   const [query, setQuery] = useState(searchOptions?.query ?? '');
   const [offset, setOffset] = useState(searchOptions?.offset ?? 0);
   const [sortBy, setSortBy] = useState<SortBy>(initialSortBy);
@@ -59,6 +62,7 @@ export default function ClientFilters({
       filters: {
         licenses: selectedLicenses,
         publishers: selectedPublishers,
+        spatialCoverages: selectedSpatialCoverages,
       },
       offset,
       sortBy,
@@ -66,7 +70,15 @@ export default function ClientFilters({
     startTransition(() => {
       router.replace(urlWithSearchParams);
     });
-  }, [query, offset, sortBy, selectedLicenses, selectedPublishers, router]);
+  }, [
+    query,
+    offset,
+    sortBy,
+    selectedLicenses,
+    selectedPublishers,
+    router,
+    selectedSpatialCoverages,
+  ]);
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setSortBy(e.target.value as SortBy);
@@ -108,14 +120,25 @@ export default function ClientFilters({
             testId="publishersFilter"
           />
         )}
+        {!!filters.spatialCoverages?.length && (
+          <FilterSet
+            title={t('spatialCoveragesFilter')}
+            searchResultFilters={filters.spatialCoverages}
+            selectedFilters={selectedSpatialCoverages}
+            setSelectedFilters={setSelectedSpatialCoverages}
+            testId="spatialCoveragesFilter"
+          />
+        )}
       </>
     ),
     [
       filters.licenses,
       filters.publishers,
+      filters.spatialCoverages,
       query,
       selectedLicenses,
       selectedPublishers,
+      selectedSpatialCoverages,
       t,
     ]
   );
@@ -220,6 +243,11 @@ export default function ClientFilters({
                 searchResultFilters: filters.publishers ?? [],
                 selectedFilters: selectedPublishers,
                 setSelectedFilters: setSelectedPublishers,
+              },
+              {
+                searchResultFilters: filters.spatialCoverages ?? [],
+                selectedFilters: selectedSpatialCoverages,
+                setSelectedFilters: setSelectedSpatialCoverages,
               },
             ]}
             query={{
