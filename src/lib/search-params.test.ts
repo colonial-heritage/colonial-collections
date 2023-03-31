@@ -159,14 +159,14 @@ describe('fromSearchParamsToSearchOptions', () => {
       sortBy: SortBy.NameAsc,
       licenses: 'license1,license2',
       publishers: 'publisher',
-      spatialCoverages: 'spatial-coverages',
+      spatialCoverages: 'spatial-coverage',
     };
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
       query: 'My query',
       filters: {
         licenses: ['license1', 'license2'],
         publishers: ['publisher'],
-        spatialCoverages: ['spatial-coverages'],
+        spatialCoverages: ['spatial-coverage'],
       },
       offset: 10,
       sortBy: 'name',
