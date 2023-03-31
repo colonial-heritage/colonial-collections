@@ -36,6 +36,7 @@ describe('getUrlWithSearchParams', () => {
       filters: {
         licenses: [],
         publishers: [],
+        spatialCoverages: [],
       },
     };
     expect(getUrlWithSearchParams(options)).toBe('/');
@@ -70,10 +71,11 @@ describe('getUrlWithSearchParams', () => {
       filters: {
         licenses: ['filter1'],
         publishers: ['filter2'],
+        spatialCoverages: ['filter3'],
       },
     };
     expect(getUrlWithSearchParams(options)).toBe(
-      '/?licenses=filter1&publishers=filter2'
+      '/?licenses=filter1&publishers=filter2&spatialCoverages=filter3'
     );
   });
 
@@ -85,10 +87,11 @@ describe('getUrlWithSearchParams', () => {
       filters: {
         licenses: ['filter1', 'filter2'],
         publishers: ['filter3'],
+        spatialCoverages: ['filter4'],
       },
     };
     expect(getUrlWithSearchParams(options)).toBe(
-      '/?query=my+query&licenses=filter1%2Cfilter2&publishers=filter3&offset=20&sortBy=nameDesc'
+      '/?query=my+query&licenses=filter1%2Cfilter2&publishers=filter3&spatialCoverages=filter4&offset=20&sortBy=nameDesc'
     );
   });
 });
@@ -99,6 +102,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       filters: {
         licenses: [],
         publishers: [],
+        spatialCoverages: [],
       },
       offset: 0,
       sortBy: 'relevance',
@@ -117,6 +121,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       filters: {
         licenses: [],
         publishers: [],
+        spatialCoverages: [],
       },
       offset: 0,
       sortBy: 'relevance',
@@ -137,6 +142,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       filters: {
         licenses: [],
         publishers: [],
+        spatialCoverages: [],
       },
       offset: 0,
       sortBy: 'relevance',
@@ -153,12 +159,14 @@ describe('fromSearchParamsToSearchOptions', () => {
       sortBy: SortBy.NameAsc,
       licenses: 'license1,license2',
       publishers: 'publisher',
+      spatialCoverages: 'spatial-coverage',
     };
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
       query: 'My query',
       filters: {
         licenses: ['license1', 'license2'],
         publishers: ['publisher'],
+        spatialCoverages: ['spatial-coverage'],
       },
       offset: 10,
       sortBy: 'name',

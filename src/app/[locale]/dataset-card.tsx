@@ -30,6 +30,13 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
           </p>
         </div>
         <div className="mt-2 flex">
+          {dataset.spatialCoverages?.map(spatialCoverage => (
+            <p key={spatialCoverage.id} className="text-xs text-gray-500 mr-10">
+              {spatialCoverage.name}
+            </p>
+          ))}
+        </div>
+        <div className="mt-2 flex">
           {dataset.keywords?.map(keyword => (
             <p key={keyword} className="text-xs text-gray-500 mr-10">
               {keyword}
