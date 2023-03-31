@@ -142,7 +142,7 @@ export default function FilterSet({
   const filteredSearchResultFilters: SearchResultFilter[] = useMemo(() => {
     return searchResultFilters.filter(searchResultFilter =>
       searchResultFilter.name
-        .toLocaleLowerCase()
+        ?.toLocaleLowerCase()
         .includes(query.toLocaleLowerCase())
     );
   }, [query, searchResultFilters]);
