@@ -14,7 +14,7 @@ export function PageTitle({children, id}: PageTitleProps) {
     <h1
       id={id}
       data-testid="page-title"
-      className="text-2xl font-bold leading-tight tracking-tight text-gray-900"
+      className="text-2xl font-semibold leading-tight tracking-tight text-gray-900"
     >
       {children}
     </h1>

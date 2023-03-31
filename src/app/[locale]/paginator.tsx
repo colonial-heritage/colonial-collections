@@ -33,10 +33,10 @@ export default function Paginator({
   }
 
   return (
-    <div className="flex items-center justify-between bg-white py-3">
+    <div className="flex items-center justify-between py-3">
       <div className="sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-gray-700">
+          <p>
             {t.rich('results', {
               start,
               end,

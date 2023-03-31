@@ -78,7 +78,7 @@ export default async function Details({params}: Props) {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center font-semibold mb-5"
+            className="inline-flex items-center mb-5 text-gray-900"
           >
             <ChevronLeftIcon className="h-5 w-5" />
             {t('back')}
@@ -88,7 +88,7 @@ export default async function Details({params}: Props) {
               <a
                 key={item.name}
                 href={item.href}
-                className="flex px-2 font-medium"
+                className="flex px-2 text-gray-900"
               >
                 {item.name}
               </a>
@@ -105,13 +105,13 @@ export default async function Details({params}: Props) {
             <div>{dataset.description}</div>
           </div>
           <div className="py-10">
-            <h2 className="font-bold leading-6 text-lg mb-6" id="metadata">
+            <h2 className="leading-6 mb-6" id="metadata">
               {t('metadata.title')}
             </h2>
             {datasetProperties.map(property => (
               <Fragment key={property.name}>
-                <h3 className="font-bold">{property.name}</h3>
-                <div className="mt-1 text-gray-900 sm:col-span-3 sm:mt-0 mb-4">
+                <h3 className="mb-0">{property.name}</h3>
+                <div className="mt-0 text-gray-900 sm:col-span-3 sm:mt-0 mb-6">
                   {property.value}
                 </div>
               </Fragment>

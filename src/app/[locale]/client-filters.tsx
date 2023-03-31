@@ -88,7 +88,7 @@ export default function ClientFilters({
     () => (
       <>
         <div className="pr-4 max-w-[350px]">
-          <label htmlFor="search" className="block font-bold text-gray-900">
+          <label htmlFor="search" className="block font-semibold text-gray-900">
             {t('search')}
           </label>
           <input
@@ -98,7 +98,7 @@ export default function ClientFilters({
             type="text"
             name="search"
             id="search"
-            className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-sky-700 focus:ring-sky-700 sm:text-sm"
             aria-label={t('accessibilityTypeToFilter')}
           />
         </div>
@@ -175,7 +175,7 @@ export default function ClientFilters({
             >
               <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white px-4 py-4 pb-6 shadow-xl">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-medium text-gray-900">
+                  <h2 className="text-lg font-semibold text-gray-900">
                     {t('filters')}
                   </h2>
                   <button
@@ -219,7 +219,7 @@ export default function ClientFilters({
             <div>
               <select
                 name="location"
-                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-600 focus:outline-none focus:ring-sky-600 sm:text-sm"
                 value={sortBy}
                 onChange={handleSortByChange}
                 aria-label={t('accessibilitySelectToChangeOrder')}
