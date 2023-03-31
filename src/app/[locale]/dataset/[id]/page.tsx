@@ -10,6 +10,9 @@ interface Props {
   params: {id: string};
 }
 
+// Revalidate the page
+export const revalidate = 0;
+
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const dataset = await datasetFetcher.getById({id});
