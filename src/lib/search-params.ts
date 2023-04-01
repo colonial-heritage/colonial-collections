@@ -85,6 +85,7 @@ export interface SearchParams {
   publishers?: string;
   licenses?: string;
   spatialCoverages?: string;
+  genres?: string;
   query?: string;
   offset?: string;
   sortBy?: SortBy;
@@ -120,6 +121,7 @@ export function fromSearchParamsToSearchOptions({
   publishers,
   licenses,
   spatialCoverages,
+  genres,
   query,
   offset = '0',
   sortBy = defaultSortBy,
@@ -133,6 +135,7 @@ export function fromSearchParamsToSearchOptions({
       publishers: publishers?.split(',').filter(id => !!id),
       licenses: licenses?.split(',').filter(id => !!id),
       spatialCoverages: spatialCoverages?.split(',').filter(id => !!id),
+      genres: genres?.split(',').filter(id => !!id),
     },
     sortBy: sortBySearchOption,
     sortOrder: sortOrder,
