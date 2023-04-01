@@ -12,6 +12,10 @@ import {
 interface Props {
   searchParams?: SearchParams;
 }
+
+// Revalidate the page
+export const revalidate = 0;
+
 export default async function Home({searchParams}: Props) {
   const searchOptions = fromSearchParamsToSearchOptions(searchParams ?? {});
   const sortBy = getClientSortBy({

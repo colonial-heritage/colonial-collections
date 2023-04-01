@@ -27,8 +27,8 @@
     "next": "Volgende"
   },
   "DatasetCard": {
-    "license": "Licentie",
-    "publisher": "Uitgever"
+    "keywords": "Trefwoorden"
+
   },
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"
