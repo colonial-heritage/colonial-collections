@@ -36,6 +36,7 @@ type Thing = {
 export type Publisher = Thing;
 export type License = Thing;
 export type Place = Thing;
+export type Term = Thing;
 
 export type Dataset = {
   id: string;
@@ -49,6 +50,7 @@ export type Dataset = {
   dateModified?: Date;
   datePublished?: Date;
   spatialCoverages?: Place[];
+  genres?: Term[];
 };
 
 export enum SortBy {
@@ -243,20 +245,24 @@ export class DatasetFetcher {
       name: this.labelFetcher.getByIri({iri: licenseIri}),
     };
 
-    let places: Place[] | undefined;
-    const placeIris: string[] = reach(
-      rawDataset,
-      `${RawDatasetKeys.SpatialCoverage}`
-    );
-    if (placeIris !== undefined) {
-      places = placeIris.map((placeIri: string) => {
-        const place: Place = {
-          id: placeIri,
-          name: this.labelFetcher.getByIri({iri: placeIri}),
+    const toThings = <T>(rawDatasetKey: string) => {
+      const iris: string[] | undefined = reach(rawDataset, `${rawDatasetKey}`);
+      if (iris === undefined) {
+        return undefined;
+      }
+
+      const things = iris.map((iri: string) => {
+        return {
+          id: iri,
+          name: this.labelFetcher.getByIri({iri}),
         };
-        return place;
       });
-    }
+
+      return things as T[];
+    };
+
+    const places = toThings<Place>(RawDatasetKeys.SpatialCoverage);
+    const genres = toThings<Term>(RawDatasetKeys.Genre);
 
     const datasetWithUndefinedValues: Dataset = {
       id: rawDataset[RawDatasetKeys.Id],
@@ -270,6 +276,7 @@ export class DatasetFetcher {
       dateModified,
       datePublished,
       spatialCoverages: places,
+      genres,
     };
 
     const dataset = merge({}, datasetWithUndefinedValues, {
@@ -338,11 +345,11 @@ export class DatasetFetcher {
       [RawDatasetKeys.Genre, options.filters?.genres],
     ]);
 
-    for (const [rawDatasetKey, filter] of queryFilters) {
-      if (filter !== undefined && filter.length) {
+    for (const [rawDatasetKey, filters] of queryFilters) {
+      if (filters !== undefined && filters.length) {
         searchRequest.query.bool.filter.push({
           terms: {
-            [`${rawDatasetKey}.keyword`]: filter,
+            [`${rawDatasetKey}.keyword`]: filters,
           },
         });
       }

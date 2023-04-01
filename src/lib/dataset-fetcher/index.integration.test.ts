@@ -51,6 +51,12 @@ describe('search', () => {
               name: 'Jakarta',
             },
           ],
+          genres: [
+            {
+              id: 'http://vocab.getty.edu/aat/300386957',
+              name: 'man-made objects',
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/10',
@@ -88,6 +94,12 @@ describe('search', () => {
             {
               id: 'https://hdl.handle.net/20.500.11840/termmaster10063401',
               name: 'Ubud',
+            },
+          ],
+          genres: [
+            {
+              id: 'http://vocab.getty.edu/aat/300027200',
+              name: 'notes (documents)',
             },
           ],
         },
@@ -137,6 +149,16 @@ describe('search', () => {
               name: 'Zuid-Amerika',
             },
           ],
+          genres: [
+            {
+              id: 'http://vocab.getty.edu/aat/300048715',
+              name: 'articles',
+            },
+            {
+              id: 'http://vocab.getty.edu/aat/300111999',
+              name: 'publications (documents)',
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/14',
@@ -173,6 +195,16 @@ describe('search', () => {
               name: 'Zuid-Afrika',
             },
           ],
+          genres: [
+            {
+              id: 'http://vocab.getty.edu/aat/300043196',
+              name: 'tableware',
+            },
+            {
+              id: 'http://vocab.getty.edu/aat/300417586',
+              name: 'art (broad object genre)',
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/3',
@@ -207,6 +239,12 @@ describe('search', () => {
               name: 'Suriname',
             },
           ],
+          genres: [
+            {
+              id: 'http://vocab.getty.edu/aat/300043196',
+              name: 'tableware',
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/5',
@@ -222,6 +260,12 @@ describe('search', () => {
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           keywords: ['Keyword'],
+          genres: [
+            {
+              id: 'http://vocab.getty.edu/aat/300404198',
+              name: 'digital media',
+            },
+          ],
         },
       ],
       filters: {
@@ -531,6 +575,12 @@ describe('search', () => {
             name: 'Attribution 4.0 International (CC BY 4.0)',
           },
           keywords: ['Keyword'],
+          genres: [
+            {
+              id: 'http://vocab.getty.edu/aat/300404198',
+              name: 'digital media',
+            },
+          ],
         },
       ],
       filters: {
@@ -980,6 +1030,12 @@ describe('getById', () => {
         {
           id: 'https://hdl.handle.net/20.500.11840/termmaster10063182',
           name: 'Jakarta',
+        },
+      ],
+      genres: [
+        {
+          id: 'http://vocab.getty.edu/aat/300386957',
+          name: 'man-made objects',
         },
       ],
     });
