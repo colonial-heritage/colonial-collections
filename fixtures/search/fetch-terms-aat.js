@@ -5,8 +5,8 @@ const {SparqlEndpointFetcher} = require('fetch-sparql-endpoint');
 const {stdout} = require('node:process');
 const rdfSerializer = require('rdf-serialize').default;
 
-const fetcher = new SparqlEndpointFetcher();
 const sparqlEndpointUrl = 'https://vocab.getty.edu/sparql';
+const fetcher = new SparqlEndpointFetcher();
 
 async function fetchDataByIri(iri) {
   const query = `DESCRIBE <${iri}>`;
