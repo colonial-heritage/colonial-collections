@@ -2,6 +2,7 @@
 // node fetch-terms-aat.js > genres.ttl
 
 const {SparqlEndpointFetcher} = require('fetch-sparql-endpoint');
+const {EOL} = require('node:os');
 const {stdout} = require('node:process');
 const rdfSerializer = require('rdf-serialize').default;
 
@@ -30,7 +31,7 @@ async function fetchData(iris) {
   for (const iri of iris) {
     const textStream = await fetchDataByIri(iri);
     textStream.pipe(writeStream).on('error', err => console.error(err));
-    writeStream.write('\n');
+    writeStream.write(EOL); // For readability
   }
 }
 
