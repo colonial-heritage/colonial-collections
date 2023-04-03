@@ -44,6 +44,7 @@ const searchParamsSchema = z.object({
   licenses: searchParamArraySchema,
   publishers: searchParamArraySchema,
   spatialCoverages: searchParamArraySchema,
+  genres: searchParamArraySchema,
   sortBy: z
     .nativeEnum(SortBy)
     // Don't add the default sort to the search params
@@ -56,6 +57,7 @@ interface ClientSearchOptions {
   offset?: SearchOptions['offset'];
   licenses?: string[];
   publishers?: string[];
+  genres?: string[];
   spatialCoverages?: string[];
   sortBy?: SortBy;
 }

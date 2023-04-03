@@ -34,6 +34,7 @@ describe('getUrlWithSearchParams', () => {
       licenses: [],
       publishers: [],
       spatialCoverages: [],
+      genres: [],
     };
     expect(getUrlWithSearchParams(options)).toBe('/');
   });
@@ -64,9 +65,10 @@ describe('getUrlWithSearchParams', () => {
       licenses: ['filter1'],
       publishers: ['filter2'],
       spatialCoverages: ['filter3'],
+      genres: ['filter4'],
     };
     expect(getUrlWithSearchParams(options)).toBe(
-      '/?licenses=filter1&publishers=filter2&spatialCoverages=filter3'
+      '/?licenses=filter1&publishers=filter2&spatialCoverages=filter3&genres=filter4'
     );
   });
 
@@ -78,9 +80,10 @@ describe('getUrlWithSearchParams', () => {
       licenses: ['filter1', 'filter2'],
       publishers: ['filter3'],
       spatialCoverages: ['filter4'],
+      genres: ['filter5'],
     };
     expect(getUrlWithSearchParams(options)).toBe(
-      '/?query=my+query&offset=20&licenses=filter1%2Cfilter2&publishers=filter3&spatialCoverages=filter4&sortBy=nameDesc'
+      '/?query=my+query&offset=20&licenses=filter1%2Cfilter2&publishers=filter3&spatialCoverages=filter4&genres=filter5&sortBy=nameDesc'
     );
   });
 });
