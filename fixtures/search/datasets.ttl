@@ -10,6 +10,7 @@
 
 <https://example.org/datasets/1>
   a dcat:Dataset ;
+  dct:type <http://vocab.getty.edu/aat/300386957> ; # Man-made objects
   dct:title "Dataset 1"@nl, "Dataset 1"@en ;
   dct:license <https://creativecommons.org/licenses/by/4.0/> ;
   dct:publisher <https://museum.example.org/> ;
@@ -24,6 +25,8 @@
 
 <https://example.org/datasets/2>
   a dcat:Dataset ;
+  dct:type <http://vocab.getty.edu/aat/300417586> , # Art
+           <http://vocab.getty.edu/aat/300043196> ; # Tableware
   dct:title "Dataset 2"@nl ;
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://museum.example.org/> ;
@@ -41,6 +44,7 @@
 
 <https://example.org/datasets/4>
   a dcat:Dataset ;
+  dct:type <http://vocab.getty.edu/aat/300043196> ; # Tableware
   dct:title "Dataset 4" ;
   dct:license <http://opendatacommons.org/licenses/by/1.0/> ;
   dct:publisher <https://museum.example.org/> ;
@@ -51,6 +55,7 @@
 
 <https://example.org/datasets/5>
   a dcat:Dataset ;
+  dct:type <http://vocab.getty.edu/aat/300404198> ; # Digital media
   dct:title "Dataset 5"@nl, "Dataset 5"@en ;
   dct:license <https://creativecommons.org/licenses/by/4.0/> ;
   dct:publisher <https://archive.example.org/> ;
@@ -68,6 +73,7 @@
 
 <https://example.org/datasets/7>
   a dcat:Dataset ;
+  dct:type <http://vocab.getty.edu/aat/300431978> ; # Unidentified works
   dct:title "Dataset 7"@en ;
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://archive.example.org/> ;
@@ -77,6 +83,7 @@
 
 <https://example.org/datasets/8>
   a dcat:Dataset ;
+  dct:type <http://vocab.getty.edu/aat/300048715> ; # Articles
   dct:title "Dataset 8" ;
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://archive.example.org/> ;
@@ -101,6 +108,7 @@
 
 <https://example.org/datasets/11>
   a dcat:Dataset ;
+  dct:type <http://vocab.getty.edu/aat/300027200> ; # Notes
   dct:title "Dataset 11"@en ;
   dct:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
   dct:publisher <https://library.example.org/> ;
@@ -121,6 +129,8 @@
 
 <https://example.org/datasets/13>
   a dcat:Dataset ;
+  dct:type <http://vocab.getty.edu/aat/300048715> , # Articles
+           <http://vocab.getty.edu/aat/300111999> ; # Publications
   dct:title "Dataset 13" ;
   dct:license <http://rightsstatements.org/vocab/UND/1.0/> ;
   dct:publisher <https://research.example.org/> ;

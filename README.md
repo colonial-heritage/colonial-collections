@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-1. Node.js version 18+
+1. Node.js version 18
 1. NPM version 8+
 
 ## Without Docker

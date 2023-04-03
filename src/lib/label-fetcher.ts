@@ -1,5 +1,5 @@
 import {IBindings, SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
-import {isIri} from './iri';
+import {isIri} from '@/lib/iri';
 import LRUCache from 'lru-cache';
 import {z} from 'zod';
 
@@ -55,11 +55,6 @@ export class LabelFetcher {
       return; // No IRIs to fetch
     }
 
-    // Cache all IRIs, regardless whether they're found by the fetch underneath;
-    // otherwise IRIs that aren't found will be fetched again and again on
-    // subsequent requests
-    iris.forEach(iri => this.cache.set(iri, cacheValueIfIriNotFound));
-
     // This returns multiple labels per IRI if multiple predicates match
     const predicate = predicates.map(predicate => `<${predicate}>`).join('|');
 
@@ -86,6 +81,11 @@ export class LabelFetcher {
       const bindings = rawBindings as unknown as IBindings; // TS assumes it's a string or Buffer
       this.cache.set(bindings.iri.value, bindings.label.value);
     }
+
+    // Also cache IRIs not found by the endpoint; otherwise these will
+    // be fetched again and again on subsequent requests
+    const irisNotFound = iris.filter(iri => !this.cache.has(iri));
+    irisNotFound.forEach(iri => this.cache.set(iri, cacheValueIfIriNotFound));
   }
 
   async loadByIris(options: LoadByIrisOptions) {
