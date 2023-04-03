@@ -21,6 +21,7 @@ export default function RootLayout({children, params}: Props) {
 
   const tNavigation = useTranslations('Navigation');
   const tLanguageSelector = useTranslations('LanguageSelector');
+  const tLanguageScreenreaderMenu = useTranslations('ScreenreaderMenu');
 
   // The navigation is a client component, get the labels first in this server component
   // See: https://next-intl-docs.vercel.app/docs/next-13/server-components#switching-to-client-components
@@ -54,13 +55,17 @@ export default function RootLayout({children, params}: Props) {
         <div className="sr-only">
           <ul>
             <li>
-              <a href="#facets">Jump to filter facets</a>
+              <a href="#facets">{tLanguageScreenreaderMenu('jumpFilters')}</a>
             </li>
             <li>
-              <a href="#search-results">Jump to results</a>
+              <a href="#search-results">
+                {tLanguageScreenreaderMenu('jumpResults')}
+              </a>
             </li>
             <li>
-              <a href="#pagenavigation">Jump to main navigation</a>
+              <a href="#pagenavigation">
+                {tLanguageScreenreaderMenu('jumpNavigation')}
+              </a>
             </li>
           </ul>
         </div>
