@@ -27,7 +27,6 @@ export default function RootLayout({children, params}: Props) {
   const navigationLabels = {
     name: tNavigation('name'),
     home: tNavigation('home'),
-    register: tNavigation('register'),
     about: tNavigation('about'),
     faq: tNavigation('faq'),
     contact: tNavigation('contact'),
@@ -73,7 +72,9 @@ export default function RootLayout({children, params}: Props) {
             locale={locale}
           />
         </header>
-        <main className="bg-gray-light">{children}</main>
+        <main className="bg-gray-light pb-32">
+          <div className="max-w-7xl container mx-auto p-8">{children}</div>
+        </main>
       </body>
     </html>
   );

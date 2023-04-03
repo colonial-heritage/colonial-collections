@@ -3,25 +3,33 @@
 @tailwind utilities;
 
 @layer base {
-    h1 {
-      @apply text-2xl;
-      margin-bottom: .5rem
-    }
-    h2 {
-      @apply text-xl;
-      margin-top: .5rem;
-      margin-bottom: .5rem
-    }
-    h3 {
-      @apply text-lg;
-      margin-top: .5rem;
-      margin-bottom: .5rem
-      }
-    p {
-        margin-bottom: 1rem;
-        max-width: 750px;
-    }
-    a {
-        color: hsl(225, 92%, 39%);
-    }
+  h1 {
+    @apply text-2xl;
+    @apply font-semibold;
+    @apply pb-10;
   }
+  h2 {
+    @apply text-xl;
+    @apply font-semibold;
+    @apply mb-1;
+    @apply mt-10;
+  }
+  h3 {
+    @apply text-lg;
+    @apply font-semibold;
+    @apply mb-2;
+    }
+  p {
+    @apply mb-4;
+    @apply max-w-3xl;
+  }
+  a {
+    @apply text-sky-700;
+  }
+  ul {
+    @apply list-disc;
+  }
+  li {
+    @apply ml-4;
+  }
+}

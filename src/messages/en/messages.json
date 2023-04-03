@@ -7,6 +7,7 @@
     "search": "Search",
     "licensesFilter": "Licenses",
     "publishersFilter": "Publishers",
+    "spatialCoveragesFilter": "Locations",
     "noResults": "There are no results",
     "sortRelevanceDesc": "Relevance",
     "sortNameAsc": "Name - Ascending",
@@ -14,6 +15,8 @@
     "fetchError": "There was a problem fetching the datasets. Please reload the page to try again.",
     "filters": "Filters",
     "clearAllFilters": "Clear all",
+    "expandFilter": "Expand",
+    "filterSearchPlaceholder": "Filter on {filterName}",
     "accessibilityTypeToFilter": "Type to filter on text.",
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result",
     "accessibilitySelectToFilter": "Select a checkbox to filter"
@@ -24,13 +27,11 @@
     "next": "Next"
   },
   "DatasetCard": {
-    "license": "License",
-    "publisher": "Publisher"
+    "keywords": "Keywords"
   },
   "Navigation": {
     "name": "Dataset Browser",
     "home": "Dataset Browser",
-    "register": "Register dataset",
     "about": "About",
     "faq": "FAQ",
     "contact": "Contact"

@@ -8,28 +8,25 @@ import {
   Fragment,
   useMemo,
 } from 'react';
-import {SearchResult} from '@/lib/dataset-fetcher';
+import {SearchOptions, SearchResult} from '@/lib/dataset-fetcher';
 import FilterSet from './filter-set';
 import Paginator from './paginator';
-import {
-  PageSidebar,
-  PageContent,
-  PageTitle,
-  PageHeader,
-} from '@/components/page';
+import {PageTitle, PageHeader} from '@/components/page';
 import {useTranslations} from 'next-intl';
 import SelectedFilters from './selected-filters';
 import {useRouter} from 'next/navigation';
-import {Sort, defaultSort} from './dataset-list';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
+import {getUrlWithSearchParams, SortBy} from '@/lib/search-params';
 
 export interface Props {
   filters: SearchResult['filters'];
   limit: SearchResult['limit'];
   totalCount: SearchResult['totalCount'];
   children: ReactNode;
+  sortBy: SortBy;
+  searchOptions: SearchOptions;
 }
 
 export default function ClientFilters({
@@ -37,12 +34,21 @@ export default function ClientFilters({
   filters,
   limit,
   totalCount,
+  sortBy: initialSortBy,
+  searchOptions,
 }: Props) {
-  const [selectedLicenses, setSelectedLicenses] = useState<string[]>([]);
-  const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
-  const [query, setQuery] = useState('');
-  const [offset, setOffset] = useState(0);
-  const [sort, setSort] = useState<Sort>(defaultSort);
+  const [selectedLicenses, setSelectedLicenses] = useState<string[]>(
+    searchOptions?.filters?.licenses ?? []
+  );
+  const [selectedPublishers, setSelectedPublishers] = useState<string[]>(
+    searchOptions?.filters?.publishers ?? []
+  );
+  const [selectedSpatialCoverages, setSelectedSpatialCoverages] = useState<
+    string[]
+  >(searchOptions?.filters?.spatialCoverages ?? []);
+  const [query, setQuery] = useState(searchOptions?.query ?? '');
+  const [offset, setOffset] = useState(searchOptions?.offset ?? 0);
+  const [sortBy, setSortBy] = useState<SortBy>(initialSortBy);
   const [showFiltersSidebarOnSmallScreen, setShowFiltersSidebarOnSmallScreen] =
     useState(false);
   const t = useTranslations('Home');
@@ -51,46 +57,38 @@ export default function ClientFilters({
   const [, startTransition] = useTransition();
 
   useEffect(() => {
-    const searchParams: {[key: string]: string} = {};
-
-    if (query) {
-      searchParams.query = query;
-    }
-
-    if (selectedLicenses.length) {
-      searchParams.licenses = selectedLicenses.join(',');
-    }
-
-    if (selectedPublishers.length) {
-      searchParams.publishers = selectedPublishers.join(',');
-    }
-
-    if (offset) {
-      searchParams.offset = `${offset}`;
-    }
-
-    if (sort !== defaultSort) {
-      searchParams.sort = sort;
-    }
-    const encodedSearchParams = new URLSearchParams(searchParams).toString();
-    startTransition(() => {
-      if (encodedSearchParams) {
-        router.replace('/?' + encodedSearchParams);
-      } else {
-        router.replace('/' + encodedSearchParams);
-      }
+    const urlWithSearchParams = getUrlWithSearchParams({
+      query,
+      filters: {
+        licenses: selectedLicenses,
+        publishers: selectedPublishers,
+        spatialCoverages: selectedSpatialCoverages,
+      },
+      offset,
+      sortBy,
     });
-  }, [query, offset, sort, selectedLicenses, selectedPublishers, router]);
+    startTransition(() => {
+      router.replace(urlWithSearchParams);
+    });
+  }, [
+    query,
+    offset,
+    sortBy,
+    selectedLicenses,
+    selectedPublishers,
+    router,
+    selectedSpatialCoverages,
+  ]);
 
-  function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setSort(e.target.value as Sort);
+  function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setSortBy(e.target.value as SortBy);
   }
 
   const renderFilters = useMemo(
     () => (
       <>
         <div className="pr-4 max-w-[350px]" id="facets">
-          <label htmlFor="search" className="block font-bold text-gray-900">
+          <label htmlFor="search" className="block font-semibold text-gray-900">
             {t('search')}
           </label>
           <input
@@ -100,7 +98,7 @@ export default function ClientFilters({
             type="text"
             name="search"
             id="search"
-            className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-sky-700 focus:ring-sky-700 sm:text-sm"
             aria-label={t('accessibilityTypeToFilter')}
           />
         </div>
@@ -122,14 +120,25 @@ export default function ClientFilters({
             testId="publishersFilter"
           />
         )}
+        {!!filters.spatialCoverages?.length && (
+          <FilterSet
+            title={t('spatialCoveragesFilter')}
+            searchResultFilters={filters.spatialCoverages}
+            selectedFilters={selectedSpatialCoverages}
+            setSelectedFilters={setSelectedSpatialCoverages}
+            testId="spatialCoveragesFilter"
+          />
+        )}
       </>
     ),
     [
       filters.licenses,
       filters.publishers,
+      filters.spatialCoverages,
       query,
       selectedLicenses,
       selectedPublishers,
+      selectedSpatialCoverages,
       t,
     ]
   );
@@ -166,7 +175,7 @@ export default function ClientFilters({
             >
               <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white px-4 py-4 pb-6 shadow-xl">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-medium text-gray-900">
+                  <h2 className="text-lg font-semibold text-gray-900">
                     {t('filters')}
                   </h2>
                   <button
@@ -184,9 +193,11 @@ export default function ClientFilters({
           </div>
         </Dialog>
       </Transition.Root>
-      <PageSidebar>{renderFilters}</PageSidebar>
+      <aside className="self-stretch hidden md:flex md:h-full w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2">
+        {renderFilters}
+      </aside>
 
-      <PageContent>
+      <section className="w-full md:w-2/3 gap-6 flex flex-col">
         <button
           type="button"
           className="inline-flex items-center md:hidden"
@@ -211,16 +222,16 @@ export default function ClientFilters({
             <div>
               <select
                 name="location"
-                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
-                value={sort}
-                onChange={handleSortChange}
+                className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-600 focus:outline-none focus:ring-sky-600 sm:text-sm"
+                value={sortBy}
+                onChange={handleSortByChange}
                 aria-label={t('accessibilitySelectToChangeOrder')}
               >
-                <option value={Sort.RelevanceDesc}>
+                <option value={SortBy.RelevanceDesc}>
                   {t('sortRelevanceDesc')}
                 </option>
-                <option value={Sort.NameAsc}>{t('sortNameAsc')}</option>
-                <option value={Sort.NameDesc}>{t('sortNameDesc')}</option>
+                <option value={SortBy.NameAsc}>{t('sortNameAsc')}</option>
+                <option value={SortBy.NameDesc}>{t('sortNameDesc')}</option>
               </select>
             </div>
           </div>
@@ -235,6 +246,11 @@ export default function ClientFilters({
                 searchResultFilters: filters.publishers ?? [],
                 selectedFilters: selectedPublishers,
                 setSelectedFilters: setSelectedPublishers,
+              },
+              {
+                searchResultFilters: filters.spatialCoverages ?? [],
+                selectedFilters: selectedSpatialCoverages,
+                setSelectedFilters: setSelectedSpatialCoverages,
               },
             ]}
             query={{
@@ -253,7 +269,7 @@ export default function ClientFilters({
             limit={limit}
           />
         ) : null}
-      </PageContent>
+      </section>
     </>
   );
 }
