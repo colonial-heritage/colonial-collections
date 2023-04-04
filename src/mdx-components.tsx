@@ -11,7 +11,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h3: ({children}) => (
       <h3 className="leading-tight tracking-tight text-gray-900">{children}</h3>
     ),
-    p: ({children}) => <p className="text-gray-900 w-96">{children}</p>,
+    p: ({children}) => <p className="text-gray-900">{children}</p>,
     ...components,
   };
 }
