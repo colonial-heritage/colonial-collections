@@ -7,6 +7,8 @@ import {
   useTransition,
   Fragment,
   useMemo,
+  useCallback,
+  Dispatch,
 } from 'react';
 import {SearchOptions, SearchResult} from '@/lib/dataset-fetcher';
 import FilterSet from './filter-set';
@@ -56,6 +58,10 @@ export default function ClientFilters({
   // Use the first param `isPending` of `useTransition` for a loading state.
   const [, startTransition] = useTransition();
 
+  const resetOffset = useCallback(() => {
+    setOffset(0);
+  }, []);
+
   useEffect(() => {
     const urlWithSearchParams = getUrlWithSearchParams({
       query,
@@ -79,11 +85,26 @@ export default function ClientFilters({
   ]);
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    resetOffset();
     setSortBy(e.target.value as SortBy);
   }
 
-  const renderFilters = useMemo(
-    () => (
+  const handleQueryChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      resetOffset();
+      setQuery(e.target.value);
+    },
+    [resetOffset]
+  );
+
+  const renderFilters = useMemo(() => {
+    function setAndResetOffset(setter: Dispatch<string[]>) {
+      return (newValue: string[]) => {
+        resetOffset();
+        return setter(newValue);
+      };
+    }
+    return (
       <>
         <div className="pr-4 max-w-[350px]" id="facets">
           <label htmlFor="search" className="block font-semibold text-gray-900">
@@ -92,7 +113,7 @@ export default function ClientFilters({
           <input
             data-testid="searchQuery"
             value={query}
-            onChange={e => setQuery(e.target.value)}
+            onChange={handleQueryChange}
             type="text"
             name="search"
             id="search"
@@ -105,7 +126,7 @@ export default function ClientFilters({
             title={t('licensesFilter')}
             searchResultFilters={filters.licenses}
             selectedFilters={selectedLicenses}
-            setSelectedFilters={setSelectedLicenses}
+            setSelectedFilters={setAndResetOffset(setSelectedLicenses)}
             testId="licensesFilter"
           />
         )}
@@ -114,7 +135,7 @@ export default function ClientFilters({
             title={t('publishersFilter')}
             searchResultFilters={filters.publishers}
             selectedFilters={selectedPublishers}
-            setSelectedFilters={setSelectedPublishers}
+            setSelectedFilters={setAndResetOffset(setSelectedPublishers)}
             testId="publishersFilter"
           />
         )}
@@ -123,23 +144,24 @@ export default function ClientFilters({
             title={t('spatialCoveragesFilter')}
             searchResultFilters={filters.spatialCoverages}
             selectedFilters={selectedSpatialCoverages}
-            setSelectedFilters={setSelectedSpatialCoverages}
+            setSelectedFilters={setAndResetOffset(setSelectedSpatialCoverages)}
             testId="spatialCoveragesFilter"
           />
         )}
       </>
-    ),
-    [
-      filters.licenses,
-      filters.publishers,
-      filters.spatialCoverages,
-      query,
-      selectedLicenses,
-      selectedPublishers,
-      selectedSpatialCoverages,
-      t,
-    ]
-  );
+    );
+  }, [
+    t,
+    query,
+    handleQueryChange,
+    filters.licenses,
+    filters.publishers,
+    filters.spatialCoverages,
+    selectedLicenses,
+    selectedPublishers,
+    selectedSpatialCoverages,
+    resetOffset,
+  ]);
 
   return (
     <>
@@ -255,6 +277,7 @@ export default function ClientFilters({
               value: query,
               setQuery,
             }}
+            clearAllSideEffects={resetOffset}
           />
         </PageHeader>
 
