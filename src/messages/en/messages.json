@@ -43,7 +43,7 @@
     "accessibilityLanguageSelector": "Select to change the language of the site. The current language is {language}",
     "accessibilityOpenMenu": "Open menu"
   },
-  "ScreenreaderMenu": {
+  "ScreenReaderMenu": {
     "jumpFilters": "Jump to filter facets",
     "jumpResults": "Jump to results",
     "jumpNavigation": "Jump to main navigation"

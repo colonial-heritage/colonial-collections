@@ -47,7 +47,7 @@
     "accessibilityLanguageSelector": "Selecteer om de taal van de site te wijzigen. De huidige taal is {language}",
     "accessibilityOpenMenu": "Open menu"
   },
-  "ScreenreaderMenu": {
+  "ScreenReaderMenu": {
     "jumpFilters": "Ga naar de facets",
     "jumpResults": "Ga naar de resultaten",
     "jumpNavigation": "Ga naar de hoofdnavigatie"
