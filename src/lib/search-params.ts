@@ -31,16 +31,16 @@ const sortMapping = {
 
 const searchParamArraySchema = z
   .array(z.string())
-  .transform(stringArray => stringArray.join(','))
-  .optional();
+  .default([])
+  .transform(stringArray => stringArray.join(','));
 
 const searchParamsSchema = z.object({
-  query: z.string().optional(),
+  query: z.string().default(''),
   offset: z
     .number()
+    .default(0)
     // Don't add the default offset of 0 to the search params
-    .transform(offset => (offset > 0 ? `${offset}` : undefined))
-    .optional(),
+    .transform(offset => (offset > 0 ? `${offset}` : '')),
   licenses: searchParamArraySchema,
   publishers: searchParamArraySchema,
   spatialCoverages: searchParamArraySchema,
@@ -48,8 +48,8 @@ const searchParamsSchema = z.object({
   sortBy: z
     .nativeEnum(SortBy)
     // Don't add the default sort to the search params
-    .transform(sortBy => (sortBy === defaultSortBy ? undefined : sortBy))
-    .optional(),
+    .optional()
+    .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
 });
 
 interface ClientSearchOptions {
@@ -68,9 +68,9 @@ export function getUrlWithSearchParams(
   const searchParams: {[key: string]: string} =
     searchParamsSchema.parse(clientSearchOption);
 
-  // Only add relevant values to the search params. Remove all keys with a empty value (undefined or "")
+  // Only add relevant values to the search params. Remove all keys with a empty strings
   Object.keys(searchParams).forEach(key =>
-    !searchParams[key] ? delete searchParams[key] : {}
+    searchParams[key] === '' ? delete searchParams[key] : {}
   );
   const encodedSearchParams = new URLSearchParams(searchParams).toString();
 
