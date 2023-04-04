@@ -29,10 +29,10 @@ const sortMapping = {
   },
 };
 
-const searchParamArraySchema = z
+const searchParamFilterSchema = z
   .array(z.string())
   .default([])
-  .transform(stringArray => stringArray.join(','));
+  .transform(filterValues => filterValues.join(','));
 
 const searchParamsSchema = z.object({
   query: z.string().default(''),
@@ -41,10 +41,10 @@ const searchParamsSchema = z.object({
     .default(0)
     // Don't add the default offset of 0 to the search params
     .transform(offset => (offset > 0 ? `${offset}` : '')),
-  licenses: searchParamArraySchema,
-  publishers: searchParamArraySchema,
-  spatialCoverages: searchParamArraySchema,
-  genres: searchParamArraySchema,
+  licenses: searchParamFilterSchema,
+  publishers: searchParamFilterSchema,
+  spatialCoverages: searchParamFilterSchema,
+  genres: searchParamFilterSchema,
   sortBy: z
     .nativeEnum(SortBy)
     // Don't add the default sort to the search params
@@ -99,7 +99,7 @@ export function fallback<T>(value: T) {
 const searchOptionsFilterSchema = z
   .string()
   .optional()
-  .transform(filterString => filterString?.split(',').filter(id => !!id))
+  .transform(filterValue => filterValue?.split(',').filter(id => !!id))
   .pipe(z.array(z.string()).optional().default([]));
 
 // Always return a valid SearchOptions object, even if the search params aren't correct,
