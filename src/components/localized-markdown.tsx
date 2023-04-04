@@ -9,7 +9,11 @@ async function LocalizedMarkdown({name}: Props) {
   const locale = useLocale();
   try {
     const Markdown = (await import(`@/messages/${locale}/${name}.mdx`)).default;
-    return <Markdown />;
+    return (
+      <div className="max-w-3xl">
+        <Markdown />
+      </div>
+    );
   } catch {
     notFound();
   }

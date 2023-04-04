@@ -27,6 +27,7 @@
     "next": "Next"
   },
   "DatasetCard": {
+    "Dataset": "Dataset",
     "keywords": "Keywords"
   },
   "Navigation": {
@@ -41,6 +42,11 @@
     "en": "English",
     "accessibilityLanguageSelector": "Select to change the language of the site. The current language is {language}",
     "accessibilityOpenMenu": "Open menu"
+  },
+  "ScreenReaderMenu": {
+    "jumpFilters": "Jump to filter facets",
+    "jumpResults": "Jump to results",
+    "jumpNavigation": "Jump to main navigation"
   },
   "Details": {
     "noDataset": "Dataset could not be found.",

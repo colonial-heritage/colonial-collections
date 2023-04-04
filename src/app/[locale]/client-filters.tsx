@@ -87,7 +87,7 @@ export default function ClientFilters({
   const renderFilters = useMemo(
     () => (
       <>
-        <div className="pr-4 max-w-[350px]">
+        <div className="pr-4 max-w-[350px]" id="facets">
           <label htmlFor="search" className="block font-semibold text-gray-900">
             {t('search')}
           </label>
@@ -212,7 +212,10 @@ export default function ClientFilters({
           />
         </button>
         <PageHeader>
-          <div className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
+          <div
+            className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap"
+            id="search-results"
+          >
             <div className="ml-4 mt-2">
               <PageTitle>{t('title', {totalDatasets: totalCount})}</PageTitle>
             </div>
