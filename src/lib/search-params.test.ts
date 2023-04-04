@@ -10,14 +10,13 @@ import {describe, expect, it} from '@jest/globals';
 
 describe('getUrlWithSearchParams', () => {
   it('returns "/" if there are no options', () => {
-    expect(getUrlWithSearchParams({filters: {}})).toBe('/');
+    expect(getUrlWithSearchParams({})).toBe('/');
   });
 
   it('returns "/" with only default values', () => {
     const options = {
       offset: 0,
       sortBy: defaultSortBy,
-      filters: {},
     };
     expect(getUrlWithSearchParams(options)).toBe('/');
   });
@@ -25,7 +24,6 @@ describe('getUrlWithSearchParams', () => {
   it('returns "/" with an empty query string', () => {
     const options = {
       query: '',
-      filters: {},
     };
     expect(getUrlWithSearchParams(options)).toBe('/');
   });
@@ -33,11 +31,10 @@ describe('getUrlWithSearchParams', () => {
   it('returns "/" with empty filter arrays', () => {
     const options = {
       query: '',
-      filters: {
-        licenses: [],
-        publishers: [],
-        spatialCoverages: [],
-      },
+      licenses: [],
+      publishers: [],
+      spatialCoverages: [],
+      genres: [],
     };
     expect(getUrlWithSearchParams(options)).toBe('/');
   });
@@ -45,7 +42,6 @@ describe('getUrlWithSearchParams', () => {
   it('adds "query" to the search params if `query` is not empty', () => {
     const options = {
       query: 'my query',
-      filters: {},
     };
     expect(getUrlWithSearchParams(options)).toBe('/?query=my+query');
   });
@@ -53,7 +49,6 @@ describe('getUrlWithSearchParams', () => {
   it('adds "offset" to the search params if `offset` is not 0', () => {
     const options = {
       offset: 10,
-      filters: {},
     };
     expect(getUrlWithSearchParams(options)).toBe('/?offset=10');
   });
@@ -61,21 +56,19 @@ describe('getUrlWithSearchParams', () => {
   it('adds "sortBy" to the search params if `sortBy` is not the default', () => {
     const options = {
       sortBy: SortBy.NameAsc,
-      filters: {},
     };
     expect(getUrlWithSearchParams(options)).toBe('/?sortBy=nameAsc');
   });
 
   it('adds "filters" to the search params if the filter arrays are not empty', () => {
     const options = {
-      filters: {
-        licenses: ['filter1'],
-        publishers: ['filter2'],
-        spatialCoverages: ['filter3'],
-      },
+      licenses: ['filter1'],
+      publishers: ['filter2'],
+      spatialCoverages: ['filter3'],
+      genres: ['filter4'],
     };
     expect(getUrlWithSearchParams(options)).toBe(
-      '/?licenses=filter1&publishers=filter2&spatialCoverages=filter3'
+      '/?licenses=filter1&publishers=filter2&spatialCoverages=filter3&genres=filter4'
     );
   });
 
@@ -84,14 +77,13 @@ describe('getUrlWithSearchParams', () => {
       query: 'my query',
       offset: 20,
       sortBy: SortBy.NameDesc,
-      filters: {
-        licenses: ['filter1', 'filter2'],
-        publishers: ['filter3'],
-        spatialCoverages: ['filter4'],
-      },
+      licenses: ['filter1', 'filter2'],
+      publishers: ['filter3'],
+      spatialCoverages: ['filter4'],
+      genres: ['filter5'],
     };
     expect(getUrlWithSearchParams(options)).toBe(
-      '/?query=my+query&licenses=filter1%2Cfilter2&publishers=filter3&spatialCoverages=filter4&offset=20&sortBy=nameDesc'
+      '/?query=my+query&offset=20&licenses=filter1%2Cfilter2&publishers=filter3&spatialCoverages=filter4&genres=filter5&sortBy=nameDesc'
     );
   });
 });

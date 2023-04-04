@@ -59,11 +59,9 @@ export default function ClientFilters({
   useEffect(() => {
     const urlWithSearchParams = getUrlWithSearchParams({
       query,
-      filters: {
-        licenses: selectedLicenses,
-        publishers: selectedPublishers,
-        spatialCoverages: selectedSpatialCoverages,
-      },
+      licenses: selectedLicenses,
+      publishers: selectedPublishers,
+      spatialCoverages: selectedSpatialCoverages,
       offset,
       sortBy,
     });

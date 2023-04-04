@@ -29,49 +29,49 @@ const sortMapping = {
   },
 };
 
+const searchParamFilterSchema = z
+  .array(z.string())
+  .default([])
+  .transform(filterValues => filterValues.join(','));
+
+const searchParamsSchema = z.object({
+  query: z.string().default(''),
+  offset: z
+    .number()
+    .default(0)
+    // Don't add the default offset of 0 to the search params
+    .transform(offset => (offset > 0 ? `${offset}` : '')),
+  licenses: searchParamFilterSchema,
+  publishers: searchParamFilterSchema,
+  spatialCoverages: searchParamFilterSchema,
+  genres: searchParamFilterSchema,
+  sortBy: z
+    .nativeEnum(SortBy)
+    // Don't add the default sort to the search params
+    .optional()
+    .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
+});
+
 interface ClientSearchOptions {
   query?: SearchOptions['query'];
   offset?: SearchOptions['offset'];
-  filters: {
-    licenses?: string[];
-    publishers?: string[];
-    spatialCoverages?: string[];
-  };
+  licenses?: string[];
+  publishers?: string[];
+  genres?: string[];
+  spatialCoverages?: string[];
   sortBy?: SortBy;
 }
 
-export function getUrlWithSearchParams({
-  query,
-  offset,
-  filters: {licenses, publishers, spatialCoverages},
-  sortBy,
-}: ClientSearchOptions): string {
-  const searchParams: {[key: string]: string} = {};
+export function getUrlWithSearchParams(
+  clientSearchOption: ClientSearchOptions
+): string {
+  const searchParams: {[key: string]: string} =
+    searchParamsSchema.parse(clientSearchOption);
 
-  if (query) {
-    searchParams.query = query;
-  }
-
-  if (licenses?.length) {
-    searchParams.licenses = licenses.join(',');
-  }
-
-  if (publishers?.length) {
-    searchParams.publishers = publishers.join(',');
-  }
-
-  if (spatialCoverages?.length) {
-    searchParams.spatialCoverages = spatialCoverages.join(',');
-  }
-
-  if (offset) {
-    searchParams.offset = `${offset}`;
-  }
-
-  if (sortBy && sortBy !== defaultSortBy) {
-    searchParams.sortBy = sortBy;
-  }
-
+  // Only add relevant values to the search params. Remove all keys with a empty strings
+  Object.keys(searchParams).forEach(key =>
+    searchParams[key] === '' ? delete searchParams[key] : {}
+  );
   const encodedSearchParams = new URLSearchParams(searchParams).toString();
 
   if (encodedSearchParams) {
@@ -96,10 +96,28 @@ export function fallback<T>(value: T) {
   return z.any().transform(() => value);
 }
 
+const searchOptionsFilterSchema = z
+  .string()
+  .optional()
+  .transform(filterValue => filterValue?.split(',').filter(id => !!id))
+  .pipe(z.array(z.string()).optional().default([]));
+
 // Always return a valid SearchOptions object, even if the search params aren't correct,
 // so the application doesn't fail on invalid search params.
 const searchOptionsWithFallbackSchema = searchOptionsSchema.extend({
-  offset: searchOptionsSchema.shape.offset.or(fallback(0)),
+  offset: z
+    .string()
+    .transform(offsetString => +offsetString)
+    .pipe(searchOptionsSchema.shape.offset)
+    .or(fallback(0)),
+  filters: z
+    .object({
+      publishers: searchOptionsFilterSchema,
+      licenses: searchOptionsFilterSchema,
+      spatialCoverages: searchOptionsFilterSchema,
+      genres: searchOptionsFilterSchema,
+    })
+    .optional(),
   sortBy: searchOptionsSchema.shape.sortBy.or(
     fallback(SortBySearchOption.Relevance)
   ),
@@ -123,29 +141,24 @@ export function fromSearchParamsToSearchOptions({
   spatialCoverages,
   genres,
   query,
-  offset = '0',
-  sortBy = defaultSortBy,
+  offset,
+  sortBy,
 }: SearchParams): SearchOptionsWithRequiredSort {
-  const {sortBy: sortBySearchOption, sortOrder} = sortMapping[sortBy] || {};
+  const {sortBy: sortBySearchOption, sortOrder} =
+    (sortBy && sortMapping[sortBy]) || {};
 
-  // Transform the string values from the search params to SearchOptions
-  const options = {
-    offset: +offset,
+  return searchOptionsWithFallbackSchema.parse({
+    offset,
     filters: {
-      publishers: publishers?.split(',').filter(id => !!id),
-      licenses: licenses?.split(',').filter(id => !!id),
-      spatialCoverages: spatialCoverages?.split(',').filter(id => !!id),
-      genres: genres?.split(',').filter(id => !!id),
+      publishers,
+      licenses,
+      spatialCoverages,
+      genres,
     },
     sortBy: sortBySearchOption,
     sortOrder: sortOrder,
     query: query,
-  };
-
-  const validOptions: SearchOptionsWithRequiredSort =
-    searchOptionsWithFallbackSchema.parse(options);
-
-  return validOptions;
+  });
 }
 
 interface SortPairProps {
