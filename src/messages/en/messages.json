@@ -8,6 +8,7 @@
     "licensesFilter": "Licenses",
     "publishersFilter": "Publishers",
     "spatialCoveragesFilter": "Locations",
+    "genresFilter": "Genres",
     "noResults": "There are no results",
     "sortRelevanceDesc": "Relevance",
     "sortNameAsc": "Name - Ascending",

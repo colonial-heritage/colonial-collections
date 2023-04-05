@@ -212,7 +212,7 @@ export default function FilterSet({
                   )
                 ),
               ].map((_, i) => (
-                <div key={i} className="space-y-3 mr-2 md:max-w-[350px]">
+                <div key={i} className="space-y-3 mr-2 md:w-[350px]">
                   {filteredSearchResultFilters
                     .slice(
                       i * maxOptionsInColumn,

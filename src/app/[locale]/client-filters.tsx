@@ -48,6 +48,9 @@ export default function ClientFilters({
   const [selectedSpatialCoverages, setSelectedSpatialCoverages] = useState<
     string[]
   >(searchOptions?.filters?.spatialCoverages ?? []);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>(
+    searchOptions?.filters?.genres ?? []
+  );
   const [query, setQuery] = useState(searchOptions?.query ?? '');
   const [offset, setOffset] = useState(searchOptions?.offset ?? 0);
   const [sortBy, setSortBy] = useState<SortBy>(initialSortBy);
@@ -68,6 +71,7 @@ export default function ClientFilters({
       licenses: selectedLicenses,
       publishers: selectedPublishers,
       spatialCoverages: selectedSpatialCoverages,
+      genres: selectedGenres,
       offset,
       sortBy,
     });
@@ -82,6 +86,7 @@ export default function ClientFilters({
     selectedPublishers,
     router,
     selectedSpatialCoverages,
+    selectedGenres,
   ]);
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -145,7 +150,14 @@ export default function ClientFilters({
             searchResultFilters={filters.spatialCoverages}
             selectedFilters={selectedSpatialCoverages}
             setSelectedFilters={setAndResetOffset(setSelectedSpatialCoverages)}
-            testId="spatialCoveragesFilter"
+          />
+        )}
+        {!!filters.genres?.length && (
+          <FilterSet
+            title={t('genresFilter')}
+            searchResultFilters={filters.genres}
+            selectedFilters={selectedGenres}
+            setSelectedFilters={setAndResetOffset(setSelectedGenres)}
           />
         )}
       </>
@@ -157,9 +169,11 @@ export default function ClientFilters({
     filters.licenses,
     filters.publishers,
     filters.spatialCoverages,
+    filters.genres,
     selectedLicenses,
     selectedPublishers,
     selectedSpatialCoverages,
+    selectedGenres,
     resetOffset,
   ]);
 
@@ -271,6 +285,11 @@ export default function ClientFilters({
                 searchResultFilters: filters.spatialCoverages ?? [],
                 selectedFilters: selectedSpatialCoverages,
                 setSelectedFilters: setSelectedSpatialCoverages,
+              },
+              {
+                searchResultFilters: filters.genres ?? [],
+                selectedFilters: selectedGenres,
+                setSelectedFilters: setSelectedGenres,
               },
             ]}
             query={{
