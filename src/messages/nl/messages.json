@@ -8,6 +8,7 @@
     "licensesFilter": "Licenties",
     "publishersFilter": "Eigenaren",
     "spatialCoveragesFilter": "Locaties",
+    "genresFilter": "Genres",
     "noResults": "Er zijn geen resultaten",
     "sortRelevanceDesc": "Relevantie",
     "sortNameAsc": "Naam - Oplopend",
