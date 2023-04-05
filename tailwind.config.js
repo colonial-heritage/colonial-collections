@@ -7,6 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      typography: theme => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.gray.900'),
+          },
+        },
+      }),
       colors: {
         gray: {
           light: '#F7F5F2',
@@ -17,5 +24,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };
