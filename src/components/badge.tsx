@@ -1,17 +1,27 @@
 import {ReactNode} from 'react';
 import {XMarkIcon} from '@heroicons/react/24/solid';
+import classNames from 'classnames';
 
 interface Props {
   children: ReactNode;
   testId?: string;
+  variant?: 'transparent' | 'gray';
 }
 
-export default function Badge({children, testId}: Props) {
+export default function Badge({
+  children,
+  variant = 'transparent',
+  testId,
+}: Props) {
+  const variantClassName = classNames(
+    'inline-flex items-center rounded-md mr-4 px-2 py-1',
+    {
+      'bg-gray-medium text-xs text-gray-900': variant === 'transparent',
+      'text-sm bg-stone-100': variant === 'gray',
+    }
+  );
   return (
-    <span
-      data-testid={testId}
-      className="m-1 inline-flex items-center rounded-md bg-gray-medium py-1.5 pl-3 pr-2 text-xs text-gray-900"
-    >
+    <span data-testid={testId} className={variantClassName}>
       {children}
     </span>
   );

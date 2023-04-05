@@ -1,6 +1,7 @@
 import {Link} from 'next-intl';
 import {useTranslations} from 'next-intl';
 import {Dataset} from '@/lib/dataset-fetcher';
+import Badge from '@/components/badge';
 
 export default function DatasetCard({dataset}: {dataset: Dataset}) {
   const t = useTranslations('DatasetCard');
@@ -23,22 +24,30 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
           </Link>
         </h2>
         <p className="text-base text-gray-900">{dataset.description}</p>
-        <div className="mt-2 flex">
-          <span className="text-sm -ml-2 mr-4 px-2 py-1 bg-stone-100 rounded">
-            {dataset.publisher.name}
-          </span>
-          <span className="text-sm -ml-2 mr-4 px-2 py-1 bg-stone-100 rounded">
-            {dataset.license.name}
-          </span>
-        </div>
-        <div className="mt-2 flex text-sm">
-          <span className="mr-3">{t('keywords')}: </span>
-          {dataset.keywords?.map(keyword => (
-            <span key={keyword} className="mr-3">
-              {keyword}
-            </span>
+        <div className="mt-2 flex flex-wrap">
+          <Badge variant="gray"> {dataset.publisher.name} </Badge>
+          <Badge variant="gray"> {dataset.license.name} </Badge>
+          {dataset.spatialCoverages?.map(spatialCoverage => (
+            <Badge variant="gray" key={spatialCoverage.id}>
+              {spatialCoverage.name}
+            </Badge>
+          ))}
+          {dataset.genres?.map(genre => (
+            <Badge variant="gray" key={genre.id}>
+              {genre.name}
+            </Badge>
           ))}
         </div>
+        {dataset.keywords?.length && (
+          <div className="mt-2 flex text-sm flex-wrap">
+            <span className="mr-3">{t('keywords')}: </span>
+            {dataset.keywords?.map(keyword => (
+              <span key={keyword} className="mr-3">
+                {keyword}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
