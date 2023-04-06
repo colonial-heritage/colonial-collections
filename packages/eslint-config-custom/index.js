@@ -1,11 +1,12 @@
 module.exports = {
-  extends: ["next", "turbo", "prettier"],
+  extends: ['next', 'turbo', '../../node_modules/gts/'],
   rules: {
-    "@next/next/no-html-link-for-pages": "off",
-  },
-  parserOptions: {
-    babelOptions: {
-      presets: [require.resolve("next/babel")],
-    },
+    'capitalized-comments': [
+      'error',
+      'always',
+      {
+        ignoreConsecutiveComments: true,
+      },
+    ],
   },
 };
