@@ -1,4 +1,4 @@
-import LocalizedMarkdown from '@/components/localized-markdown';
+import {LocalizedMarkdown} from 'ui';
 
 export default function About() {
   return <LocalizedMarkdown name="about" />;

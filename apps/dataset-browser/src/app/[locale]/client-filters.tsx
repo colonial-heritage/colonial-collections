@@ -13,7 +13,7 @@ import {
 import {SearchOptions, SearchResult} from '@/lib/dataset-fetcher';
 import FilterSet from './filter-set';
 import Paginator from './paginator';
-import {PageTitle, PageHeader} from '@/components/page';
+import {PageTitle, PageHeader} from 'ui';
 import {useTranslations} from 'next-intl';
 import SelectedFilters from './selected-filters';
 import {useRouter} from 'next/navigation';

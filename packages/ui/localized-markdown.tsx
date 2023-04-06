@@ -6,7 +6,8 @@ interface Props {
   name: string;
 }
 
-async function LocalizedMarkdown({name}: Props) {
+const LocalizedMarkdown = (async ({ name }: Props) => {
+  const locale = useLocale();
   const markdownClassName = classNames(
     'max-w-3xl prose',
     'prose-headings:font-semibold prose:text-blue-100',
@@ -15,7 +16,6 @@ async function LocalizedMarkdown({name}: Props) {
     'prose-h3:text-lg prose-h3:mb-2',
     'prose-a:text-sky-700 prose-a:no-underline'
   );
-  const locale = useLocale();
   try {
     const Markdown = (await import(`@/messages/${locale}/${name}.mdx`)).default;
     return (
@@ -26,11 +26,12 @@ async function LocalizedMarkdown({name}: Props) {
   } catch {
     notFound();
   }
-}
+}) as unknown as (props: Props) => JSX.Element
 
 // TypeScript doesn't understand async components yet.
 // So this is a temporary workaround.
 // More info:
 //  - Next.js issue: https://github.com/vercel/next.js/issues/42292
 //  - Typescript pull request: https://github.com/microsoft/TypeScript/pull/51328
-export default LocalizedMarkdown as unknown as (props: Props) => JSX.Element;
+// export LocalizedMarkdown as unknown as (props: Props) => JSX.Element;
+export {LocalizedMarkdown};

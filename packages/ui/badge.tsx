@@ -8,7 +8,7 @@ interface Props {
   variant?: 'transparent' | 'gray';
 }
 
-export default function Badge({
+export function Badge({
   children,
   variant = 'transparent',
   testId,

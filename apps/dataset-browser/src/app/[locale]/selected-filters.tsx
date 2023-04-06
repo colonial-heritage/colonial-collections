@@ -1,7 +1,7 @@
 import {SearchResultFilter} from '@/lib/dataset-fetcher';
 import {Dispatch} from 'react';
 import {useTranslations} from 'next-intl';
-import Badge from '@/components/badge';
+import {Badge} from 'ui';
 
 interface Props {
   filters: {

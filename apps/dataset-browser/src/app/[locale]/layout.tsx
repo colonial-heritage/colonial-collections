@@ -2,7 +2,7 @@ import './globals.css';
 import {useLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import {ReactNode} from 'react';
-import Navigation from '@/components/navigation';
+import Navigation from './navigation';
 import {useTranslations} from 'next-intl';
 import {locales} from '@/middleware';
 

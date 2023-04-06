@@ -1,5 +1,5 @@
 import {getTranslations} from 'next-intl/server';
-import {PageHeader, PageTitle} from '@/components/page';
+import {PageHeader, PageTitle} from 'ui';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {Link} from 'next-intl';

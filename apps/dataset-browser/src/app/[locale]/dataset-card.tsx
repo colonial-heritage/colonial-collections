@@ -1,7 +1,7 @@
 import {Link} from 'next-intl';
 import {useTranslations} from 'next-intl';
 import {Dataset} from '@/lib/dataset-fetcher';
-import Badge from '@/components/badge';
+import {Badge} from 'ui';
 
 export default function DatasetCard({dataset}: {dataset: Dataset}) {
   const t = useTranslations('DatasetCard');
