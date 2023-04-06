@@ -1,20 +1,16 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
+  "extends": "../../node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "composite": false,
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "inlineSources": false,
-    "isolatedModules": true,
-    "moduleResolution": "node",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "preserveWatchOutput": true,
     "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "strictNullChecks": true,
     "strict": true
   },
+
   "exclude": ["node_modules"]
 }
