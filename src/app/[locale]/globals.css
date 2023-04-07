@@ -1,34 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer base {
-  h1 {
-    @apply text-2xl;
-    @apply font-semibold;
-    @apply pb-10;
-  }
-  h2 {
-    @apply text-xl;
-    @apply font-semibold;
-    @apply mb-1;
-    @apply mt-10;
-  }
-  h3 {
-    @apply text-lg;
-    @apply font-semibold;
-    @apply mb-2;
-    }
-  p {
-    @apply mb-4;
-  }
-  a {
-    @apply text-sky-700;
-  }
-  ul {
-    @apply list-disc;
-  }
-  li {
-    @apply ml-4;
-  }
-}
