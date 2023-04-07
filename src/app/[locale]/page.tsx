@@ -35,7 +35,7 @@ export default async function Home({searchParams}: Props) {
   const t = await getTranslations('Home');
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-6">
+    <div className="flex flex-col md:flex-row gap-6">
       <NextIntlClientProvider
         locale={locale}
         messages={{
