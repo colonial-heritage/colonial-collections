@@ -8,11 +8,7 @@ interface Props {
   variant?: 'transparent' | 'gray';
 }
 
-export function Badge({
-  children,
-  variant = 'transparent',
-  testId,
-}: Props) {
+export function Badge({children, variant = 'transparent', testId}: Props) {
   const variantClassName = classNames(
     'inline-flex items-center rounded-md mr-4 px-2 py-1',
     {

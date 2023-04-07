@@ -13,9 +13,15 @@
     "eslint": "8.37.0",
     "eslint-config-custom": "*",
     "postcss": "8.4.21",
-    "react": "18.2.0",
     "tailwind-config": "*",
     "tsconfig": "*",
     "typescript": "5.0.3"
+  },
+  "dependencies": {
+    "@heroicons/react": "2.0.17",
+    "classnames": "2.3.2",
+    "next": "13.3.0",
+    "next-intl": "2.12.0",
+    "react": "18.2.0"
   }
 }

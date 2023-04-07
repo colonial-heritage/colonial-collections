@@ -6,7 +6,7 @@ interface Props {
   name: string;
 }
 
-const LocalizedMarkdown = (async ({ name }: Props) => {
+const LocalizedMarkdown = (async ({name}: Props) => {
   const locale = useLocale();
   const markdownClassName = classNames(
     'max-w-3xl prose',
@@ -26,7 +26,7 @@ const LocalizedMarkdown = (async ({ name }: Props) => {
   } catch {
     notFound();
   }
-}) as unknown as (props: Props) => JSX.Element
+}) as unknown as (props: Props) => JSX.Element;
 
 // TypeScript doesn't understand async components yet.
 // So this is a temporary workaround.
