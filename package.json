@@ -19,7 +19,7 @@
     "turbo": "1.8.8"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "18.x"
   },
   "packageManager": "npm@8.19.3"
 }
