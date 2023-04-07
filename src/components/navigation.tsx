@@ -163,25 +163,30 @@ export default function Navigation({
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-12 justify-between">
                   <div className="flex">
-                    <div className="hidden sm:-my-px sm:flex sm:space-x-8">
+                    <div className="hidden sm:-my-px sm:flex sm:space-x-8 items-center">
                       {navigation.map(item => {
                         const isCurrentPathname = item.href === pathname;
                         return (
-                          <Link
-                            key={item.name}
-                            href={item.href}
-                            className={classNames(
-                              isCurrentPathname
-                                ? 'font-semibold border-white text-gray-900'
-                                : 'border-transparent hover:border-white hover:font-semibold text-gray-900 ',
-                              'inline-flex items-center px-1 pt-1 border-b-2'
-                            )}
-                            aria-current={
-                              isCurrentPathname ? 'page' : undefined
-                            }
-                          >
-                            {item.name}
-                          </Link>
+                          <span key={item.name} className="px-1 pt-1">
+                            <Link
+                              href={item.href}
+                              title={item.name}
+                              className={classNames(
+                                isCurrentPathname
+                                  ? 'font-semibold text-gray-900'
+                                  : 'border-transparent hover:font-semibold text-gray-900 ',
+                                'inline-flex flex-col items-center',
+                                // Don't shift on hover
+                                // https://css-tricks.com/bold-on-hover-without-the-layout-shift/
+                                'after:content-[attr(title)] after:font-semibold after:overflow-hidden after:invisible after:h-0'
+                              )}
+                              aria-current={
+                                isCurrentPathname ? 'page' : undefined
+                              }
+                            >
+                              {item.name}
+                            </Link>
+                          </span>
                         );
                       })}
                     </div>
