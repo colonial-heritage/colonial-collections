@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Cypress",
+  "compilerOptions": {
+    "noEmit": false,
+    "sourceMap": false,
+    "isolatedModules": false,
+    "types": ["cypress", "node"]
+  },
+  "exclude": ["node_modules"]
+}
