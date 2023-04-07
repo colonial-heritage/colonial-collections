@@ -1,17 +1,5 @@
-/** @type {import('tailwindcss').Config} */
+const sharedConfig = require('tailwind-config/tailwind.config.js');
+
 module.exports = {
-  content: ['**/*.{js,ts,jsx,tsx}'],
-  theme: {
-    extend: {
-      colors: {
-        gray: {
-          light: '#F7F5F2',
-        },
-        blue: {
-          link: '#22609D',
-        },
-      },
-    },
-  },
-  plugins: [require('@tailwindcss/forms')],
+  presets: [sharedConfig],
 };
