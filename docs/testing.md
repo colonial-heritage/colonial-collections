@@ -1,6 +1,6 @@
 # Testing
 
-This application has different tests. The unit tests and end-to-end tests run in CI after creating a pull request. Therefore, pull requests can only be merged if all tests have passed.
+The applications have different tests. The unit tests and end-to-end tests run in CI after creating a pull request. Therefore, pull requests can only be merged if all tests have passed.
 
 ## Unit testing
 
