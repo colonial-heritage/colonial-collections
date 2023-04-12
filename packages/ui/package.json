@@ -4,13 +4,9 @@
   "main": "./index.tsx",
   "types": "./index.tsx",
   "private": true,
-  "scripts": {
-    "lint": "eslint \"**/*.ts*\""
-  },
   "devDependencies": {
     "@types/react": "18.0.33",
     "autoprefixer": "10.4.14",
-    "eslint": "8.37.0",
     "eslint-config-custom": "*",
     "postcss": "8.4.21",
     "tailwind-config": "*",
