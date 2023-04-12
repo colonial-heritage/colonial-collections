@@ -1,73 +1,90 @@
-# Turborepo starter
-
-This is an official npm starter turborepo.
+# Colonial Collections
 
 ## What's inside?
 
-This turborepo uses [npm](https://www.npmjs.com/) as a package manager. It includes the following packages/apps:
+This repo uses [turborepo](https://turbo.build/) as build system and [npm](https://www.npmjs.com/) as a package manager. It includes the following packages/apps:
 
-### Apps and Packages
+### Apps 
+- `dataset-browser`: The Dataset Browser
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+### Packages
+- `ui`: a React component library shared by the apps
+- `eslint-config-custom`: `eslint` configurations
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- `tailwind-config`: tailwind config used by both the apps and the ui package
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Prerequisites
 
-### Utilities
+1. Node.js version 18
+1. NPM version 8+
 
-This turborepo has some additional tools already setup for you:
+## Without Docker
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+The following commands will run for all the workspaces. If you want to run a command for one workspace add the -w command. For example, to add a package to the dataset-browser:
 
-### Build
+    npm install myPackage --save-exact -w dataset-browser
 
-To build all apps and packages, run the following command:
+### Install packages
 
-```
-cd my-turborepo
-npm run build
-```
+Install all the packages, including the apps and packages
 
-### Develop
+    npm install
 
-To develop all apps and packages, run the following command:
+### Run development server
 
-```
-cd my-turborepo
-npm run dev
-```
+    npm run dev
 
-### Remote Caching
+Opens the dataset-browser on [http://localhost:3000](http://localhost:3000).
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### Create production build (for testing locally)
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+Create the file `apps/dataset-browser/.env.production.local` in the root and set the endpoint URLs:
 
-```
-cd my-turborepo
-npx turbo login
-```
+    SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=
+    SEARCH_PLATFORM_SPARQL_ENDPOINT_URL=
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Then run:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
+    npm run build
 
-```
-npx turbo link
-```
+### Run production server (for testing locally)
 
-## Useful Links
+    npm run start
 
-Learn more about the power of Turborepo:
+## With Docker
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+### Run container (optional)
+
+    docker run --rm -it -v "$PWD":/app -w /app node:18 /bin/bash
+
+### Install packages
+
+    docker run --rm -it -v "$PWD":/app -w /app node:18 npm install --no-progress
+
+### Run development server
+
+    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 node:18 npm run dev
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Create production build (for testing locally)
+
+Create the file `.env.production.local` in the root and set the endpoint URLs:
+
+    SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=
+    SEARCH_PLATFORM_SPARQL_ENDPOINT_URL=
+
+Then run:
+
+    docker run --rm -it -v "$PWD":/app -w /app node:18 npm run build
+
+### Run production server (for testing locally)
+
+    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 node:18 npm run start
+
+## With Docker, using Development Containers within VS Code
+
+See https://code.visualstudio.com/docs/devcontainers/containers
+
+1. Install the [Dev Containers extension](https://code.visualstudio.com/docs/devcontainers/tutorial#_install-the-extension)
+2. Run the Development Container
