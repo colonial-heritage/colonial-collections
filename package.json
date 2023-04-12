@@ -10,8 +10,12 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "start": "turbo run start",
+    "compile": "turbo run compile",
     "fix": "gts fix",
-    "lint": "gts lint"
+    "lint": "gts lint",
+    "test": "turbo run test",
+    "test:ci": "turbo run test:ci",
+    "test:integration": "turbo run test:integration"
   },
   "devDependencies": {
     "eslint-config-custom": "*",

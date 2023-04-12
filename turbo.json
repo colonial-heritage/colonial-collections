@@ -12,6 +12,10 @@
     "dev": {
       "cache": false
     },
-    "start": {}
+    "start": {},
+    "compile": {},
+    "test": {},
+    "test:ci": {},
+    "test:integration": {}
   }
 }
