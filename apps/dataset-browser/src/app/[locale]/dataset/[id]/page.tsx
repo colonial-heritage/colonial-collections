@@ -77,7 +77,7 @@ export default async function Details({params}: Props) {
 
   return (
     <div className="flex flex-col md:flex-row justify-between gap-6">
-      <aside className="md:h-full w-full sm:w-1/5 flex flex-row md:flex-col border-r-2 border-white">
+      <aside className="w-full sm:w-1/5 flex flex-row md:flex-col border-r-2 border-white">
         <div>
           <Link
             href="/"
@@ -100,7 +100,7 @@ export default async function Details({params}: Props) {
         </div>
       </aside>
       <section className="w-full sm:w-4/5 gap-6 flex flex-col">
-        <div className="divide-y-4 divide-white flex flex-col">
+        <div className="divide-y-2 divide-white flex flex-col">
           <div className="pb-10">
             <PageHeader>
               <PageTitle id="about">{dataset.name}</PageTitle>
@@ -108,12 +108,12 @@ export default async function Details({params}: Props) {
             <div>{dataset.description}</div>
           </div>
           <div className="py-10">
-            <h2 className="leading-6 mb-6" id="metadata">
+            <h2 className="leading-6 mb-6 font-semibold text-lg" id="metadata">
               {t('metadata.title')}
             </h2>
             {datasetProperties.map(property => (
               <Fragment key={property.name}>
-                <h3 className="mb-0">{property.name}</h3>
+                <h3 className="mb-0 font-semibold">{property.name}</h3>
                 <div className="mt-0 text-gray-900 sm:col-span-3 sm:mt-0 mb-6">
                   {property.value}
                 </div>

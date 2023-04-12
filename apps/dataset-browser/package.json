@@ -37,7 +37,7 @@
   "devDependencies": {
     "@jest/globals": "29.5.0",
     "@next/env": "13.2.4",
-    "@types/mdx": "2.0.3",
+    "@types/mdx": "2.0.4",
     "@types/node": "18.15.11",
     "@types/react": "18.0.32",
     "@types/react-dom": "18.0.11",
@@ -52,6 +52,6 @@
     "tailwind-config": "*",
     "tailwindcss": "3.3.1",
     "tsconfig": "*",
-    "typescript": "5.0.3"
+    "typescript": "5.0.4"
   }
 }
