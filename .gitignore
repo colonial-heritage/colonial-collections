@@ -23,11 +23,15 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# https://nextjs.org/docs/basic-features/environment-variables#default-environment-variables
+.env.*local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 
 # turbo
 .turbo
