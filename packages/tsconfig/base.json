@@ -3,13 +3,10 @@
   "display": "Default",
   "extends": "../../node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "composite": false,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "strictNullChecks": true,
-    "strict": true
+    "strictNullChecks": true
   },
 
   "exclude": ["node_modules"]
