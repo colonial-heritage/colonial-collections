@@ -10,8 +10,6 @@
     "build": "next build",
     "compile": "tsc",
     "dev": "next dev",
-    "fix": "gts fix",
-    "lint": "gts lint",
     "start": "next start",
     "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
     "test:ci": "npm test -- --ci",
