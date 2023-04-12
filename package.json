@@ -10,13 +10,11 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "fix": "gts fix",
-    "lint": "gts lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint": "gts lint"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
     "gts": "3.1.1",
-    "prettier": "2.8.7",
     "turbo": "1.8.8"
   },
   "engines": {
