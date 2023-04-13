@@ -8,9 +8,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Run Cypress 🌲
+      - name: Run Cypress for the Dataset Browser 🌲
         uses: cypress-io/github-action@v5
         with:
           project: ./apps/dataset-browser
+        env:
+          CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
+      - name: Run Cypress for the Research app 🌲
+        uses: cypress-io/github-action@v5
+        with:
+          project: ./apps/research
         env:
           CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
