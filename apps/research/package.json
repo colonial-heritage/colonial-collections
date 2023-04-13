@@ -1,0 +1,50 @@
+{
+  "name": "research",
+  "version": "1.0.0",
+  "private": true,
+  "files": [],
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "build": "next build",
+    "compile": "tsc",
+    "dev": "next dev --port 3001",
+    "start": "next start",
+    "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
+    "test:ci": "npm test -- --ci",
+    "test:watch": "npm test -- --watchAll",
+    "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
+    "test:integration:watch": "npm run test:integration -- --watchAll",
+    "cypress": "cypress open"
+  },
+  "dependencies": {
+    "@headlessui/react": "1.7.13",
+    "@heroicons/react": "2.0.17",
+    "@next/mdx": "13.2.4",
+    "classnames": "2.3.2",
+    "next": "13.2.4    ",
+    "next-intl": "2.12.0-beta.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "29.5.0",
+    "@next/env": "13.2.4",
+    "@types/mdx": "2.0.4",
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.32",
+    "@types/react-dom": "18.0.11",
+    "autoprefixer": "10.4.14",
+    "cypress": "12.9.0",
+    "encoding": "0.1.13",
+    "eslint-config-custom": "*",
+    "gts": "3.1.1",
+    "jest": "29.5.0",
+    "postcss": "8.4.21",
+    "tailwind-config": "*",
+    "tailwindcss": "3.3.1",
+    "tsconfig": "*",
+    "typescript": "5.0.4"
+  }
+}

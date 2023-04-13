@@ -1,0 +1,5 @@
+{
+  "extends": ["../tsconfig", "tsconfig/cypress.json"],
+  "include": ["**/*.ts", "**/*.tsx", "../src/**/*.cy.tsx"],
+  "exclude": []
+}

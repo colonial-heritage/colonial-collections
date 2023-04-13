@@ -1,0 +1,21 @@
+{
+  "Meta": {
+    "title": "Research app"
+  },
+  "Home": {
+    "title": "De onderzoeksapp wordt hier geplaatst"
+  },
+  "Navigation": {
+    "name": "app",
+    "home": "Home"
+  },
+  "LanguageSelector": {
+    "nl": "Nederlands",
+    "en": "English",
+    "accessibilityLanguageSelector": "Selecteer om de taal van de site te wijzigen. De huidige taal is {language}",
+    "accessibilityOpenMenu": "Open menu"
+  },
+  "NotFound": {
+    "title": "Pagina kon niet gevonden worden (404)"
+  }
+}
