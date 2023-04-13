@@ -6,6 +6,7 @@ This repo uses [turborepo](https://turbo.build/) as build system and [npm](https
 
 ### Apps 
 - `dataset-browser`: The Dataset Browser
+- `researcher`: The Research App
 
 ### Packages
 - `ui`: a React component library shared by the apps
@@ -36,7 +37,10 @@ Install all the packages.
 
     npm run dev
 
-Opens the Dataset Browser on [http://localhost:3000](http://localhost:3000).
+Open:
+
+- the Dataset Browser on [http://localhost:3000](http://localhost:3000)
+- the Research app on [http://localhost:3001](http://localhost:3001)
 
 ### Create production build (for testing locally)
 
@@ -65,9 +69,12 @@ Then run:
 
 ### Run development server
 
-    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 node:18 npm run dev
+    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 -p 3001:3001 node:18 npm run dev
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
+
+- the Dataset Browser on [http://localhost:3000](http://localhost:3000)
+- the Research app on [http://localhost:3001](http://localhost:3001)
 
 ### Create production build (for testing locally)
 
@@ -82,7 +89,7 @@ Then run:
 
 ### Run production server (for testing locally)
 
-    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 node:18 npm run start
+    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 -p 3001:3001 node:18 npm run start
 
 ## With Docker, using Development Containers within VS Code
 
