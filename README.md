@@ -2,7 +2,7 @@
 
 ## What's inside?
 
-This repo uses [turborepo](https://turbo.build/) as build system and [npm](https://www.npmjs.com/) as a package manager. It includes the following packages/apps:
+This repo uses [turborepo](https://turbo.build/) as build system and [npm](https://www.npmjs.com/) as a package manager. It includes the following apps and packages:
 
 ### Apps 
 - `dataset-browser`: The Dataset Browser
@@ -11,7 +11,7 @@ This repo uses [turborepo](https://turbo.build/) as build system and [npm](https
 - `ui`: a React component library shared by the apps
 - `eslint-config-custom`: `eslint` configurations
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
-- `tailwind-config`: tailwind config used by both the apps and the ui package
+- `tailwind-config`: tailwind config used by both the apps and the `ui` package
 
 ## Prerequisites
 
@@ -20,13 +20,15 @@ This repo uses [turborepo](https://turbo.build/) as build system and [npm](https
 
 ## Without Docker
 
-The following commands will run for all the workspaces. If you want to run a command for one workspace add the -w command. For example, to add a package to the dataset-browser:
+The following commands will run for all the workspaces. If you want to run a command for one workspace add the -w command. 
+
+For example, to add a package to the dataset-browser:
 
     npm install myPackage --save-exact -w dataset-browser
 
 ### Install packages
 
-Install all the packages, including the apps and packages
+Install all the packages.
 
     npm install
 
@@ -34,7 +36,7 @@ Install all the packages, including the apps and packages
 
     npm run dev
 
-Opens the dataset-browser on [http://localhost:3000](http://localhost:3000).
+Opens the Dataset Browser on [http://localhost:3000](http://localhost:3000).
 
 ### Create production build (for testing locally)
 
