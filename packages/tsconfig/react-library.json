@@ -4,6 +4,6 @@
   "extends": "./base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "module": "ESNext"
+    "module": "esnext"
   }
 }
