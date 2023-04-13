@@ -6,7 +6,7 @@ This repo uses [turborepo](https://turbo.build/) as build system and [npm](https
 
 ### Apps 
 - `dataset-browser`: The Dataset Browser
-- `research`: The Research App
+- `researcher`: The Research App
 
 ### Packages
 - `ui`: a React component library shared by the apps
