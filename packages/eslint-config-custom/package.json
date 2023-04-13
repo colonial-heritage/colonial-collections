@@ -4,9 +4,7 @@
   "main": "index.js",
   "private": true,
   "devDependencies": {
-    "eslint": "8.37.0",
     "eslint-config-next": "13.3.0",
-    "eslint-config-prettier": "8.8.0",
     "eslint-config-turbo": "1.8.8",
     "eslint-plugin-react": "7.32.2",
     "typescript": "5.0.4"
