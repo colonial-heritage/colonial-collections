@@ -16,7 +16,8 @@
     "test:watch": "npm test -- --watchAll",
     "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
     "test:integration:watch": "npm run test:integration -- --watchAll",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@floating-ui/react": "0.23.0",
