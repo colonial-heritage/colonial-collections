@@ -16,6 +16,7 @@
     "compile": {},
     "test": {},
     "test:ci": {},
-    "test:integration": {}
+    "test:integration": {},
+    "cypress:run": {}
   }
 }
