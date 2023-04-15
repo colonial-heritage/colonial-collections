@@ -1,0 +1,53 @@
+###############################
+# Sample data for testing
+###############################
+
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix la: <https://linked.art/ns/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/objects/1>
+  a crm:E22_Human-Made_Object ;
+  crm:P2_has_type <http://vocab.getty.edu/aat/300033618> ; # Painting
+  crm:P45_consists_of <http://vocab.getty.edu/aat/300015050> , # Oilpaint
+                      <http://vocab.getty.edu/aat/300014078> ; # Canvas
+  crm:P52_has_current_owner <https://museum.example.org/> ;
+  la:member_of <https://example.org/datasets/1> ;
+  crm:P1_is_identified_by [
+    a crm:E33_E41_Linguistic_Appellation ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404670> ; # Name
+    crm:P190_has_symbolic_content "Mauris vestibulum varius lectus" ;
+    crm:P72_has_language <http://vocab.getty.edu/aat/300388277> ; # English
+  ] ;
+  crm:P67i_is_referred_to_by [
+    a crm:E33_Linguistic_Object ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300435416> ; # Description
+    crm:P190_has_symbolic_content "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis." ;
+    crm:P72_has_language <http://vocab.getty.edu/aat/300388277> ; # English
+  ] ;
+  crm:P65_shows_visual_item [
+    a crm:E36_Visual_Item ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300152441> ; # Celebrations
+  ] ;
+  crm:P43_has_dimension [
+    a crm:E54_Dimension ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055647> ; # Width
+    crm:P90_has_value 120.0 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300379098> ; # Centimeters
+  ] ;
+  crm:P43_has_dimension [
+    a crm:E54_Dimension ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055644> ; # Height
+    crm:P90_has_value 112.0 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300379098> ; # Centimeters
+  ] ;
+  crm:P108i_was_produced_by [
+    a crm:E12_Production ;
+    crm:P14_carried_out_by <https://data.rkd.nl/artists/32439> ; # Vincent van Gogh
+    crm:P4_has_time-span [
+      a crm:E52_Time-Span ;
+      crm:P82a_begin_of_the_begin "1889"^^xsd:gYear ;
+      crm:P82b_end_of_the_end "1890"^^xsd:gYear ;
+    ] ;
+  ] ;
+.
