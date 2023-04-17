@@ -17,6 +17,6 @@
     "test": {},
     "test:ci": {},
     "test:integration": {},
-    "cypress:run": {}
+    "test:e2e": {}
   }
 }

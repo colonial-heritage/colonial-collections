@@ -16,7 +16,7 @@
     "test": "turbo run test",
     "test:ci": "turbo run test:ci",
     "test:integration": "turbo run test:integration",
-    "cypress:run": "turbo run cypress:run"
+    "test:e2e": "turbo run test:e2e"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
