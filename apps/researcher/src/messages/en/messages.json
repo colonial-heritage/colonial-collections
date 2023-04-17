@@ -3,7 +3,7 @@
     "title": "Research app"
   },
   "Home": {
-    "title": "The research app will be placed here"
+    "fetchError": "There was a problem fetching the objects. Please reload the page to try again."
   },
   "Navigation": {
     "name": "app",
@@ -17,5 +17,8 @@
   },
   "NotFound": {
     "title": "This page was not found (404)"
+  },
+  "HeritageObjectCard": {
+    "HeritageObject": "Heritage object"
   }
 }

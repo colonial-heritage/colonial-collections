@@ -3,7 +3,7 @@
     "title": "Research app"
   },
   "Home": {
-    "title": "De onderzoeksapp wordt hier geplaatst"
+    "fetchError": "Er is een probleem opgetreden bij het ophalen van de objecten. Laad de pagina opnieuw om het opnieuw te proberen."
   },
   "Navigation": {
     "name": "app",
@@ -17,5 +17,8 @@
   },
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"
+  },
+  "HeritageObjectCard": {
+    "HeritageObject": "Erfgoedobject"
   }
 }

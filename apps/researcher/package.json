@@ -19,6 +19,7 @@
     "cypress": "cypress open"
   },
   "dependencies": {
+    "@faker-js/faker": "7.6.0",
     "@headlessui/react": "1.7.14",
     "@heroicons/react": "2.0.17",
     "@next/mdx": "13.2.4",
