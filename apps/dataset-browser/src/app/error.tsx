@@ -1,11 +1,11 @@
 'use client'; // Error components must be Client components
 
-import {useEffect} from 'react';
+interface Props {
+  error: Error;
+}
 
-export default function Error({error}: {error: Error}) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+export default function Error({error}: Props) {
+  console.error(error);
 
   return (
     <div data-testid="error">
