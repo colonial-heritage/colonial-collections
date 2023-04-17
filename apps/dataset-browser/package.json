@@ -28,7 +28,7 @@
     "fetch-sparql-endpoint": "3.2.1",
     "lru-cache": "9.0.1",
     "next": "13.2.4    ",
-    "next-intl": "2.12.0-beta.4",
+    "next-intl": "2.13.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "validate-iri": "1.0.1",
