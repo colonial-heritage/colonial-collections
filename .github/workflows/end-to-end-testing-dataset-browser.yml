@@ -1,0 +1,28 @@
+name: End-to-end testing Dataset Browser
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - 'package.json'
+      - 'apps/dataset-browser/**'
+      - .github/workflows/end-to-end-testing-dataset-browser.yml
+jobs:
+  run-end-to-end-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Wait for a successful Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitForPreview
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 60
+          environment: Preview – colonial-collections-dataset-browser
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Cypress for Dataset Browser 🌲
+        uses: cypress-io/github-action@v5
+        with:
+          project: ./apps/dataset-browser
+          wait-on: ${{ steps.waitForPreview.outputs.url }}
+        env:
+          CYPRESS_BASE_URL: ${{ steps.waitForPreview.outputs.url }}
