@@ -16,7 +16,8 @@
     "test:watch": "npm test -- --watchAll",
     "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
     "test:integration:watch": "npm run test:integration -- --watchAll",
-    "cypress": "cypress open"
+    "test:e2e": "cypress run",
+    "test:e2e:open": "cypress open"
   },
   "dependencies": {
     "@headlessui/react": "1.7.14",

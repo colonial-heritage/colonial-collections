@@ -19,7 +19,7 @@ const LocalizedMarkdown = (async ({name}: Props) => {
   try {
     const Markdown = (await import(`@/messages/${locale}/${name}.mdx`)).default;
     return (
-      <div className={markdownClassName}>
+      <div className={markdownClassName} data-testid="markdown-container">
         <Markdown />
       </div>
     );

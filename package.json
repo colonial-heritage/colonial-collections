@@ -15,7 +15,8 @@
     "lint": "gts lint",
     "test": "turbo run test",
     "test:ci": "turbo run test:ci",
-    "test:integration": "turbo run test:integration"
+    "test:integration": "turbo run test:integration",
+    "test:e2e": "turbo run test:e2e"
   },
   "devDependencies": {
     "eslint-config-custom": "*",

@@ -1,6 +1,7 @@
 describe('Dataset Browser homepage', () => {
   it('loads a dataset list', () => {
     cy.visit('/en');
+    cy.getBySel('error').should('not.exist');
     cy.getBySel('dataset-card-name').its('length').should('be.gt', 0);
   });
 });

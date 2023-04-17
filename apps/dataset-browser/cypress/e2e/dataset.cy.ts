@@ -10,6 +10,7 @@ describe('Dataset details page', () => {
         // Wait for the page to load.
         cy.location('pathname', {timeout: 60000}).should('include', '/dataset');
         // On the details page.
+        cy.getBySel('error').should('not.exist');
         cy.getBySel('page-title').then($detailsName => {
           expect($cardName.text()).equal($detailsName.text());
           cy.getBySel('no-dataset').should('not.exist');
