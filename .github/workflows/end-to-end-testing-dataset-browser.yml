@@ -10,9 +10,9 @@ jobs:
   run-end-to-end-tests:
     runs-on: ubuntu-22.04
     steps:
-      - name: Waiting for 200 from the Vercel Preview
+      - name: Wait for a successful Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
-        id: waitFor200
+        id: waitForPreview
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 60
@@ -23,6 +23,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           project: ./apps/dataset-browser
-          wait-on: ${{ steps.waitFor200.outputs.url }}
+          wait-on: ${{ steps.waitForPreview.outputs.url }}
         env:
-          CYPRESS_BASE_URL: ${{ steps.waitFor200.outputs.url }}
+          CYPRESS_BASE_URL: ${{ steps.waitForPreview.outputs.url }}
