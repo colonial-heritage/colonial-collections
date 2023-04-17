@@ -36,6 +36,9 @@ async function fetchData(iris) {
   }
 }
 
-const iris = ['https://data.rkd.nl/artists/32439'];
+const iris = [
+  'https://data.rkd.nl/artists/32439',
+  'https://data.rkd.nl/artists/120388',
+];
 
 fetchData(iris);

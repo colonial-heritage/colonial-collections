@@ -20,17 +20,21 @@ CONSTRUCT {
     cc:about ?subject ;
     cc:name ?name ;
     cc:description ?description ;
+    cc:inscription ?inscription ;
     cc:owner ?owner ;
     cc:isPartOf ?dataset ;
     cc:material ?material ;
+    cc:technique ?technique ;
     cc:creator ?creator ;
-    cc:dateCreated ?dateCreated ;
+    cc:dateCreatedStart ?beginOfTheBegin ;
+    cc:dateCreatedEnd ?endOfTheEnd ;
     # To allow for search actions based on name
     cc:typeName ?typeName ;
     cc:aboutName ?aboutName ;
     cc:ownerName ?ownerName ;
     cc:datasetName ?datasetName ;
     cc:materialName ?materialName ;
+    cc:techniqueName ?techniqueName ;
     cc:creatorName ?creatorName .
 }
 WHERE {
@@ -53,11 +57,35 @@ WHERE {
   ####################
 
   OPTIONAL {
-    ?object crm:P65_shows_visual_item/crm:P2_has_type ?subject .
+    ?object crm:P62_depicts ?subject .
     ?subject a skos:Concept ;
       skos:prefLabel ?aboutName ;
       skos:inScheme <http://vocab.getty.edu/aat/> .
     FILTER(LANG(?aboutName) = "" || LANGMATCHES(LANG(?aboutName), "en")) # TBD: which languages to support?
+  }
+
+  ####################
+  # Material
+  ####################
+
+  OPTIONAL {
+    ?object crm:P45_consists_of ?material .
+    ?material a skos:Concept ;
+      skos:prefLabel ?materialName ;
+      skos:inScheme <http://vocab.getty.edu/aat/> .
+    FILTER(LANG(?materialName) = "" || LANGMATCHES(LANG(?materialName), "en")) # TBD: which languages to support?
+  }
+
+  ####################
+  # Technique
+  ####################
+
+  OPTIONAL {
+    ?object crm:P32_used_general_technique ?technique .
+    ?technique a skos:Concept ;
+      skos:prefLabel ?techniqueName ;
+      skos:inScheme <http://vocab.getty.edu/aat/> .
+    FILTER(LANG(?techniqueName) = "" || LANGMATCHES(LANG(?techniqueName), "en")) # TBD: which languages to support?
   }
 
   ####################
@@ -75,9 +103,19 @@ WHERE {
   ####################
 
   OPTIONAL {
-    ?object crm:P67i_is_referred_to_by ?linguisticObject .
-    ?linguisticObject crm:P2_has_type <http://vocab.getty.edu/aat/300435416> ; # Description
+    ?object crm:P67i_is_referred_to_by ?linguisticObjectForDescription .
+    ?linguisticObjectForDescription crm:P2_has_type <http://vocab.getty.edu/aat/300435416> ; # Description
       crm:P190_has_symbolic_content ?description .
+  }
+
+  ####################
+  # Inscription
+  ####################
+
+  OPTIONAL {
+    ?object crm:P128_carries ?linguisticObjectForInscription .
+    ?linguisticObjectForInscription crm:P2_has_type <http://vocab.getty.edu/aat/300028702> ; # Inscription
+      crm:P190_has_symbolic_content ?inscription .
   }
 
   ####################
@@ -102,18 +140,6 @@ WHERE {
   }
 
   ####################
-  # Material
-  ####################
-
-  OPTIONAL {
-    ?object crm:P45_consists_of ?material .
-    ?material a skos:Concept ;
-      skos:prefLabel ?materialName ;
-      skos:inScheme <http://vocab.getty.edu/aat/> .
-    FILTER(LANG(?materialName) = "" || LANGMATCHES(LANG(?materialName), "en")) # TBD: which languages to support?
-  }
-
-  ####################
   # Creator
   ####################
 
@@ -130,6 +156,5 @@ WHERE {
     ?object crm:P108i_was_produced_by/crm:P4_has_time-span ?timeSpan .
     ?timeSpan crm:P82a_begin_of_the_begin ?beginOfTheBegin ;
       crm:P82b_end_of_the_end ?endOfTheEnd .
-    BIND(CONCAT(?beginOfTheBegin, "-", ?endOfTheEnd) AS ?dateCreated)
   }
 }
