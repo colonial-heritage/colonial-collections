@@ -1,5 +1,5 @@
 import {DatasetFetcher, SortBy, SortOrder} from '.';
-import {LabelFetcher} from '@/lib/label-fetcher';
+import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 

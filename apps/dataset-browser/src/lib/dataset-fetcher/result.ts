@@ -1,5 +1,5 @@
 import type {RawBucket, SearchResultFilter} from '.';
-import type {LabelFetcher} from '@/lib/label-fetcher';
+import type {LabelFetcher} from '@colonial-collections/label-fetcher';
 
 function toUnmatchedFilter(
   bucket: RawBucket,

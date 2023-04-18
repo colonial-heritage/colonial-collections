@@ -2,17 +2,21 @@
 
 ## What's inside?
 
-This repo uses [turborepo](https://turbo.build/) as build system and [npm](https://www.npmjs.com/) as a package manager. It includes the following apps and packages:
+This repo uses [Turborepo](https://turbo.build/) as build system and [npm](https://www.npmjs.com/) as package manager. It includes the following apps and packages:
 
-### Apps 
+### Apps
+
 - `dataset-browser`: The Dataset Browser
 - `researcher`: The Research App
 
 ### Packages
-- `ui`: a React component library shared by the apps
+
 - `eslint-config-custom`: `eslint` configurations
+- `iris`: helper functions for working with IRIs
+- `label-fetcher`: package for fetching the labels of IRIs
+- `tailwind-config`: Tailwind config used by both the apps and the `ui` package
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
-- `tailwind-config`: tailwind config used by both the apps and the `ui` package
+- `ui`: a React component library shared by the apps
 
 ## Prerequisites
 
@@ -21,7 +25,7 @@ This repo uses [turborepo](https://turbo.build/) as build system and [npm](https
 
 ## Without Docker
 
-The following commands will run for all the workspaces. If you want to run a command for one workspace add the -w command. 
+The following commands will run for all the workspaces. If you want to run a command for one workspace add the -w command.
 
 For example, to add a package to the dataset-browser:
 

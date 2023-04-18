@@ -1,4 +1,4 @@
-import {LabelFetcher} from '@/lib/label-fetcher';
+import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {DatasetFetcher} from '@/lib/dataset-fetcher/index';
 import {env} from 'node:process';
 
