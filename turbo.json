@@ -15,6 +15,7 @@
     "start": {},
     "compile": {},
     "test": {},
+    "test:watch": {},
     "test:ci": {},
     "test:integration": {},
     "test:e2e": {}

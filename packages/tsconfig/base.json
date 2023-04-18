@@ -8,6 +8,5 @@
     "moduleResolution": "node",
     "strictNullChecks": true
   },
-
   "exclude": ["node_modules"]
 }
