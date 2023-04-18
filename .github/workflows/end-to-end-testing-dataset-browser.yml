@@ -15,7 +15,7 @@ jobs:
         id: waitForPreview
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 60
+          max_timeout: 180
           environment: Preview – colonial-collections-dataset-browser
       - name: Checkout
         uses: actions/checkout@v3
