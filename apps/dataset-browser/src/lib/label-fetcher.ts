@@ -1,5 +1,5 @@
+import {isIri} from '@colonial-collections/iris';
 import {IBindings, SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
-import {isIri} from '@/lib/iri';
 import {LRUCache} from 'lru-cache';
 import {z} from 'zod';
 
