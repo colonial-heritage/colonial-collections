@@ -1,21 +1,14 @@
-// Dummy fetcher, replace completely with the correct fetcher.
-// Don't forget to remove dependency `faker` after replacing this dummy code.
+import {LabelFetcher} from '@colonial-collections/label-fetcher';
+import {HeritageFetcher} from '@/lib/heritage-fetcher';
+import {env} from 'node:process';
 
-import {faker} from '@faker-js/faker';
-import {SearchResult} from './heritage-object-fetcher';
+const labelFetcher = new LabelFetcher({
+  endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
+});
 
-const dummyInstance = {
-  search: (): SearchResult => {
-    const numberOfObjects = faker.datatype.number({min: 10, max: 100});
-    return {
-      totalCount: numberOfObjects,
-      heritageObjects: Array.from(Array(numberOfObjects)).map(() => ({
-        id: faker.internet.url(),
-        name: faker.lorem.sentence(),
-        description: faker.lorem.text(),
-      })),
-    };
-  },
-};
+const heritageFetcher = new HeritageFetcher({
+  endpointUrl: env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
+  labelFetcher,
+});
 
-export default dummyInstance;
+export default heritageFetcher;
