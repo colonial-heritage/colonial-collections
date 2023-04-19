@@ -17,6 +17,7 @@
     "test:watch": "turbo run test:watch",
     "test:ci": "turbo run test:ci",
     "test:integration": "turbo run test:integration",
+    "test:integration:watch": "turbo run test:integration:watch",
     "test:e2e": "turbo run test:e2e"
   },
   "devDependencies": {

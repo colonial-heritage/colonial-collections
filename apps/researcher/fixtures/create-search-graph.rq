@@ -36,6 +36,27 @@ CONSTRUCT {
     cc:materialName ?materialName ;
     cc:techniqueName ?techniqueName ;
     cc:creatorName ?creatorName .
+
+  ?owner a cc:Organization ;
+    cc:name ?ownerName .
+
+  ?creator a cc:Person ;
+    cc:name ?creatorName .
+
+  ?type a cc:DefinedTerm ;
+    cc:name ?typeName .
+
+  ?subject a cc:DefinedTerm ;
+    cc:name ?aboutName .
+
+  ?material a cc:DefinedTerm ;
+    cc:name ?materialName .
+
+  ?technique a cc:DefinedTerm ;
+    cc:name ?techniqueName .
+
+  ?dataset a cc:Dataset ;
+    cc:name ?datasetName .
 }
 WHERE {
   ?object a crm:E22_Human-Made_Object .
@@ -132,12 +153,16 @@ WHERE {
   # Part of dataset
   ####################
 
+  ?object la:member_of ?dataset .
+
+  # Required property, but it may not exist in a specific language
   OPTIONAL {
-    ?object la:member_of ?dataset .
-    ?dataset dct:title ?tmpTitle .
+    ?dataset dct:title ?tmpTitle
     FILTER(LANG(?tmpTitle) = "" || LANGMATCHES(LANG(?tmpTitle), "en"))
-    BIND(COALESCE(?tmpTitle, "(No name)"@en) AS ?datasetName) # TBD: add multi-language support?
   }
+
+  # TBD: add multi-language support?
+  BIND(COALESCE(?tmpTitle, "(No name)"@en) AS ?datasetName)
 
   ####################
   # Creator
