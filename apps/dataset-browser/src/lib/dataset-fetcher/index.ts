@@ -1,7 +1,7 @@
 import {buildAggregation} from './request';
 import {buildFilters} from './result';
-import {LabelFetcher} from '@/lib/label-fetcher';
 import {getIrisFromObject} from '@colonial-collections/iris';
+import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {merge, reach} from '@hapi/hoek';
 import {z} from 'zod';
 

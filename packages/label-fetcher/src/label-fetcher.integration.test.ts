@@ -1,4 +1,4 @@
-import {LabelFetcher} from './label-fetcher';
+import {LabelFetcher} from '.';
 import {afterEach, describe, expect, it, jest} from '@jest/globals';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 
