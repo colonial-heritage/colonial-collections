@@ -1,12 +1,14 @@
 name: End-to-end testing Dataset Browser
+
 on:
   pull_request:
     branches: ["main"]
     paths:
-      - 'package.json'
-      - 'apps/dataset-browser/**'
-      - .github/workflows/end-to-end-testing-dataset-browser.yml
-      - 'packages/**'
+      - "package.json"
+      - "apps/dataset-browser/**"
+      - ".github/workflows/end-to-end-testing-dataset-browser.yml"
+      - "packages/**"
+
 jobs:
   run-end-to-end-tests:
     runs-on: ubuntu-22.04

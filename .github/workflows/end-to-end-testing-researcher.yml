@@ -1,12 +1,14 @@
 name: End-to-end testing Researcher
+
 on:
   pull_request:
     branches: ["main"]
     paths:
-      - 'package.json'
-      - 'apps/researcher/**'
-      - .github/workflows/end-to-end-testing-researcher.yml
-      - 'packages/**'
+      - "package.json"
+      - "apps/researcher/**"
+      - ".github/workflows/end-to-end-testing-researcher.yml"
+      - "packages/**"
+
 jobs:
   run-end-to-end-tests:
     runs-on: ubuntu-22.04
