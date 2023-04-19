@@ -14,7 +14,7 @@
     "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
     "test:ci": "npm test -- --ci",
     "test:watch": "npm test -- --watchAll",
-    "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
+    "test:integration": "jest --passWithNoTests --testMatch '**/src/**/*.integration.test.ts'",
     "test:integration:watch": "npm run test:integration -- --watchAll",
     "test:e2e": "cypress run",
     "test:e2e:open": "cypress open"
