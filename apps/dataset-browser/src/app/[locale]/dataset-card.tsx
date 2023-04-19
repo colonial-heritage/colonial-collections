@@ -2,6 +2,11 @@ import {Link} from 'next-intl';
 import {useTranslations} from 'next-intl';
 import {Dataset} from '@/lib/dataset-fetcher';
 import {Badge} from 'ui';
+import {
+  GlobeEuropeAfricaIcon,
+  BuildingLibraryIcon,
+} from '@heroicons/react/24/solid';
+import {DocumentCheckIcon, TagIcon} from '@heroicons/react/24/outline';
 
 export default function DatasetCard({dataset}: {dataset: Dataset}) {
   const t = useTranslations('DatasetCard');
@@ -25,15 +30,23 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
         </h2>
         <p className="text-base text-gray-900">{dataset.description}</p>
         <div className="mt-2 flex flex-wrap">
-          <Badge variant="gray"> {dataset.publisher.name} </Badge>
-          <Badge variant="gray"> {dataset.license.name} </Badge>
+          <Badge variant="gray">
+            <Badge.Icon Icon={BuildingLibraryIcon} variant="solid" />
+            {dataset.publisher.name}
+          </Badge>
+          <Badge variant="gray">
+            <Badge.Icon Icon={DocumentCheckIcon} />
+            {dataset.license.name}
+          </Badge>
           {dataset.spatialCoverages?.map(spatialCoverage => (
             <Badge variant="gray" key={spatialCoverage.id}>
+              <Badge.Icon Icon={GlobeEuropeAfricaIcon} variant="solid" />
               {spatialCoverage.name}
             </Badge>
           ))}
           {dataset.genres?.map(genre => (
             <Badge variant="gray" key={genre.id}>
+              <Badge.Icon Icon={TagIcon} />
               {genre.name}
             </Badge>
           ))}
