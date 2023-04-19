@@ -18,6 +18,7 @@
     "test:watch": {},
     "test:ci": {},
     "test:integration": {},
+    "test:integration:watch": {},
     "test:e2e": {}
   }
 }
