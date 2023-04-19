@@ -100,7 +100,7 @@ const rawHeritageObjectSchema = z
   .setKey(RawKeys.Material, z.array(z.string()).optional())
   .setKey(RawKeys.Technique, z.array(z.string()).optional())
   .setKey(RawKeys.Owner, z.array(z.string()).optional())
-  .setKey(RawKeys.IsPartOf, z.array(z.string()).optional());
+  .setKey(RawKeys.IsPartOf, z.array(z.string()).min(1));
 
 type RawHeritageObject = z.infer<typeof rawHeritageObjectSchema>;
 
