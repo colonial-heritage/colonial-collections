@@ -36,6 +36,27 @@ CONSTRUCT {
     cc:materialName ?materialName ;
     cc:techniqueName ?techniqueName ;
     cc:creatorName ?creatorName .
+
+  ?owner a cc:Organization ;
+    cc:name ?ownerName .
+
+  ?creator a cc:Person ;
+    cc:name ?creatorName .
+
+  ?type a cc:DefinedTerm ;
+    cc:name ?typeName .
+
+  ?subject a cc:DefinedTerm ;
+    cc:name ?aboutName .
+
+  ?material a cc:DefinedTerm ;
+    cc:name ?materialName .
+
+  ?technique a cc:DefinedTerm ;
+    cc:name ?techniqueName .
+
+  ?dataset a cc:Dataset ;
+    cc:name ?datasetName .
 }
 WHERE {
   ?object a crm:E22_Human-Made_Object .

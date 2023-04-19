@@ -14,13 +14,16 @@
     "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
     "test:ci": "npm test -- --ci",
     "test:watch": "npm test -- --watchAll",
-    "test:integration": "jest --passWithNoTests --testMatch '**/src/**/*.integration.test.ts'",
+    "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
     "test:integration:watch": "npm run test:integration -- --watchAll",
     "test:e2e": "cypress run",
     "test:e2e:open": "cypress open"
   },
   "dependencies": {
+    "@colonial-collections/iris": "*",
+    "@colonial-collections/label-fetcher": "*",
     "@faker-js/faker": "7.6.0",
+    "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.14",
     "@heroicons/react": "2.0.17",
     "@next/mdx": "13.3.0",
@@ -28,7 +31,8 @@
     "next": "13.2.4    ",
     "next-intl": "2.13.0-beta.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "zod": "3.21.4"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",
