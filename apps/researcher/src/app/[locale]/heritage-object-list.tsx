@@ -1,6 +1,6 @@
 import HeritageObjectCard from './heritage-object-card';
 import {useTranslations} from 'next-intl';
-import {SearchResult} from '@/lib/heritage-object-fetcher';
+import {SearchResult} from '@/lib/heritage-fetcher';
 
 interface Props {
   heritageObjects: SearchResult['heritageObjects'];
