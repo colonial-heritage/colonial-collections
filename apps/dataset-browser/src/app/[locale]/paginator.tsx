@@ -1,36 +1,17 @@
-import {Dispatch} from 'react';
 import {useTranslations} from 'next-intl';
 
 interface Props {
   totalCount: number;
   offset: number;
   limit: number;
-  setOffset: Dispatch<number>;
+  setPage: (direction: 1 | -1) => void;
 }
 
-export default function Paginator({
-  totalCount,
-  offset,
-  setOffset,
-  limit,
-}: Props) {
+export default function Paginator({totalCount, offset, setPage, limit}: Props) {
   const endMax = offset + limit;
   const start = offset + 1;
   const end = endMax < totalCount ? endMax : totalCount;
   const t = useTranslations('Paginator');
-
-  function setPage(direction: -1 | 1) {
-    let newOffset = start - 1 + direction * limit;
-    if (newOffset < 0) {
-      newOffset = 0;
-    }
-
-    if (newOffset > totalCount) {
-      newOffset = totalCount;
-    }
-
-    setOffset(newOffset);
-  }
 
   return (
     <div className="flex items-center justify-between py-3">

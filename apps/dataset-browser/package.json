@@ -28,11 +28,13 @@
     "@heroicons/react": "2.0.17",
     "@next/mdx": "13.3.1",
     "classnames": "2.3.2",
+    "list-store": "*",    
     "next": "13.3.0",
     "next-intl": "2.13.0-beta.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "zod": "3.21.4"
+    "zod": "3.21.4",
+    "zustand": "4.3.7"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",

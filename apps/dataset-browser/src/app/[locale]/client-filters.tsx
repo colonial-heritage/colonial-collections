@@ -7,10 +7,8 @@ import {
   useTransition,
   Fragment,
   useMemo,
-  useCallback,
-  Dispatch,
 } from 'react';
-import {SearchOptions, SearchResult} from '@/lib/dataset-fetcher';
+import {SearchResult} from '@/lib/dataset-fetcher';
 import FilterSet from './filter-set';
 import Paginator from './paginator';
 import {PageTitle, PageHeader} from 'ui';
@@ -20,40 +18,19 @@ import {useRouter} from 'next/navigation';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import {getUrlWithSearchParams, SortBy} from '@/lib/search-params';
+import {useListStore, SortBy} from 'list-store';
 
 export interface Props {
-  filters: SearchResult['filters'];
-  limit: SearchResult['limit'];
-  totalCount: SearchResult['totalCount'];
   children: ReactNode;
-  sortBy: SortBy;
-  searchOptions: SearchOptions;
+  filters: SearchResult['filters'];
+  filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']>;
 }
 
 export default function ClientFilters({
   children,
   filters,
-  limit,
-  totalCount,
-  sortBy: initialSortBy,
-  searchOptions,
+  filterKeysOrder,
 }: Props) {
-  const [selectedLicenses, setSelectedLicenses] = useState<string[]>(
-    searchOptions?.filters?.licenses ?? []
-  );
-  const [selectedPublishers, setSelectedPublishers] = useState<string[]>(
-    searchOptions?.filters?.publishers ?? []
-  );
-  const [selectedSpatialCoverages, setSelectedSpatialCoverages] = useState<
-    string[]
-  >(searchOptions?.filters?.spatialCoverages ?? []);
-  const [selectedGenres, setSelectedGenres] = useState<string[]>(
-    searchOptions?.filters?.genres ?? []
-  );
-  const [query, setQuery] = useState(searchOptions?.query ?? '');
-  const [offset, setOffset] = useState(searchOptions?.offset ?? 0);
-  const [sortBy, setSortBy] = useState<SortBy>(initialSortBy);
   const [showFiltersSidebarOnSmallScreen, setShowFiltersSidebarOnSmallScreen] =
     useState(false);
   const t = useTranslations('Home');
@@ -61,54 +38,23 @@ export default function ClientFilters({
   // Use the first param `isPending` of `useTransition` for a loading state.
   const [, startTransition] = useTransition();
 
-  const resetOffset = useCallback(() => {
-    setOffset(0);
-  }, []);
+  const state = useListStore();
 
   useEffect(() => {
-    const urlWithSearchParams = getUrlWithSearchParams({
-      query,
-      licenses: selectedLicenses,
-      publishers: selectedPublishers,
-      spatialCoverages: selectedSpatialCoverages,
-      genres: selectedGenres,
-      offset,
-      sortBy,
-    });
     startTransition(() => {
-      router.replace(urlWithSearchParams);
+      router.replace(state.composed.urlWithSearchParams);
     });
-  }, [
-    query,
-    offset,
-    sortBy,
-    selectedLicenses,
-    selectedPublishers,
-    router,
-    selectedSpatialCoverages,
-    selectedGenres,
-  ]);
+  }, [router, state]);
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    resetOffset();
-    setSortBy(e.target.value as SortBy);
+    state.setSortBy(e.target.value as SortBy);
   }
 
-  const handleQueryChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      resetOffset();
-      setQuery(e.target.value);
-    },
-    [resetOffset]
-  );
-
   const renderFilters = useMemo(() => {
-    function setAndResetOffset(setter: Dispatch<string[]>) {
-      return (newValue: string[]) => {
-        resetOffset();
-        return setter(newValue);
-      };
-    }
+    const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      state.setQuery(e.target.value);
+    };
+
     return (
       <>
         <div className="pr-4 max-w-[350px]" id="facets">
@@ -117,7 +63,7 @@ export default function ClientFilters({
           </label>
           <input
             data-testid="searchQuery"
-            value={query}
+            value={state.query}
             onChange={handleQueryChange}
             type="text"
             name="search"
@@ -126,56 +72,24 @@ export default function ClientFilters({
             aria-label={t('accessibilityTypeToFilter')}
           />
         </div>
-        {!!filters.licenses?.length && (
-          <FilterSet
-            title={t('licensesFilter')}
-            searchResultFilters={filters.licenses}
-            selectedFilters={selectedLicenses}
-            setSelectedFilters={setAndResetOffset(setSelectedLicenses)}
-            testId="licensesFilter"
-          />
-        )}
-        {!!filters.licenses?.length && (
-          <FilterSet
-            title={t('publishersFilter')}
-            searchResultFilters={filters.publishers}
-            selectedFilters={selectedPublishers}
-            setSelectedFilters={setAndResetOffset(setSelectedPublishers)}
-            testId="publishersFilter"
-          />
-        )}
-        {!!filters.spatialCoverages?.length && (
-          <FilterSet
-            title={t('spatialCoveragesFilter')}
-            searchResultFilters={filters.spatialCoverages}
-            selectedFilters={selectedSpatialCoverages}
-            setSelectedFilters={setAndResetOffset(setSelectedSpatialCoverages)}
-          />
-        )}
-        {!!filters.genres?.length && (
-          <FilterSet
-            title={t('genresFilter')}
-            searchResultFilters={filters.genres}
-            selectedFilters={selectedGenres}
-            setSelectedFilters={setAndResetOffset(setSelectedGenres)}
-          />
+        {filterKeysOrder.map(
+          filterKey =>
+            !!filters[filterKey]?.length && (
+              <FilterSet
+                key={filterKey}
+                title={t(`${filterKey}Filter`)}
+                searchResultFilters={filters[filterKey]}
+                selectedFilters={state.selectedFilters[filterKey] || []}
+                setSelectedFilters={selectedFilters =>
+                  state.setSelectedFilters(filterKey, selectedFilters)
+                }
+                testId={`${filterKey}Filter`}
+              />
+            )
         )}
       </>
     );
-  }, [
-    t,
-    query,
-    handleQueryChange,
-    filters.licenses,
-    filters.publishers,
-    filters.spatialCoverages,
-    filters.genres,
-    selectedLicenses,
-    selectedPublishers,
-    selectedSpatialCoverages,
-    selectedGenres,
-    resetOffset,
-  ]);
+  }, [filterKeysOrder, filters, state, t]);
 
   return (
     <>
@@ -251,13 +165,15 @@ export default function ClientFilters({
             id="search-results"
           >
             <div className="ml-4 mt-2">
-              <PageTitle>{t('title', {totalDatasets: totalCount})}</PageTitle>
+              <PageTitle>
+                {t('title', {totalDatasets: state.totalCount})}
+              </PageTitle>
             </div>
             <div>
               <select
                 name="location"
                 className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-600 focus:outline-none focus:ring-sky-600 sm:text-sm"
-                value={sortBy}
+                value={state.sortBy}
                 onChange={handleSortByChange}
                 aria-label={t('accessibilitySelectToChangeOrder')}
               >
@@ -270,43 +186,27 @@ export default function ClientFilters({
             </div>
           </div>
           <SelectedFilters
-            filters={[
-              {
-                searchResultFilters: filters.licenses ?? [],
-                selectedFilters: selectedLicenses,
-                setSelectedFilters: setSelectedLicenses,
-              },
-              {
-                searchResultFilters: filters.publishers ?? [],
-                selectedFilters: selectedPublishers,
-                setSelectedFilters: setSelectedPublishers,
-              },
-              {
-                searchResultFilters: filters.spatialCoverages ?? [],
-                selectedFilters: selectedSpatialCoverages,
-                setSelectedFilters: setSelectedSpatialCoverages,
-              },
-              {
-                searchResultFilters: filters.genres ?? [],
-                selectedFilters: selectedGenres,
-                setSelectedFilters: setSelectedGenres,
-              },
-            ]}
+            filters={filterKeysOrder.map(filterKey => ({
+              searchResultFilters: filters[filterKey] ?? [],
+              selectedFilters: state.selectedFilters[filterKey] ?? [],
+              setSelectedFilters: selectedFilters =>
+                state.setSelectedFilters(filterKey, selectedFilters),
+            }))}
             query={{
-              value: query,
-              setQuery,
+              value: state.query,
+              setQuery: state.setQuery,
             }}
-            clearAllSideEffects={resetOffset}
+            clearAllSideEffects={() => state.setOffset(0)}
           />
         </PageHeader>
 
         {children}
-        {totalCount && totalCount > 0 ? (
+        {state.totalCount && state.totalCount > 0 ? (
           <Paginator
-            totalCount={totalCount}
-            offset={offset}
-            setOffset={setOffset}
-            limit={limit}
+            totalCount={state.totalCount}
+            offset={state.offset}
+            setPage={state.setPage}
+            limit={state.limit}
           />
         ) : null}
       </section>
