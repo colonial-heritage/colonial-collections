@@ -15,14 +15,14 @@ export default function HeritageObjectList({
 
   if (totalCount && totalCount > 0) {
     return (
-      <div className="w-full md:w-2/3 gap-6 flex flex-col">
+      <>
         {heritageObjects.map(heritageObject => (
           <HeritageObjectCard
             key={heritageObject.id}
             heritageObject={heritageObject}
           />
         ))}
-      </div>
+      </>
     );
   }
 
