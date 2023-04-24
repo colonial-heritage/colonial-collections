@@ -17,11 +17,7 @@ const searchParamsSchema = z.object({
     .nativeEnum(SortBy)
     .default(defaultSortBy)
     // Don't add the default sort to the search params
-    .transform(sortBy => {
-      console.log(sortBy, defaultSortBy);
-      return sortBy === defaultSortBy ? '' : sortBy;
-    }),
-  // .optional(),
+    .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
 });
 
 interface ClientSearchOptions {

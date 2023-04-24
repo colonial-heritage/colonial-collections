@@ -8,7 +8,7 @@ import {
   getClientSortBy,
   SearchParams,
 } from '@/lib/search-params';
-import {StoreInitializer} from './store-initializer';
+import {ClientStore} from './client-store';
 import {SearchResult} from '@/lib/dataset-fetcher';
 
 // Set the order of the filters
@@ -65,7 +65,7 @@ export default async function Home({searchParams}: Props) {
 
         {searchResult && (
           <>
-            <StoreInitializer
+            <ClientStore
               {...{
                 totalCount: searchResult.totalCount,
                 offset: searchResult.offset,
