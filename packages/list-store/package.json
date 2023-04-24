@@ -16,6 +16,7 @@
     "test:watch": "npm test -- --watchAll"
   },
   "dependencies": {
+    "react": "18.2.0",
     "zod": "3.21.4",
     "zustand": "^4.3.7"
   },
@@ -25,8 +26,12 @@
   "jest": {
     "preset": "ts-jest",
     "testTimeout": 60000,
-    "testMatch": ["<rootDir>/src/**/*.test.ts"],
+    "testMatch": [
+      "<rootDir>/src/**/*.test.ts"
+    ],
     "collectCoverage": true,
-    "collectCoverageFrom": ["<rootDir>/src/**/*.ts"]
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.ts"
+    ]
   }
 }

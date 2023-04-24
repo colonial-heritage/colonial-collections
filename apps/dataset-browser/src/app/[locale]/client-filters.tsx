@@ -14,7 +14,7 @@ import Paginator from './paginator';
 import {PageTitle, PageHeader} from 'ui';
 import {useTranslations} from 'next-intl';
 import SelectedFilters from './selected-filters';
-import {useRouter} from 'next/navigation';
+import {useRouter} from 'next-intl/client';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
@@ -36,15 +36,23 @@ export default function ClientFilters({
   const t = useTranslations('Home');
   const router = useRouter();
   // Use the first param `isPending` of `useTransition` for a loading state.
-  const [, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const state = useListStore();
 
   useEffect(() => {
-    startTransition(() => {
-      router.replace(state.composed.urlWithSearchParams);
-    });
-  }, [router, state]);
+    if (state.newDataNeeded && !isPending) {
+      startTransition(() => {
+        useListStore.setState({newDataNeeded: false});
+        router.replace(state.composed.urlWithSearchParams);
+      });
+    }
+  }, [
+    isPending,
+    router,
+    state.composed.urlWithSearchParams,
+    state.newDataNeeded,
+  ]);
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
     state.setSortBy(e.target.value as SortBy);
@@ -196,7 +204,6 @@ export default function ClientFilters({
               value: state.query,
               setQuery: state.setQuery,
             }}
-            clearAllSideEffects={() => state.setOffset(0)}
           />
         </PageHeader>
 

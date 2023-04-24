@@ -8,12 +8,14 @@ export interface Props {
   limit: number;
   query: string;
   sortBy: SortBy;
+  // Setting newDataNeeded to true will trigger a page reload with new search params
+  newDataNeeded: boolean;
   selectedFilters: {[filterKey: string]: string[] | undefined};
   setSelectedFilters: (key: string, value: string[]) => void;
   setSortBy: (sortBy: SortBy) => void;
   setQuery: (query: string) => void;
-  setOffset: (offset: number) => void;
   setPage: (direction: 1 | -1) => void;
+  apiUpdate: ({totalCount}: {totalCount: number}) => void;
   composed: {
     urlWithSearchParams: string;
   };
@@ -26,17 +28,19 @@ export const useListStore = create<Props>((set, get) => ({
   limit: 10,
   sortBy: defaultSortBy,
   selectedFilters: {},
+  newDataNeeded: false,
   setSelectedFilters: (key, value) => {
-    set({selectedFilters: {...get().selectedFilters, [key]: value}, offset: 0});
+    set({
+      selectedFilters: {...get().selectedFilters, [key]: value},
+      offset: 0,
+      newDataNeeded: true,
+    });
   },
   setSortBy: sortBy => {
-    set({sortBy, offset: 0});
+    set({sortBy, offset: 0, newDataNeeded: true});
   },
   setQuery: query => {
-    set({query, offset: 0});
-  },
-  setOffset: offset => {
-    set({offset});
+    set({query, offset: 0, newDataNeeded: true});
   },
   setPage: direction => {
     let newOffset = get().offset + direction * get().limit;
@@ -48,7 +52,10 @@ export const useListStore = create<Props>((set, get) => ({
       newOffset = get().totalCount;
     }
 
-    set({offset: newOffset});
+    set({offset: newOffset, newDataNeeded: true});
+  },
+  apiUpdate: ({totalCount}) => {
+    set({totalCount});
   },
   composed: {
     get urlWithSearchParams() {
