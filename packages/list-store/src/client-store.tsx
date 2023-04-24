@@ -1,7 +1,8 @@
 'use client';
 
 import {useRef, useEffect} from 'react';
-import {useListStore, SortBy} from 'list-store';
+import {useListStore} from './store';
+import {SortBy} from './sort';
 
 interface Props {
   totalCount: number;

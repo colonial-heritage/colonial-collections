@@ -8,7 +8,7 @@ import {
   getClientSortBy,
   SearchParams,
 } from '@/lib/search-params';
-import {ClientStore} from './client-store';
+import {ClientStore} from 'list-store';
 import {SearchResult} from '@/lib/dataset-fetcher';
 
 // Set the order of the filters

@@ -16,6 +16,7 @@
     "test:watch": "npm test -- --watchAll"
   },
   "dependencies": {
+    "next-intl": "2.13.0-beta.2",
     "react": "18.2.0",
     "zod": "3.21.4",
     "zustand": "^4.3.7"
