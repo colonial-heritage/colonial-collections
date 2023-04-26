@@ -15,7 +15,6 @@ export interface Props {
   setSortBy: (sortBy: SortBy) => void;
   setQuery: (query: string) => void;
   setPage: (direction: 1 | -1) => void;
-  apiUpdate: ({totalCount}: {totalCount: number}) => void;
   composed: {
     urlWithSearchParams: string;
   };
@@ -53,9 +52,6 @@ export const useListStore = create<Props>((set, get) => ({
     }
 
     set({offset: newOffset, newDataNeeded: true});
-  },
-  apiUpdate: ({totalCount}) => {
-    set({totalCount});
   },
   composed: {
     get urlWithSearchParams() {

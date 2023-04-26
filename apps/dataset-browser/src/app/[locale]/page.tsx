@@ -8,7 +8,7 @@ import {
   getClientSortBy,
   SearchParams,
 } from '@/lib/search-params';
-import {ClientStore} from 'list-store';
+import {ClientListStore} from 'list-store';
 import {SearchResult} from '@/lib/dataset-fetcher';
 
 // Set the order of the filters
@@ -36,6 +36,7 @@ export default async function Home({searchParams}: Props) {
   let hasError, searchResult;
   try {
     searchResult = await datasetFetcher.search(searchOptions);
+    console.log('api call');
   } catch (error) {
     hasError = true;
     console.error(error);
@@ -65,7 +66,7 @@ export default async function Home({searchParams}: Props) {
 
         {searchResult && (
           <>
-            <ClientStore
+            <ClientListStore
               {...{
                 totalCount: searchResult.totalCount,
                 offset: searchResult.offset,

@@ -2,7 +2,7 @@
 
 import {useRouter} from 'next-intl/client';
 import {useEffect, useTransition} from 'react';
-import {useListStore} from './store';
+import {useListStore} from './useListStore';
 
 export function useSearchParamsUpdate() {
   const router = useRouter();
