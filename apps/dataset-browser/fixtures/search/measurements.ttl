@@ -1,6 +1,5 @@
 ###############################
 # Sample data for testing
-# The measurements are about the datasets and their 'best' distribution (e.g. N-Triples file, not SPARQL endpoint; CSV file, not PDF file)
 ###############################
 
 @prefix dqv: <http://www.w3.org/ns/dqv#> .
