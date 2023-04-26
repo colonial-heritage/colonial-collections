@@ -60,10 +60,11 @@ export default function RootLayout({children}: Props) {
         </div>
         <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">
           <Navigation
+            locale={locale}
+            locales={locales}
             navigationLabels={navigationLabels}
             languageSelectorLabels={languageSelectorLabels}
             localeLabels={localeLabels}
-            locale={locale}
           />
         </header>
         <main className="bg-gray-light pb-32">
