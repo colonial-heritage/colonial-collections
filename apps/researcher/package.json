@@ -10,7 +10,7 @@
     "build": "next build",
     "compile": "tsc",
     "dev": "next dev --port 3001",
-    "start": "next start",
+    "start": "next start --port 3001",
     "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
     "test:ci": "npm test -- --ci",
     "test:watch": "npm test -- --watchAll",

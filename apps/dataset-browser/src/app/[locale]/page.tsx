@@ -36,7 +36,6 @@ export default async function Home({searchParams}: Props) {
   let hasError, searchResult;
   try {
     searchResult = await datasetFetcher.search(searchOptions);
-    console.log('api call');
   } catch (error) {
     hasError = true;
     console.error(error);
