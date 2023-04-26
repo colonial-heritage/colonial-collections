@@ -11,6 +11,7 @@
 
 <https://example.org/metrics/open-license>
   a dqv:Metric ;
+  skos:prefLabel "Open license"@en ;
   skos:definition "Checks whether the license is available in the dataset description and is a standardized, open license"@en ;
   skos:scopeNote "Valid licenses: https?://creativecommons.org/publicdomain/*, https?://creativecommons.org/licenses/*, https?://opendatacommons.org/licenses/*, https?://rightsstatements.org/vocab/NoC-CR/1.0/, https?://rightsstatements.org/vocab/NoC-NC/1.0/, https?://rightsstatements.org/vocab/NoC-OKLR/1.0/, https?://rightsstatements.org/vocab/NoC-US/1.0/"@en ;
   dqv:expectedDataType xsd:boolean ;
@@ -18,6 +19,7 @@
 
 <https://example.org/metrics/languages>
   a dqv:Metric ;
+  skos:prefLabel "Languages"@en ;
   skos:definition "Checks whether language codes are available in the dataset description that make clear in which languages the dataset is available"@en ;
   skos:scopeNote "Does not check whether the languages codes are valid (e.g. according to https://www.rfc-editor.org/rfc/rfc5646)"@en ;
   skos:scopeNote "Does not check whether the languages codes in the dataset description are the same as or different from the language codes used in the distribution (consistency)"@en ;
@@ -27,6 +29,7 @@
 
 <https://example.org/metrics/downloadable>
   a dqv:Metric ;
+  skos:prefLabel "Downloadable or accessible"@en ;
   skos:definition "Checks whether a download URL or access URL is available in the distribution description"@en ;
   skos:scopeNote "Does not check whether the actual distribution is downloadable"@en ;
   dqv:expectedDataType xsd:boolean ;
@@ -34,6 +37,7 @@
 
 <https://example.org/metrics/structured-format>
   a dqv:Metric ;
+  skos:prefLabel "Structured format"@en ;
   skos:definition "Checks whether the format is available in the distribution description and is a structured format"@en ;
   skos:scopeNote "Does not check whether the actual distribution uses a structured format"@en ;
   skos:scopeNote "The format could be proprietary (e.g. Excel)"@en ;
@@ -43,6 +47,7 @@
 
 <https://example.org/metrics/open-format>
   a dqv:Metric ;
+  skos:prefLabel "Open format"@en ;
   skos:definition "Checks whether the format is available in the distribution description and is a standardized, open format"@en ;
   skos:scopeNote "Does not check whether the actual distribution uses a standardized, open format"@en ;
   skos:scopeNote "Valid formats: text/csv, application/json, application/xml, all RDF formats"@en ;
@@ -51,6 +56,7 @@
 
 <https://example.org/metrics/rdf-format>
   a dqv:Metric ;
+  skos:prefLabel "RDF format"@en ;
   skos:definition "Checks whether the format is available in the distribution description and is an RDF format"@en ;
   skos:scopeNote "Does not check whether the actual distribution uses an RDF format"@en ;
   skos:scopeNote "Valid formats: text/turtle, application/rdf+xml, application/trig, application/n-quads, application/n-triples, text/n3, application/ld+json, application/sparql-query"@en ;
