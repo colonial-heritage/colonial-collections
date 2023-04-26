@@ -12,10 +12,10 @@ import classNames from 'classnames';
 import {usePathname} from 'next-intl/client';
 import {Link} from 'next-intl';
 import {Fragment} from 'react';
-import {locales} from '@/middleware';
 
 interface Props {
   locale: string;
+  locales: string[];
   navigationLabels: {
     name: string;
     home: string;
@@ -29,6 +29,7 @@ interface Props {
 
 export default function Navigation({
   locale,
+  locales,
   navigationLabels,
   languageSelectorLabels,
   localeLabels,
