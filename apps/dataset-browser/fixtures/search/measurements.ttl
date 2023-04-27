@@ -24,7 +24,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/1/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -62,7 +62,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/2/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -115,7 +115,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/4/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -130,29 +130,6 @@
   ] , [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/4/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
-    dqv:value "false"^^xsd:boolean
-  ] .
-
-<https://example.org/datasets/4/distributions/2>
-  dqv:hasQualityMeasurement [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/4/distributions/2> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
-    dqv:value "true"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/4/distributions/2> ;
-    dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
-    dqv:value "false"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/4/distributions/2> ;
-    dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
-    dqv:value "false"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/4/distributions/2> ;
     dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
     dqv:value "false"^^xsd:boolean
   ] .
@@ -176,7 +153,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/5/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -214,7 +191,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/6/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -248,34 +225,11 @@
     dqv:value "true"^^xsd:boolean
   ] .
 
-<https://example.org/datasets/7/distributions/1>
-  dqv:hasQualityMeasurement [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/7/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
-    dqv:value "true"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/7/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
-    dqv:value "true"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/7/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
-    dqv:value "true"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/7/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
-    dqv:value "true"^^xsd:boolean
-  ] .
-
 <https://example.org/datasets/7/distributions/2>
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/7/distributions/2> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -313,7 +267,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/8/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -366,7 +320,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/10/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -400,34 +354,11 @@
     dqv:value "true"^^xsd:boolean
   ] .
 
-<https://example.org/datasets/11/distributions/1>
-  dqv:hasQualityMeasurement [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/11/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
-    dqv:value "true"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/11/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
-    dqv:value "true"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/11/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
-    dqv:value "true"^^xsd:boolean
-  ] , [
-    a dqv:QualityMeasurement ;
-    dqv:computedOn <https://example.org/datasets/11/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
-    dqv:value "true"^^xsd:boolean
-  ] .
-
 <https://example.org/datasets/11/distributions/2>
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/11/distributions/2> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -465,7 +396,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/12/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -503,7 +434,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/13/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;
@@ -541,7 +472,7 @@
   dqv:hasQualityMeasurement [
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/14/distributions/1> ;
-    dqv:isMeasurementOf <https://example.org/metrics/downloadable> ;
+    dqv:isMeasurementOf <https://example.org/metrics/online> ;
     dqv:value "true"^^xsd:boolean
   ] , [
     a dqv:QualityMeasurement ;

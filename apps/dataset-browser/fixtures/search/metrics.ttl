@@ -1,13 +1,11 @@
 ###############################
-# Sample data for testing
+# Definitions of metrics for measuring the data quality of descriptions of datasets and their distributions
 ###############################
 
 @prefix dqv: <http://www.w3.org/ns/dqv#> .
 @prefix ldqd: <http://www.w3.org/2016/05/ldqd#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-# Definitions of metrics for measuring the quality of descriptions of datasets and their distributions
 
 <https://example.org/metrics/open-license>
   a dqv:Metric ;
@@ -27,11 +25,11 @@
   dqv:expectedDataType xsd:boolean ;
   dqv:inDimension ldqd:availability .
 
-<https://example.org/metrics/downloadable>
+<https://example.org/metrics/online>
   a dqv:Metric ;
-  skos:prefLabel "Downloadable or accessible"@en ;
+  skos:prefLabel "Downloadable or accessible online"@en ;
   skos:definition "Checks whether a download URL or access URL is available in the distribution description"@en ;
-  skos:scopeNote "Does not check whether the actual distribution is downloadable"@en ;
+  skos:scopeNote "Does not check whether the actual distribution is downloadable or accessible"@en ;
   dqv:expectedDataType xsd:boolean ;
   dqv:inDimension ldqd:availability .
 
