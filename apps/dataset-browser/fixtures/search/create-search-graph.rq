@@ -1,5 +1,5 @@
 ###############################
-# Query for generating a search graph with dataset descriptions for testing
+# Query for generating a search graph with dataset descriptions
 # Source of the query: https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Full%20dataset%20descriptions%20for%20publisher&owner=admin&execute
 # Publish the query to https://colonial-heritage.triply.cc/data-hub/-/queries/create-search-graph/ for use in production
 ###############################
@@ -7,6 +7,7 @@
 PREFIX cc: <https://colonialcollections.nl/search#> # Internal, undocumented ontology
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dqv: <http://www.w3.org/ns/dqv#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX skolem: <https://triplydb.com/.well-known/genid/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -24,6 +25,7 @@ CONSTRUCT {
     cc:datePublished ?issued ;
     cc:spatialCoverage ?place ;
     cc:genre ?genre ;
+    cc:measurement ?datasetMeasurement ;
     # To allow for search actions based on name
     cc:publisherName ?publisherName ;
     cc:licenseName ?licenseName ;
@@ -42,8 +44,23 @@ CONSTRUCT {
 
   ?genre a cc:DefinedTerm ;
     cc:name ?genreName .
+
+  ?datasetMeasurement a cc:Measurement ;
+    cc:measurementOf ?datasetMetric ;
+    cc:value ?datasetMeasurementValue .
+
+  ?datasetMetric a cc:Metric ;
+    cc:name ?datasetMetricName .
+
+  ?distributionMeasurement a cc:Measurement ;
+    cc:measurementOf ?distributionMetric ;
+    cc:value ?distributionMeasurementValue .
+
+  ?distributionMetric a cc:Metric ;
+    cc:name ?distributionMetricName .
 }
 WHERE {
+  BIND(<https://example.org/datasets/11> AS ?dataset)
   ?dataset a dcat:Dataset .
 
   ####################
@@ -150,5 +167,32 @@ WHERE {
       skos:prefLabel ?genreName ;
       skos:inScheme <http://vocab.getty.edu/aat/> .
     FILTER(LANG(?genreName) = "" || LANGMATCHES(LANG(?genreName), "en")) # TBD: which languages to support?
+  }
+
+  ####################
+  # Dataset measurements
+  ####################
+
+  OPTIONAL {
+    ?dataset dqv:hasQualityMeasurement ?datasetMeasurement .
+    ?datasetMeasurement dqv:value ?datasetMeasurementValue ;
+      dqv:isMeasurementOf ?datasetMetric .
+
+    ?datasetMetric skos:prefLabel ?datasetMetricName
+    FILTER(LANG(?datasetMetricName) = "" || LANGMATCHES(LANG(?datasetMetricName), "en")) # TBD: which languages to support?
+  }
+
+  ####################
+  # Distribution measurements
+  ####################
+
+  OPTIONAL {
+    ?dataset dcat:distribution ?distribution .
+    ?distribution dqv:hasQualityMeasurement ?distributionMeasurement .
+    ?distributionMeasurement dqv:value ?distributionMeasurementValue ;
+      dqv:isMeasurementOf ?distributionMetric .
+
+    ?distributionMetric skos:prefLabel ?distributionMetricName
+    FILTER(LANG(?distributionMetricName) = "" || LANGMATCHES(LANG(?distributionMetricName), "en")) # TBD: which languages to support?
   }
 }
