@@ -10,6 +10,7 @@ export interface Props {
   sortBy: SortBy;
   // Setting newDataNeeded to true will trigger a page reload with new search params
   newDataNeeded: boolean;
+  initialized: boolean;
   selectedFilters: {[filterKey: string]: string[] | undefined};
   setSelectedFilters: (key: string, value: string[]) => void;
   setSortBy: (sortBy: SortBy) => void;
@@ -18,6 +19,21 @@ export interface Props {
   composed: {
     urlWithSearchParams: string;
   };
+  newServerData: ({
+    totalCount,
+    offset,
+    limit,
+    query,
+    sortBy,
+    selectedFilters,
+  }: {
+    totalCount: number;
+    offset: number;
+    limit: number;
+    query: string;
+    sortBy: SortBy;
+    selectedFilters: {[filterKey: string]: string[] | undefined};
+  }) => void;
 }
 
 export const useListStore = create<Props>((set, get) => ({
@@ -28,6 +44,7 @@ export const useListStore = create<Props>((set, get) => ({
   sortBy: defaultSortBy,
   selectedFilters: {},
   newDataNeeded: false,
+  initialized: false,
   setSelectedFilters: (key, value) => {
     set({
       selectedFilters: {...get().selectedFilters, [key]: value},
@@ -52,6 +69,32 @@ export const useListStore = create<Props>((set, get) => ({
     }
 
     set({offset: newOffset, newDataNeeded: true});
+  },
+  newServerData: ({
+    totalCount,
+    offset,
+    limit,
+    query,
+    sortBy,
+    selectedFilters,
+  }) => {
+    if (!get().initialized) {
+      set({
+        totalCount,
+        offset,
+        limit,
+        query,
+        sortBy,
+        selectedFilters,
+        initialized: true,
+      });
+    } else if (totalCount !== get().totalCount) {
+      // Don't reset the values the user can edit after initializing the client store.
+      // Resetting these values could override user actions like typing.
+      set({
+        totalCount,
+      });
+    }
   },
   composed: {
     get urlWithSearchParams() {

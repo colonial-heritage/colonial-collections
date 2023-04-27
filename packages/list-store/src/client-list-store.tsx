@@ -23,25 +23,16 @@ export function ClientListStore({
   sortBy,
   selectedFilters,
 }: Props) {
-  const initialized = useRef(false);
+  const state = useListStore();
   useEffect(() => {
-    if (!initialized.current) {
-      useListStore.setState({
-        totalCount,
-        offset,
-        limit,
-        query,
-        sortBy,
-        selectedFilters: selectedFilters ?? {},
-      });
-      initialized.current = true;
-    } else {
-      // Don't reset the values the user can edit after initializing the client store.
-      // Resetting these values could override user actions like typing.
-      useListStore.setState({
-        totalCount,
-      });
-    }
-  }, [limit, offset, query, selectedFilters, sortBy, totalCount]);
+    state.newServerData({
+      totalCount,
+      offset,
+      limit,
+      query,
+      sortBy,
+      selectedFilters: selectedFilters ?? {},
+    });
+  }, [limit, offset, query, selectedFilters, sortBy, state, totalCount]);
   return null;
 }
