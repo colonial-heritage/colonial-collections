@@ -26,6 +26,7 @@ CONSTRUCT {
     cc:spatialCoverage ?place ;
     cc:genre ?genre ;
     cc:measurement ?datasetMeasurement ;
+    cc:measurement ?distributionMeasurement ;
     # To allow for search actions based on name
     cc:publisherName ?publisherName ;
     cc:licenseName ?licenseName ;
