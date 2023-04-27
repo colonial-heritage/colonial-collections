@@ -4,6 +4,10 @@
 
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
+<http://example.org/custom-license>
+  a foaf:Document;
+  foaf:name "Custom License" .
+
 <http://creativecommons.org/publicdomain/zero/1.0/>
   a foaf:Document;
   foaf:name "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication" .
