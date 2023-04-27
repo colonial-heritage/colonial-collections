@@ -16,7 +16,7 @@
   "dependencies": {
     "@heroicons/react": "2.0.17",
     "classnames": "2.3.2",
-    "next": "13.3.1",
+    "next": "13.3.0",
     "next-intl": "2.13.0-beta.2",
     "react": "18.2.0"
   }
