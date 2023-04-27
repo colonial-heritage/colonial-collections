@@ -60,7 +60,6 @@ CONSTRUCT {
     cc:name ?distributionMetricName .
 }
 WHERE {
-  BIND(<https://example.org/datasets/11> AS ?dataset)
   ?dataset a dcat:Dataset .
 
   ####################
