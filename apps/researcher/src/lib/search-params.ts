@@ -5,7 +5,7 @@ import {
   searchOptionsSchema,
 } from '@/lib/heritage-fetcher';
 import {z} from 'zod';
-import {SortBy} from 'list-store';
+import {SortBy} from '@colonial-collections/list-store';
 
 const sortMapping = {
   [SortBy.RelevanceDesc]: {

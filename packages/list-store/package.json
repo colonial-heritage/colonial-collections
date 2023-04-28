@@ -1,5 +1,5 @@
 {
-  "name": "list-store",
+  "name": "@colonial-collections/list-store",
   "version": "0.0.0",
   "main": "./src/index.ts",
   "types": "./src/index.ts",

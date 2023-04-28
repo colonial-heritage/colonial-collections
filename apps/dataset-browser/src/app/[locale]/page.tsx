@@ -8,7 +8,7 @@ import {
   getClientSortBy,
   SearchParams,
 } from '@/lib/search-params';
-import {ClientListStore} from 'list-store';
+import {ClientListStore} from '@colonial-collections/list-store';
 import {SearchResult} from '@/lib/dataset-fetcher';
 
 // Set the order of the filters

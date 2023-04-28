@@ -2,7 +2,7 @@ import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
 } from './search-params';
-import {SortBy, defaultSortBy} from 'list-store';
+import {SortBy, defaultSortBy} from '@colonial-collections/list-store';
 import {SortBy as SortBySearchOption, SortOrder} from '@/lib/dataset-fetcher';
 import {describe, expect, it} from '@jest/globals';
 

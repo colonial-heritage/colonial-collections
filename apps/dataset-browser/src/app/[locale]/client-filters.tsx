@@ -10,7 +10,11 @@ import SelectedFilters from './selected-filters';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import {useListStore, SortBy, useSearchParamsUpdate} from 'list-store';
+import {
+  useListStore,
+  SortBy,
+  useSearchParamsUpdate,
+} from '@colonial-collections/list-store';
 
 export interface Props {
   children: ReactNode;
