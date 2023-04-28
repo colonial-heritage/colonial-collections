@@ -37,6 +37,13 @@ export type Publisher = Thing;
 export type License = Thing;
 export type Place = Thing;
 export type Term = Thing;
+export type Metric = Thing;
+
+export type Measurement = {
+  id: string;
+  value: boolean;
+  metric: Metric;
+};
 
 export type Dataset = {
   id: string;
@@ -51,6 +58,7 @@ export type Dataset = {
   datePublished?: Date;
   spatialCoverages?: Place[];
   genres?: Term[];
+  measurements?: Measurement[];
 };
 
 export enum SortBy {

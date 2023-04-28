@@ -1,3 +1,4 @@
+import {Dataset, Measurement} from '.';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {lru} from 'tiny-lru';
 import {RdfObjectLoader} from 'rdf-object';
@@ -15,11 +16,21 @@ const loadByIrisOptionsSchema = z.object({
 
 export type LoadByIrisOptions = z.infer<typeof loadByIrisOptionsSchema>;
 
+const getByIriOptionsSchema = z.object({
+  iri: z.string(),
+});
+
+export type GetByIriOptions = z.infer<typeof getByIriOptionsSchema>;
+
+const cacheValueIfIriNotFound = Symbol('cacheValueIfIriNotFound');
+
+export type PartialDataset = Pick<Dataset, 'id' | 'measurements'>;
+
 // Fetches dataset information from a SPARQL endpoint
 export class SparqlFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
-  private lru = lru(10000);
+  private cache = lru(10000);
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -40,17 +51,18 @@ export class SparqlFetcher {
       PREFIX cc: <https://colonialcollections.nl/search#>
 
       CONSTRUCT {
-        ?iri cc:hasQualityMeasurement ?measurement .
+        ?iri a cc:Dataset ;
+          cc:measurement ?measurement .
         ?measurement cc:value ?value ;
-          cc:isMeasurementOf ?metric .
+          cc:measurementOf ?metric .
         ?metric cc:name ?name .
       }
       WHERE {
         VALUES ?iri { ${irisForValues.join(' ')} }
         ?iri a cc:Dataset ;
-          cc:hasQualityMeasurement ?measurement .
+          cc:measurement ?measurement .
         ?measurement cc:value ?value ;
-          cc:isMeasurementOf ?metric .
+          cc:measurementOf ?metric .
         ?metric cc:name ?name .
       }
     `;
@@ -64,6 +76,39 @@ export class SparqlFetcher {
       },
     });
     await loader.import(stream);
+
+    for (const iri of iris) {
+      const rawDataset = loader.resources[iri];
+      if (rawDataset === undefined) {
+        this.cache.set(iri, cacheValueIfIriNotFound);
+        continue;
+      }
+
+      const measurements: Measurement[] = [];
+      const rawMeasurements = rawDataset.properties['cc:measurement'];
+      for (const rawMeasurement of rawMeasurements) {
+        const measurementValue = rawMeasurement.property['cc:value'];
+        const metric = rawMeasurement.property['cc:measurementOf'];
+        const metricName = metric.property['cc:name'];
+
+        const measurement: Measurement = {
+          id: rawMeasurement.value,
+          value: measurementValue.value === 'true', // TODO
+          metric: {
+            id: metric.value,
+            name: metricName.value,
+          },
+        };
+        measurements.push(measurement);
+      }
+
+      const partialDataset: PartialDataset = {
+        id: iri,
+        measurements,
+      };
+
+      this.cache.set(iri, partialDataset);
+    }
   }
 
   async loadByIris(options: LoadByIrisOptions) {
@@ -79,5 +124,11 @@ export class SparqlFetcher {
     } catch (err) {
       console.error(err); // TODO: add logger
     }
+  }
+
+  getByIri(options: GetByIriOptions) {
+    const opts = getByIriOptionsSchema.parse(options);
+    const label = this.cache.get(opts.iri);
+    return label !== cacheValueIfIriNotFound ? label : undefined;
   }
 }

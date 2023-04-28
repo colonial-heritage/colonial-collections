@@ -1,5 +1,5 @@
 import {SparqlFetcher} from './sparql-fetcher';
-import {beforeEach, describe, it} from '@jest/globals';
+import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 
 let sparqlFetcher: SparqlFetcher;
@@ -17,5 +17,10 @@ describe('getByIri', () => {
       'https://example.org/datasets/12',
     ];
     await sparqlFetcher.loadByIris({iris});
+
+    const result = sparqlFetcher.getByIri({
+      iri: 'https://example.org/datasets/1',
+    });
+    expect(result).toBeDefined();
   });
 });
