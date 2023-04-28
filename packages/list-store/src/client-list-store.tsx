@@ -1,6 +1,6 @@
 'use client';
 
-import {useRef, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useListStore} from './useListStore';
 import {SortBy} from './sort';
 
@@ -34,5 +34,6 @@ export function ClientListStore({
       selectedFilters: selectedFilters ?? {},
     });
   }, [limit, offset, query, selectedFilters, sortBy, state, totalCount]);
+
   return null;
 }

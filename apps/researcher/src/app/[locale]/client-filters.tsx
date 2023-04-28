@@ -1,24 +1,20 @@
 'use client';
 
-import {
-  useState,
-  ReactNode,
-  useEffect,
-  useTransition,
-  Fragment,
-  useMemo,
-} from 'react';
+import {useState, ReactNode, Fragment, useMemo} from 'react';
 import {SearchResult} from '@/lib/heritage-fetcher';
 import FilterSet from './filter-set';
 import Paginator from './paginator';
 import {PageTitle, PageHeader} from 'ui';
 import {useTranslations} from 'next-intl';
 import SelectedFilters from './selected-filters';
-import {useRouter} from 'next-intl/client';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import {useListStore, SortBy} from '@colonial-collections/list-store';
+import {
+  useListStore,
+  SortBy,
+  useSearchParamsUpdate,
+} from '@colonial-collections/list-store';
 
 export interface Props {
   children: ReactNode;
@@ -34,25 +30,10 @@ export default function ClientFilters({
   const [showFiltersSidebarOnSmallScreen, setShowFiltersSidebarOnSmallScreen] =
     useState(false);
   const t = useTranslations('Home');
-  const router = useRouter();
-  // Use the first param `isPending` of `useTransition` for a loading state.
-  const [isPending, startTransition] = useTransition();
 
   const state = useListStore();
 
-  useEffect(() => {
-    if (state.newDataNeeded && !isPending) {
-      startTransition(() => {
-        useListStore.setState({newDataNeeded: false});
-        router.replace(state.composed.urlWithSearchParams);
-      });
-    }
-  }, [
-    isPending,
-    router,
-    state.composed.urlWithSearchParams,
-    state.newDataNeeded,
-  ]);
+  useSearchParamsUpdate();
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
     state.setSortBy(e.target.value as SortBy);

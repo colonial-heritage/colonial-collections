@@ -10,7 +10,7 @@ export interface Props {
   sortBy: SortBy;
   // Setting newDataNeeded to true will trigger a page reload with new search params
   newDataNeeded: boolean;
-  initialized: boolean;
+  isInitialized: boolean;
   selectedFilters: {[filterKey: string]: string[] | undefined};
   setSelectedFilters: (key: string, value: string[]) => void;
   setSortBy: (sortBy: SortBy) => void;
@@ -44,7 +44,7 @@ export const useListStore = create<Props>((set, get) => ({
   sortBy: defaultSortBy,
   selectedFilters: {},
   newDataNeeded: false,
-  initialized: false,
+  isInitialized: false,
   setSelectedFilters: (key, value) => {
     set({
       selectedFilters: {...get().selectedFilters, [key]: value},
@@ -78,7 +78,7 @@ export const useListStore = create<Props>((set, get) => ({
     sortBy,
     selectedFilters,
   }) => {
-    if (!get().initialized) {
+    if (!get().isInitialized) {
       set({
         totalCount,
         offset,
@@ -86,7 +86,7 @@ export const useListStore = create<Props>((set, get) => ({
         query,
         sortBy,
         selectedFilters,
-        initialized: true,
+        isInitialized: true,
       });
     } else if (totalCount !== get().totalCount) {
       // Don't reset the values the user can edit after initializing the client store.

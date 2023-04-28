@@ -6,7 +6,6 @@ import {useListStore} from './useListStore';
 
 export function useSearchParamsUpdate() {
   const router = useRouter();
-  // Use the first param `isPending` of `useTransition` for a loading state.
   const [isPending, startTransition] = useTransition();
   const state = useListStore();
 

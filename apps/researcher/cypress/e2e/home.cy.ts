@@ -1,5 +1,5 @@
-describe('Dataset Browser homepage', () => {
-  it('loads a dataset list', () => {
+describe('Researcher homepage', () => {
+  it('loads an object list', () => {
     cy.visit('/en');
     cy.getBySel('error').should('not.exist');
     cy.getBySel('heritage-object-card-name').its('length').should('be.gt', 0);
@@ -26,7 +26,7 @@ describe('Object list filters', () => {
     cy.getBySel('selectedFilter').should('have.length', 2);
   });
 
-  it('removes a owner filter by deselecting the filter in the sidebar', () => {
+  it('removes an owner filter by deselecting the filter in the sidebar', () => {
     cy.visit('/en');
     cy.getBySel('ownersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
@@ -71,7 +71,7 @@ describe('Object list filters', () => {
     cy.getBySel('selectedFilter').should('have.text', searchText);
   });
 
-  it('filters multiple categories together (query, owner and types)', () => {
+  it('filters multiple categories together (query, owners and types)', () => {
     cy.visit('/en');
     const searchText = 'My query';
 

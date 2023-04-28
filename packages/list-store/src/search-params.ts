@@ -47,7 +47,7 @@ export function getUrlWithSearchParams({
     });
   }
 
-  // Only add relevant values to the search params. Remove all keys with a empty strings
+  // Only add relevant values to the search params. Remove all keys with empty strings as values
   Object.keys(searchParams).forEach(key =>
     searchParams[key] === '' ? delete searchParams[key] : {}
   );
