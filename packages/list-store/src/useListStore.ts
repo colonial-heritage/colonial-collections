@@ -1,5 +1,4 @@
 import {create} from 'zustand';
-import {getUrlWithSearchParams} from './search-params';
 import {SortBy, defaultSortBy} from './sort';
 
 export interface Props {
@@ -16,9 +15,6 @@ export interface Props {
   setSortBy: (sortBy: SortBy) => void;
   setQuery: (query: string) => void;
   setPage: (direction: 1 | -1) => void;
-  composed: {
-    urlWithSearchParams: string;
-  };
   newServerData: ({
     totalCount,
     offset,
@@ -95,15 +91,5 @@ export const useListStore = create<Props>((set, get) => ({
         totalCount,
       });
     }
-  },
-  composed: {
-    get urlWithSearchParams() {
-      return getUrlWithSearchParams({
-        query: get().query,
-        offset: get().offset,
-        sortBy: get().sortBy,
-        filters: get().selectedFilters,
-      });
-    },
   },
 }));
