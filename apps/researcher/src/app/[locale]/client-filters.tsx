@@ -31,17 +31,17 @@ export default function ClientFilters({
     useState(false);
   const t = useTranslations('Home');
 
-  const state = useListStore();
+  const listStore = useListStore();
 
   useSearchParamsUpdate();
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    state.setSortBy(e.target.value as SortBy);
+    listStore.setSortBy(e.target.value as SortBy);
   }
 
   const renderFilters = useMemo(() => {
     const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      state.setQuery(e.target.value);
+      listStore.setQuery(e.target.value);
     };
 
     return (
@@ -52,7 +52,7 @@ export default function ClientFilters({
           </label>
           <input
             data-testid="searchQuery"
-            value={state.query}
+            value={listStore.query}
             onChange={handleQueryChange}
             type="text"
             name="search"
@@ -68,9 +68,9 @@ export default function ClientFilters({
                 key={filterKey}
                 title={t(`${filterKey}Filter`)}
                 searchResultFilters={filters[filterKey]}
-                selectedFilters={state.selectedFilters[filterKey] || []}
+                selectedFilters={listStore.selectedFilters[filterKey] || []}
                 setSelectedFilters={selectedFilters =>
-                  state.setSelectedFilters(filterKey, selectedFilters)
+                  listStore.setSelectedFilters(filterKey, selectedFilters)
                 }
                 testId={`${filterKey}Filter`}
               />
@@ -78,7 +78,7 @@ export default function ClientFilters({
         )}
       </>
     );
-  }, [filterKeysOrder, filters, state, t]);
+  }, [filterKeysOrder, filters, listStore, t]);
 
   return (
     <>
@@ -155,14 +155,14 @@ export default function ClientFilters({
           >
             <div className="ml-4 mt-2">
               <PageTitle>
-                {t('title', {totalDatasets: state.totalCount})}
+                {t('title', {totalDatasets: listStore.totalCount})}
               </PageTitle>
             </div>
             <div>
               <select
                 name="location"
                 className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-600 focus:outline-none focus:ring-sky-600 sm:text-sm"
-                value={state.sortBy}
+                value={listStore.sortBy}
                 onChange={handleSortByChange}
                 aria-label={t('accessibilitySelectToChangeOrder')}
               >
@@ -177,24 +177,24 @@ export default function ClientFilters({
           <SelectedFilters
             filters={filterKeysOrder.map(filterKey => ({
               searchResultFilters: filters[filterKey] ?? [],
-              selectedFilters: state.selectedFilters[filterKey] ?? [],
+              selectedFilters: listStore.selectedFilters[filterKey] ?? [],
               setSelectedFilters: selectedFilters =>
-                state.setSelectedFilters(filterKey, selectedFilters),
+                listStore.setSelectedFilters(filterKey, selectedFilters),
             }))}
             query={{
-              value: state.query,
-              setQuery: state.setQuery,
+              value: listStore.query,
+              setQuery: listStore.setQuery,
             }}
           />
         </PageHeader>
 
         {children}
-        {state.totalCount && state.totalCount > 0 ? (
+        {listStore.totalCount && listStore.totalCount > 0 ? (
           <Paginator
-            totalCount={state.totalCount}
-            offset={state.offset}
-            setPage={state.setPage}
-            limit={state.limit}
+            totalCount={listStore.totalCount}
+            offset={listStore.offset}
+            setPage={listStore.setPage}
+            limit={listStore.limit}
           />
         ) : null}
       </section>

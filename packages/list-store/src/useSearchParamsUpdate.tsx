@@ -8,22 +8,22 @@ import {getUrlWithSearchParams} from './search-params';
 export function useSearchParamsUpdate() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const state = useListStore();
+  const listStore = useListStore();
 
   useEffect(() => {
-    if (state.newDataNeeded && !isPending) {
+    if (listStore.newDataNeeded && !isPending) {
       const url = getUrlWithSearchParams({
-        query: state.query,
-        offset: state.offset,
-        sortBy: state.sortBy,
-        filters: state.selectedFilters,
+        query: listStore.query,
+        offset: listStore.offset,
+        sortBy: listStore.sortBy,
+        filters: listStore.selectedFilters,
       });
       startTransition(() => {
         useListStore.setState({newDataNeeded: false});
         router.replace(url);
       });
     }
-  }, [isPending, router, state]);
+  }, [isPending, router, listStore]);
 
   return {isPending};
 }

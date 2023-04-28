@@ -23,9 +23,9 @@ export function ClientListStore({
   sortBy,
   selectedFilters,
 }: Props) {
-  const state = useListStore();
+  const listStore = useListStore();
   useEffect(() => {
-    state.newServerData({
+    listStore.newServerData({
       totalCount,
       offset,
       limit,
@@ -33,7 +33,7 @@ export function ClientListStore({
       sortBy,
       selectedFilters: selectedFilters ?? {},
     });
-  }, [limit, offset, query, selectedFilters, sortBy, state, totalCount]);
+  }, [limit, offset, query, selectedFilters, sortBy, listStore, totalCount]);
 
   return null;
 }
