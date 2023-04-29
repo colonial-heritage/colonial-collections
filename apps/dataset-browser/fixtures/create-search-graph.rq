@@ -9,6 +9,7 @@ PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX dqv: <http://www.w3.org/ns/dqv#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX skolem: <https://triplydb.com/.well-known/genid/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
@@ -51,14 +52,16 @@ CONSTRUCT {
     cc:value ?datasetMeasurementValue .
 
   ?datasetMetric a cc:Metric ;
-    cc:name ?datasetMetricName .
+    cc:name ?datasetMetricName ;
+    cc:order ?datasetMetricOrder .
 
   ?distributionMeasurement a cc:Measurement ;
     cc:measurementOf ?distributionMetric ;
     cc:value ?distributionMeasurementValue .
 
   ?distributionMetric a cc:Metric ;
-    cc:name ?distributionMetricName .
+    cc:name ?distributionMetricName ;
+    cc:order ?distributionMetricOrder .
 }
 WHERE {
   ?dataset a dcat:Dataset .
@@ -180,6 +183,8 @@ WHERE {
 
     ?datasetMetric skos:prefLabel ?datasetMetricName
     FILTER(LANG(?datasetMetricName) = "" || LANGMATCHES(LANG(?datasetMetricName), "en")) # TBD: which languages to support?
+
+    ?datasetMetric qb:order ?datasetMetricOrder .
   }
 
   ####################
@@ -194,5 +199,7 @@ WHERE {
 
     ?distributionMetric skos:prefLabel ?distributionMetricName
     FILTER(LANG(?distributionMetricName) = "" || LANGMATCHES(LANG(?distributionMetricName), "en")) # TBD: which languages to support?
+
+    ?distributionMetric qb:order ?distributionMetricOrder .
   }
 }

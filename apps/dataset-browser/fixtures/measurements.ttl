@@ -74,8 +74,7 @@
 <https://example.org/datasets/2/distributions/1>
   dqv:hasQualityMeasurement <https://example.org/datasets/2/distributions/1/measurements/1> ,
                             <https://example.org/datasets/2/distributions/1/measurements/2> ,
-                            <https://example.org/datasets/2/distributions/1/measurements/3> ,
-                            <https://example.org/datasets/2/distributions/1/measurements/4> .
+                            <https://example.org/datasets/2/distributions/1/measurements/3> .
 
 <https://example.org/datasets/2/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
@@ -95,11 +94,7 @@
   dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
   dqv:value "true"^^xsd:boolean .
 
-<https://example.org/datasets/2/distributions/1/measurements/4>
-  a dqv:QualityMeasurement ;
-  dqv:computedOn <https://example.org/datasets/2/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
-  dqv:value "true"^^xsd:boolean .
+# Metric <https://example.org/metrics/rdf-format> intentionally missing, for testing incomplete data
 
 # Dataset 3
 
@@ -218,8 +213,7 @@
 # Dataset 6
 
 <https://example.org/datasets/6>
-  dqv:hasQualityMeasurement <https://example.org/datasets/6/measurements/1> ,
-                            <https://example.org/datasets/6/measurements/2> .
+  dqv:hasQualityMeasurement <https://example.org/datasets/6/measurements/1> .
 
 <https://example.org/datasets/6/measurements/1>
   a dqv:QualityMeasurement ;
@@ -227,15 +221,10 @@
   dqv:isMeasurementOf <https://example.org/metrics/languages> ;
   dqv:value "true"^^xsd:boolean .
 
-<https://example.org/datasets/6/measurements/2>
-  a dqv:QualityMeasurement ;
-  dqv:computedOn <https://example.org/datasets/6> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
-  dqv:value "true"^^xsd:boolean .
+# Metric <https://example.org/metrics/open-license> intentionally missing, for testing incomplete data
 
 <https://example.org/datasets/6/distributions/1>
   dqv:hasQualityMeasurement <https://example.org/datasets/6/distributions/1/measurements/1> ,
-                            <https://example.org/datasets/6/distributions/1/measurements/2> ,
                             <https://example.org/datasets/6/distributions/1/measurements/3> ,
                             <https://example.org/datasets/6/distributions/1/measurements/4> .
 
@@ -243,12 +232,6 @@
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/6/distributions/1> ;
   dqv:isMeasurementOf <https://example.org/metrics/online> ;
-  dqv:value "true"^^xsd:boolean .
-
-<https://example.org/datasets/6/distributions/1/measurements/2>
-  a dqv:QualityMeasurement ;
-  dqv:computedOn <https://example.org/datasets/6/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/6/distributions/1/measurements/3>
@@ -262,6 +245,8 @@
   dqv:computedOn <https://example.org/datasets/6/distributions/1> ;
   dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
   dqv:value "true"^^xsd:boolean .
+
+# Metric <https://example.org/metrics/structured-format> intentionally missing, for testing incomplete data
 
 # Dataset 7
 

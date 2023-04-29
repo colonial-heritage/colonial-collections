@@ -62,35 +62,12 @@ describe('search', () => {
           ],
           measurements: [
             {
-              id: 'https://example.org/datasets/1/distributions/1/measurements/1',
+              id: 'https://example.org/datasets/1/measurements/2',
               value: true,
               metric: {
-                id: 'https://example.org/metrics/online',
-                name: 'Downloadable or accessible online',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/1/distributions/1/measurements/2',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/structured-format',
-                name: 'Structured format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/1/distributions/1/measurements/3',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/open-format',
-                name: 'Open format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/1/distributions/1/measurements/4',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                id: 'https://example.org/metrics/open-license',
+                name: 'Open license',
+                order: 1,
               },
             },
             {
@@ -99,14 +76,43 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
+                order: 2,
               },
             },
             {
-              id: 'https://example.org/datasets/1/measurements/2',
+              id: 'https://example.org/datasets/1/distributions/1/measurements/1',
               value: true,
               metric: {
-                id: 'https://example.org/metrics/open-license',
-                name: 'Open license',
+                id: 'https://example.org/metrics/online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/1/distributions/1/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/1/distributions/1/measurements/3',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/1/distributions/1/measurements/4',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -121,11 +127,12 @@ describe('search', () => {
           },
           measurements: [
             {
-              id: 'https://example.org/datasets/10/distributions/1/measurements/4',
+              id: 'https://example.org/datasets/10/measurements/2',
               value: false,
               metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                id: 'https://example.org/metrics/open-license',
+                name: 'Open license',
+                order: 1,
               },
             },
             {
@@ -134,14 +141,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/10/measurements/2',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/open-license',
-                name: 'Open license',
+                order: 2,
               },
             },
             {
@@ -150,6 +150,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/online',
                 name: 'Downloadable or accessible online',
+                order: 3,
               },
             },
             {
@@ -158,6 +159,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/structured-format',
                 name: 'Structured format',
+                order: 4,
               },
             },
             {
@@ -166,6 +168,16 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/open-format',
                 name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/10/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -201,35 +213,12 @@ describe('search', () => {
           ],
           measurements: [
             {
-              id: 'https://example.org/datasets/11/distributions/2/measurements/1',
+              id: 'https://example.org/datasets/11/measurements/2',
               value: true,
               metric: {
-                id: 'https://example.org/metrics/online',
-                name: 'Downloadable or accessible online',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/11/distributions/2/measurements/2',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/structured-format',
-                name: 'Structured format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/11/distributions/2/measurements/3',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/open-format',
-                name: 'Open format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/11/distributions/2/measurements/4',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                id: 'https://example.org/metrics/open-license',
+                name: 'Open license',
+                order: 1,
               },
             },
             {
@@ -238,14 +227,43 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
+                order: 2,
               },
             },
             {
-              id: 'https://example.org/datasets/11/measurements/2',
+              id: 'https://example.org/datasets/11/distributions/2/measurements/1',
               value: true,
               metric: {
-                id: 'https://example.org/metrics/open-license',
-                name: 'Open license',
+                id: 'https://example.org/metrics/online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/11/distributions/2/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/11/distributions/2/measurements/3',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/11/distributions/2/measurements/4',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -273,43 +291,12 @@ describe('search', () => {
           ],
           measurements: [
             {
-              id: 'https://example.org/datasets/12/distributions/1/measurements/1',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/online',
-                name: 'Downloadable or accessible online',
-              },
-            },
-            {
               id: 'https://example.org/datasets/12/measurements/2',
               value: true,
               metric: {
                 id: 'https://example.org/metrics/open-license',
                 name: 'Open license',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/12/distributions/1/measurements/2',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/structured-format',
-                name: 'Structured format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/12/distributions/1/measurements/3',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/open-format',
-                name: 'Open format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/12/distributions/1/measurements/4',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                order: 1,
               },
             },
             {
@@ -318,6 +305,43 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/distributions/1/measurements/2',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/distributions/1/measurements/3',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -352,19 +376,12 @@ describe('search', () => {
           ],
           measurements: [
             {
-              id: 'https://example.org/datasets/13/distributions/1/measurements/3',
+              id: 'https://example.org/datasets/13/measurements/2',
               value: false,
               metric: {
-                id: 'https://example.org/metrics/open-format',
-                name: 'Open format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/13/distributions/1/measurements/4',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                id: 'https://example.org/metrics/open-license',
+                name: 'Open license',
+                order: 1,
               },
             },
             {
@@ -373,14 +390,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/13/measurements/2',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/open-license',
-                name: 'Open license',
+                order: 2,
               },
             },
             {
@@ -389,6 +399,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/online',
                 name: 'Downloadable or accessible online',
+                order: 3,
               },
             },
             {
@@ -397,6 +408,25 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/structured-format',
                 name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/13/distributions/1/measurements/3',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/13/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -414,11 +444,12 @@ describe('search', () => {
           keywords: ['Hendrerit', 'Suspendisse'],
           measurements: [
             {
-              id: 'https://example.org/datasets/14/distributions/1/measurements/4',
-              value: false,
+              id: 'https://example.org/datasets/14/measurements/2',
+              value: true,
               metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                id: 'https://example.org/metrics/open-license',
+                name: 'Open license',
+                order: 1,
               },
             },
             {
@@ -427,14 +458,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/14/measurements/2',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/open-license',
-                name: 'Open license',
+                order: 2,
               },
             },
             {
@@ -443,6 +467,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/online',
                 name: 'Downloadable or accessible online',
+                order: 3,
               },
             },
             {
@@ -451,6 +476,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/structured-format',
                 name: 'Structured format',
+                order: 4,
               },
             },
             {
@@ -459,6 +485,16 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/open-format',
                 name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/14/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -489,19 +525,21 @@ describe('search', () => {
           ],
           measurements: [
             {
-              id: 'https://example.org/datasets/2/measurements/1',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/languages',
-                name: 'Languages',
-              },
-            },
-            {
               id: 'https://example.org/datasets/2/measurements/2',
               value: true,
               metric: {
                 id: 'https://example.org/metrics/open-license',
                 name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/2/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/languages',
+                name: 'Languages',
+                order: 2,
               },
             },
             {
@@ -510,6 +548,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/online',
                 name: 'Downloadable or accessible online',
+                order: 3,
               },
             },
             {
@@ -518,6 +557,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/structured-format',
                 name: 'Structured format',
+                order: 4,
               },
             },
             {
@@ -526,14 +566,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/open-format',
                 name: 'Open format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/2/distributions/1/measurements/4',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                order: 5,
               },
             },
           ],
@@ -553,6 +586,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/open-license',
                 name: 'Open license',
+                order: 1,
               },
             },
             {
@@ -561,6 +595,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
+                order: 2,
               },
             },
           ],
@@ -588,19 +623,12 @@ describe('search', () => {
           ],
           measurements: [
             {
-              id: 'https://example.org/datasets/4/distributions/1/measurements/3',
+              id: 'https://example.org/datasets/4/measurements/2',
               value: true,
               metric: {
-                id: 'https://example.org/metrics/open-format',
-                name: 'Open format',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/4/distributions/1/measurements/4',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                id: 'https://example.org/metrics/open-license',
+                name: 'Open license',
+                order: 1,
               },
             },
             {
@@ -609,14 +637,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/4/measurements/2',
-              value: true,
-              metric: {
-                id: 'https://example.org/metrics/open-license',
-                name: 'Open license',
+                order: 2,
               },
             },
             {
@@ -625,6 +646,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/online',
                 name: 'Downloadable or accessible online',
+                order: 3,
               },
             },
             {
@@ -633,6 +655,25 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/structured-format',
                 name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/4/distributions/1/measurements/3',
+              value: true,
+              metric: {
+                id: 'https://example.org/metrics/open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/4/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -658,14 +699,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/open-license',
                 name: 'Open license',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/5/distributions/1/measurements/4',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                order: 1,
               },
             },
             {
@@ -674,6 +708,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
+                order: 2,
               },
             },
             {
@@ -682,6 +717,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/online',
                 name: 'Downloadable or accessible online',
+                order: 3,
               },
             },
             {
@@ -690,6 +726,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/structured-format',
                 name: 'Structured format',
+                order: 4,
               },
             },
             {
@@ -698,6 +735,16 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/open-format',
                 name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -1028,14 +1075,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/open-license',
                 name: 'Open license',
-              },
-            },
-            {
-              id: 'https://example.org/datasets/5/distributions/1/measurements/4',
-              value: false,
-              metric: {
-                id: 'https://example.org/metrics/rdf-format',
-                name: 'RDF format',
+                order: 1,
               },
             },
             {
@@ -1044,6 +1084,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/languages',
                 name: 'Languages',
+                order: 2,
               },
             },
             {
@@ -1052,6 +1093,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/online',
                 name: 'Downloadable or accessible online',
+                order: 3,
               },
             },
             {
@@ -1060,6 +1102,7 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/structured-format',
                 name: 'Structured format',
+                order: 4,
               },
             },
             {
@@ -1068,6 +1111,16 @@ describe('search', () => {
               metric: {
                 id: 'https://example.org/metrics/open-format',
                 name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://example.org/metrics/rdf-format',
+                name: 'RDF format',
+                order: 6,
               },
             },
           ],
@@ -1211,37 +1264,6 @@ describe('search', () => {
           },
         ],
       },
-    });
-  });
-
-  it('finds datasets, sorted by name in ascending order', async () => {
-    const result = await datasetFetcher.search({
-      query: 'placerat',
-      sortBy: SortBy.Name,
-      sortOrder: SortOrder.Ascending,
-    });
-
-    expect(result).toMatchObject({
-      sortBy: 'name',
-      sortOrder: 'asc',
-      datasets: [
-        {
-          id: 'https://example.org/datasets/12',
-          name: 'Dataset 12',
-        },
-        {
-          id: 'https://example.org/datasets/14',
-          name: 'Dataset 14',
-        },
-        {
-          id: 'https://example.org/datasets/4',
-          name: 'Dataset 4',
-        },
-        {
-          id: 'https://example.org/datasets/8',
-          name: 'Dataset 8',
-        },
-      ],
     });
   });
 
@@ -1532,35 +1554,12 @@ describe('getById', () => {
       ],
       measurements: [
         {
-          id: 'https://example.org/datasets/1/distributions/1/measurements/1',
+          id: 'https://example.org/datasets/1/measurements/2',
           value: true,
           metric: {
-            id: 'https://example.org/metrics/online',
-            name: 'Downloadable or accessible online',
-          },
-        },
-        {
-          id: 'https://example.org/datasets/1/distributions/1/measurements/2',
-          value: true,
-          metric: {
-            id: 'https://example.org/metrics/structured-format',
-            name: 'Structured format',
-          },
-        },
-        {
-          id: 'https://example.org/datasets/1/distributions/1/measurements/3',
-          value: true,
-          metric: {
-            id: 'https://example.org/metrics/open-format',
-            name: 'Open format',
-          },
-        },
-        {
-          id: 'https://example.org/datasets/1/distributions/1/measurements/4',
-          value: true,
-          metric: {
-            id: 'https://example.org/metrics/rdf-format',
-            name: 'RDF format',
+            id: 'https://example.org/metrics/open-license',
+            name: 'Open license',
+            order: 1,
           },
         },
         {
@@ -1569,14 +1568,43 @@ describe('getById', () => {
           metric: {
             id: 'https://example.org/metrics/languages',
             name: 'Languages',
+            order: 2,
           },
         },
         {
-          id: 'https://example.org/datasets/1/measurements/2',
+          id: 'https://example.org/datasets/1/distributions/1/measurements/1',
           value: true,
           metric: {
-            id: 'https://example.org/metrics/open-license',
-            name: 'Open license',
+            id: 'https://example.org/metrics/online',
+            name: 'Downloadable or accessible online',
+            order: 3,
+          },
+        },
+        {
+          id: 'https://example.org/datasets/1/distributions/1/measurements/2',
+          value: true,
+          metric: {
+            id: 'https://example.org/metrics/structured-format',
+            name: 'Structured format',
+            order: 4,
+          },
+        },
+        {
+          id: 'https://example.org/datasets/1/distributions/1/measurements/3',
+          value: true,
+          metric: {
+            id: 'https://example.org/metrics/open-format',
+            name: 'Open format',
+            order: 5,
+          },
+        },
+        {
+          id: 'https://example.org/datasets/1/distributions/1/measurements/4',
+          value: true,
+          metric: {
+            id: 'https://example.org/metrics/rdf-format',
+            name: 'RDF format',
+            order: 6,
           },
         },
       ],

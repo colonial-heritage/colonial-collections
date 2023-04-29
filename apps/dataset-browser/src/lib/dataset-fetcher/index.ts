@@ -39,7 +39,10 @@ export type Publisher = Thing;
 export type License = Thing;
 export type Place = Thing;
 export type Term = Thing;
-export type Metric = Thing;
+
+export type Metric = Thing & {
+  order: number; // To aid clients in presenting information in UIs
+};
 
 export type Measurement = {
   id: string;

@@ -68,7 +68,8 @@ export class DatasetEnricher {
         ?iri cc:measurement ?measurement .
         ?measurement cc:value ?value ;
           cc:measurementOf ?metric .
-        ?metric cc:name ?name .
+        ?metric cc:name ?name ;
+          cc:order ?order .
       }
       WHERE {
         VALUES ?iri { ${irisForValues.join(' ')} }
@@ -76,7 +77,8 @@ export class DatasetEnricher {
           cc:measurement ?measurement .
         ?measurement cc:value ?value ;
           cc:measurementOf ?metric .
-        ?metric cc:name ?name .
+        ?metric cc:name ?name ;
+          cc:order ?order .
       }
     `;
 
@@ -92,6 +94,7 @@ export class DatasetEnricher {
       const measurementValue = rawMeasurement.property['cc:value'];
       const metric = rawMeasurement.property['cc:measurementOf'];
       const metricName = metric.property['cc:name'];
+      const metricOrder = metric.property['cc:order'];
 
       const measurement: Measurement = {
         id: rawMeasurement.value,
@@ -99,13 +102,15 @@ export class DatasetEnricher {
         metric: {
           id: metric.value,
           name: metricName.value,
+          order: +metricOrder.value,
         },
       };
 
       return measurement;
     });
 
-    // TBD: sort measurements by metric (e.g. a predefined order)?
+    // Sort measurements by metric order
+    measurements.sort((a, b) => a.metric.order - b.metric.order);
 
     const partialDataset: PartialDataset = {
       id: rawDataset.value,
