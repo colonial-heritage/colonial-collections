@@ -105,6 +105,8 @@ export class DatasetEnricher {
       return measurement;
     });
 
+    // TBD: sort measurements by metric (e.g. a predefined order)?
+
     const partialDataset: PartialDataset = {
       id: rawDataset.value,
       measurements,

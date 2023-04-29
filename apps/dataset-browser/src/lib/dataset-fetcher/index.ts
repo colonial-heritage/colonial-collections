@@ -1,3 +1,4 @@
+import {DatasetEnricher} from './enricher';
 import {buildAggregation} from './request';
 import {buildFilters} from './result';
 import {getIrisFromObject} from '@colonial-collections/iris';
@@ -8,6 +9,7 @@ import {z} from 'zod';
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
   labelFetcher: z.instanceof(LabelFetcher),
+  datasetEnricher: z.instanceof(DatasetEnricher),
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
@@ -41,7 +43,7 @@ export type Metric = Thing;
 
 export type Measurement = {
   id: string;
-  value: boolean;
+  value: boolean; // TBD: may need to support other types at some point
   metric: Metric;
 };
 
@@ -191,12 +193,14 @@ export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 export class DatasetFetcher {
   private endpointUrl: string;
   private labelFetcher: LabelFetcher;
+  private datasetEnricher: DatasetEnricher;
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
     this.labelFetcher = opts.labelFetcher;
+    this.datasetEnricher = opts.datasetEnricher;
   }
 
   async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
@@ -227,6 +231,7 @@ export class DatasetFetcher {
 
   // Map the response to our internal model
   private fromRawDatasetToDataset(rawDataset: RawDataset): Dataset {
+    const id = rawDataset[RawDatasetKeys.Id];
     const name = reach(rawDataset, `${RawDatasetKeys.Name}.0`);
     const description = reach(rawDataset, `${RawDatasetKeys.Description}.0`);
     const keywords = reach(rawDataset, `${RawDatasetKeys.Keyword}`);
@@ -273,7 +278,7 @@ export class DatasetFetcher {
     const genres = toThings<Term>(RawDatasetKeys.Genre);
 
     const datasetWithUndefinedValues: Dataset = {
-      id: rawDataset[RawDatasetKeys.Id],
+      id,
       name,
       publisher,
       license,
@@ -290,6 +295,14 @@ export class DatasetFetcher {
     const dataset = merge({}, datasetWithUndefinedValues, {
       nullOverride: false,
     });
+
+    // Enrich the dataset with data
+    const partialDataset = this.datasetEnricher.getByIri({
+      iri: id,
+    });
+    if (partialDataset !== undefined) {
+      Object.assign(dataset, partialDataset);
+    }
 
     return dataset;
   }
@@ -372,10 +385,15 @@ export class DatasetFetcher {
   ) {
     const {hits, aggregations} = rawSearchResponse;
 
-    const datasets: Dataset[] = hits.hits.map(hit => {
-      const rawDataset = hit._source;
-      return this.fromRawDatasetToDataset(rawDataset);
-    });
+    const rawDatasets = hits.hits.map(hit => hit._source);
+
+    // Load the dataset enrichments
+    const ids = rawDatasets.map(rawDataset => rawDataset['@id']);
+    await this.datasetEnricher.loadByIris({iris: ids});
+
+    const datasets: Dataset[] = rawDatasets.map(rawDataset =>
+      this.fromRawDatasetToDataset(rawDataset)
+    );
 
     const publisherFilters = buildFilters(
       aggregations.all.publishers.buckets,
@@ -455,6 +473,8 @@ export class DatasetFetcher {
     if (searchResponse.hits.hits.length !== 1) {
       return undefined;
     }
+
+    await this.datasetEnricher.loadByIris({iris: [opts.id]});
 
     const rawDataset = searchResponse.hits.hits[0]._source;
     const dataset = this.fromRawDatasetToDataset(rawDataset);
