@@ -1,6 +1,9 @@
 import {Dataset, Measurement} from '.';
+import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
-import {lru} from 'tiny-lru';
+import {Readable} from 'node:stream';
+import {lru, LRU} from 'tiny-lru';
+import type {Stream} from '@rdfjs/types';
 import {RdfObjectLoader} from 'rdf-object';
 import {z} from 'zod';
 
@@ -26,20 +29,31 @@ const cacheValueIfIriNotFound = Symbol('cacheValueIfIriNotFound');
 
 export type PartialDataset = Pick<Dataset, 'id' | 'measurements'>;
 
-// Fetches dataset information from a SPARQL endpoint
-export class SparqlFetcher {
+// Fetches dataset information from a SPARQL endpoint for enriching
+export class DatasetEnricher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
-  private cache = lru(10000);
+  private cache: LRU<PartialDataset | typeof cacheValueIfIriNotFound> =
+    lru(10000); // TBD: make the max configurable?
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private async fetchAndCacheData(options: LoadByIrisOptions) {
-    const {iris} = options;
+  private getFetchableIris(iris: string[]) {
+    // Remove duplicate IRIs
+    const uniqueIris = [...new Set(iris)];
 
+    // Remove invalid IRIs and IRIs already cached
+    const validAndUncachedIris = uniqueIris.filter(
+      (iri: string) => isIri(iri) && this.cache.get(iri) === undefined
+    );
+
+    return validAndUncachedIris;
+  }
+
+  private async fetchByIris(iris: string[]) {
     if (iris.length === 0) {
       return; // No IRIs to fetch
     }
@@ -51,8 +65,7 @@ export class SparqlFetcher {
       PREFIX cc: <https://colonialcollections.nl/search#>
 
       CONSTRUCT {
-        ?iri a cc:Dataset ;
-          cc:measurement ?measurement .
+        ?iri cc:measurement ?measurement .
         ?measurement cc:value ?value ;
           cc:measurementOf ?metric .
         ?metric cc:name ?name .
@@ -70,6 +83,10 @@ export class SparqlFetcher {
     // The endpoint throws an error if an IRI is not valid
     const stream = await this.fetcher.fetchTriples(this.endpointUrl, query);
 
+    return stream;
+  }
+
+  private async processResponse(iris: string[], stream: Readable & Stream) {
     const loader = new RdfObjectLoader({
       context: {
         cc: 'https://colonialcollections.nl/search#',
@@ -79,28 +96,31 @@ export class SparqlFetcher {
 
     for (const iri of iris) {
       const rawDataset = loader.resources[iri];
+
+      // Also cache IRIs not found; otherwise these will
+      // be fetched again and again on subsequent requests
       if (rawDataset === undefined) {
         this.cache.set(iri, cacheValueIfIriNotFound);
         continue;
       }
 
-      const measurements: Measurement[] = [];
       const rawMeasurements = rawDataset.properties['cc:measurement'];
-      for (const rawMeasurement of rawMeasurements) {
+      const measurements = rawMeasurements.map(rawMeasurement => {
         const measurementValue = rawMeasurement.property['cc:value'];
         const metric = rawMeasurement.property['cc:measurementOf'];
         const metricName = metric.property['cc:name'];
 
         const measurement: Measurement = {
           id: rawMeasurement.value,
-          value: measurementValue.value === 'true', // TODO
+          value: measurementValue.value === 'true', // May need to support other data types at some point
           metric: {
             id: metric.value,
             name: metricName.value,
           },
         };
-        measurements.push(measurement);
-      }
+
+        return measurement;
+      });
 
       const partialDataset: PartialDataset = {
         id: iri,
@@ -114,13 +134,16 @@ export class SparqlFetcher {
   async loadByIris(options: LoadByIrisOptions) {
     const opts = loadByIrisOptionsSchema.parse(options);
 
+    const iris = this.getFetchableIris(opts.iris);
+
     // TBD: the endpoint could limit its results if we request
     // a large number of IRIs at once. Split the IRIs into chunks
     // of e.g. 1000 IRIs and call the endpoint per chunk?
     try {
-      await this.fetchAndCacheData({
-        iris: opts.iris,
-      });
+      const stream = await this.fetchByIris(iris);
+      if (stream !== undefined) {
+        await this.processResponse(iris, stream);
+      }
     } catch (err) {
       console.error(err); // TODO: add logger
     }
