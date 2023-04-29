@@ -1,5 +1,4 @@
-import {DatasetEnricher} from './enricher';
-import {DatasetFetcher, SortBy, SortOrder} from '.';
+import {DatasetEnricher, DatasetFetcher} from '.';
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
@@ -123,7 +122,7 @@ describe('search', () => {
           publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
             id: 'https://example.org/custom-license',
-            name: '(No name)',
+            name: 'Custom License',
           },
           measurements: [
             {
@@ -800,7 +799,7 @@ describe('search', () => {
           {
             totalCount: 1,
             id: 'https://example.org/custom-license',
-            name: '(No name)',
+            name: 'Custom License',
           },
         ],
         spatialCoverages: [
@@ -953,7 +952,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'https://example.org/custom-license',
-            name: '(No name)',
+            name: 'Custom License',
           },
         ],
         spatialCoverages: [
@@ -1176,7 +1175,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'https://example.org/custom-license',
-            name: '(No name)',
+            name: 'Custom License',
           },
         ],
         spatialCoverages: [
@@ -1378,7 +1377,7 @@ describe('search', () => {
           {
             totalCount: 0,
             id: 'https://example.org/custom-license',
-            name: '(No name)',
+            name: 'Custom License',
           },
         ],
       },

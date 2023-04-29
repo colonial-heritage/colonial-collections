@@ -11,7 +11,9 @@ const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
 });
 
-export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
+export type EnricherConstructorOptions = z.infer<
+  typeof constructorOptionsSchema
+>;
 
 const loadByIrisOptionsSchema = z.object({
   iris: z.array(z.string()),
@@ -36,7 +38,7 @@ export class DatasetEnricher {
   private cache: LRU<PartialDataset | typeof cacheValueIfIriNotFound> =
     lru(10000); // TBD: make the max configurable?
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: EnricherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
     this.endpointUrl = opts.endpointUrl;
   }

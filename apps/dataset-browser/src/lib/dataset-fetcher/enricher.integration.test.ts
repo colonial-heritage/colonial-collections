@@ -1,4 +1,4 @@
-import {DatasetEnricher} from './enricher';
+import {DatasetEnricher} from '.';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
