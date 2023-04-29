@@ -1,10 +1,10 @@
 import {Dataset, Measurement} from '.';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
-import {Readable} from 'node:stream';
+import type {Readable} from 'node:stream';
 import {lru, LRU} from 'tiny-lru';
 import type {Stream} from '@rdfjs/types';
-import {RdfObjectLoader} from 'rdf-object';
+import {RdfObjectLoader, Resource} from 'rdf-object';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -29,7 +29,7 @@ const cacheValueIfIriNotFound = Symbol('cacheValueIfIriNotFound');
 
 export type PartialDataset = Pick<Dataset, 'id' | 'measurements'>;
 
-// Fetches dataset information from a SPARQL endpoint for enriching
+// Fetches data from a SPARQL endpoint for enriching datasets
 export class DatasetEnricher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
@@ -86,6 +86,33 @@ export class DatasetEnricher {
     return stream;
   }
 
+  private processResource(rawDataset: Resource) {
+    const rawMeasurements = rawDataset.properties['cc:measurement'];
+    const measurements = rawMeasurements.map(rawMeasurement => {
+      const measurementValue = rawMeasurement.property['cc:value'];
+      const metric = rawMeasurement.property['cc:measurementOf'];
+      const metricName = metric.property['cc:name'];
+
+      const measurement: Measurement = {
+        id: rawMeasurement.value,
+        value: measurementValue.value === 'true', // May need to support other data types at some point
+        metric: {
+          id: metric.value,
+          name: metricName.value,
+        },
+      };
+
+      return measurement;
+    });
+
+    const partialDataset: PartialDataset = {
+      id: rawDataset.value,
+      measurements,
+    };
+
+    return partialDataset;
+  }
+
   private async processResponse(iris: string[], stream: Readable & Stream) {
     const loader = new RdfObjectLoader({
       context: {
@@ -104,29 +131,7 @@ export class DatasetEnricher {
         continue;
       }
 
-      const rawMeasurements = rawDataset.properties['cc:measurement'];
-      const measurements = rawMeasurements.map(rawMeasurement => {
-        const measurementValue = rawMeasurement.property['cc:value'];
-        const metric = rawMeasurement.property['cc:measurementOf'];
-        const metricName = metric.property['cc:name'];
-
-        const measurement: Measurement = {
-          id: rawMeasurement.value,
-          value: measurementValue.value === 'true', // May need to support other data types at some point
-          metric: {
-            id: metric.value,
-            name: metricName.value,
-          },
-        };
-
-        return measurement;
-      });
-
-      const partialDataset: PartialDataset = {
-        id: iri,
-        measurements,
-      };
-
+      const partialDataset = this.processResource(rawDataset);
       this.cache.set(iri, partialDataset);
     }
   }
