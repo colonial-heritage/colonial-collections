@@ -1,6 +1,6 @@
 import {Link} from 'next-intl';
 import {useTranslations} from 'next-intl';
-import {Dataset} from '@/lib/dataset-fetcher';
+import {Dataset} from '@/lib/datasets';
 import {Badge} from 'ui';
 import {
   GlobeEuropeAfricaIcon,

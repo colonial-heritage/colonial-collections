@@ -5,7 +5,7 @@ import {
   getClientSortBy,
   SortBy,
 } from './search-params';
-import {SortBy as SortBySearchOption, SortOrder} from '@/lib/dataset-fetcher';
+import {SortBy as SortBySearchOption, SortOrder} from '@/lib/datasets';
 import {describe, expect, it} from '@jest/globals';
 
 describe('getUrlWithSearchParams', () => {
