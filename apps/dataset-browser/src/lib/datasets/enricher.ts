@@ -60,7 +60,7 @@ export class DatasetEnricher {
       return; // No IRIs to fetch
     }
 
-    const irisForValues = iris.map((iri: string) => `<${iri}>`);
+    const irisForValues = iris.map(iri => `<${iri}>`).join(' ');
 
     // Query can be expanded to also include other properties
     const query = `
@@ -74,7 +74,7 @@ export class DatasetEnricher {
           cc:order ?order .
       }
       WHERE {
-        VALUES ?iri { ${irisForValues.join(' ')} }
+        VALUES ?iri { ${irisForValues} }
         ?iri a cc:Dataset ;
           cc:measurement ?measurement .
         ?measurement cc:value ?value ;
