@@ -1,5 +1,5 @@
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
-import {DatasetEnricher, DatasetFetcher} from '@/lib/dataset-fetcher';
+import {DatasetEnricher, DatasetFetcher} from '@/lib/datasets';
 import {env} from 'node:process';
 
 const labelFetcher = new LabelFetcher({

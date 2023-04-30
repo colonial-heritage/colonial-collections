@@ -36,7 +36,7 @@ export class DatasetEnricher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
   private cache: LRU<PartialDataset | typeof cacheValueIfIriNotFound> =
-    lru(10000); // TBD: make the max configurable?
+    lru(1000); // TBD: make the max configurable?
 
   constructor(options: EnricherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -128,21 +128,21 @@ export class DatasetEnricher {
         cc: 'https://colonialcollections.nl/search#',
       },
     });
+
     await loader.import(stream);
 
-    for (const iri of iris) {
+    iris.forEach(iri => {
       const rawDataset = loader.resources[iri];
 
-      // Also cache IRIs not found; otherwise these will
-      // be fetched again and again on subsequent requests
+      // Cache IRIs that don't belong to a resource; otherwise these
+      // will be fetched again and again on subsequent requests
       if (rawDataset === undefined) {
         this.cache.set(iri, cacheValueIfIriNotFound);
-        continue;
+      } else {
+        const partialDataset = this.processResource(rawDataset);
+        this.cache.set(iri, partialDataset);
       }
-
-      const partialDataset = this.processResource(rawDataset);
-      this.cache.set(iri, partialDataset);
-    }
+    });
   }
 
   async loadByIris(options: LoadByIrisOptions) {
