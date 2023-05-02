@@ -22,7 +22,7 @@
   "dependencies": {
     "@colonial-collections/iris": "*",
     "@colonial-collections/label-fetcher": "*",
-    "@floating-ui/react": "0.23.0",
+    "@floating-ui/react": "0.24.0",
     "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.14",
     "@heroicons/react": "2.0.17",
