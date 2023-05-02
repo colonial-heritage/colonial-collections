@@ -30,6 +30,7 @@ export interface Props {
     sortBy: SortBy;
     selectedFilters: {[filterKey: string]: string[] | undefined};
   }) => void;
+  transitionStarted: () => void;
 }
 
 export const useListStore = create<Props>((set, get) => ({
@@ -84,5 +85,8 @@ export const useListStore = create<Props>((set, get) => ({
         totalCount,
       });
     }
+  },
+  transitionStarted: () => {
+    set({newDataNeeded: false});
   },
 }));

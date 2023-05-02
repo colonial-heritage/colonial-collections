@@ -19,7 +19,7 @@ export function useSearchParamsUpdate() {
         filters: listStore.selectedFilters,
       });
       startTransition(() => {
-        useListStore.setState({newDataNeeded: false});
+        listStore.transitionStarted();
         router.replace(url);
       });
     }
