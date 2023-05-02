@@ -36,12 +36,12 @@ export default function ClientFilters({
   useSearchParamsUpdate();
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    listStore.setSortBy(e.target.value as SortBy);
+    listStore.sortChange(e.target.value as SortBy);
   }
 
   const renderFilters = useMemo(() => {
     const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      listStore.setQuery(e.target.value);
+      listStore.queryChange(e.target.value);
     };
 
     return (
@@ -70,7 +70,7 @@ export default function ClientFilters({
                 searchResultFilters={filters[filterKey]}
                 selectedFilters={listStore.selectedFilters[filterKey] || []}
                 setSelectedFilters={selectedFilters =>
-                  listStore.setSelectedFilters(filterKey, selectedFilters)
+                  listStore.filterChange(filterKey, selectedFilters)
                 }
                 testId={`${filterKey}Filter`}
               />
@@ -179,11 +179,11 @@ export default function ClientFilters({
               searchResultFilters: filters[filterKey] ?? [],
               selectedFilters: listStore.selectedFilters[filterKey] ?? [],
               setSelectedFilters: selectedFilters =>
-                listStore.setSelectedFilters(filterKey, selectedFilters),
+                listStore.filterChange(filterKey, selectedFilters),
             }))}
             query={{
               value: listStore.query,
-              setQuery: listStore.setQuery,
+              setQuery: listStore.queryChange,
             }}
           />
         </PageHeader>
@@ -193,7 +193,7 @@ export default function ClientFilters({
           <Paginator
             totalCount={listStore.totalCount}
             offset={listStore.offset}
-            setPage={listStore.setPage}
+            setPage={listStore.pageChange}
             limit={listStore.limit}
           />
         ) : null}

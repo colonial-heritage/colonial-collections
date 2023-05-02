@@ -11,11 +11,11 @@ export interface Props {
   newDataNeeded: boolean;
   isInitialized: boolean;
   selectedFilters: {[filterKey: string]: string[] | undefined};
-  setSelectedFilters: (key: string, value: string[]) => void;
-  setSortBy: (sortBy: SortBy) => void;
-  setQuery: (query: string) => void;
-  setPage: (direction: 1 | -1) => void;
-  newServerData: ({
+  filterChange: (key: string, value: string[]) => void;
+  sortChange: (sortBy: SortBy) => void;
+  queryChange: (query: string) => void;
+  pageChange: (direction: 1 | -1) => void;
+  setNewData: ({
     totalCount,
     offset,
     limit,
@@ -41,20 +41,20 @@ export const useListStore = create<Props>((set, get) => ({
   selectedFilters: {},
   newDataNeeded: false,
   isInitialized: false,
-  setSelectedFilters: (key, value) => {
+  filterChange: (key, value) => {
     set({
       selectedFilters: {...get().selectedFilters, [key]: value},
       offset: 0,
       newDataNeeded: true,
     });
   },
-  setSortBy: sortBy => {
+  sortChange: sortBy => {
     set({sortBy, offset: 0, newDataNeeded: true});
   },
-  setQuery: query => {
+  queryChange: query => {
     set({query, offset: 0, newDataNeeded: true});
   },
-  setPage: direction => {
+  pageChange: direction => {
     let newOffset = get().offset + direction * get().limit;
     if (newOffset < 0) {
       newOffset = 0;
@@ -66,14 +66,7 @@ export const useListStore = create<Props>((set, get) => ({
 
     set({offset: newOffset, newDataNeeded: true});
   },
-  newServerData: ({
-    totalCount,
-    offset,
-    limit,
-    query,
-    sortBy,
-    selectedFilters,
-  }) => {
+  setNewData: ({totalCount, offset, limit, query, sortBy, selectedFilters}) => {
     if (!get().isInitialized) {
       set({
         totalCount,

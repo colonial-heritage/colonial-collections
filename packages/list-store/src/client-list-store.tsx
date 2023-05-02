@@ -25,7 +25,7 @@ export function ClientListStore({
 }: Props) {
   const listStore = useListStore();
   useEffect(() => {
-    listStore.newServerData({
+    listStore.setNewData({
       totalCount,
       offset,
       limit,
