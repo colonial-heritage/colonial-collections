@@ -114,12 +114,11 @@ WHERE {
   # Identifier
   ####################
 
-  OPTIONAL {
-    ?object crm:P1_is_identified_by ?identifier .
-    ?identifier a crm:E42_Identifier ;
-      crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
-      crm:P190_has_symbolic_content ?identificationNumber .
-  }
+  # Required property
+  ?object crm:P1_is_identified_by ?identifier .
+  ?identifier a crm:E42_Identifier ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
+    crm:P190_has_symbolic_content ?identificationNumber .
 
   ####################
   # Name

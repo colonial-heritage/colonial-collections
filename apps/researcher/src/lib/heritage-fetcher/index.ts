@@ -40,7 +40,7 @@ export type Dataset = Thing;
 
 export type HeritageObject = {
   id: string;
-  identifier?: string;
+  identifier: string;
   name?: string;
   description?: string;
   inscriptions?: string[];
@@ -61,7 +61,7 @@ export enum SortBy {
 const SortByEnum = z.nativeEnum(SortBy);
 
 const sortByToRawKeys = new Map<string, string>([
-  [SortBy.Name, `${RawKeys.Name}.keyword`],
+  [SortBy.Name, `${RawKeys.Name}.keyword`], // TBD: name may not exist
   [SortBy.Relevance, '_score'],
 ]);
 
@@ -94,7 +94,7 @@ const rawHeritageObjectSchema = z
   .object({})
   .setKey(RawKeys.Id, z.string())
   .setKey(RawKeys.AdditionalType, z.array(z.string()).optional())
-  .setKey(RawKeys.Identifier, z.array(z.string()).optional())
+  .setKey(RawKeys.Identifier, z.array(z.string()).min(1))
   .setKey(RawKeys.Name, z.array(z.string()).optional())
   .setKey(RawKeys.Description, z.array(z.string()).optional())
   .setKey(RawKeys.Inscription, z.array(z.string()).optional())
@@ -220,11 +220,14 @@ export class HeritageFetcher {
     const description = reach(rawHeritageObject, `${RawKeys.Description}.0`);
     const inscriptions = reach(rawHeritageObject, `${RawKeys.Inscription}`);
 
+    let owner: Organization | undefined;
     const ownerIri = reach(rawHeritageObject, `${RawKeys.Owner}.0`);
-    const owner: Organization = {
-      id: ownerIri,
-      name: this.labelFetcher.getByIri({iri: ownerIri}),
-    };
+    if (ownerIri !== undefined) {
+      owner = {
+        id: ownerIri,
+        name: this.labelFetcher.getByIri({iri: ownerIri}),
+      };
+    }
 
     const datasetIri = reach(rawHeritageObject, `${RawKeys.IsPartOf}.0`);
     const dataset: Dataset = {
@@ -238,7 +241,7 @@ export class HeritageFetcher {
         return undefined;
       }
 
-      const things = iris.map((iri: string) => {
+      const things = iris.map(iri => {
         return {
           id: iri,
           name: this.labelFetcher.getByIri({iri}),

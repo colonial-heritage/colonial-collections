@@ -142,3 +142,14 @@
     crm:P190_has_symbolic_content "Maecenas commodo est neque" ;
   ] ;
 .
+
+# An object with only required data, for testing
+<https://example.org/objects/4>
+  a crm:E22_Human-Made_Object ;
+  crm:P1_is_identified_by [
+    a crm:E42_Identifier ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
+    crm:P190_has_symbolic_content "3456" ;
+  ] ;
+  la:member_of <https://example.org/datasets/1> ;
+.
