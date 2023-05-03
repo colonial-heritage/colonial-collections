@@ -28,6 +28,7 @@ describe('search', () => {
       heritageObjects: [
         {
           id: 'https://example.org/objects/1',
+          identifier: '1234',
           name: 'Object 1',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',
@@ -70,6 +71,7 @@ describe('search', () => {
         },
         {
           id: 'https://example.org/objects/2',
+          identifier: '5678',
           name: 'Object 2',
           description:
             'Suspendisse ut condimentum leo, et vulputate lectus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce vel volutpat nunc. Sed vel libero ac lorem dapibus euismod. Aenean a ante et turpis bibendum consectetur at pulvinar quam.',
@@ -114,6 +116,7 @@ describe('search', () => {
         },
         {
           id: 'https://example.org/objects/3',
+          identifier: '9012',
           name: 'Object 3',
           description:
             'Ut dictum elementum augue sit amet sodales. Vivamus viverra ligula sed arcu cursus sagittis. Donec ac placerat lacus.',
@@ -232,6 +235,7 @@ describe('getById', () => {
 
     expect(heritageObject).toStrictEqual({
       id: 'https://example.org/objects/1',
+      identifier: '1234',
       name: 'Object 1',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',

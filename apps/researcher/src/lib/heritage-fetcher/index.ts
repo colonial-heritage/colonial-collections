@@ -16,6 +16,7 @@ enum RawKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
   AdditionalType = 'https://colonialcollections nl/search#additionalType',
+  Identifier = 'https://colonialcollections nl/search#identifier',
   Name = 'https://colonialcollections nl/search#name',
   Description = 'https://colonialcollections nl/search#description',
   Inscription = 'https://colonialcollections nl/search#inscription',
@@ -39,6 +40,7 @@ export type Dataset = Thing;
 
 export type HeritageObject = {
   id: string;
+  identifier?: string;
   name?: string;
   description?: string;
   inscriptions?: string[];
@@ -92,6 +94,7 @@ const rawHeritageObjectSchema = z
   .object({})
   .setKey(RawKeys.Id, z.string())
   .setKey(RawKeys.AdditionalType, z.array(z.string()).optional())
+  .setKey(RawKeys.Identifier, z.array(z.string()).optional())
   .setKey(RawKeys.Name, z.array(z.string()).optional())
   .setKey(RawKeys.Description, z.array(z.string()).optional())
   .setKey(RawKeys.Inscription, z.array(z.string()).optional())
@@ -213,6 +216,7 @@ export class HeritageFetcher {
     rawHeritageObject: RawHeritageObject
   ): HeritageObject {
     const name = reach(rawHeritageObject, `${RawKeys.Name}.0`);
+    const identifier = reach(rawHeritageObject, `${RawKeys.Identifier}.0`);
     const description = reach(rawHeritageObject, `${RawKeys.Description}.0`);
     const inscriptions = reach(rawHeritageObject, `${RawKeys.Inscription}`);
 
@@ -253,6 +257,7 @@ export class HeritageFetcher {
     const heritageObjectWithUndefinedValues: HeritageObject = {
       id: rawHeritageObject[RawKeys.Id],
       name,
+      identifier,
       description,
       inscriptions,
       types,
