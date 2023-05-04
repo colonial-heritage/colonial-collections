@@ -2,6 +2,7 @@
 # Sample data for testing
 ###############################
 
+@prefix cc: <https://data.colonialcollections.nl/metrics#> .
 @prefix dqv: <http://www.w3.org/ns/dqv#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -14,13 +15,13 @@
 <https://example.org/datasets/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/1/distributions/1>
@@ -32,25 +33,25 @@
 <https://example.org/datasets/1/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/1/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/1/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/1/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/1/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/1/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/1/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/1/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "true"^^xsd:boolean .
 
 # Dataset 2
@@ -62,13 +63,13 @@
 <https://example.org/datasets/2/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/2/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/2/distributions/1>
@@ -79,22 +80,22 @@
 <https://example.org/datasets/2/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/2/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/2/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/2/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/2/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/2/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "true"^^xsd:boolean .
 
-# Metric <https://example.org/metrics/rdf-format> intentionally missing, for testing incomplete data
+# Metric cc:rdf-format> intentionally missing, for testing incomplete data
 
 # Dataset 3
 
@@ -105,13 +106,13 @@
 <https://example.org/datasets/3/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/3> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/3/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 # Dataset 4
@@ -123,13 +124,13 @@
 <https://example.org/datasets/4/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/4> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/4/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/4> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/4/distributions/1>
@@ -141,25 +142,25 @@
 <https://example.org/datasets/4/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/4/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/4/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/4/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/4/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/4/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/4/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/4/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "false"^^xsd:boolean .
 
 # Dataset 5
@@ -171,13 +172,13 @@
 <https://example.org/datasets/5/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/5> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/5/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/5> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/5/distributions/1>
@@ -189,25 +190,25 @@
 <https://example.org/datasets/5/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/5/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/5/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/5/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/5/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/5/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/5/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/5/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "false"^^xsd:boolean .
 
 # Dataset 6
@@ -218,10 +219,10 @@
 <https://example.org/datasets/6/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/6> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "true"^^xsd:boolean .
 
-# Metric <https://example.org/metrics/open-license> intentionally missing, for testing incomplete data
+# Metric cc:open-license> intentionally missing, for testing incomplete data
 
 <https://example.org/datasets/6/distributions/1>
   dqv:hasQualityMeasurement <https://example.org/datasets/6/distributions/1/measurements/1> ,
@@ -231,22 +232,22 @@
 <https://example.org/datasets/6/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/6/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/6/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/6/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/6/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/6/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "true"^^xsd:boolean .
 
-# Metric <https://example.org/metrics/structured-format> intentionally missing, for testing incomplete data
+# Metric cc:structured-format> intentionally missing, for testing incomplete data
 
 # Dataset 7
 
@@ -257,13 +258,13 @@
 <https://example.org/datasets/7/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/7> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/7/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/7> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/7/distributions/2>
@@ -275,25 +276,25 @@
 <https://example.org/datasets/7/distributions/2/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/7/distributions/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/7/distributions/2/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/7/distributions/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/7/distributions/2/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/7/distributions/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/7/distributions/2/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/7/distributions/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "true"^^xsd:boolean .
 
 # Dataset 8
@@ -305,13 +306,13 @@
 <https://example.org/datasets/8/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/8> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/8/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/8> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/8/distributions/1>
@@ -323,25 +324,25 @@
 <https://example.org/datasets/8/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/8/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/8/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/8/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/8/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/8/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/8/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/8/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "true"^^xsd:boolean .
 
 # Dataset 9
@@ -353,13 +354,13 @@
 <https://example.org/datasets/9/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/9> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/9/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/9> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 # Dataset 10
@@ -371,13 +372,13 @@
 <https://example.org/datasets/10/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/10> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/10/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/10> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/10/distributions/1>
@@ -389,25 +390,25 @@
 <https://example.org/datasets/10/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/10/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/10/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/10/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/10/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/10/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/10/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/10/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "false"^^xsd:boolean .
 
 # Dataset 11
@@ -419,13 +420,13 @@
 <https://example.org/datasets/11/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/11> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/11/measurements/2>
     a dqv:QualityMeasurement ;
     dqv:computedOn <https://example.org/datasets/11> ;
-    dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+    dqv:isMeasurementOf cc:open-license ;
     dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/11/distributions/2>
@@ -437,25 +438,25 @@
 <https://example.org/datasets/11/distributions/2/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/11/distributions/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/11/distributions/2/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/11/distributions/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/11/distributions/2/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/11/distributions/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/11/distributions/2/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/11/distributions/2> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "true"^^xsd:boolean .
 
 # Dataset 12
@@ -467,13 +468,13 @@
 <https://example.org/datasets/12/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/12> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/12/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/12> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/12/distributions/1>
@@ -485,25 +486,25 @@
 <https://example.org/datasets/12/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/12/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/12/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/12/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/12/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/12/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/12/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/12/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "false"^^xsd:boolean .
 
 # Dataset 13
@@ -515,13 +516,13 @@
 <https://example.org/datasets/13/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/13> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/13/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/13> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/13/distributions/1>
@@ -533,25 +534,25 @@
 <https://example.org/datasets/13/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/13/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/13/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/13/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/13/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/13/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/13/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/13/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "false"^^xsd:boolean .
 
 # Dataset 14
@@ -563,13 +564,13 @@
 <https://example.org/datasets/14/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/14> ;
-  dqv:isMeasurementOf <https://example.org/metrics/languages> ;
+  dqv:isMeasurementOf cc:languages ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/14/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/14> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-license> ;
+  dqv:isMeasurementOf cc:open-license ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/14/distributions/1>
@@ -581,23 +582,23 @@
 <https://example.org/datasets/14/distributions/1/measurements/1>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/14/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/online> ;
+  dqv:isMeasurementOf cc:online ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/14/distributions/1/measurements/2>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/14/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/structured-format> ;
+  dqv:isMeasurementOf cc:structured-format ;
   dqv:value "true"^^xsd:boolean .
 
 <https://example.org/datasets/14/distributions/1/measurements/3>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/14/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/open-format> ;
+  dqv:isMeasurementOf cc:open-format ;
   dqv:value "false"^^xsd:boolean .
 
 <https://example.org/datasets/14/distributions/1/measurements/4>
   a dqv:QualityMeasurement ;
   dqv:computedOn <https://example.org/datasets/14/distributions/1> ;
-  dqv:isMeasurementOf <https://example.org/metrics/rdf-format> ;
+  dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "false"^^xsd:boolean .

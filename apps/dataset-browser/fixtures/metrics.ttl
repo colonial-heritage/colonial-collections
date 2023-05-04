@@ -2,13 +2,14 @@
 # Definitions of metrics for measuring the data quality of descriptions of datasets and their distributions
 ###############################
 
+@prefix cc: <https://data.colonialcollections.nl/metrics#> .
 @prefix dqv: <http://www.w3.org/ns/dqv#> .
 @prefix ldqd: <http://www.w3.org/2016/05/ldqd#> .
 @prefix qb: <http://purl.org/linked-data/cube#> . # TBD: is there a better model for denoting the order of metrics?
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://example.org/metrics/open-license>
+cc:open-license
   a dqv:Metric ;
   skos:prefLabel "Open license"@en ;
   skos:definition "Checks whether the license is available in the dataset description and is a standardized, open license"@en ;
@@ -17,7 +18,7 @@
   dqv:inDimension ldqd:licensing ;
   qb:order 1 .
 
-<https://example.org/metrics/languages>
+cc:languages
   a dqv:Metric ;
   skos:prefLabel "Languages"@en ;
   skos:definition "Checks whether language codes are available in the dataset description that make clear in which languages the dataset is available"@en ;
@@ -28,7 +29,7 @@
   dqv:inDimension ldqd:availability ;
   qb:order 2 .
 
-<https://example.org/metrics/online>
+cc:online
   a dqv:Metric ;
   skos:prefLabel "Downloadable or accessible online"@en ;
   skos:definition "Checks whether a download URL or access URL is available in the distribution description"@en ;
@@ -37,7 +38,7 @@
   dqv:inDimension ldqd:availability ;
   qb:order 3 .
 
-<https://example.org/metrics/structured-format>
+cc:structured-format
   a dqv:Metric ;
   skos:prefLabel "Structured format"@en ;
   skos:definition "Checks whether the format is available in the distribution description and is a structured format"@en ;
@@ -48,7 +49,7 @@
   dqv:inDimension ldqd:interoperability ;
   qb:order 4 .
 
-<https://example.org/metrics/open-format>
+cc:open-format
   a dqv:Metric ;
   skos:prefLabel "Open format"@en ;
   skos:definition "Checks whether the format is available in the distribution description and is a standardized, open format"@en ;
@@ -58,7 +59,7 @@
   dqv:inDimension ldqd:interoperability ;
   qb:order 5 .
 
-<https://example.org/metrics/rdf-format>
+cc:rdf-format
   a dqv:Metric ;
   skos:prefLabel "RDF format"@en ;
   skos:definition "Checks whether the format is available in the distribution description and is an RDF format"@en ;
