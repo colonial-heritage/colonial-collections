@@ -29,28 +29,28 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
           </Link>
         </h2>
         <p className="text-base text-gray-900">{dataset.description}</p>
-        <div className="inline-flex items-end">
+        <div className="inline-flex items-stretch border border-gray-100">
           {dataset.measurements?.map(measurement => (
             <div
               key={measurement.id}
-              className="flex flex-1 flex-col items-center justify-center gap-3 text-center font-bold p-4"
+              className="flex flex-1 flex-col gap-3 text-center font-semibold text-base p-4 border border-gray-100"
             >
               <div className="flex flex-col items-center justify-end h-full w-full">
                 {measurement.metric.name}
               </div>
-              <div className="flex flex-col items-center justify-start h-full w-full">
+              <div className="flex flex-col items-center justify-end h-full w-full shrink">
                 {measurement.value ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     className="stroke-sky-500 w-10 h-10 stroke-[5px]"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M4.5 12.75l6 6 9-13.5"
                     />
                   </svg>
@@ -59,13 +59,13 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     className="stroke-gray-300 w-10 h-10 stroke-[5px]"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
