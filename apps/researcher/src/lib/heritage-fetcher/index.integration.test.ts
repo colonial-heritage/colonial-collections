@@ -20,7 +20,7 @@ describe('search', () => {
     const result = await heritageFetcher.search();
 
     expect(result).toStrictEqual({
-      totalCount: 3,
+      totalCount: 4,
       offset: 0,
       limit: 10,
       sortBy: 'relevance',
@@ -29,6 +29,7 @@ describe('search', () => {
         {
           id: 'https://example.org/objects/1',
           name: 'Object 1',
+          identifier: '1234',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',
           types: [
@@ -38,10 +39,7 @@ describe('search', () => {
             },
           ],
           subjects: [
-            {
-              id: 'http://vocab.getty.edu/aat/300152441',
-              name: 'celebrations',
-            },
+            {id: 'http://vocab.getty.edu/aat/300152441', name: 'celebrations'},
           ],
           materials: [
             {
@@ -59,25 +57,17 @@ describe('search', () => {
               name: 'Gogh, Vincent van',
             },
           ],
-          owner: {
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
-          isPartOf: {
-            id: 'https://example.org/datasets/1',
-            name: 'Dataset 1',
-          },
+          owner: {id: 'https://museum.example.org/', name: 'Museum'},
+          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
         {
           id: 'https://example.org/objects/2',
           name: 'Object 2',
+          identifier: '5678',
           description:
             'Suspendisse ut condimentum leo, et vulputate lectus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce vel volutpat nunc. Sed vel libero ac lorem dapibus euismod. Aenean a ante et turpis bibendum consectetur at pulvinar quam.',
           types: [
-            {
-              id: 'http://vocab.getty.edu/aat/300046300',
-              name: 'photographs',
-            },
+            {id: 'http://vocab.getty.edu/aat/300046300', name: 'photographs'},
           ],
           subjects: [
             {
@@ -98,23 +88,18 @@ describe('search', () => {
             },
           ],
           creators: [
-            {
-              id: 'https://data.rkd.nl/artists/120388',
-              name: 'Boer, Adriaan',
-            },
+            {id: 'https://data.rkd.nl/artists/120388', name: 'Boer, Adriaan'},
           ],
           owner: {
             id: 'https://research.example.org/',
             name: 'Research Organisation',
           },
-          isPartOf: {
-            id: 'https://example.org/datasets/13',
-            name: 'Dataset 13',
-          },
+          isPartOf: {id: 'https://example.org/datasets/13', name: 'Dataset 13'},
         },
         {
           id: 'https://example.org/objects/3',
           name: 'Object 3',
+          identifier: '9012',
           description:
             'Ut dictum elementum augue sit amet sodales. Vivamus viverra ligula sed arcu cursus sagittis. Donec ac placerat lacus.',
           inscriptions: ['Maecenas commodo est neque'],
@@ -125,10 +110,7 @@ describe('search', () => {
             },
           ],
           subjects: [
-            {
-              id: 'http://vocab.getty.edu/aat/300005500',
-              name: 'cottages',
-            },
+            {id: 'http://vocab.getty.edu/aat/300005500', name: 'cottages'},
             {
               id: 'http://vocab.getty.edu/aat/300006891',
               name: 'castles (fortifications)',
@@ -139,33 +121,21 @@ describe('search', () => {
               id: 'http://vocab.getty.edu/aat/300014109',
               name: 'paper (fiber product)',
             },
-            {
-              id: 'http://vocab.getty.edu/aat/300015012',
-              name: 'ink',
-            },
+            {id: 'http://vocab.getty.edu/aat/300015012', name: 'ink'},
           ],
-          owner: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
-          isPartOf: {
-            id: 'https://example.org/datasets/10',
-            name: '(No name)',
-          },
+          owner: {id: 'https://library.example.org/', name: 'Library'},
+          isPartOf: {id: 'https://example.org/datasets/10', name: '(No name)'},
+        },
+        {
+          id: 'https://example.org/objects/4',
+          identifier: '3456',
+          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
       ],
       filters: {
         owners: [
-          {
-            totalCount: 1,
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
-          {
-            totalCount: 1,
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
+          {totalCount: 1, id: 'https://library.example.org/', name: 'Library'},
+          {totalCount: 1, id: 'https://museum.example.org/', name: 'Museum'},
           {
             totalCount: 1,
             id: 'https://research.example.org/',
@@ -232,6 +202,7 @@ describe('getById', () => {
 
     expect(heritageObject).toStrictEqual({
       id: 'https://example.org/objects/1',
+      identifier: '1234',
       name: 'Object 1',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',
