@@ -48,7 +48,7 @@ describe('getByIri', () => {
           id: 'https://example.org/datasets/1/measurements/2',
           value: true,
           metric: {
-            id: 'https://example.org/metrics/open-license',
+            id: 'https://data.colonialcollections.nl/metrics#open-license',
             name: 'Open license',
             order: 1,
           },
@@ -57,7 +57,7 @@ describe('getByIri', () => {
           id: 'https://example.org/datasets/1/measurements/1',
           value: true,
           metric: {
-            id: 'https://example.org/metrics/languages',
+            id: 'https://data.colonialcollections.nl/metrics#languages',
             name: 'Languages',
             order: 2,
           },
@@ -66,7 +66,7 @@ describe('getByIri', () => {
           id: 'https://example.org/datasets/1/distributions/1/measurements/1',
           value: true,
           metric: {
-            id: 'https://example.org/metrics/online',
+            id: 'https://data.colonialcollections.nl/metrics#online',
             name: 'Downloadable or accessible online',
             order: 3,
           },
@@ -75,7 +75,7 @@ describe('getByIri', () => {
           id: 'https://example.org/datasets/1/distributions/1/measurements/2',
           value: true,
           metric: {
-            id: 'https://example.org/metrics/structured-format',
+            id: 'https://data.colonialcollections.nl/metrics#structured-format',
             name: 'Structured format',
             order: 4,
           },
@@ -84,7 +84,7 @@ describe('getByIri', () => {
           id: 'https://example.org/datasets/1/distributions/1/measurements/3',
           value: true,
           metric: {
-            id: 'https://example.org/metrics/open-format',
+            id: 'https://data.colonialcollections.nl/metrics#open-format',
             name: 'Open format',
             order: 5,
           },
@@ -93,7 +93,7 @@ describe('getByIri', () => {
           id: 'https://example.org/datasets/1/distributions/1/measurements/4',
           value: true,
           metric: {
-            id: 'https://example.org/metrics/rdf-format',
+            id: 'https://data.colonialcollections.nl/metrics#rdf-format',
             name: 'RDF format',
             order: 6,
           },
