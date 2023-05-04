@@ -23,9 +23,6 @@ module.exports = {
           800: 'hsl(36, 20%, 20%)',
           900: 'hsl(36, 20%, 10%)',
         },
-        gray: {
-          light: '#F7F5F2',
-        },
         blue: {
           link: '#22609D',
         },
