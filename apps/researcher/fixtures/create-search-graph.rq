@@ -18,6 +18,7 @@ CONSTRUCT {
   ?object a cc:Thing ;
     cc:additionalType ?type ;
     cc:about ?subject ;
+    cc:identifier ?identificationNumber ;
     cc:name ?name ;
     cc:description ?description ;
     cc:inscription ?inscription ;
@@ -110,12 +111,23 @@ WHERE {
   }
 
   ####################
+  # Identifier
+  ####################
+
+  # Required property
+  ?object crm:P1_is_identified_by ?identifier .
+  ?identifier a crm:E42_Identifier ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
+    crm:P190_has_symbolic_content ?identificationNumber .
+
+  ####################
   # Name
   ####################
 
   OPTIONAL {
     ?object crm:P1_is_identified_by ?linguisticAppellation .
-    ?linguisticAppellation crm:P2_has_type <http://vocab.getty.edu/aat/300404670> ; # Name
+    ?linguisticAppellation a crm:E33_E41_Linguistic_Appellation ;
+      crm:P2_has_type <http://vocab.getty.edu/aat/300404670> ; # Name
       crm:P190_has_symbolic_content ?name .
   }
 

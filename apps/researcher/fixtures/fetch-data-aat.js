@@ -55,6 +55,7 @@ const iris = [
   'http://vocab.getty.edu/aat/300046300',
   'http://vocab.getty.edu/aat/300133274',
   'http://vocab.getty.edu/aat/300005734',
+  'http://vocab.getty.edu/aat/300404626',
 ];
 
 fetchData(iris);

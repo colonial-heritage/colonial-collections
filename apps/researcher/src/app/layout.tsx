@@ -67,7 +67,7 @@ export default function RootLayout({children}: Props) {
             localeLabels={localeLabels}
           />
         </header>
-        <main className="bg-gray-light pb-32">
+        <main className="bg-sand-50 pb-32">
           <div className="max-w-7xl container mx-auto p-8">{children}</div>
         </main>
       </body>

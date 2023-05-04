@@ -1,6 +1,6 @@
 import {isIri} from '@colonial-collections/iris';
 import {IBindings, SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
-import {LRUCache} from 'lru-cache';
+import {lru, LRU} from 'tiny-lru';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -28,8 +28,7 @@ const cacheValueIfIriNotFound = Symbol('cacheValueIfIriNotFound');
 export class LabelFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
-  private cache: LRUCache<string, string | typeof cacheValueIfIriNotFound> =
-    new LRUCache({max: 10000});
+  private cache: LRU<string | typeof cacheValueIfIriNotFound> = lru(10000);
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -42,7 +41,7 @@ export class LabelFetcher {
 
     // Remove invalid IRIs and IRIs already cached
     const validAndUncachedIris = uniqueIris.filter(
-      (iri: string) => isIri(iri) && !this.cache.has(iri)
+      (iri: string) => isIri(iri) && this.cache.get(iri) === undefined
     );
 
     return validAndUncachedIris;
@@ -55,20 +54,16 @@ export class LabelFetcher {
       return; // No IRIs to fetch
     }
 
+    const irisForValues = iris.map(iri => `<${iri}>`).join(' ');
+
     // This returns multiple labels per IRI if multiple predicates match
     const predicate = predicates.map(predicate => `<${predicate}>`).join('|');
 
     // TBD: add an option for a locale, for filtering the labels in a specific language?
-    const queryConditions = iris.map((iri: string) => {
-      return `{
-        BIND(<${iri}> AS ?iri)
-        ?iri ${predicate} ?label
-      }`;
-    });
-
     const query = `
       SELECT ?iri ?label WHERE {
-        ${queryConditions.join(' UNION ')}
+        VALUES ?iri { ${irisForValues} }
+        ?iri ${predicate} ?label
       }`;
 
     // The endpoint throws an error if an IRI is not valid
@@ -84,7 +79,7 @@ export class LabelFetcher {
 
     // Also cache IRIs not found by the endpoint; otherwise these will
     // be fetched again and again on subsequent requests
-    const irisNotFound = iris.filter(iri => !this.cache.has(iri));
+    const irisNotFound = iris.filter(iri => this.cache.get(iri) === undefined);
     irisNotFound.forEach(iri => this.cache.set(iri, cacheValueIfIriNotFound));
   }
 
