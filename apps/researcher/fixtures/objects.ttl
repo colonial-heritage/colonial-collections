@@ -15,6 +15,11 @@
   crm:P52_has_current_owner <https://museum.example.org/> ;
   la:member_of <https://example.org/datasets/1> ;
   crm:P1_is_identified_by [
+    a crm:E42_Identifier ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
+    crm:P190_has_symbolic_content "1234" ;
+  ] ;
+  crm:P1_is_identified_by [
     a crm:E33_E41_Linguistic_Appellation ;
     crm:P2_has_type <http://vocab.getty.edu/aat/300404670> ; # Name
     crm:P190_has_symbolic_content "Object 1" ;
@@ -57,6 +62,11 @@
   crm:P62_depicts <http://vocab.getty.edu/aat/300005734> ; # Palace
   crm:P52_has_current_owner <https://research.example.org/> ;
   la:member_of <https://example.org/datasets/13> ;
+  crm:P1_is_identified_by [
+    a crm:E42_Identifier ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
+    crm:P190_has_symbolic_content "5678" ;
+  ] ;
   crm:P1_is_identified_by [
     a crm:E33_E41_Linguistic_Appellation ;
     crm:P2_has_type <http://vocab.getty.edu/aat/300404670> ; # Name
@@ -102,6 +112,11 @@
   crm:P52_has_current_owner <https://library.example.org/> ;
   la:member_of <https://example.org/datasets/10> ;
   crm:P1_is_identified_by [
+    a crm:E42_Identifier ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
+    crm:P190_has_symbolic_content "9012" ;
+  ] ;
+  crm:P1_is_identified_by [
     a crm:E33_E41_Linguistic_Appellation ;
     crm:P2_has_type <http://vocab.getty.edu/aat/300404670> ; # Name
     crm:P190_has_symbolic_content "Object 3" ;
@@ -126,4 +141,15 @@
     crm:P2_has_type <http://vocab.getty.edu/aat/300028702> ; # Inscription
     crm:P190_has_symbolic_content "Maecenas commodo est neque" ;
   ] ;
+.
+
+# An object with only required data, for testing
+<https://example.org/objects/4>
+  a crm:E22_Human-Made_Object ;
+  crm:P1_is_identified_by [
+    a crm:E42_Identifier ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
+    crm:P190_has_symbolic_content "3456" ;
+  ] ;
+  la:member_of <https://example.org/datasets/1> ;
 .
