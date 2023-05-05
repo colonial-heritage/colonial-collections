@@ -11,6 +11,7 @@ import BooleanMeasurement from '@/components/boolean-measurement';
 
 export default function DatasetCard({dataset}: {dataset: Dataset}) {
   const t = useTranslations('DatasetCard');
+  const tMeasurements = useTranslations('Measurements');
 
   return (
     <div
@@ -37,7 +38,12 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
               className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-gray-100"
             >
               <div className="flex flex-col items-center justify-end h-full w-full">
-                {measurement.metric.name}
+                {tMeasurements(
+                  `${encodeURIComponent(measurement.metric.id).replace(
+                    /\./g,
+                    '%2E'
+                  )}.shortTitle`
+                )}
               </div>
               <div className="flex flex-col items-center justify-end h-full w-full shrink">
                 <BooleanMeasurement value={measurement.value} />

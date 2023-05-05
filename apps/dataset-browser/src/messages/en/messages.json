@@ -72,5 +72,31 @@
   },
   "NotFound": {
     "title": "This page was not found (404)"
+  },
+  "Measurements": {
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-license": {
+      "shortTitle": "Open license",
+      "longTitle": "Open license"
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23languages": {
+      "shortTitle": "Languages",
+      "longTitle": "Languages"
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23online": {
+      "shortTitle": "Online",
+      "longTitle": "Downloadable or accessible online"
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23structured-format": {
+      "shortTitle": "Structured format",
+      "longTitle": "Structured format"
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-format": {
+      "shortTitle": "Open format",
+      "longTitle": "Open format"
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23rdf-format": {
+      "shortTitle": "RDF format",
+      "longTitle": "RDF format"
+    }
   }
 }
