@@ -29,11 +29,11 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
           </Link>
         </h2>
         <p className="text-base text-gray-900">{dataset.description}</p>
-        <div className="inline-flex items-stretch border border-gray-100">
+        <div className="inline-flex items-stretch border border-neutral-100 flex-wrap">
           {dataset.measurements?.map(measurement => (
             <div
               key={measurement.id}
-              className="flex flex-1 flex-col gap-3 text-center font-semibold text-base p-4 border border-gray-100"
+              className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-gray-100"
             >
               <div className="flex flex-col items-center justify-end h-full w-full">
                 {measurement.metric.name}
@@ -46,7 +46,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="stroke-sky-500 w-10 h-10 stroke-[5px]"
+                    className="stroke-sky-500 w-5 h-5 stroke-[5px]"
                   >
                     <path
                       strokeLinecap="round"
@@ -61,7 +61,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="stroke-gray-300 w-10 h-10 stroke-[5px]"
+                    className="stroke-gray-300 w-5 h-5 stroke-[5px]"
                   >
                     <path
                       strokeLinecap="round"
