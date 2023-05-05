@@ -95,7 +95,7 @@
   dqv:isMeasurementOf cc:open-format ;
   dqv:value "true"^^xsd:boolean .
 
-# Metric cc:rdf-format> intentionally missing, for testing incomplete data
+# Metric 'cc:rdf-format' intentionally missing, for testing incomplete data
 
 # Dataset 3
 
@@ -222,7 +222,7 @@
   dqv:isMeasurementOf cc:languages ;
   dqv:value "true"^^xsd:boolean .
 
-# Metric cc:open-license> intentionally missing, for testing incomplete data
+# Metric 'cc:open-license' intentionally missing, for testing incomplete data
 
 <https://example.org/datasets/6/distributions/1>
   dqv:hasQualityMeasurement <https://example.org/datasets/6/distributions/1/measurements/1> ,
@@ -247,7 +247,7 @@
   dqv:isMeasurementOf cc:rdf-format ;
   dqv:value "true"^^xsd:boolean .
 
-# Metric cc:structured-format> intentionally missing, for testing incomplete data
+# Metric 'cc:structured-format' intentionally missing, for testing incomplete data
 
 # Dataset 7
 
