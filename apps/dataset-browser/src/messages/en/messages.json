@@ -54,6 +54,7 @@
     "back": "Back to datasets",
     "navigation": {
       "about": "About",
+      "measurements": "Transparency measurements",
       "metadata": "Metadata"
     },
     "metadata": {
@@ -65,6 +66,10 @@
       "dateCreated": "Date created",
       "dateModified": "Date modified",
       "keywords": "Keywords"
+    },
+    "measurements": {
+      "title": "Transparency measurements",
+      "moreInfo": "Learn more on the transparency measurements and how to improve them."
     }
   },
   "Register": {
@@ -76,27 +81,39 @@
   "Measurements": {
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-license": {
       "shortTitle": "Open license",
-      "longTitle": "Open license"
+      "longTitle": "Open license",
+      "descriptionTrue": "Dataset is available with an open license.",
+      "descriptionFalse": "Dataset is not available with an open license."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23languages": {
       "shortTitle": "Languages",
-      "longTitle": "Languages"
+      "longTitle": "Languages",
+      "descriptionTrue": "The dataset description does make clear in which languages a dataset is available.",
+      "descriptionFalse": "The dataset description doesn't make clear in which languages a dataset is available."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23online": {
       "shortTitle": "Online",
-      "longTitle": "Downloadable or accessible online"
+      "longTitle": "Downloadable or accessible online",
+      "descriptionTrue": "Dataset is downloadable or accessible online.",
+      "descriptionFalse": "Dataset is not downloadable or accessible online."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23structured-format": {
       "shortTitle": "Structured format",
-      "longTitle": "Structured format"
+      "longTitle": "Structured format",
+      "descriptionTrue": "Dataset contains structured data. (.csv).",
+      "descriptionFalse": "Dataset doesn't contains structured data."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-format": {
       "shortTitle": "Open format",
-      "longTitle": "Open format"
+      "longTitle": "Open format",
+      "descriptionTrue": "Dataset is available in an open format. (.csv).",
+      "descriptionFalse": "Dataset is not available with in an open format."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23rdf-format": {
       "shortTitle": "RDF format",
-      "longTitle": "RDF format"
+      "longTitle": "RDF format",
+      "descriptionTrue": "Dataset is available as linked data.",
+      "descriptionFalse": "Dataset is not available as linked data."
     }
   }
 }

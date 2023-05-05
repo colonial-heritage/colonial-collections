@@ -1,10 +1,16 @@
 import {getTranslations} from 'next-intl/server';
 import {PageHeader, PageTitle} from 'ui';
-import {ChevronLeftIcon} from '@heroicons/react/24/solid';
+import {
+  ChevronLeftIcon,
+  InformationCircleIcon,
+} from '@heroicons/react/24/solid';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {Link} from 'next-intl';
 import {getFormatter} from 'next-intl/server';
 import {Fragment} from 'react';
+import BooleanMeasurement from '@/components/boolean-measurement';
+import {LocalizedMarkdown} from 'ui';
+import {Modal, ModalOpenButton, ModalDialog} from './modal';
 
 interface Props {
   params: {id: string};
@@ -17,6 +23,7 @@ export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const dataset = await datasetFetcher.getById({id});
   const t = await getTranslations('Details');
+  const tMeasurements = await getTranslations('Measurements');
   const format = await getFormatter();
 
   if (!dataset) {
@@ -25,6 +32,7 @@ export default async function Details({params}: Props) {
 
   const navigation = [
     {name: t('navigation.about'), href: '#about'},
+    {name: t('navigation.measurements'), href: '#measurements'},
     {name: t('navigation.metadata'), href: '#metadata'},
   ];
 
@@ -106,6 +114,53 @@ export default async function Details({params}: Props) {
               <PageTitle id="about">{dataset.name}</PageTitle>
             </PageHeader>
             <div>{dataset.description}</div>
+          </div>
+          <div className="py-10">
+            <h2
+              className="leading-6 mb-6 font-semibold text-lg"
+              id="measurements"
+            >
+              {t('measurements.title')}
+            </h2>
+            <div className="grid grid-cols-4 gap-1 bg-white">
+              {dataset.measurements?.map(measurement => {
+                const translationId = encodeURIComponent(
+                  measurement.metric.id
+                ).replace(/\./g, '%2E');
+                return (
+                  <div
+                    key={measurement.id}
+                    className="flex flex-1 flex-col gap-3 text-center p-4 bg-sand-50"
+                  >
+                    <div className="flex flex-col items-center h-full w-full font-semibold text-base">
+                      {tMeasurements(`${translationId}.longTitle`)}
+                    </div>
+                    <div className="flex flex-col items-center h-full w-full shrink">
+                      <BooleanMeasurement value={measurement.value} />
+                    </div>
+                    <div className="flex flex-col items-center justify-end h-full w-full">
+                      {tMeasurements(
+                        `${translationId}.description${
+                          measurement.value ? 'True' : 'False'
+                        }`
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+              <div className="flex-1 gap-3 font-semibold text-base p-4 bg-sand-50">
+                <Modal>
+                  <ModalOpenButton className="text-sky-500 underline hover:no-underline inline-block text-left">
+                    {t('measurements.moreInfo')}
+                    <InformationCircleIcon className="w-6 h-6 align-middle inline-block ml-1" />
+                  </ModalOpenButton>
+                  <ModalDialog>
+                    <LocalizedMarkdown name="transparency-measurements" />
+                  </ModalDialog>
+                </Modal>
+              </div>
+              <div className="flex flex-1 gap-3 bg-sand-50"></div>
+            </div>
           </div>
           <div className="py-10">
             <h2 className="leading-6 mb-6 font-semibold text-lg" id="metadata">

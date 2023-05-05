@@ -57,6 +57,7 @@
     "back": "Terug naar datasets",
     "navigation": {
       "about": "Over",
+      "measurements": "Transparantiemetingen",
       "metadata": "Metadata"
     },
     "metadata": {
@@ -68,9 +69,51 @@
       "dateCreated": "Datum gecreëerd",
       "dateModified": "Datum gewijzigd",
       "keywords": "Trefwoorden"
+    },
+    "measurements": {
+      "title": "Transparantiemetingen",
+      "moreInfo": "Meer informatie over de transparantiemetingen en hoe u deze kunt verbeteren."
     }
   },
   "Register": {
     "title": "Registreer dataset"
+  },
+  "Measurements": {
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-license": {
+      "shortTitle": "Open licentie",
+      "longTitle": "Open licentie",
+      "descriptionTrue": "Dataset is beschikbaar met een open licentie.",
+      "descriptionFalse": "Dataset is niet beschikbaar met een open licentie."
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23languages": {
+      "shortTitle": "Talen",
+      "longTitle": "Talen",
+      "descriptionTrue": "De datasetbeschrijving maakt duidelijk in welke talen een dataset beschikbaar is.",
+      "descriptionFalse": "De datasetbeschrijving maakt niet duidelijk in welke talen een dataset beschikbaar is."
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23online": {
+      "shortTitle": "Online",
+      "longTitle": "Downloadbaar of online toegankelijk",
+      "descriptionTrue": "Dataset kan worden gedownload of is online toegankelijk.",
+      "descriptionFalse": "Dataset kan niet worden gedownload en is niet online toegankelijk."
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23structured-format": {
+      "shortTitle": "Gestructureerd formaat",
+      "longTitle": "Gestructureerd formaat",
+      "descriptionTrue": "Dataset bevat gestructureerde gegevens. (.csv).",
+      "descriptionFalse": "Dataset bevat niet gestructureerde gegevens."
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-format": {
+      "shortTitle": "Open formaat",
+      "longTitle": "Open formaat",
+      "descriptionTrue": "Dataset is beschikbaar in een open formaat. (.csv).",
+      "descriptionFalse": "Dataset is niet beschikbaar in een open formaat."
+    },
+    "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23rdf-format": {
+      "shortTitle": "RDF formaat",
+      "longTitle": "RDF formaat",
+      "descriptionTrue": "Dataset is beschikbaar als linked data.",
+      "descriptionFalse": "Dataset is beschikbaar als linked data."
+    }
   }
 }
