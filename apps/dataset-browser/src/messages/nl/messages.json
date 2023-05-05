@@ -78,7 +78,8 @@
   "Register": {
     "title": "Registreer dataset"
   },
-  "Measurements": {
+  "TransparencyMetrics": {
+    "unknown": "Onbekend",
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-license": {
       "shortTitle": "Open licentie",
       "longTitle": "Open licentie",

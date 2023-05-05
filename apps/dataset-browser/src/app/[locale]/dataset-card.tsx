@@ -8,10 +8,11 @@ import {
 } from '@heroicons/react/24/solid';
 import {DocumentCheckIcon, TagIcon} from '@heroicons/react/24/outline';
 import BooleanMeasurement from '@/components/boolean-measurement';
+import metrics from '@/lib/transparency-metrics';
 
 export default function DatasetCard({dataset}: {dataset: Dataset}) {
   const t = useTranslations('DatasetCard');
-  const tMeasurements = useTranslations('Measurements');
+  const tMetrics = useTranslations('TransparencyMetrics');
 
   return (
     <div
@@ -32,24 +33,36 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
         </h2>
         <p className="text-base text-gray-900">{dataset.description}</p>
         <div className="inline-flex items-stretch border border-neutral-100 flex-wrap">
-          {dataset.measurements?.map(measurement => (
-            <div
-              key={measurement.id}
-              className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-gray-100"
-            >
-              <div className="flex flex-col items-center justify-end h-full w-full">
-                {tMeasurements(
-                  `${encodeURIComponent(measurement.metric.id).replace(
-                    /\./g,
-                    '%2E'
-                  )}.shortTitle`
+          {metrics.map(metricId => {
+            const measurement = dataset.measurements?.find(
+              measurement => measurement.metric.id === metricId
+            );
+
+            return (
+              <div
+                key={metricId}
+                className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-gray-100"
+              >
+                <div className="flex flex-col items-center justify-end h-full w-full">
+                  {tMetrics(
+                    `${encodeURIComponent(metricId).replace(
+                      /\./g,
+                      '%2E'
+                    )}.shortTitle`
+                  )}
+                </div>
+                {measurement ? (
+                  <div className="flex flex-col items-center justify-end h-full w-full shrink">
+                    <BooleanMeasurement value={measurement.value} />
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-end h-full w-full shrink text-gray-400">
+                    {tMetrics('unknown')}
+                  </div>
                 )}
               </div>
-              <div className="flex flex-col items-center justify-end h-full w-full shrink">
-                <BooleanMeasurement value={measurement.value} />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className="mt-2 flex flex-wrap">
           <Badge variant="gray">

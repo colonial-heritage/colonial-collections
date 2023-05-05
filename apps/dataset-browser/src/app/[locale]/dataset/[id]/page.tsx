@@ -11,6 +11,7 @@ import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import {LocalizedMarkdown} from 'ui';
 import {Modal, ModalOpenButton, ModalDialog} from './modal';
+import metrics from '@/lib/transparency-metrics';
 
 interface Props {
   params: {id: string};
@@ -23,7 +24,7 @@ export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const dataset = await datasetFetcher.getById({id});
   const t = await getTranslations('Details');
-  const tMeasurements = await getTranslations('Measurements');
+  const tMetrics = await getTranslations('TransparencyMetrics');
   const format = await getFormatter();
 
   if (!dataset) {
@@ -123,28 +124,38 @@ export default async function Details({params}: Props) {
               {t('measurements.title')}
             </h2>
             <div className="grid grid-cols-4 gap-1 bg-white">
-              {dataset.measurements?.map(measurement => {
-                const translationId = encodeURIComponent(
-                  measurement.metric.id
-                ).replace(/\./g, '%2E');
+              {metrics.map(metricId => {
+                const translationId = encodeURIComponent(metricId).replace(
+                  /\./g,
+                  '%2E'
+                );
+                const measurement = dataset.measurements?.find(
+                  measurement => measurement.metric.id === metricId
+                );
                 return (
                   <div
-                    key={measurement.id}
+                    key={metricId}
                     className="flex flex-1 flex-col gap-3 text-center p-4 bg-sand-50"
                   >
                     <div className="flex flex-col items-center h-full w-full font-semibold text-base">
-                      {tMeasurements(`${translationId}.longTitle`)}
+                      {tMetrics(`${translationId}.longTitle`)}
                     </div>
-                    <div className="flex flex-col items-center h-full w-full shrink">
-                      <BooleanMeasurement value={measurement.value} />
-                    </div>
-                    <div className="flex flex-col items-center justify-end h-full w-full">
-                      {tMeasurements(
-                        `${translationId}.description${
-                          measurement.value ? 'True' : 'False'
-                        }`
-                      )}
-                    </div>
+                    {measurement ? (
+                      <>
+                        <div className="flex flex-col items-center h-full w-full shrink">
+                          <BooleanMeasurement value={measurement.value} />
+                        </div>
+                        <div className="flex flex-col items-center justify-end h-full w-full">
+                          {tMetrics(
+                            `${translationId}.description${
+                              measurement.value ? 'True' : 'False'
+                            }`
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="text-gray-400">{tMetrics('unknown')}</div>
+                    )}
                   </div>
                 );
               })}

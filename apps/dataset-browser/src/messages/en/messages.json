@@ -78,7 +78,8 @@
   "NotFound": {
     "title": "This page was not found (404)"
   },
-  "Measurements": {
+  "TransparencyMetrics": {
+    "unknown": "Unknown",
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-license": {
       "shortTitle": "Open license",
       "longTitle": "Open license",
