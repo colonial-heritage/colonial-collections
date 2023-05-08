@@ -4,7 +4,7 @@
 
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-<http://example.org/custom-license>
+<https://example.org/custom-license>
   a foaf:Document;
   foaf:name "Custom License" .
 

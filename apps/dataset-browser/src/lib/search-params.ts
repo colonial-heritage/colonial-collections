@@ -3,7 +3,7 @@ import {
   SortBy as SortBySearchOption,
   SortOrder,
   searchOptionsSchema,
-} from '@/lib/dataset-fetcher';
+} from '@/lib/datasets';
 import {z} from 'zod';
 
 export enum SortBy {

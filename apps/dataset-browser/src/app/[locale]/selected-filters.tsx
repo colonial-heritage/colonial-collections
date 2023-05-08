@@ -1,4 +1,4 @@
-import {SearchResultFilter} from '@/lib/dataset-fetcher';
+import {SearchResultFilter} from '@/lib/datasets';
 import {Dispatch} from 'react';
 import {useTranslations} from 'next-intl';
 import {Badge} from 'ui';
