@@ -3,6 +3,7 @@
 ###############################
 
 @prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix dig: <http://www.ics.forth.gr/isl/CRMdig/> .
 @prefix la: <https://linked.art/ns/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -52,6 +53,14 @@
       crm:P82b_end_of_the_end "1890"^^xsd:gYear ;
     ] ;
   ] ;
+  crm:P65_shows_visual_item [
+    a crm:E36_Visual_Item ;
+    la:digitally_shown_by [
+      a dig:D1_Digital_Object ;
+      crm:P2_has_type <http://vocab.getty.edu/aat/300215302> ; # Digital image
+      la:access_point <http://images.memorix.nl/rce/thumb/1600x1600/4a3d23be-1021-b0dc-41b7-df87b15ac357.jpg> ;
+    ] ;
+  ] ;
 .
 
 <https://example.org/objects/2>
@@ -98,6 +107,14 @@
       a crm:E52_Time-Span ;
       crm:P82a_begin_of_the_begin "1895"^^xsd:gYear ;
       crm:P82b_end_of_the_end "1895"^^xsd:gYear ;
+    ] ;
+  ] ;
+  crm:P65_shows_visual_item [
+    a crm:E36_Visual_Item ;
+    la:digitally_shown_by [
+      a dig:D1_Digital_Object ;
+      crm:P2_has_type <http://vocab.getty.edu/aat/300215302> ; # Digital image
+      la:access_point <http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg> ;
     ] ;
   ] ;
 .
