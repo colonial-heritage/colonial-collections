@@ -1,5 +1,6 @@
-import {buildAggregation} from './request';
-import {buildFilters} from './result';
+import {DatasetEnricher} from '.';
+import {buildAggregation} from './fetcher-request';
+import {buildFilters} from './fetcher-result';
 import {getIrisFromObject} from '@colonial-collections/iris';
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {merge, reach} from '@hapi/hoek';
@@ -8,9 +9,12 @@ import {z} from 'zod';
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
   labelFetcher: z.instanceof(LabelFetcher),
+  datasetEnricher: z.instanceof(DatasetEnricher),
 });
 
-export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
+export type FetcherConstructorOptions = z.infer<
+  typeof constructorOptionsSchema
+>;
 
 enum RawDatasetKeys {
   Id = '@id',
@@ -38,6 +42,16 @@ export type License = Thing;
 export type Place = Thing;
 export type Term = Thing;
 
+export type Metric = Thing & {
+  order: number; // To aid clients in presenting information in UIs
+};
+
+export type Measurement = {
+  id: string;
+  value: boolean; // TBD: may need to support other types at some point
+  metric: Metric;
+};
+
 export type Dataset = {
   id: string;
   name: string;
@@ -51,6 +65,7 @@ export type Dataset = {
   datePublished?: Date;
   spatialCoverages?: Place[];
   genres?: Term[];
+  measurements?: Measurement[];
 };
 
 export enum SortBy {
@@ -183,12 +198,14 @@ export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 export class DatasetFetcher {
   private endpointUrl: string;
   private labelFetcher: LabelFetcher;
+  private datasetEnricher: DatasetEnricher;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: FetcherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
     this.labelFetcher = opts.labelFetcher;
+    this.datasetEnricher = opts.datasetEnricher;
   }
 
   async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
@@ -219,6 +236,7 @@ export class DatasetFetcher {
 
   // Map the response to our internal model
   private fromRawDatasetToDataset(rawDataset: RawDataset): Dataset {
+    const id = rawDataset[RawDatasetKeys.Id];
     const name = reach(rawDataset, `${RawDatasetKeys.Name}.0`);
     const description = reach(rawDataset, `${RawDatasetKeys.Description}.0`);
     const keywords = reach(rawDataset, `${RawDatasetKeys.Keyword}`);
@@ -265,7 +283,7 @@ export class DatasetFetcher {
     const genres = toThings<Term>(RawDatasetKeys.Genre);
 
     const datasetWithUndefinedValues: Dataset = {
-      id: rawDataset[RawDatasetKeys.Id],
+      id,
       name,
       publisher,
       license,
@@ -282,6 +300,14 @@ export class DatasetFetcher {
     const dataset = merge({}, datasetWithUndefinedValues, {
       nullOverride: false,
     });
+
+    // Enrich the dataset with data
+    const partialDataset = this.datasetEnricher.getByIri({
+      iri: id,
+    });
+    if (partialDataset !== undefined) {
+      Object.assign(dataset, partialDataset);
+    }
 
     return dataset;
   }
@@ -364,10 +390,15 @@ export class DatasetFetcher {
   ) {
     const {hits, aggregations} = rawSearchResponse;
 
-    const datasets: Dataset[] = hits.hits.map(hit => {
-      const rawDataset = hit._source;
-      return this.fromRawDatasetToDataset(rawDataset);
-    });
+    const rawDatasets = hits.hits.map(hit => hit._source);
+
+    // Load the dataset enrichments
+    const ids = rawDatasets.map(rawDataset => rawDataset['@id']);
+    await this.datasetEnricher.loadByIris({iris: ids});
+
+    const datasets: Dataset[] = rawDatasets.map(rawDataset =>
+      this.fromRawDatasetToDataset(rawDataset)
+    );
 
     const publisherFilters = buildFilters(
       aggregations.all.publishers.buckets,
@@ -447,6 +478,8 @@ export class DatasetFetcher {
     if (searchResponse.hits.hits.length !== 1) {
       return undefined;
     }
+
+    await this.datasetEnricher.loadByIris({iris: [opts.id]});
 
     const rawDataset = searchResponse.hits.hits[0]._source;
     const dataset = this.fromRawDatasetToDataset(rawDataset);

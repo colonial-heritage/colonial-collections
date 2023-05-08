@@ -10,7 +10,7 @@ import {
   useCallback,
   Dispatch,
 } from 'react';
-import {SearchOptions, SearchResult} from '@/lib/dataset-fetcher';
+import {SearchOptions, SearchResult} from '@/lib/datasets';
 import FilterSet from './filter-set';
 import Paginator from './paginator';
 import {PageTitle, PageHeader} from 'ui';
