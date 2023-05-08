@@ -43,7 +43,7 @@
     "@rdfjs/types": "1.1.0",
     "@types/mdx": "2.0.4",
     "@types/node": "18.15.11",
-    "@types/react": "18.0.35",
+    "@types/react": "18.2.6",
     "@types/react-dom": "18.0.11",
     "autoprefixer": "10.4.14",
     "cypress": "12.9.0",
