@@ -83,38 +83,38 @@
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-license": {
       "shortTitle": "Open license",
       "longTitle": "Open license",
-      "descriptionTrue": "Dataset is available with an open license.",
-      "descriptionFalse": "Dataset is not available with an open license."
+      "descriptionTrue": "The dataset is available with an open license.",
+      "descriptionFalse": "The dataset is not available with an open license."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23languages": {
       "shortTitle": "Languages",
       "longTitle": "Languages",
-      "descriptionTrue": "The dataset description does make clear in which languages a dataset is available.",
-      "descriptionFalse": "The dataset description doesn't make clear in which languages a dataset is available."
+      "descriptionTrue": "The dataset makes clear in which language(s) it is available.",
+      "descriptionFalse": "The dataset does not make clear in which language(s) it is available."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23online": {
       "shortTitle": "Online",
       "longTitle": "Downloadable or accessible online",
-      "descriptionTrue": "Dataset is downloadable or accessible online.",
-      "descriptionFalse": "Dataset is not downloadable or accessible online."
+      "descriptionTrue": "The dataset is downloadable or accessible online.",
+      "descriptionFalse": "The dataset is not downloadable or accessible online."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23structured-format": {
       "shortTitle": "Structured format",
       "longTitle": "Structured format",
-      "descriptionTrue": "Dataset contains structured data. (.csv).",
-      "descriptionFalse": "Dataset doesn't contains structured data."
+      "descriptionTrue": "The dataset is available in a structured format (e.g. Excel).",
+      "descriptionFalse": "The dataset is not available in a structured format (e.g. Excel)"
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23open-format": {
       "shortTitle": "Open format",
       "longTitle": "Open format",
-      "descriptionTrue": "Dataset is available in an open format. (.csv).",
-      "descriptionFalse": "Dataset is not available with in an open format."
+      "descriptionTrue": "The dataset is available in an open format (e.g. comma-separated values).",
+      "descriptionFalse": "The dataset is not available in an open format (e.g. comma-separated values)."
     },
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23rdf-format": {
       "shortTitle": "RDF format",
       "longTitle": "RDF format",
-      "descriptionTrue": "Dataset is available as linked data.",
-      "descriptionFalse": "Dataset is not available as linked data."
+      "descriptionTrue": "The dataset is available in an RDF format.",
+      "descriptionFalse": "The dataset is not available in an RDF format."
     }
   }
 }
