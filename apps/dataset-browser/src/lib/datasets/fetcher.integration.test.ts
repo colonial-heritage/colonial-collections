@@ -1,4 +1,4 @@
-import {DatasetFetcher, SortBy, SortOrder} from '.';
+import {DatasetEnricher, DatasetFetcher} from '.';
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
@@ -6,12 +6,18 @@ import {env} from 'node:process';
 const labelFetcher = new LabelFetcher({
   endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
 });
+
+const datasetEnricher = new DatasetEnricher({
+  endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
+});
+
 let datasetFetcher: DatasetFetcher;
 
 beforeEach(() => {
   datasetFetcher = new DatasetFetcher({
     endpointUrl: env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
     labelFetcher,
+    datasetEnricher,
   });
 });
 
@@ -29,10 +35,7 @@ describe('search', () => {
         {
           id: 'https://example.org/datasets/1',
           name: 'Dataset 1',
-          publisher: {
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
+          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
@@ -56,26 +59,132 @@ describe('search', () => {
               name: 'man-made objects',
             },
           ],
+          measurements: [
+            {
+              id: 'https://example.org/datasets/1/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/1/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/1/distributions/1/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/1/distributions/1/measurements/3',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/1/distributions/1/measurements/4',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/10',
           name: '(No name)',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
-            id: 'http://opendatacommons.org/licenses/by/1.0/',
-            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+            id: 'https://example.org/custom-license',
+            name: 'Custom License',
           },
+          measurements: [
+            {
+              id: 'https://example.org/datasets/10/measurements/2',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/10/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/10/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/10/distributions/1/measurements/2',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/10/distributions/1/measurements/3',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/10/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/11',
           name: 'Dataset 11',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
@@ -101,14 +210,67 @@ describe('search', () => {
               name: 'notes (documents)',
             },
           ],
+          measurements: [
+            {
+              id: 'https://example.org/datasets/11/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/11/measurements/1',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/11/distributions/2/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/11/distributions/2/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/11/distributions/2/measurements/3',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/11/distributions/2/measurements/4',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/12',
           name: 'Dataset 12',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
@@ -124,6 +286,62 @@ describe('search', () => {
             {
               id: 'https://hdl.handle.net/20.500.11840/termmaster10055279',
               name: 'Zuid-Afrika',
+            },
+          ],
+          measurements: [
+            {
+              id: 'https://example.org/datasets/12/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/measurements/1',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/distributions/1/measurements/2',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/distributions/1/measurements/3',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/12/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
             },
           ],
         },
@@ -149,38 +367,141 @@ describe('search', () => {
             },
           ],
           genres: [
-            {
-              id: 'http://vocab.getty.edu/aat/300048715',
-              name: 'articles',
-            },
+            {id: 'http://vocab.getty.edu/aat/300048715', name: 'articles'},
             {
               id: 'http://vocab.getty.edu/aat/300111999',
               name: 'publications (documents)',
+            },
+          ],
+          measurements: [
+            {
+              id: 'https://example.org/datasets/13/measurements/2',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/13/measurements/1',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/13/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/13/distributions/1/measurements/2',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/13/distributions/1/measurements/3',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/13/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
             },
           ],
         },
         {
           id: 'https://example.org/datasets/14',
           name: 'Dataset 14',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
+          publisher: {id: 'https://library.example.org/', name: 'Library'},
           license: {
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            name: 'CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring',
           },
           description:
             'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
           keywords: ['Hendrerit', 'Suspendisse'],
+          measurements: [
+            {
+              id: 'https://example.org/datasets/14/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/14/measurements/1',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/14/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/14/distributions/1/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/14/distributions/1/measurements/3',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/14/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/2',
           name: '(No name)',
-          publisher: {
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
+          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
@@ -195,35 +516,93 @@ describe('search', () => {
             },
           ],
           genres: [
-            {
-              id: 'http://vocab.getty.edu/aat/300043196',
-              name: 'tableware',
-            },
+            {id: 'http://vocab.getty.edu/aat/300043196', name: 'tableware'},
             {
               id: 'http://vocab.getty.edu/aat/300417586',
               name: 'art (broad object genre)',
+            },
+          ],
+          measurements: [
+            {
+              id: 'https://example.org/datasets/2/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/2/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/2/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/2/distributions/1/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/2/distributions/1/measurements/3',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
             },
           ],
         },
         {
           id: 'https://example.org/datasets/3',
           name: 'Dataset 3',
-          publisher: {
-            id: 'https://archive.example.org/',
-            name: 'Archive',
-          },
+          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
           license: {
             id: 'http://opendatacommons.org/licenses/odbl/1.0/',
             name: 'Open Data Commons Open Database License (ODbL) v1.0',
           },
+          measurements: [
+            {
+              id: 'https://example.org/datasets/3/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/3/measurements/1',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+          ],
         },
         {
           id: 'https://example.org/datasets/4',
           name: 'Dataset 4',
-          publisher: {
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
+          publisher: {id: 'https://museum.example.org/', name: 'Museum'},
           license: {
             id: 'http://opendatacommons.org/licenses/by/1.0/',
             name: 'Open Data Commons Attribution License (ODC-By) v1.0',
@@ -239,51 +618,142 @@ describe('search', () => {
             },
           ],
           genres: [
+            {id: 'http://vocab.getty.edu/aat/300043196', name: 'tableware'},
+          ],
+          measurements: [
             {
-              id: 'http://vocab.getty.edu/aat/300043196',
-              name: 'tableware',
+              id: 'https://example.org/datasets/4/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/4/measurements/1',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/4/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/4/distributions/1/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/4/distributions/1/measurements/3',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/4/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
             },
           ],
         },
         {
           id: 'https://example.org/datasets/5',
           name: 'Dataset 5',
-          publisher: {
-            id: 'https://archive.example.org/',
-            name: 'Archive',
-          },
+          publisher: {id: 'https://archive.example.org/', name: 'Archive'},
           license: {
-            id: 'https://creativecommons.org/licenses/by/4.0/',
-            name: 'Attribution 4.0 International (CC BY 4.0)',
+            id: 'http://rightsstatements.org/vocab/InC/1.0/',
+            name: 'In Copyright',
           },
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           keywords: ['Keyword'],
           genres: [
+            {id: 'http://vocab.getty.edu/aat/300404198', name: 'digital media'},
+          ],
+          measurements: [
             {
-              id: 'http://vocab.getty.edu/aat/300404198',
-              name: 'digital media',
+              id: 'https://example.org/datasets/5/measurements/2',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/3',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
             },
           ],
         },
       ],
       filters: {
         publishers: [
-          {
-            totalCount: 5,
-            id: 'https://archive.example.org/',
-            name: 'Archive',
-          },
-          {
-            totalCount: 5,
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
-          {
-            totalCount: 3,
-            id: 'https://museum.example.org/',
-            name: 'Museum',
-          },
+          {totalCount: 5, id: 'https://archive.example.org/', name: 'Archive'},
+          {totalCount: 5, id: 'https://library.example.org/', name: 'Library'},
+          {totalCount: 3, id: 'https://museum.example.org/', name: 'Museum'},
           {
             totalCount: 1,
             id: 'https://research.example.org/',
@@ -297,19 +767,19 @@ describe('search', () => {
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
           },
           {
-            totalCount: 3,
+            totalCount: 2,
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
           },
           {
-            totalCount: 2,
-            id: 'http://opendatacommons.org/licenses/by/1.0/',
-            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+            totalCount: 1,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: 'CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring',
           },
           {
             totalCount: 1,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
           },
           {
             totalCount: 1,
@@ -318,8 +788,18 @@ describe('search', () => {
           },
           {
             totalCount: 1,
+            id: 'http://rightsstatements.org/vocab/InC/1.0/',
+            name: 'In Copyright',
+          },
+          {
+            totalCount: 1,
             id: 'http://rightsstatements.org/vocab/UND/1.0/',
             name: 'Copyright Undetermined',
+          },
+          {
+            totalCount: 1,
+            id: 'https://example.org/custom-license',
+            name: 'Custom License',
           },
         ],
         spatialCoverages: [
@@ -446,13 +926,13 @@ describe('search', () => {
           },
           {
             totalCount: 0,
-            id: 'http://opendatacommons.org/licenses/by/1.0/',
-            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: 'CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring',
           },
           {
             totalCount: 0,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
+            id: 'http://opendatacommons.org/licenses/by/1.0/',
+            name: 'Open Data Commons Attribution License (ODC-By) v1.0',
           },
           {
             totalCount: 0,
@@ -461,8 +941,18 @@ describe('search', () => {
           },
           {
             totalCount: 0,
+            id: 'http://rightsstatements.org/vocab/InC/1.0/',
+            name: 'In Copyright',
+          },
+          {
+            totalCount: 0,
             id: 'http://rightsstatements.org/vocab/UND/1.0/',
             name: 'Copyright Undetermined',
+          },
+          {
+            totalCount: 0,
+            id: 'https://example.org/custom-license',
+            name: 'Custom License',
           },
         ],
         spatialCoverages: [
@@ -566,18 +1056,71 @@ describe('search', () => {
         {
           id: 'https://example.org/datasets/5',
           name: 'Dataset 5',
-          description:
-            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           publisher: {id: 'https://archive.example.org/', name: 'Archive'},
           license: {
-            id: 'https://creativecommons.org/licenses/by/4.0/',
-            name: 'Attribution 4.0 International (CC BY 4.0)',
+            id: 'http://rightsstatements.org/vocab/InC/1.0/',
+            name: 'In Copyright',
           },
+          description:
+            'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           keywords: ['Keyword'],
           genres: [
+            {id: 'http://vocab.getty.edu/aat/300404198', name: 'digital media'},
+          ],
+          measurements: [
             {
-              id: 'http://vocab.getty.edu/aat/300404198',
-              name: 'digital media',
+              id: 'https://example.org/datasets/5/measurements/2',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-license',
+                name: 'Open license',
+                order: 1,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#languages',
+                name: 'Languages',
+                order: 2,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/1',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#online',
+                name: 'Downloadable or accessible online',
+                order: 3,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/2',
+              value: true,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#structured-format',
+                name: 'Structured format',
+                order: 4,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/3',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#open-format',
+                name: 'Open format',
+                order: 5,
+              },
+            },
+            {
+              id: 'https://example.org/datasets/5/distributions/1/measurements/4',
+              value: false,
+              metric: {
+                id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+                name: 'RDF format',
+                order: 6,
+              },
             },
           ],
         },
@@ -600,9 +1143,14 @@ describe('search', () => {
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
           },
           {
-            totalCount: 1,
+            totalCount: 0,
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: 'CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring',
           },
           {
             totalCount: 0,
@@ -611,18 +1159,23 @@ describe('search', () => {
           },
           {
             totalCount: 0,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
-          },
-          {
-            totalCount: 0,
             id: 'http://opendatacommons.org/licenses/odbl/1.0/',
             name: 'Open Data Commons Open Database License (ODbL) v1.0',
+          },
+          {
+            totalCount: 1,
+            id: 'http://rightsstatements.org/vocab/InC/1.0/',
+            name: 'In Copyright',
           },
           {
             totalCount: 0,
             id: 'http://rightsstatements.org/vocab/UND/1.0/',
             name: 'Copyright Undetermined',
+          },
+          {
+            totalCount: 0,
+            id: 'https://example.org/custom-license',
+            name: 'Custom License',
           },
         ],
         spatialCoverages: [
@@ -713,37 +1266,6 @@ describe('search', () => {
     });
   });
 
-  it('finds datasets, sorted by name in ascending order', async () => {
-    const result = await datasetFetcher.search({
-      query: 'placerat',
-      sortBy: SortBy.Name,
-      sortOrder: SortOrder.Ascending,
-    });
-
-    expect(result).toMatchObject({
-      sortBy: 'name',
-      sortOrder: 'asc',
-      datasets: [
-        {
-          id: 'https://example.org/datasets/12',
-          name: 'Dataset 12',
-        },
-        {
-          id: 'https://example.org/datasets/14',
-          name: 'Dataset 14',
-        },
-        {
-          id: 'https://example.org/datasets/4',
-          name: 'Dataset 4',
-        },
-        {
-          id: 'https://example.org/datasets/8',
-          name: 'Dataset 8',
-        },
-      ],
-    });
-  });
-
   it('finds datasets if "publishers" filter matches', async () => {
     const result = await datasetFetcher.search({
       filters: {
@@ -798,17 +1320,10 @@ describe('search', () => {
     });
 
     expect(result).toMatchObject({
-      totalCount: 3,
+      totalCount: 2,
       datasets: [
         {
           id: 'https://example.org/datasets/1',
-          license: {
-            id: 'https://creativecommons.org/licenses/by/4.0/',
-            name: 'Attribution 4.0 International (CC BY 4.0)',
-          },
-        },
-        {
-          id: 'https://example.org/datasets/5',
           license: {
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
@@ -830,9 +1345,14 @@ describe('search', () => {
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
           },
           {
-            totalCount: 3,
+            totalCount: 2,
             id: 'https://creativecommons.org/licenses/by/4.0/',
             name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+          {
+            totalCount: 0,
+            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
+            name: 'CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring',
           },
           {
             totalCount: 0,
@@ -841,18 +1361,23 @@ describe('search', () => {
           },
           {
             totalCount: 0,
-            id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
-            name: '(No name)',
-          },
-          {
-            totalCount: 0,
             id: 'http://opendatacommons.org/licenses/odbl/1.0/',
             name: 'Open Data Commons Open Database License (ODbL) v1.0',
           },
           {
             totalCount: 0,
+            id: 'http://rightsstatements.org/vocab/InC/1.0/',
+            name: 'In Copyright',
+          },
+          {
+            totalCount: 0,
             id: 'http://rightsstatements.org/vocab/UND/1.0/',
             name: 'Copyright Undetermined',
+          },
+          {
+            totalCount: 0,
+            id: 'https://example.org/custom-license',
+            name: 'Custom License',
           },
         ],
       },
@@ -870,10 +1395,6 @@ describe('search', () => {
 
     expect(result).toMatchObject({
       totalCount: 1,
-      offset: 0,
-      limit: 10,
-      sortBy: 'relevance',
-      sortOrder: 'desc',
       datasets: [
         {
           id: 'https://example.org/datasets/1',
@@ -941,10 +1462,6 @@ describe('search', () => {
 
     expect(result).toMatchObject({
       totalCount: 1,
-      offset: 0,
-      limit: 10,
-      sortBy: 'relevance',
-      sortOrder: 'desc',
       datasets: [
         {
           id: 'https://example.org/datasets/2',
@@ -1013,13 +1530,13 @@ describe('getById', () => {
     expect(dataset).toStrictEqual({
       id: 'https://example.org/datasets/1',
       name: 'Dataset 1',
-      description:
-        'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
       publisher: {id: 'https://museum.example.org/', name: 'Museum'},
       license: {
         id: 'https://creativecommons.org/licenses/by/4.0/',
         name: 'Attribution 4.0 International (CC BY 4.0)',
       },
+      description:
+        'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
       keywords: ['Hendrerit', 'Suspendisse'],
       mainEntityOfPages: ['https://example.org/'],
       dateCreated: new Date('2019-03-12T00:00:00.000Z'),
@@ -1032,9 +1549,62 @@ describe('getById', () => {
         },
       ],
       genres: [
+        {id: 'http://vocab.getty.edu/aat/300386957', name: 'man-made objects'},
+      ],
+      measurements: [
         {
-          id: 'http://vocab.getty.edu/aat/300386957',
-          name: 'man-made objects',
+          id: 'https://example.org/datasets/1/measurements/2',
+          value: true,
+          metric: {
+            id: 'https://data.colonialcollections.nl/metrics#open-license',
+            name: 'Open license',
+            order: 1,
+          },
+        },
+        {
+          id: 'https://example.org/datasets/1/measurements/1',
+          value: true,
+          metric: {
+            id: 'https://data.colonialcollections.nl/metrics#languages',
+            name: 'Languages',
+            order: 2,
+          },
+        },
+        {
+          id: 'https://example.org/datasets/1/distributions/1/measurements/1',
+          value: true,
+          metric: {
+            id: 'https://data.colonialcollections.nl/metrics#online',
+            name: 'Downloadable or accessible online',
+            order: 3,
+          },
+        },
+        {
+          id: 'https://example.org/datasets/1/distributions/1/measurements/2',
+          value: true,
+          metric: {
+            id: 'https://data.colonialcollections.nl/metrics#structured-format',
+            name: 'Structured format',
+            order: 4,
+          },
+        },
+        {
+          id: 'https://example.org/datasets/1/distributions/1/measurements/3',
+          value: true,
+          metric: {
+            id: 'https://data.colonialcollections.nl/metrics#open-format',
+            name: 'Open format',
+            order: 5,
+          },
+        },
+        {
+          id: 'https://example.org/datasets/1/distributions/1/measurements/4',
+          value: true,
+          metric: {
+            id: 'https://data.colonialcollections.nl/metrics#rdf-format',
+            name: 'RDF format',
+            order: 6,
+          },
         },
       ],
     });
