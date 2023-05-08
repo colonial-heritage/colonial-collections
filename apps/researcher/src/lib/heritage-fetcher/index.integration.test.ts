@@ -53,9 +53,14 @@ describe('search', () => {
           ],
           images: [
             {
-              id: 'http://images.memorix.nl/rce/thumb/1600x1600/4a3d23be-1021-b0dc-41b7-df87b15ac357.jpg',
+              id: 'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
               contentUrl:
-                'http://images.memorix.nl/rce/thumb/1600x1600/4a3d23be-1021-b0dc-41b7-df87b15ac357.jpg',
+                'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+            },
+            {
+              contentUrl:
+                'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+              id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ],
           creators: [
@@ -250,9 +255,14 @@ describe('getById', () => {
       ],
       images: [
         {
-          id: 'http://images.memorix.nl/rce/thumb/1600x1600/4a3d23be-1021-b0dc-41b7-df87b15ac357.jpg',
+          id: 'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
           contentUrl:
-            'http://images.memorix.nl/rce/thumb/1600x1600/4a3d23be-1021-b0dc-41b7-df87b15ac357.jpg',
+            'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+        },
+        {
+          contentUrl:
+            'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+          id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
         },
       ],
       owner: {
