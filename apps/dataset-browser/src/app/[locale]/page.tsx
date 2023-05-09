@@ -9,7 +9,7 @@ import {
   SearchParams,
 } from '@/lib/search-params';
 import {ClientListStore} from '@colonial-collections/list-store';
-import {SearchResult} from '@/lib/dataset-fetcher';
+import {SearchResult} from '@/lib/datasets';
 
 // Set the order of the filters
 const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
