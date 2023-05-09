@@ -13,7 +13,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'images.memorix.nl',
+        hostname: '*',
       },
     ],
   },
