@@ -9,6 +9,14 @@ const nextConfig = {
     appDir: true,
     mdxRs: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'images.memorix.nl',
+      },
+    ],
+  },
 };
 
 module.exports = withNextIntl(withMDX(nextConfig));
