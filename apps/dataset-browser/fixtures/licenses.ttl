@@ -1,0 +1,37 @@
+###############################
+# Sample data for testing
+###############################
+
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+<https://example.org/custom-license>
+  a foaf:Document;
+  foaf:name "Custom License" .
+
+<https://creativecommons.org/licenses/by/4.0/>
+  a foaf:Document;
+  foaf:name "Attribution 4.0 International (CC BY 4.0)" .
+
+<https://creativecommons.org/publicdomain/zero/1.0/>
+  a foaf:Document;
+  foaf:name "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication" .
+
+<http://opendatacommons.org/licenses/odbl/1.0/>
+  a foaf:Document;
+  foaf:name "Open Data Commons Open Database License (ODbL) v1.0" .
+
+<http://opendatacommons.org/licenses/by/1.0/>
+  a foaf:Document;
+  foaf:name "Open Data Commons Attribution License (ODC-By) v1.0" .
+
+<http://rightsstatements.org/vocab/InC/1.0/>
+  a foaf:Document;
+  foaf:name "In Copyright" .
+
+<http://rightsstatements.org/vocab/UND/1.0/>
+  a foaf:Document;
+  foaf:name "Copyright Undetermined" .
+
+<http://creativecommons.org/publicdomain/zero/1.0/deed.nl>
+  a foaf:Document;
+  foaf:name "CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring" .

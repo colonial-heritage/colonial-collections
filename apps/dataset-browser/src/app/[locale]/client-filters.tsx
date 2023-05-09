@@ -1,7 +1,7 @@
 'use client';
 
 import {useState, ReactNode, Fragment, useMemo} from 'react';
-import {SearchResult} from '@/lib/dataset-fetcher';
+import {SearchResult} from '@/lib/datasets';
 import FilterSet from './filter-set';
 import Paginator from './paginator';
 import {PageTitle, PageHeader} from 'ui';

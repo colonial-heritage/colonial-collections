@@ -41,7 +41,10 @@ describe('getByIds', () => {
 
   it('returns the label of the provided IRI', async () => {
     await labelFetcher.loadByIris({
-      iris: ['http://www.wikidata.org/entity/Q33432813'],
+      iris: [
+        'http://www.wikidata.org/entity/Q33432813',
+        'http://www.wikidata.org/entity/Q1309',
+      ],
       predicates: ['http://www.w3.org/2000/01/rdf-schema#label'],
     });
 
