@@ -1,6 +1,6 @@
 import {Link} from 'next-intl';
 import {useTranslations} from 'next-intl';
-import {HeritageObject} from '@/lib/heritage-fetcher';
+import {HeritageObject} from '@/lib/objects';
 
 interface Props {
   heritageObject: HeritageObject;
