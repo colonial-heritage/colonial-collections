@@ -113,8 +113,8 @@
     "https%3A%2F%2Fdata%2Ecolonialcollections%2Enl%2Fmetrics%23rdf-format": {
       "shortTitle": "RDF formaat",
       "longTitle": "RDF formaat",
-      "descriptionTrue": "De dataset is beschikbaar in RDF-formaat.",
-      "descriptionFalse": "De dataset is niet beschikbaar in RDF-formaat."
+      "descriptionTrue": "De dataset is beschikbaar in een RDF-formaat.",
+      "descriptionFalse": "De dataset is niet beschikbaar in een RDF-formaat."
     }
   }
 }
