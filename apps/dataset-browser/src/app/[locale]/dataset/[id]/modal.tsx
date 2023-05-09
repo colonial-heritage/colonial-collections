@@ -15,6 +15,7 @@ interface ModalContextType {
   isOpen: boolean;
   setIsOpen: Dispatch<React.SetStateAction<boolean>>;
 }
+
 const ModalContext = createContext<ModalContextType>({
   isOpen: false,
   setIsOpen: () => {},

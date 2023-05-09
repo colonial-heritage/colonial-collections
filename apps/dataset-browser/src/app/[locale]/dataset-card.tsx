@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/24/solid';
 import {DocumentCheckIcon, TagIcon} from '@heroicons/react/24/outline';
 import BooleanMeasurement from '@/components/boolean-measurement';
-import metrics from '@/lib/transparency-metrics';
+import metricIds from '@/lib/transparency-metrics';
 
 export default function DatasetCard({dataset}: {dataset: Dataset}) {
   const t = useTranslations('DatasetCard');
@@ -33,7 +33,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
         </h2>
         <p className="text-base text-gray-900">{dataset.description}</p>
         <div className="inline-flex items-stretch border border-neutral-100 flex-wrap">
-          {metrics.map(metricId => {
+          {metricIds.map(metricId => {
             const measurement = dataset.measurements?.find(
               measurement => measurement.metric.id === metricId
             );

@@ -1,4 +1,4 @@
-const metrics = [
+const metricIds = [
   'https://data.colonialcollections.nl/metrics#open-license',
   'https://data.colonialcollections.nl/metrics#languages',
   'https://data.colonialcollections.nl/metrics#online',
@@ -7,4 +7,4 @@ const metrics = [
   'https://data.colonialcollections.nl/metrics#rdf-format',
 ];
 
-export default metrics;
+export default metricIds;

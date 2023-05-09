@@ -11,7 +11,7 @@ import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import {LocalizedMarkdown} from 'ui';
 import {Modal, ModalOpenButton, ModalDialog} from './modal';
-import metrics from '@/lib/transparency-metrics';
+import metricIds from '@/lib/transparency-metrics';
 
 interface Props {
   params: {id: string};
@@ -124,7 +124,7 @@ export default async function Details({params}: Props) {
               {t('measurements.title')}
             </h2>
             <div className="grid grid-cols-4 gap-1 bg-white">
-              {metrics.map(metricId => {
+              {metricIds.map(metricId => {
                 // Language keys can not contain a '.'.
                 const translationId = metricId.replace(/\./g, '%2E');
                 const measurement = dataset.measurements?.find(
