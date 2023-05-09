@@ -51,6 +51,18 @@ describe('search', () => {
               name: 'oil paint (paint)',
             },
           ],
+          images: [
+            {
+              id: 'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+              contentUrl:
+                'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+            },
+            {
+              contentUrl:
+                'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+              id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+            },
+          ],
           creators: [
             {
               id: 'https://data.rkd.nl/artists/32439',
@@ -89,6 +101,13 @@ describe('search', () => {
           ],
           creators: [
             {id: 'https://data.rkd.nl/artists/120388', name: 'Boer, Adriaan'},
+          ],
+          images: [
+            {
+              id: 'http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg',
+              contentUrl:
+                'http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg',
+            },
           ],
           owner: {
             id: 'https://research.example.org/',
@@ -232,6 +251,18 @@ describe('getById', () => {
         {
           id: 'https://data.rkd.nl/artists/32439',
           name: 'Gogh, Vincent van',
+        },
+      ],
+      images: [
+        {
+          id: 'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+          contentUrl:
+            'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+        },
+        {
+          contentUrl:
+            'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+          id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
         },
       ],
       owner: {
