@@ -24,6 +24,7 @@
     pnv:literalName "Michiel Adriaensz. de Ruyter" ;
   ] ;
   dbo:militaryRank "luitenant-admiraal-generaal"@nl ;
+  schema:isPartOf <https://example.org/datasets/1> ;
 .
 
 <https://example.org/persons/2>
@@ -41,6 +42,7 @@
     pnv:surname "de Vries" ;
     pnv:literalName "Jan de Vries" ;
   ] ;
+  schema:isPartOf <https://example.org/datasets/1> ;
 .
 
 <https://example.org/persons/3>
@@ -56,6 +58,7 @@
     pnv:surname "Jansen" ;
     pnv:literalName "Kees Jansen" ;
   ] ;
+  schema:isPartOf <https://example.org/datasets/3> ;
 .
 
 <https://example.org/persons/4>
@@ -70,6 +73,7 @@
     pnv:surname "Nooitgedacht" ;
     pnv:literalName "Gert Nooitgedacht" ;
   ] ;
+  schema:isPartOf <https://example.org/datasets/3> ;
 .
 
 <https://example.org/persons/5>
@@ -83,6 +87,7 @@
     pnv:surname "Vlieger" ;
     pnv:literalName "Beatrice Vlieger" ;
   ] ;
+  schema:isPartOf <https://example.org/datasets/4> ;
 .
 
 <https://example.org/persons/6>
@@ -97,6 +102,7 @@
     pnv:surname "van Châtellerault" ;
     pnv:literalName "Geeske van Châtellerault" ;
   ] ;
+  schema:isPartOf <https://example.org/datasets/4> ;
 .
 
 <https://example.org/persons/7>
@@ -109,6 +115,7 @@
     pnv:surname "Noord" ;
     pnv:literalName "Theodora Noord" ;
   ] ;
+  schema:isPartOf <https://example.org/datasets/5> ;
 .
 
 <https://example.org/persons/8>
@@ -120,4 +127,5 @@
     pnv:surname "Zuid" ;
     pnv:literalName "Welmoed Zuid" ;
   ] ;
+  schema:isPartOf <https://example.org/datasets/5> ;
 .
