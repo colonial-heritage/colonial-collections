@@ -24,6 +24,7 @@ enum RawKeys {
   Creator = 'https://colonialcollections nl/search#creator',
   Material = 'https://colonialcollections nl/search#material',
   Technique = 'https://colonialcollections nl/search#technique',
+  Image = 'https://colonialcollections nl/search#image',
   Owner = 'https://colonialcollections nl/search#owner',
   IsPartOf = 'https://colonialcollections nl/search#isPartOf',
 }
@@ -38,6 +39,11 @@ export type Term = Thing;
 export type Person = Thing;
 export type Dataset = Thing;
 
+export type Image = {
+  id: string;
+  contentUrl: string;
+};
+
 export type HeritageObject = {
   id: string;
   identifier: string;
@@ -49,6 +55,7 @@ export type HeritageObject = {
   materials?: Term[];
   techniques?: Term[];
   creators?: Person[];
+  images?: Image[];
   owner?: Organization;
   isPartOf: Dataset;
 };
@@ -102,6 +109,7 @@ const rawHeritageObjectSchema = z
   .setKey(RawKeys.Creator, z.array(z.string()).optional())
   .setKey(RawKeys.Material, z.array(z.string()).optional())
   .setKey(RawKeys.Technique, z.array(z.string()).optional())
+  .setKey(RawKeys.Image, z.array(z.string()).optional())
   .setKey(RawKeys.Owner, z.array(z.string()).optional())
   .setKey(RawKeys.IsPartOf, z.array(z.string()).min(1));
 
@@ -257,6 +265,20 @@ export class HeritageFetcher {
     const techniques = toThings<Term>(RawKeys.Technique);
     const creators = toThings<Person>(RawKeys.Creator);
 
+    let images: Image[] | undefined;
+    const contentUrls: string[] | undefined = reach(
+      rawHeritageObject,
+      `${RawKeys.Image}`
+    );
+    if (contentUrls !== undefined) {
+      images = contentUrls.map(contentUrl => {
+        return {
+          id: contentUrl, // At this moment the same
+          contentUrl,
+        };
+      });
+    }
+
     const heritageObjectWithUndefinedValues: HeritageObject = {
       id: rawHeritageObject[RawKeys.Id],
       name,
@@ -268,6 +290,7 @@ export class HeritageFetcher {
       materials,
       techniques,
       creators,
+      images,
       owner,
       isPartOf: dataset,
     };
