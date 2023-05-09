@@ -1,5 +1,5 @@
-import {buildAggregation} from './request';
-import {buildFilters} from './result';
+import {buildAggregation} from './fetcher-request';
+import {buildFilters} from './fetcher-result';
 import {getIrisFromObject} from '@colonial-collections/iris';
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {merge, reach} from '@hapi/hoek';
@@ -182,7 +182,7 @@ const getByIdOptionsSchema = z.object({
 
 export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 
-export class HeritageFetcher {
+export class HeritageObjectFetcher {
   private endpointUrl: string;
   private labelFetcher: LabelFetcher;
 
@@ -331,7 +331,7 @@ export class HeritageFetcher {
           ],
           filter: [
             {
-              // Only return documents of type 'Thing'
+              // Only return documents of a specific type
               terms: {
                 [`${RawKeys.Type}.keyword`]: [
                   'https://colonialcollections.nl/search#Thing',
