@@ -125,10 +125,8 @@ export default async function Details({params}: Props) {
             </h2>
             <div className="grid grid-cols-4 gap-1 bg-white">
               {metrics.map(metricId => {
-                const translationId = encodeURIComponent(metricId).replace(
-                  /\./g,
-                  '%2E'
-                );
+                // Language keys can not contain a '.'.
+                const translationId = metricId.replace(/\./g, '%2E');
                 const measurement = dataset.measurements?.find(
                   measurement => measurement.metric.id === metricId
                 );

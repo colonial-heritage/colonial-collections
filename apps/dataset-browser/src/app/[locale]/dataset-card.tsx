@@ -44,12 +44,8 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
                 className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-gray-100"
               >
                 <div className="flex flex-col items-center justify-end h-full w-full">
-                  {tMetrics(
-                    `${encodeURIComponent(metricId).replace(
-                      /\./g,
-                      '%2E'
-                    )}.shortTitle`
-                  )}
+                  {/* Language keys can not contain a '.'. */}
+                  {tMetrics(`${metricId.replace(/\./g, '%2E')}.shortTitle`)}
                 </div>
                 {measurement ? (
                   <div className="flex flex-col items-center justify-end h-full w-full shrink">
