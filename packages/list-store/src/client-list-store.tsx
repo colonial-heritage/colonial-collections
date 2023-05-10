@@ -10,7 +10,7 @@ interface Props {
   limit: number;
   query: string;
   sortBy: SortBy;
-  selectedFilters: {[filterKey: string]: string[] | undefined} | undefined;
+  selectedFilters?: {[filterKey: string]: string[] | undefined};
 }
 
 // The server component that does the API call loads this component.

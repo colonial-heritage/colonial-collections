@@ -73,7 +73,7 @@ interface SearchOptionsWithRequiredSort extends SearchOptions {
 }
 
 // This function translates the search params to valid search options.
-// Next.js already separate the search query string into separates properties with string values.
+// Next.js already separates the search query string into separate properties with string values.
 export function fromSearchParamsToSearchOptions({
   owners,
   types,

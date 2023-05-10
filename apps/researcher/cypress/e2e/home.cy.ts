@@ -39,7 +39,7 @@ describe('Object list filters', () => {
     cy.getBySel('selectedFilter').should('have.length', 0);
   });
 
-  it('removes a owner filter by deselecting it in the selected filter bar', () => {
+  it('removes an owner filter by deselecting it in the selected filter bar', () => {
     cy.visit('/en');
     cy.getBySel('ownersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();

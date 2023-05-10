@@ -7,23 +7,25 @@ import {useListStore} from './useListStore';
 import {SortBy} from './sort';
 
 describe('pageChange', () => {
-  it('will add the `limit` to the `offset` if the new `offset` is not greater than the `totalCount`', () => {
+  it('adds the `limit` to the `offset` if the new `offset` is not greater than the `totalCount`', () => {
     useListStore.setState({totalCount: 100, offset: 0, limit: 10});
     const {result} = renderHook(() => useListStore());
 
     act(() => {
       result.current.pageChange(1);
     });
+
     expect(result.current.offset).toBe(10);
   });
 
-  it('will subtract the `limit` from the `offset` if the new offset is not smaller than 0', () => {
+  it('subtracts the `limit` from the `offset` if the new offset is not smaller than 0', () => {
     useListStore.setState({totalCount: 100, offset: 20, limit: 10});
     const {result} = renderHook(() => useListStore());
 
     act(() => {
       result.current.pageChange(-1);
     });
+
     expect(result.current.offset).toBe(10);
   });
 
@@ -34,6 +36,7 @@ describe('pageChange', () => {
     act(() => {
       result.current.pageChange(1);
     });
+
     expect(result.current.offset).toBe(12);
   });
 
@@ -44,20 +47,23 @@ describe('pageChange', () => {
     act(() => {
       result.current.pageChange(-1);
     });
+
     expect(result.current.offset).toBe(0);
   });
 });
 
 describe('setNewData', () => {
   it('will set all data if `isInitialized is `false`', () => {
-    useListStore.setState({
+    const initialData = {
       totalCount: 20,
       offset: 0,
       limit: 10,
       query: '',
       sortBy: SortBy.NameAsc,
       selectedFilters: {},
-    });
+    };
+
+    useListStore.setState(initialData);
     const {result} = renderHook(() => useListStore());
 
     const newData = {
@@ -82,8 +88,9 @@ describe('setNewData', () => {
       })
     );
   });
+
   it('will not set values the user can edit if initialized', () => {
-    const initializedData = {
+    const initialData = {
       totalCount: 20,
       offset: 0,
       limit: 10,
@@ -93,7 +100,7 @@ describe('setNewData', () => {
       isInitialized: true,
     };
 
-    useListStore.setState(initializedData);
+    useListStore.setState(initialData);
     const {result} = renderHook(() => useListStore());
 
     const newData = {
@@ -111,15 +118,16 @@ describe('setNewData', () => {
       result.current.setNewData(newData);
     });
 
-    expect(result.current).toEqual(expect.objectContaining(initializedData));
+    expect(result.current).toEqual(expect.objectContaining(initialData));
   });
+
   it('will set the `totalCount` if initialized', () => {
-    const initializedData = {
+    const initialData = {
       totalCount: 20,
       isInitialized: true,
     };
 
-    useListStore.setState(initializedData);
+    useListStore.setState(initialData);
     const {result} = renderHook(() => useListStore());
 
     const newData = {
