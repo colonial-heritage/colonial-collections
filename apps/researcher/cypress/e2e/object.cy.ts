@@ -1,5 +1,5 @@
 describe('Object details page', () => {
-  it('loads an existing object', () => {
+  it('opens the object page if clicked on in the search list', () => {
     cy.visit('/en');
     // Get the name of the first object in the list.
     cy.getBySel('object-card-name')
@@ -11,14 +11,14 @@ describe('Object details page', () => {
         cy.location('pathname', {timeout: 60000}).should('include', '/object');
         // On the details page.
         cy.getBySel('error').should('not.exist');
+        cy.getBySel('no-object').should('not.exist');
         cy.getBySel('page-title').then($detailsName => {
           expect($cardName.text()).equal($detailsName.text());
-          cy.getBySel('no-object').should('not.exist');
         });
       });
   });
 
-  it('shows an error message if no object can be found', () => {
+  it('shows an error message if no object matches the ID', () => {
     cy.visit('/en/object/anIdThatDoesNotExist');
     cy.getBySel('no-object').should('exist');
     cy.getBySel('object-name').should('not.exist');

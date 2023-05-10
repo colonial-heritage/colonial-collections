@@ -55,7 +55,7 @@ function InfoBlock({object, objectKey, singleLine}: InfoBlockProps) {
     return null;
   }
 
-  const itemStrings = items.map(item =>
+  const itemValues = items.map(item =>
     typeof item === 'string' ? item : item.name
   );
 
@@ -63,11 +63,11 @@ function InfoBlock({object, objectKey, singleLine}: InfoBlockProps) {
     <div>
       <H3>{t(objectKey)}</H3>
       {singleLine ? (
-        <>{itemStrings.join(', ')}</>
+        <>{itemValues.join(', ')}</>
       ) : (
         <>
-          {itemStrings.map(string => (
-            <div key={string}>{string}</div>
+          {itemValues.map(value => (
+            <div key={value}>{value}</div>
           ))}
         </>
       )}
