@@ -36,7 +36,7 @@ export type Place = Thing;
 export type Person = {
   id: string;
   identifier?: string; // TBD: can be more than 1?
-  name: string;
+  name: string; // TBD: always exists?
   birthPlace?: Place;
   birthDate?: Date; // TBD: may not be a valid date?
   deathPlace?: Place;
