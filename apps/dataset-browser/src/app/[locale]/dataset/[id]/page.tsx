@@ -164,7 +164,10 @@ export default async function Details({params}: Props) {
                     <InformationCircleIcon className="w-6 h-6 align-middle inline-block ml-1" />
                   </ModalOpenButton>
                   <ModalDialog>
-                    <LocalizedMarkdown name="transparency-measurements" />
+                    <LocalizedMarkdown
+                      name="transparency-measurements"
+                      contentPath="@/messages"
+                    />
                   </ModalDialog>
                 </Modal>
               </div>

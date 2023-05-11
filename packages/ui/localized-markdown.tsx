@@ -4,9 +4,13 @@ import classNames from 'classnames';
 
 interface Props {
   name: string;
+  // Note: the path prefix for dynamic imports must be static to work correctly.
+  // See the issue: https://github.com/webpack/webpack/issues/6680
+  // That is why `contentPath` can only be fixed values.
+  contentPath: '@colonial-collections/content' | '@/messages';
 }
 
-const LocalizedMarkdown = (async ({name}: Props) => {
+const LocalizedMarkdown = (async ({name, contentPath}: Props) => {
   const locale = useLocale();
   const markdownClassName = classNames(
     'max-w-3xl prose',
@@ -16,8 +20,16 @@ const LocalizedMarkdown = (async ({name}: Props) => {
     'prose-h3:text-lg prose-h3:mb-2',
     'prose-a:text-sky-700 prose-a:no-underline'
   );
+  let Markdown;
   try {
-    const Markdown = (await import(`@/messages/${locale}/${name}.mdx`)).default;
+    if (contentPath === '@colonial-collections/content') {
+      Markdown = (
+        await import(`@colonial-collections/content/${locale}/${name}.mdx`)
+      ).default;
+    }
+    if (contentPath === '@/messages') {
+      Markdown = (await import(`@/messages/${locale}/${name}.mdx`)).default;
+    }
     return (
       <div className={markdownClassName} data-testid="markdown-container">
         <Markdown />

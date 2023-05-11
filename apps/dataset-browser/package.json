@@ -20,6 +20,7 @@
     "test:e2e:open": "cypress open"
   },
   "dependencies": {
+    "@colonial-collections/content": "*",
     "@colonial-collections/iris": "*",
     "@colonial-collections/label-fetcher": "*",
     "@colonial-collections/list-store": "*",    

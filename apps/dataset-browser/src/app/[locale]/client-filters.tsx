@@ -130,7 +130,10 @@ export default function ClientFilters({
           </div>
         </Dialog>
       </Transition.Root>
-      <aside className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2">
+      <aside
+        id="facets"
+        className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2"
+      >
         {renderFilters}
       </aside>
 
