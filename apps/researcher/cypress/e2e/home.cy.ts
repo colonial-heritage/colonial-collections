@@ -1,5 +1,5 @@
 describe('Researcher homepage', () => {
-  it('loads an object list', () => {
+  it('shows an object list', () => {
     cy.visit('/en');
     cy.getBySel('error').should('not.exist');
     cy.getBySel('heritage-object-card-name').its('length').should('be.gt', 0);

@@ -29,7 +29,7 @@ describe('pageChange', () => {
     expect(result.current.offset).toBe(10);
   });
 
-  it("won't set the `offset` higher than the `totalCount`", () => {
+  it('does not set the `offset` higher than the `totalCount`', () => {
     useListStore.setState({totalCount: 12, offset: 10, limit: 10});
     const {result} = renderHook(() => useListStore());
 
@@ -40,7 +40,7 @@ describe('pageChange', () => {
     expect(result.current.offset).toBe(12);
   });
 
-  it("won't set the `offset` lower than 0", () => {
+  it('does not set the `offset` lower than 0', () => {
     useListStore.setState({totalCount: 100, offset: 0, limit: 10});
     const {result} = renderHook(() => useListStore());
 
@@ -53,7 +53,7 @@ describe('pageChange', () => {
 });
 
 describe('setNewData', () => {
-  it('will set all data if `isInitialized is `false`', () => {
+  it('sets all data if `isInitialized is `false`', () => {
     const initialData = {
       totalCount: 20,
       offset: 0,
