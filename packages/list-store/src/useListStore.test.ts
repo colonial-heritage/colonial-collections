@@ -89,7 +89,7 @@ describe('setNewData', () => {
     );
   });
 
-  it('will not set values the user can edit if initialized', () => {
+  it('does not set values the user can edit if initialized', () => {
     const initialData = {
       totalCount: 20,
       offset: 0,
@@ -121,7 +121,7 @@ describe('setNewData', () => {
     expect(result.current).toEqual(expect.objectContaining(initialData));
   });
 
-  it('will set the `totalCount` if initialized', () => {
+  it('sets the `totalCount` if initialized', () => {
     const initialData = {
       totalCount: 20,
       isInitialized: true,
