@@ -10,7 +10,7 @@
     "build": "next build",
     "compile": "tsc",
     "dev": "next dev --port 3001",
-    "start": "next start",
+    "start": "next start --port 3001",
     "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
     "test:ci": "npm test -- --ci",
     "test:watch": "npm test -- --watchAll",
@@ -20,8 +20,11 @@
     "test:e2e:open": "cypress open"
   },
   "dependencies": {
+    "@colonial-collections/content": "*",
     "@colonial-collections/iris": "*",
     "@colonial-collections/label-fetcher": "*",
+    "@colonial-collections/list-store": "*",
+    "@floating-ui/react": "0.23.1",
     "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.14",
     "@heroicons/react": "2.0.17",
@@ -31,7 +34,8 @@
     "next-intl": "2.13.0-beta.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "zod": "3.21.4"
+    "zod": "3.21.4",
+    "zustand": "4.3.7"
   },
   "devDependencies": {
     "@comunica/query-sparql-file": "2.6.9",

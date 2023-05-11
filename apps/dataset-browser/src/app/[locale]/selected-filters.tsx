@@ -13,7 +13,6 @@ interface Props {
     value: string;
     setQuery: Dispatch<string>;
   };
-  clearAllSideEffects: () => void;
 }
 
 interface ClearSelectedFilterProps {
@@ -22,11 +21,7 @@ interface ClearSelectedFilterProps {
   setSelectedFilters: Dispatch<string[]>;
 }
 
-export default function SelectedFilters({
-  filters,
-  query,
-  clearAllSideEffects,
-}: Props) {
+export default function SelectedFilters({filters, query}: Props) {
   const t = useTranslations('Home');
 
   // Only show this component if there are active filters.
@@ -52,7 +47,6 @@ export default function SelectedFilters({
   function clearAllFilters() {
     clearQuery();
     filters.forEach(filter => filter.setSelectedFilters([]));
-    clearAllSideEffects();
   }
 
   return (

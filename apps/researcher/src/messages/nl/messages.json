@@ -3,11 +3,35 @@
     "title": "Research app"
   },
   "Home": {
-    "fetchError": "Er is een probleem opgetreden bij het ophalen van de objecten. Laad de pagina opnieuw om het opnieuw te proberen."
+    "title": "{totalDatasets, plural, =0 {0 Objecten} =1 {1 Object} other {# Objecten}}",
+    "search": "Zoeken",
+    "ownersFilter": "Eigenaren",
+    "typesFilter": "Types",
+    "subjectsFilter": "Onderwerpen",
+    "noResults": "Er zijn geen resultaten",
+    "sortRelevanceDesc": "Relevantie",
+    "sortNameAsc": "Naam - Oplopend",
+    "sortNameDesc": "Naam - Aflopend",
+    "fetchError": "Er is een probleem opgetreden bij het ophalen van de objecten. Laad de pagina opnieuw om het opnieuw te proberen.",
+    "filters": "Filters",
+    "clearAllFilters": "Alles verwijderen",
+    "expandFilter": "Uitklappen",
+    "filterSearchPlaceholder": "Filteren op {filterName}",
+    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
+    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen",
+    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
+  },
+  "Paginator": {
+    "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
+    "previous": "Vorige",
+    "next": "Volgende"
   },
   "Navigation": {
     "name": "app",
-    "home": "Home"
+    "home": "Home",
+    "about": "Over",
+    "faq": "FAQ",
+    "contact": "Contact"
   },
   "LanguageSelector": {
     "nl": "Nederlands",
@@ -15,10 +39,35 @@
     "accessibilityLanguageSelector": "Selecteer om de taal van de site te wijzigen. De huidige taal is {language}",
     "accessibilityOpenMenu": "Open menu"
   },
+  "ScreenReaderMenu": {
+    "jumpFilters": "Ga naar de facets",
+    "jumpResults": "Ga naar de resultaten",
+    "jumpNavigation": "Ga naar de hoofdnavigatie"
+  },
   "NotFound": {
     "title": "Pagina kon niet gevonden worden (404)"
   },
   "HeritageObjectCard": {
     "HeritageObject": "Erfgoedobject"
+  },
+  "Details": {
+    "backButton": "Terug naar resultaten",
+    "notImplemented": "Niet geïmplementeerd",
+    "noData": "Geen gegevens",
+    "description": "Beschrijving",
+    "date": "Datum",
+    "owner": "Eigenaar",
+    "handle": "Handle",
+    "license": "Licentie",
+    "moreInfo": "Meer informatie",
+    "materials": "Materialen",
+    "techniques": "Technieken",
+    "creators": "Makers",
+    "inscriptions": "Inscripties",
+    "saveButton": "Object opslaan",
+    "shareButton": "Object delen",
+    "relatedPersons": "Verwante personen",
+    "origin": "Oorsprong",
+    "discussion": "Discussie"
   }
 }

@@ -3,11 +3,35 @@
     "title": "Research app"
   },
   "Home": {
-    "fetchError": "There was a problem fetching the objects. Please reload the page to try again."
+    "title": "{totalDatasets, plural, =0 {0 Heritage Objects} =1 {1 Heritage Object} other {# Heritage Objects}}",
+    "search": "Search",
+    "ownersFilter": "Owners",
+    "typesFilter": "Types",
+    "subjectsFilter": "Subjects",
+    "noResults": "There are no results",
+    "sortRelevanceDesc": "Relevance",
+    "sortNameAsc": "Name - Ascending",
+    "sortNameDesc": "Name - Descending",
+    "fetchError": "There was a problem fetching the objects. Please reload the page to try again.",
+    "filters": "Filters",
+    "clearAllFilters": "Clear all",
+    "expandFilter": "Expand",
+    "filterSearchPlaceholder": "Filter on {filterName}",
+    "accessibilityTypeToFilter": "Type to filter on text.",
+    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result",
+    "accessibilitySelectToFilter": "Select a checkbox to filter"
+  },
+  "Paginator": {
+    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
+    "previous": "Previous",
+    "next": "Next"
   },
   "Navigation": {
     "name": "app",
-    "home": "Home"
+    "home": "Home",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact"
   },
   "LanguageSelector": {
     "nl": "Nederlands",
@@ -15,10 +39,35 @@
     "accessibilityLanguageSelector": "Select to change the language of the site. The current language is {language}",
     "accessibilityOpenMenu": "Open menu"
   },
+  "ScreenReaderMenu": {
+    "jumpFilters": "Jump to filter facets",
+    "jumpResults": "Jump to results",
+    "jumpNavigation": "Jump to main navigation"
+  },
   "NotFound": {
     "title": "This page was not found (404)"
   },
   "HeritageObjectCard": {
     "HeritageObject": "Heritage object"
+  },
+  "Details": {
+    "backButton": "Back to results",
+    "notImplemented": "Not implemented",
+    "noData": "No Data",
+    "description": "Description",
+    "date": "Date",
+    "owner": "Owner",
+    "handle": "Handle",
+    "license": "License",
+    "moreInfo": "More info",
+    "materials": "Materials",
+    "techniques": "Techniques",
+    "creators": "Creators",
+    "inscriptions": "Inscriptions",
+    "saveButton": "Save object",
+    "shareButton": "Share object",
+    "relatedPersons": "Related Persons",
+    "origin": "Origin",
+    "discussion": "Discussion"
   }
 }

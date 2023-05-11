@@ -14,13 +14,16 @@ export default function RootLayout({children}: Props) {
 
   const tNavigation = useTranslations('Navigation');
   const tLanguageSelector = useTranslations('LanguageSelector');
-  // Const tScreenReaderMenu = useTranslations('ScreenReaderMenu');
+  const tScreenReaderMenu = useTranslations('ScreenReaderMenu');
 
   // The navigation is a client component, get the labels first in this server component
   // See: https://next-intl-docs.vercel.app/docs/next-13/server-components#switching-to-client-components
   const navigationLabels = {
     name: tNavigation('name'),
     home: tNavigation('home'),
+    about: tNavigation('about'),
+    faq: tNavigation('faq'),
+    contact: tNavigation('contact'),
   };
 
   const languageSelectorLabels = {
@@ -44,7 +47,6 @@ export default function RootLayout({children}: Props) {
       <body className="flex flex-col min-h-screen">
         <div className="sr-only">
           <ul>
-            {/* TODO: Add Screen Reader Menu
             <li>
               <a href="#facets">{tScreenReaderMenu('jumpFilters')}</a>
             </li>
@@ -55,7 +57,7 @@ export default function RootLayout({children}: Props) {
               <a href="#page-navigation">
                 {tScreenReaderMenu('jumpNavigation')}
               </a>
-            </li> */}
+            </li>
           </ul>
         </div>
         <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">

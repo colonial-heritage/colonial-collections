@@ -5,14 +5,7 @@ import {
   searchOptionsSchema,
 } from '@/lib/datasets';
 import {z} from 'zod';
-
-export enum SortBy {
-  RelevanceDesc = 'relevanceDesc',
-  NameAsc = 'nameAsc',
-  NameDesc = 'nameDesc',
-}
-
-export const defaultSortBy = SortBy.RelevanceDesc;
+import {SortBy} from '@colonial-collections/list-store';
 
 const sortMapping = {
   [SortBy.RelevanceDesc]: {
@@ -29,58 +22,6 @@ const sortMapping = {
   },
 };
 
-const searchParamFilterSchema = z
-  .array(z.string())
-  .default([])
-  .transform(filterValues => filterValues.join(','));
-
-const searchParamsSchema = z.object({
-  query: z.string().default(''),
-  offset: z
-    .number()
-    .default(0)
-    // Don't add the default offset of 0 to the search params
-    .transform(offset => (offset > 0 ? `${offset}` : '')),
-  licenses: searchParamFilterSchema,
-  publishers: searchParamFilterSchema,
-  spatialCoverages: searchParamFilterSchema,
-  genres: searchParamFilterSchema,
-  sortBy: z
-    .nativeEnum(SortBy)
-    // Don't add the default sort to the search params
-    .optional()
-    .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
-});
-
-interface ClientSearchOptions {
-  query?: SearchOptions['query'];
-  offset?: SearchOptions['offset'];
-  licenses?: string[];
-  publishers?: string[];
-  genres?: string[];
-  spatialCoverages?: string[];
-  sortBy?: SortBy;
-}
-
-export function getUrlWithSearchParams(
-  clientSearchOption: ClientSearchOptions
-): string {
-  const searchParams: {[key: string]: string} =
-    searchParamsSchema.parse(clientSearchOption);
-
-  // Only add relevant values to the search params. Remove all keys with a empty strings
-  Object.keys(searchParams).forEach(key =>
-    searchParams[key] === '' ? delete searchParams[key] : {}
-  );
-  const encodedSearchParams = new URLSearchParams(searchParams).toString();
-
-  if (encodedSearchParams) {
-    return '/?' + encodedSearchParams;
-  } else {
-    return '/' + encodedSearchParams;
-  }
-}
-
 export interface SearchParams {
   publishers?: string;
   licenses?: string;
@@ -92,7 +33,7 @@ export interface SearchParams {
 }
 
 // Based on https://github.com/colinhacks/zod/issues/316#issuecomment-1024793482
-export function fallback<T>(value: T) {
+function fallback<T>(value: T) {
   return z.any().transform(() => value);
 }
 
@@ -134,7 +75,7 @@ interface SearchOptionsWithRequiredSort extends SearchOptions {
 }
 
 // This function translates the search params to valid search options.
-// Next.js already separate the search query string into separates properties with string values.
+// Next.js already separates the search query string into separate properties with string values.
 export function fromSearchParamsToSearchOptions({
   publishers,
   licenses,

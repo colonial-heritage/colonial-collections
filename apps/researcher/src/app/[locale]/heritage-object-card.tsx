@@ -18,8 +18,8 @@ export default function HeritageObjectCard({heritageObject}: Props) {
       <div className="flex flex-1 flex-col space-y-2 p-6">
         <h2 className="font-semibold text-gray-900 mt-0">
           <Link
-            href={`/heritageObject/${encodeURIComponent(heritageObject.id)}`}
-            data-testid="heritageObject-card-name"
+            href={`/object/${encodeURIComponent(heritageObject.id)}`}
+            data-testid="object-card-name"
             className="text-gray-900"
           >
             <span aria-hidden="true" className="absolute inset-0" />

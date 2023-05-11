@@ -9,6 +9,13 @@ const nextConfig = {
     appDir: true,
     mdxRs: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: '*',
+      },
+    ],
+  },
 };
 
 module.exports = withNextIntl(withMDX(nextConfig));
