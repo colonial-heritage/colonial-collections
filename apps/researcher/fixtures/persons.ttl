@@ -27,9 +27,9 @@
 <https://example.org/persons/2>
   a schema:Person, pnv:Person ;
   schema:birthPlace <https://sws.geonames.org/2759821/> ; # Amersfoort
-  schema:birthDate "1645-12-05"^^xsd:date ;
+  schema:birthDate "1645"^^xsd:gYear ;
   schema:deathPlace <https://sws.geonames.org/2745392/> ; # Vlissingen
-  schema:deathDate "1701-09-29"^^xsd:date ;
+  schema:deathDate "1701"^^xsd:gYear ;
   pnv:hasName [
     a pnv:PersonName ;
     pnv:givenName "Jan" ;
@@ -119,4 +119,47 @@
     pnv:literalName "Welmoed Zuid" ;
   ] ;
   schema:isPartOf <https://example.org/datasets/5> ;
+.
+
+<https://example.org/persons/9>
+  a schema:Person, pnv:Person ;
+  schema:birthPlace <https://sws.geonames.org/2759821/> ; # Amersfoort
+  schema:birthDate "1645-02"^^xsd:gYearMonth ;
+  schema:deathPlace <https://sws.geonames.org/2747891/> ; # Rotterdam
+  schema:deathDate "1701-07"^^xsd:gYearMonth ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Karel" ;
+    pnv:surnamePrefix "van 't" ;
+    pnv:baseSurname "Westen" ;
+    pnv:surname "van 't Westen" ;
+    pnv:literalName "Karel van 't Westen" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/1> ;
+.
+
+<https://example.org/persons/10>
+  a schema:Person, pnv:Person ;
+  schema:birthDate "invalid" ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Ida" ;
+    pnv:baseSurname "Oost" ;
+    pnv:surname "Oost" ;
+    pnv:literalName "Ida Oost" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/1> ;
+.
+
+<https://example.org/persons/11>
+  a schema:Person, pnv:Person ;
+  schema:deathDate "invalid" ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Julienne" ;
+    pnv:baseSurname "Noordwest" ;
+    pnv:surname "Noordwest" ;
+    pnv:literalName "Julienne Noordwest" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/3> ;
 .
