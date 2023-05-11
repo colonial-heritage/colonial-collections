@@ -1,15 +1,40 @@
 import heritageObjectFetcher from '@/lib/heritage-object-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
+import ClientFilters from './client-filters';
 import HeritageObjectList from './heritage-object-list';
+import {
+  fromSearchParamsToSearchOptions,
+  getClientSortBy,
+  SearchParams,
+} from '@/lib/search-params';
+import {ClientListStore} from '@colonial-collections/list-store';
+import {SearchResult} from '@/lib/heritage-fetcher';
+
+// Set the order of the filters
+const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
+  'owners',
+  'types',
+  'subjects',
+];
+
+interface Props {
+  searchParams?: SearchParams;
+}
 
 // Revalidate the page
 export const revalidate = 0;
 
-export default async function Home() {
+export default async function Home({searchParams}: Props) {
+  const searchOptions = fromSearchParamsToSearchOptions(searchParams ?? {});
+  const sortBy = getClientSortBy({
+    sortBy: searchOptions.sortBy,
+    sortOrder: searchOptions.sortOrder,
+  });
+
   let hasError, searchResult;
   try {
-    searchResult = await heritageObjectFetcher.search();
+    searchResult = await heritageObjectFetcher.search(searchOptions);
   } catch (error) {
     hasError = true;
     console.error(error);
@@ -38,10 +63,27 @@ export default async function Home() {
         )}
 
         {searchResult && (
-          <HeritageObjectList
-            heritageObjects={searchResult.heritageObjects}
-            totalCount={searchResult.totalCount}
-          />
+          <>
+            <ClientListStore
+              {...{
+                totalCount: searchResult.totalCount,
+                offset: searchResult.offset,
+                limit: searchResult.limit,
+                query: searchOptions.query ?? '',
+                sortBy,
+                selectedFilters: searchOptions.filters,
+              }}
+            />
+            <ClientFilters
+              filters={searchResult.filters}
+              filterKeysOrder={filterKeysOrder}
+            >
+              <HeritageObjectList
+                heritageObjects={searchResult.heritageObjects}
+                totalCount={searchResult.totalCount}
+              />
+            </ClientFilters>
+          </>
         )}
       </NextIntlClientProvider>
     </div>

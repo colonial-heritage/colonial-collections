@@ -3,17 +3,16 @@ import {
   getClientSortBy,
 } from './search-params';
 import {SortBy, defaultSortBy} from '@colonial-collections/list-store';
-import {SortBy as SortBySearchOption, SortOrder} from '@/lib/datasets';
+import {SortBy as SortBySearchOption, SortOrder} from '@/lib/heritage-fetcher';
 import {describe, expect, it} from '@jest/globals';
 
 describe('fromSearchParamsToSearchOptions', () => {
   it('returns default search options if there are no search params', () => {
     expect(fromSearchParamsToSearchOptions({})).toStrictEqual({
       filters: {
-        licenses: [],
-        publishers: [],
-        spatialCoverages: [],
-        genres: [],
+        owners: [],
+        types: [],
+        subjects: [],
       },
       offset: 0,
       sortBy: 'relevance',
@@ -30,10 +29,9 @@ describe('fromSearchParamsToSearchOptions', () => {
     };
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
       filters: {
-        licenses: [],
-        publishers: [],
-        spatialCoverages: [],
-        genres: [],
+        owners: [],
+        types: [],
+        subjects: [],
       },
       offset: 0,
       sortBy: 'relevance',
@@ -52,10 +50,9 @@ describe('fromSearchParamsToSearchOptions', () => {
     // @ts-expect-error:TS2553
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
       filters: {
-        licenses: [],
-        publishers: [],
-        spatialCoverages: [],
-        genres: [],
+        owners: [],
+        types: [],
+        subjects: [],
       },
       offset: 0,
       sortBy: 'relevance',
@@ -70,18 +67,16 @@ describe('fromSearchParamsToSearchOptions', () => {
       query: 'My query',
       offset: '10',
       sortBy: SortBy.NameAsc,
-      licenses: 'license1,license2',
-      publishers: 'publisher',
-      spatialCoverages: 'spatial-coverage',
-      genres: 'genre',
+      owners: 'owner1,owner2',
+      types: 'type',
+      subjects: 'subject',
     };
     expect(fromSearchParamsToSearchOptions(searchParams)).toStrictEqual({
       query: 'My query',
       filters: {
-        licenses: ['license1', 'license2'],
-        publishers: ['publisher'],
-        spatialCoverages: ['spatial-coverage'],
-        genres: ['genre'],
+        owners: ['owner1', 'owner2'],
+        types: ['type'],
+        subjects: ['subject'],
       },
       offset: 10,
       sortBy: 'name',

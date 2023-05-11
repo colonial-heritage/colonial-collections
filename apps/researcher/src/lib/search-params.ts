@@ -3,7 +3,7 @@ import {
   SortBy as SortBySearchOption,
   SortOrder,
   searchOptionsSchema,
-} from '@/lib/datasets';
+} from '@/lib/heritage-fetcher';
 import {z} from 'zod';
 import {SortBy} from '@colonial-collections/list-store';
 
@@ -23,10 +23,9 @@ const sortMapping = {
 };
 
 export interface SearchParams {
-  publishers?: string;
-  licenses?: string;
-  spatialCoverages?: string;
-  genres?: string;
+  owners?: string;
+  types?: string;
+  subjects?: string;
   query?: string;
   offset?: string;
   sortBy?: SortBy;
@@ -53,10 +52,9 @@ const searchOptionsWithFallbackSchema = searchOptionsSchema.extend({
     .or(fallback(0)),
   filters: z
     .object({
-      publishers: searchOptionsFilterSchema,
-      licenses: searchOptionsFilterSchema,
-      spatialCoverages: searchOptionsFilterSchema,
-      genres: searchOptionsFilterSchema,
+      owners: searchOptionsFilterSchema,
+      types: searchOptionsFilterSchema,
+      subjects: searchOptionsFilterSchema,
     })
     .optional(),
   sortBy: searchOptionsSchema.shape.sortBy.or(
@@ -77,10 +75,9 @@ interface SearchOptionsWithRequiredSort extends SearchOptions {
 // This function translates the search params to valid search options.
 // Next.js already separates the search query string into separate properties with string values.
 export function fromSearchParamsToSearchOptions({
-  publishers,
-  licenses,
-  spatialCoverages,
-  genres,
+  owners,
+  types,
+  subjects,
   query,
   offset,
   sortBy,
@@ -91,10 +88,9 @@ export function fromSearchParamsToSearchOptions({
   return searchOptionsWithFallbackSchema.parse({
     offset,
     filters: {
-      publishers,
-      licenses,
-      spatialCoverages,
-      genres,
+      owners,
+      types,
+      subjects,
     },
     sortBy: sortBySearchOption,
     sortOrder: sortOrder,

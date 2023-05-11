@@ -8,6 +8,16 @@ import {
   getClientSortBy,
   SearchParams,
 } from '@/lib/search-params';
+import {ClientListStore} from '@colonial-collections/list-store';
+import {SearchResult} from '@/lib/datasets';
+
+// Set the order of the filters
+const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
+  'publishers',
+  'spatialCoverages',
+  'genres',
+  'licenses',
+];
 
 interface Props {
   searchParams?: SearchParams;
@@ -54,18 +64,27 @@ export default async function Home({searchParams}: Props) {
         )}
 
         {searchResult && (
-          <ClientFilters
-            searchOptions={searchOptions}
-            sortBy={sortBy}
-            filters={searchResult.filters}
-            limit={searchResult.limit}
-            totalCount={searchResult.totalCount}
-          >
-            <DatasetList
-              datasets={searchResult.datasets}
-              totalCount={searchResult.totalCount}
+          <>
+            <ClientListStore
+              {...{
+                totalCount: searchResult.totalCount,
+                offset: searchResult.offset,
+                limit: searchResult.limit,
+                query: searchOptions.query ?? '',
+                sortBy,
+                selectedFilters: searchOptions.filters,
+              }}
             />
-          </ClientFilters>
+            <ClientFilters
+              filters={searchResult.filters}
+              filterKeysOrder={filterKeysOrder}
+            >
+              <DatasetList
+                datasets={searchResult.datasets}
+                totalCount={searchResult.totalCount}
+              />
+            </ClientFilters>
+          </>
         )}
       </NextIntlClientProvider>
     </div>
