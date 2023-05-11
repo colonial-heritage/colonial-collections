@@ -41,5 +41,25 @@
   },
   "HeritageObjectCard": {
     "HeritageObject": "Heritage object"
+  },
+  "Details": {
+    "backButton": "Back to results",
+    "notImplemented": "Not implemented",
+    "noData": "No Data",
+    "description": "Description",
+    "date": "Date",
+    "owner": "Owner",
+    "handle": "Handle",
+    "license": "License",
+    "moreInfo": "More info",
+    "materials": "Materials",
+    "techniques": "Techniques",
+    "creators": "Creators",
+    "inscriptions": "Inscriptions",
+    "saveButton": "Save object",
+    "shareButton": "Share object",
+    "relatedPersons": "Related Persons",
+    "origin": "Origin",
+    "discussion": "Discussion"
   }
 }

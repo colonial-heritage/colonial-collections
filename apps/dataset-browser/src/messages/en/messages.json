@@ -54,6 +54,7 @@
     "back": "Back to datasets",
     "navigation": {
       "about": "About",
+      "measurements": "Transparency measurements",
       "metadata": "Metadata"
     },
     "metadata": {
@@ -65,6 +66,10 @@
       "dateCreated": "Date created",
       "dateModified": "Date modified",
       "keywords": "Keywords"
+    },
+    "measurements": {
+      "title": "Transparency measurements",
+      "moreInfo": "Learn more on the transparency measurements and how to improve them."
     }
   },
   "Register": {
@@ -72,5 +77,44 @@
   },
   "NotFound": {
     "title": "This page was not found (404)"
+  },
+  "TransparencyMetrics": {
+    "unknown": "Unknown",
+    "https://data%2Ecolonialcollections%2Enl/metrics#open-license": {
+      "shortTitle": "Open license",
+      "longTitle": "Open license",
+      "descriptionTrue": "The dataset is available with an open license.",
+      "descriptionFalse": "The dataset is not available with an open license."
+    },
+    "https://data%2Ecolonialcollections%2Enl/metrics#languages": {
+      "shortTitle": "Languages",
+      "longTitle": "Languages",
+      "descriptionTrue": "The dataset makes clear in which language(s) it is available.",
+      "descriptionFalse": "The dataset does not make clear in which language(s) it is available."
+    },
+    "https://data%2Ecolonialcollections%2Enl/metrics#online": {
+      "shortTitle": "Online",
+      "longTitle": "Downloadable or accessible online",
+      "descriptionTrue": "The dataset is downloadable or accessible online.",
+      "descriptionFalse": "The dataset is not downloadable or accessible online."
+    },
+    "https://data%2Ecolonialcollections%2Enl/metrics#structured-format": {
+      "shortTitle": "Structured format",
+      "longTitle": "Structured format",
+      "descriptionTrue": "The dataset is available in a structured format (e.g. Excel).",
+      "descriptionFalse": "The dataset is not available in a structured format (e.g. Excel)"
+    },
+    "https://data%2Ecolonialcollections%2Enl/metrics#open-format": {
+      "shortTitle": "Open format",
+      "longTitle": "Open format",
+      "descriptionTrue": "The dataset is available in an open format (e.g. comma-separated values).",
+      "descriptionFalse": "The dataset is not available in an open format (e.g. comma-separated values)."
+    },
+    "https://data%2Ecolonialcollections%2Enl/metrics#rdf-format": {
+      "shortTitle": "RDF format",
+      "longTitle": "RDF format",
+      "descriptionTrue": "The dataset is available in an RDF format.",
+      "descriptionFalse": "The dataset is not available in an RDF format."
+    }
   }
 }

@@ -41,5 +41,25 @@
   },
   "HeritageObjectCard": {
     "HeritageObject": "Erfgoedobject"
+  },
+  "Details": {
+    "backButton": "Terug naar resultaten",
+    "notImplemented": "Niet geïmplementeerd",
+    "noData": "Geen gegevens",
+    "description": "Beschrijving",
+    "date": "Datum",
+    "owner": "Eigenaar",
+    "handle": "Handle",
+    "license": "Licentie",
+    "moreInfo": "Meer informatie",
+    "materials": "Materialen",
+    "techniques": "Technieken",
+    "creators": "Makers",
+    "inscriptions": "Inscripties",
+    "saveButton": "Object opslaan",
+    "shareButton": "Object delen",
+    "relatedPersons": "Verwante personen",
+    "origin": "Oorsprong",
+    "discussion": "Discussie"
   }
 }

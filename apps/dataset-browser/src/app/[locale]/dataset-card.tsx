@@ -7,9 +7,12 @@ import {
   BuildingLibraryIcon,
 } from '@heroicons/react/24/solid';
 import {DocumentCheckIcon, TagIcon} from '@heroicons/react/24/outline';
+import BooleanMeasurement from '@/components/boolean-measurement';
+import metricIds from '@/lib/transparency-metrics';
 
 export default function DatasetCard({dataset}: {dataset: Dataset}) {
   const t = useTranslations('DatasetCard');
+  const tMetrics = useTranslations('TransparencyMetrics');
 
   return (
     <div
@@ -29,6 +32,34 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
           </Link>
         </h2>
         <p className="text-base text-gray-900">{dataset.description}</p>
+        <div className="inline-flex items-stretch border border-neutral-100 flex-wrap">
+          {metricIds.map(metricId => {
+            const measurement = dataset.measurements?.find(
+              measurement => measurement.metric.id === metricId
+            );
+
+            return (
+              <div
+                key={metricId}
+                className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-gray-100"
+              >
+                <div className="flex flex-col items-center justify-end h-full w-full">
+                  {/* Language keys can not contain a '.'. */}
+                  {tMetrics(`${metricId.replace(/\./g, '%2E')}.shortTitle`)}
+                </div>
+                {measurement ? (
+                  <div className="flex flex-col items-center justify-end h-full w-full shrink">
+                    <BooleanMeasurement value={measurement.value} />
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-end h-full w-full shrink text-gray-400">
+                    {tMetrics('unknown')}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
         <div className="mt-2 flex flex-wrap">
           <Badge variant="gray">
             <Badge.Icon Icon={BuildingLibraryIcon} variant="solid" />

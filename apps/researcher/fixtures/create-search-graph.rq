@@ -7,6 +7,7 @@
 PREFIX cc: <https://colonialcollections.nl/search#> # Internal, undocumented ontology
 PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
 PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dig: <http://www.ics.forth.gr/isl/CRMdig/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX la: <https://linked.art/ns/terms/>
 PREFIX schema: <http://schema.org/> # Not the https version!
@@ -29,6 +30,7 @@ CONSTRUCT {
     cc:creator ?creator ;
     cc:dateCreatedStart ?beginOfTheBegin ;
     cc:dateCreatedEnd ?endOfTheEnd ;
+    cc:image ?contentUrl ; # TBD: may need to change this to ImageObject if e.g. MIME type matters
     # To allow for search actions based on name
     cc:typeName ?typeName ;
     cc:aboutName ?aboutName ;
@@ -193,5 +195,16 @@ WHERE {
     ?object crm:P108i_was_produced_by/crm:P4_has_time-span ?timeSpan .
     ?timeSpan crm:P82a_begin_of_the_begin ?beginOfTheBegin ;
       crm:P82b_end_of_the_end ?endOfTheEnd .
+  }
+
+  ####################
+  # Image
+  ####################
+
+  OPTIONAL {
+    ?object crm:P65_shows_visual_item/la:digitally_shown_by ?digitalObject .
+    ?digitalObject a dig:D1_Digital_Object ;
+      crm:P2_has_type <http://vocab.getty.edu/aat/300215302> ; # Digital image
+      la:access_point ?contentUrl .
   }
 }
