@@ -28,13 +28,21 @@
   },
   "Navigation": {
     "name": "app",
-    "home": "Home"
+    "home": "Home",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact"
   },
   "LanguageSelector": {
     "nl": "Nederlands",
     "en": "English",
     "accessibilityLanguageSelector": "Select to change the language of the site. The current language is {language}",
     "accessibilityOpenMenu": "Open menu"
+  },
+  "ScreenReaderMenu": {
+    "jumpFilters": "Jump to filter facets",
+    "jumpResults": "Jump to results",
+    "jumpNavigation": "Jump to main navigation"
   },
   "NotFound": {
     "title": "This page was not found (404)"
