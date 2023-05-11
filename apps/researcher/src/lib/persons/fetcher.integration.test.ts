@@ -29,18 +29,15 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/1',
           name: 'Michiel Adriaensz. de Ruyter',
-          identifier: '1234',
           birthPlace: {id: 'Flushing', name: 'Flushing'},
           birthDate: new Date('1607-03-24'),
           deathPlace: {id: 'Syracuse', name: 'Syracuse'},
           deathDate: new Date('1676-04-29'),
-          militaryRank: 'luitenant-admiraal-generaal',
           isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
         {
           id: 'https://example.org/persons/2',
           name: 'Jan de Vries',
-          identifier: '5678',
           birthPlace: {id: 'Amersfoort', name: 'Amersfoort'},
           birthDate: new Date('1645-12-05'),
           deathPlace: {id: 'Flushing', name: 'Flushing'},
@@ -50,7 +47,6 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/3',
           name: 'Kees Jansen',
-          identifier: '9012',
           birthPlace: {id: 'Groningen', name: 'Groningen'},
           birthDate: new Date('1645-12-05'),
           deathPlace: {id: 'Jakarta', name: 'Jakarta'},
@@ -59,7 +55,6 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/4',
           name: 'Gert Nooitgedacht',
-          identifier: '3456',
           birthPlace: {id: 'Bali', name: 'Bali'},
           birthDate: new Date('1815-09-27'),
           isPartOf: {id: 'https://example.org/datasets/3', name: 'Dataset 3'},
@@ -67,21 +62,18 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/5',
           name: 'Beatrice Vlieger',
-          identifier: '7890',
           birthPlace: {id: 'Rotterdam', name: 'Rotterdam'},
           isPartOf: {id: 'https://example.org/datasets/4', name: 'Dataset 4'},
         },
         {
           id: 'https://example.org/persons/6',
           name: 'Geeske van Châtellerault',
-          identifier: '7890',
           birthPlace: {id: 'New York', name: 'New York'},
           isPartOf: {id: 'https://example.org/datasets/4', name: 'Dataset 4'},
         },
         {
           id: 'https://example.org/persons/7',
           name: 'Theodora Noord',
-          identifier: '1234',
           isPartOf: {id: 'https://example.org/datasets/5', name: 'Dataset 5'},
         },
         {
@@ -126,12 +118,10 @@ describe('getById', () => {
     expect(person).toStrictEqual({
       id: 'https://example.org/persons/1',
       name: 'Michiel Adriaensz. de Ruyter',
-      identifier: '1234',
       birthPlace: {id: 'Flushing', name: 'Flushing'},
       birthDate: new Date('1607-03-24'),
       deathPlace: {id: 'Syracuse', name: 'Syracuse'},
       deathDate: new Date('1676-04-29'),
-      militaryRank: 'luitenant-admiraal-generaal',
       isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
     });
   });

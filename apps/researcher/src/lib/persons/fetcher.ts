@@ -15,13 +15,11 @@ export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 enum RawKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
-  Identifier = 'https://colonialcollections nl/search#identifier',
   Name = 'https://colonialcollections nl/search#name',
   BirthPlace = 'https://colonialcollections nl/search#birthPlaceName', // Replace with 'birthPlace' as soon as we have IRIs
   BirthDate = 'https://colonialcollections nl/search#birthDate',
   DeathPlace = 'https://colonialcollections nl/search#deathPlaceName', // Replace with 'deathPlace' as soon as we have IRIs
   DeathDate = 'https://colonialcollections nl/search#deathDate',
-  MilitaryRank = 'https://colonialcollections nl/search#militaryRank',
   IsPartOf = 'https://colonialcollections nl/search#isPartOf',
 }
 
@@ -35,13 +33,11 @@ export type Place = Thing;
 
 export type Person = {
   id: string;
-  identifier?: string; // TBD: can be more than 1?
   name: string; // TBD: always exists?
   birthPlace?: Place;
   birthDate?: Date; // TBD: may not be a valid date?
   deathPlace?: Place;
   deathDate?: Date; // TBD: may not be a valid date?
-  militaryRank?: string;
   isPartOf: Dataset;
 };
 
@@ -86,13 +82,11 @@ const dateSchema = z.coerce.date();
 const rawPersonSchema = z
   .object({})
   .setKey(RawKeys.Id, z.string())
-  .setKey(RawKeys.Identifier, z.array(z.string()).optional())
   .setKey(RawKeys.Name, z.array(z.string()).min(1))
   .setKey(RawKeys.BirthPlace, z.array(z.string()).optional())
   .setKey(RawKeys.BirthDate, z.array(dateSchema).optional())
   .setKey(RawKeys.DeathPlace, z.array(z.string()).optional())
   .setKey(RawKeys.DeathDate, z.array(dateSchema).optional())
-  .setKey(RawKeys.MilitaryRank, z.array(z.string()).optional())
   .setKey(RawKeys.IsPartOf, z.array(z.string()).min(1));
 
 type RawPerson = z.infer<typeof rawPersonSchema>;
@@ -201,10 +195,8 @@ export class PersonFetcher {
   // Map the response to our internal model
   private fromRawPersonToPerson(rawPerson: RawPerson): Person {
     const name = reach(rawPerson, `${RawKeys.Name}.0`);
-    const identifier = reach(rawPerson, `${RawKeys.Identifier}.0`);
     const birthDate = reach(rawPerson, `${RawKeys.BirthDate}.0`);
     const deathDate = reach(rawPerson, `${RawKeys.DeathDate}.0`);
-    const militaryRank = reach(rawPerson, `${RawKeys.MilitaryRank}.0`);
 
     const datasetIri = reach(rawPerson, `${RawKeys.IsPartOf}.0`);
     const dataset: Dataset = {
@@ -232,12 +224,10 @@ export class PersonFetcher {
     const personWithUndefinedValues: Person = {
       id: rawPerson[RawKeys.Id],
       name,
-      identifier,
       birthPlace,
       birthDate,
       deathPlace,
       deathDate,
-      militaryRank,
       isPartOf: dataset,
     };
 
