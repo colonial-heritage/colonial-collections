@@ -33,7 +33,7 @@ export interface SearchParams {
 }
 
 // Based on https://github.com/colinhacks/zod/issues/316#issuecomment-1024793482
-export function fallback<T>(value: T) {
+function fallback<T>(value: T) {
   return z.any().transform(() => value);
 }
 
