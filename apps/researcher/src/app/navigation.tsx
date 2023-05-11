@@ -19,6 +19,9 @@ interface Props {
   navigationLabels: {
     name: string;
     home: string;
+    about: string;
+    faq: string;
+    contact: string;
   };
   languageSelectorLabels: {
     accessibilityLanguageSelector: string;
@@ -36,7 +39,12 @@ export default function Navigation({
 }: Props) {
   const pathname = usePathname();
 
-  const navigation = [{name: navigationLabels.home, href: '/'}];
+  const navigation = [
+    {name: navigationLabels.home, href: '/'},
+    {name: navigationLabels.about, href: '/about'},
+    {name: navigationLabels.faq, href: '/faq'},
+    {name: navigationLabels.contact, href: '/contact'},
+  ];
 
   return (
     <>
