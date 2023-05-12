@@ -18,8 +18,10 @@ enum RawKeys {
   Name = 'https://colonialcollections nl/search#name',
   BirthPlace = 'https://colonialcollections nl/search#birthPlaceName', // Replace with 'birthPlace' as soon as we have IRIs
   BirthDate = 'https://colonialcollections nl/search#birthDate',
+  BirthYear = 'https://colonialcollections nl/search#birthYear',
   DeathPlace = 'https://colonialcollections nl/search#deathPlaceName', // Replace with 'deathPlace' as soon as we have IRIs
   DeathDate = 'https://colonialcollections nl/search#deathDate',
+  DeathYear = 'https://colonialcollections nl/search#deathYear',
   IsPartOf = 'https://colonialcollections nl/search#isPartOf',
 }
 
@@ -35,9 +37,9 @@ export type Person = {
   id: string;
   name: string; // TBD: always exists?
   birthPlace?: Place;
-  birthDate?: Date; // TBD: may not be a valid date?
+  birthDate?: Date; // TBD: always a valid date?
   deathPlace?: Place;
-  deathDate?: Date; // TBD: may not be a valid date?
+  deathDate?: Date; // TBD: always a valid date?
   isPartOf: Dataset;
 };
 
@@ -69,7 +71,9 @@ export const searchOptionsSchema = z.object({
   sortOrder: SortOrderEnum.optional().default(SortOrder.Descending),
   filters: z
     .object({
+      birthYears: z.array(z.string()).optional().default([]),
       birthPlaces: z.array(z.string()).optional().default([]),
+      deathYears: z.array(z.string()).optional().default([]),
       deathPlaces: z.array(z.string()).optional().default([]),
     })
     .optional(),
@@ -121,10 +125,14 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
   z.object({
     aggregations: z.object({
       all: z.object({
+        birthYears: rawAggregationSchema,
         birthPlaces: rawAggregationSchema,
+        deathYears: rawAggregationSchema,
         deathPlaces: rawAggregationSchema,
       }),
+      birthYears: rawAggregationSchema,
       birthPlaces: rawAggregationSchema,
+      deathYears: rawAggregationSchema,
       deathPlaces: rawAggregationSchema,
     }),
   })
@@ -144,7 +152,9 @@ export type SearchResult = {
   sortOrder: SortOrder;
   persons: Person[];
   filters: {
+    birthYears: SearchResultFilter[];
     birthPlaces: SearchResultFilter[];
+    deathYears: SearchResultFilter[];
     deathPlaces: SearchResultFilter[];
   };
 };
@@ -240,7 +250,9 @@ export class PersonFetcher {
 
   private buildSearchRequest(options: SearchOptions) {
     const aggregations = {
+      birthYears: buildAggregation(RawKeys.BirthYear),
       birthPlaces: buildAggregation(RawKeys.BirthPlace),
+      deathYears: buildAggregation(RawKeys.DeathYear),
       deathPlaces: buildAggregation(RawKeys.DeathPlace),
     };
 
@@ -296,7 +308,9 @@ export class PersonFetcher {
     };
 
     const queryFilters: Map<string, string[] | undefined> = new Map([
+      [RawKeys.BirthYear, options.filters?.birthYears],
       [RawKeys.BirthPlace, options.filters?.birthPlaces],
+      [RawKeys.DeathYear, options.filters?.deathYears],
       [RawKeys.DeathPlace, options.filters?.deathPlaces],
     ]);
 
@@ -324,9 +338,19 @@ export class PersonFetcher {
       return this.fromRawPersonToPerson(rawPerson);
     });
 
+    const birthYearFilters = buildFilters(
+      aggregations.all.birthYears.buckets,
+      aggregations.birthYears.buckets
+    );
+
     const birthPlaceFilters = buildFilters(
       aggregations.all.birthPlaces.buckets,
       aggregations.birthPlaces.buckets
+    );
+
+    const deathYearFilters = buildFilters(
+      aggregations.all.deathYears.buckets,
+      aggregations.deathYears.buckets
     );
 
     const deathPlacesFilters = buildFilters(
@@ -342,7 +366,9 @@ export class PersonFetcher {
       sortOrder: options.sortOrder!,
       persons,
       filters: {
+        birthYears: birthYearFilters,
         birthPlaces: birthPlaceFilters,
+        deathYears: deathYearFilters,
         deathPlaces: deathPlacesFilters,
       },
     };
