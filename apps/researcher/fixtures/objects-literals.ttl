@@ -1,18 +1,30 @@
 ###############################
-# Sample data for testing
+# Sample data for testing, with literals instead of IRIs from terminology sources
 ###############################
 
 @prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
 @prefix dig: <http://www.ics.forth.gr/isl/CRMdig/> .
 @prefix la: <https://linked.art/ns/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://example.org/objects/1>
   a crm:E22_Human-Made_Object ;
-  crm:P2_has_type <http://vocab.getty.edu/aat/300033618> ; # Painting
-  crm:P45_consists_of <http://vocab.getty.edu/aat/300015050> , # Oilpaint
-                      <http://vocab.getty.edu/aat/300014078> ; # Canvas
-  crm:P62_depicts <http://vocab.getty.edu/aat/300152441> ; # Celebrations
+  crm:P2_has_type [
+    a crm:E55_Type ;
+    rdfs:label "Painting"
+  ] ;
+  crm:P45_consists_of [
+    a crm:E57_Material ;
+    rdfs:label "Oilpaint"
+  ] , [
+    a crm:E57_Material ;
+    rdfs:label "Canvas"
+  ] ;
+  crm:P62_depicts [
+    a crm:E1_CRM_Entity ;
+    rdfs:label "Celebrations"
+  ] ;
   crm:P52_has_current_owner <https://museum.example.org/> ;
   la:member_of <https://example.org/datasets/1> ;
   crm:P1_is_identified_by [
@@ -46,7 +58,10 @@
   ] ;
   crm:P108i_was_produced_by [
     a crm:E12_Production ;
-    crm:P14_carried_out_by <https://data.rkd.nl/artists/32439> ; # Vincent van Gogh
+    crm:P14_carried_out_by [
+      a crm:E39_Actor ;
+      rdfs:label "Vincent van Gogh"
+    ] ;
     crm:P4_has_time-span [
       a crm:E52_Time-Span ;
       crm:P82a_begin_of_the_begin "1889"^^xsd:gYear ;
@@ -69,9 +84,18 @@
 
 <https://example.org/objects/2>
   a crm:E22_Human-Made_Object ;
-  crm:P2_has_type <http://vocab.getty.edu/aat/300046300> ; # Photo
-  crm:P45_consists_of <http://vocab.getty.edu/aat/300014109> ; # Paper
-  crm:P62_depicts <http://vocab.getty.edu/aat/300005734> ; # Palace
+  crm:P2_has_type [
+    a crm:E55_Type ;
+    rdfs:label "Photo"
+  ] ;
+  crm:P45_consists_of [
+    a crm:E57_Material ;
+    rdfs:label "Paper"
+  ] ;
+  crm:P62_depicts [
+    a crm:E1_CRM_Entity ;
+    rdfs:label "Palace"
+  ] ;
   crm:P52_has_current_owner <https://research.example.org/> ;
   la:member_of <https://example.org/datasets/13> ;
   crm:P1_is_identified_by [
@@ -105,8 +129,14 @@
   ] ;
   crm:P108i_was_produced_by [
     a crm:E12_Production ;
-    crm:P32_used_general_technique <http://vocab.getty.edu/aat/300133274> ; # Albumen process
-    crm:P14_carried_out_by <https://data.rkd.nl/artists/120388> ; # Adriaan Boer
+    crm:P32_used_general_technique [
+      a crm:E55_Type ;
+      rdfs:label "Albumen process"
+    ] ;
+    crm:P14_carried_out_by [
+      a crm:E39_Actor ;
+      rdfs:label "Adriaan Boer"
+    ] ;
     crm:P4_has_time-span [
       a crm:E52_Time-Span ;
       crm:P82a_begin_of_the_begin "1895"^^xsd:gYear ;
@@ -125,11 +155,24 @@
 
 <https://example.org/objects/3>
   a crm:E22_Human-Made_Object ;
-  crm:P2_has_type <http://vocab.getty.edu/aat/300033973> ; # Drawing
-  crm:P45_consists_of <http://vocab.getty.edu/aat/300014109> , # Paper
-                      <http://vocab.getty.edu/aat/300015012> ; # Ink
-  crm:P62_depicts <http://vocab.getty.edu/aat/300006891> , # Castle
-                  <http://vocab.getty.edu/aat/300005500> ; # Cottage
+  crm:P2_has_type [
+    a crm:E55_Type ;
+    rdfs:label "Drawing"
+  ] ;
+  crm:P45_consists_of [
+    a crm:E57_Material ;
+    rdfs:label "Paper"
+  ] , [
+    a crm:E57_Material ;
+    rdfs:label "Ink"
+  ] ;
+  crm:P62_depicts [
+    a crm:E1_CRM_Entity ;
+    rdfs:label "Castle"
+  ] , [
+    a crm:E1_CRM_Entity ;
+    rdfs:label "Cottage"
+  ] ;
   crm:P52_has_current_owner <https://library.example.org/> ;
   la:member_of <https://example.org/datasets/10> ;
   crm:P1_is_identified_by [

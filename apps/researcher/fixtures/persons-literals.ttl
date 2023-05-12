@@ -1,0 +1,198 @@
+###############################
+# Sample data for testing, with literals instead of IRIs from terminology sources
+###############################
+
+@prefix pnv: <https://w3id.org/pnv#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/persons/1>
+  a schema:Person, pnv:Person ;
+  schema:birthPlace [
+    a schema:Place ;
+    schema:name "Vlissingen" ;
+  ] ;
+  schema:birthDate "1607-03-24"^^xsd:date ;
+  schema:deathPlace [
+    a schema:Place ;
+    schema:name "Syracuse" ;
+  ] ;
+  schema:deathDate "1676-04-29"^^xsd:date ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Michiel" ;
+    pnv:patronym "Adriaensz." ;
+    pnv:surnamePrefix "de" ;
+    pnv:baseSurname "Ruyter" ;
+    pnv:surname "de Ruyter" ;
+    pnv:literalName "Michiel Adriaensz. de Ruyter" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/1> ;
+.
+
+<https://example.org/persons/2>
+  a schema:Person, pnv:Person ;
+  schema:birthPlace [
+    a schema:Place ;
+    schema:name "Vlissienge" ;
+  ] ;
+  schema:birthDate "1645"^^xsd:gYear ;
+  schema:deathPlace [
+    a schema:Place ;
+    schema:name "Amersfoort" ;
+  ] ;
+  schema:deathDate "1701"^^xsd:gYear ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Jan" ;
+    pnv:surnamePrefix "de" ;
+    pnv:baseSurname "Vries" ;
+    pnv:surname "de Vries" ;
+    pnv:literalName "Jan de Vries" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/1> ;
+.
+
+<https://example.org/persons/3>
+  a schema:Person, pnv:Person ;
+  schema:birthPlace [
+    a schema:Place ;
+    schema:name "Groningen" ;
+  ] ;
+  schema:birthDate "1645-12-05"^^xsd:date ;
+  schema:deathPlace [
+    a schema:Place ;
+    schema:name "Jakarta" ;
+  ] ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Kees" ;
+    pnv:baseSurname "Jansen" ;
+    pnv:surname "Jansen" ;
+    pnv:literalName "Kees Jansen" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/3> ;
+.
+
+<https://example.org/persons/4>
+  a schema:Person, pnv:Person ;
+  schema:birthPlace [
+    a schema:Place ;
+    schema:name "Batavia" ;
+  ] ;
+  schema:birthDate "1815-09-27"^^xsd:date ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Gert" ;
+    pnv:baseSurname "Nooitgedacht" ;
+    pnv:surname "Nooitgedacht" ;
+    pnv:literalName "Gert Nooitgedacht" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/3> ;
+.
+
+<https://example.org/persons/5>
+  a schema:Person, pnv:Person ;
+  schema:birthPlace [
+    a schema:Place ;
+    schema:name "Rotterdam" ;
+  ] ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Beatrice" ;
+    pnv:baseSurname "Vlieger" ;
+    pnv:surname "Vlieger" ;
+    pnv:literalName "Beatrice Vlieger" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/4> ;
+.
+
+<https://example.org/persons/6>
+  a schema:Person, pnv:Person ;
+  schema:birthPlace [
+    a schema:Place ;
+    schema:name "New York" ;
+  ] ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Geeske" ;
+    pnv:surnamePrefix "van" ;
+    pnv:baseSurname "Châtellerault" ;
+    pnv:surname "van Châtellerault" ;
+    pnv:literalName "Geeske van Châtellerault" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/4> ;
+.
+
+<https://example.org/persons/7>
+  a schema:Person, pnv:Person ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Theodora" ;
+    pnv:baseSurname "Noord" ;
+    pnv:surname "Noord" ;
+    pnv:literalName "Theodora Noord" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/5> ;
+.
+
+<https://example.org/persons/8>
+  a schema:Person, pnv:Person ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Welmoed" ;
+    pnv:baseSurname "Zuid" ;
+    pnv:surname "Zuid" ;
+    pnv:literalName "Welmoed Zuid" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/5> ;
+.
+
+<https://example.org/persons/9>
+  a schema:Person, pnv:Person ;
+  schema:birthPlace [
+    a schema:Place ;
+    schema:name "Rotterdam" ;
+  ] ;
+  schema:birthDate "1645-02"^^xsd:gYearMonth ;
+  schema:deathPlace [
+    a schema:Place ;
+    schema:name "Amersfoort" ;
+  ] ;
+  schema:deathDate "1701-07"^^xsd:gYearMonth ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Karel" ;
+    pnv:surnamePrefix "van 't" ;
+    pnv:baseSurname "Westen" ;
+    pnv:surname "van 't Westen" ;
+    pnv:literalName "Karel van 't Westen" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/1> ;
+.
+
+<https://example.org/persons/10>
+  a schema:Person, pnv:Person ;
+  schema:birthDate "invalid" ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Ida" ;
+    pnv:baseSurname "Oost" ;
+    pnv:surname "Oost" ;
+    pnv:literalName "Ida Oost" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/1> ;
+.
+
+<https://example.org/persons/11>
+  a schema:Person, pnv:Person ;
+  schema:deathDate "invalid" ;
+  pnv:hasName [
+    a pnv:PersonName ;
+    pnv:givenName "Julienne" ;
+    pnv:baseSurname "Noordwest" ;
+    pnv:surname "Noordwest" ;
+    pnv:literalName "Julienne Noordwest" ;
+  ] ;
+  schema:isPartOf <https://example.org/datasets/3> ;
+.
