@@ -3,7 +3,7 @@ import {
   getClientSortBy,
 } from './search-params';
 import {SortBy, defaultSortBy} from '@colonial-collections/list-store';
-import {SortBy as SortBySearchOption, SortOrder} from '@/lib/heritage-fetcher';
+import {SortBy as SortBySearchOption, SortOrder} from '@/lib/objects';
 import {describe, expect, it} from '@jest/globals';
 
 describe('fromSearchParamsToSearchOptions', () => {

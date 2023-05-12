@@ -2,7 +2,7 @@ import {useTranslations} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import {PageHeader, PageTitle} from 'ui';
 import objectFetcher from '@/lib/heritage-object-fetcher-instance';
-import {HeritageObject} from '@/lib/heritage-fetcher';
+import {HeritageObject} from '@/lib/objects';
 import {Link} from 'next-intl';
 import Image from 'next/image';
 import {ReactNode} from 'react';

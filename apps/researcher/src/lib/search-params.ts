@@ -3,7 +3,7 @@ import {
   SortBy as SortBySearchOption,
   SortOrder,
   searchOptionsSchema,
-} from '@/lib/heritage-fetcher';
+} from '@/lib/objects';
 import {z} from 'zod';
 import {SortBy} from '@colonial-collections/list-store';
 
