@@ -1,4 +1,4 @@
-import {HeritageFetcher} from '.';
+import {HeritageObjectFetcher} from '.';
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
@@ -6,10 +6,10 @@ import {env} from 'node:process';
 const labelFetcher = new LabelFetcher({
   endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
 });
-let heritageFetcher: HeritageFetcher;
+let heritageObjectFetcher: HeritageObjectFetcher;
 
 beforeEach(() => {
-  heritageFetcher = new HeritageFetcher({
+  heritageObjectFetcher = new HeritageObjectFetcher({
     endpointUrl: env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
     labelFetcher,
   });
@@ -17,7 +17,7 @@ beforeEach(() => {
 
 describe('search', () => {
   it('finds all heritage objects if no options are provided', async () => {
-    const result = await heritageFetcher.search();
+    const result = await heritageObjectFetcher.search();
 
     expect(result).toStrictEqual({
       totalCount: 4,
@@ -207,7 +207,7 @@ describe('search', () => {
 
 describe('getById', () => {
   it('returns undefined if no heritage object matches the ID', async () => {
-    const heritageObject = await heritageFetcher.getById({
+    const heritageObject = await heritageObjectFetcher.getById({
       id: 'AnIdThatDoesNotExist',
     });
 
@@ -215,7 +215,7 @@ describe('getById', () => {
   });
 
   it('returns the heritage object that matches the ID', async () => {
-    const heritageObject = await heritageFetcher.getById({
+    const heritageObject = await heritageObjectFetcher.getById({
       id: 'https://example.org/objects/1',
     });
 
