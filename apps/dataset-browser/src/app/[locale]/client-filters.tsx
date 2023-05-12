@@ -177,10 +177,6 @@ export default function ClientFilters({
               searchResultFilters: filters[filterKey] ?? [],
               filterKey,
             }))}
-            query={{
-              value: listStore.query,
-              setQuery: listStore.queryChange,
-            }}
           />
         </PageHeader>
 

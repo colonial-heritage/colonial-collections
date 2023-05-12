@@ -1,6 +1,5 @@
 'use client';
 
-import {Dispatch} from 'react';
 import {useTranslations} from 'next-intl';
 import {Badge} from '../badge';
 import {useListStore} from '@colonial-collections/list-store';
@@ -11,10 +10,6 @@ interface Props {
     searchResultFilters: SearchResultFilter[];
     filterKey: string;
   }[];
-  query: {
-    value: string;
-    setQuery: Dispatch<string>;
-  };
 }
 
 interface ClearSelectedFilterProps {
@@ -22,13 +17,13 @@ interface ClearSelectedFilterProps {
   filterKey: string;
 }
 
-export function SelectedFilters({filters, query}: Props) {
+export function SelectedFilters({filters}: Props) {
   const t = useTranslations('Home');
-  const {selectedFilters, filterChange} = useListStore();
+  const {query, selectedFilters, filterChange, queryChange} = useListStore();
 
   // Only show this component if there are active filters.
   if (
-    !query.value &&
+    !query &&
     !filters.filter(filter => selectedFilters[filter.filterKey]?.length).length
   ) {
     return null;
@@ -42,7 +37,7 @@ export function SelectedFilters({filters, query}: Props) {
   }
 
   function clearQuery() {
-    query.setQuery('');
+    queryChange('');
   }
 
   function clearAllFilters() {
@@ -81,9 +76,9 @@ export function SelectedFilters({filters, query}: Props) {
             ))
           );
         })}
-        {query.value && (
+        {query && (
           <Badge testId="selectedFilter">
-            {query.value}
+            {query}
             <Badge.Action onClick={clearQuery} />
           </Badge>
         )}
