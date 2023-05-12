@@ -1,4 +1,4 @@
-import {SearchResultFilter} from '@/lib/heritage-fetcher';
+import {SearchResultFilter} from '@/lib/objects';
 import {useCallback, useState, useMemo, Dispatch} from 'react';
 import {useTranslations} from 'next-intl';
 import {
