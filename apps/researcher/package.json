@@ -24,7 +24,6 @@
     "@colonial-collections/iris": "*",
     "@colonial-collections/label-fetcher": "*",
     "@colonial-collections/list-store": "*",
-    "@floating-ui/react": "0.23.1",
     "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.14",
     "@heroicons/react": "2.0.17",

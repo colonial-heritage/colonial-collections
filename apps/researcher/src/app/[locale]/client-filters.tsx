@@ -2,11 +2,9 @@
 
 import {useState, ReactNode, Fragment, useMemo} from 'react';
 import {SearchResult} from '@/lib/objects';
-import FilterSet from './filter-set';
-import Paginator from './paginator';
+import {FilterSet, Paginator, SelectedFilters} from 'ui/list';
 import {PageTitle, PageHeader} from 'ui';
 import {useTranslations} from 'next-intl';
-import SelectedFilters from './selected-filters';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
@@ -68,10 +66,7 @@ export default function ClientFilters({
                 key={filterKey}
                 title={t(`${filterKey}Filter`)}
                 searchResultFilters={filters[filterKey]}
-                selectedFilters={listStore.selectedFilters[filterKey] || []}
-                setSelectedFilters={selectedFilters =>
-                  listStore.filterChange(filterKey, selectedFilters)
-                }
+                filterKey={filterKey}
                 testId={`${filterKey}Filter`}
               />
             )
@@ -180,9 +175,7 @@ export default function ClientFilters({
           <SelectedFilters
             filters={filterKeysOrder.map(filterKey => ({
               searchResultFilters: filters[filterKey] ?? [],
-              selectedFilters: listStore.selectedFilters[filterKey] ?? [],
-              setSelectedFilters: selectedFilters =>
-                listStore.filterChange(filterKey, selectedFilters),
+              filterKey,
             }))}
             query={{
               value: listStore.query,
@@ -193,12 +186,7 @@ export default function ClientFilters({
 
         {children}
         {listStore.totalCount && listStore.totalCount > 0 ? (
-          <Paginator
-            totalCount={listStore.totalCount}
-            offset={listStore.offset}
-            setPage={listStore.pageChange}
-            limit={listStore.limit}
-          />
+          <Paginator />
         ) : null}
       </section>
     </>

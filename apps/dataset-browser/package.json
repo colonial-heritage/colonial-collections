@@ -23,8 +23,7 @@
     "@colonial-collections/content": "*",
     "@colonial-collections/iris": "*",
     "@colonial-collections/label-fetcher": "*",
-    "@colonial-collections/list-store": "*",    
-    "@floating-ui/react": "0.24.0",
+    "@colonial-collections/list-store": "*",
     "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.14",
     "@heroicons/react": "2.0.17",
@@ -36,9 +35,9 @@
     "rdf-object": "1.13.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "zustand": "4.3.7",
     "tiny-lru": "11.0.1",
-    "zod": "3.21.4"
+    "zod": "3.21.4",
+    "zustand": "4.3.7"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",
