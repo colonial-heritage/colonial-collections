@@ -1,7 +1,6 @@
 import heritageObjectFetcher from '@/lib/heritage-object-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
-import ClientFilters from './client-filters';
 import HeritageObjectList from './heritage-object-list';
 import {
   fromSearchParamsToSearchOptions,
@@ -10,6 +9,25 @@ import {
 } from '@/lib/search-params';
 import {ClientListStore} from '@colonial-collections/list-store';
 import {SearchResult} from '@/lib/objects';
+import {
+  FilterSet,
+  Paginator,
+  SelectedFilters,
+  SearchField,
+  OrderSelector,
+} from 'ui/list';
+import {
+  PageTitle,
+  PageHeader,
+  SmallScreenSubMenu,
+  SubMenuButton,
+  SubMenuDialog,
+} from 'ui';
+import {useTranslations} from 'next-intl';
+import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
+
+// Revalidate the page
+export const revalidate = 0;
 
 // Set the order of the filters
 const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
@@ -18,12 +36,36 @@ const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
   'subjects',
 ];
 
+export interface FacetMenuProps {
+  filters: SearchResult['filters'];
+  filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']>;
+}
+
+function FacetMenu({filterKeysOrder, filters}: FacetMenuProps) {
+  const t = useTranslations('Home');
+
+  return (
+    <>
+      <SearchField />
+      {filterKeysOrder.map(
+        filterKey =>
+          !!filters[filterKey]?.length && (
+            <FilterSet
+              key={filterKey}
+              title={t(`${filterKey}Filter`)}
+              searchResultFilters={filters[filterKey]}
+              filterKey={filterKey}
+              testId={`${filterKey}Filter`}
+            />
+          )
+      )}
+    </>
+  );
+}
+
 interface Props {
   searchParams?: SearchParams;
 }
-
-// Revalidate the page
-export const revalidate = 0;
 
 export default async function Home({searchParams}: Props) {
   const searchOptions = fromSearchParamsToSearchOptions(searchParams ?? {});
@@ -32,13 +74,15 @@ export default async function Home({searchParams}: Props) {
     sortOrder: searchOptions.sortOrder,
   });
 
-  let hasError, searchResult;
+  let hasError, searchResultOrUndefined;
   try {
-    searchResult = await heritageObjectFetcher.search(searchOptions);
+    searchResultOrUndefined = await heritageObjectFetcher.search(searchOptions);
   } catch (error) {
     hasError = true;
     console.error(error);
   }
+  const searchResult = searchResultOrUndefined as SearchResult;
+
   const locale = useLocale();
   const messages = (await import(`@/messages/${locale}/messages.json`)).default;
   const t = await getTranslations('Home');
@@ -74,15 +118,62 @@ export default async function Home({searchParams}: Props) {
                 selectedFilters: searchOptions.filters,
               }}
             />
-            <ClientFilters
-              filters={searchResult.filters}
-              filterKeysOrder={filterKeysOrder}
+            <aside
+              id="facets"
+              className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2"
             >
+              <FacetMenu
+                filters={searchResult.filters}
+                filterKeysOrder={filterKeysOrder}
+              />
+            </aside>
+
+            <section className="w-full md:w-2/3 gap-6 flex flex-col">
+              <SmallScreenSubMenu>
+                <SubMenuButton className="inline-flex items-center md:hidden">
+                  <span className="text-base font-medium text-gray-900">
+                    {t('filters')}
+                  </span>
+                  <AdjustmentsHorizontalIcon
+                    className="ml-1 h-5 w-5 flex-shrink-0 text-gray-900"
+                    aria-hidden="true"
+                  />
+                </SubMenuButton>
+                <SubMenuDialog title={t('filters')}>
+                  <FacetMenu
+                    filters={searchResult.filters}
+                    filterKeysOrder={filterKeysOrder}
+                  />
+                </SubMenuDialog>
+              </SmallScreenSubMenu>
+              <PageHeader>
+                <div
+                  className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap"
+                  id="search-results"
+                >
+                  <div className="ml-4 mt-2">
+                    <PageTitle>
+                      {t('title', {totalDatasets: searchResult.totalCount})}
+                    </PageTitle>
+                  </div>
+                  <div>
+                    <OrderSelector />
+                  </div>
+                </div>
+                <SelectedFilters
+                  filters={filterKeysOrder.map(filterKey => ({
+                    searchResultFilters: searchResult.filters[filterKey] ?? [],
+                    filterKey,
+                  }))}
+                />
+              </PageHeader>
+
               <HeritageObjectList
                 heritageObjects={searchResult.heritageObjects}
                 totalCount={searchResult.totalCount}
               />
-            </ClientFilters>
+              <Paginator />
+            </section>
           </>
         )}
       </NextIntlClientProvider>
