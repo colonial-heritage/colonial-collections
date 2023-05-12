@@ -1,4 +1,5 @@
-import {SearchResultFilter} from '@/lib/objects';
+'use client';
+
 import {useCallback, useState, useMemo, Dispatch} from 'react';
 import {useTranslations} from 'next-intl';
 import {
@@ -8,21 +9,19 @@ import {
   useInteractions,
 } from '@floating-ui/react';
 import {ChevronDoubleRightIcon} from '@heroicons/react/20/solid';
+import {useListStore} from '@colonial-collections/list-store';
+import {SearchResultFilter} from './SearchResultFilter';
 
 const maxOptionsInColumn = 10;
 
 interface Props {
   title: string;
   searchResultFilters: SearchResultFilter[];
-  selectedFilters: string[];
-  setSelectedFilters: Dispatch<string[]>;
+  filterKey: string;
   testId?: string;
 }
 
-type FilterOptionProps = Pick<
-  Props,
-  'title' | 'selectedFilters' | 'setSelectedFilters'
-> & {
+type FilterOptionProps = Pick<Props, 'title' | 'filterKey'> & {
   searchResultFilter: SearchResultFilter;
 };
 
@@ -73,20 +72,26 @@ function Header({
 function FilterOption({
   searchResultFilter,
   title,
-  selectedFilters,
-  setSelectedFilters,
+  filterKey,
 }: FilterOptionProps) {
+  const listStore = useListStore();
+  const selectedFilters = useMemo(
+    () => listStore.selectedFilters[filterKey] || [],
+    [filterKey, listStore.selectedFilters]
+  );
+
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.checked) {
-        setSelectedFilters([...selectedFilters, e.target.value]);
+        listStore.filterChange(filterKey, [...selectedFilters, e.target.value]);
       } else {
-        setSelectedFilters(
+        listStore.filterChange(
+          filterKey,
           selectedFilters.filter(filterId => e.target.value !== filterId)
         );
       }
     },
-    [selectedFilters, setSelectedFilters]
+    [filterKey, listStore, selectedFilters]
   );
 
   return (
@@ -112,11 +117,10 @@ function FilterOption({
   );
 }
 
-export default function FilterSet({
+export function FilterSet({
   title,
   searchResultFilters,
-  selectedFilters,
-  setSelectedFilters,
+  filterKey,
   testId,
 }: Props) {
   const t = useTranslations('Home');
@@ -173,8 +177,7 @@ export default function FilterSet({
             <FilterOption
               key={`${option.id}${option.name}`}
               {...{
-                selectedFilters,
-                setSelectedFilters,
+                filterKey,
                 title,
                 searchResultFilter: option,
               }}
@@ -222,8 +225,7 @@ export default function FilterSet({
                       <FilterOption
                         key={`${option.id}${option.name}`}
                         {...{
-                          selectedFilters,
-                          setSelectedFilters,
+                          filterKey,
                           title,
                           searchResultFilter: option,
                         }}
