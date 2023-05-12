@@ -1,52 +1,48 @@
-import {SearchResultFilter} from '@/lib/objects';
-import {Dispatch} from 'react';
+'use client';
+
 import {useTranslations} from 'next-intl';
-import {Badge} from 'ui';
+import {Badge} from '../badge';
+import {useListStore} from '@colonial-collections/list-store';
+import {SearchResultFilter} from './SearchResultFilter';
 
 interface Props {
   filters: {
     searchResultFilters: SearchResultFilter[];
-    selectedFilters: string[];
-    setSelectedFilters: Dispatch<string[]>;
+    filterKey: string;
   }[];
-  query: {
-    value: string;
-    setQuery: Dispatch<string>;
-  };
 }
 
 interface ClearSelectedFilterProps {
   id: string;
-  selectedFilters: string[];
-  setSelectedFilters: Dispatch<string[]>;
+  filterKey: string;
 }
 
-export default function SelectedFilters({filters, query}: Props) {
+export function SelectedFilters({filters}: Props) {
   const t = useTranslations('Home');
+  const {query, selectedFilters, filterChange, queryChange} = useListStore();
 
   // Only show this component if there are active filters.
   if (
-    !query.value &&
-    !filters.filter(filter => filter.selectedFilters.length).length
+    !query &&
+    !filters.filter(filter => selectedFilters[filter.filterKey]?.length).length
   ) {
     return null;
   }
 
-  function clearSelectedFilter({
-    id,
-    selectedFilters,
-    setSelectedFilters,
-  }: ClearSelectedFilterProps) {
-    setSelectedFilters(selectedFilters.filter(filterId => id !== filterId));
+  function clearSelectedFilter({id, filterKey}: ClearSelectedFilterProps) {
+    filterChange(
+      filterKey,
+      selectedFilters[filterKey]?.filter(filterId => id !== filterId) || []
+    );
   }
 
   function clearQuery() {
-    query.setQuery('');
+    queryChange('');
   }
 
   function clearAllFilters() {
     clearQuery();
-    filters.forEach(filter => filter.setSelectedFilters([]));
+    filters.forEach(filter => filterChange(filter.filterKey, []));
   }
 
   return (
@@ -57,10 +53,11 @@ export default function SelectedFilters({filters, query}: Props) {
         className="hidden h-5 w-px bg-gray-300 sm:ml-3 sm:block mr-2"
       />
       <div className="flex flex-wrap grow">
-        {filters.map(
-          ({selectedFilters, searchResultFilters, setSelectedFilters}) =>
-            !!selectedFilters.length &&
-            selectedFilters.map(id => (
+        {filters.map(({searchResultFilters, filterKey}) => {
+          const selectedFilter = selectedFilters[filterKey];
+          return (
+            !!selectedFilter?.length &&
+            selectedFilter.map(id => (
               <Badge key={id} testId="selectedFilter">
                 {
                   searchResultFilters.find(
@@ -71,17 +68,17 @@ export default function SelectedFilters({filters, query}: Props) {
                   onClick={() =>
                     clearSelectedFilter({
                       id,
-                      selectedFilters: selectedFilters,
-                      setSelectedFilters: setSelectedFilters,
+                      filterKey,
                     })
                   }
                 />
               </Badge>
             ))
-        )}
-        {query.value && (
+          );
+        })}
+        {query && (
           <Badge testId="selectedFilter">
-            {query.value}
+            {query}
             <Badge.Action onClick={clearQuery} />
           </Badge>
         )}
