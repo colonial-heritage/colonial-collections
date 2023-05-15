@@ -74,14 +74,14 @@ export default async function Home({searchParams}: Props) {
     sortOrder: searchOptions.sortOrder,
   });
 
-  let hasError, searchResultOrUndefined;
+  let hasError;
+  let searchResult: SearchResult | undefined;
   try {
-    searchResultOrUndefined = await heritageObjectFetcher.search(searchOptions);
+    searchResult = await heritageObjectFetcher.search(searchOptions);
   } catch (error) {
     hasError = true;
     console.error(error);
   }
-  const searchResult = searchResultOrUndefined as SearchResult;
 
   const locale = useLocale();
   const messages = (await import(`@/messages/${locale}/messages.json`)).default;
@@ -162,7 +162,7 @@ export default async function Home({searchParams}: Props) {
                 </div>
                 <SelectedFilters
                   filters={filterKeysOrder.map(filterKey => ({
-                    searchResultFilters: searchResult.filters[filterKey] ?? [],
+                    searchResultFilters: searchResult!.filters[filterKey] ?? [],
                     filterKey,
                   }))}
                 />
