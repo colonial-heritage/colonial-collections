@@ -10,7 +10,7 @@ export function Paginator() {
   const end = endMax < totalCount ? endMax : totalCount;
   const t = useTranslations('Paginator');
 
-  if (!totalCount || totalCount === 0) {
+  if (!totalCount) {
     return null;
   }
 
