@@ -36,7 +36,7 @@ const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
   'subjects',
 ];
 
-export interface FacetMenuProps {
+interface FacetMenuProps {
   filters: SearchResult['filters'];
   filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']>;
 }
