@@ -55,7 +55,7 @@
     "rdf-dereference": "2.1.0",
     "rdf-serialize": "2.2.2",
     "tailwind-config": "*",
-    "tailwindcss": "3.3.1",
+    "tailwindcss": "3.3.2",
     "tsconfig": "*",
     "typescript": "5.0.4"
   }
