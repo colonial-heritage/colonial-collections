@@ -4,27 +4,15 @@
   },
   "Home": {
     "title": "{totalDatasets, plural, =0 {0 Objecten} =1 {1 Object} other {# Objecten}}",
-    "search": "Zoeken",
-    "ownersFilter": "Eigenaren",
-    "typesFilter": "Types",
-    "subjectsFilter": "Onderwerpen",
     "noResults": "Er zijn geen resultaten",
-    "sortRelevanceDesc": "Relevantie",
-    "sortNameAsc": "Naam - Oplopend",
-    "sortNameDesc": "Naam - Aflopend",
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de objecten. Laad de pagina opnieuw om het opnieuw te proberen.",
-    "filters": "Filters",
-    "clearAllFilters": "Alles verwijderen",
-    "expandFilter": "Uitklappen",
-    "filterSearchPlaceholder": "Filteren op {filterName}",
-    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
-    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen",
-    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
+    "filters": "Filters"
   },
-  "Paginator": {
-    "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
-    "previous": "Vorige",
-    "next": "Volgende"
+  "Persons": {
+    "title": "{totalPersons, plural, =0 {0 persons} =1 {1 person} other {# persons}}",
+    "noResults": "There are no results",
+    "fetchError": "There was a problem fetching the objects. Please reload the page to try again.",
+    "filters": "Filters"
   },
   "Navigation": {
     "name": "app",
@@ -32,6 +20,10 @@
     "about": "Over",
     "faq": "FAQ",
     "contact": "Contact"
+  },
+  "Tabs": {
+    "objects": "Objecten zoeken",
+    "persons": "Personen zoeken"
   },
   "LanguageSelector": {
     "nl": "Nederlands",
@@ -69,5 +61,32 @@
     "relatedPersons": "Verwante personen",
     "origin": "Oorsprong",
     "discussion": "Discussie"
+  },
+  "Paginator": {
+    "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
+    "previous": "Vorige",
+    "next": "Volgende"
+  },
+ "Filters": {
+    "ownersFilter": "Eigenaren",
+    "typesFilter": "Types",
+    "subjectsFilter": "Onderwerpen",
+    "birthYearsFilter": "Geboortejaren",
+    "birthPlacesFilter": "Geboorteplaatsen",
+    "deathYearsFilter": "Overlijdensjaren",
+    "deathPlacesFilter": "Overlijdensplaatsen",
+    "search": "Zoeken",
+    "filters": "Filters",
+    "expandFilter": "Uitklappen",
+    "clearAllFilters": "Alles verwijderen",
+    "filterSearchPlaceholder": "Filteren op {filterName}",
+    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
+    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
+  },
+  "Sort": {
+    "sortRelevanceDesc": "Relevantie",
+    "sortNameAsc": "Naam - Oplopend",
+    "sortNameDesc": "Naam - Aflopend",
+    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
   }
 }

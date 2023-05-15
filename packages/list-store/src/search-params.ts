@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import {z, Schema} from 'zod';
 import {SortBy, defaultSortBy} from './sort';
 
 const searchParamFilterSchema = z
@@ -25,6 +25,7 @@ interface ClientSearchOptions {
   offset?: number;
   sortBy?: SortBy;
   filters?: {[filterKey: string]: string[] | undefined};
+  baseUrl?: string;
 }
 
 export function getUrlWithSearchParams({
@@ -32,6 +33,7 @@ export function getUrlWithSearchParams({
   offset,
   sortBy,
   filters,
+  baseUrl = '/',
 }: ClientSearchOptions): string {
   const searchParams: {[key: string]: string} = searchParamsSchema.parse({
     query,
@@ -54,8 +56,96 @@ export function getUrlWithSearchParams({
   const encodedSearchParams = new URLSearchParams(searchParams).toString();
 
   if (encodedSearchParams) {
-    return '/?' + encodedSearchParams;
+    return baseUrl + '?' + encodedSearchParams;
   } else {
-    return '/' + encodedSearchParams;
+    return baseUrl + encodedSearchParams;
   }
+}
+
+interface FromSearchParamsToSearchOptionsProps {
+  searchParams: {
+    [filter: string]: string;
+  };
+  options: {
+    SortByEnum: Schema;
+    SortOrderEnum: Schema;
+    defaultSortBy: string;
+    defaultSortOrder: string;
+    sortMapping: {
+      [sortBy: string]: {
+        sortBy: string;
+        sortOrder: string;
+      };
+    };
+  };
+}
+
+// Based on https://github.com/colinhacks/zod/issues/316#issuecomment-1024793482
+function fallback<T>(value: T) {
+  return z.any().transform(() => value);
+}
+
+const searchOptionsFilterSchema = z
+  .string()
+  .optional()
+  .transform(filterValue => filterValue?.split(',').filter(id => !!id))
+  .pipe(z.array(z.string()).optional().default([]));
+
+// This function translates the search params to valid search options.
+// Next.js already separates the search query string into separate properties with string values.
+export function fromSearchParamsToSearchOptions({
+  searchParams: {query, offset, sortBy, ...filters},
+  options: {
+    SortByEnum,
+    SortOrderEnum,
+    defaultSortBy,
+    defaultSortOrder,
+    sortMapping,
+  },
+}: FromSearchParamsToSearchOptionsProps) {
+  // Always return a valid SearchOptions object, even if the search params aren't correct,
+  // so the application doesn't fail on invalid search params.
+  const searchOptionsWithFallbackSchema = z.object({
+    offset: z
+      .string()
+      .transform(offsetString => +offsetString)
+      .or(fallback(0)),
+    filters: z.record(searchOptionsFilterSchema).optional(),
+    sortBy: SortByEnum.or(fallback(defaultSortBy)),
+    sortOrder: SortOrderEnum.or(fallback(defaultSortOrder)),
+    query: z.string().optional(),
+  });
+
+  const {sortBy: sortBySearchOption, sortOrder} =
+    ((sortBy as SortBy) && sortMapping[sortBy as SortBy]) || {};
+
+  const searchOptions = searchOptionsWithFallbackSchema.parse({
+    offset,
+    filters,
+    sortBy: sortBySearchOption,
+    sortOrder: sortOrder,
+    query: query,
+  });
+
+  return searchOptions;
+}
+
+interface SortPairProps<SortBySearchOption, SortOrder> {
+  sortPair: {sortBy: SortBySearchOption; sortOrder: SortOrder};
+  sortMapping: {
+    [sortBy: string]: {
+      sortBy: SortBySearchOption;
+      sortOrder: SortOrder;
+    };
+  };
+}
+
+export function getClientSortBy<SortBySearchOption, SortOrder>({
+  sortPair,
+  sortMapping,
+}: SortPairProps<SortBySearchOption, SortOrder>): SortBy {
+  return Object.entries(sortMapping).find(
+    ([, {sortBy, sortOrder}]) =>
+      sortPair.sortBy === sortBy && sortPair.sortOrder === sortOrder
+  )![0] as SortBy;
 }

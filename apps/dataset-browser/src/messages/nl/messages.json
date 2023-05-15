@@ -4,28 +4,9 @@
   },
   "Home": {
     "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
-    "search": "Zoeken",
-    "licensesFilter": "Licenties",
-    "publishersFilter": "Eigenaren",
-    "spatialCoveragesFilter": "Locaties",
-    "genresFilter": "Genres",
     "noResults": "Er zijn geen resultaten",
-    "sortRelevanceDesc": "Relevantie",
-    "sortNameAsc": "Naam - Oplopend",
-    "sortNameDesc": "Naam - Aflopend",
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de datasets. Laad de pagina opnieuw om het opnieuw te proberen.",
-    "filters": "Filters",
-    "clearAllFilters": "Alles verwijderen",
-    "expandFilter": "Uitklappen",
-    "filterSearchPlaceholder": "Filteren op {filterName}",
-    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
-    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen",
-    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
-  },
-  "Paginator": {
-    "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
-    "previous": "Vorige",
-    "next": "Volgende"
+    "filters": "Filters"
   },
   "DatasetCard": {
     "Dataset": "Dataset",
@@ -116,5 +97,29 @@
       "descriptionTrue": "De dataset is beschikbaar in een RDF-formaat.",
       "descriptionFalse": "De dataset is niet beschikbaar in een RDF-formaat."
     }
+  },
+  "Paginator": {
+    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "Filters": {
+    "licensesFilter": "Licenties",
+    "publishersFilter": "Eigenaren",
+    "spatialCoveragesFilter": "Locaties",
+    "genresFilter": "Genres",
+    "search": "Search",
+    "filters": "Filters",
+    "expandFilter": "Expand",
+    "clearAllFilters": "Clear all",
+    "filterSearchPlaceholder": "Filter on {filterName}",
+    "accessibilityTypeToFilter": "Type to filter on text.",
+    "accessibilitySelectToFilter": "Select a checkbox to filter"
+  },
+  "Sort": {
+    "sortRelevanceDesc": "Relevance",
+    "sortNameAsc": "Name - Ascending",
+    "sortNameDesc": "Name - Descending",
+    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
   }
 }

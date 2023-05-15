@@ -13,7 +13,7 @@ export default function HeritageObjectList({
 }: Props) {
   const t = useTranslations('Home');
 
-  if (totalCount && totalCount > 0) {
+  if (totalCount) {
     return (
       <>
         {heritageObjects.map(heritageObject => (

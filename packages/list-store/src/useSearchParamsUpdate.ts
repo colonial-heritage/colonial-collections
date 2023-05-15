@@ -5,7 +5,7 @@ import {useEffect, useTransition} from 'react';
 import {useListStore} from './useListStore';
 import {getUrlWithSearchParams} from './search-params';
 
-export function useSearchParamsUpdate() {
+export function useSearchParamsUpdate({baseUrl = '/'} = {}) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const listStore = useListStore();
@@ -17,13 +17,14 @@ export function useSearchParamsUpdate() {
         offset: listStore.offset,
         sortBy: listStore.sortBy,
         filters: listStore.selectedFilters,
+        baseUrl: baseUrl,
       });
       startTransition(() => {
         listStore.transitionStarted();
         router.replace(url);
       });
     }
-  }, [isPending, router, listStore]);
+  }, [isPending, router, listStore, baseUrl]);
 
   return {isPending};
 }

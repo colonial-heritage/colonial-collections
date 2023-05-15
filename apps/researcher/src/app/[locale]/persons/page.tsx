@@ -1,7 +1,7 @@
-import heritageObjectFetcher from '@/lib/heritage-object-fetcher-instance';
+import personFetcher from '@/lib/person-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
-import HeritageObjectList from './heritage-object-list';
+import PersonList from './person-list';
 import {sortMapping} from './sort-mapping';
 import {
   ClientListStore,
@@ -14,7 +14,7 @@ import {
   SortByEnum,
   SortOrder,
   SortOrderEnum,
-} from '@/lib/objects';
+} from '@/lib/persons';
 import {
   FilterSet,
   Paginator,
@@ -31,20 +31,20 @@ import {
 } from 'ui';
 import {useTranslations} from 'next-intl';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import Tabs from './tabs';
-import {z} from 'zod';
+import Tabs from '../tabs';
 
 // Revalidate the page
 export const revalidate = 0;
 
 // Set the order of the filters
 const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
-  'owners',
-  'types',
-  'subjects',
+  'birthYears',
+  'birthPlaces',
+  'deathYears',
+  'deathPlaces',
 ];
 
-interface FacetMenuProps {
+export interface FacetMenuProps {
   filters: SearchResult['filters'];
   filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']>;
 }
@@ -97,7 +97,7 @@ export default async function Home({searchParams = {}}: Props) {
   let hasError;
   let searchResult: SearchResult | undefined;
   try {
-    searchResult = await heritageObjectFetcher.search(searchOptions);
+    searchResult = await personFetcher.search(searchOptions);
   } catch (error) {
     hasError = true;
     console.error(error);
@@ -105,7 +105,7 @@ export default async function Home({searchParams = {}}: Props) {
 
   const locale = useLocale();
   const messages = (await import(`@/messages/${locale}/messages.json`)).default;
-  const t = await getTranslations('Home');
+  const t = await getTranslations('Persons');
 
   return (
     <NextIntlClientProvider
@@ -140,7 +140,7 @@ export default async function Home({searchParams = {}}: Props) {
                 query: searchOptions.query ?? '',
                 sortBy,
                 selectedFilters: searchOptions.filters,
-                baseUrl: '/',
+                baseUrl: '/persons',
               }}
             />
             <aside
@@ -178,7 +178,7 @@ export default async function Home({searchParams = {}}: Props) {
                 >
                   <div className="ml-4 mt-2">
                     <PageTitle>
-                      {t('title', {totalDatasets: searchResult.totalCount})}
+                      {t('title', {totalPersons: searchResult.totalCount})}
                     </PageTitle>
                   </div>
                   <div>
@@ -193,8 +193,8 @@ export default async function Home({searchParams = {}}: Props) {
                 />
               </PageHeader>
 
-              <HeritageObjectList
-                heritageObjects={searchResult.heritageObjects}
+              <PersonList
+                persons={searchResult.persons}
                 totalCount={searchResult.totalCount}
               />
               <Paginator />

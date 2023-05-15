@@ -4,7 +4,7 @@ import {useListStore, SortBy} from '@colonial-collections/list-store';
 import {useTranslations} from 'next-intl';
 
 export function OrderSelector() {
-  const t = useTranslations('Home');
+  const t = useTranslations('Sort');
   const {sortBy, sortChange} = useListStore();
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
