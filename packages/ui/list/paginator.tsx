@@ -10,6 +10,10 @@ export function Paginator() {
   const end = endMax < totalCount ? endMax : totalCount;
   const t = useTranslations('Paginator');
 
+  if (!totalCount) {
+    return null;
+  }
+
   return (
     <div className="flex items-center justify-between py-3">
       <div className="sm:flex sm:flex-1 sm:items-center sm:justify-between">

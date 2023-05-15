@@ -3,6 +3,7 @@
 import {useEffect} from 'react';
 import {useListStore} from './useListStore';
 import {SortBy} from './sort';
+import {useSearchParamsUpdate} from './useSearchParamsUpdate';
 
 interface Props {
   totalCount: number;
@@ -24,6 +25,7 @@ export function ClientListStore({
   selectedFilters,
 }: Props) {
   const listStore = useListStore();
+
   useEffect(() => {
     listStore.setNewData({
       totalCount,
@@ -34,6 +36,8 @@ export function ClientListStore({
       selectedFilters: selectedFilters ?? {},
     });
   }, [limit, offset, query, selectedFilters, sortBy, listStore, totalCount]);
+
+  useSearchParamsUpdate();
 
   return null;
 }

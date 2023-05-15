@@ -4,3 +4,5 @@
 export * from './filter-set';
 export * from './paginator';
 export * from './selected-filters';
+export * from './search-field';
+export * from './order-selector';
