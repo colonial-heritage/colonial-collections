@@ -32,7 +32,6 @@ import {
 import {useTranslations} from 'next-intl';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import Tabs from './tabs';
-import {z} from 'zod';
 
 // Revalidate the page
 export const revalidate = 0;

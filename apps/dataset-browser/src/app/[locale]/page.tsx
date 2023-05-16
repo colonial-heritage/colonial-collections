@@ -31,7 +31,6 @@ import {
 } from 'ui';
 import {useTranslations} from 'next-intl';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import {z} from 'zod';
 
 // Revalidate the page
 export const revalidate = 0;
