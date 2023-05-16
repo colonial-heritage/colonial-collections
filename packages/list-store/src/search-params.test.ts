@@ -12,7 +12,7 @@ enum SortBySearchOption {
   Relevance = 'relevance',
 }
 
-const SortByEnum = z.nativeEnum(SortBy);
+const SortByEnum = z.nativeEnum(SortBySearchOption);
 
 enum SortOrder {
   Ascending = 'asc',
@@ -142,11 +142,7 @@ describe('fromSearchParamsToSearchOptions', () => {
     expect(
       fromSearchParamsToSearchOptions({options, searchParams: {}})
     ).toStrictEqual({
-      filters: {
-        owners: [],
-        types: [],
-        subjects: [],
-      },
+      filters: {},
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
@@ -164,11 +160,7 @@ describe('fromSearchParamsToSearchOptions', () => {
     expect(
       fromSearchParamsToSearchOptions({options, searchParams})
     ).toStrictEqual({
-      filters: {
-        owners: [],
-        types: [],
-        subjects: [],
-      },
+      filters: {},
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
@@ -181,17 +173,12 @@ describe('fromSearchParamsToSearchOptions', () => {
     const searchParams = {
       offset: 'string',
       sortBy: 'color',
-      notValidParam: 'notValid',
     };
 
     expect(
       fromSearchParamsToSearchOptions({options, searchParams})
     ).toStrictEqual({
-      filters: {
-        owners: [],
-        types: [],
-        subjects: [],
-      },
+      filters: {},
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',

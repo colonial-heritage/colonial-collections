@@ -109,7 +109,13 @@ export function fromSearchParamsToSearchOptions({
     offset: z
       .string()
       .transform(offsetString => +offsetString)
+      .pipe(z.number().int().positive())
       .or(fallback(0)),
+    limit: z
+      .string()
+      .transform(limitString => +limitString)
+      .pipe(z.number().int().positive())
+      .or(fallback(10)),
     filters: z.record(searchOptionsFilterSchema).optional(),
     sortBy: SortByEnum.or(fallback(defaultSortBy)),
     sortOrder: SortOrderEnum.or(fallback(defaultSortOrder)),
