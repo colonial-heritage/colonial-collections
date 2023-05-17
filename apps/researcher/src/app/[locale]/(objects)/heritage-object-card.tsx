@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function HeritageObjectCard({heritageObject}: Props) {
-  const t = useTranslations('HeritageObjectCard');
+  const t = useTranslations('heritageObjectCard');
 
   return (
     <div

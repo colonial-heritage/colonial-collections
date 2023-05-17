@@ -40,7 +40,10 @@
     "title": "This page was not found (404)"
   },
   "HeritageObjectCard": {
-    "HeritageObject": "Heritage object"
+    "heritageObject": "Heritage object"
+  },
+  "PersonCard": {
+    "person": "Person"
   },
   "Details": {
     "backButton": "Back to results",

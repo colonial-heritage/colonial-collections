@@ -13,7 +13,7 @@ export default function PersonCard({person}: Props) {
     <div
       key={person.id}
       className="group relative flex flex-col overflow-hidden drop-shadow-md hover:drop-shadow-lg hover:-translate-y-0.5 transition ease-in-out duration-300 bg-white"
-      aria-label={t('HeritageObject')}
+      aria-label={t('person')}
     >
       <div className="flex flex-1 flex-col space-y-2 p-6">
         <h2 className="font-semibold text-gray-900 mt-0">
