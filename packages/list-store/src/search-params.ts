@@ -25,7 +25,7 @@ interface ClientSearchOptions {
   offset?: number;
   sortBy?: SortBy;
   filters?: {[filterKey: string]: string[] | undefined};
-  baseUrl?: string;
+  baseUrl: string;
 }
 
 export function getUrlWithSearchParams({
@@ -33,7 +33,7 @@ export function getUrlWithSearchParams({
   offset,
   sortBy,
   filters,
-  baseUrl = '/',
+  baseUrl,
 }: ClientSearchOptions): string {
   const searchParams: {[key: string]: string} = searchParamsSchema.parse({
     query,

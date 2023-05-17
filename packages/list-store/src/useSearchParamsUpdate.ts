@@ -5,7 +5,11 @@ import {useEffect, useTransition} from 'react';
 import {useListStore} from './useListStore';
 import {getUrlWithSearchParams} from './search-params';
 
-export function useSearchParamsUpdate({baseUrl = '/'} = {}) {
+interface Props {
+  baseUrl: string;
+}
+
+export function useSearchParamsUpdate({baseUrl}: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const listStore = useListStore();
