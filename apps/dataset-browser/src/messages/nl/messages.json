@@ -99,9 +99,9 @@
     }
   },
   "Paginator": {
-    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
-    "previous": "Previous",
-    "next": "Next"
+    "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
+    "previous": "Vorige",
+    "next": "Volgende"
   },
   "Filters": {
     "licensesFilter": "Licenties",
