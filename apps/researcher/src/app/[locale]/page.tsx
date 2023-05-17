@@ -1,8 +1,8 @@
 import heritageObjectFetcher from '@/lib/heritage-object-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
-import HeritageObjectList from './heritage-object-list';
-import {sortMapping} from './sort-mapping';
+import HeritageObjectList from './(objects)/heritage-object-list';
+import {sortMapping} from './(objects)/sort-mapping';
 import {
   ClientListStore,
   fromSearchParamsToSearchOptions,
