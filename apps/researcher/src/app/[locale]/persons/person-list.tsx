@@ -10,7 +10,7 @@ interface Props {
 export default function PersonList({persons, totalCount}: Props) {
   const t = useTranslations('Home');
 
-  if (totalCount) {
+  if (totalCount > 0) {
     return (
       <>
         {persons.map(person => (
