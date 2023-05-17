@@ -137,6 +137,7 @@ describe('getUrlWithSearchParams', () => {
     );
   });
 });
+
 describe('fromSearchParamsToSearchOptions', () => {
   it('returns default search options if there are no search params', () => {
     expect(
@@ -215,7 +216,7 @@ describe('fromSearchParamsToSearchOptions', () => {
 });
 
 describe('getClientSortBy', () => {
-  it('finds the client SortBy', () => {
+  it('returns the client SortBy', () => {
     expect(
       getClientSortBy({
         sortMapping,
