@@ -76,7 +76,7 @@ interface Props {
 
 export default async function Home({searchParams = {}}: Props) {
   const searchOptions = fromSearchParamsToSearchOptions({
-    options: {
+    sortOptions: {
       SortOrderEnum,
       defaultSortOrder: SortOrder.Descending,
       SortByEnum,

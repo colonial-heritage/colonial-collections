@@ -62,24 +62,6 @@ export function getUrlWithSearchParams({
   }
 }
 
-interface FromSearchParamsToSearchOptionsProps {
-  searchParams: {
-    [filter: string]: string;
-  };
-  options: {
-    SortByEnum: Schema;
-    SortOrderEnum: Schema;
-    defaultSortBy: string;
-    defaultSortOrder: string;
-    sortMapping: {
-      [sortBy: string]: {
-        sortBy: string;
-        sortOrder: string;
-      };
-    };
-  };
-}
-
 // Based on https://github.com/colinhacks/zod/issues/316#issuecomment-1024793482
 function fallback<T>(value: T) {
   return z.any().transform(() => value);
@@ -91,11 +73,34 @@ const searchOptionsFilterSchema = z
   .transform(filterValue => filterValue?.split(',').filter(id => !!id))
   .pipe(z.array(z.string()).optional().default([]));
 
+interface FromSearchParamsToSearchOptionsProps {
+  // `searchParams` is a key value object based on the url search params.
+  searchParams: {
+    [filter: string]: string;
+  };
+  // The searchOption `sortBy` and `sortOrder` are enums values.
+  // Set the correct enums, default values and sortMapper in the `sortOptions`.
+  sortOptions: {
+    // `SortByEnum` should be a Zod `nativeEnum`.
+    SortByEnum: Schema;
+    // `SortByEnum` should be a Zod `nativeEnum`.
+    SortOrderEnum: Schema;
+    defaultSortBy: string;
+    defaultSortOrder: string;
+    // `sortMapping` is the map from the sortBy in the `searchParams` to the `sortBy` and `sortOrder` in the searchOptions.
+    sortMapping: {
+      [sortBySearchParam: string]: {
+        sortBy: string;
+        sortOrder: string;
+      };
+    };
+  };
+}
+
 // This function translates the search params to valid search options.
-// Next.js already separates the search query string into separate properties with string values.
 export function fromSearchParamsToSearchOptions({
   searchParams: {query, offset, sortBy, ...filters},
-  options: {
+  sortOptions: {
     SortByEnum,
     SortOrderEnum,
     defaultSortBy,
@@ -123,7 +128,7 @@ export function fromSearchParamsToSearchOptions({
   });
 
   const {sortBy: sortBySearchOption, sortOrder} =
-    ((sortBy as SortBy) && sortMapping[sortBy as SortBy]) || {};
+    (sortBy && sortMapping[sortBy as SortBy]) || {};
 
   const searchOptions = searchOptionsWithFallbackSchema.parse({
     offset,

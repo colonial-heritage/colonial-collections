@@ -36,7 +36,7 @@ const sortMapping = {
   },
 };
 
-const options = {
+const sortOptions = {
   SortByEnum,
   SortOrderEnum,
   defaultSortBy: SortBySearchOption.Relevance,
@@ -141,7 +141,7 @@ describe('getUrlWithSearchParams', () => {
 describe('fromSearchParamsToSearchOptions', () => {
   it('returns default search options if there are no search params', () => {
     expect(
-      fromSearchParamsToSearchOptions({options, searchParams: {}})
+      fromSearchParamsToSearchOptions({sortOptions, searchParams: {}})
     ).toStrictEqual({
       filters: {},
       offset: 0,
@@ -159,7 +159,7 @@ describe('fromSearchParamsToSearchOptions', () => {
     };
 
     expect(
-      fromSearchParamsToSearchOptions({options, searchParams})
+      fromSearchParamsToSearchOptions({sortOptions, searchParams})
     ).toStrictEqual({
       filters: {},
       offset: 0,
@@ -177,7 +177,7 @@ describe('fromSearchParamsToSearchOptions', () => {
     };
 
     expect(
-      fromSearchParamsToSearchOptions({options, searchParams})
+      fromSearchParamsToSearchOptions({sortOptions, searchParams})
     ).toStrictEqual({
       filters: {},
       offset: 0,
@@ -199,7 +199,7 @@ describe('fromSearchParamsToSearchOptions', () => {
     };
 
     expect(
-      fromSearchParamsToSearchOptions({options, searchParams})
+      fromSearchParamsToSearchOptions({sortOptions, searchParams})
     ).toStrictEqual({
       query: 'My query',
       filters: {
