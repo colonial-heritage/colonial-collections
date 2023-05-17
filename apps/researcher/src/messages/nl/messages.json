@@ -45,8 +45,9 @@
   "PersonCard": {
     "person": "Persoon"
   },
-  "Details": {
+  "ObjectDetails": {
     "backButton": "Terug naar resultaten",
+    "noObject": "Object kon niet gevonden worden",
     "notImplemented": "Niet geïmplementeerd",
     "noData": "Geen gegevens",
     "description": "Beschrijving",
@@ -64,6 +65,18 @@
     "relatedPersons": "Verwante personen",
     "origin": "Oorsprong",
     "discussion": "Discussie"
+  },
+  "PersonDetails": {
+    "backButton": "Terug naar resultaten",
+    "noObject": "Persoon kon niet gevonden worden",
+    "notImplemented": "Niet geïmplementeerd",
+    "noData": "Geen gegevens",
+    "birthDate": "Geboortedatum",
+    "birthPlace": "Geboorteplaats",
+    "deathDate": "Overlijdensdatum",
+    "deathPlace": "De plaats van de dood",
+    "dataset": "In dataset",
+    "relatedObjects": "Verwante objecten"
   },
   "Paginator": {
     "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
