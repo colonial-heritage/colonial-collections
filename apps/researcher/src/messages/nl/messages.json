@@ -5,13 +5,13 @@
   "Home": {
     "title": "{totalDatasets, plural, =0 {0 Objecten} =1 {1 Object} other {# Objecten}}",
     "noResults": "Er zijn geen resultaten",
-    "fetchError": "Er is een probleem opgetreden bij het ophalen van de objecten. Laad de pagina opnieuw om het opnieuw te proberen.",
+    "fetchError": "Er is een probleem opgetreden bij het ophalen van de resultaten. Laad de pagina opnieuw om het opnieuw te proberen.",
     "filters": "Filters"
   },
   "Persons": {
     "title": "{totalPersons, plural, =0 {0 personen} =1 {1 persoon} other {# personen}}",
     "noResults": "Er zijn geen resultaten",
-    "fetchError": "Er is een probleem opgetreden bij het ophalen van de personen. Laad de pagina opnieuw om het opnieuw te proberen.",
+    "fetchError": "Er is een probleem opgetreden bij het ophalen van de resultaten. Laad de pagina opnieuw om het opnieuw te proberen.",
     "filters": "Filters"
   },
   "Navigation": {

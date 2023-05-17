@@ -108,18 +108,18 @@
     "publishersFilter": "Eigenaren",
     "spatialCoveragesFilter": "Locaties",
     "genresFilter": "Genres",
-    "search": "Search",
+    "search": "Zoeken",
     "filters": "Filters",
-    "expandFilter": "Expand",
-    "clearAllFilters": "Clear all",
-    "filterSearchPlaceholder": "Filter on {filterName}",
-    "accessibilityTypeToFilter": "Type to filter on text.",
-    "accessibilitySelectToFilter": "Select a checkbox to filter"
+    "expandFilter": "Uitklappen",
+    "clearAllFilters": "Alles verwijderen",
+    "filterSearchPlaceholder": "Filteren op {filterName}",
+    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
+    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
   },
   "Sort": {
-    "sortRelevanceDesc": "Relevance",
-    "sortNameAsc": "Name - Ascending",
-    "sortNameDesc": "Name - Descending",
-    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
+    "sortRelevanceDesc": "Relevantie",
+    "sortNameAsc": "Naam - Oplopend",
+    "sortNameDesc": "Naam - Aflopend",
+    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
   }
 }
