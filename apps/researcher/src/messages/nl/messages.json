@@ -44,7 +44,7 @@
   },
   "PersonCard": {
     "person": "Persoon",
-    "relatedPersons": "Hoeveelheid gerelateerde objecten Onbekend (niet geïmplementeerd)",
+    "relatedObjects": "Gerelateerde objecten onbekend (niet geïmplementeerd)",
     "birthPlaceUnknown": "Geboorteplaats onbekend",
     "birthYearUnknown": "Geboortejaar onbekend",
     "deathPlaceUnknown": "Plaats van overlijden onbekend",

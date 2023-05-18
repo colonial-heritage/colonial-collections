@@ -56,7 +56,7 @@ export default function PersonCard({person}: Props) {
             <p className={unknownClassName}>{t('deathPlaceUnknown')}</p>
           )}
         </div>
-        <div className="col-span-7 bg-white p-4">{t('relatedPersons')}</div>
+        <div className="col-span-7 bg-white p-4">{t('relatedObjects')}</div>
       </div>
     </div>
   );
