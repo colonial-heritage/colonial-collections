@@ -43,7 +43,12 @@
     "heritageObject": "Heritage object"
   },
   "PersonCard": {
-    "person": "Person"
+    "person": "Person",
+    "relatedPersons": "Unknown related objects (not implemented)",
+    "birthPlaceUnknown": "Birth place unknown",
+    "birthYearUnknown": "Birth year unknown",
+    "deathPlaceUnknown": "Death place unknown",
+    "deathYearUnknown": "Death year unknown"
   },
   "Details": {
     "backButton": "Back to results",
