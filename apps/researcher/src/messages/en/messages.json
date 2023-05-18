@@ -44,7 +44,7 @@
   },
   "PersonCard": {
     "person": "Person",
-    "relatedObjects": "Unknown related objects (not implemented)",
+    "relatedObjects": "0 related objects (not implemented)",
     "birthPlaceUnknown": "Birth place unknown",
     "birthYearUnknown": "Birth year unknown",
     "deathPlaceUnknown": "Death place unknown",
