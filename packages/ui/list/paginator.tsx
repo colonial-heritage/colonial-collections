@@ -1,17 +1,18 @@
+'use client';
+
+import {useListStore} from '@colonial-collections/list-store';
 import {useTranslations} from 'next-intl';
 
-interface Props {
-  totalCount: number;
-  offset: number;
-  limit: number;
-  setPage: (direction: 1 | -1) => void;
-}
-
-export default function Paginator({totalCount, offset, setPage, limit}: Props) {
+export function Paginator() {
+  const {totalCount, offset, pageChange, limit} = useListStore();
   const endMax = offset + limit;
   const start = offset + 1;
   const end = endMax < totalCount ? endMax : totalCount;
   const t = useTranslations('Paginator');
+
+  if (!totalCount) {
+    return null;
+  }
 
   return (
     <div className="flex items-center justify-between py-3">
@@ -28,7 +29,7 @@ export default function Paginator({totalCount, offset, setPage, limit}: Props) {
         </div>
         <div className="flex flex-1 justify-between sm:justify-end">
           <button
-            onClick={() => setPage(-1)}
+            onClick={() => pageChange(-1)}
             disabled={offset <= 0}
             type="button"
             className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
@@ -36,7 +37,7 @@ export default function Paginator({totalCount, offset, setPage, limit}: Props) {
             {t('previous')}
           </button>
           <button
-            onClick={() => setPage(1)}
+            onClick={() => pageChange(1)}
             disabled={offset + limit >= totalCount}
             type="button"
             className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"

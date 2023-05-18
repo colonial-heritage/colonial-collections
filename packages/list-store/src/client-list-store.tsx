@@ -3,6 +3,7 @@
 import {useEffect} from 'react';
 import {useListStore} from './useListStore';
 import {SortBy} from './sort';
+import {useSearchParamsUpdate} from './useSearchParamsUpdate';
 
 interface Props {
   totalCount: number;
@@ -11,6 +12,7 @@ interface Props {
   query: string;
   sortBy: SortBy;
   selectedFilters?: {[filterKey: string]: string[] | undefined};
+  baseUrl: string;
 }
 
 // The server component that does the API call loads this component.
@@ -22,8 +24,10 @@ export function ClientListStore({
   query,
   sortBy,
   selectedFilters,
+  baseUrl,
 }: Props) {
   const listStore = useListStore();
+
   useEffect(() => {
     listStore.setNewData({
       totalCount,
@@ -34,6 +38,8 @@ export function ClientListStore({
       selectedFilters: selectedFilters ?? {},
     });
   }, [limit, offset, query, selectedFilters, sortBy, listStore, totalCount]);
+
+  useSearchParamsUpdate({baseUrl});
 
   return null;
 }

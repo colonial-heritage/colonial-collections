@@ -4,28 +4,10 @@
   },
   "Home": {
     "title": "{totalDatasets, plural, =0 {0 Datasets} =1 {1 Dataset} other {# Datasets}}",
-    "search": "Search",
-    "licensesFilter": "Licenses",
-    "publishersFilter": "Publishers",
-    "spatialCoveragesFilter": "Locations",
-    "genresFilter": "Genres",
     "noResults": "There are no results",
-    "sortRelevanceDesc": "Relevance",
-    "sortNameAsc": "Name - Ascending",
-    "sortNameDesc": "Name - Descending",
     "fetchError": "There was a problem fetching the datasets. Please reload the page to try again.",
-    "filters": "Filters",
-    "clearAllFilters": "Clear all",
-    "expandFilter": "Expand",
-    "filterSearchPlaceholder": "Filter on {filterName}",
-    "accessibilityTypeToFilter": "Type to filter on text.",
-    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result",
-    "accessibilitySelectToFilter": "Select a checkbox to filter"
-  },
-  "Paginator": {
-    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
-    "previous": "Previous",
-    "next": "Next"
+    "search": "Search",
+    "filters": "Filters"
   },
   "DatasetCard": {
     "Dataset": "Dataset",
@@ -116,5 +98,29 @@
       "descriptionTrue": "The dataset is available in an RDF format.",
       "descriptionFalse": "The dataset is not available in an RDF format."
     }
+  },
+  "Paginator": {
+    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "Filters": {
+    "licensesFilter": "Licenses",
+    "publishersFilter": "Publishers",
+    "spatialCoveragesFilter": "Locations",
+    "genresFilter": "Genres",
+    "search": "Search",
+    "filters": "Filters",
+    "expandFilter": "Expand",
+    "clearAllFilters": "Clear all",
+    "filterSearchPlaceholder": "Filter on {filterName}",
+    "accessibilityTypeToFilter": "Type to filter on text.",
+    "accessibilitySelectToFilter": "Select a checkbox to filter"
+  },
+  "Sort": {
+    "sortRelevanceDesc": "Relevance",
+    "sortNameAsc": "Name - Ascending",
+    "sortNameDesc": "Name - Descending",
+    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
   }
 }
