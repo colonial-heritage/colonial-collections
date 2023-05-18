@@ -73,7 +73,7 @@ export default async function Details({params}: Props) {
   const t = await getTranslations('ObjectDetails');
 
   if (!object) {
-    return <div data-testid="no-object">{t('noObject')}</div>;
+    return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
   return (

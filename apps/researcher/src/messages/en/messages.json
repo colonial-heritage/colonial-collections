@@ -47,7 +47,7 @@
   },
   "ObjectDetails": {
     "backButton": "Back to results",
-    "noObject": "Object could not be found",
+    "noEntity": "Object could not be found",
     "notImplemented": "Not implemented",
     "noData": "No Data",
     "description": "Description",
@@ -68,7 +68,7 @@
   },
   "PersonDetails": {
     "backButton": "Back to results",
-    "noObject": "Person could not be found",
+    "noEntity": "Person could not be found",
     "notImplemented": "Not implemented",
     "noData": "No Data",
     "birthDate": "Birth date",

@@ -47,7 +47,7 @@
   },
   "ObjectDetails": {
     "backButton": "Terug naar resultaten",
-    "noObject": "Object kon niet gevonden worden",
+    "noEntity": "Object kon niet gevonden worden",
     "notImplemented": "Niet geïmplementeerd",
     "noData": "Geen gegevens",
     "description": "Beschrijving",
@@ -68,7 +68,7 @@
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
-    "noObject": "Persoon kon niet gevonden worden",
+    "noEntity": "Persoon kon niet gevonden worden",
     "notImplemented": "Niet geïmplementeerd",
     "noData": "Geen gegevens",
     "birthDate": "Geboortedatum",
