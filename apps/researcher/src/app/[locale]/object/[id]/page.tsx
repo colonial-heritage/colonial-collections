@@ -92,7 +92,7 @@ export default async function Details({params}: Props) {
     object.images?.map((image, i) => ({
       ...image,
       src: image.contentUrl,
-      alt: `${object.name}, image - ${i}`,
+      alt: `${object.name} #${i + 1}`,
     })) ?? [];
 
   return (
