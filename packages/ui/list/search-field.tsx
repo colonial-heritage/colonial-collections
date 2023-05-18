@@ -5,7 +5,7 @@ import {useTranslations} from 'next-intl';
 
 export function SearchField() {
   const {query, queryChange} = useListStore();
-  const t = useTranslations('Home');
+  const t = useTranslations('Filters');
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     queryChange(e.target.value);

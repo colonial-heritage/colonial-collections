@@ -4,3 +4,4 @@ export * from './sort';
 // Client components need to be explicitly reexported. For more info on this error, see: https://github.com/vercel/next.js/issues/41940#issuecomment-1480885131
 export {ClientListStore} from './client-list-store';
 export * from './useSearchParamsUpdate';
+export * from './search-params';

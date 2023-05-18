@@ -2,14 +2,19 @@ import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import DatasetList from './dataset-list';
+import {sortMapping} from './sort-mapping';
 import {
+  ClientListStore,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
-  SearchParams,
-} from '@/lib/search-params';
-import {ClientListStore} from '@colonial-collections/list-store';
-import {SearchResult} from '@/lib/datasets';
-
+} from '@colonial-collections/list-store';
+import {
+  SearchResult,
+  SortBy,
+  SortByEnum,
+  SortOrder,
+  SortOrderEnum,
+} from '@/lib/datasets';
 import {
   FilterSet,
   Paginator,
@@ -44,7 +49,7 @@ interface FacetMenuProps {
 }
 
 function FacetMenu({filterKeysOrder, filters}: FacetMenuProps) {
-  const t = useTranslations('Home');
+  const t = useTranslations('Filters');
 
   return (
     <>
@@ -66,14 +71,26 @@ function FacetMenu({filterKeysOrder, filters}: FacetMenuProps) {
 }
 
 interface Props {
-  searchParams?: SearchParams;
+  searchParams?: {[filter: string]: string};
 }
 
-export default async function Home({searchParams}: Props) {
-  const searchOptions = fromSearchParamsToSearchOptions(searchParams ?? {});
+export default async function Home({searchParams = {}}: Props) {
+  const searchOptions = fromSearchParamsToSearchOptions({
+    sortOptions: {
+      SortOrderEnum,
+      defaultSortOrder: SortOrder.Descending,
+      SortByEnum,
+      defaultSortBy: SortBy.Relevance,
+      sortMapping: sortMapping,
+    },
+    searchParams,
+  });
   const sortBy = getClientSortBy({
-    sortBy: searchOptions.sortBy,
-    sortOrder: searchOptions.sortOrder,
+    sortMapping,
+    sortPair: {
+      sortBy: searchOptions.sortBy,
+      sortOrder: searchOptions.sortOrder,
+    },
   });
 
   let hasError;
@@ -96,6 +113,8 @@ export default async function Home({searchParams}: Props) {
         messages={{
           Home: messages.Home,
           Paginator: messages.Paginator,
+          Filters: messages.Filters,
+          Sort: messages.Sort,
         }}
       >
         {hasError && (
@@ -118,6 +137,7 @@ export default async function Home({searchParams}: Props) {
                 query: searchOptions.query ?? '',
                 sortBy,
                 selectedFilters: searchOptions.filters,
+                baseUrl: '/',
               }}
             />
             <aside

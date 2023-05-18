@@ -73,7 +73,7 @@ export enum SortBy {
   Relevance = 'relevance',
 }
 
-const SortByEnum = z.nativeEnum(SortBy);
+export const SortByEnum = z.nativeEnum(SortBy);
 
 const sortByToRawKeys = new Map<string, string>([
   [SortBy.Name, `${RawDatasetKeys.Name}.keyword`],
@@ -85,7 +85,7 @@ export enum SortOrder {
   Descending = 'desc',
 }
 
-const SortOrderEnum = z.nativeEnum(SortOrder);
+export const SortOrderEnum = z.nativeEnum(SortOrder);
 
 // TBD: add language option, for returning results in a specific locale (e.g. 'nl', 'en')
 export const searchOptionsSchema = z.object({

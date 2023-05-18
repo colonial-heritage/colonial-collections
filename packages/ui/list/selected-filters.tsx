@@ -18,7 +18,7 @@ interface ClearSelectedFilterProps {
 }
 
 export function SelectedFilters({filters}: Props) {
-  const t = useTranslations('Home');
+  const t = useTranslations('Filters');
   const {query, selectedFilters, filterChange, queryChange} = useListStore();
 
   // Only show this component if there are active filters.

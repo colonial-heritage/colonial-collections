@@ -12,6 +12,7 @@ interface Props {
   query: string;
   sortBy: SortBy;
   selectedFilters?: {[filterKey: string]: string[] | undefined};
+  baseUrl: string;
 }
 
 // The server component that does the API call loads this component.
@@ -23,6 +24,7 @@ export function ClientListStore({
   query,
   sortBy,
   selectedFilters,
+  baseUrl,
 }: Props) {
   const listStore = useListStore();
 
@@ -37,7 +39,7 @@ export function ClientListStore({
     });
   }, [limit, offset, query, selectedFilters, sortBy, listStore, totalCount]);
 
-  useSearchParamsUpdate();
+  useSearchParamsUpdate({baseUrl});
 
   return null;
 }
