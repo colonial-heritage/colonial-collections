@@ -38,7 +38,7 @@ function Header({
   query,
   setQuery,
 }: HeaderProps) {
-  const t = useTranslations('Home');
+  const t = useTranslations('Filters');
 
   return (
     <>
@@ -123,7 +123,7 @@ export function FilterSet({
   filterKey,
   testId,
 }: Props) {
-  const t = useTranslations('Home');
+  const t = useTranslations('Filters');
   const [isExpanded, setIsExpanded] = useState(false);
   const {x, y, strategy, context, refs} = useFloating({
     placement: 'right-start',

@@ -10,7 +10,7 @@ interface Props {
 export default function DatasetList({datasets, totalCount}: Props) {
   const t = useTranslations('Home');
 
-  if (totalCount && totalCount > 0) {
+  if (totalCount > 0) {
     return (
       <>
         {datasets.map(dataset => (
