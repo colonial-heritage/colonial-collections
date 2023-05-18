@@ -44,16 +44,17 @@ export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const person = await personFetcher.getById({id});
   const t = await getTranslations('PersonDetails');
+
+  if (!person) {
+    return <div data-testid="no-entity">{t('noEntity')}</div>;
+  }
+
   const format = await getFormatter();
 
   const columnClassName = 'px-10 first:pl-0 last:pr-0 space-y-6 flex-1';
   const dateFormat: DateTimeFormatOptions = {
     dateStyle: 'long',
   };
-
-  if (!person) {
-    return <div data-testid="no-person">{t('noPerson')}</div>;
-  }
 
   return (
     <>
