@@ -29,7 +29,7 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/1',
           name: 'Michiel Adriaensz. de Ruyter',
-          birthPlace: {id: 'Flushing', name: 'Flushing'},
+          birthPlace: {id: 'Vlissingen', name: 'Vlissingen'},
           birthDate: new Date('1607-03-24T00:00:00.000Z'),
           deathPlace: {id: 'Syracuse', name: 'Syracuse'},
           deathDate: new Date('1676-04-29T00:00:00.000Z'),
@@ -48,9 +48,9 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/2',
           name: 'Jan de Vries',
-          birthPlace: {id: 'Amersfoort', name: 'Amersfoort'},
+          birthPlace: {id: 'Vlissienge', name: 'Vlissienge'},
           birthDate: new Date('1645-01-01T00:00:00.000Z'),
-          deathPlace: {id: 'Flushing', name: 'Flushing'},
+          deathPlace: {id: 'Amersfoort', name: 'Amersfoort'},
           deathDate: new Date('1701-01-01T00:00:00.000Z'),
           isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
@@ -65,7 +65,7 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/4',
           name: 'Gert Nooitgedacht',
-          birthPlace: {id: 'Bali', name: 'Bali'},
+          birthPlace: {id: 'Batavia', name: 'Batavia'},
           birthDate: new Date('1815-09-27T00:00:00.000Z'),
           isPartOf: {id: 'https://example.org/datasets/3', name: 'Dataset 3'},
         },
@@ -99,21 +99,20 @@ describe('search', () => {
           {totalCount: 1, id: '1815', name: '1815'},
         ],
         birthPlaces: [
-          {totalCount: 2, id: 'Amersfoort', name: 'Amersfoort'},
-          {totalCount: 1, id: 'Bali', name: 'Bali'},
-          {totalCount: 1, id: 'Flushing', name: 'Flushing'},
+          {totalCount: 1, id: 'Batavia', name: 'Batavia'},
           {totalCount: 1, id: 'Groningen', name: 'Groningen'},
           {totalCount: 1, id: 'New York', name: 'New York'},
-          {totalCount: 1, id: 'Rotterdam', name: 'Rotterdam'},
+          {totalCount: 2, id: 'Rotterdam', name: 'Rotterdam'},
+          {totalCount: 1, id: 'Vlissienge', name: 'Vlissienge'},
+          {totalCount: 1, id: 'Vlissingen', name: 'Vlissingen'},
         ],
         deathYears: [
           {totalCount: 1, id: '1676', name: '1676'},
           {totalCount: 2, id: '1701', name: '1701'},
         ],
         deathPlaces: [
-          {totalCount: 1, id: 'Flushing', name: 'Flushing'},
+          {totalCount: 2, id: 'Amersfoort', name: 'Amersfoort'},
           {totalCount: 1, id: 'Jakarta', name: 'Jakarta'},
-          {totalCount: 1, id: 'Rotterdam', name: 'Rotterdam'},
           {totalCount: 1, id: 'Syracuse', name: 'Syracuse'},
         ],
       },
@@ -133,7 +132,7 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/1',
           name: 'Michiel Adriaensz. de Ruyter',
-          birthPlace: {id: 'Flushing', name: 'Flushing'},
+          birthPlace: {id: 'Vlissingen', name: 'Vlissingen'},
           birthDate: new Date('1607-03-24T00:00:00.000Z'),
           deathPlace: {id: 'Syracuse', name: 'Syracuse'},
           deathDate: new Date('1676-04-29T00:00:00.000Z'),
@@ -163,7 +162,7 @@ describe('search', () => {
         {
           id: 'https://example.org/persons/1',
           name: 'Michiel Adriaensz. de Ruyter',
-          birthPlace: {id: 'Flushing', name: 'Flushing'},
+          birthPlace: {id: 'Vlissingen', name: 'Vlissingen'},
           birthDate: new Date('1607-03-24T00:00:00.000Z'),
           deathPlace: {id: 'Syracuse', name: 'Syracuse'},
           deathDate: new Date('1676-04-29T00:00:00.000Z'),
@@ -197,7 +196,7 @@ describe('getById', () => {
     expect(person).toStrictEqual({
       id: 'https://example.org/persons/1',
       name: 'Michiel Adriaensz. de Ruyter',
-      birthPlace: {id: 'Flushing', name: 'Flushing'},
+      birthPlace: {id: 'Vlissingen', name: 'Vlissingen'},
       birthDate: new Date('1607-03-24'),
       deathPlace: {id: 'Syracuse', name: 'Syracuse'},
       deathDate: new Date('1676-04-29'),

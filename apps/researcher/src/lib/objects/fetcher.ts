@@ -15,17 +15,17 @@ export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 enum RawKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
-  AdditionalType = 'https://colonialcollections nl/search#additionalType',
+  AdditionalType = 'https://colonialcollections nl/search#typeName', // Replace with 'additionalType' as soon as we have IRIs
   Identifier = 'https://colonialcollections nl/search#identifier',
   Name = 'https://colonialcollections nl/search#name',
   Description = 'https://colonialcollections nl/search#description',
   Inscription = 'https://colonialcollections nl/search#inscription',
-  About = 'https://colonialcollections nl/search#about',
-  Creator = 'https://colonialcollections nl/search#creator',
-  Material = 'https://colonialcollections nl/search#material',
-  Technique = 'https://colonialcollections nl/search#technique',
+  About = 'https://colonialcollections nl/search#aboutName', // Replace with 'about' as soon as we have IRIs
+  Creator = 'https://colonialcollections nl/search#creatorName', // Replace with 'creator' as soon as we have IRIs
+  Material = 'https://colonialcollections nl/search#materialName', // Replace with 'material' as soon as we have IRIs
+  Technique = 'https://colonialcollections nl/search#techniqueName', // Replace with 'technique' as soon as we have IRIs
   Image = 'https://colonialcollections nl/search#image',
-  Owner = 'https://colonialcollections nl/search#owner',
+  Owner = 'https://colonialcollections nl/search#ownerName', // Replace with 'owner' as soon as we have IRIs
   IsPartOf = 'https://colonialcollections nl/search#isPartOf',
 }
 
@@ -229,11 +229,11 @@ export class HeritageObjectFetcher {
     const inscriptions = reach(rawHeritageObject, `${RawKeys.Inscription}`);
 
     let owner: Organization | undefined;
-    const ownerIri = reach(rawHeritageObject, `${RawKeys.Owner}.0`);
-    if (ownerIri !== undefined) {
+    const ownerName = reach(rawHeritageObject, `${RawKeys.Owner}.0`);
+    if (ownerName !== undefined) {
       owner = {
-        id: ownerIri,
-        name: this.labelFetcher.getByIri({iri: ownerIri}),
+        id: ownerName,
+        name: ownerName, // Replace with labelFetcher lookup as soon as we have IRIs
       };
     }
 
@@ -243,16 +243,17 @@ export class HeritageObjectFetcher {
       name: this.labelFetcher.getByIri({iri: datasetIri}),
     };
 
+    // Replace 'names' with IRIs as soon as we have IRIs
     const toThings = <T>(rawKey: string) => {
-      const iris: string[] | undefined = reach(rawHeritageObject, `${rawKey}`);
-      if (iris === undefined) {
+      const names: string[] | undefined = reach(rawHeritageObject, `${rawKey}`);
+      if (names === undefined) {
         return undefined;
       }
 
-      const things = iris.map(iri => {
+      const things = names.map(name => {
         return {
-          id: iri,
-          name: this.labelFetcher.getByIri({iri}),
+          id: name, // Replace with IRI as soon as we have IRIs
+          name, // Replace with labelFetcher lookup as soon as we have IRIs
         };
       });
 
@@ -385,20 +386,17 @@ export class HeritageObjectFetcher {
 
     const ownerFilters = buildFilters(
       aggregations.all.owners.buckets,
-      aggregations.owners.buckets,
-      this.labelFetcher
+      aggregations.owners.buckets
     );
 
     const typeFilters = buildFilters(
       aggregations.all.types.buckets,
-      aggregations.types.buckets,
-      this.labelFetcher
+      aggregations.types.buckets
     );
 
     const subjectFilters = buildFilters(
       aggregations.all.subjects.buckets,
-      aggregations.subjects.buckets,
-      this.labelFetcher
+      aggregations.subjects.buckets
     );
 
     const searchResult: SearchResult = {
