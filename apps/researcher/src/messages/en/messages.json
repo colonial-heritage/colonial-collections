@@ -45,8 +45,9 @@
   "PersonCard": {
     "person": "Person"
   },
-  "Details": {
+  "ObjectDetails": {
     "backButton": "Back to results",
+    "noEntity": "Object could not be found",
     "notImplemented": "Not implemented",
     "noData": "No Data",
     "description": "Description",
@@ -64,6 +65,18 @@
     "relatedPersons": "Related Persons",
     "origin": "Origin",
     "discussion": "Discussion"
+  },
+  "PersonDetails": {
+    "backButton": "Back to results",
+    "noEntity": "Person could not be found",
+    "notImplemented": "Not implemented",
+    "noData": "No Data",
+    "birthDate": "Birth date",
+    "birthPlace": "Birth place",
+    "deathDate": "Death date",
+    "deathPlace": "Death place",
+    "dataset": "In Dataset",
+    "relatedObjects": "Related objects"
   },
   "Paginator": {
     "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
