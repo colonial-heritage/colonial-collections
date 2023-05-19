@@ -4,7 +4,7 @@ import {PageHeader, PageTitle} from 'ui';
 import objectFetcher from '@/lib/heritage-object-fetcher-instance';
 import {HeritageObject} from '@/lib/objects';
 import {Link} from 'next-intl';
-import Image from 'next/image';
+import Gallery from './gallery';
 import {H2, H3} from '@/components/titles';
 
 // Revalidate the page
@@ -76,6 +76,13 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
+  const galleryImages =
+    object.images?.map((image, i) => ({
+      id: image.id,
+      src: image.contentUrl,
+      alt: `${object.name} #${i + 1}`,
+    })) ?? [];
+
   return (
     <>
       <Link href="/">{t('backButton')}</Link>
@@ -144,14 +151,10 @@ export default async function Details({params}: Props) {
               {t('shareButton')}
             </button>
           </div>
-          {object.images?.length && (
-            <div className="relative col-span-2 h-[250px] w-full">
-              <Image
-                alt={object.name || object.id}
-                src={object.images[0].contentUrl}
-                fill
-                className="object-cover"
-              />
+
+          {galleryImages.length > 0 && (
+            <div className="relative col-span-2 w-full">
+              <Gallery images={galleryImages} />
             </div>
           )}
           <div className="bg-gray-200 rounded-md p-4">
