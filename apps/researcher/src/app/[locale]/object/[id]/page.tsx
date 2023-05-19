@@ -5,31 +5,19 @@ import objectFetcher from '@/lib/heritage-object-fetcher-instance';
 import {HeritageObject} from '@/lib/objects';
 import {Link} from 'next-intl';
 import Image from 'next/image';
-import {ReactNode} from 'react';
+import {H2, H3} from '@/components/titles';
 
 // Revalidate the page
 export const revalidate = 0;
 
-export interface HeaderProps {
-  children: ReactNode;
-}
-
-function H2({children}: HeaderProps) {
-  return <h2 className="font-semibold uppercase text-lg">{children}</h2>;
-}
-
-function H3({children}: HeaderProps) {
-  return <h3 className="font-semibold uppercase text-gray-800">{children}</h3>;
-}
-
 function NotImplemented() {
-  const t = useTranslations('Details');
+  const t = useTranslations('ObjectDetails');
 
   return <div>{t('notImplemented')}</div>;
 }
 
 function NoData() {
-  const t = useTranslations('Details');
+  const t = useTranslations('ObjectDetails');
 
   return <div>{t('noData')}</div>;
 }
@@ -47,7 +35,7 @@ interface InfoBlockProps {
 }
 
 function InfoBlock({object, objectKey, singleLine}: InfoBlockProps) {
-  const t = useTranslations('Details');
+  const t = useTranslations('ObjectDetails');
 
   const items = object[objectKey];
 
@@ -82,10 +70,10 @@ interface Props {
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const object = await objectFetcher.getById({id});
-  const t = await getTranslations('Details');
+  const t = await getTranslations('ObjectDetails');
 
   if (!object) {
-    return <div data-testid="no-object">{t('noObject')}</div>;
+    return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
   return (
