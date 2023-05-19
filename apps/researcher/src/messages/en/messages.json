@@ -40,7 +40,11 @@
     "title": "This page was not found (404)"
   },
   "HeritageObjectCard": {
-    "heritageObject": "Heritage object"
+    "heritageObject": "Heritage object",
+    "date": "Date",
+    "dateUnknown": "Date unknown",
+    "origin": "Origin",
+    "originUnknown": "Origin unknown"
   },
   "PersonCard": {
     "person": "Person",
