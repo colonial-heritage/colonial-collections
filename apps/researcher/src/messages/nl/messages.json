@@ -43,7 +43,12 @@
     "heritageObject": "Erfgoedobject"
   },
   "PersonCard": {
-    "person": "Persoon"
+    "person": "Persoon",
+    "relatedObjects": "0 gerelateerde objecten (niet geïmplementeerd)",
+    "birthPlaceUnknown": "Geboorteplaats onbekend",
+    "birthYearUnknown": "Geboortejaar onbekend",
+    "deathPlaceUnknown": "Plaats van overlijden onbekend",
+    "deathYearUnknown": "Overlijdensjaar onbekend"
   },
   "ObjectDetails": {
     "backButton": "Terug naar resultaten",
