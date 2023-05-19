@@ -88,9 +88,9 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-object">{t('noObject')}</div>;
   }
 
-  const imagesWithAlt =
+  const galleryImages =
     object.images?.map((image, i) => ({
-      ...image,
+      id: image.id,
       src: image.contentUrl,
       alt: `${object.name} #${i + 1}`,
     })) ?? [];
@@ -164,9 +164,9 @@ export default async function Details({params}: Props) {
             </button>
           </div>
 
-          {object.images && object.images.length > 0 && (
+          {galleryImages.length > 0 && (
             <div className="relative col-span-2 w-full">
-              <Gallery images={imagesWithAlt} />
+              <Gallery images={galleryImages} />
             </div>
           )}
           <div className="bg-gray-200 rounded-md p-4">
