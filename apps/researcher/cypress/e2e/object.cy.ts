@@ -11,7 +11,7 @@ describe('Object details page', () => {
         cy.location('pathname', {timeout: 60000}).should('include', '/object');
         // On the details page.
         cy.getBySel('error').should('not.exist');
-        cy.getBySel('no-object').should('not.exist');
+        cy.getBySel('no-entity').should('not.exist');
         cy.getBySel('page-title').then($detailsName => {
           expect($cardName.text()).equal($detailsName.text());
         });
@@ -20,7 +20,7 @@ describe('Object details page', () => {
 
   it('shows an error message if no object matches the ID', () => {
     cy.visit('/en/object/anIdThatDoesNotExist');
-    cy.getBySel('no-object').should('exist');
+    cy.getBySel('no-entity').should('exist');
     cy.getBySel('object-name').should('not.exist');
   });
 });
