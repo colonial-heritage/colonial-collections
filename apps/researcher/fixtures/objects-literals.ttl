@@ -217,3 +217,87 @@
   ] ;
   la:member_of <https://example.org/datasets/1> ;
 .
+
+# All properties
+<https://example.org/objects/5>
+  a crm:E22_Human-Made_Object ;
+  crm:P2_has_type [
+    a crm:E55_Type ;
+    rdfs:label "Canvas Painting"
+  ] ;
+  crm:P45_consists_of [
+    a crm:E57_Material ;
+    rdfs:label "Oilpaint"
+  ] , [
+    a crm:E57_Material ;
+    rdfs:label "Canvas"
+  ] ;
+  crm:P62_depicts [
+    a crm:E1_CRM_Entity ;
+    rdfs:label "Celebrations"
+  ] ;
+  crm:P52_has_current_owner <https://museum.example.org/> ;
+  la:member_of <https://example.org/datasets/1> ;
+  crm:P1_is_identified_by [
+    a crm:E42_Identifier ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
+    crm:P190_has_symbolic_content "7890" ;
+  ] ;
+  crm:P1_is_identified_by [
+    a crm:E33_E41_Linguistic_Appellation ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404670> ; # Name
+    crm:P190_has_symbolic_content "Object 5" ;
+    crm:P72_has_language <http://vocab.getty.edu/aat/300388277> ; # English
+  ] ;
+  crm:P67i_is_referred_to_by [
+    a crm:E33_Linguistic_Object ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300435416> ; # Description
+    crm:P190_has_symbolic_content "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis." ;
+    crm:P72_has_language <http://vocab.getty.edu/aat/300388277> ; # English
+  ] ;
+  crm:P43_has_dimension [
+    a crm:E54_Dimension ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055647> ; # Width
+    crm:P90_has_value 120.0 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300379098> ; # Centimeters
+  ] ;
+  crm:P43_has_dimension [
+    a crm:E54_Dimension ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055644> ; # Height
+    crm:P90_has_value 112.0 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300379098> ; # Centimeters
+  ] ;
+  crm:P108i_was_produced_by [
+    a crm:E12_Production ;
+    crm:P32_used_general_technique [
+      a crm:E55_Type ;
+      rdfs:label "Albumen process"
+    ] ;
+    crm:P14_carried_out_by [
+      a crm:E39_Actor ;
+      rdfs:label "Geeske van Châtellerault"
+    ] ;
+    crm:P4_has_time-span [
+      a crm:E52_Time-Span ;
+      crm:P82a_begin_of_the_begin "1889"^^xsd:gYear ;
+      crm:P82b_end_of_the_end "1890"^^xsd:gYear ;
+    ] ;
+  ] ;
+  crm:P128_carries [
+    a crm:E33_Linguistic_Object ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028702> ; # Inscription
+    crm:P190_has_symbolic_content "Maecenas commodo est neque" ;
+  ] ;
+  crm:P65_shows_visual_item [
+    a crm:E36_Visual_Item ;
+    la:digitally_shown_by [
+      a dig:D1_Digital_Object ;
+      crm:P2_has_type <http://vocab.getty.edu/aat/300215302> ; # Digital image
+      la:access_point <http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg> ;
+    ], [
+      a dig:D1_Digital_Object ;
+      crm:P2_has_type <http://vocab.getty.edu/aat/300215302> ; # Digital image
+      la:access_point <http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg> ;
+    ] ;
+  ] ;
+.

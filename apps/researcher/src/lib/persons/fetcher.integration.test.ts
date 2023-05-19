@@ -19,8 +19,6 @@ describe('search', () => {
   it('finds all persons if no options are provided', async () => {
     const result = await personFetcher.search();
 
-    console.log(JSON.stringify(result));
-
     expect(result).toStrictEqual({
       totalCount: 11,
       offset: 0,

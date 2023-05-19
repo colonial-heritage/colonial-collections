@@ -20,7 +20,7 @@ describe('search', () => {
     const result = await heritageObjectFetcher.search();
 
     expect(result).toStrictEqual({
-      totalCount: 4,
+      totalCount: 5,
       offset: 0,
       limit: 10,
       sortBy: 'relevance',
@@ -32,25 +32,13 @@ describe('search', () => {
           identifier: '1234',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',
-          types: [
-            {
-              id: 'http://vocab.getty.edu/aat/300033618',
-              name: 'paintings (visual works)',
-            },
-          ],
-          subjects: [
-            {id: 'http://vocab.getty.edu/aat/300152441', name: 'celebrations'},
-          ],
+          types: [{id: 'Painting', name: 'Painting'}],
+          subjects: [{id: 'Celebrations', name: 'Celebrations'}],
           materials: [
-            {
-              id: 'http://vocab.getty.edu/aat/300014078',
-              name: 'canvas (textile material)',
-            },
-            {
-              id: 'http://vocab.getty.edu/aat/300015050',
-              name: 'oil paint (paint)',
-            },
+            {id: 'Canvas', name: 'Canvas'},
+            {id: 'Oilpaint', name: 'Oilpaint'},
           ],
+          creators: [{id: 'Vincent van Gogh', name: 'Vincent van Gogh'}],
           images: [
             {
               id: 'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
@@ -58,18 +46,12 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
             },
             {
+              id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
               contentUrl:
                 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
-              id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ],
-          creators: [
-            {
-              id: 'https://data.rkd.nl/artists/32439',
-              name: 'Gogh, Vincent van',
-            },
-          ],
-          owner: {id: 'https://museum.example.org/', name: 'Museum'},
+          owner: {id: 'Museum', name: 'Museum'},
           isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
         {
@@ -78,30 +60,11 @@ describe('search', () => {
           identifier: '5678',
           description:
             'Suspendisse ut condimentum leo, et vulputate lectus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce vel volutpat nunc. Sed vel libero ac lorem dapibus euismod. Aenean a ante et turpis bibendum consectetur at pulvinar quam.',
-          types: [
-            {id: 'http://vocab.getty.edu/aat/300046300', name: 'photographs'},
-          ],
-          subjects: [
-            {
-              id: 'http://vocab.getty.edu/aat/300005734',
-              name: 'palaces (official residences)',
-            },
-          ],
-          materials: [
-            {
-              id: 'http://vocab.getty.edu/aat/300014109',
-              name: 'paper (fiber product)',
-            },
-          ],
-          techniques: [
-            {
-              id: 'http://vocab.getty.edu/aat/300133274',
-              name: 'albumen process',
-            },
-          ],
-          creators: [
-            {id: 'https://data.rkd.nl/artists/120388', name: 'Boer, Adriaan'},
-          ],
+          types: [{id: 'Photo', name: 'Photo'}],
+          subjects: [{id: 'Palace', name: 'Palace'}],
+          materials: [{id: 'Paper', name: 'Paper'}],
+          techniques: [{id: 'Albumen process', name: 'Albumen process'}],
+          creators: [{id: 'Adriaan Boer', name: 'Adriaan Boer'}],
           images: [
             {
               id: 'http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg',
@@ -109,10 +72,7 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg',
             },
           ],
-          owner: {
-            id: 'https://research.example.org/',
-            name: 'Research Organisation',
-          },
+          owner: {id: 'Research Organisation', name: 'Research Organisation'},
           isPartOf: {id: 'https://example.org/datasets/13', name: 'Dataset 13'},
         },
         {
@@ -122,27 +82,16 @@ describe('search', () => {
           description:
             'Ut dictum elementum augue sit amet sodales. Vivamus viverra ligula sed arcu cursus sagittis. Donec ac placerat lacus.',
           inscriptions: ['Maecenas commodo est neque'],
-          types: [
-            {
-              id: 'http://vocab.getty.edu/aat/300033973',
-              name: 'drawings (visual works)',
-            },
-          ],
+          types: [{id: 'Drawing', name: 'Drawing'}],
           subjects: [
-            {id: 'http://vocab.getty.edu/aat/300005500', name: 'cottages'},
-            {
-              id: 'http://vocab.getty.edu/aat/300006891',
-              name: 'castles (fortifications)',
-            },
+            {id: 'Castle', name: 'Castle'},
+            {id: 'Cottage', name: 'Cottage'},
           ],
           materials: [
-            {
-              id: 'http://vocab.getty.edu/aat/300014109',
-              name: 'paper (fiber product)',
-            },
-            {id: 'http://vocab.getty.edu/aat/300015012', name: 'ink'},
+            {id: 'Ink', name: 'Ink'},
+            {id: 'Paper', name: 'Paper'},
           ],
-          owner: {id: 'https://library.example.org/', name: 'Library'},
+          owner: {id: 'Library', name: 'Library'},
           isPartOf: {id: 'https://example.org/datasets/10', name: '(No name)'},
         },
         {
@@ -150,55 +99,60 @@ describe('search', () => {
           identifier: '3456',
           isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
+        {
+          id: 'https://example.org/objects/5',
+          name: 'Object 5',
+          identifier: '7890',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',
+          inscriptions: ['Maecenas commodo est neque'],
+          types: [{id: 'Canvas Painting', name: 'Canvas Painting'}],
+          subjects: [{id: 'Celebrations', name: 'Celebrations'}],
+          materials: [
+            {id: 'Canvas', name: 'Canvas'},
+            {id: 'Oilpaint', name: 'Oilpaint'},
+          ],
+          techniques: [{id: 'Albumen process', name: 'Albumen process'}],
+          creators: [
+            {id: 'Geeske van Châtellerault', name: 'Geeske van Châtellerault'},
+          ],
+          images: [
+            {
+              id: 'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+              contentUrl:
+                'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+            },
+            {
+              id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+              contentUrl:
+                'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+            },
+          ],
+          owner: {id: 'Museum', name: 'Museum'},
+          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+        },
       ],
       filters: {
         owners: [
-          {totalCount: 1, id: 'https://library.example.org/', name: 'Library'},
-          {totalCount: 1, id: 'https://museum.example.org/', name: 'Museum'},
+          {totalCount: 1, id: 'Library', name: 'Library'},
+          {totalCount: 2, id: 'Museum', name: 'Museum'},
           {
             totalCount: 1,
-            id: 'https://research.example.org/',
+            id: 'Research Organisation',
             name: 'Research Organisation',
           },
         ],
         types: [
-          {
-            totalCount: 1,
-            id: 'http://vocab.getty.edu/aat/300033618',
-            name: 'paintings (visual works)',
-          },
-          {
-            totalCount: 1,
-            id: 'http://vocab.getty.edu/aat/300033973',
-            name: 'drawings (visual works)',
-          },
-          {
-            totalCount: 1,
-            id: 'http://vocab.getty.edu/aat/300046300',
-            name: 'photographs',
-          },
+          {totalCount: 1, id: 'Canvas Painting', name: 'Canvas Painting'},
+          {totalCount: 1, id: 'Drawing', name: 'Drawing'},
+          {totalCount: 1, id: 'Painting', name: 'Painting'},
+          {totalCount: 1, id: 'Photo', name: 'Photo'},
         ],
         subjects: [
-          {
-            totalCount: 1,
-            id: 'http://vocab.getty.edu/aat/300005500',
-            name: 'cottages',
-          },
-          {
-            totalCount: 1,
-            id: 'http://vocab.getty.edu/aat/300005734',
-            name: 'palaces (official residences)',
-          },
-          {
-            totalCount: 1,
-            id: 'http://vocab.getty.edu/aat/300006891',
-            name: 'castles (fortifications)',
-          },
-          {
-            totalCount: 1,
-            id: 'http://vocab.getty.edu/aat/300152441',
-            name: 'celebrations',
-          },
+          {totalCount: 1, id: 'Castle', name: 'Castle'},
+          {totalCount: 2, id: 'Celebrations', name: 'Celebrations'},
+          {totalCount: 1, id: 'Cottage', name: 'Cottage'},
+          {totalCount: 1, id: 'Palace', name: 'Palace'},
         ],
       },
     });
@@ -216,42 +170,25 @@ describe('getById', () => {
 
   it('returns the heritage object that matches the ID', async () => {
     const heritageObject = await heritageObjectFetcher.getById({
-      id: 'https://example.org/objects/1',
+      id: 'https://example.org/objects/5',
     });
 
     expect(heritageObject).toStrictEqual({
-      id: 'https://example.org/objects/1',
-      identifier: '1234',
-      name: 'Object 1',
+      id: 'https://example.org/objects/5',
+      name: 'Object 5',
+      identifier: '7890',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',
-      types: [
-        {
-          id: 'http://vocab.getty.edu/aat/300033618',
-          name: 'paintings (visual works)',
-        },
-      ],
-      subjects: [
-        {
-          id: 'http://vocab.getty.edu/aat/300152441',
-          name: 'celebrations',
-        },
-      ],
+      inscriptions: ['Maecenas commodo est neque'],
+      types: [{id: 'Canvas Painting', name: 'Canvas Painting'}],
+      subjects: [{id: 'Celebrations', name: 'Celebrations'}],
       materials: [
-        {
-          id: 'http://vocab.getty.edu/aat/300014078',
-          name: 'canvas (textile material)',
-        },
-        {
-          id: 'http://vocab.getty.edu/aat/300015050',
-          name: 'oil paint (paint)',
-        },
+        {id: 'Canvas', name: 'Canvas'},
+        {id: 'Oilpaint', name: 'Oilpaint'},
       ],
+      techniques: [{id: 'Albumen process', name: 'Albumen process'}],
       creators: [
-        {
-          id: 'https://data.rkd.nl/artists/32439',
-          name: 'Gogh, Vincent van',
-        },
+        {id: 'Geeske van Châtellerault', name: 'Geeske van Châtellerault'},
       ],
       images: [
         {
@@ -260,19 +197,13 @@ describe('getById', () => {
             'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
         },
         {
+          id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
-          id: 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
         },
       ],
-      owner: {
-        id: 'https://museum.example.org/',
-        name: 'Museum',
-      },
-      isPartOf: {
-        id: 'https://example.org/datasets/1',
-        name: 'Dataset 1',
-      },
+      owner: {id: 'Museum', name: 'Museum'},
+      isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
     });
   });
 });
