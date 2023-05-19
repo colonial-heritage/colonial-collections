@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/forms": "0.5.3",
     "@tailwindcss/typography": "0.5.9"
   }
