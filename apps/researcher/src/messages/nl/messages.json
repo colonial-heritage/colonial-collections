@@ -40,7 +40,11 @@
     "title": "Pagina kon niet gevonden worden (404)"
   },
   "HeritageObjectCard": {
-    "heritageObject": "Erfgoedobject"
+    "heritageObject": "Erfgoedobject",
+    "date": "Datum",
+    "dateUnknown": "Datum onbekend",
+    "origin": "Oorsprong",
+    "originUnknown": "Herkomst onbekend"
   },
   "PersonCard": {
     "person": "Persoon",
