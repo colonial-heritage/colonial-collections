@@ -313,6 +313,7 @@ export class HeritageObjectFetcher {
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
 
     const searchRequest = {
+      track_total_hits: true,
       size: options.limit,
       from: options.offset,
       sort: [
@@ -335,7 +336,7 @@ export class HeritageObjectFetcher {
               // Only return documents of a specific type
               terms: {
                 [`${RawKeys.Type}.keyword`]: [
-                  'https://colonialcollections.nl/search#Thing',
+                  'https://colonialcollections.nl/search#HeritageObject',
                 ],
               },
             },
