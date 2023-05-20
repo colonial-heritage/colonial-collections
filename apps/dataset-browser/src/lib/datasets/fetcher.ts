@@ -323,6 +323,7 @@ export class DatasetFetcher {
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
 
     const searchRequest = {
+      track_total_hits: true,
       size: options.limit,
       from: options.offset,
       sort: [
@@ -342,7 +343,7 @@ export class DatasetFetcher {
           ],
           filter: [
             {
-              // Only return documents of type 'Dataset'
+              // Only return documents of a specific type
               terms: {
                 [`${RawDatasetKeys.Type}.keyword`]: [
                   'https://colonialcollections.nl/search#Dataset',
