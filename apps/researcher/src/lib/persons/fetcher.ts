@@ -259,6 +259,7 @@ export class PersonFetcher {
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
 
     const searchRequest = {
+      track_total_hits: true,
       size: options.limit,
       from: options.offset,
       sort: [
