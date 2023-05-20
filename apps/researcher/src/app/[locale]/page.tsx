@@ -33,8 +33,8 @@ import {useTranslations} from 'next-intl';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import Tabs from './tabs';
 
-// Revalidate the page
-export const revalidate = 0;
+// Revalidate the page every n seconds
+export const revalidate = 60;
 
 // Set the order of the filters
 const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
