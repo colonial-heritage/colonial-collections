@@ -24,7 +24,7 @@ describe('Dataset details page', () => {
     cy.getBySel('dataset-name').should('not.exist');
   });
 
-  it('navigates back to the list with the previous selected filters', () => {
+  it('navigates back to the list with the previously selected filters', () => {
     cy.visit('/en');
 
     cy.getBySel('licensesFilter').within(() => {
