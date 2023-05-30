@@ -2,18 +2,23 @@ import classNames from 'classnames';
 import {ObjectIcon, PersonIcon} from '@/components/icons';
 import {useTranslations} from 'next-intl';
 import {headers} from 'next/headers';
+import {locales} from '@/middleware';
 
 export default function Tabs() {
   const t = useTranslations('Tabs');
 
-  // The header 'x-invoke-path' always contains the language prefix even if the next-intl middleware removed it
-  const activePath = headers().get('x-invoke-path') || '';
+  const activePath = headers().get('x-pathname') || '/';
 
   const tabs = [
-    {name: t('objects'), current: /^\/[^/]+$/, href: '/', icon: ObjectIcon},
+    {
+      name: t('objects'),
+      isCurrentRegex: `^/(${locales.join('|')})?$`,
+      href: '/',
+      icon: ObjectIcon,
+    },
     {
       name: t('persons'),
-      current: /\/persons$/,
+      isCurrentRegex: `^(/(${locales.join('|')}))?/persons$`,
       href: '/persons',
       icon: PersonIcon,
     },
@@ -24,7 +29,9 @@ export default function Tabs() {
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map(tab => {
-            const isCurrentPathname = tab.current.test(activePath);
+            const isCurrentPathname = new RegExp(tab.isCurrentRegex).test(
+              activePath
+            );
             return (
               <a
                 key={tab.name}
