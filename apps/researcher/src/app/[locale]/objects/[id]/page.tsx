@@ -3,9 +3,9 @@ import {getTranslations} from 'next-intl/server';
 import {PageHeader, PageTitle} from 'ui';
 import objectFetcher from '@/lib/heritage-object-fetcher-instance';
 import {HeritageObject} from '@/lib/objects';
-import {Link} from 'next-intl';
 import Gallery from './gallery';
 import {H2, H3} from '@/components/titles';
+import {ToFilteredListButton} from 'ui/list';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -85,7 +85,7 @@ export default async function Details({params}: Props) {
 
   return (
     <>
-      <Link href="/">{t('backButton')}</Link>
+      <ToFilteredListButton baseUrl="/">{t('backButton')}</ToFilteredListButton>
       <div className="grid grid-cols-5 mt-5">
         <div className="col-span-3 flex flex-col space-y-4">
           <PageHeader>

@@ -5,13 +5,13 @@ import {
   InformationCircleIcon,
 } from '@heroicons/react/24/solid';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
-import {Link} from 'next-intl';
 import {getFormatter} from 'next-intl/server';
 import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import {LocalizedMarkdown} from 'ui';
 import {Modal, ModalOpenButton, ModalDialog} from './modal';
 import metricIds from '@/lib/transparency-metrics';
+import {ToFilteredListButton} from 'ui/list';
 
 interface Props {
   params: {id: string};
@@ -88,13 +88,13 @@ export default async function Details({params}: Props) {
     <div className="flex flex-col md:flex-row justify-between gap-6">
       <aside className="w-full sm:w-1/5 flex flex-row md:flex-col border-r-2 border-white">
         <div>
-          <Link
-            href="/"
+          <ToFilteredListButton
+            baseUrl="/"
             className="inline-flex items-center mb-5 text-gray-900"
           >
             <ChevronLeftIcon className="h-5 w-5" />
             {t('back')}
-          </Link>
+          </ToFilteredListButton>
           <nav className="flex-1 space-y-1 pb-4">
             {navigation.map(item => (
               <a
