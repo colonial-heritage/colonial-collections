@@ -22,7 +22,7 @@ export default function HeritageObjectCard({heritageObject}: Props) {
     >
       <h2 className="row-span-2 col-span-3 font-semibold text-gray-900 p-3 mt-0 bg-white">
         <Link
-          href={`/object/${encodeURIComponent(heritageObject.id)}`}
+          href={`/objects/${encodeURIComponent(heritageObject.id)}`}
           data-testid="object-card-name"
           className="text-gray-900 inline-flex items-center"
         >
