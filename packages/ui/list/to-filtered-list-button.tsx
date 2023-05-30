@@ -34,7 +34,11 @@ export function ToFilteredListButton({children, baseUrl, className}: Props) {
     ]
   );
   return (
-    <Link className={className} href={href}>
+    <Link
+      data-testId="to-filtered-list-button"
+      className={className}
+      href={href}
+    >
       {children}
     </Link>
   );
