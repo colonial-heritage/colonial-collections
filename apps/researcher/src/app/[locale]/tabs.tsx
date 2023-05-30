@@ -1,16 +1,22 @@
-'use client';
-
 import classNames from 'classnames';
 import {ObjectIcon, PersonIcon} from '@/components/icons';
-import {usePathname} from 'next-intl/client';
 import {useTranslations} from 'next-intl';
+import {headers} from 'next/headers';
 
 export default function Tabs() {
   const t = useTranslations('Tabs');
-  const pathname = usePathname();
+
+  // The header 'x-invoke-path' always contains the language prefix even if the next-intl middleware removed it
+  const activePath = headers().get('x-invoke-path') || '';
+
   const tabs = [
-    {name: t('objects'), href: '/', icon: ObjectIcon},
-    {name: t('persons'), href: '/persons', icon: PersonIcon},
+    {name: t('objects'), current: /^\/[^/]+$/, href: '/', icon: ObjectIcon},
+    {
+      name: t('persons'),
+      current: /\/persons$/,
+      href: '/persons',
+      icon: PersonIcon,
+    },
   ];
 
   return (
@@ -18,7 +24,7 @@ export default function Tabs() {
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map(tab => {
-            const isCurrentPathname = tab.href === pathname;
+            const isCurrentPathname = tab.current.test(activePath);
             return (
               <a
                 key={tab.name}
