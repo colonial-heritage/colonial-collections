@@ -23,7 +23,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
       <div className="flex flex-1 flex-col space-y-2 p-6">
         <h2 className="font-semibold text-gray-900 mt-0">
           <Link
-            href={`/dataset/${encodeURIComponent(dataset.id)}`}
+            href={`/datasets/${encodeURIComponent(dataset.id)}`}
             data-testid="dataset-card-name"
             className="text-gray-900"
           >
