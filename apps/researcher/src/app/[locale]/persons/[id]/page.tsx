@@ -2,10 +2,10 @@ import {DateTimeFormatOptions, useTranslations} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import {PageHeader, PageTitle} from 'ui';
 import personFetcher from '@/lib/person-fetcher-instance';
-import {Link} from 'next-intl';
 import {getFormatter} from 'next-intl/server';
 import {PersonIcon} from '@/components/icons';
 import {H2, H3} from '@/components/titles';
+import {ToFilteredListButton} from 'ui/list';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -58,7 +58,9 @@ export default async function Details({params}: Props) {
 
   return (
     <>
-      <Link href="/">{t('backButton')}</Link>
+      <ToFilteredListButton baseUrl="/persons">
+        {t('backButton')}
+      </ToFilteredListButton>
       <div className="mt-10 mb-4">
         <PageHeader>
           <PageTitle id="about">
