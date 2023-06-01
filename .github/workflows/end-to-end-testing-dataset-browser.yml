@@ -1,0 +1,17 @@
+name: End-to-end testing Dataset Browser
+on:
+  [deployment_status]
+jobs:     
+  run-end-to-end-tests:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Preview – colonial-collections-dataset-browser'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Cypress for Dataset Browser 🌲
+        uses: cypress-io/github-action@v5
+        with:
+          project: ./apps/dataset-browser
+          wait-on: ${{ github.event.deployment_status.target_url }}
+        env:
+          CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
