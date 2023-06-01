@@ -1,16 +1,27 @@
-'use client';
-
 import classNames from 'classnames';
 import {ObjectIcon, PersonIcon} from '@/components/icons';
-import {usePathname} from 'next-intl/client';
 import {useTranslations} from 'next-intl';
+import {headers} from 'next/headers';
+import {locales} from '@/middleware';
 
 export default function Tabs() {
   const t = useTranslations('Tabs');
-  const pathname = usePathname();
+
+  const activePath = headers().get('x-pathname') || '/';
+
   const tabs = [
-    {name: t('objects'), href: '/', icon: ObjectIcon},
-    {name: t('persons'), href: '/persons', icon: PersonIcon},
+    {
+      name: t('objects'),
+      isCurrentRegex: `^/(${locales.join('|')})?$`,
+      href: '/',
+      icon: ObjectIcon,
+    },
+    {
+      name: t('persons'),
+      isCurrentRegex: `^(/(${locales.join('|')}))?/persons$`,
+      href: '/persons',
+      icon: PersonIcon,
+    },
   ];
 
   return (
@@ -18,7 +29,9 @@ export default function Tabs() {
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map(tab => {
-            const isCurrentPathname = tab.href === pathname;
+            const isCurrentPathname = new RegExp(tab.isCurrentRegex).test(
+              activePath
+            );
             return (
               <a
                 key={tab.name}
