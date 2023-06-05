@@ -53,7 +53,7 @@
     "eslint-config-custom": "*",
     "gts": "3.1.1",
     "jest": "29.5.0",
-    "postcss": "8.4.23",
+    "postcss": "8.4.24",
     "rdf-serialize": "2.2.2",
     "tailwind-config": "*",
     "tailwindcss": "3.3.2",
