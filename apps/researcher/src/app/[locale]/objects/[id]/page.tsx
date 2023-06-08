@@ -6,6 +6,7 @@ import {HeritageObject} from '@/lib/objects';
 import Gallery from './gallery';
 import {H2, H3} from '@/components/titles';
 import {ToFilteredListButton} from 'ui/list';
+import Provenance from './provenance';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -87,7 +88,7 @@ export default async function Details({params}: Props) {
     <>
       <ToFilteredListButton baseUrl="/">{t('backButton')}</ToFilteredListButton>
       <div className="grid grid-cols-5 mt-5">
-        <div className="col-span-3 flex flex-col space-y-4">
+        <div className="col-span-3 flex flex-col space-y-8">
           <PageHeader>
             <PageTitle id="about">{object.name}</PageTitle>
           </PageHeader>
@@ -118,7 +119,9 @@ export default async function Details({params}: Props) {
             <NotImplemented />
           </div>
           <div className="space-y-4">
-            <H2>{t('moreInfo')}</H2>
+            <div className="mt-8">
+              <H2>{t('moreInfo')}</H2>
+            </div>
             <InfoBlock singleLine objectKey="materials" object={object} />
             <InfoBlock singleLine objectKey="types" object={object} />
             <InfoBlock
@@ -170,6 +173,9 @@ export default async function Details({params}: Props) {
             <NotImplemented />
           </div>
         </div>
+      </div>
+      <div className="mt-16">
+        <Provenance />
       </div>
     </>
   );

@@ -118,5 +118,14 @@
   "WorkInProgress": {
     "message": "This website is a work in progress",
     "roadmapLink": "Read about the current status and roadmap of this project."
+  },
+  "Provenance": {
+    "title": "Provenance",
+    "type": "Type",
+    "transferredTo": "Transferred to",
+    "transferredFrom": "Transferred from",
+    "location": "Location",
+    "name": "Name",
+    "description": "Description"
   }
 }

@@ -84,7 +84,7 @@
     "birthDate": "Geboortedatum",
     "birthPlace": "Geboorteplaats",
     "deathDate": "Overlijdensdatum",
-    "deathPlace": "De plaats van de dood",
+    "deathPlace": "Overlijdensplaats",
     "dataset": "In dataset",
     "relatedObjects": "Verwante objecten"
   },
@@ -118,5 +118,14 @@
   "WorkInProgress": {
     "message": "Aan deze website wordt gewerkt",
     "roadmapLink": "Lees over de huidige status en roadmap van dit project."
+  },
+  "Provenance": {
+    "title": "Herkomst",
+    "type": "Type",
+    "transferredTo": "Overgedragen aan",
+    "transferredFrom": "Overgebracht door",
+    "location": "Locatie",
+    "name": "naam",
+    "description": "Beschrijving"
   }
 }

@@ -41,7 +41,7 @@ export default function HeritageObjectCard({heritageObject}: Props) {
               // For min-width 1280px:
               // The page container is max 1280px. So above 1280px the size is fixed to 200px
               // For width 768px - 1280px:
-              // The list is 2/4 of the page. The image is 1/4 of the list.
+              // The list is 3/4 of the page. The image is 1/4 of the list.
               // For max-width: 768px:
               // The image is 1/4 of page.
               sizes="(min-width: 1280px) 200px, (min-width: 768px) 17vw, 25vw"
