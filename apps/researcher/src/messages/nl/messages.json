@@ -113,5 +113,9 @@
     "sortNameAsc": "Naam - Oplopend",
     "sortNameDesc": "Naam - Aflopend",
     "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
+  },
+  "WorkInProgress": {
+    "message": "Aan deze website wordt gewerkt",
+    "roadmapLink": "Lees over de huidige status en roadmap van dit project."
   }
 }
