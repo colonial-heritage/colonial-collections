@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
 import {H2} from '@/components/titles';
-import {useTranslations} from 'next-intl';
+import {Link, useTranslations} from 'next-intl';
 import {PersonIcon} from '@/components/icons';
 import ProvenanceMoreInfo from './provenance-more-info';
 
@@ -18,10 +18,12 @@ function Person() {
     },
   };
   return (
-    <div className="bg-white w-full drop-shadow-sm rounded-md inline-flex font-bold">
-      <PersonIcon className="my-4 ml-2 h-6 w-6" />
-      <span className="grow my-4 mx-2">{person.name}</span>
-    </div>
+    <Link href={`/persons/${encodeURIComponent(person.id)}`}>
+      <div className="bg-white w-full drop-shadow-sm rounded-md inline-flex font-bold">
+        <PersonIcon className="my-4 ml-2 h-6 w-6" />
+        <span className="grow my-4 mx-2">{person.name}</span>
+      </div>
+    </Link>
   );
 }
 
