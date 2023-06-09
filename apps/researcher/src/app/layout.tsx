@@ -4,6 +4,7 @@ import {ReactNode} from 'react';
 import Navigation from './navigation';
 import {useTranslations} from 'next-intl';
 import {locales} from '@/middleware';
+import WipMessage from 'ui/wip-message';
 
 interface Props {
   children: ReactNode;
@@ -45,6 +46,7 @@ export default function RootLayout({children}: Props) {
   return (
     <html className="h-full" lang={locale}>
       <body className="flex flex-col min-h-screen">
+        <WipMessage />
         <div className="sr-only">
           <ul>
             <li>

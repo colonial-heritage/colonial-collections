@@ -113,5 +113,9 @@
     "sortNameAsc": "Name - Ascending",
     "sortNameDesc": "Name - Descending",
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
+  },
+  "WorkInProgress": {
+    "message": "This website is a work in progress",
+    "roadmapLink": "Read about the current status and roadmap of this project."
   }
 }
