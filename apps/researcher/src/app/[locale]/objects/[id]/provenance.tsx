@@ -82,13 +82,11 @@ export default function Provenance() {
           );
           return (
             <>
-              <div className="font-bold">
-                {event.date ? (
-                  event.date
-                ) : (
-                  <div className="rounded-full w-2 h-2 bg-gray-300 -ml-0.5" />
-                )}
-              </div>
+              {event.date ? (
+                <div className="font-bold">{event.date}</div>
+              ) : (
+                <div className="italic text-gray-500">{t('dateUnknown')}</div>
+              )}
               <div className="grid grid-cols-9 w-full items-center my-1 pl-4 pb-4 border-l-2 gap-6">
                 <div className="col-span-2">
                   {event.type} ({event.classification})

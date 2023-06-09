@@ -126,6 +126,7 @@
     "transferredFrom": "Overgebracht door",
     "location": "Locatie",
     "name": "naam",
-    "description": "Beschrijving"
+    "description": "Beschrijving",
+    "dateUnknown": "Datum onbekend"
   }
 }

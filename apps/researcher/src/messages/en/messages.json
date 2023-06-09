@@ -126,6 +126,7 @@
     "transferredFrom": "Transferred from",
     "location": "Location",
     "name": "Name",
-    "description": "Description"
+    "description": "Description",
+    "dateUnknown": "Date unknown"
   }
 }
