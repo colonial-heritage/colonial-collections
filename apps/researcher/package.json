@@ -37,7 +37,7 @@
     "zustand": "4.3.8"
   },
   "devDependencies": {
-    "@comunica/query-sparql-file": "2.6.9",
+    "@comunica/query-sparql-file": "2.7.1",
     "@jest/globals": "29.5.0",
     "@next/env": "13.3.4",
     "@types/mdx": "2.0.5",
