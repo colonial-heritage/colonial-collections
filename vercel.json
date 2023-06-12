@@ -1,3 +1,6 @@
 {
-  "buildCommand": "turbo run build"
+  "github": {
+    "enabled": false,
+    "silent": true
+  }
 }
