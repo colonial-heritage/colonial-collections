@@ -3,6 +3,13 @@
 import {Tab} from '@headlessui/react';
 import classNames from 'classnames';
 import Image from 'next/image';
+import {SlideOver, SlideOverOpenButton} from 'ui';
+import dynamic from 'next/dynamic';
+
+// SSR needs to be false for plugin 'openseadragon'
+const SlideOverGallery = dynamic(() => import('./slide-over-gallery'), {
+  ssr: false,
+});
 
 interface Props {
   images: {
@@ -16,7 +23,7 @@ export default function Gallery({images}: Props) {
   return (
     <Tab.Group as="div" className="flex flex-col-reverse">
       {images.length > 1 && (
-        <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
+        <div className="mx-auto mt-6 w-full max-w-2xl lg:max-w-none">
           <Tab.List className="grid grid-cols-4 gap-6">
             {images.map(image => (
               <Tab
@@ -51,15 +58,20 @@ export default function Gallery({images}: Props) {
       )}
 
       <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-        {images.map(image => (
+        {images.map((image, index) => (
           <Tab.Panel key={image.id}>
-            <Image
-              fill
-              src={image.src}
-              alt={image.alt}
-              className="h-full w-full object-contain object-center sm:rounded-lg"
-              sizes="40vw"
-            />
+            <SlideOver variant="gallery">
+              <SlideOverOpenButton>
+                <Image
+                  fill
+                  src={image.src}
+                  alt={image.alt}
+                  className="h-full w-full object-contain object-center sm:rounded-lg"
+                  sizes="40vw"
+                />
+              </SlideOverOpenButton>
+              <SlideOverGallery images={images} selected={index} />
+            </SlideOver>
           </Tab.Panel>
         ))}
       </Tab.Panels>

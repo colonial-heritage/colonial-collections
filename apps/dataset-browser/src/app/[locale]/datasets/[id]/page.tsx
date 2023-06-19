@@ -1,5 +1,13 @@
 import {getTranslations} from 'next-intl/server';
-import {PageHeader, PageTitle} from 'ui';
+import {
+  PageHeader,
+  PageTitle,
+  SlideOverContent,
+  SlideOverHeader,
+  SlideOver,
+  SlideOverOpenButton,
+  SlideOverDialog,
+} from 'ui';
 import {
   ChevronLeftIcon,
   InformationCircleIcon,
@@ -9,7 +17,6 @@ import {getFormatter} from 'next-intl/server';
 import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import {LocalizedMarkdown} from 'ui';
-import {Modal, ModalOpenButton, ModalDialog} from './modal';
 import metricIds from '@/lib/transparency-metrics';
 import {ToFilteredListButton} from 'ui/list';
 
@@ -158,18 +165,21 @@ export default async function Details({params}: Props) {
                 );
               })}
               <div className="flex-1 gap-3 font-semibold text-base p-4 bg-sand-50">
-                <Modal>
-                  <ModalOpenButton className="text-sky-500 underline hover:no-underline inline-block text-left">
+                <SlideOver>
+                  <SlideOverOpenButton className="text-sky-500 underline hover:no-underline inline-block text-left">
                     {t('measurements.moreInfo')}
                     <InformationCircleIcon className="w-6 h-6 align-middle inline-block ml-1" />
-                  </ModalOpenButton>
-                  <ModalDialog>
-                    <LocalizedMarkdown
-                      name="transparency-measurements"
-                      contentPath="@/messages"
-                    />
-                  </ModalDialog>
-                </Modal>
+                  </SlideOverOpenButton>
+                  <SlideOverDialog>
+                    <SlideOverHeader />
+                    <SlideOverContent>
+                      <LocalizedMarkdown
+                        name="transparency-measurements"
+                        contentPath="@/messages"
+                      />
+                    </SlideOverContent>
+                  </SlideOverDialog>
+                </SlideOver>
               </div>
               <div className="flex flex-1 gap-3 bg-sand-50"></div>
             </div>
