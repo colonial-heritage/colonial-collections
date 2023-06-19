@@ -65,7 +65,7 @@
   crm:P9i_forms_part_of <https://example.org/objects/1/provenance/event/2> ;
 .
 
-<https://example.org/objects/1/provenance/event/2/activity/1>
+<https://example.org/objects/1/provenance/event/2>
   a crm:E7_Activity ;
   rdfs:label "Purchase of object" ;
   crm:P2_has_type <http://vocab.getty.edu/aat/300055863> ; # "Provenance event"
