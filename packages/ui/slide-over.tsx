@@ -29,7 +29,7 @@ const SlideOverContext = createContext<SlideOverContextType>({
   variant: 'text',
 });
 
-function SlideOver({children, variant = 'text'}: SlideOverProps) {
+export function SlideOver({children, variant = 'text'}: SlideOverProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const context = {
@@ -48,7 +48,7 @@ interface SlideOverDialogProps {
   children: ReactNode;
 }
 
-function SlideOverDialog({children}: SlideOverDialogProps) {
+export function SlideOverDialog({children}: SlideOverDialogProps) {
   const {isOpen, setIsOpen, variant} = useContext(SlideOverContext);
 
   const panelClassName = classNames('pointer-events-auto w-screen', {
@@ -96,7 +96,7 @@ interface OpenButtonProps {
   className?: string;
 }
 
-function SlideOverOpenButton({children, className}: OpenButtonProps) {
+export function SlideOverOpenButton({children, className}: OpenButtonProps) {
   const {setIsOpen} = useContext(SlideOverContext);
 
   return (
@@ -110,7 +110,7 @@ interface SlideOverHeaderProps {
   children?: ReactNode;
 }
 
-function SlideOverHeader({children}: SlideOverHeaderProps = {}) {
+export function SlideOverHeader({children}: SlideOverHeaderProps = {}) {
   const {variant, setIsOpen} = useContext(SlideOverContext);
 
   const headerClassName = classNames({
@@ -144,7 +144,7 @@ function SlideOverHeader({children}: SlideOverHeaderProps = {}) {
   );
 }
 
-function SlideOverContent({children}: SlideOverDialogProps) {
+export function SlideOverContent({children}: SlideOverDialogProps) {
   const {variant} = useContext(SlideOverContext);
   const className = classNames('relative flex-1', {
     'mt-6 px-4 sm:px-6': variant === 'text',
@@ -152,11 +152,3 @@ function SlideOverContent({children}: SlideOverDialogProps) {
 
   return <div className={className}>{children}</div>;
 }
-
-export {
-  SlideOver,
-  SlideOverOpenButton,
-  SlideOverDialog,
-  SlideOverHeader,
-  SlideOverContent,
-};
