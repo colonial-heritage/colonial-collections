@@ -16,7 +16,8 @@
 <https://example.org/objects/1/provenance/event/1/activity/1>
   a crm:E8_Acquisition ;
   rdfs:label "Acquisition of object from seller" ;
-  crm:P2_has_type <http://vocab.getty.edu/aat/300417642> ; # "Purchase"
+  crm:P2_has_type <http://vocab.getty.edu/aat/300417642> , # "Purchase"
+                  <http://vocab.getty.edu/aat/300417644> ; # "Transfer" - second type for testing
   crm:P24_transferred_title_of <https://example.org/objects/1> ;
   crm:P23_transferred_title_from [
     a crm:E21_Person ;
