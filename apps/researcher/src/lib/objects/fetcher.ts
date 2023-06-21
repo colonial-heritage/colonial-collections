@@ -39,6 +39,7 @@ export type Term = Thing;
 export type Person = Thing;
 export type Dataset = Thing;
 export type Place = Thing;
+export type Agent = Person | Organization;
 
 export type Image = {
   id: string;
@@ -50,8 +51,8 @@ export type ProvenanceEvent = {
   types: Term[];
   startDate?: Date;
   endDate?: Date;
-  transferredFrom?: Person | Organization;
-  transferredTo?: Person | Organization;
+  transferredFrom?: Agent;
+  transferredTo?: Agent;
   description?: string;
   location?: Place;
   startsAfter?: string; // ID of another provenance event

@@ -1,7 +1,7 @@
-import {HeritageObject, ProvenanceEvent, Term} from '.';
+import {Agent, HeritageObject, Place, ProvenanceEvent, Term} from '.';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
-import {reach} from '@hapi/hoek';
+import {merge} from '@hapi/hoek';
 import type {Readable} from 'node:stream';
 import {lru, LRU} from 'tiny-lru';
 import type {Stream} from '@rdfjs/types';
@@ -123,22 +123,55 @@ export class HeritageObjectEnricher {
       // Console.log(rawProvenanceEvent);
 
       const id = rawProvenanceEvent.value;
-      const startDate = rawProvenanceEvent.property['cc:startDate']; // Can be undefined
-      const endDate = rawProvenanceEvent.property['cc:endDate']; // Can be undefined
-      const description = rawProvenanceEvent.property['cc:description']; // Can be undefined
+      const startDate = rawProvenanceEvent.property['cc:startDate'];
+      const endDate = rawProvenanceEvent.property['cc:endDate'];
+      const description = rawProvenanceEvent.property['cc:description'];
       const startsAfter = rawProvenanceEvent.property['cc:startsAfter'];
       const endsBefore = rawProvenanceEvent.property['cc:endsBefore'];
 
-      // Const location = rawProvenanceEvent.property['cc:location'];
-      // const locationName = location.property['cc:name'];
-      // console.log(location, locationName.value);
-
-      const provenanceEvent: ProvenanceEvent = {
+      const provenanceEventWithUndefinedValues: ProvenanceEvent = {
         id,
         types: [],
+        description: description ? description.value : undefined,
+        startDate: startDate ? new Date(startDate.value) : undefined,
+        endDate: endDate ? new Date(endDate.value) : undefined,
         startsAfter: startsAfter ? startsAfter.value : undefined,
         endsBefore: endsBefore ? endsBefore.value : undefined,
       };
+
+      const transferredFrom = rawProvenanceEvent.property['cc:transferredFrom'];
+      if (transferredFrom !== undefined) {
+        const transferredFromName = transferredFrom.property['cc:name'];
+        const agent: Agent = {
+          id: transferredFrom.value,
+          name: transferredFromName ? transferredFromName.value : undefined,
+        };
+        provenanceEventWithUndefinedValues.transferredFrom = agent;
+      }
+
+      const transferredTo = rawProvenanceEvent.property['cc:transferredTo'];
+      if (transferredTo !== undefined) {
+        const transferredToName = transferredTo.property['cc:name'];
+        const agent: Agent = {
+          id: transferredTo.value,
+          name: transferredToName ? transferredToName.value : undefined,
+        };
+        provenanceEventWithUndefinedValues.transferredTo = agent;
+      }
+
+      const location = rawProvenanceEvent.property['cc:location'];
+      if (location !== undefined) {
+        const locationName = location.property['cc:name'];
+        const place: Place = {
+          id: location.value,
+          name: locationName ? locationName.value : undefined,
+        };
+        provenanceEventWithUndefinedValues.location = place;
+      }
+
+      const provenanceEvent = merge({}, provenanceEventWithUndefinedValues, {
+        nullOverride: false,
+      });
 
       return provenanceEvent;
 
@@ -152,14 +185,6 @@ export class HeritageObjectEnricher {
       // for (const friend of types.properties.label) {
       //   console.log(`* ${friend.property.name}`);
       // }
-      // const startDate = rawProvenanceEvent.property['cc:startDate'];
-      // const endDate = rawProvenanceEvent.property['cc:endDate'];
-      // // Const transferredFrom = rawProvenanceEvent.property['cc:transferredFrom'];
-      // // const transferredTo = rawProvenanceEvent.property['cc:transferredTo'];
-      // const description = rawProvenanceEvent.property['cc:description'];
-      // // Const location = rawProvenanceEvent.property['cc:location'];
-      // const startsAfter = rawProvenanceEvent.property['cc:startsAfter'];
-      // const endsBefore = rawProvenanceEvent.property['cc:endsBefore'];
 
       // const t: Term[] = [
       //   {
@@ -167,18 +192,6 @@ export class HeritageObjectEnricher {
       //     name: 'name',
       //   },
       // ];
-
-      // return {
-      //   types: t,
-      //   startDate: new Date(startDate.value),
-      //   endDate: new Date(endDate.value),
-      //   // TransferredFrom,
-      //   // transferredTo,
-      //   description: description.value,
-      //   // Location,
-      //   startsAfter: startsAfter.value,
-      //   endsBefore: endsBefore.value,
-      // } as ProvenanceEvent;
     });
 
     // TODO: sort provenance events by 'endsBefore'

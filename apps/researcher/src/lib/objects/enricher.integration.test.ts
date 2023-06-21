@@ -32,14 +32,14 @@ describe('getByIri', () => {
   });
 
   it('gets data by IRI', async () => {
-    const iris = ['https://example.org/objects/1'];
+    const iris = ['https://example.org/objects/2'];
     await heritageObjectEnricher.loadByIris({iris});
 
     const result = heritageObjectEnricher.getByIri({
-      iri: 'https://example.org/objects/1',
+      iri: 'https://example.org/objects/2',
     });
 
-    console.log(result);
+    console.log(JSON.stringify(result, null, 2));
 
     // Expect(result).toStrictEqual({});
   });
