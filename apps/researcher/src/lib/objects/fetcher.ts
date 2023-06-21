@@ -46,6 +46,7 @@ export type Image = {
 };
 
 export type ProvenanceEvent = {
+  id: string;
   types: Term[];
   startDate?: Date;
   endDate?: Date;
@@ -53,8 +54,8 @@ export type ProvenanceEvent = {
   transferredTo?: Person | Organization;
   description?: string;
   location?: Place;
-  startsAfter: string; // ID of another provenance event
-  endsBefore: string; // ID of another provenance event
+  startsAfter?: string; // ID of another provenance event
+  endsBefore?: string; // ID of another provenance event
 };
 
 export type HeritageObject = {

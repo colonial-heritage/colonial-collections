@@ -120,42 +120,65 @@ export class HeritageObjectEnricher {
   private processResource(rawHeritageObject: Resource) {
     const rawProvenanceEvents = rawHeritageObject.properties['cc:subjectOf'];
     const provenanceEvents = rawProvenanceEvents.map(rawProvenanceEvent => {
-      console.log(rawProvenanceEvent);
+      // Console.log(rawProvenanceEvent);
 
-      const types = rawProvenanceEvent.property['cc:additionalType'];
+      const id = rawProvenanceEvent.value;
+      const startDate = rawProvenanceEvent.property['cc:startDate']; // Can be undefined
+      const endDate = rawProvenanceEvent.property['cc:endDate']; // Can be undefined
+      const description = rawProvenanceEvent.property['cc:description']; // Can be undefined
+      const startsAfter = rawProvenanceEvent.property['cc:startsAfter'];
+      const endsBefore = rawProvenanceEvent.property['cc:endsBefore'];
+
+      // Const location = rawProvenanceEvent.property['cc:location'];
+      // const locationName = location.property['cc:name'];
+      // console.log(location, locationName.value);
+
+      const provenanceEvent: ProvenanceEvent = {
+        id,
+        types: [],
+        startsAfter: startsAfter ? startsAfter.value : undefined,
+        endsBefore: endsBefore ? endsBefore.value : undefined,
+      };
+
+      return provenanceEvent;
+
+      // Const types = rawProvenanceEvent.property['cc:additionalType'];
+      // console.log(rawProvenanceEvents, types);
+      // console.log('-----------------------------------');
+
       // Const typeNames = types.property['cc:name'];
 
       // // https://www.npmjs.com/package/rdf-object
       // for (const friend of types.properties.label) {
       //   console.log(`* ${friend.property.name}`);
       // }
-      const startDate = rawProvenanceEvent.property['cc:startDate'];
-      const endDate = rawProvenanceEvent.property['cc:endDate'];
-      // Const transferredFrom = rawProvenanceEvent.property['cc:transferredFrom'];
-      // const transferredTo = rawProvenanceEvent.property['cc:transferredTo'];
-      const description = rawProvenanceEvent.property['cc:description'];
-      // Const location = rawProvenanceEvent.property['cc:location'];
-      const startsAfter = rawProvenanceEvent.property['cc:startsAfter'];
-      const endsBefore = rawProvenanceEvent.property['cc:endsBefore'];
+      // const startDate = rawProvenanceEvent.property['cc:startDate'];
+      // const endDate = rawProvenanceEvent.property['cc:endDate'];
+      // // Const transferredFrom = rawProvenanceEvent.property['cc:transferredFrom'];
+      // // const transferredTo = rawProvenanceEvent.property['cc:transferredTo'];
+      // const description = rawProvenanceEvent.property['cc:description'];
+      // // Const location = rawProvenanceEvent.property['cc:location'];
+      // const startsAfter = rawProvenanceEvent.property['cc:startsAfter'];
+      // const endsBefore = rawProvenanceEvent.property['cc:endsBefore'];
 
-      const t: Term[] = [
-        {
-          id: '123',
-          name: 'name',
-        },
-      ];
+      // const t: Term[] = [
+      //   {
+      //     id: '123',
+      //     name: 'name',
+      //   },
+      // ];
 
-      return {
-        types: t,
-        startDate: new Date(startDate.value),
-        endDate: new Date(endDate.value),
-        // TransferredFrom,
-        // transferredTo,
-        description: description.value,
-        // Location,
-        startsAfter: startsAfter.value,
-        endsBefore: endsBefore.value,
-      } as ProvenanceEvent;
+      // return {
+      //   types: t,
+      //   startDate: new Date(startDate.value),
+      //   endDate: new Date(endDate.value),
+      //   // TransferredFrom,
+      //   // transferredTo,
+      //   description: description.value,
+      //   // Location,
+      //   startsAfter: startsAfter.value,
+      //   endsBefore: endsBefore.value,
+      // } as ProvenanceEvent;
     });
 
     // TODO: sort provenance events by 'endsBefore'
