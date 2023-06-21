@@ -153,7 +153,7 @@ export default async function Details({params}: Props) {
           </div>
 
           {galleryImages.length > 0 && (
-            <div className="relative col-span-2 w-full">
+            <div className="w-full">
               <Gallery images={galleryImages} />
             </div>
           )}

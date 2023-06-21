@@ -73,7 +73,8 @@
     "shareButton": "Share object",
     "relatedPersons": "Related Persons",
     "origin": "Origin",
-    "discussion": "Discussion"
+    "discussion": "Discussion",
+    "types": "Types"
   },
   "PersonDetails": {
     "backButton": "Back to results",
