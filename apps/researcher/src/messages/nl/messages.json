@@ -73,7 +73,8 @@
     "shareButton": "Object delen",
     "relatedPersons": "Verwante personen",
     "origin": "Oorsprong",
-    "discussion": "Discussie"
+    "discussion": "Discussie",
+    "types": "Types"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
