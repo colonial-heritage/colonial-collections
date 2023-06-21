@@ -38,10 +38,23 @@ export type Organization = Thing;
 export type Term = Thing;
 export type Person = Thing;
 export type Dataset = Thing;
+export type Place = Thing;
 
 export type Image = {
   id: string;
   contentUrl: string;
+};
+
+export type ProvenanceEvent = {
+  types: Term[];
+  startDate?: Date;
+  endDate?: Date;
+  transferredFrom?: Person | Organization;
+  transferredTo?: Person | Organization;
+  description?: string;
+  location?: Place;
+  startsAfter: string; // ID of another provenance event
+  endsBefore: string; // ID of another provenance event
 };
 
 export type HeritageObject = {
@@ -58,6 +71,7 @@ export type HeritageObject = {
   images?: Image[];
   owner?: Organization;
   isPartOf: Dataset;
+  subjectOf?: ProvenanceEvent[];
 };
 
 export enum SortBy {
