@@ -1,3 +1,4 @@
+import {HeritageObjectEnricher} from '.';
 import {buildAggregation} from './fetcher-request';
 import {buildFilters} from './fetcher-result';
 import {getIrisFromObject} from '@colonial-collections/iris';
@@ -8,6 +9,7 @@ import {z} from 'zod';
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
   labelFetcher: z.instanceof(LabelFetcher),
+  heritageObjectEnricher: z.instanceof(HeritageObjectEnricher),
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
@@ -201,12 +203,14 @@ export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 export class HeritageObjectFetcher {
   private endpointUrl: string;
   private labelFetcher: LabelFetcher;
+  private heritageObjectEnricher: HeritageObjectEnricher;
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
     this.labelFetcher = opts.labelFetcher;
+    this.heritageObjectEnricher = opts.heritageObjectEnricher;
   }
 
   async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
@@ -239,6 +243,7 @@ export class HeritageObjectFetcher {
   private fromRawHeritageObjectToHeritageObject(
     rawHeritageObject: RawHeritageObject
   ): HeritageObject {
+    const id = rawHeritageObject[RawKeys.Id];
     const name = reach(rawHeritageObject, `${RawKeys.Name}.0`);
     const identifier = reach(rawHeritageObject, `${RawKeys.Identifier}.0`);
     const description = reach(rawHeritageObject, `${RawKeys.Description}.0`);
@@ -315,6 +320,14 @@ export class HeritageObjectFetcher {
     const heritageObject = merge({}, heritageObjectWithUndefinedValues, {
       nullOverride: false,
     });
+
+    // Enrich the object
+    const partialHeritageObject = this.heritageObjectEnricher.getByIri({
+      iri: id,
+    });
+    if (partialHeritageObject !== undefined) {
+      Object.assign(heritageObject, partialHeritageObject);
+    }
 
     return heritageObject;
   }
@@ -469,6 +482,8 @@ export class HeritageObjectFetcher {
     if (searchResponse.hits.hits.length !== 1) {
       return undefined;
     }
+
+    await this.heritageObjectEnricher.loadByIris({iris: [opts.id]});
 
     const rawHeritageObject = searchResponse.hits.hits[0]._source;
     const heritageObject =

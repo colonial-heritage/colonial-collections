@@ -120,8 +120,6 @@ export class HeritageObjectEnricher {
   private processResource(rawHeritageObject: Resource) {
     const rawProvenanceEvents = rawHeritageObject.properties['cc:subjectOf'];
     const provenanceEvents = rawProvenanceEvents.map(rawProvenanceEvent => {
-      // Console.log(rawProvenanceEvent);
-
       const id = rawProvenanceEvent.value;
       const startDate = rawProvenanceEvent.property['cc:startDate'];
       const endDate = rawProvenanceEvent.property['cc:endDate'];
@@ -138,6 +136,18 @@ export class HeritageObjectEnricher {
         startsAfter: startsAfter ? startsAfter.value : undefined,
         endsBefore: endsBefore ? endsBefore.value : undefined,
       };
+
+      provenanceEventWithUndefinedValues.types = [];
+      const additionalTypes =
+        rawProvenanceEvent.properties['cc:additionalType'];
+      for (const additionalType of additionalTypes) {
+        const additionalTypeName = additionalType.property['cc:name'];
+        const term: Term = {
+          id: additionalType.value,
+          name: additionalTypeName ? additionalTypeName.value : undefined,
+        };
+        provenanceEventWithUndefinedValues.types.push(term);
+      }
 
       const transferredFrom = rawProvenanceEvent.property['cc:transferredFrom'];
       if (transferredFrom !== undefined) {
@@ -174,27 +184,9 @@ export class HeritageObjectEnricher {
       });
 
       return provenanceEvent;
-
-      // Const types = rawProvenanceEvent.property['cc:additionalType'];
-      // console.log(rawProvenanceEvents, types);
-      // console.log('-----------------------------------');
-
-      // Const typeNames = types.property['cc:name'];
-
-      // // https://www.npmjs.com/package/rdf-object
-      // for (const friend of types.properties.label) {
-      //   console.log(`* ${friend.property.name}`);
-      // }
-
-      // const t: Term[] = [
-      //   {
-      //     id: '123',
-      //     name: 'name',
-      //   },
-      // ];
     });
 
-    // TODO: sort provenance events by 'endsBefore'
+    // TODO: sort provenance events
 
     const partialHeritageObject: PartialHeritageObject = {
       id: rawHeritageObject.value,
@@ -247,7 +239,9 @@ export class HeritageObjectEnricher {
 
   getByIri(options: GetByIriOptions) {
     const opts = getByIriOptionsSchema.parse(options);
-    const label = this.cache.get(opts.iri);
-    return label !== cacheValueIfIriNotFound ? label : undefined;
+    const partialHeritageObject = this.cache.get(opts.iri);
+    return partialHeritageObject !== cacheValueIfIriNotFound
+      ? partialHeritageObject
+      : undefined;
   }
 }
