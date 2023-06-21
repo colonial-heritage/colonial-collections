@@ -29,6 +29,7 @@ export type GetByIriOptions = z.infer<typeof getByIriOptionsSchema>;
 
 const cacheValueIfIriNotFound = Symbol('cacheValueIfIriNotFound');
 
+// Can be expanded to also include other properties from 'Dataset'
 export type PartialDataset = Pick<Dataset, 'id' | 'measurements'>;
 
 // Fetches data from a SPARQL endpoint for enriching datasets
@@ -85,9 +86,7 @@ export class DatasetEnricher {
     `;
 
     // The endpoint throws an error if an IRI is not valid
-    const stream = await this.fetcher.fetchTriples(this.endpointUrl, query);
-
-    return stream;
+    return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
   private processResource(rawDataset: Resource) {
