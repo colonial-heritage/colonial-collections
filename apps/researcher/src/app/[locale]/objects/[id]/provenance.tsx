@@ -1,8 +1,10 @@
 import {Fragment} from 'react';
 import {H2} from '@/components/titles';
-import {Link, useTranslations} from 'next-intl';
+import {Link, useFormatter, useTranslations} from 'next-intl';
 import {PersonIcon} from '@/components/icons';
 import ProvenanceMoreInfo from './provenance-more-info';
+import {ProvenanceEvent} from '@/lib/objects';
+import {MinusIcon} from '@heroicons/react/24/solid';
 
 function Person() {
   const person = {
@@ -27,46 +29,13 @@ function Person() {
   );
 }
 
-const moreInfoEventProps: ReadonlyArray<string> = ['name', 'description'];
+interface Props {
+  events: ProvenanceEvent[];
+}
 
-export default function Provenance() {
+export default function Provenance({events}: Props) {
   const t = useTranslations('Provenance');
-
-  const moreInfoLabelMap = Object.fromEntries(
-    moreInfoEventProps.map(propName => [propName, t(propName)])
-  );
-
-  const events = [
-    {
-      id: '1',
-      date: '1887',
-      type: 'Acquisition',
-      classification: 'Gift',
-      transferredTo: 'Museum',
-      transferredFrom: 'Museum',
-      location: 'Delft',
-    },
-    {
-      id: '2',
-      date: '1887-06-05',
-      type: 'Transfer',
-      classification: 'Loan',
-      transferredTo: 'Museum',
-      transferredFrom: 'Museum',
-      location: 'Batavia',
-      description: 'This is a description',
-    },
-    {
-      id: '3',
-      type: 'Transfer',
-      classification: 'Loan',
-      transferredTo: 'Museum',
-      transferredFrom: 'Museum',
-      location: 'Batavia',
-      name: 'This is a name',
-      description: 'This is a description',
-    },
-  ];
+  const format = useFormatter();
 
   return (
     <>
@@ -79,30 +48,46 @@ export default function Provenance() {
           <div className="col-span-2">{t('location')}</div>
         </div>
         {events.map(event => {
-          const hasMoreInfo = moreInfoEventProps.some(
-            propName => !!event[propName]
-          );
+          const startDateText = event.startDate
+            ? format.dateTime(event.startDate)
+            : null;
+
+          //  Only show an end date if its a different date then the start date
+          const endDateText =
+            event.endDate && format.dateTime(event.endDate) !== startDateText
+              ? format.dateTime(event.endDate)
+              : null;
+
           return (
             <>
-              {event.date ? (
-                <div className="font-bold">{event.date}</div>
-              ) : (
+              {!startDateText && !endDateText ? (
                 <div className="italic text-gray-500">{t('dateUnknown')}</div>
+              ) : (
+                <div className="inline-flex space-x-4 items-center">
+                  {startDateText && (
+                    <div className="font-bold">{startDateText}</div>
+                  )}
+                  {startDateText && endDateText && (
+                    <MinusIcon className="w-5 h-5 text-gray-400" />
+                  )}
+                  {endDateText && (
+                    <div className="font-bold">{endDateText}</div>
+                  )}
+                </div>
               )}
               <div className="grid grid-cols-9 w-full items-center my-1 pl-4 pb-4 border-l-2 gap-6">
                 <div className="col-span-2">
-                  {event.type} ({event.classification})
+                  {event.types.map(type => (
+                    <div key={type.id}>{type.name}</div>
+                  ))}
                 </div>
-                <div className="col-span-2">{event.transferredFrom}</div>
-                <div className="col-span-2">
-                  <Person />
-                </div>
-                <div className="col-span-2">{event.location}</div>
-                {hasMoreInfo && (
+                <div className="col-span-2">{event.transferredFrom?.name}</div>
+                <div className="col-span-2">{event.transferredTo?.name}</div>
+                <div className="col-span-2">{event.location?.name}</div>
+                {event.description && (
                   <ProvenanceMoreInfo
-                    event={event}
-                    moreInfoEventProps={moreInfoEventProps}
-                    moreInfoLabelMap={moreInfoLabelMap}
+                    descriptionLabel={t('description')}
+                    description={event.description}
                   />
                 )}
               </div>

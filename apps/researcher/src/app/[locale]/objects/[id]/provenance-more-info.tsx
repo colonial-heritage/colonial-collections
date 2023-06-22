@@ -4,13 +4,17 @@ import {Fragment} from 'react';
 import {Disclosure} from '@headlessui/react';
 import {InformationCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
 
+interface Props {
+  descriptionLabel: string;
+  description: string;
+}
+
 export default function ProvenanceMoreInfo({
-  event,
-  moreInfoEventProps,
-  moreInfoLabelMap,
-}) {
+  descriptionLabel,
+  description,
+}: Props) {
   return (
-    <Disclosure as={Fragment} key={event.id}>
+    <Disclosure as={Fragment}>
       {({open}) => (
         <>
           <Disclosure.Button className="justify-self-end col-span-1">
@@ -23,16 +27,8 @@ export default function ProvenanceMoreInfo({
             </span>
           </Disclosure.Button>
           <Disclosure.Panel as="div" className="col-span-9">
-            {moreInfoEventProps
-              .filter(propName => !!event[propName])
-              .map(propName => (
-                <>
-                  <div className="italic text-gray-800">
-                    {moreInfoLabelMap[propName]}
-                  </div>
-                  <p>{event[propName]}</p>
-                </>
-              ))}
+            <div className="italic text-gray-800">{descriptionLabel}</div>
+            <p>{description}</p>
           </Disclosure.Panel>
         </>
       )}

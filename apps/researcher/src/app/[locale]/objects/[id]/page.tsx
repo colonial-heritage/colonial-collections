@@ -175,7 +175,7 @@ export default async function Details({params}: Props) {
         </div>
       </div>
       <div className="mt-16">
-        <Provenance />
+        {object.subjectOf?.length && <Provenance events={object.subjectOf} />}
       </div>
     </>
   );
