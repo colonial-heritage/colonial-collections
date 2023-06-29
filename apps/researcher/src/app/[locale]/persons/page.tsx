@@ -1,6 +1,6 @@
 import personFetcher from '@/lib/person-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
-import {getTranslations} from 'next-intl/server';
+import {getTranslator} from 'next-intl/server';
 import PersonList from './person-list';
 import {sortMapping} from './sort-mapping';
 import {
@@ -105,7 +105,7 @@ export default async function Home({searchParams = {}}: Props) {
 
   const locale = useLocale();
   const messages = (await import(`@/messages/${locale}/messages.json`)).default;
-  const t = await getTranslations('Persons');
+  const t = await getTranslator(locale, 'Persons');
 
   return (
     <NextIntlClientProvider
