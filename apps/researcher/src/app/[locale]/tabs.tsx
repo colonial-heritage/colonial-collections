@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import {ObjectIcon, PersonIcon} from '@/components/icons';
-import {useTranslations, Link} from 'next-intl';
+import {useTranslations} from 'next-intl';
+import Link from 'next-intl/link';
 import {headers} from 'next/headers';
 import {locales} from '@/middleware';
 
