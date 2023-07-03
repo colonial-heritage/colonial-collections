@@ -24,12 +24,12 @@ export default function middleware(request: NextRequest) {
     defaultLocale: 'en',
   });
 
-  const response = handleI18nRouting(request);
-
-  // Store current request pathname in the response header,
+  // Store current request pathname in the request header,
   // this can be used to set the active menu/tab item.
   // See issue: https://github.com/vercel/next.js/issues/43704
-  response.headers.set('x-pathname', request.nextUrl.pathname);
+  request.headers.set('x-pathname', request.nextUrl.pathname);
+
+  const response = handleI18nRouting(request);
 
   return response;
 }

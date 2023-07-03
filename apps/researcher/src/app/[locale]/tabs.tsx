@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import {ObjectIcon, PersonIcon} from '@/components/icons';
 import {useTranslations} from 'next-intl';
+import Link from 'next-intl/link';
 import {headers} from 'next/headers';
 import {locales} from '@/middleware';
 
@@ -33,7 +34,7 @@ export default function Tabs() {
               activePath
             );
             return (
-              <a
+              <Link
                 key={tab.name}
                 href={tab.href}
                 className={classNames(
@@ -54,7 +55,7 @@ export default function Tabs() {
                   aria-hidden="true"
                 />
                 <span>{tab.name}</span>
-              </a>
+              </Link>
             );
           })}
         </nav>

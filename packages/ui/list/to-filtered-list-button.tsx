@@ -5,7 +5,7 @@ import {
   useListStore,
   getUrlWithSearchParams,
 } from '@colonial-collections/list-store';
-import {Link} from 'next-intl';
+import Link from 'next-intl/link';
 import {useMemo} from 'react';
 
 interface Props {

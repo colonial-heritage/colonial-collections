@@ -1,5 +1,6 @@
 import {WrenchScrewdriverIcon} from '@heroicons/react/24/solid';
-import {Link, useTranslations} from 'next-intl';
+import {useTranslations} from 'next-intl';
+import Link from 'next-intl/link';
 
 export default function WipMessage() {
   const t = useTranslations('WorkInProgress');

@@ -10,7 +10,7 @@ import {
 } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import {usePathname} from 'next-intl/client';
-import {Link} from 'next-intl';
+import Link from 'next-intl/link';
 import {Fragment} from 'react';
 
 interface Props {
