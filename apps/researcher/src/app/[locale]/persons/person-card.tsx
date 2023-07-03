@@ -1,4 +1,5 @@
-import {Link, useFormatter, useTranslations} from 'next-intl';
+import {useFormatter, useTranslations} from 'next-intl';
+import Link from 'next-intl/link';
 import {Person} from '@/lib/persons';
 import {PersonIcon} from '@/components/icons';
 

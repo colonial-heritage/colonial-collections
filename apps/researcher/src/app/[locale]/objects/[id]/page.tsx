@@ -1,5 +1,5 @@
-import {useTranslations} from 'next-intl';
-import {getTranslations} from 'next-intl/server';
+import {useTranslations, useLocale} from 'next-intl';
+import {getTranslator} from 'next-intl/server';
 import {PageHeader, PageTitle} from 'ui';
 import objectFetcher from '@/lib/heritage-object-fetcher-instance';
 import {HeritageObject} from '@/lib/objects';
@@ -70,7 +70,8 @@ interface Props {
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const object = await objectFetcher.getById({id});
-  const t = await getTranslations('ObjectDetails');
+  const locale = useLocale();
+  const t = await getTranslator(locale, 'ObjectDetails');
 
   if (!object) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;

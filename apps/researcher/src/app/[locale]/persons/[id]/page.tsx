@@ -1,5 +1,5 @@
-import {DateTimeFormatOptions, useTranslations} from 'next-intl';
-import {getTranslations} from 'next-intl/server';
+import {DateTimeFormatOptions, useTranslations, useLocale} from 'next-intl';
+import {getTranslator} from 'next-intl/server';
 import {PageHeader, PageTitle} from 'ui';
 import personFetcher from '@/lib/person-fetcher-instance';
 import {getFormatter} from 'next-intl/server';
@@ -43,7 +43,8 @@ interface Props {
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const person = await personFetcher.getById({id});
-  const t = await getTranslations('PersonDetails');
+  const locale = useLocale();
+  const t = await getTranslator(locale, 'PersonDetails');
 
   if (!person) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;

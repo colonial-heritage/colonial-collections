@@ -1,6 +1,6 @@
 import heritageObjectFetcher from '@/lib/heritage-object-fetcher-instance';
 import {useLocale, NextIntlClientProvider} from 'next-intl';
-import {getTranslations} from 'next-intl/server';
+import {getTranslator} from 'next-intl/server';
 import HeritageObjectList from './(objects)/heritage-object-list';
 import {sortMapping} from './(objects)/sort-mapping';
 import {
@@ -104,7 +104,7 @@ export default async function Home({searchParams = {}}: Props) {
 
   const locale = useLocale();
   const messages = (await import(`@/messages/${locale}/messages.json`)).default;
-  const t = await getTranslations('Home');
+  const t = await getTranslator(locale, 'Home');
 
   return (
     <NextIntlClientProvider
