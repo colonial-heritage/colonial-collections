@@ -20,6 +20,7 @@
     "test:e2e:open": "cypress open"
   },
   "dependencies": {
+    "@clerk/nextjs": "4.21.13",
     "@colonial-collections/content": "*",
     "@colonial-collections/iris": "*",
     "@colonial-collections/label-fetcher": "*",
