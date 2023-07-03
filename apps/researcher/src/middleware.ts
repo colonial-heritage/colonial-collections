@@ -8,8 +8,6 @@ import {authMiddleware} from '@clerk/nextjs';
 // So you can't read the filesystem.
 export const locales = ['en', 'nl'];
 
-const publicRoutes = ['/', '/:locale', '/:locale/sign-in', '/:locale/sign-up'];
-
 export const config = {
   // Skip all internal paths
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
@@ -37,5 +35,5 @@ export default authMiddleware({
 
     return response;
   },
-  publicRoutes,
+  publicRoutes: ['/', '/(.*)'],
 });
