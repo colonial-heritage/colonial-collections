@@ -68,7 +68,7 @@ interface Props {
 }
 
 export default async function Details({params}: Props) {
-  const id = decodeURIComponent(params.id);
+  const id = decodeURIComponent(params.id).replaceAll('%2E', '.');
   const object = await objectFetcher.getById({id});
   const locale = useLocale();
   const t = await getTranslator(locale, 'ObjectDetails');
