@@ -12,7 +12,12 @@ import classNames from 'classnames';
 import {usePathname} from 'next-intl/client';
 import Link from 'next-intl/link';
 import {Fragment} from 'react';
-import {UserButton, SignInButton, useUser} from '@clerk/nextjs';
+import {
+  UserButton,
+  SignInButton,
+  useUser,
+  OrganizationSwitcher,
+} from '@clerk/nextjs';
 
 interface Props {
   locale: string;
@@ -40,8 +45,6 @@ export default function Navigation({
 }: Props) {
   const pathname = usePathname();
   const {isSignedIn} = useUser();
-
-  console.log(isSignedIn);
 
   const navigation = [
     {name: navigationLabels.home, href: '/'},
@@ -195,7 +198,10 @@ export default function Navigation({
                         );
                       })}
                       {isSignedIn ? (
-                        <UserButton afterSignOutUrl="/" />
+                        <>
+                          <OrganizationSwitcher />
+                          <UserButton afterSignOutUrl="/" />
+                        </>
                       ) : (
                         <SignInButton />
                       )}
