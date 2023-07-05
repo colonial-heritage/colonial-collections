@@ -22,13 +22,7 @@ import {
   SearchField,
   OrderSelector,
 } from 'ui/list';
-import {
-  PageTitle,
-  PageHeader,
-  SmallScreenSubMenu,
-  SubMenuButton,
-  SubMenuDialog,
-} from 'ui';
+import {SmallScreenSubMenu, SubMenuButton, SubMenuDialog} from 'ui';
 import {useTranslations} from 'next-intl';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import Tabs from './tabs';
@@ -118,7 +112,8 @@ export default async function Home({searchParams = {}}: Props) {
       }}
     >
       <Tabs />
-      <div className="flex flex-col md:flex-row gap-6">
+      {/* Todo: check styling error message */}
+      <div className="flex flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-10">
         {hasError && (
           <div
             className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
@@ -144,7 +139,7 @@ export default async function Home({searchParams = {}}: Props) {
             />
             <aside
               id="facets"
-              className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2"
+              className="hidden md:block w-full md:w-1/3 lg:w-1/5 order-2 md:order-1"
             >
               <FacetMenu
                 filters={searchResult.filters}
@@ -152,7 +147,7 @@ export default async function Home({searchParams = {}}: Props) {
               />
             </aside>
 
-            <section className="w-full md:w-2/3 gap-6 flex flex-col">
+            <main className="w-full md:w-2/3 lg:w-4/5  order-2 md:order-1">
               <SmallScreenSubMenu>
                 <SubMenuButton className="inline-flex items-center md:hidden">
                   <span className="text-base font-medium text-gray-900">
@@ -170,34 +165,30 @@ export default async function Home({searchParams = {}}: Props) {
                   />
                 </SubMenuDialog>
               </SmallScreenSubMenu>
-              <PageHeader>
-                <div
-                  className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap"
-                  id="search-results"
-                >
-                  <div className="ml-4 mt-2">
-                    <PageTitle>
-                      {t('title', {totalDatasets: searchResult.totalCount})}
-                    </PageTitle>
-                  </div>
-                  <div>
-                    <OrderSelector />
-                  </div>
+              <div
+                className="flex flex-col sm:flex-row sm:justify-between"
+                id="search-results"
+              >
+                <h2 className="text-xl">
+                  {t('title', {totalDatasets: searchResult.totalCount})}
+                </h2>
+                <div className="flex flex-col sm:flex-row justify-end gap-2">
+                  <OrderSelector />
                 </div>
-                <SelectedFilters
-                  filters={filterKeysOrder.map(filterKey => ({
-                    searchResultFilters: searchResult!.filters[filterKey] ?? [],
-                    filterKey,
-                  }))}
-                />
-              </PageHeader>
-
+              </div>
+              {/* Todo: styling selected filters */}
+              <SelectedFilters
+                filters={filterKeysOrder.map(filterKey => ({
+                  searchResultFilters: searchResult!.filters[filterKey] ?? [],
+                  filterKey,
+                }))}
+              />
               <HeritageObjectList
                 heritageObjects={searchResult.heritageObjects}
                 totalCount={searchResult.totalCount}
               />
               <Paginator />
-            </section>
+            </main>
           </>
         )}
       </div>
