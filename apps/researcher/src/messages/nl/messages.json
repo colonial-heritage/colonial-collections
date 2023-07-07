@@ -55,7 +55,7 @@
     "deathYearUnknown": "Overlijdensjaar onbekend"
   },
   "ObjectDetails": {
-    "backButton": "Terug naar resultaten",
+    "backButton": "Zoeken",
     "noEntity": "Object kon niet gevonden worden",
     "notImplemented": "Niet geïmplementeerd",
     "noData": "Geen gegevens",
@@ -69,7 +69,7 @@
     "techniques": "Technieken",
     "creators": "Makers",
     "inscriptions": "Inscripties",
-    "saveButton": "Object opslaan",
+    "bookmarkButton": "Object opslaan",
     "shareButton": "Object delen",
     "relatedPersons": "Verwante personen",
     "origin": "Oorsprong",

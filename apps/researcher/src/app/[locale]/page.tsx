@@ -176,7 +176,6 @@ export default async function Home({searchParams = {}}: Props) {
                   <OrderSelector />
                 </div>
               </div>
-              {/* Todo: styling selected filters */}
               <SelectedFilters
                 filters={filterKeysOrder.map(filterKey => ({
                   searchResultFilters: searchResult!.filters[filterKey] ?? [],

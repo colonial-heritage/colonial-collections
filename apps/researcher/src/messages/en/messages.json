@@ -55,7 +55,7 @@
     "deathYearUnknown": "Death year unknown"
   },
   "ObjectDetails": {
-    "backButton": "Back to results",
+    "backButton": "Search",
     "noEntity": "Object could not be found",
     "notImplemented": "Not implemented",
     "noData": "No Data",
@@ -69,7 +69,7 @@
     "techniques": "Techniques",
     "creators": "Creators",
     "inscriptions": "Inscriptions",
-    "saveButton": "Save object",
+    "bookmarkButton": "Save object",
     "shareButton": "Share object",
     "relatedPersons": "Related Persons",
     "origin": "Origin",
