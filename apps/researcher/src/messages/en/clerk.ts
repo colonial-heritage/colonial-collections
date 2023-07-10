@@ -36,7 +36,7 @@ export const enUS: LocalizationResource = {
   formFieldLabel__firstName: 'First name',
   formFieldLabel__lastName: 'Last name',
   formFieldLabel__backupCode: 'Backup code',
-  formFieldLabel__organizationName: 'Organization name',
+  formFieldLabel__organizationName: 'Community name',
   formFieldLabel__organizationSlug: 'Slug URL',
   formFieldLabel__role: 'Role',
   formFieldInputPlaceholder__emailAddress: '',
@@ -564,9 +564,9 @@ export const enUS: LocalizationResource = {
   },
   organizationSwitcher: {
     personalWorkspace: 'Personal Workspace',
-    notSelected: 'No organization selected',
-    action__createOrganization: 'Create Organization',
-    action__manageOrganization: 'Manage Organization',
+    notSelected: 'No community selected',
+    action__createOrganization: 'Create Community',
+    action__manageOrganization: 'Manage Community',
   },
   impersonationFab: {
     title: 'Signed in as {{identifier}}',
@@ -576,33 +576,33 @@ export const enUS: LocalizationResource = {
     start: {
       headerTitle__members: 'Members',
       headerTitle__settings: 'Settings',
-      headerSubtitle__members: 'View and manage organization members',
-      headerSubtitle__settings: 'Manage organization settings',
+      headerSubtitle__members: 'View and manage community members',
+      headerSubtitle__settings: 'Manage community settings',
     },
     profilePage: {
-      title: 'Organization Profile',
-      subtitle: 'Manage organization profile',
-      successMessage: 'The organization has been updated.',
+      title: 'Community Profile',
+      subtitle: 'Manage community profile',
+      successMessage: 'The community has been updated.',
       dangerSection: {
         title: 'Danger',
         leaveOrganization: {
-          title: 'Leave organization',
+          title: 'Leave community',
           messageLine1:
-            'Are you sure you want to leave this organization? You will lose access to this organization and its applications.',
+            'Are you sure you want to leave this community? You will lose access to this community and its applications.',
           messageLine2: 'This action is permanent and irreversible.',
-          successMessage: 'You have left the organization.',
+          successMessage: 'You have left the community.',
         },
         deleteOrganization: {
-          title: 'Delete organization',
-          messageLine1: 'Are you sure you want to delete this organization?',
+          title: 'Delete community',
+          messageLine1: 'Are you sure you want to delete this community?',
           messageLine2: 'This action is permanent and irreversible.',
-          successMessage: 'You have deleted the organization.',
+          successMessage: 'You have deleted the community.',
         },
       },
     },
     invitePage: {
       title: 'Invite members',
-      subtitle: 'Invite new members to this organization',
+      subtitle: 'Invite new members to this community',
       successMessage: 'Invitations successfully sent',
       detailsTitle__inviteFailed:
         'The invitations could not be sent. Fix the following and try again:',
@@ -629,9 +629,9 @@ export const enUS: LocalizationResource = {
     },
   },
   createOrganization: {
-    title: 'Create Organization',
-    formButtonSubmit: 'Create organization',
-    subtitle: 'Set the organization profile',
+    title: 'Create Community',
+    formButtonSubmit: 'Create community',
+    subtitle: 'Set the community profile',
     invitePage: {
       formButtonReset: 'Skip',
     },

@@ -512,9 +512,9 @@ export const nlNL: LocalizationResource = {
   },
   organizationSwitcher: {
     personalWorkspace: 'Persoonlijke werkruimte',
-    notSelected: 'Geen organisatie geselecteerd',
-    action__createOrganization: 'Maak organisatie aan',
-    action__manageOrganization: 'Beheer organisatie',
+    notSelected: 'Geen community geselecteerd',
+    action__createOrganization: 'Maak community aan',
+    action__manageOrganization: 'Beheer community',
   },
   impersonationFab: {
     title: 'Ingelogd als {{identifier}}',
@@ -525,26 +525,26 @@ export const nlNL: LocalizationResource = {
       headerTitle__members: 'Leden',
       headerTitle__settings: 'Instellingen',
       headerSubtitle__members: 'Organisatieleden bekijken en beheren',
-      headerSubtitle__settings: 'Organisatie-instellingen beheren',
+      headerSubtitle__settings: 'Community-instellingen beheren',
     },
     profilePage: {
       title: 'Organisatieprofiel',
       subtitle: 'Beheer Organisatieprofiel',
-      successMessage: 'De organisatie is bijgewerkt.',
+      successMessage: 'De community is bijgewerkt.',
       dangerSection: {
         title: 'Gevaar',
         leaveOrganization: {
-          title: 'Verlaat organisatie',
+          title: 'Verlaat community',
           messageLine1:
-            'Weet je zeker dat je deze organisatie wilt verlaten? Je zult toegang verliezen tot deze organisatie en haar applicaties.',
+            'Weet je zeker dat je deze community wilt verlaten? Je zult toegang verliezen tot deze community en haar applicaties.',
           messageLine2: 'Deze actie is permanent en onomkeerbaar.',
-          successMessage: 'Je hebt deze organisatie verlaten.',
+          successMessage: 'Je hebt deze community verlaten.',
         },
       },
     },
     invitePage: {
       title: 'Leden uitnodigen',
-      subtitle: 'Nodig nieuwe leden uit voor deze organisatie',
+      subtitle: 'Nodig nieuwe leden uit voor deze community',
       successMessage: 'Uitnodigingen succesvol verzonden',
       detailsTitle__inviteFailed:
         'De uitnodigingen konden niet verzonden worden. Los het volgende op en probeer het opnieuw:',
@@ -571,8 +571,8 @@ export const nlNL: LocalizationResource = {
     },
   },
   createOrganization: {
-    title: 'Organisatie aanmaken',
-    formButtonSubmit: 'Maak organisatie aan',
+    title: 'Community aanmaken',
+    formButtonSubmit: 'Maak community aan',
     subtitle: 'Stel het organisatieprofiel in',
     invitePage: {
       formButtonReset: 'Overslaan',
