@@ -1,9 +1,9 @@
 import {SignUp} from '@clerk/nextjs';
-import {useLocale} from 'next-intl';
+import {headers} from 'next/headers';
 
 export default function Page() {
-  const locale = useLocale();
-  const path = locale === 'en' ? '/sign-up' : `/${locale}/sign-up`;
+  // Get the path with the locale preset.
+  const activePath = headers().get('x-pathname') || '/sign-up';
 
-  return <SignUp path={path} />;
+  return <SignUp path={activePath} />;
 }
