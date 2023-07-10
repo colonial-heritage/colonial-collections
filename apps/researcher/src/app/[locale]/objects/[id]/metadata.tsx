@@ -55,7 +55,12 @@ export function MetadataEntry({
     return (
       <div className="w-full flex flex-col gap-2">
         <div className="text-neutral-600 italic w-full border-t p-6">
-          No <span className="lowercase">{t(dataKey)}</span> available
+          {t.rich('noData', {
+            subject: t(dataKey),
+            subjectWrapper: chunks => (
+              <span className="lowercase">{chunks}</span>
+            ),
+          })}
         </div>
       </div>
     );
@@ -67,12 +72,12 @@ export function MetadataEntry({
       <div className="w-full lg:w-2/5 px-2 py-3 text-xs text-sand-700 mt-1 flex flex-row justify-between gap-2 ">
         <div className="flex flex-col gap-1">
           <div>
-            Added by
+            {t('addedBy')}
             <strong className="ml-1">{name}</strong>
             {/* Form <em>Amsterdam, Netherlands</em>
             on <em>12-12-2018</em> */}
           </div>
-          {isOwner && <div>Current owner</div>}
+          {isOwner && <div>{t('currentOwner')}</div>}
         </div>
         <div className="flex shrink">
           <div>

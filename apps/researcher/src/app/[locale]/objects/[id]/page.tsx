@@ -1,7 +1,6 @@
 import {useLocale} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import objectFetcher from '@/lib/heritage-object-fetcher-instance';
-import {HeritageObject} from '@/lib/objects';
 import Gallery from './gallery';
 import {ToFilteredListButton} from 'ui/list';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
@@ -51,13 +50,8 @@ export default async function Details({params}: Props) {
             {t('shareButton')}
           </button>
           <select className="p-1 sm:py-2 sm:px-3 rounded-xl text-xs bg-sand-100  text-sand-800 flex items-center gap-1">
-            {/* Todo: to translations */}
-            <option className="p-2">Add object to list</option>
-            <optgroup label="Add to list:">
-              <option className="p-2">List: Holy objects</option>
-              <option className="p-2">List: Tōtaiete</option>
-            </optgroup>
-            <option className="p-2">Create new list</option>
+            <option className="p-2">{t('addToListButton')}</option>
+            <option className="p-2">{t('createNewListButton')}</option>
           </select>
         </div>
       </div>
@@ -73,9 +67,8 @@ export default async function Details({params}: Props) {
               <ObjectIcon className='w-5 h-5 stroke-neutral-500"' />
             </span>
             <span className="inline items-center flex-row flex-wrap gap-1">
-              {/* Todo: to translations */}
-              Object, currently holded by
-              <span className="inline items-start sm:items-center flex-wrap gap-1 hover:underline ml-1">
+              {t('subTitle')}
+              <span className="inline items-start sm:items-center flex-wrap gap-1 hover:underline">
                 <strong className="text-left text-sky-700 cursor-pointer">
                   {object.owner?.name}
                 </strong>
@@ -85,14 +78,14 @@ export default async function Details({params}: Props) {
               </span>
             </span>
           </div>
-          {/* Todo: ask for object id */}
+          {/* Add when 'object id' is part of API */}
           {/* <div className="grow sm:text-right break-keep">ID:RV-1310-2</div> */}
         </div>
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-4 sm:px-10">
         <main className="w-full md:w-2/3 order-2 md:order-1">
           <div className=" mb-4 mt-10 flex justify-between">
-            <h2 className="text-2xl">Metadata </h2>
+            <h2 className="text-2xl">{t('metadata')}</h2>
           </div>
           <div className="flex flex-col gap-8 self-stretch">
             <MetadataContainer dataKey="description">

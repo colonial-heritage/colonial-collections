@@ -10,8 +10,6 @@ interface Props {
 export default function HeritageObjectCard({heritageObject}: Props) {
   const t = useTranslations('HeritageObjectCard');
 
-  const unknownClassName = 'text-gray-500 text-xs py-1';
-
   return (
     <Link
       href={`/objects/${encodeURIComponent(heritageObject.id)}`}
@@ -31,14 +29,8 @@ export default function HeritageObjectCard({heritageObject}: Props) {
               src={heritageObject.images[0].contentUrl}
               alt={heritageObject.name || ''}
               fill
-              // Todo: recalculate
-              // For min-width 1280px:
-              // The page container is max 1280px. So above 1280px the size is fixed to 200px
-              // For width 768px - 1280px:
-              // The list is 2/4 of the page. The image is 1/4 of the list.
-              // For max-width: 768px:
-              // The image is 1/4 of page.
-              sizes="(min-width: 1280px) 200px, (min-width: 768px) 17vw, 25vw"
+              // The size varies between 200 and 330px depending on the page width.
+              sizes="330px"
               quality={40}
               className="object-contain object-center"
             />

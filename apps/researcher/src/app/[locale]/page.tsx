@@ -112,7 +112,6 @@ export default async function Home({searchParams = {}}: Props) {
       }}
     >
       <Tabs />
-      {/* Todo: check styling error message */}
       <div className="flex flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-10">
         {hasError && (
           <div
