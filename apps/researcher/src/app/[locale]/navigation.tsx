@@ -15,8 +15,9 @@ import {Fragment} from 'react';
 import {
   UserButton,
   SignInButton,
-  useUser,
   OrganizationSwitcher,
+  SignedIn,
+  SignedOut,
 } from '@clerk/nextjs';
 
 interface Props {
@@ -44,7 +45,6 @@ export default function Navigation({
   localeLabels,
 }: Props) {
   const pathname = usePathname();
-  const {isSignedIn} = useUser();
 
   const navigation = [
     {name: navigationLabels.home, href: '/'},
@@ -197,14 +197,13 @@ export default function Navigation({
                           </span>
                         );
                       })}
-                      {isSignedIn ? (
-                        <>
-                          <OrganizationSwitcher />
-                          <UserButton afterSignOutUrl="/" />
-                        </>
-                      ) : (
+                      <SignedIn>
+                        <OrganizationSwitcher />
+                        <UserButton afterSignOutUrl="/" />
+                      </SignedIn>
+                      <SignedOut>
                         <SignInButton />
-                      )}
+                      </SignedOut>
                     </div>
                   </div>
                   <div className="-mr-2 flex items-center sm:hidden ">
