@@ -1,6 +1,12 @@
+// Because Clerk uses short-lived JWTs, it uses middleware that will re-load the JWT from a different page if necessary.
+// This page might return a 401, so we need to tell cypress to ignore the 401 and continue.
+// Passing `failOnStatusCode: false` into `cy.visit` accomplishes just that.
+
 describe('Object details page', () => {
   it('opens the object page if clicked on in the search list', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     // Get the name of the first object in the list.
     cy.getBySel('object-card-name')
       .first()
@@ -19,13 +25,17 @@ describe('Object details page', () => {
   });
 
   it('shows an error message if no object matches the ID', () => {
-    cy.visit('/en/objects/anIdThatDoesNotExist');
+    cy.visit('/en/objects/anIdThatDoesNotExist', {
+      failOnStatusCode: false,
+    });
     cy.getBySel('no-entity').should('exist');
     cy.getBySel('object-name').should('not.exist');
   });
 
   it('navigates back to the list with the previously selected filters', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
 
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
