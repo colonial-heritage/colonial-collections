@@ -53,7 +53,7 @@
     "fetch-sparql-endpoint": "3.3.2",
     "gts": "3.1.1",
     "jest": "29.5.0",
-    "postcss": "8.4.24",
+    "postcss": "8.4.25",
     "rdf-dereference": "2.1.0",
     "rdf-serialize": "2.2.2",
     "tailwind-config": "*",
