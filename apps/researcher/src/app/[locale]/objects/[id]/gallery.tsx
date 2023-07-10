@@ -78,7 +78,7 @@ export default function Gallery({images}: Props) {
                   />
                   <span
                     className={classNames(
-                      selected ? 'ring-indigo-500' : 'ring-transparent',
+                      selected ? 'ring-sand-700' : 'ring-transparent',
                       'pointer-events-none absolute inset-0 ring-1 ring-offset-1'
                     )}
                     aria-hidden="true"

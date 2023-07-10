@@ -51,7 +51,7 @@ export default function SlideOverGallery({images, selected = 0}: Props) {
                         <span
                           className={classNames(
                             selected
-                              ? 'ring-indigo-500 ring-1'
+                              ? 'ring-sand-700 ring-1'
                               : 'ring-transparent',
                             'pointer-events-none absolute inset-0'
                           )}
