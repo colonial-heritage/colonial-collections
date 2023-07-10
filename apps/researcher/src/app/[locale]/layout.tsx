@@ -3,7 +3,7 @@ import {useLocale} from 'next-intl';
 import {ReactNode} from 'react';
 import {notFound} from 'next/navigation';
 import Navigation from './navigation';
-import {useTranslations} from 'next-intl';
+import {getTranslator} from 'next-intl/server';
 import {locales} from '@/middleware';
 import WipMessage from 'ui/wip-message';
 import {ClerkProvider} from '@clerk/nextjs';
@@ -13,7 +13,7 @@ interface Props {
   params: {locale: string};
 }
 
-export default function RootLayout({children, params}: Props) {
+export default async function RootLayout({children, params}: Props) {
   const locale = useLocale();
 
   // Show a 404 error for unknown locales
@@ -21,9 +21,11 @@ export default function RootLayout({children, params}: Props) {
     notFound();
   }
 
-  const tNavigation = useTranslations('Navigation');
-  const tLanguageSelector = useTranslations('LanguageSelector');
-  const tScreenReaderMenu = useTranslations('ScreenReaderMenu');
+  const clerkLocale = (await import(`@/messages/${locale}/clerk.ts`)).default;
+
+  const tNavigation = await getTranslator(locale, 'Navigation');
+  const tLanguageSelector = await getTranslator(locale, 'LanguageSelector');
+  const tScreenReaderMenu = await getTranslator(locale, 'ScreenReaderMenu');
 
   // The navigation is a client component, get the labels first in this server component
   // See: https://next-intl-docs.vercel.app/docs/next-13/server-components#switching-to-client-components
@@ -52,7 +54,7 @@ export default function RootLayout({children, params}: Props) {
   });
 
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={clerkLocale}>
       <html className="h-full" lang={locale}>
         <body className="flex flex-col min-h-screen">
           <WipMessage />
