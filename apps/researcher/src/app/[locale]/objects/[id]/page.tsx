@@ -57,7 +57,10 @@ export default async function Details({params}: Props) {
       </div>
 
       <div className="px-4 sm:px-10 my-4 flex flex-col gap-4">
-        <h1 className="flex flex-row gap-4 gap-y-2 items-start flex-wrap text-2xl md:text-3xl">
+        <h1
+          className="flex flex-row gap-4 gap-y-2 items-start flex-wrap text-2xl md:text-3xl"
+          data-testid="page-title"
+        >
           {object.name}
         </h1>
 
