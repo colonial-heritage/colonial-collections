@@ -16,7 +16,7 @@ const commonTexts = {
   },
 } as const;
 
-export const nlNL: LocalizationResource = {
+const LocalizationResource = {
   locale: 'nl-NL',
   socialButtonsBlockButton: 'Ga verder met {{provider|titleize}}',
   dividerText: 'or',
@@ -656,7 +656,4 @@ export const nlNL: LocalizationResource = {
   },
 } as const;
 
-export const nlBE: LocalizationResource = {
-  locale: 'nl-BE',
-  ...nlNL,
-};
+export default LocalizationResource;

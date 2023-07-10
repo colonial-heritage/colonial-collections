@@ -15,7 +15,7 @@ const commonTexts = {
   },
 } as const;
 
-export const enUS: LocalizationResource = {
+const LocalizationResource = {
   locale: 'en-US',
   socialButtonsBlockButton: 'Continue with {{provider|titleize}}',
   dividerText: 'or',
@@ -724,3 +724,5 @@ export const enUS: LocalizationResource = {
     numeric: "{{ date | numeric('en-US') }}",
   },
 } as const;
+
+export default LocalizationResource;

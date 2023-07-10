@@ -21,7 +21,7 @@ export default async function RootLayout({children, params}: Props) {
     notFound();
   }
 
-  const clerkLocale = (await import(`@/messages/${locale}/clerk.ts`)).default;
+  const clerkLocale = (await import(`@/messages/${locale}/clerk`)).default;
 
   const tNavigation = await getTranslator(locale, 'Navigation');
   const tLanguageSelector = await getTranslator(locale, 'LanguageSelector');
