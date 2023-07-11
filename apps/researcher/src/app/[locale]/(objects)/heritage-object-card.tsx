@@ -13,13 +13,14 @@ export default function HeritageObjectCard({heritageObject}: Props) {
   return (
     <Link
       href={`/objects/${encodeURIComponent(heritageObject.id)}`}
-      // Todo test data-testid
-      data-testid="object-card-name"
+      data-testid="object-card"
       className="border border-blueGrey-200 text-blueGrey-800 bg-greenGrey-50 rounded-sm flex flex-col sm:flex-row gap-2 cursor-pointer hover:bg-white"
       aria-label={t('heritageObject')}
     >
       <div className="w-full sm:w-1/2 p-2 flex flex-col justify-between gap-2">
-        <div className="font-semibold mt-4">{heritageObject.name}</div>
+        <div className="font-semibold mt-4" data-testid="object-card-name">
+          {heritageObject.name}
+        </div>
         <div className="text-sm opacity-70">{heritageObject.owner?.name}</div>
       </div>
       <div className="w-full sm:w-1/2 flex justify-center items-center bg-neutral-200">
