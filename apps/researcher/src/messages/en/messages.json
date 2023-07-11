@@ -81,7 +81,8 @@
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
     "addedBy": "Added by",
-    "currentOwner": "Current owner"
+    "currentOwner": "Current owner",
+    "reset": "Reset"
   },
   "PersonDetails": {
     "backButton": "Back to results",

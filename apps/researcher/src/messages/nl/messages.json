@@ -81,7 +81,8 @@
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
     "addedBy": "Toegevoegd door",
-    "currentOwner": "Huidige eigenaar"
+    "currentOwner": "Huidige eigenaar",
+    "reset": "Reset"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",

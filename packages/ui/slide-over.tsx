@@ -53,7 +53,7 @@ export function SlideOverDialog({children}: SlideOverDialogProps) {
 
   const panelClassName = classNames('pointer-events-auto w-screen', {
     'max-w-md bg-white': variant === 'text',
-    'max-w-4xl bg-neutral-600': variant === 'gallery',
+    'max-w-full bg-neutral-600': variant === 'gallery',
   });
 
   return (
