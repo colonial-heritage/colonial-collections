@@ -18,9 +18,10 @@ interface Props {
     src: string;
     alt: string;
   }[];
+  resetText: string;
 }
 
-export default function Gallery({images}: Props) {
+export default function Gallery({images, resetText}: Props) {
   return (
     <Tab.Group
       as="div"
@@ -56,7 +57,11 @@ export default function Gallery({images}: Props) {
                   </svg>
                 </span>
               </SlideOverOpenButton>
-              <SlideOverGallery images={images} selected={index} />
+              <SlideOverGallery
+                images={images}
+                selected={index}
+                resetText={resetText}
+              />
             </SlideOver>
           </Tab.Panel>
         ))}
@@ -78,7 +83,7 @@ export default function Gallery({images}: Props) {
                   />
                   <span
                     className={classNames(
-                      selected ? 'ring-indigo-500' : 'ring-transparent',
+                      selected ? 'ring-sand-700' : 'ring-transparent',
                       'pointer-events-none absolute inset-0 ring-1 ring-offset-1'
                     )}
                     aria-hidden="true"

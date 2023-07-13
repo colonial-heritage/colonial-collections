@@ -90,10 +90,10 @@ describe('getUrlWithSearchParams', () => {
 
   it('adds "offset" to the search params if `offset` is not 0', () => {
     const options = {
-      offset: 10,
+      offset: 12,
     };
 
-    expect(getUrlWithSearchParams(options)).toBe('/?offset=10');
+    expect(getUrlWithSearchParams(options)).toBe('/?offset=12');
   });
 
   it('adds "sortBy" to the search params if `sortBy` is not the default', () => {
@@ -147,7 +147,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
-      limit: 10,
+      limit: 12,
       query: undefined,
     });
   });
@@ -165,7 +165,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
-      limit: 10,
+      limit: 12,
       query: undefined,
     });
   });
@@ -183,7 +183,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
-      limit: 10,
+      limit: 12,
       query: undefined,
     });
   });
@@ -191,7 +191,7 @@ describe('fromSearchParamsToSearchOptions', () => {
   it('converts valid search params to search options', () => {
     const searchParams = {
       query: 'My query',
-      offset: '10',
+      offset: '12',
       sortBy: SortBy.NameAsc,
       owners: 'owner1,owner2',
       types: 'type',
@@ -207,10 +207,10 @@ describe('fromSearchParamsToSearchOptions', () => {
         types: ['type'],
         subjects: ['subject'],
       },
-      offset: 10,
+      offset: 12,
       sortBy: 'name',
       sortOrder: 'asc',
-      limit: 10,
+      limit: 12,
     });
   });
 });

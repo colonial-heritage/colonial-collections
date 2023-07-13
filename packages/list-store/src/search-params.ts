@@ -120,7 +120,7 @@ export function fromSearchParamsToSearchOptions({
       .string()
       .transform(limitString => +limitString)
       .pipe(z.number().int().positive())
-      .or(fallback(10)),
+      .or(fallback(12)),
     filters: z.record(searchOptionsFilterSchema).optional(),
     sortBy: SortByEnum.or(fallback(defaultSortBy)),
     sortOrder: SortOrderEnum.or(fallback(defaultSortOrder)),

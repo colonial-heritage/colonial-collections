@@ -1,6 +1,7 @@
 'use client';
 
 import {useListStore} from '@colonial-collections/list-store';
+import {MagnifyingGlassIcon} from '@heroicons/react/24/solid';
 import {useTranslations} from 'next-intl';
 
 export function SearchField() {
@@ -12,20 +13,29 @@ export function SearchField() {
   };
 
   return (
-    <div className="pr-4 max-w-[350px]" id="facets">
-      <label htmlFor="search" className="block font-semibold text-gray-900">
+    <div className="w-full max-w-[450px] relative" id="facets">
+      <label htmlFor="search" className="font-semibold">
         {t('search')}
       </label>
-      <input
-        data-testid="searchQuery"
-        value={query}
-        onChange={handleQueryChange}
-        type="text"
-        name="search"
-        id="search"
-        className="block w-full rounded-md border-gray-300 px-4 shadow-sm focus:border-sky-700 focus:ring-sky-700 sm:text-sm"
-        aria-label={t('accessibilityTypeToFilter')}
-      />
+      <div className="flex flex-row w-full">
+        <input
+          data-testid="searchQuery"
+          value={query}
+          onChange={handleQueryChange}
+          type="text"
+          name="search"
+          id="search"
+          className="py-1 px-3 w-full rounded-l border border-neutral-700"
+          aria-label={t('accessibilityTypeToFilter')}
+        />
+        <button
+          className="bg-neutral-700 py-1 px-3 rounded-r border-t  border-b border-r border-neutral-700"
+          aria-label="Click to search"
+          value="amster"
+        >
+          <MagnifyingGlassIcon className="w-4 h-4 fill-white" />
+        </button>
+      </div>
     </div>
   );
 }

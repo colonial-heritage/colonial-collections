@@ -2,7 +2,7 @@ describe('Researcher homepage', () => {
   it('shows an object list', () => {
     cy.visit('/en');
     cy.getBySel('error').should('not.exist');
-    cy.getBySel('object-card-name').its('length').should('be.gt', 0);
+    cy.getBySel('object-card').its('length').should('be.gt', 0);
   });
 });
 
