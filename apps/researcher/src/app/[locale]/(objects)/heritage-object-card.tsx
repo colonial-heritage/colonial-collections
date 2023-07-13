@@ -4,7 +4,7 @@ import {HeritageObject} from '@/lib/objects';
 import Image from 'next/image';
 import {ObjectIcon} from '@/components/icons';
 import {H3} from '@/components/titles';
-import {encodeUriIdentifier} from '@/lib/encode-uri-identifier';
+import {encodeUri} from '@/lib/uri-transformer';
 
 interface Props {
   heritageObject: HeritageObject;
@@ -23,7 +23,7 @@ export default function HeritageObjectCard({heritageObject}: Props) {
     >
       <h2 className="row-span-2 col-span-3 font-semibold text-gray-900 p-3 mt-0 bg-white">
         <Link
-          href={`/objects/${encodeUriIdentifier(heritageObject.id)}`}
+          href={`/objects/${encodeUri(heritageObject.id)}`}
           data-testid="object-card-name"
           className="text-gray-900 inline-flex items-center"
         >
