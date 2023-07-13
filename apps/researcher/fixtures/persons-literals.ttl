@@ -2,12 +2,15 @@
 # Sample data for testing, with literals instead of IRIs from terminology sources
 ###############################
 
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
 @prefix pnv: <https://w3id.org/pnv#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://example.org/persons/1>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Michiel Adriaensz. de Ruyter" ;
   schema:birthPlace [
     a schema:Place ;
     schema:name "Vlissingen" ;
@@ -31,7 +34,8 @@
 .
 
 <https://example.org/persons/2>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Jan de Vries" ;
   schema:birthPlace [
     a schema:Place ;
     schema:name "Vlissienge" ;
@@ -54,7 +58,8 @@
 .
 
 <https://example.org/persons/3>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Kees Jansen" ;
   schema:birthPlace [
     a schema:Place ;
     schema:name "Groningen" ;
@@ -75,7 +80,8 @@
 .
 
 <https://example.org/persons/4>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Gert Nooitgedacht" ;
   schema:birthPlace [
     a schema:Place ;
     schema:name "Batavia" ;
@@ -92,7 +98,8 @@
 .
 
 <https://example.org/persons/5>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Beatrice Vlieger" ;
   schema:birthPlace [
     a schema:Place ;
     schema:name "Rotterdam" ;
@@ -108,7 +115,8 @@
 .
 
 <https://example.org/persons/6>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Geeske van Châtellerault" ;
   schema:birthPlace [
     a schema:Place ;
     schema:name "New York" ;
@@ -125,7 +133,8 @@
 .
 
 <https://example.org/persons/7>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Theodora Noord" ;
   pnv:hasName [
     a pnv:PersonName ;
     pnv:givenName "Theodora" ;
@@ -137,7 +146,8 @@
 .
 
 <https://example.org/persons/8>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Welmoed Zuid" ;
   pnv:hasName [
     a pnv:PersonName ;
     pnv:givenName "Welmoed" ;
@@ -149,7 +159,8 @@
 .
 
 <https://example.org/persons/9>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Karel van 't Westen" ;
   schema:birthPlace [
     a schema:Place ;
     schema:name "Rotterdam" ;
@@ -172,7 +183,8 @@
 .
 
 <https://example.org/persons/10>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Ida Oost" ;
   schema:birthDate "invalid" ;
   pnv:hasName [
     a pnv:PersonName ;
@@ -185,7 +197,8 @@
 .
 
 <https://example.org/persons/11>
-  a schema:Person, pnv:Person ;
+  a schema:Person, pnv:Person, crm:E21_Person ;
+  rdfs:label "Julienne Noordwest" ;
   schema:deathDate "invalid" ;
   pnv:hasName [
     a pnv:PersonName ;
