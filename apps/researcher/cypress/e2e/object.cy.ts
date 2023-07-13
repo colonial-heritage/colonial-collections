@@ -1,5 +1,5 @@
 // Because Clerk uses short-lived JWTs, it uses middleware that will re-load the JWT from a different page if necessary.
-// This page might return a 401, so we need to tell cypress to ignore the 401 and continue.
+// This page might return a 401, so we need to tell Cypress to ignore the 401 and continue.
 // Passing `failOnStatusCode: false` into `cy.visit` accomplishes just that.
 
 describe('Object details page', () => {

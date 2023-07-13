@@ -8,7 +8,7 @@ const commonTexts = {
     phoneCode: {
       title: 'Check je telefoon',
       subtitle: 'om verder te gaan naar {{applicationName}}',
-      formTitle: 'Verificatie code',
+      formTitle: 'Verificatiecode',
       formSubtitle:
         'Voer de verificatiecode in die naar je telefoonnummer is gestuurd',
       resendButton: 'Verstuur code opnieuw',
@@ -35,7 +35,7 @@ const LocalizationResource = {
   formFieldLabel__firstName: 'Voornaam',
   formFieldLabel__lastName: 'Achternaam',
   formFieldLabel__backupCode: 'Backupcode',
-  formFieldLabel__organizationName: 'Organisatienaam',
+  formFieldLabel__organizationName: 'Communitynaam',
   formFieldLabel__role: 'Rol',
   formFieldInputPlaceholder__emailAddress: '',
   formFieldInputPlaceholder__emailAddresses:
@@ -60,7 +60,7 @@ const LocalizationResource = {
   badge__primary: 'Hoofd',
   badge__thisDevice: 'Dit apparaat',
   badge__userDevice: 'Gebruikersapparaat',
-  badge__otherImpersonatorDevice: 'Ander immitatie apparaat',
+  badge__otherImpersonatorDevice: 'Ander immitatieapparaat',
   badge__default: 'Standaard',
   badge__unverified: 'Ongeverifieerd',
   badge__requiresAction: 'Actie nodig',
@@ -524,12 +524,12 @@ const LocalizationResource = {
     start: {
       headerTitle__members: 'Leden',
       headerTitle__settings: 'Instellingen',
-      headerSubtitle__members: 'Organisatieleden bekijken en beheren',
+      headerSubtitle__members: 'Communityleden bekijken en beheren',
       headerSubtitle__settings: 'Community-instellingen beheren',
     },
     profilePage: {
-      title: 'Organisatieprofiel',
-      subtitle: 'Beheer Organisatieprofiel',
+      title: 'Communityprofiel',
+      subtitle: 'Beheer Communityprofiel',
       successMessage: 'De community is bijgewerkt.',
       dangerSection: {
         title: 'Gevaar',
@@ -573,7 +573,7 @@ const LocalizationResource = {
   createOrganization: {
     title: 'Community aanmaken',
     formButtonSubmit: 'Maak community aan',
-    subtitle: 'Stel het organisatieprofiel in',
+    subtitle: 'Stel het communityprofiel in',
     invitePage: {
       formButtonReset: 'Overslaan',
     },
