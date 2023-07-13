@@ -12,6 +12,13 @@ import classNames from 'classnames';
 import {usePathname} from 'next-intl/client';
 import Link from 'next-intl/link';
 import {Fragment} from 'react';
+import {
+  UserButton,
+  SignInButton,
+  OrganizationSwitcher,
+  SignedIn,
+  SignedOut,
+} from '@clerk/nextjs';
 
 interface Props {
   locale: string;
@@ -190,6 +197,13 @@ export default function Navigation({
                           </span>
                         );
                       })}
+                      <SignedIn>
+                        <OrganizationSwitcher />
+                        <UserButton afterSignOutUrl="/" />
+                      </SignedIn>
+                      <SignedOut>
+                        <SignInButton />
+                      </SignedOut>
                     </div>
                   </div>
                   <div className="-mr-2 flex items-center sm:hidden ">

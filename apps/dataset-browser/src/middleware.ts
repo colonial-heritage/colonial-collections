@@ -11,7 +11,7 @@ export const locales = ['en', 'nl'];
 // In the background a cookie is set that will remember the
 // locale of the last page that the user has visited.
 // The middleware furthermore passes the resolved locale
-// to components in your app.
+// to components.
 export default createIntlMiddleware({
   locales,
   defaultLocale: 'en',
