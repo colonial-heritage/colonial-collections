@@ -1,5 +1,5 @@
 import personFetcher from '@/lib/person-fetcher-instance';
-import {useLocale, NextIntlClientProvider} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import PersonList from './person-list';
 import {sortMapping} from './sort-mapping';
@@ -29,7 +29,6 @@ import {
   SubMenuButton,
   SubMenuDialog,
 } from 'ui';
-import {useTranslations} from 'next-intl';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import Tabs from '../tabs';
 
@@ -104,20 +103,10 @@ export default async function Home({searchParams = {}}: Props) {
   }
 
   const locale = useLocale();
-  const messages = (await import(`@/messages/${locale}/messages.json`)).default;
   const t = await getTranslator(locale, 'Persons');
 
   return (
-    <NextIntlClientProvider
-      locale={locale}
-      messages={{
-        Home: messages.Home,
-        Paginator: messages.Paginator,
-        Filters: messages.Filters,
-        Sort: messages.Sort,
-        Tabs: messages.Tabs,
-      }}
-    >
+    <>
       <Tabs />
       <div className="flex flex-col md:flex-row gap-6">
         {hasError && (
@@ -202,6 +191,6 @@ export default async function Home({searchParams = {}}: Props) {
           </>
         )}
       </div>
-    </NextIntlClientProvider>
+    </>
   );
 }
