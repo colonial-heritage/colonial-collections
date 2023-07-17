@@ -7,10 +7,6 @@ import {getTranslator} from 'next-intl/server';
 import {locales} from '@/middleware';
 import WipMessage from 'ui/wip-message';
 
-export function generateStaticParams() {
-  return locales.map(locale => ({locale}));
-}
-
 interface Props {
   children: ReactNode;
   params: {locale: string};
