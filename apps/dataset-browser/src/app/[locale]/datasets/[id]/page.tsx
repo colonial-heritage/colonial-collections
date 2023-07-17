@@ -1,4 +1,5 @@
-import {getTranslations} from 'next-intl/server';
+import {getTranslator, getFormatter} from 'next-intl/server';
+import {useLocale} from 'next-intl';
 import {
   PageHeader,
   PageTitle,
@@ -13,7 +14,6 @@ import {
   InformationCircleIcon,
 } from '@heroicons/react/24/solid';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
-import {getFormatter} from 'next-intl/server';
 import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import {LocalizedMarkdown} from 'ui';
@@ -30,8 +30,9 @@ export const revalidate = 0;
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const dataset = await datasetFetcher.getById({id});
-  const t = await getTranslations('Details');
-  const tMetrics = await getTranslations('TransparencyMetrics');
+  const locale = useLocale();
+  const t = await getTranslator(locale, 'Details');
+  const tMetrics = await getTranslator(locale, 'TransparencyMetrics');
   const format = await getFormatter();
 
   if (!dataset) {
