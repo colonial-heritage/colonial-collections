@@ -46,7 +46,7 @@ export type Image = {
 
 export type HeritageObject = {
   id: string;
-  identifier: string;
+  identifier?: string;
   name?: string;
   description?: string;
   inscriptions?: string[];

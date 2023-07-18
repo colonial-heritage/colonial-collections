@@ -1,5 +1,6 @@
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
-import {RdfObjectLoader} from 'rdf-object';
+import {merge} from '@hapi/hoek';
+import {RdfObjectLoader, Resource} from 'rdf-object';
 import type {Stream} from '@rdfjs/types';
 import type {Readable} from 'node:stream';
 import {z} from 'zod';
@@ -25,7 +26,7 @@ const getByIdOptionsSchema = z.object({
 export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 
 // Fetch the metadata of a heritage object from the Knowledge Graph
-export class HeritageObjectFetcher {
+export class HeritageObjectMetadataFetcher {
   private ontologyUrl = 'https://colonialcollections.nl/schema#';
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
@@ -225,6 +226,55 @@ export class HeritageObjectFetcher {
     return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
+  private getPropertyValue(rawHeritageObject: Resource, propertyName: string) {
+    const property = rawHeritageObject.property[propertyName];
+    if (property === undefined) {
+      return undefined;
+    }
+    return property.value;
+  }
+
+  private getPropertyValues(rawHeritageObject: Resource, propertyName: string) {
+    const properties = rawHeritageObject.properties[propertyName];
+    if (properties === undefined) {
+      return undefined;
+    }
+    const values = properties.map(property => property.value);
+    return values.length > 0 ? values : undefined;
+  }
+
+  private createThingFromProperty<T>(
+    rawHeritageObject: Resource,
+    propertyName: string
+  ) {
+    const property = rawHeritageObject.property[propertyName];
+    if (property === undefined) {
+      return undefined;
+    }
+    return {
+      id: property.value,
+      name: property.property['cc:name'].value,
+    } as T;
+  }
+
+  private createThingsFromProperties<T>(
+    rawHeritageObject: Resource,
+    propertyName: string
+  ) {
+    const properties = rawHeritageObject.properties[propertyName];
+    if (properties === undefined) {
+      return undefined;
+    }
+    const things = properties.map(property => {
+      return {
+        id: property.value,
+        name: property.property['cc:name'].value,
+      };
+    });
+
+    return things.length > 0 ? (things as T[]) : undefined;
+  }
+
   private async fromTriplesToHeritageObject(
     iri: string,
     triplesStream: Readable & Stream
@@ -242,82 +292,76 @@ export class HeritageObjectFetcher {
       return undefined; // No such object
     }
 
-    const identifier = rawHeritageObject.property['cc:identifier'].value;
-    const name = rawHeritageObject.property['cc:name'].value;
-    const description = rawHeritageObject.property['cc:description'].value;
-
-    const rawTypes = rawHeritageObject.properties['cc:additionalType'];
-    const types = rawTypes.map(rawType => {
-      const type: Term = {
-        id: rawType.value,
-        name: rawType.property['cc:name'].value,
-      };
-      return type;
-    });
-
-    const rawSubjects = rawHeritageObject.properties['cc:about'];
-    const subjects = rawSubjects.map(rawSubject => {
-      const subject: Term = {
-        id: rawSubject.value,
-        name: rawSubject.property['cc:name'].value,
-      };
-      return subject;
-    });
-
-    const rawInscriptions = rawHeritageObject.properties['cc:inscription'];
-    const inscriptions = rawInscriptions.map(
-      rawInscription => rawInscription.value
+    const identifier = this.getPropertyValue(
+      rawHeritageObject,
+      'cc:identifier'
+    );
+    const name = this.getPropertyValue(rawHeritageObject, 'cc:name');
+    const description = this.getPropertyValue(
+      rawHeritageObject,
+      'cc:description'
     );
 
-    const rawMaterials = rawHeritageObject.properties['cc:material'];
-    const materials = rawMaterials.map(rawMaterial => {
-      const material: Term = {
-        id: rawMaterial.value,
-        name: rawMaterial.property['cc:name'].value,
-      };
-      return material;
-    });
+    const types = this.createThingsFromProperties<Term>(
+      rawHeritageObject,
+      'cc:additionalType'
+    );
 
-    const rawTechniques = rawHeritageObject.properties['cc:technique'];
-    const techniques = rawTechniques.map(rawTechnique => {
-      const technique: Term = {
-        id: rawTechnique.value,
-        name: rawTechnique.property['cc:name'].value,
-      };
-      return technique;
-    });
+    const subjects = this.createThingsFromProperties<Term>(
+      rawHeritageObject,
+      'cc:about'
+    );
 
-    const rawCreators = rawHeritageObject.properties['cc:creator'];
-    const creators = rawCreators.map(rawCreator => {
-      const creator: Person = {
-        id: rawCreator.value,
-        name: rawCreator.property['cc:name'].value,
-      };
-      return creator;
-    });
+    const inscriptions = this.getPropertyValues(
+      rawHeritageObject,
+      'cc:inscription'
+    );
 
+    const materials = this.createThingsFromProperties<Term>(
+      rawHeritageObject,
+      'cc:material'
+    );
+
+    const techniques = this.createThingsFromProperties<Term>(
+      rawHeritageObject,
+      'cc:technique'
+    );
+
+    const creators = this.createThingsFromProperties<Person>(
+      rawHeritageObject,
+      'cc:creator'
+    );
+
+    let images: Image[] | undefined;
     const rawImages = rawHeritageObject.properties['cc:image'];
-    const images = rawImages.map(rawImage => {
-      const image: Image = {
-        id: rawImage.value,
-        contentUrl: rawImage.property['cc:contentUrl'].value,
-      };
-      return image;
-    });
+    if (rawImages !== undefined) {
+      const things = rawImages.map(rawImage => {
+        const image: Image = {
+          id: rawImage.value,
+          contentUrl: rawImage.property['cc:contentUrl'].value,
+        };
+        return image;
+      });
 
-    const rawOwner = rawHeritageObject.property['cc:owner'];
-    const owner: Organization = {
-      id: rawOwner.value,
-      name: rawOwner.property['cc:name'].value,
-    };
+      if (things.length > 0) {
+        images = things;
+      }
+    }
 
-    const rawDataset = rawHeritageObject.property['cc:isPartOf'];
-    const dataset: Dataset = {
-      id: rawDataset.value,
-      name: rawDataset.property['cc:name'].value,
-    };
+    const owner = this.createThingFromProperty<Organization>(
+      rawHeritageObject,
+      'cc:owner'
+    );
 
-    const heritageObject: HeritageObject = {
+    const dataset = this.createThingFromProperty<Dataset>(
+      rawHeritageObject,
+      'cc:isPartOf'
+    );
+    if (dataset === undefined) {
+      throw new Error('Property "cc:isPartOf" does not exist');
+    }
+
+    const heritageObjectWithUndefinedValues: HeritageObject = {
       id: iri,
       identifier,
       name,
@@ -333,7 +377,9 @@ export class HeritageObjectFetcher {
       isPartOf: dataset,
     };
 
-    // TODO: remove empty arrays and undefined values
+    const heritageObject = merge({}, heritageObjectWithUndefinedValues, {
+      nullOverride: false,
+    });
 
     return heritageObject;
   }

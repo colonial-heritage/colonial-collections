@@ -1,18 +1,18 @@
-import {HeritageObjectFetcher} from './object-fetcher';
+import {HeritageObjectMetadataFetcher} from './object-fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 
-let heritageObjectFetcher: HeritageObjectFetcher;
+let heritageObjectMetadataFetcher: HeritageObjectMetadataFetcher;
 
 beforeEach(() => {
-  heritageObjectFetcher = new HeritageObjectFetcher({
+  heritageObjectMetadataFetcher = new HeritageObjectMetadataFetcher({
     endpointUrl: env.KG_SPARQL_ENDPOINT_URL as string,
   });
 });
 
 describe('getById', () => {
   xit('returns undefined if no heritage object matches the ID', async () => {
-    const heritageObject = await heritageObjectFetcher.getById({
+    const heritageObject = await heritageObjectMetadataFetcher.getById({
       id: 'AnIdThatDoesNotExist',
     });
 
@@ -20,7 +20,7 @@ describe('getById', () => {
   });
 
   it('returns the heritage object that matches the ID', async () => {
-    const heritageObject = await heritageObjectFetcher.getById({
+    const heritageObject = await heritageObjectMetadataFetcher.getById({
       id: 'https://example.org/objects/5',
     });
 
