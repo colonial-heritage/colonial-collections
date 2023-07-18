@@ -6,7 +6,7 @@ import {getFormatter} from 'next-intl/server';
 import {PersonIcon} from '@/components/icons';
 import {H2, H3} from '@/components/titles';
 import {ToFilteredListButton} from 'ui/list';
-import {decodeUri} from '@/lib/uri-transformer';
+import {decodeRouteSegment} from '@/lib/route-segment-transformer';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -42,7 +42,7 @@ interface Props {
 }
 
 export default async function Details({params}: Props) {
-  const id = decodeUri(params.id);
+  const id = decodeRouteSegment(params.id);
   const person = await personFetcher.getById({id});
   const locale = useLocale();
   const t = await getTranslator(locale, 'PersonDetails');
