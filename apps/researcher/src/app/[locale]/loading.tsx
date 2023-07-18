@@ -1,17 +1,8 @@
-import {useLocale, NextIntlClientProvider} from 'next-intl';
 import Tabs from './tabs';
 
 export default async function Loading() {
-  const locale = useLocale();
-  const messages = (await import(`@/messages/${locale}/messages.json`)).default;
-
   return (
-    <NextIntlClientProvider
-      locale={locale}
-      messages={{
-        Tabs: messages.Tabs,
-      }}
-    >
+    <>
       <Tabs />
 
       <div className="flex flex-col md:flex-row gap-6">
@@ -39,6 +30,6 @@ export default async function Loading() {
           </div>
         </section>
       </div>
-    </NextIntlClientProvider>
+    </>
   );
 }

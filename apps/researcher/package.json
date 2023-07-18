@@ -41,7 +41,7 @@
     "zustand": "4.3.8"
   },
   "devDependencies": {
-    "@comunica/query-sparql-file": "2.7.1",
+    "@comunica/query-sparql-file": "2.8.0",
     "@jest/globals": "29.5.0",
     "@next/env": "13.4.7",
     "@types/mdx": "2.0.5",
@@ -53,7 +53,7 @@
     "cypress": "12.16.0",
     "encoding": "0.1.13",
     "eslint-config-custom": "*",
-    "fetch-sparql-endpoint": "3.3.2",
+    "fetch-sparql-endpoint": "3.3.3",
     "gts": "3.1.1",
     "jest": "29.5.0",
     "postcss": "8.4.25",
