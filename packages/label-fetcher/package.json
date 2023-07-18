@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@colonial-collections/iris": "*",
-    "fetch-sparql-endpoint": "3.3.2",
+    "fetch-sparql-endpoint": "3.3.3",
     "tiny-lru": "11.0.1",
     "zod": "3.21.4"
   },
