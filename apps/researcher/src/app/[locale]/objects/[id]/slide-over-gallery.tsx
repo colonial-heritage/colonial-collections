@@ -10,6 +10,7 @@ import {
   MagnifyingGlassPlusIcon,
   MagnifyingGlassMinusIcon,
 } from '@heroicons/react/24/solid';
+import {useTranslations} from 'next-intl';
 
 interface Props {
   images: {
@@ -18,16 +19,11 @@ interface Props {
     alt: string;
   }[];
   selected?: number;
-  resetText: string;
 }
 
-export default function SlideOverGallery({
-  images,
-  selected = 0,
-  resetText,
-}: Props) {
+export default function SlideOverGallery({images, selected = 0}: Props) {
   const [selectedIndex, setSelectedIndex] = useState(selected);
-
+  const t = useTranslations('Gallery');
   return (
     <SlideOverDialog>
       <Tab.Group
@@ -90,7 +86,7 @@ export default function SlideOverGallery({
               className="p-2 bg-black rounded top-2 left-2 text-white !static"
               id="home"
             >
-              {resetText}
+              {t('resetZoomButton')}
             </button>
           </div>
         </SlideOverHeader>

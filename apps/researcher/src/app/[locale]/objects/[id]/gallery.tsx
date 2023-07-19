@@ -18,10 +18,9 @@ interface Props {
     src: string;
     alt: string;
   }[];
-  resetText: string;
 }
 
-export default function Gallery({images, resetText}: Props) {
+export default function Gallery({images}: Props) {
   return (
     <Tab.Group
       as="div"
@@ -57,11 +56,7 @@ export default function Gallery({images, resetText}: Props) {
                   </svg>
                 </span>
               </SlideOverOpenButton>
-              <SlideOverGallery
-                images={images}
-                selected={index}
-                resetText={resetText}
-              />
+              <SlideOverGallery images={images} selected={index} />
             </SlideOver>
           </Tab.Panel>
         ))}

@@ -81,8 +81,7 @@
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
     "addedBy": "Toegevoegd door",
-    "currentOwner": "Huidige eigenaar",
-    "reset": "Reset"
+    "currentOwner": "Huidige eigenaar"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
@@ -126,5 +125,8 @@
   "WorkInProgress": {
     "message": "Aan deze website wordt gewerkt",
     "roadmapLink": "Lees over de huidige status en roadmap van dit project."
+  },
+  "Gallery": {
+    "resetZoomButton": "Reset"
   }
 }

@@ -81,8 +81,7 @@
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
     "addedBy": "Added by",
-    "currentOwner": "Current owner",
-    "reset": "Reset"
+    "currentOwner": "Current owner"
   },
   "PersonDetails": {
     "backButton": "Back to results",
@@ -126,5 +125,8 @@
   "WorkInProgress": {
     "message": "This website is a work in progress",
     "roadmapLink": "Read about the current status and roadmap of this project."
+  },
+  "Gallery": {
+    "resetZoomButton": "Reset"
   }
 }
