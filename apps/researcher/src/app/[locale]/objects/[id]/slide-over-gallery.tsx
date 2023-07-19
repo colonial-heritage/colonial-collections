@@ -135,9 +135,12 @@ const OpenSeaDragonViewer = ({image}: OpenSeaDragonViewer) => {
     };
 
     initOpenseadragon();
+
     return () => {
       viewer && viewer.destroy();
     };
+    // Only initialize once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div id="openSeaDragon" className="h-full w-full" />;
