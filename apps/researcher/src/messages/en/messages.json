@@ -128,5 +128,8 @@
   },
   "Gallery": {
     "resetZoomButton": "Reset"
+  },
+  "ErrorPage": {
+    "message": "Something went wrong!"
   }
 }
