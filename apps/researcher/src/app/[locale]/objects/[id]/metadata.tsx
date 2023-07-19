@@ -6,16 +6,16 @@ import {create} from 'zustand';
 export const useCurrentOwner = create(() => ({
   name: '',
   location: '',
-  dataKey: '',
+  identifier: '',
 }));
 
 interface Props {
-  dataKey: string;
+  identifier: string;
   children: ReactNode;
 }
 
-export function MetadataContainer({dataKey, children}: Props) {
-  useCurrentOwner.setState({dataKey: dataKey});
+export function MetadataContainer({identifier, children}: Props) {
+  useCurrentOwner.setState({identifier});
   const t = useTranslations('ObjectDetails');
 
   return (
@@ -24,10 +24,10 @@ export function MetadataContainer({dataKey, children}: Props) {
         <div className="w-full xl:w-1/5 border-t pt-4">
           <div className=" sticky top-0 bg-white py-1">
             <h3 className="text-lg w-full my-1 flex items-center">
-              {t(dataKey)}
+              {t(identifier)}
             </h3>
             <div className="text-neutral-500 text-sm">
-              {t(`${dataKey}SubTitle`)}
+              {t(`${identifier}SubTitle`)}
             </div>
           </div>
         </div>
@@ -40,23 +40,18 @@ export function MetadataContainer({dataKey, children}: Props) {
 interface MetadataEntryProps {
   children: ReactNode;
   isOwner: boolean;
-  isEmpty: boolean;
 }
 
-export function MetadataEntry({
-  children,
-  isEmpty,
-  isOwner = false,
-}: MetadataEntryProps) {
-  const {name, dataKey} = useCurrentOwner.getState();
+export function MetadataEntry({children, isOwner = false}: MetadataEntryProps) {
+  const {name, identifier} = useCurrentOwner.getState();
   const t = useTranslations('ObjectDetails');
 
-  if (isEmpty) {
+  if (!children) {
     return (
       <div className="w-full flex flex-col gap-2">
         <div className="text-neutral-600 italic w-full border-t p-6">
           {t.rich('noData', {
-            subject: t(dataKey),
+            subject: t(identifier),
             subjectWrapper: chunks => (
               <span className="lowercase">{chunks}</span>
             ),

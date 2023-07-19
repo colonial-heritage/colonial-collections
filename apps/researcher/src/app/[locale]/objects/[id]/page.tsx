@@ -91,46 +91,44 @@ export default async function Details({params}: Props) {
             <h2 className="text-2xl">{t('metadata')}</h2>
           </div>
           <div className="flex flex-col gap-8 self-stretch">
-            <MetadataContainer dataKey="description">
-              <MetadataEntry isOwner isEmpty={!object.description}>
-                {object.description}
-              </MetadataEntry>
+            <MetadataContainer identifier="description">
+              <MetadataEntry isOwner>{object.description}</MetadataEntry>
             </MetadataContainer>
 
-            <MetadataContainer dataKey="materials">
-              <MetadataEntry isOwner isEmpty={!object.materials?.length}>
+            <MetadataContainer identifier="materials">
+              <MetadataEntry isOwner>
                 {object.materials?.map(material => (
                   <div key={material.id}>{material.name}</div>
                 ))}
               </MetadataEntry>
             </MetadataContainer>
 
-            <MetadataContainer dataKey="types">
-              <MetadataEntry isOwner isEmpty={!object.types?.length}>
+            <MetadataContainer identifier="types">
+              <MetadataEntry isOwner>
                 {object.types?.map(type => (
                   <div key={type.id}>{type.name}</div>
                 ))}
               </MetadataEntry>
             </MetadataContainer>
 
-            <MetadataContainer dataKey="techniques">
-              <MetadataEntry isOwner isEmpty={!object.techniques?.length}>
+            <MetadataContainer identifier="techniques">
+              <MetadataEntry isOwner>
                 {object.techniques?.map(technique => (
                   <div key={technique.id}>{technique.name}</div>
                 ))}
               </MetadataEntry>
             </MetadataContainer>
 
-            <MetadataContainer dataKey="creators">
-              <MetadataEntry isOwner isEmpty={!object.creators?.length}>
+            <MetadataContainer identifier="creators">
+              <MetadataEntry isOwner>
                 {object.creators?.map(creator => (
                   <div key={creator.id}>{creator.name}</div>
                 ))}
               </MetadataEntry>
             </MetadataContainer>
 
-            <MetadataContainer dataKey="inscriptions">
-              <MetadataEntry isOwner isEmpty={!object.inscriptions?.length}>
+            <MetadataContainer identifier="inscriptions">
+              <MetadataEntry isOwner>
                 {object.inscriptions?.map(inscription => (
                   <div key={inscription}>{inscription}</div>
                 ))}
