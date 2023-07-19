@@ -5,7 +5,7 @@ import type {
   Organization,
   Person,
   Term,
-} from './fetcher';
+} from './types';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {merge} from '@hapi/hoek';
 import type {Readable} from 'node:stream';
@@ -32,6 +32,7 @@ export class HeritageObjectFetcher {
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
+
     this.endpointUrl = opts.endpointUrl;
   }
 
