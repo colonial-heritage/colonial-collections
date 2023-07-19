@@ -1,7 +1,7 @@
 import {useTranslations, useLocale} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import {PageHeader, PageTitle} from 'ui';
-import objectFetcher from '@/lib/heritage-object-fetcher-instance';
+import heritageObjects from '@/lib/heritage-objects-instance';
 import {HeritageObject} from '@/lib/objects';
 import Gallery from './gallery';
 import {H2, H3} from '@/components/titles';
@@ -69,7 +69,7 @@ interface Props {
 
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
-  const object = await objectFetcher.getById({id});
+  const object = await heritageObjects.getById({id});
   const locale = useLocale();
   const t = await getTranslator(locale, 'ObjectDetails');
 

@@ -1,14 +1,18 @@
-import type {
+import {
   Dataset,
   HeritageObject,
   Image,
   Organization,
   Person,
+  SearchResult,
+  SortBy,
+  SortByEnum,
+  SortOrder,
+  SortOrderEnum,
   Term,
-  Thing,
-} from './types';
-import {buildAggregation} from './fetcher-request';
-import {buildFilters} from './fetcher-result';
+} from './definitions';
+import {buildAggregation} from './searcher-request';
+import {buildFilters} from './searcher-result';
 import {getIrisFromObject} from '@colonial-collections/iris';
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {merge, reach} from '@hapi/hoek';
@@ -38,27 +42,13 @@ enum RawKeys {
   IsPartOf = 'https://colonialcollections nl/search#isPartOf',
 }
 
-export enum SortBy {
-  Name = 'name',
-  Relevance = 'relevance',
-}
-
-export const SortByEnum = z.nativeEnum(SortBy);
-
 const sortByToRawKeys = new Map<string, string>([
   [SortBy.Name, `${RawKeys.Name}.keyword`], // TBD: name may not exist
   [SortBy.Relevance, '_score'],
 ]);
 
-export enum SortOrder {
-  Ascending = 'asc',
-  Descending = 'desc',
-}
-
-export const SortOrderEnum = z.nativeEnum(SortOrder);
-
 // TBD: add language option, for returning results in a specific locale (e.g. 'nl', 'en')
-export const searchOptionsSchema = z.object({
+const searchOptionsSchema = z.object({
   query: z.string().optional().default('*'), // If no query provided, match all
   offset: z.number().int().nonnegative().optional().default(0),
   limit: z.number().int().positive().optional().default(10),
@@ -136,23 +126,7 @@ type RawSearchResponseWithAggregations = z.infer<
   typeof rawSearchResponseWithAggregationsSchema
 >;
 
-export type SearchResultFilter = Thing & {totalCount: number};
-
-export type SearchResult = {
-  totalCount: number;
-  offset: number;
-  limit: number;
-  sortBy: SortBy;
-  sortOrder: SortOrder;
-  heritageObjects: HeritageObject[];
-  filters: {
-    owners: SearchResultFilter[];
-    types: SearchResultFilter[];
-    subjects: SearchResultFilter[];
-  };
-};
-
-export class HeritageObjectsSearcher {
+export class HeritageObjectSearcher {
   private endpointUrl: string;
   private labelFetcher: LabelFetcher;
 
@@ -273,7 +247,7 @@ export class HeritageObjectsSearcher {
     return heritageObject;
   }
 
-  private buildSearchRequest(options: SearchOptions) {
+  private buildRequest(options: SearchOptions) {
     const aggregations = {
       owners: buildAggregation(RawKeys.Owner),
       types: buildAggregation(RawKeys.AdditionalType),
@@ -344,7 +318,7 @@ export class HeritageObjectsSearcher {
     return searchRequest;
   }
 
-  private async buildSearchResult(
+  private async buildResult(
     options: SearchOptions,
     rawSearchResponse: RawSearchResponseWithAggregations
   ) {
@@ -387,17 +361,17 @@ export class HeritageObjectsSearcher {
     return searchResult;
   }
 
-  async search(options?: SearchOptions): Promise<SearchResult> {
+  async search(options?: SearchOptions) {
     const opts = searchOptionsSchema.parse(options ?? {});
 
-    const searchRequest = this.buildSearchRequest(opts);
+    const searchRequest = this.buildRequest(opts);
 
     const rawResponse =
       await this.makeRequest<RawSearchResponseWithAggregations>(searchRequest);
     const searchResponse =
       rawSearchResponseWithAggregationsSchema.parse(rawResponse);
 
-    const searchResult = await this.buildSearchResult(opts, searchResponse);
+    const searchResult = await this.buildResult(opts, searchResponse);
 
     return searchResult;
   }
