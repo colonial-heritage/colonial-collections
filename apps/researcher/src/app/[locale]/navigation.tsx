@@ -11,39 +11,24 @@ import {
 import classNames from 'classnames';
 import {usePathname} from 'next-intl/client';
 import Link from 'next-intl/link';
+import {useLocale, useTranslations} from 'next-intl';
 import {Fragment} from 'react';
 
 interface Props {
-  locale: string;
   locales: string[];
-  navigationLabels: {
-    name: string;
-    home: string;
-    about: string;
-    faq: string;
-    contact: string;
-  };
-  languageSelectorLabels: {
-    accessibilityLanguageSelector: string;
-    accessibilityOpenMenu: string;
-  };
-  localeLabels: {[locale: string]: string};
 }
 
-export default function Navigation({
-  locale,
-  locales,
-  navigationLabels,
-  languageSelectorLabels,
-  localeLabels,
-}: Props) {
+export default function Navigation({locales}: Props) {
   const pathname = usePathname();
+  const locale = useLocale();
 
+  const tNavigation = useTranslations('Navigation');
+  const tLanguageSelector = useTranslations('LanguageSelector');
   const navigation = [
-    {name: navigationLabels.home, href: '/'},
-    {name: navigationLabels.about, href: '/about'},
-    {name: navigationLabels.faq, href: '/faq'},
-    {name: navigationLabels.contact, href: '/contact'},
+    {name: tNavigation('home'), href: '/'},
+    {name: tNavigation('about'), href: '/about'},
+    {name: tNavigation('faq'), href: '/faq'},
+    {name: tNavigation('contact'), href: '/contact'},
   ];
 
   return (
@@ -63,14 +48,17 @@ export default function Navigation({
                     <div className="relative mt-1 w-44">
                       <Listbox.Button
                         className="relative w-full py-2 pl-3 pr-8 text-left"
-                        aria-label={
-                          languageSelectorLabels.accessibilityLanguageSelector
-                        }
+                        aria-label={tLanguageSelector(
+                          'accessibilityLanguageSelector',
+                          {
+                            language: tLanguageSelector(locale),
+                          }
+                        )}
                       >
                         <span className="flex justify-end items-center">
                           <LanguageIcon className="w-4 h-4" />
                           <span className="ml-3 block truncate text-right">
-                            {localeLabels[locale]}
+                            {tLanguageSelector(locale)}
                           </span>
                         </span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
@@ -117,7 +105,7 @@ export default function Navigation({
                                           'ml-3 block truncate'
                                         )}
                                       >
-                                        {localeLabels[localeKey]}
+                                        {tLanguageSelector(localeKey)}
                                       </span>
                                     </div>
 
@@ -156,7 +144,7 @@ export default function Navigation({
           href="/"
           className="flex items-center justify font-bold text-sky-700"
         >
-          {navigationLabels.name}
+          {tNavigation('name')}
         </Link>
         <Disclosure as="nav" id="page-navigation">
           {({open}) => (
@@ -196,7 +184,7 @@ export default function Navigation({
                     {/* Small screen menu button */}
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
                       <span className="sr-only">
-                        {languageSelectorLabels.accessibilityOpenMenu}
+                        {tLanguageSelector('accessibilityOpenMenu')}
                       </span>
                       {open ? (
                         <XMarkIcon
