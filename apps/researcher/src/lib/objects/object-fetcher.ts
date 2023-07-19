@@ -1,9 +1,3 @@
-import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
-import {merge} from '@hapi/hoek';
-import {RdfObjectLoader, Resource} from 'rdf-object';
-import type {Stream} from '@rdfjs/types';
-import type {Readable} from 'node:stream';
-import {z} from 'zod';
 import type {
   Dataset,
   HeritageObject,
@@ -12,6 +6,12 @@ import type {
   Person,
   Term,
 } from './fetcher';
+import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
+import {merge} from '@hapi/hoek';
+import type {Readable} from 'node:stream';
+import {RdfObjectLoader, Resource} from 'rdf-object';
+import type {Stream} from '@rdfjs/types';
+import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
@@ -20,14 +20,13 @@ const constructorOptionsSchema = z.object({
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
 const getByIdOptionsSchema = z.object({
-  id: z.string(),
+  id: z.string().url(),
 });
 
 export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 
-// Fetch the metadata of a heritage object from the Knowledge Graph
-export class HeritageObjectMetadataFetcher {
-  private ontologyUrl = 'https://colonialcollections.nl/schema#';
+export class HeritageObjectFetcher {
+  private ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
 
@@ -58,7 +57,7 @@ export class HeritageObjectMetadataFetcher {
           cc:material ?material ;
           cc:technique ?technique ;
           cc:creator ?creator ;
-          cc:image ?image ;
+          cc:image ?digitalObject ;
           cc:owner ?owner ;
           cc:isPartOf ?dataset .
 
@@ -78,7 +77,7 @@ export class HeritageObjectMetadataFetcher {
         ?creator a cc:Agent ;
           cc:name ?creatorName .
 
-        ?image a cc:ImageObject ;
+        ?digitalObject a cc:ImageObject ;
           cc:contentUrl ?contentUrl .
 
         # TBD: distinguish between 'persons' and 'organizations'?
@@ -97,7 +96,7 @@ export class HeritageObjectMetadataFetcher {
         # Identifier
         ####################
 
-        # TBD: this should be a required property!
+        # TBD: this should be a required property
         OPTIONAL {
           ?object crm:P1_is_identified_by ?identifier .
           ?identifier a crm:E42_Identifier ;
@@ -184,7 +183,7 @@ export class HeritageObjectMetadataFetcher {
         }
 
         ####################
-        # Images
+        # Digital objects (currently: images)
         ####################
 
         OPTIONAL {
@@ -211,7 +210,7 @@ export class HeritageObjectMetadataFetcher {
 
         ?object la:member_of ?dataset .
 
-        # TBD: add more info about the dataset - e.g. license?
+        # TBD: add more info about the dataset, e.g. license?
         # Required property, but it may not exist in a specific language
         OPTIONAL {
           ?dataset dct:title ?tmpTitle
@@ -357,9 +356,6 @@ export class HeritageObjectMetadataFetcher {
       rawHeritageObject,
       'cc:isPartOf'
     );
-    if (dataset === undefined) {
-      throw new Error('Property "cc:isPartOf" does not exist');
-    }
 
     const heritageObjectWithUndefinedValues: HeritageObject = {
       id: iri,
@@ -374,9 +370,10 @@ export class HeritageObjectMetadataFetcher {
       creators,
       images,
       owner,
-      isPartOf: dataset,
+      isPartOf: dataset!, // Ignore 'Thing | undefined' warning - it's always of type 'Thing'
     };
 
+    // Remove undefined values, if any
     const heritageObject = merge({}, heritageObjectWithUndefinedValues, {
       nullOverride: false,
     });
