@@ -5,14 +5,14 @@ import {
 } from './clerk-route-segment-transformer';
 
 describe('encodeRouteSegment', () => {
-  it('encodes a URI', () => {
+  it('encodes a string with dots', () => {
     const encodedUri = encodeRouteSegment('https://museum.example.org/');
     expect(encodedUri).toBe('https%3A%2F%2Fmuseum%252Eexample%252Eorg%2F');
   });
 });
 
 describe('decodeRouteSegment', () => {
-  it('decodes a URI', () => {
+  it('decodes a string with dots', () => {
     const decodedUri = decodeRouteSegment(
       'https%3A%2F%2Fmuseum%252Eexample%252Eorg%2F'
     );
