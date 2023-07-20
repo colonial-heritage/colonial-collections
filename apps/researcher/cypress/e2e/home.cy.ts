@@ -1,6 +1,12 @@
+// Because Clerk uses short-lived JWTs, it uses middleware that will re-load the JWT from a different page if necessary.
+// This page might return a 401, so we need to tell Cypress to ignore the 401 and continue.
+// Passing `failOnStatusCode: false` into `cy.visit` accomplishes just that.
+
 describe('Researcher homepage', () => {
   it('shows an object list', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     cy.getBySel('error').should('not.exist');
     cy.getBySel('object-card-name').its('length').should('be.gt', 0);
   });
@@ -8,7 +14,9 @@ describe('Researcher homepage', () => {
 
 describe('Object list filters', () => {
   it('filters by one owner', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     cy.getBySel('ownersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
@@ -17,7 +25,9 @@ describe('Object list filters', () => {
   });
 
   it('filters by two owners', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     cy.getBySel('ownersFilter').within(() => {
       cy.get('[type="checkbox"]').eq(0).check();
       cy.get('[type="checkbox"]').eq(1).check();
@@ -27,7 +37,9 @@ describe('Object list filters', () => {
   });
 
   it('removes an owner filter by deselecting the filter in the sidebar', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     cy.getBySel('ownersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
@@ -40,7 +52,9 @@ describe('Object list filters', () => {
   });
 
   it('removes an owner filter by deselecting it in the selected filter bar', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     cy.getBySel('ownersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
@@ -53,7 +67,9 @@ describe('Object list filters', () => {
   });
 
   it('filters by one type', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
@@ -62,7 +78,9 @@ describe('Object list filters', () => {
   });
 
   it('filters based on the search query', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     const searchText = 'My query';
 
     cy.getBySel('searchQuery').type(searchText);
@@ -72,7 +90,9 @@ describe('Object list filters', () => {
   });
 
   it('filters multiple categories together (query, owners and types)', () => {
-    cy.visit('/en');
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
     const searchText = 'My query';
 
     cy.getBySel('searchQuery').type(searchText);

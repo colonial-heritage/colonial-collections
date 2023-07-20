@@ -13,6 +13,13 @@ import {usePathname} from 'next-intl/client';
 import Link from 'next-intl/link';
 import {useLocale, useTranslations} from 'next-intl';
 import {Fragment} from 'react';
+import {
+  UserButton,
+  SignInButton,
+  OrganizationSwitcher,
+  SignedIn,
+  SignedOut,
+} from '@clerk/nextjs';
 
 interface Props {
   locales: string[];
@@ -178,6 +185,13 @@ export default function Navigation({locales}: Props) {
                           </span>
                         );
                       })}
+                      <SignedIn>
+                        <OrganizationSwitcher />
+                        <UserButton afterSignOutUrl="/" />
+                      </SignedIn>
+                      <SignedOut>
+                        <SignInButton />
+                      </SignedOut>
                     </div>
                   </div>
                   <div className="-mr-2 flex items-center sm:hidden ">
