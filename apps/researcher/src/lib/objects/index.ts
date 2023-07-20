@@ -1,6 +1,6 @@
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {HeritageObjectSearcher, SearchOptions} from './searcher';
-import {GetByIdOptions, HeritageObjectFetcher} from './fetcher';
+import {HeritageObjectFetcher} from './fetcher';
 import {z} from 'zod';
 
 // Re-export definitions for ease of use in consuming apps
@@ -30,8 +30,8 @@ export class HeritageObjects {
     });
   }
 
-  async getById(options: GetByIdOptions) {
-    return this.heritageObjectFetcher.getById(options);
+  async getById(id: string) {
+    return this.heritageObjectFetcher.getById(id);
   }
 
   async search(options?: SearchOptions) {

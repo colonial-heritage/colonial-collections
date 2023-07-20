@@ -11,18 +11,24 @@ beforeEach(() => {
 });
 
 describe('getById', () => {
+  it('returns undefined if a malformed ID is used', async () => {
+    const heritageObject = await heritageObjectFetcher.getById('malformedID');
+
+    expect(heritageObject).toBeUndefined();
+  });
+
   it('returns undefined if no heritage object matches the ID', async () => {
-    const heritageObject = await heritageObjectFetcher.getById({
-      id: 'https://unknown.org/',
-    });
+    const heritageObject = await heritageObjectFetcher.getById(
+      'https://unknown.org/'
+    );
 
     expect(heritageObject).toBeUndefined();
   });
 
   it('returns the heritage object that matches the ID', async () => {
-    const heritageObject = await heritageObjectFetcher.getById({
-      id: 'https://example.org/objects/5',
-    });
+    const heritageObject = await heritageObjectFetcher.getById(
+      'https://example.org/objects/5'
+    );
 
     expect(heritageObject).toStrictEqual({
       id: 'https://example.org/objects/5',

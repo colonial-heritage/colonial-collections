@@ -17,7 +17,7 @@ interface Props {
 
 export default async function Details({params}: Props) {
   const id = decodeRouteSegment(params.id);
-  const object = await heritageObjects.getById({id});
+  const object = await heritageObjects.getById(id);
   const locale = useLocale();
   const t = await getTranslator(locale, 'ObjectDetails');
 

@@ -7,6 +7,7 @@ import type {
   Term,
 } from './definitions';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
+import {isIri} from '@colonial-collections/iris';
 import {merge} from '@hapi/hoek';
 import type {Readable} from 'node:stream';
 import {RdfObjectLoader, Resource} from 'rdf-object';
@@ -18,12 +19,6 @@ const constructorOptionsSchema = z.object({
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
-
-const getByIdOptionsSchema = z.object({
-  id: z.string().url(),
-});
-
-export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 
 export class HeritageObjectFetcher {
   private ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
@@ -382,12 +377,14 @@ export class HeritageObjectFetcher {
     return heritageObject;
   }
 
-  async getById(options: GetByIdOptions) {
-    const opts = getByIdOptionsSchema.parse(options);
+  async getById(id: string) {
+    if (!isIri(id)) {
+      return undefined;
+    }
 
-    const triplesStream = await this.fetchTriples(opts.id);
+    const triplesStream = await this.fetchTriples(id);
     const heritageObject = await this.fromTriplesToHeritageObject(
-      opts.id,
+      id,
       triplesStream
     );
 
