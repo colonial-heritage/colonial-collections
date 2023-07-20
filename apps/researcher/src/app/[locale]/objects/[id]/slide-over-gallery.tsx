@@ -111,7 +111,7 @@ const OpenSeaDragonViewer = ({imageUrl}: OpenSeaDragonViewer) => {
     if (imageUrl && viewer) {
       viewer.open({
         type: 'image',
-        url: image,
+        url: imageUrl,
       });
     }
   }, [imageUrl, viewer]);
@@ -128,7 +128,7 @@ const OpenSeaDragonViewer = ({imageUrl}: OpenSeaDragonViewer) => {
           homeButton: 'home',
           tileSources: {
             type: 'image',
-            url: image,
+            url: imageUrl,
           },
         })
       );
