@@ -26,40 +26,34 @@ export default function Tabs() {
   ];
 
   return (
-    <div className="mb-5">
-      <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-          {tabs.map(tab => {
-            const isCurrentPathname = new RegExp(tab.isCurrentRegex).test(
-              activePath
-            );
-            return (
-              <Link
-                key={tab.name}
-                href={tab.href}
-                className={classNames(
-                  isCurrentPathname
-                    ? 'border-indigo-500 text-indigo-600'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                  'group inline-flex items-center border-b-2 py-4 px-1 text-sm font-medium'
-                )}
-                aria-current={isCurrentPathname ? 'page' : undefined}
-              >
-                <tab.icon
-                  className={classNames(
-                    isCurrentPathname
-                      ? 'text-indigo-500'
-                      : 'text-gray-400 group-hover:text-gray-500',
-                    '-ml-0.5 mr-2 h-6 w-6'
-                  )}
-                  aria-hidden="true"
-                />
-                <span>{tab.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
-    </div>
+    <nav className="flex px-10 mt-10 mb-4" aria-label="Tabs">
+      {tabs.map(tab => {
+        const isCurrentPathname = new RegExp(tab.isCurrentRegex).test(
+          activePath
+        );
+        return (
+          <Link
+            key={tab.name}
+            href={tab.href}
+            className={classNames(
+              isCurrentPathname
+                ? 'bg-neutral-100 text-neutral-800 font-semibold'
+                : 'border border-neutral-200 text-neutral-500 hover:border-neutral-500 hover:text-neutral-800',
+              'flex rounded-t p-2 items-center gap-1'
+            )}
+            aria-current={isCurrentPathname ? 'page' : undefined}
+          >
+            <tab.icon
+              className={classNames(
+                isCurrentPathname ? 'stroke-neutral-800' : 'stroke-neutral-500',
+                'w-6 h-6'
+              )}
+              aria-hidden="true"
+            />
+            <span>{tab.name}</span>
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
