@@ -41,10 +41,7 @@
   },
   "HeritageObjectCard": {
     "heritageObject": "Heritage object",
-    "date": "Date",
-    "dateUnknown": "Date unknown",
-    "origin": "Origin",
-    "originUnknown": "Origin unknown"
+    "noImage": "No image"
   },
   "PersonCard": {
     "person": "Person",

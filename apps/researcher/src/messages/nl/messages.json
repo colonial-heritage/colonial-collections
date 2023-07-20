@@ -41,10 +41,7 @@
   },
   "HeritageObjectCard": {
     "heritageObject": "Erfgoedobject",
-    "date": "Datum",
-    "dateUnknown": "Datum onbekend",
-    "origin": "Oorsprong",
-    "originUnknown": "Herkomst onbekend"
+    "noImage": "Geen afbeelding"
   },
   "PersonCard": {
     "person": "Persoon",
