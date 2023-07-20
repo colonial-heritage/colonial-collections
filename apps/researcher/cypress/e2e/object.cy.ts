@@ -12,7 +12,7 @@ describe('Object details page', () => {
       .first()
       .then($cardName => {
         // Navigate to the first object details page.
-        cy.getBySel('object-card-name').first().click();
+        cy.getBySel('object-card').first().click();
         // Wait for the page to load.
         cy.location('pathname', {timeout: 60000}).should('include', '/object');
         // On the details page.
@@ -46,7 +46,7 @@ describe('Object details page', () => {
       .should('contain', '?')
       .then(url => {
         // Open the details page
-        cy.getBySel('object-card-name').first().click();
+        cy.getBySel('object-card').first().click();
         // Go back to the list
         cy.getBySel('to-filtered-list-button').first().click();
 

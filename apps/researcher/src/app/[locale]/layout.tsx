@@ -26,8 +26,8 @@ export default async function RootLayout({children, params: {locale}}: Props) {
 
   return (
     <ClerkProvider localization={clerkLocale}>
-      <html className="h-full" lang={locale}>
-        <body className="flex flex-col min-h-screen">
+      <html className="h-full min-h-screen" lang={locale}>
+        <body className="h-full min-h-screen">
           <NextIntlClientProvider locale={locale} messages={messages}>
             <WipMessage />
             <div className="sr-only">
@@ -43,12 +43,12 @@ export default async function RootLayout({children, params: {locale}}: Props) {
                 </li>
               </ul>
             </div>
-            <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">
-              <Navigation locales={locales} />
-            </header>
-            <main className="bg-sand-50 pb-32">
-              <div className="max-w-7xl container mx-auto p-8">{children}</div>
-            </main>
+            <div className="max-w-[1800px] mx-auto h-full min-h-screen flex flex-col justify-stretch items-stretch gap-8 pb-40">
+              <header className="w-full px-10 py-4 bg-neutral-50">
+                <Navigation locales={locales} />
+              </header>
+              {children}
+            </div>
           </NextIntlClientProvider>
         </body>
       </html>

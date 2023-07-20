@@ -15,14 +15,14 @@ export default function HeritageObjectList({
 
   if (totalCount > 0) {
     return (
-      <>
+      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6 mt-6">
         {heritageObjects.map(heritageObject => (
           <HeritageObjectCard
             key={heritageObject.id}
             heritageObject={heritageObject}
           />
         ))}
-      </>
+      </div>
     );
   }
 
