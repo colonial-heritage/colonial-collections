@@ -59,6 +59,7 @@
     "noEntity": "Object could not be found",
     "subTitle": "Object, currently holded by ",
     "noData": "No <subjectWrapper>{subject}</subjectWrapper> available",
+    "identifier": "ID: {identifier}",
     "metadata": "Metadata",
     "description": "Description",
     "date": "Date",

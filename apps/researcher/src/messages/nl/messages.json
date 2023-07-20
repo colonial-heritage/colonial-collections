@@ -59,6 +59,7 @@
     "noEntity": "Object kon niet gevonden worden",
     "subTitle": "Object, op dit moment in bezit door ",
     "noData": "Geen <subjectWrapper>{subject}</subjectWrapper> beschikbaar",
+    "identifier": "ID: {identifier}",
     "metadata": "Metadata",
     "description": "Beschrijving",
     "date": "Datum",

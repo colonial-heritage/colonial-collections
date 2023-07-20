@@ -81,8 +81,11 @@ export default async function Details({params}: Props) {
               </span>
             </span>
           </div>
-          {/* Add when 'object id' is part of API */}
-          {/* <div className="grow sm:text-right break-keep">ID:RV-1310-2</div> */}
+          <div className="grow sm:text-right break-keep">
+            {t('identifier', {
+              identifier: object.identifier,
+            })}
+          </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-4 sm:px-10">
