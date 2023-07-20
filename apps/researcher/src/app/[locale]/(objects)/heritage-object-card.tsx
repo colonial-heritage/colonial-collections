@@ -4,7 +4,7 @@ import {HeritageObject} from '@/lib/objects';
 import Image from 'next/image';
 import {ObjectIcon} from '@/components/icons';
 import {H3} from '@/components/titles';
-import {encodeRouteSegment} from '@/lib/route-segment-transformer';
+import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 
 interface Props {
   heritageObject: HeritageObject;

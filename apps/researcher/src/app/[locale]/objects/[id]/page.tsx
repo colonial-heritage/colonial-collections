@@ -6,7 +6,7 @@ import {HeritageObject} from '@/lib/objects';
 import Gallery from './gallery';
 import {H2, H3} from '@/components/titles';
 import {ToFilteredListButton} from 'ui/list';
-import {decodeRouteSegment} from '@/lib/route-segment-transformer';
+import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 
 // Revalidate the page
 export const revalidate = 0;

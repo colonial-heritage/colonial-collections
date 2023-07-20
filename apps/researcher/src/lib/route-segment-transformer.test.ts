@@ -2,7 +2,7 @@ import {describe, expect, it} from '@jest/globals';
 import {
   encodeRouteSegment,
   decodeRouteSegment,
-} from './route-segment-transformer';
+} from './clerk-route-segment-transformer';
 
 describe('encodeRouteSegment', () => {
   it('encodes a URI', () => {
