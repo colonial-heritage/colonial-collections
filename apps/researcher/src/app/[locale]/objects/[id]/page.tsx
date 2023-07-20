@@ -6,6 +6,7 @@ import {ToFilteredListButton} from 'ui/list';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
 import {MetadataContainer, MetadataEntry, useCurrentOwner} from './metadata';
+import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -15,7 +16,7 @@ interface Props {
 }
 
 export default async function Details({params}: Props) {
-  const id = decodeURIComponent(params.id);
+  const id = decodeRouteSegment(params.id);
   const object = await objectFetcher.getById({id});
   const locale = useLocale();
   const t = await getTranslator(locale, 'ObjectDetails');

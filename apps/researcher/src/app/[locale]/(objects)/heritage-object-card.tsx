@@ -2,6 +2,7 @@ import Link from 'next-intl/link';
 import {useTranslations} from 'next-intl';
 import {HeritageObject} from '@/lib/objects';
 import Image from 'next/image';
+import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 
 interface Props {
   heritageObject: HeritageObject;
@@ -12,7 +13,7 @@ export default function HeritageObjectCard({heritageObject}: Props) {
 
   return (
     <Link
-      href={`/objects/${encodeURIComponent(heritageObject.id)}`}
+      href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
       data-testid="object-card"
       className="border border-blueGrey-200 text-blueGrey-800 bg-greenGrey-50 rounded-sm flex flex-col sm:flex-row gap-2 cursor-pointer hover:bg-white"
       aria-label={t('heritageObject')}
