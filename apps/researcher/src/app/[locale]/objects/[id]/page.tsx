@@ -1,8 +1,6 @@
 import {useLocale} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
-import {PageHeader, PageTitle} from 'ui';
 import heritageObjects from '@/lib/heritage-objects-instance';
-import {HeritageObject} from '@/lib/objects';
 import Gallery from './gallery';
 import {ToFilteredListButton} from 'ui/list';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
@@ -18,7 +16,7 @@ interface Props {
 }
 
 export default async function Details({params}: Props) {
-  const id = decodeURIComponent(params.id);
+  const id = decodeRouteSegment(params.id);
   const object = await heritageObjects.getById({id});
   const locale = useLocale();
   const t = await getTranslator(locale, 'ObjectDetails');
