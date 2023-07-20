@@ -2,6 +2,7 @@ import {useFormatter, useTranslations} from 'next-intl';
 import Link from 'next-intl/link';
 import {Person} from '@/lib/persons';
 import {PersonIcon} from '@/components/icons';
+import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 
 interface Props {
   person: Person;
@@ -24,7 +25,7 @@ export default function PersonCard({person}: Props) {
           <h2 className="font-semibold text-lg text-gray-900 mt-0 inline-flex items-center">
             <PersonIcon className="w-6 h-6 mr-2" />
             <Link
-              href={`/persons/${encodeURIComponent(person.id)}`}
+              href={`/persons/${encodeRouteSegment(person.id)}`}
               data-testid="person-card-name"
               className="text-gray-900"
             >
