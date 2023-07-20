@@ -55,26 +55,34 @@
     "deathYearUnknown": "Death year unknown"
   },
   "ObjectDetails": {
-    "backButton": "Back to results",
+    "backButton": "Search",
     "noEntity": "Object could not be found",
-    "notImplemented": "Not implemented",
-    "noData": "No Data",
+    "subTitle": "Object, currently holded by ",
+    "noData": "No <subjectWrapper>{subject}</subjectWrapper> available",
+    "identifier": "ID: {identifier}",
+    "metadata": "Metadata",
     "description": "Description",
     "date": "Date",
     "owner": "Owner",
-    "handle": "Handle",
     "license": "License",
-    "moreInfo": "More info",
     "materials": "Materials",
     "techniques": "Techniques",
     "creators": "Creators",
     "inscriptions": "Inscriptions",
-    "saveButton": "Save object",
+    "bookmarkButton": "Save object",
     "shareButton": "Share object",
-    "relatedPersons": "Related Persons",
-    "origin": "Origin",
+    "addToListButton": "Add object to list",
+    "createNewListButton": "Create new list",
     "discussion": "Discussion",
-    "types": "Types"
+    "types": "Types",
+    "descriptionSubTitle": "A short description about the object",
+    "materialsSubTitle": "What kind of material is used. Click on the i of the material to learn more.",
+    "typesSubTitle": "",
+    "techniquesSubTitle": "",
+    "creatorsSubTitle": "",
+    "inscriptionsSubTitle": "",
+    "addedBy": "Added by",
+    "currentOwner": "Current owner"
   },
   "PersonDetails": {
     "backButton": "Back to results",
@@ -101,7 +109,7 @@
     "birthPlacesFilter": "Birth places",
     "deathYearsFilter": "Death years",
     "deathPlacesFilter": "Death places",
-    "search": "Search",
+    "search": "Search for text",
     "filters": "Filters",
     "expandFilter": "Expand",
     "clearAllFilters": "Clear all",
@@ -118,5 +126,11 @@
   "WorkInProgress": {
     "message": "This website is a work in progress",
     "roadmapLink": "Read about the current status and roadmap of this project."
+  },
+  "Gallery": {
+    "resetZoomButton": "Reset"
+  },
+  "ErrorPage": {
+    "message": "Something went wrong!"
   }
 }

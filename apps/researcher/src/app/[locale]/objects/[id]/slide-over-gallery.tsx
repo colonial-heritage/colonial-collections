@@ -1,11 +1,16 @@
 'use client';
 
 import React, {useEffect, useState} from 'react';
-import OpenSeaDragon from 'openseadragon';
+import OpenSeaDragon, {Viewer} from 'openseadragon';
 import {SlideOverDialog, SlideOverHeader, SlideOverContent} from 'ui';
 import Image from 'next/image';
 import {Tab} from '@headlessui/react';
 import classNames from 'classnames';
+import {
+  MagnifyingGlassPlusIcon,
+  MagnifyingGlassMinusIcon,
+} from '@heroicons/react/24/solid';
+import {useTranslations} from 'next-intl';
 
 interface Props {
   images: {
@@ -18,7 +23,7 @@ interface Props {
 
 export default function SlideOverGallery({images, selected = 0}: Props) {
   const [selectedIndex, setSelectedIndex] = useState(selected);
-
+  const t = useTranslations('Gallery');
   return (
     <SlideOverDialog>
       <Tab.Group
@@ -30,7 +35,7 @@ export default function SlideOverGallery({images, selected = 0}: Props) {
         <SlideOverHeader>
           {images.length > 1 && (
             <div className="mx-auto w-full max-w-4xl lg:max-w-none p-2">
-              <Tab.List className="grid sm:grid-cols-5 md:grid-cols-10 grid-cols-3 gap-2">
+              <Tab.List className="grid sm:grid-cols-5 lg:grid-cols-12 grid-cols-3 gap-2">
                 {images.map(image => (
                   <Tab
                     key={image.id}
@@ -51,7 +56,7 @@ export default function SlideOverGallery({images, selected = 0}: Props) {
                         <span
                           className={classNames(
                             selected
-                              ? 'ring-indigo-500 ring-1'
+                              ? 'ring-sand-700 ring-1'
                               : 'ring-transparent',
                             'pointer-events-none absolute inset-0'
                           )}
@@ -64,15 +69,31 @@ export default function SlideOverGallery({images, selected = 0}: Props) {
               </Tab.List>
             </div>
           )}
+          <div className="flex flex-row justify-center items-center gap-2">
+            <button
+              className="p-2 bg-black rounded top-2 left-2 !static"
+              id="zoom-out"
+            >
+              <MagnifyingGlassMinusIcon className="w-6 h-6 fill-white" />
+            </button>
+            <button
+              className="p-2 bg-black rounded top-2 left-2 !static"
+              id="zoom-in"
+            >
+              <MagnifyingGlassPlusIcon className="w-6 h-6 fill-white" />
+            </button>
+            <button
+              className="p-2 bg-black rounded top-2 left-2 text-white !static"
+              id="home"
+            >
+              {t('resetZoomButton')}
+            </button>
+          </div>
         </SlideOverHeader>
         <SlideOverContent>
-          <Tab.Panels className="h-full w-full">
-            {images.map(image => (
-              <Tab.Panel key={image.id} className="h-full w-full">
-                <OpenSeaDragonViewer image={image.src} />
-              </Tab.Panel>
-            ))}
-          </Tab.Panels>
+          <div className="h-full w-full">
+            <OpenSeaDragonViewer imageUrl={images[selectedIndex].src} />
+          </div>
         </SlideOverContent>
       </Tab.Group>
     </SlideOverDialog>
@@ -80,21 +101,47 @@ export default function SlideOverGallery({images, selected = 0}: Props) {
 }
 
 interface OpenSeaDragonViewer {
-  image: string;
+  imageUrl: string;
 }
 
-function OpenSeaDragonViewer({image}: OpenSeaDragonViewer) {
+const OpenSeaDragonViewer = ({imageUrl}: OpenSeaDragonViewer) => {
+  const [viewer, setViewer] = useState<Viewer | null>(null);
+
   useEffect(() => {
-    OpenSeaDragon({
-      id: 'openSeaDragon',
-      showNavigationControl: false,
-      showNavigator: true,
-      tileSources: {
+    if (imageUrl && viewer) {
+      viewer.open({
         type: 'image',
-        url: image,
-      },
-    });
-  }, [image]);
+        url: imageUrl,
+      });
+    }
+  }, [imageUrl, viewer]);
+
+  useEffect(() => {
+    const initOpenseadragon = () => {
+      viewer && viewer.destroy();
+      setViewer(
+        OpenSeaDragon({
+          id: 'openSeaDragon',
+          showNavigator: true,
+          zoomInButton: 'zoom-in',
+          zoomOutButton: 'zoom-out',
+          homeButton: 'home',
+          tileSources: {
+            type: 'image',
+            url: imageUrl,
+          },
+        })
+      );
+    };
+
+    initOpenseadragon();
+
+    return () => {
+      viewer && viewer.destroy();
+    };
+    // Only initialize once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <div id="openSeaDragon" className="h-full w-full" />;
-}
+};

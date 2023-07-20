@@ -55,26 +55,34 @@
     "deathYearUnknown": "Overlijdensjaar onbekend"
   },
   "ObjectDetails": {
-    "backButton": "Terug naar resultaten",
+    "backButton": "Zoeken",
     "noEntity": "Object kon niet gevonden worden",
-    "notImplemented": "Niet geïmplementeerd",
-    "noData": "Geen gegevens",
+    "subTitle": "Object, op dit moment in bezit door ",
+    "noData": "Geen <subjectWrapper>{subject}</subjectWrapper> beschikbaar",
+    "identifier": "ID: {identifier}",
+    "metadata": "Metadata",
     "description": "Beschrijving",
     "date": "Datum",
     "owner": "Eigenaar",
-    "handle": "Handle",
     "license": "Licentie",
-    "moreInfo": "Meer informatie",
     "materials": "Materialen",
     "techniques": "Technieken",
     "creators": "Makers",
     "inscriptions": "Inscripties",
-    "saveButton": "Object opslaan",
+    "bookmarkButton": "Object opslaan",
     "shareButton": "Object delen",
-    "relatedPersons": "Verwante personen",
-    "origin": "Oorsprong",
+    "addToListButton": "Object aan lijst toevoegen",
+    "createNewListButton": "Nieuwe lijst maken",
     "discussion": "Discussie",
-    "types": "Types"
+    "types": "Types",
+    "descriptionSubTitle": "Een korte omschrijving over het object",
+    "materialsSubTitle": "Wat voor materiaal is gebruikt. Klik op de i van het materiaal voor meer informatie.",
+    "typesSubTitle": "",
+    "techniquesSubTitle": "",
+    "creatorsSubTitle": "",
+    "inscriptionsSubTitle": "",
+    "addedBy": "Toegevoegd door",
+    "currentOwner": "Huidige eigenaar"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
@@ -118,5 +126,11 @@
   "WorkInProgress": {
     "message": "Aan deze website wordt gewerkt",
     "roadmapLink": "Lees over de huidige status en roadmap van dit project."
+  },
+  "Gallery": {
+    "resetZoomButton": "Reset"
+  },
+  "ErrorPage": {
+    "message": "Er is iets fout gegaan!"
   }
 }
