@@ -92,7 +92,7 @@ export default function SlideOverGallery({images, selected = 0}: Props) {
         </SlideOverHeader>
         <SlideOverContent>
           <div className="h-full w-full">
-            <OpenSeaDragonViewer image={images[selectedIndex].src} />
+            <OpenSeaDragonViewer imageUrl={images[selectedIndex].src} />
           </div>
         </SlideOverContent>
       </Tab.Group>
@@ -101,20 +101,20 @@ export default function SlideOverGallery({images, selected = 0}: Props) {
 }
 
 interface OpenSeaDragonViewer {
-  image: string;
+  imageUrl: string;
 }
 
-const OpenSeaDragonViewer = ({image}: OpenSeaDragonViewer) => {
+const OpenSeaDragonViewer = ({imageUrl}: OpenSeaDragonViewer) => {
   const [viewer, setViewer] = useState<Viewer | null>(null);
 
   useEffect(() => {
-    if (image && viewer) {
+    if (imageUrl && viewer) {
       viewer.open({
         type: 'image',
         url: image,
       });
     }
-  }, [image, viewer]);
+  }, [imageUrl, viewer]);
 
   useEffect(() => {
     const initOpenseadragon = () => {
