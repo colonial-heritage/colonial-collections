@@ -196,6 +196,11 @@ export default function Navigation({locales}: Props) {
                   </div>
                   <div className="-mr-2 flex items-center sm:hidden ">
                     {/* Small screen menu button */}
+                    <SignedIn>
+                      <button className="mr-3">
+                        <UserButton afterSignOutUrl="/" />
+                      </button>
+                    </SignedIn>
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
                       <span className="sr-only">
                         {tLanguageSelector('accessibilityOpenMenu')}
@@ -218,6 +223,11 @@ export default function Navigation({locales}: Props) {
 
               <Disclosure.Panel className="sm:hidden">
                 <div className="space-y-1 pt-2 pb-3 absolute bg-sky-50 w-full z-50 left-0">
+                  <SignedOut>
+                    <button className="block pl-3 pr-4 py-2 border-l-4 font-medium border-transparent text-grey-900 hover:bg-sky-700 hover:border-text-right-300 hover:text-white">
+                      <SignInButton />
+                    </button>
+                  </SignedOut>
                   {navigation.map(item => {
                     const isCurrentPathname = item.href === pathname;
                     return (
@@ -237,6 +247,11 @@ export default function Navigation({locales}: Props) {
                       </Disclosure.Button>
                     );
                   })}
+                  <SignedIn>
+                    <button className="pl-3">
+                      <OrganizationSwitcher />
+                    </button>
+                  </SignedIn>
                 </div>
               </Disclosure.Panel>
             </>
