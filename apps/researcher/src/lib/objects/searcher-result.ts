@@ -1,4 +1,5 @@
-import type {RawBucket, SearchResultFilter} from '.';
+import type {SearchResultFilter} from './';
+import type {RawBucket} from './searcher';
 
 function toUnmatchedFilter(bucket: RawBucket): SearchResultFilter {
   const totalCount = 0; // Initial count; will be overridden by the matching filter, if any
