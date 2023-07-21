@@ -8,7 +8,11 @@ export type Thing = {
 export type Organization = Thing;
 export type Term = Thing;
 export type Person = Thing;
+export type Place = Thing;
 export type Dataset = Thing;
+export type Agent =
+  | Person
+  | (Organization & {type?: 'Person' | 'Organization'}); // Type may not be known
 
 export type Image = {
   id: string;
@@ -59,4 +63,17 @@ export type SearchResult = {
     types: SearchResultFilter[];
     subjects: SearchResultFilter[];
   };
+};
+
+export type ProvenanceEvent = {
+  id: string;
+  types: Term[];
+  startDate?: Date;
+  endDate?: Date;
+  transferredFrom?: Agent;
+  transferredTo?: Agent;
+  description?: string;
+  location?: Place;
+  startsAfter?: string; // ID of another provenance event
+  endsBefore?: string; // ID of another provenance event
 };
