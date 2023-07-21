@@ -14,7 +14,7 @@ export default function HeritageObjectCard({heritageObject}: Props) {
   const imageUrl =
     heritageObject.images && heritageObject.images.length > 0
       ? heritageObject.images[0].contentUrl
-      : null;
+      : undefined;
 
   return (
     <Link
