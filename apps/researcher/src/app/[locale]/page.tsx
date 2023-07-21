@@ -1,4 +1,4 @@
-import heritageObjectFetcher from '@/lib/heritage-object-fetcher-instance';
+import heritageObjects from '@/lib/heritage-objects-instance';
 import {useLocale, useTranslations} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import HeritageObjectList from './(objects)/heritage-object-list';
@@ -89,7 +89,7 @@ export default async function Home({searchParams = {}}: Props) {
   let hasError;
   let searchResult: SearchResult | undefined;
   try {
-    searchResult = await heritageObjectFetcher.search(searchOptions);
+    searchResult = await heritageObjects.search(searchOptions);
   } catch (error) {
     hasError = true;
     console.error(error);
