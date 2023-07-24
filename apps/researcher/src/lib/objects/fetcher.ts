@@ -1,16 +1,17 @@
-import type {
-  Dataset,
-  HeritageObject,
-  Image,
-  Organization,
-  Person,
-  Term,
-} from './definitions';
+import {ontologyUrl, Dataset, HeritageObject, Term} from './definitions';
+import {
+  getPropertyValue,
+  getPropertyValues,
+  createThingsFromProperties,
+  createAgentsFromProperties,
+  createImagesFromProperties,
+  onlyOne,
+} from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
 import {merge} from '@hapi/hoek';
 import type {Readable} from 'node:stream';
-import {RdfObjectLoader, Resource} from 'rdf-object';
+import {RdfObjectLoader} from 'rdf-object';
 import type {Stream} from '@rdfjs/types';
 import {z} from 'zod';
 
@@ -21,7 +22,6 @@ const constructorOptionsSchema = z.object({
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
 export class HeritageObjectFetcher {
-  private ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
 
@@ -33,7 +33,7 @@ export class HeritageObjectFetcher {
 
   private async fetchTriples(iri: string) {
     const query = `
-      PREFIX cc: <${this.ontologyUrl}>
+      PREFIX cc: <${ontologyUrl}>
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
       PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX dig: <http://www.ics.forth.gr/isl/CRMdig/>
@@ -69,15 +69,13 @@ export class HeritageObjectFetcher {
         ?technique a cc:DefinedTerm ;
           cc:name ?techniqueName .
 
-        # TBD: distinguish between 'persons' and 'organizations'?
-        ?creator a cc:Agent ;
+        ?creator a ?creatorType ;
           cc:name ?creatorName .
 
         ?digitalObject a cc:ImageObject ;
           cc:contentUrl ?contentUrl .
 
-        # TBD: distinguish between 'persons' and 'organizations'?
-        ?owner a cc:Agent ;
+        ?owner a ?ownerType ;
           cc:name ?ownerName .
 
         ?dataset a cc:Dataset ;
@@ -175,7 +173,9 @@ export class HeritageObjectFetcher {
 
         OPTIONAL {
           ?object crm:P108i_was_produced_by/crm:P14_carried_out_by ?creator .
-          ?creator rdfs:label ?creatorName .
+          ?creator rdfs:label ?creatorName ;
+            rdf:type ?creatorTypeTemp .
+          BIND(IF(?creatorTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?creatorType)
         }
 
         ####################
@@ -195,7 +195,9 @@ export class HeritageObjectFetcher {
 
         OPTIONAL {
           ?object crm:P52_has_current_owner ?owner .
-          ?owner foaf:name ?ownerName .
+          ?owner foaf:name ?ownerName ;
+            rdf:type ?ownerTypeTemp .
+          BIND(IF(?ownerTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?ownerType)
           # TBD: how to handle languages?
           FILTER(LANG(?ownerName) = "" || LANGMATCHES(LANG(?ownerName), "en"))
         }
@@ -221,62 +223,14 @@ export class HeritageObjectFetcher {
     return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
-  private getPropertyValue(rawHeritageObject: Resource, propertyName: string) {
-    const property = rawHeritageObject.property[propertyName];
-    if (property === undefined) {
-      return undefined;
-    }
-    return property.value;
-  }
-
-  private getPropertyValues(rawHeritageObject: Resource, propertyName: string) {
-    const properties = rawHeritageObject.properties[propertyName];
-    if (properties === undefined) {
-      return undefined;
-    }
-    const values = properties.map(property => property.value);
-    return values.length > 0 ? values : undefined;
-  }
-
-  private createThingFromProperty<T>(
-    rawHeritageObject: Resource,
-    propertyName: string
-  ) {
-    const property = rawHeritageObject.property[propertyName];
-    if (property === undefined) {
-      return undefined;
-    }
-    return {
-      id: property.value,
-      name: property.property['cc:name'].value,
-    } as T;
-  }
-
-  private createThingsFromProperties<T>(
-    rawHeritageObject: Resource,
-    propertyName: string
-  ) {
-    const properties = rawHeritageObject.properties[propertyName];
-    if (properties === undefined) {
-      return undefined;
-    }
-    const things = properties.map(property => {
-      return {
-        id: property.value,
-        name: property.property['cc:name'].value,
-      };
-    });
-
-    return things.length > 0 ? (things as T[]) : undefined;
-  }
-
   private async fromTriplesToHeritageObject(
     iri: string,
     triplesStream: Readable & Stream
   ) {
     const loader = new RdfObjectLoader({
       context: {
-        cc: this.ontologyUrl,
+        cc: ontologyUrl,
+        rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
       },
     });
 
@@ -287,70 +241,45 @@ export class HeritageObjectFetcher {
       return undefined; // No such object
     }
 
-    const identifier = this.getPropertyValue(
-      rawHeritageObject,
-      'cc:identifier'
-    );
-    const name = this.getPropertyValue(rawHeritageObject, 'cc:name');
-    const description = this.getPropertyValue(
-      rawHeritageObject,
-      'cc:description'
-    );
+    const identifier = getPropertyValue(rawHeritageObject, 'cc:identifier');
+    const name = getPropertyValue(rawHeritageObject, 'cc:name');
+    const description = getPropertyValue(rawHeritageObject, 'cc:description');
 
-    const types = this.createThingsFromProperties<Term>(
+    const types = createThingsFromProperties<Term>(
       rawHeritageObject,
       'cc:additionalType'
     );
 
-    const subjects = this.createThingsFromProperties<Term>(
+    const subjects = createThingsFromProperties<Term>(
       rawHeritageObject,
       'cc:about'
     );
 
-    const inscriptions = this.getPropertyValues(
-      rawHeritageObject,
-      'cc:inscription'
-    );
+    const inscriptions = getPropertyValues(rawHeritageObject, 'cc:inscription');
 
-    const materials = this.createThingsFromProperties<Term>(
+    const materials = createThingsFromProperties<Term>(
       rawHeritageObject,
       'cc:material'
     );
 
-    const techniques = this.createThingsFromProperties<Term>(
+    const techniques = createThingsFromProperties<Term>(
       rawHeritageObject,
       'cc:technique'
     );
 
-    const creators = this.createThingsFromProperties<Person>(
+    const creators = createAgentsFromProperties(
       rawHeritageObject,
       'cc:creator'
     );
 
-    let images: Image[] | undefined;
-    const rawImages = rawHeritageObject.properties['cc:image'];
-    if (rawImages !== undefined) {
-      const things = rawImages.map(rawImage => {
-        const image: Image = {
-          id: rawImage.value,
-          contentUrl: rawImage.property['cc:contentUrl'].value,
-        };
-        return image;
-      });
+    const images = createImagesFromProperties(rawHeritageObject, 'cc:image');
 
-      if (things.length > 0) {
-        images = things;
-      }
-    }
-
-    const owner = this.createThingFromProperty<Organization>(
-      rawHeritageObject,
-      'cc:owner'
+    const owner = onlyOne(
+      createAgentsFromProperties(rawHeritageObject, 'cc:owner')
     );
 
-    const dataset = this.createThingFromProperty<Dataset>(
-      rawHeritageObject,
-      'cc:isPartOf'
+    const dataset = onlyOne(
+      createThingsFromProperties<Dataset>(rawHeritageObject, 'cc:isPartOf')
     );
 
     const heritageObjectWithUndefinedValues: HeritageObject = {

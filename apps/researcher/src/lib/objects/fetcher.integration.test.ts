@@ -67,6 +67,7 @@ describe('getById', () => {
       ],
       creators: [
         {
+          type: 'Person',
           id: 'https://colonial-heritage.triply.cc/.well-known/genid/c7d1bbe2c664b1f8272bfc07e1779dfd',
           name: 'Geeske van Châtellerault',
         },
@@ -83,7 +84,11 @@ describe('getById', () => {
             'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
         },
       ],
-      owner: {id: 'https://museum.example.org/', name: 'Museum'},
+      owner: {
+        type: 'Organization',
+        id: 'https://museum.example.org/',
+        name: 'Museum',
+      },
       isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
     });
   });

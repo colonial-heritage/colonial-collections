@@ -1,9 +1,15 @@
-import type {Agent, Place, ProvenanceEvent, Term} from './definitions';
+import {ontologyUrl, Place, ProvenanceEvent, Term} from './definitions';
+import {
+  getPropertyValue,
+  createThingsFromProperties,
+  createAgentsFromProperties,
+  onlyOne,
+} from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
 import {merge} from '@hapi/hoek';
 import type {Readable} from 'node:stream';
-import {RdfObjectLoader, Resource} from 'rdf-object';
+import {Resource, RdfObjectLoader} from 'rdf-object';
 import type {Stream} from '@rdfjs/types';
 import {z} from 'zod';
 
@@ -14,7 +20,6 @@ const constructorOptionsSchema = z.object({
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
 export class ProvenanceEventsFetcher {
-  private ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
 
@@ -26,7 +31,7 @@ export class ProvenanceEventsFetcher {
 
   private async fetchTriples(iri: string) {
     const query = `
-      PREFIX cc: <${this.ontologyUrl}>
+      PREFIX cc: <${ontologyUrl}>
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
       PREFIX foaf: <http://xmlns.com/foaf/0.1/>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -285,111 +290,30 @@ export class ProvenanceEventsFetcher {
     return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
-  private getPropertyValue(resource: Resource, propertyName: string) {
-    const property = resource.property[propertyName];
-    if (property === undefined) {
-      return undefined;
-    }
-    return property.value;
-  }
-
-  private createThingFromProperty<T>(resource: Resource, propertyName: string) {
-    const property = resource.property[propertyName];
-    if (property === undefined) {
-      return undefined;
-    }
-    const name = this.getPropertyValue(property, 'cc:name');
-    return {
-      id: property.value,
-      name: name !== undefined ? name : undefined,
-    } as T;
-  }
-
-  private createThingsFromProperties<T>(
-    resource: Resource,
-    propertyName: string
-  ) {
-    const properties = resource.properties[propertyName]; // Could be an empty array
-    const things = properties.map(property => {
-      const name = this.getPropertyValue(property, 'cc:name');
-      return {
-        id: property.value,
-        name: name !== undefined ? name : undefined,
-      };
-    });
-
-    return things.length > 0 ? (things as T[]) : undefined;
-  }
-
-  private createTransferredFromOrToAgentFromProperties(
-    resource: Resource,
-    propertyName: string
-  ) {
-    const property = resource.property[propertyName];
-    if (property === undefined) {
-      return undefined;
-    }
-
-    const type = this.getPropertyValue(property, 'rdf:type');
-    const name = this.getPropertyValue(property, 'cc:name');
-
-    let shorthandType = undefined;
-    if (type === `${this.ontologyUrl}Person`) {
-      shorthandType = 'Person' as const;
-    } else if (type === `${this.ontologyUrl}Organization`) {
-      shorthandType = 'Organization' as const;
-    }
-
-    const agent = {
-      type: shorthandType,
-      id: property.value,
-      name,
-    };
-
-    return agent;
-  }
-
   private toProvenanceEvent(rawProvenanceEvent: Resource) {
     const id = rawProvenanceEvent.value;
-    const startDate = this.getPropertyValue(rawProvenanceEvent, 'cc:startDate');
-    const endDate = this.getPropertyValue(rawProvenanceEvent, 'cc:endDate');
+    const startDate = getPropertyValue(rawProvenanceEvent, 'cc:startDate');
+    const endDate = getPropertyValue(rawProvenanceEvent, 'cc:endDate');
+    const description = getPropertyValue(rawProvenanceEvent, 'cc:description');
+    const startsAfter = getPropertyValue(rawProvenanceEvent, 'cc:startsAfter');
+    const endsBefore = getPropertyValue(rawProvenanceEvent, 'cc:endsBefore');
 
-    const description = this.getPropertyValue(
-      rawProvenanceEvent,
-      'cc:description'
-    );
-
-    const startsAfter = this.getPropertyValue(
-      rawProvenanceEvent,
-      'cc:startsAfter'
-    );
-
-    const endsBefore = this.getPropertyValue(
-      rawProvenanceEvent,
-      'cc:endsBefore'
-    );
-
-    const types = this.createThingsFromProperties<Term>(
+    const types = createThingsFromProperties<Term>(
       rawProvenanceEvent,
       'cc:additionalType'
     );
 
-    const location = this.createThingFromProperty<Place>(
-      rawProvenanceEvent,
-      'cc:location'
+    const location = onlyOne(
+      createThingsFromProperties<Place>(rawProvenanceEvent, 'cc:location')
     );
 
-    const transferredFromAgent =
-      this.createTransferredFromOrToAgentFromProperties(
-        rawProvenanceEvent,
-        'cc:transferredFrom'
-      );
+    const transferredFromAgent = onlyOne(
+      createAgentsFromProperties(rawProvenanceEvent, 'cc:transferredFrom')
+    );
 
-    const transferredToAgent =
-      this.createTransferredFromOrToAgentFromProperties(
-        rawProvenanceEvent,
-        'cc:transferredTo'
-      );
+    const transferredToAgent = onlyOne(
+      createAgentsFromProperties(rawProvenanceEvent, 'cc:transferredTo')
+    );
 
     const provenanceEventWithUndefinedValues: ProvenanceEvent = {
       id,
@@ -417,7 +341,7 @@ export class ProvenanceEventsFetcher {
   ) {
     const loader = new RdfObjectLoader({
       context: {
-        cc: this.ontologyUrl,
+        cc: ontologyUrl,
         rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
       },
     });
@@ -433,6 +357,8 @@ export class ProvenanceEventsFetcher {
     const provenanceEvents = rawProvenanceEvents.map(rawProvenanceEvent =>
       this.toProvenanceEvent(rawProvenanceEvent)
     );
+
+    // TODO: sort provenance events
 
     return provenanceEvents;
   }

@@ -176,6 +176,7 @@ export class HeritageObjectSearcher {
     const ownerName = reach(rawHeritageObject, `${RawKeys.Owner}.0`);
     if (ownerName !== undefined) {
       owner = {
+        type: 'Organization', // TODO: determine dynamically - could also be a 'Person'
         id: ownerName,
         name: ownerName, // Replace with labelFetcher lookup as soon as we have IRIs
       };
@@ -208,7 +209,7 @@ export class HeritageObjectSearcher {
     const subjects = toThings<Term>(RawKeys.About);
     const materials = toThings<Term>(RawKeys.Material);
     const techniques = toThings<Term>(RawKeys.Technique);
-    const creators = toThings<Person>(RawKeys.Creator);
+    const creators = toThings<Person>(RawKeys.Creator); // TODO: set type (Person or Organization)
 
     let images: Image[] | undefined;
     const contentUrls: string[] | undefined = reach(

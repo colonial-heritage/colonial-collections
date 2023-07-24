@@ -1,18 +1,18 @@
 import {z} from 'zod';
 
+export const ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
+
 export type Thing = {
   id: string;
   name?: string; // Name may not exist (e.g. in a specific locale)
 };
 
-export type Organization = Thing;
 export type Term = Thing;
-export type Person = Thing;
 export type Place = Thing;
 export type Dataset = Thing;
-export type Agent =
-  | Person
-  | (Organization & {type?: 'Person' | 'Organization'}); // Type may not be known
+export type Person = Thing & {type: 'Person'};
+export type Organization = Thing & {type: 'Organization'};
+export type Agent = Person | Organization | Thing; // 'Thing' if the exact type of the agent (Person, Organization) is unknown
 
 export type Image = {
   id: string;
@@ -29,9 +29,9 @@ export type HeritageObject = {
   subjects?: Term[];
   materials?: Term[];
   techniques?: Term[];
-  creators?: Person[];
+  creators?: Agent[];
   images?: Image[];
-  owner?: Organization;
+  owner?: Agent;
   isPartOf: Dataset;
 };
 
