@@ -92,7 +92,7 @@ export function createImagesFromProperties(
     createImageFromProperties(property)
   );
 
-  return images;
+  return images.length > 0 ? images : undefined;
 }
 
 export function onlyOne<T>(items: T[] | undefined) {
