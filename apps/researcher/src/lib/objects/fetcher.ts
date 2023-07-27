@@ -175,9 +175,15 @@ export class HeritageObjectFetcher {
           ?object crm:P108i_was_produced_by/crm:P14_carried_out_by ?creator .
           ?creator rdfs:label ?creatorName ;
             rdf:type ?creatorTypeTemp .
+
+          VALUES (?creatorTypeTemp ?creatorType) {
+            (foaf:Organization cc:Organization)
+            (crm:E21_Person cc:Person)
+            (UNDEF UNDEF)
+          }
         }
 
-        BIND(IF(BOUND(?creatorTypeTemp) && ?creatorTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?creatorType)
+        #BIND(IF(BOUND(?creatorTypeTemp) && ?creatorTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?creatorType)
 
         ####################
         # Digital objects (currently: images)
@@ -201,9 +207,15 @@ export class HeritageObjectFetcher {
 
           # TBD: how to handle languages?
           FILTER(LANG(?ownerName) = "" || LANGMATCHES(LANG(?ownerName), "en"))
+
+          VALUES (?ownerTypeTemp ?ownerType) {
+            (foaf:Organization cc:Organization)
+            (crm:E21_Person cc:Person)
+            (UNDEF UNDEF)
+          }
         }
 
-        BIND(IF(BOUND(?ownerTypeTemp) && ?ownerTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?ownerType)
+        #BIND(IF(BOUND(?ownerTypeTemp) && ?ownerTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?ownerType)
 
         ####################
         # Part of dataset

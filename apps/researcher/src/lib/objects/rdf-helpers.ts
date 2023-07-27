@@ -49,6 +49,8 @@ function createAgentFromProperties(resource: Resource) {
     shorthandType = 'Person' as const;
   } else if (type === `${ontologyUrl}Organization`) {
     shorthandType = 'Organization' as const;
+  } else {
+    shorthandType = 'Unknown' as const;
   }
 
   const agent: Agent = {

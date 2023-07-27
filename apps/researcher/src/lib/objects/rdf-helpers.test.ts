@@ -29,7 +29,7 @@ beforeAll(async () => {
       cc:name "Name" ;
       cc:description "Description 1", "Description 2" ;
       cc:subject ex:subject1, ex:subject2 ;
-      cc:creator ex:creator1, ex:creator2, ex:creator3 ;
+      cc:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
       cc:image ex:image1, ex:image2, ex:image3 .
 
     ex:subject1 a cc:Term ;
@@ -41,9 +41,11 @@ beforeAll(async () => {
       cc:name "Person 1" .
 
     ex:creator2 a cc:Organization ;
-      cc:name "Organization 1" .
+      cc:name "Organization 2" .
 
     ex:creator3 a cc:Organization .
+
+    ex:creator4 cc:name "Organization 4" .
 
     ex:image1 a cc:Image ;
       cc:contentUrl "https://example.org/image1.jpg" .
@@ -121,12 +123,17 @@ describe('createAgentsFromProperties', () => {
       {
         type: 'Organization',
         id: 'https://example.org/creator2',
-        name: 'Organization 1',
+        name: 'Organization 2',
       },
       {
         type: 'Organization',
         id: 'https://example.org/creator3',
         name: undefined,
+      },
+      {
+        type: 'Unknown',
+        id: 'https://example.org/creator4',
+        name: 'Organization 4',
       },
     ]);
   });

@@ -122,9 +122,13 @@ export class ProvenanceEventsFetcher {
             ?acquisition crm:P23_transferred_title_from ?acquisitionOwnerFrom .
             ?acquisitionOwnerFrom rdfs:label|foaf:name ?acquisitionOwnerFromName ;
               rdf:type ?acquisitionOwnerFromTypeTmp .
-          }
 
-          BIND(IF(BOUND(?acquisitionOwnerFromTypeTmp) && ?acquisitionOwnerFromTypeTmp = foaf:Organization, cc:Organization, cc:Person) AS ?acquisitionOwnerFromType)
+            VALUES (?acquisitionOwnerFromTypeTmp ?acquisitionOwnerFromType) {
+              (foaf:Organization cc:Organization)
+              (crm:E21_Person cc:Person)
+              (UNDEF UNDEF)
+            }
+          }
 
           ####################
           # Owner after the acquisition
@@ -134,9 +138,13 @@ export class ProvenanceEventsFetcher {
             ?acquisition crm:P22_transferred_title_to ?acquisitionOwnerTo .
             ?acquisitionOwnerTo rdfs:label|foaf:name ?acquisitionOwnerToName ;
               rdf:type ?acquisitionOwnerToTypeTmp .
-          }
 
-          BIND(IF(BOUND(?acquisitionOwnerToTypeTmp) && ?acquisitionOwnerToTypeTmp = foaf:Organization, cc:Organization, cc:Person) AS ?acquisitionOwnerToType)
+            VALUES (?acquisitionOwnerToTypeTmp ?acquisitionOwnerToType) {
+              (foaf:Organization cc:Organization)
+              (crm:E21_Person cc:Person)
+              (UNDEF UNDEF)
+            }
+          }
 
           ?acquisitionProvEvent a crm:E7_Activity .
 
@@ -220,9 +228,13 @@ export class ProvenanceEventsFetcher {
             ?transferOfCustody crm:P28_custody_surrendered_by ?transferOfCustodyCustodianFrom .
             ?transferOfCustodyCustodianFrom rdfs:label|foaf:name ?transferOfCustodyCustodianFromName ;
               rdf:type ?transferOfCustodyCustodianFromTypeTemp .
-          }
 
-          BIND(IF(BOUND(?transferOfCustodyCustodianFromTypeTemp) && ?transferOfCustodyCustodianFromTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?transferOfCustodyCustodianFromType)
+            VALUES (?transferOfCustodyCustodianFromTypeTemp ?transferOfCustodyCustodianFromType) {
+              (foaf:Organization cc:Organization)
+              (crm:E21_Person cc:Person)
+              (UNDEF UNDEF)
+            }
+          }
 
           ####################
           # Custodian after the transfer of custody
@@ -232,9 +244,13 @@ export class ProvenanceEventsFetcher {
             ?transferOfCustody crm:P29_custody_received_by ?transferOfCustodyCustodianTo .
             ?transferOfCustodyCustodianTo rdfs:label|foaf:name ?transferOfCustodyCustodianToName ;
               rdf:type ?transferOfCustodyCustodianToTypeTemp .
-          }
 
-          BIND(IF(BOUND(?transferOfCustodyCustodianToTypeTemp) && ?transferOfCustodyCustodianToTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?transferOfCustodyCustodianToType)
+            VALUES (?transferOfCustodyCustodianToTypeTemp ?transferOfCustodyCustodianToType) {
+              (foaf:Organization cc:Organization)
+              (crm:E21_Person cc:Person)
+              (UNDEF UNDEF)
+            }
+          }
 
           ?transferOfCustodyProvEvent a crm:E7_Activity .
 
