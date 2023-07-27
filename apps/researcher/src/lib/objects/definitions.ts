@@ -13,7 +13,7 @@ export type Dataset = Thing;
 export type Person = Thing & {type: 'Person'};
 export type Organization = Thing & {type: 'Organization'};
 export type Unknown = Thing & {type: 'Unknown'};
-export type Agent = Person | Organization | Unknown; // 'Thing' if the exact type of the agent (Person, Organization) is unknown
+export type Agent = Person | Organization | Unknown;
 
 export type Image = {
   id: string;
