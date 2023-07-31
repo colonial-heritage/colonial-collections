@@ -48,7 +48,7 @@
     "@next/env": "13.4.7",
     "@rdfjs/types": "1.1.0",
     "@types/mdx": "2.0.5",
-    "@types/node": "20.4.2",
+    "@types/node": "20.4.5",
     "@types/openseadragon": "3.0.6",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
