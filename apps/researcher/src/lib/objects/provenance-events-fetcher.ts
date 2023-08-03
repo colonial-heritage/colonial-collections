@@ -337,7 +337,7 @@ export class ProvenanceEventsFetcher {
 
     const provenanceEventWithUndefinedValues: ProvenanceEvent = {
       id,
-      types: types!, // Ignore 'Thing | undefined' warning - it's always of type 'Thing'
+      types,
       description: description !== undefined ? description : undefined,
       startDate: startDate !== undefined ? new Date(startDate) : undefined,
       endDate: endDate !== undefined ? new Date(endDate) : undefined,

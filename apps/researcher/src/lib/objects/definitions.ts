@@ -68,7 +68,7 @@ export type SearchResult = {
 
 export type ProvenanceEvent = {
   id: string;
-  types: Term[];
+  types?: Term[];
   startDate?: Date;
   endDate?: Date;
   transferredFrom?: Agent;
