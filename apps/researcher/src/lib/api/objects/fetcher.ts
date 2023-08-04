@@ -1,4 +1,4 @@
-import {ontologyUrl, Dataset, HeritageObject, Term} from './definitions';
+import {ontologyUrl, Dataset, HeritageObject, Term} from '../definitions';
 import {
   getPropertyValue,
   getPropertyValues,

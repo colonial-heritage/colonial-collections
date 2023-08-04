@@ -1,4 +1,4 @@
-import {ontologyUrl, Agent, Image} from './definitions';
+import {ontologyUrl, Agent, Image} from '../definitions';
 import type {Resource} from 'rdf-object';
 
 export function getPropertyValue(resource: Resource, propertyName: string) {

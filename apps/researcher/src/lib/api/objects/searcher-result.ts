@@ -1,4 +1,4 @@
-import type {SearchResultFilter} from './';
+import type {SearchResultFilter} from '../definitions';
 import type {RawBucket} from './searcher';
 
 function toUnmatchedFilter(bucket: RawBucket): SearchResultFilter {

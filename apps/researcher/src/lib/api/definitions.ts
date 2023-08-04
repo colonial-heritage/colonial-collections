@@ -52,20 +52,6 @@ export const SortOrderEnum = z.nativeEnum(SortOrder);
 
 export type SearchResultFilter = Thing & {totalCount: number};
 
-export type SearchResult = {
-  totalCount: number;
-  offset: number;
-  limit: number;
-  sortBy: SortBy;
-  sortOrder: SortOrder;
-  heritageObjects: HeritageObject[];
-  filters: {
-    owners: SearchResultFilter[];
-    types: SearchResultFilter[];
-    subjects: SearchResultFilter[];
-  };
-};
-
 export type ProvenanceEvent = {
   id: string;
   types?: Term[];

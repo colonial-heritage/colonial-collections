@@ -1,4 +1,4 @@
-import {ontologyUrl} from './definitions';
+import {ontologyUrl} from '../definitions';
 import {
   getPropertyValue,
   getPropertyValues,

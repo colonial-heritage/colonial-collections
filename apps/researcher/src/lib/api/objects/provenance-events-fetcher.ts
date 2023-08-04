@@ -1,4 +1,4 @@
-import {ontologyUrl, Place, ProvenanceEvent, Term} from './definitions';
+import {ontologyUrl, Place, ProvenanceEvent, Term} from '../definitions';
 import {
   getPropertyValue,
   createThingsFromProperties,

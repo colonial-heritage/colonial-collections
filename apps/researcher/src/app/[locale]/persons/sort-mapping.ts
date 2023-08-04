@@ -1,4 +1,4 @@
-import {SortBy as SortBySearchOption, SortOrder} from '@/lib/persons';
+import {SortBy as SortBySearchOption, SortOrder} from '@/lib/api/persons';
 import {SortBy} from '@colonial-collections/list-store';
 
 export const sortMapping = {

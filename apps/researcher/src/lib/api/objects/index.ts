@@ -6,6 +6,7 @@ import {z} from 'zod';
 
 // Re-export definitions for ease of use in consuming apps
 export * from './definitions';
+export * from '../definitions';
 
 const constructorOptionsSchema = z.object({
   sparqlEndpointUrl: z.string(),

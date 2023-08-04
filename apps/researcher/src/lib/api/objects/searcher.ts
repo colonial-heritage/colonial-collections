@@ -4,13 +4,13 @@ import {
   Image,
   Organization,
   Person,
-  SearchResult,
   SortBy,
   SortByEnum,
   SortOrder,
   SortOrderEnum,
   Term,
-} from './definitions';
+} from '../definitions';
+import {SearchResult} from './definitions';
 import {buildAggregation} from './searcher-request';
 import {buildFilters} from './searcher-result';
 import {getIrisFromObject} from '@colonial-collections/iris';
