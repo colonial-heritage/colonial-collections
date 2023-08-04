@@ -1,6 +1,6 @@
 import {ontologyUrl, Place, ProvenanceEvent, Term} from '../definitions';
+import {getPropertyValue} from '../rdf-helpers';
 import {
-  getPropertyValue,
   createThingsFromProperties,
   createAgentsFromProperties,
   onlyOne,

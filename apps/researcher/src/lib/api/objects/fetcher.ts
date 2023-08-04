@@ -1,7 +1,6 @@
 import {ontologyUrl, Dataset, HeritageObject, Term} from '../definitions';
+import {getPropertyValue, getPropertyValues} from '../rdf-helpers';
 import {
-  getPropertyValue,
-  getPropertyValues,
   createThingsFromProperties,
   createAgentsFromProperties,
   createImagesFromProperties,
