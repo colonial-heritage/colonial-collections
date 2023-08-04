@@ -111,7 +111,9 @@ export class ProvenanceEventsFetcher {
             ?acquisitionType a skos:Concept ;
               skos:prefLabel ?acquisitionTypeName ;
               skos:inScheme <http://vocab.getty.edu/aat/> .
-            FILTER(LANG(?acquisitionTypeName) = "" || LANGMATCHES(LANG(?acquisitionTypeName), "en")) # TBD: which languages to support?
+
+            # TBD: how to handle languages?
+            FILTER(LANG(?acquisitionTypeName) = "" || LANGMATCHES(LANG(?acquisitionTypeName), "en"))
           }
 
           ####################
@@ -217,7 +219,9 @@ export class ProvenanceEventsFetcher {
             ?transferOfCustodyType a skos:Concept ;
               skos:prefLabel ?transferOfCustodyTypeName ;
               skos:inScheme <http://vocab.getty.edu/aat/> .
-            FILTER(LANG(?transferOfCustodyTypeName) = "" || LANGMATCHES(LANG(?transferOfCustodyTypeName), "en")) # TBD: which languages to support?
+
+            # TBD: how to handle languages?
+            FILTER(LANG(?transferOfCustodyTypeName) = "" || LANGMATCHES(LANG(?transferOfCustodyTypeName), "en"))
           }
 
           ####################

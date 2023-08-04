@@ -183,8 +183,6 @@ export class HeritageObjectFetcher {
           }
         }
 
-        #BIND(IF(BOUND(?creatorTypeTemp) && ?creatorTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?creatorType)
-
         ####################
         # Digital objects (currently: images)
         ####################
@@ -214,8 +212,6 @@ export class HeritageObjectFetcher {
             (UNDEF UNDEF)
           }
         }
-
-        #BIND(IF(BOUND(?ownerTypeTemp) && ?ownerTypeTemp = foaf:Organization, cc:Organization, cc:Person) AS ?ownerType)
 
         ####################
         # Part of dataset
