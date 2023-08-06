@@ -33,6 +33,12 @@ export type Image = {
   contentUrl: string;
 };
 
+export type TimeSpan = {
+  id: string;
+  startDate?: Date; // TBD: change to string to allow for uncertain dates (e.g. EDTF)?
+  endDate?: Date; // TBD: change to string to allow for uncertain dates (e.g. EDTF)?
+};
+
 export type HeritageObject = {
   id: string;
   identifier?: string;
@@ -44,6 +50,7 @@ export type HeritageObject = {
   materials?: Term[];
   techniques?: Term[];
   creators?: Agent[];
+  dateCreated?: TimeSpan;
   images?: Image[];
   owner?: Agent;
   isPartOf: Dataset;

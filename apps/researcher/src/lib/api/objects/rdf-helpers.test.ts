@@ -1,8 +1,9 @@
 import {ontologyUrl} from '../definitions';
 import {
-  createThingsFromProperties,
   createAgentsFromProperties,
   createImagesFromProperties,
+  createThingsFromProperties,
+  createTimeSpansFromProperties,
   onlyOne,
 } from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
@@ -22,12 +23,14 @@ beforeAll(async () => {
   const triples = `
     @prefix cc: <${ontologyUrl}> .
     @prefix ex: <https://example.org/> .
+    @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
     ex:object1 a cc:Object ;
       cc:name "Name" ;
       cc:subject ex:subject1, ex:subject2 ;
       cc:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
-      cc:image ex:image1, ex:image2, ex:image3 .
+      cc:image ex:image1, ex:image2, ex:image3 ;
+      cc:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3 .
 
     ex:subject1 a cc:Term ;
       cc:name "Term 1" .
@@ -51,6 +54,18 @@ beforeAll(async () => {
       cc:contentUrl <https://example.org/image2.jpg> .
 
     ex:image3 a cc:Image .
+
+    ex:dateCreated1 a cc:TimeSpan ;
+      cc:startDate "1889"^^xsd:gYear ;
+      cc:endDate "1900"^^xsd:gYear .
+
+    # No end date
+    ex:dateCreated2 a cc:TimeSpan ;
+      cc:startDate "1889"^^xsd:gYear .
+
+    # No start date
+    ex:dateCreated3 a cc:TimeSpan ;
+      cc:endDate "1900"^^xsd:gYear .
   `;
 
   const stringStream = streamifyString(triples);
@@ -128,6 +143,36 @@ describe('createImagesFromProperties', () => {
         contentUrl: 'https://example.org/image2.jpg',
       },
       {id: 'https://example.org/image3', contentUrl: undefined},
+    ]);
+  });
+});
+
+describe('createTimeSpanFromProperties', () => {
+  it('returns undefined if properties do not exist', async () => {
+    const timeSpans = createTimeSpansFromProperties(resource, 'cc:unknown');
+
+    expect(timeSpans).toBeUndefined();
+  });
+
+  it('returns time spans if properties exist', async () => {
+    const timeSpans = createTimeSpansFromProperties(resource, 'cc:dateCreated');
+
+    expect(timeSpans).toStrictEqual([
+      {
+        id: 'https://example.org/dateCreated1',
+        startDate: new Date('1889-01-01'),
+        endDate: new Date('1900-01-01'),
+      },
+      {
+        id: 'https://example.org/dateCreated2',
+        startDate: new Date('1889-01-01'),
+        endDate: undefined,
+      },
+      {
+        id: 'https://example.org/dateCreated3',
+        startDate: undefined,
+        endDate: new Date('1900-01-01'),
+      },
     ]);
   });
 });
