@@ -1,9 +1,10 @@
 import {ontologyUrl, Dataset, HeritageObject, Term} from '../definitions';
 import {getPropertyValue, getPropertyValues} from '../rdf-helpers';
 import {
-  createThingsFromProperties,
   createAgentsFromProperties,
   createImagesFromProperties,
+  createTimeSpansFromProperties,
+  createThingsFromProperties,
   onlyOne,
 } from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
@@ -52,6 +53,7 @@ export class HeritageObjectFetcher {
           cc:material ?material ;
           cc:technique ?technique ;
           cc:creator ?creator ;
+          cc:dateCreated ?dateCreatedTimeSpan ;
           cc:image ?digitalObject ;
           cc:owner ?owner ;
           cc:isPartOf ?dataset .
@@ -70,6 +72,10 @@ export class HeritageObjectFetcher {
 
         ?creator a ?creatorType ;
           cc:name ?creatorName .
+
+  			?dateCreatedTimeSpan a cc:TimeSpan ;
+    			cc:startDate ?dateCreatedBegin ;
+        	cc:endDate ?dateCreatedEnd .
 
         ?digitalObject a cc:ImageObject ;
           cc:contentUrl ?contentUrl .
@@ -183,6 +189,22 @@ export class HeritageObjectFetcher {
         }
 
         ####################
+        # Date of creation
+        ####################
+
+        OPTIONAL {
+          ?object crm:P108i_was_produced_by/crm:P4_has_time-span ?dateCreatedTimeSpan .
+
+          OPTIONAL {
+            ?dateCreatedTimeSpan crm:P82a_begin_of_the_begin ?dateCreatedBegin
+          }
+
+          OPTIONAL {
+            ?dateCreatedTimeSpan crm:P82b_end_of_the_end ?dateCreatedEnd
+          }
+        }
+
+        ####################
         # Digital objects (currently: images)
         ####################
 
@@ -282,6 +304,10 @@ export class HeritageObjectFetcher {
       'cc:creator'
     );
 
+    const dateCreated = onlyOne(
+      createTimeSpansFromProperties(rawHeritageObject, 'cc:dateCreated')
+    );
+
     const images = createImagesFromProperties(rawHeritageObject, 'cc:image');
 
     const owner = onlyOne(
@@ -303,6 +329,7 @@ export class HeritageObjectFetcher {
       materials,
       techniques,
       creators,
+      dateCreated,
       images,
       owner,
       isPartOf: dataset!, // Ignore 'Thing | undefined' warning - it's always of type 'Thing'
