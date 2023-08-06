@@ -1,5 +1,6 @@
 import {ontologyUrl, Organization} from '../definitions';
-import {createAddressFromProperty} from './rdf-helpers';
+import {onlyOne} from '../rdf-helpers';
+import {createAddressesFromProperties} from './rdf-helpers';
 import {getPropertyValue} from '../rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
@@ -92,7 +93,9 @@ export class OrganizationFetcher {
 
     const name = getPropertyValue(rawOrganization, 'cc:name');
     const url = getPropertyValue(rawOrganization, 'cc:url');
-    const address = createAddressFromProperty(rawOrganization, 'cc:address');
+    const address = onlyOne(
+      createAddressesFromProperties(rawOrganization, 'cc:address')
+    );
 
     const organizationWithUndefinedValues: Organization = {
       type: 'Organization',

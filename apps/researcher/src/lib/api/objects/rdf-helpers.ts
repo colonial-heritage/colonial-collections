@@ -81,10 +81,3 @@ export function createImagesFromProperties(
 
   return images.length > 0 ? images : undefined;
 }
-
-export function onlyOne<T>(items: T[] | undefined) {
-  if (Array.isArray(items)) {
-    return items.shift(); // Undefined if array is empty
-  }
-  return undefined;
-}

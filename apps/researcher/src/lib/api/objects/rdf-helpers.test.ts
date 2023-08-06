@@ -131,23 +131,3 @@ describe('createImagesFromProperties', () => {
     ]);
   });
 });
-
-describe('onlyOne', () => {
-  it('returns undefined if input is not an array', async () => {
-    const item = onlyOne(undefined);
-
-    expect(item).toBeUndefined();
-  });
-
-  it('returns undefined if input array is empty', async () => {
-    const item = onlyOne([]);
-
-    expect(item).toBeUndefined();
-  });
-
-  it('returns the first item from the input array', async () => {
-    const item = onlyOne([1, 2]);
-
-    expect(item).toStrictEqual(1);
-  });
-});

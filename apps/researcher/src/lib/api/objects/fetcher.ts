@@ -1,10 +1,9 @@
 import {ontologyUrl, Dataset, HeritageObject, Term} from '../definitions';
-import {getPropertyValue, getPropertyValues} from '../rdf-helpers';
+import {getPropertyValue, getPropertyValues, onlyOne} from '../rdf-helpers';
 import {
   createThingsFromProperties,
   createAgentsFromProperties,
   createImagesFromProperties,
-  onlyOne,
 } from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
