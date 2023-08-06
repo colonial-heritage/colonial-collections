@@ -15,3 +15,10 @@ export function getPropertyValues(resource: Resource, propertyName: string) {
 
   return values.length > 0 ? values : undefined;
 }
+
+export function onlyOne<T>(items: T[] | undefined) {
+  if (Array.isArray(items)) {
+    return items.shift(); // Undefined if array is empty
+  }
+  return undefined;
+}

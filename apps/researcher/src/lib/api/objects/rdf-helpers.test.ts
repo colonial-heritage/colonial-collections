@@ -4,7 +4,6 @@ import {
   createImagesFromProperties,
   createThingsFromProperties,
   createTimeSpansFromProperties,
-  onlyOne,
 } from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
@@ -174,25 +173,5 @@ describe('createTimeSpanFromProperties', () => {
         endDate: new Date('1900-01-01'),
       },
     ]);
-  });
-});
-
-describe('onlyOne', () => {
-  it('returns undefined if input is not an array', async () => {
-    const item = onlyOne(undefined);
-
-    expect(item).toBeUndefined();
-  });
-
-  it('returns undefined if input array is empty', async () => {
-    const item = onlyOne([]);
-
-    expect(item).toBeUndefined();
-  });
-
-  it('returns the first item from the input array', async () => {
-    const item = onlyOne([1, 2]);
-
-    expect(item).toStrictEqual(1);
   });
 });

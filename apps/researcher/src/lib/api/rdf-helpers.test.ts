@@ -1,5 +1,5 @@
 import {ontologyUrl} from './definitions';
-import {getPropertyValue, getPropertyValues} from './rdf-helpers';
+import {getPropertyValue, getPropertyValues, onlyOne} from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
 import streamifyString from 'streamify-string';
@@ -55,5 +55,25 @@ describe('getPropertyValues', () => {
     const values = getPropertyValues(resource, 'cc:description');
 
     expect(values).toStrictEqual(['Description 1', 'Description 2']);
+  });
+});
+
+describe('onlyOne', () => {
+  it('returns undefined if input is not an array', async () => {
+    const item = onlyOne(undefined);
+
+    expect(item).toBeUndefined();
+  });
+
+  it('returns undefined if input array is empty', async () => {
+    const item = onlyOne([]);
+
+    expect(item).toBeUndefined();
+  });
+
+  it('returns the first item from the input array', async () => {
+    const item = onlyOne([1, 2]);
+
+    expect(item).toStrictEqual(1);
   });
 });

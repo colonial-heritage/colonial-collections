@@ -1,5 +1,5 @@
 import {ontologyUrl} from '../definitions';
-import {createAddressFromProperty} from './rdf-helpers';
+import {createAddressesFromProperties} from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
 import streamifyString from 'streamify-string';
@@ -23,10 +23,16 @@ beforeAll(async () => {
       cc:url <https://example.org/> ;
       cc:address [
         a cc:PostalAddress ;
-        cc:streetAddress "Street" ;
-        cc:postalCode "Postal code" ;
-        cc:addressLocality "Locality" ;
-        cc:addressCountry "Country"
+        cc:streetAddress "Street 1" ;
+        cc:postalCode "Postal code 1" ;
+        cc:addressLocality "Locality 1" ;
+        cc:addressCountry "Country 1"
+      ], [
+        a cc:PostalAddress ;
+        cc:streetAddress "Street 2" ;
+        cc:postalCode "Postal code 2" ;
+        cc:addressLocality "Locality 2" ;
+        cc:addressCountry "Country 2"
       ] .
   `;
 
@@ -37,22 +43,31 @@ beforeAll(async () => {
   resource = loader.resources['https://example.org/organization1'];
 });
 
-describe('createAddressFromProperty', () => {
+describe('createAddressesFromProperties', () => {
   it('returns undefined if property does not exist', async () => {
-    const address = createAddressFromProperty(resource, 'cc:unknown');
+    const addresses = createAddressesFromProperties(resource, 'cc:unknown');
 
-    expect(address).toBeUndefined();
+    expect(addresses).toBeUndefined();
   });
 
-  it('returns address if property exists', async () => {
-    const address = createAddressFromProperty(resource, 'cc:address');
+  it('returns addresses if property exists', async () => {
+    const addresses = createAddressesFromProperties(resource, 'cc:address');
 
-    expect(address).toStrictEqual({
-      id: expect.stringContaining('n3-'),
-      streetAddress: 'Street',
-      postalCode: 'Postal code',
-      addressLocality: 'Locality',
-      addressCountry: 'Country',
-    });
+    expect(addresses).toStrictEqual([
+      {
+        id: expect.stringContaining('n3-'),
+        streetAddress: 'Street 1',
+        postalCode: 'Postal code 1',
+        addressLocality: 'Locality 1',
+        addressCountry: 'Country 1',
+      },
+      {
+        id: expect.stringContaining('n3-'),
+        streetAddress: 'Street 2',
+        postalCode: 'Postal code 2',
+        addressLocality: 'Locality 2',
+        addressCountry: 'Country 2',
+      },
+    ]);
   });
 });

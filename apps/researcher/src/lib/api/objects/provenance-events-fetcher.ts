@@ -1,9 +1,8 @@
 import {ontologyUrl, Place, ProvenanceEvent, Term} from '../definitions';
-import {getPropertyValue} from '../rdf-helpers';
+import {getPropertyValue, onlyOne} from '../rdf-helpers';
 import {
   createThingsFromProperties,
   createAgentsFromProperties,
-  onlyOne,
 } from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
