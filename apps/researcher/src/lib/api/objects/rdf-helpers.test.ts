@@ -3,7 +3,6 @@ import {
   createThingsFromProperties,
   createAgentsFromProperties,
   createImagesFromProperties,
-  onlyOne,
 } from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
