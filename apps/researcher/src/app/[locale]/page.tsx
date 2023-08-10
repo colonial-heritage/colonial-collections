@@ -14,7 +14,7 @@ import {
   SortByEnum,
   SortOrder,
   SortOrderEnum,
-} from '@/lib/objects';
+} from '@/lib/api/objects';
 import {
   FilterSet,
   Paginator,

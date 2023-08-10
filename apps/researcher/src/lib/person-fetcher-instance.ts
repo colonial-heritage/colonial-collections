@@ -1,5 +1,5 @@
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
-import {PersonFetcher} from '@/lib/persons';
+import {PersonFetcher} from '@/lib/api/persons';
 import {env} from 'node:process';
 
 const labelFetcher = new LabelFetcher({

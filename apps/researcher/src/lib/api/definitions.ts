@@ -1,14 +1,19 @@
 import {z} from 'zod';
 
+export const ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
+
 export type Thing = {
   id: string;
   name?: string; // Name may not exist (e.g. in a specific locale)
 };
 
-export type Organization = Thing;
 export type Term = Thing;
-export type Person = Thing;
+export type Place = Thing;
 export type Dataset = Thing;
+export type Person = Thing & {type: 'Person'};
+export type Organization = Thing & {type: 'Organization'};
+export type Unknown = Thing & {type: 'Unknown'};
+export type Agent = Person | Organization | Unknown;
 
 export type Image = {
   id: string;
@@ -25,9 +30,9 @@ export type HeritageObject = {
   subjects?: Term[];
   materials?: Term[];
   techniques?: Term[];
-  creators?: Person[];
+  creators?: Agent[];
   images?: Image[];
-  owner?: Organization;
+  owner?: Agent;
   isPartOf: Dataset;
 };
 
@@ -47,16 +52,15 @@ export const SortOrderEnum = z.nativeEnum(SortOrder);
 
 export type SearchResultFilter = Thing & {totalCount: number};
 
-export type SearchResult = {
-  totalCount: number;
-  offset: number;
-  limit: number;
-  sortBy: SortBy;
-  sortOrder: SortOrder;
-  heritageObjects: HeritageObject[];
-  filters: {
-    owners: SearchResultFilter[];
-    types: SearchResultFilter[];
-    subjects: SearchResultFilter[];
-  };
+export type ProvenanceEvent = {
+  id: string;
+  types?: Term[];
+  startDate?: Date;
+  endDate?: Date;
+  transferredFrom?: Agent;
+  transferredTo?: Agent;
+  description?: string;
+  location?: Place;
+  startsAfter?: string; // ID of another provenance event
+  endsBefore?: string; // ID of another provenance event
 };

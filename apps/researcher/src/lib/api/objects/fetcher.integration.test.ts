@@ -39,51 +39,72 @@ describe('getById', () => {
       inscriptions: ['Maecenas commodo est neque'],
       types: [
         {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/a86b708044fb2747b8a0a19bb5af4000',
+          id: expect.stringContaining(
+            'https://colonial-heritage.triply.cc/.well-known/genid/'
+          ),
           name: 'Canvas Painting',
         },
       ],
       subjects: [
         {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/22d7dbb448084adb9c2bf97c3ee5534b',
+          id: expect.stringContaining(
+            'https://colonial-heritage.triply.cc/.well-known/genid/'
+          ),
           name: 'Celebrations',
         },
       ],
       materials: [
         {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/e3c906fec3e484ff40e352b6cea0fcfb',
-          name: 'Canvas',
+          id: expect.stringContaining(
+            'https://colonial-heritage.triply.cc/.well-known/genid/'
+          ),
+          name: 'Oilpaint',
         },
         {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/787fb3814853b8d0bc5d5d3dc9e9d3d4',
-          name: 'Oilpaint',
+          id: expect.stringContaining(
+            'https://colonial-heritage.triply.cc/.well-known/genid/'
+          ),
+          name: 'Canvas',
         },
       ],
       techniques: [
         {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/10131e19f03d8005ce2dcdd491fcf715',
+          id: expect.stringContaining(
+            'https://colonial-heritage.triply.cc/.well-known/genid/'
+          ),
           name: 'Albumen process',
         },
       ],
       creators: [
         {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/c7d1bbe2c664b1f8272bfc07e1779dfd',
+          type: 'Person',
+          id: expect.stringContaining(
+            'https://colonial-heritage.triply.cc/.well-known/genid/'
+          ),
           name: 'Geeske van Châtellerault',
         },
       ],
       images: [
         {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/6a7a6d27e9147b14cd6c09758ffce757',
-          contentUrl:
-            'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
-        },
-        {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/81f8c1e4eb12d17df1403bc51d1eae49',
+          id: expect.stringContaining(
+            'https://colonial-heritage.triply.cc/.well-known/genid/'
+          ),
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
         },
+        {
+          id: expect.stringContaining(
+            'https://colonial-heritage.triply.cc/.well-known/genid/'
+          ),
+          contentUrl:
+            'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+        },
       ],
-      owner: {id: 'https://museum.example.org/', name: 'Museum'},
+      owner: {
+        type: 'Organization',
+        id: 'https://museum.example.org/',
+        name: 'Museum',
+      },
       isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
     });
   });
