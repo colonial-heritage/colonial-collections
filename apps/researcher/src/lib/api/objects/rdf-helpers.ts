@@ -119,10 +119,3 @@ export function createTimeSpansFromProperties(
 
   return timeSpans.length > 0 ? timeSpans : undefined;
 }
-
-export function onlyOne<T>(items: T[] | undefined) {
-  if (Array.isArray(items)) {
-    return items.shift(); // Undefined if array is empty
-  }
-  return undefined;
-}
