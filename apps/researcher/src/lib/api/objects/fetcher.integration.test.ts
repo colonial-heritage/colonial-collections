@@ -84,6 +84,13 @@ describe('getById', () => {
           name: 'Geeske van Châtellerault',
         },
       ],
+      dateCreated: {
+        id: expect.stringContaining(
+          'https://colonial-heritage.triply.cc/.well-known/genid/'
+        ),
+        startDate: new Date('1889-01-01'),
+        endDate: new Date('1890-01-01'),
+      },
       images: [
         {
           id: expect.stringContaining(

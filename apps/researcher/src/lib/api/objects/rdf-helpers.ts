@@ -1,4 +1,4 @@
-import {ontologyUrl, Agent, Image} from '../definitions';
+import {ontologyUrl, Agent, Image, TimeSpan} from '../definitions';
 import {getPropertyValue} from '../rdf-helpers';
 import type {Resource} from 'rdf-object';
 
@@ -80,4 +80,42 @@ export function createImagesFromProperties(
   );
 
   return images.length > 0 ? images : undefined;
+}
+
+function fromStringToDate(dateValue: string | undefined) {
+  // TBD: change 'Date' to string to allow for uncertain dates (e.g. EDTF)?
+  let date: Date | undefined;
+  if (dateValue !== undefined) {
+    date = new Date(dateValue);
+  }
+
+  return date;
+}
+
+export function createTimeSpanFromProperties(resource: Resource) {
+  const rawStartDate = getPropertyValue(resource, 'cc:startDate');
+  const startDate = fromStringToDate(rawStartDate);
+
+  const rawEndDate = getPropertyValue(resource, 'cc:endDate');
+  const endDate = fromStringToDate(rawEndDate);
+
+  const timeSpan: TimeSpan = {
+    id: resource.value,
+    startDate,
+    endDate,
+  };
+
+  return timeSpan;
+}
+
+export function createTimeSpansFromProperties(
+  resource: Resource,
+  propertyName: string
+) {
+  const properties = resource.properties[propertyName];
+  const timeSpans = properties.map(property =>
+    createTimeSpanFromProperties(property)
+  );
+
+  return timeSpans.length > 0 ? timeSpans : undefined;
 }
