@@ -51,7 +51,11 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ],
-          owner: {id: 'Museum', name: 'Museum'},
+          owner: {
+            type: 'Organization',
+            id: 'Museum',
+            name: 'Museum',
+          },
           isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
         {
@@ -72,7 +76,11 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg',
             },
           ],
-          owner: {id: 'Research Organisation', name: 'Research Organisation'},
+          owner: {
+            type: 'Organization',
+            id: 'Research Organisation',
+            name: 'Research Organisation',
+          },
           isPartOf: {id: 'https://example.org/datasets/13', name: 'Dataset 13'},
         },
         {
@@ -91,7 +99,11 @@ describe('search', () => {
             {id: 'Ink', name: 'Ink'},
             {id: 'Paper', name: 'Paper'},
           ],
-          owner: {id: 'Library', name: 'Library'},
+          owner: {
+            type: 'Organization',
+            id: 'Library',
+            name: 'Library',
+          },
           isPartOf: {id: 'https://example.org/datasets/10', name: '(No name)'},
         },
         {
@@ -128,7 +140,11 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ],
-          owner: {id: 'Museum', name: 'Museum'},
+          owner: {
+            type: 'Organization',
+            id: 'Museum',
+            name: 'Museum',
+          },
           isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
       ],

@@ -1,6 +1,6 @@
 import PersonCard from './person-card';
 import {useTranslations} from 'next-intl';
-import {SearchResult} from '@/lib/persons';
+import {SearchResult} from '@/lib/api/persons';
 
 interface Props {
   persons: SearchResult['persons'];
