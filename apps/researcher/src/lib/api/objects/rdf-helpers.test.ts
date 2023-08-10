@@ -1,11 +1,8 @@
 import {ontologyUrl} from '../definitions';
 import {
-  getPropertyValue,
-  getPropertyValues,
   createThingsFromProperties,
   createAgentsFromProperties,
   createImagesFromProperties,
-  onlyOne,
 } from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
@@ -27,7 +24,6 @@ beforeAll(async () => {
 
     ex:object1 a cc:Object ;
       cc:name "Name" ;
-      cc:description "Description 1", "Description 2" ;
       cc:subject ex:subject1, ex:subject2 ;
       cc:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
       cc:image ex:image1, ex:image2, ex:image3 .
@@ -48,10 +44,10 @@ beforeAll(async () => {
     ex:creator4 cc:name "Organization 4" .
 
     ex:image1 a cc:Image ;
-      cc:contentUrl "https://example.org/image1.jpg" .
+      cc:contentUrl <https://example.org/image1.jpg> .
 
     ex:image2 a cc:Image ;
-      cc:contentUrl "https://example.org/image2.jpg" .
+      cc:contentUrl <https://example.org/image2.jpg> .
 
     ex:image3 a cc:Image .
   `;
@@ -61,34 +57,6 @@ beforeAll(async () => {
   stringStream.pipe(streamParser);
   await loader.import(streamParser);
   resource = loader.resources['https://example.org/object1'];
-});
-
-describe('getPropertyValue', () => {
-  it('returns undefined if property does not exist', async () => {
-    const value = getPropertyValue(resource, 'cc:unknown');
-
-    expect(value).toBeUndefined();
-  });
-
-  it('returns value if property exists', async () => {
-    const value = getPropertyValue(resource, 'cc:name');
-
-    expect(value).toStrictEqual('Name');
-  });
-});
-
-describe('getPropertyValues', () => {
-  it('returns undefined if properties do not exist', async () => {
-    const values = getPropertyValues(resource, 'cc:unknown');
-
-    expect(values).toBeUndefined();
-  });
-
-  it('returns values if properties exist', async () => {
-    const values = getPropertyValues(resource, 'cc:description');
-
-    expect(values).toStrictEqual(['Description 1', 'Description 2']);
-  });
 });
 
 describe('createThingsFromProperties', () => {
@@ -160,25 +128,5 @@ describe('createImagesFromProperties', () => {
       },
       {id: 'https://example.org/image3', contentUrl: undefined},
     ]);
-  });
-});
-
-describe('onlyOne', () => {
-  it('returns undefined if input is not an array', async () => {
-    const item = onlyOne(undefined);
-
-    expect(item).toBeUndefined();
-  });
-
-  it('returns undefined if input array is empty', async () => {
-    const item = onlyOne([]);
-
-    expect(item).toBeUndefined();
-  });
-
-  it('returns the first item from the input array', async () => {
-    const item = onlyOne([1, 2]);
-
-    expect(item).toStrictEqual(1);
   });
 });

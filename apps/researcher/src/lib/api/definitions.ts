@@ -11,9 +11,22 @@ export type Term = Thing;
 export type Place = Thing;
 export type Dataset = Thing;
 export type Person = Thing & {type: 'Person'};
-export type Organization = Thing & {type: 'Organization'};
 export type Unknown = Thing & {type: 'Unknown'};
 export type Agent = Person | Organization | Unknown;
+
+export type PostalAddress = {
+  id: string;
+  streetAddress: string;
+  postalCode: string;
+  addressLocality: string;
+  addressCountry: string;
+};
+
+export type Organization = Thing & {
+  type: 'Organization';
+  url?: string;
+  address?: PostalAddress;
+};
 
 export type Image = {
   id: string;

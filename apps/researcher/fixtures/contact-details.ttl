@@ -1,0 +1,40 @@
+###############################
+# Contact details of organizations, for testing
+###############################
+
+@prefix schema: <https://schema.org/> .
+
+<https://museum.example.org/>
+  a schema:Organization ;
+  schema:url <http://www.example.org> ;
+  schema:address [
+    a schema:PostalAddress ;
+    schema:streetAddress "Museum Street 1" ;
+    schema:postalCode "1234 AB" ;
+    schema:addressLocality "Museum Place" ;
+    schema:addressCountry "Nederland"@nl, "Netherlands"@en
+  ] .
+
+<https://archive.example.org/>
+  a schema:Organization ;
+  schema:url <http://www.example.org> ;
+  schema:address [
+    a schema:PostalAddress ;
+    schema:streetAddress "Archive Street 1" ;
+    schema:postalCode "5678 CD" ;
+    schema:addressLocality "Archive Place" ;
+    schema:addressCountry "Nederland"@nl, "Netherlands"@en
+  ] .
+
+<https://library.example.org/>
+  a schema:Organization ;
+  schema:url <http://www.example.org> ;
+  schema:address [
+    a schema:PostalAddress ;
+    schema:streetAddress "Library Street 1" ;
+    schema:postalCode "9012 EF" ;
+    schema:addressLocality "Library Place" ;
+    schema:addressCountry "Nederland"@nl, "Netherlands"@en
+  ] .
+
+# No data for <https://research.example.org/> - intentionally missing for testing
