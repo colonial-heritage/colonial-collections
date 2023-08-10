@@ -72,9 +72,9 @@ export class HeritageObjectFetcher {
         ?creator a ?creatorType ;
           cc:name ?creatorName .
 
-  			?dateCreatedTimeSpan a cc:TimeSpan ;
-    			cc:startDate ?dateCreatedBegin ;
-        	cc:endDate ?dateCreatedEnd .
+        ?dateCreatedTimeSpan a cc:TimeSpan ;
+          cc:startDate ?dateCreatedBegin ;
+          cc:endDate ?dateCreatedEnd .
 
         ?digitalObject a cc:ImageObject ;
           cc:contentUrl ?contentUrl .
