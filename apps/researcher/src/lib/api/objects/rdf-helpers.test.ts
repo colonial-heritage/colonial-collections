@@ -34,19 +34,19 @@ beforeAll(async () => {
       cc:isPartOf ex:dataset1, ex:dataset2 .
 
     ex:subject1 a cc:Term ;
-      cc:name "Term 1" .
+      cc:name "Term" .
 
     ex:subject2 a cc:Term .
 
     ex:creator1 a cc:Person ;
-      cc:name "Person 1" .
+      cc:name "Person" .
 
     ex:creator2 a cc:Organization ;
-      cc:name "Organization 2" .
+      cc:name "Organization" .
 
     ex:creator3 a cc:Organization .
 
-    ex:creator4 cc:name "Organization 4" .
+    ex:creator4 cc:name "Organization" .
 
     ex:image1 a cc:Image ;
       cc:contentUrl <https://example.org/image1.jpg> .
@@ -73,14 +73,14 @@ beforeAll(async () => {
       cc:publisher ex:publisher1 .
 
     ex:publisher1 a cc:Organization ;
-      cc:name "Organization 1" .
+      cc:name "Publishing organization" .
 
     ex:dataset2 a cc:Dataset ;
       cc:name "Dataset 2" ;
       cc:publisher ex:publisher2 .
 
-    ex:publisher2 a cc:Organization ;
-      cc:name "Organization 2" .
+    ex:publisher2 a cc:Person ;
+      cc:name "Publishing person" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -101,7 +101,7 @@ describe('createThings', () => {
     const things = createThings(resource, 'cc:subject');
 
     expect(things).toStrictEqual([
-      {id: 'https://example.org/subject1', name: 'Term 1'},
+      {id: 'https://example.org/subject1', name: 'Term'},
       {id: 'https://example.org/subject2', name: undefined},
     ]);
   });
@@ -118,11 +118,11 @@ describe('createAgents', () => {
     const agents = createAgents(resource, 'cc:creator');
 
     expect(agents).toStrictEqual([
-      {type: 'Person', id: 'https://example.org/creator1', name: 'Person 1'},
+      {type: 'Person', id: 'https://example.org/creator1', name: 'Person'},
       {
         type: 'Organization',
         id: 'https://example.org/creator2',
-        name: 'Organization 2',
+        name: 'Organization',
       },
       {
         type: 'Organization',
@@ -132,7 +132,7 @@ describe('createAgents', () => {
       {
         type: 'Unknown',
         id: 'https://example.org/creator4',
-        name: 'Organization 4',
+        name: 'Organization',
       },
     ]);
   });
@@ -209,16 +209,16 @@ describe('createDataset', () => {
         publisher: {
           type: 'Organization',
           id: 'https://example.org/publisher1',
-          name: 'Organization 1',
+          name: 'Publishing organization',
         },
       },
       {
         id: 'https://example.org/dataset2',
         name: 'Dataset 2',
         publisher: {
-          type: 'Organization',
+          type: 'Person',
           id: 'https://example.org/publisher2',
-          name: 'Organization 2',
+          name: 'Publishing person',
         },
       },
     ]);
