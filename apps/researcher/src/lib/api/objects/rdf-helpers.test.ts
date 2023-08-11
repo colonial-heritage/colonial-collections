@@ -31,7 +31,7 @@ beforeAll(async () => {
       cc:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
       cc:image ex:image1, ex:image2, ex:image3 ;
       cc:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3 ;
-      cc:isPartOf ex:dataset1, ex:dataset2 .
+      cc:isPartOf ex:dataset1, ex:dataset2, ex:dataset3 .
 
     ex:subject1 a cc:Term ;
       cc:name "Term" .
@@ -81,6 +81,10 @@ beforeAll(async () => {
 
     ex:publisher2 a cc:Person ;
       cc:name "Publishing person" .
+
+    # No publisher
+    ex:dataset3 a cc:Dataset ;
+      cc:name "Dataset 3" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -220,6 +224,11 @@ describe('createDataset', () => {
           id: 'https://example.org/publisher2',
           name: 'Publishing person',
         },
+      },
+      {
+        id: 'https://example.org/dataset3',
+        name: 'Dataset 3',
+        publisher: undefined,
       },
     ]);
   });
