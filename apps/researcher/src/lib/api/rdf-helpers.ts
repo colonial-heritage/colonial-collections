@@ -1,7 +1,17 @@
+import {applyToDefaults} from '@hapi/hoek';
 import type {Resource} from 'rdf-object';
 
-export function getPropertyValue(resource: Resource, propertyName: string) {
+export function getProperty(resource: Resource, propertyName: string) {
   const property = resource.property[propertyName];
+  if (property === undefined) {
+    return undefined;
+  }
+
+  return property;
+}
+
+export function getPropertyValue(resource: Resource, propertyName: string) {
+  const property = getProperty(resource, propertyName);
   if (property === undefined) {
     return undefined;
   }
@@ -21,4 +31,12 @@ export function onlyOne<T>(items: T[] | undefined) {
     return items.shift(); // Undefined if array is empty
   }
   return undefined;
+}
+
+export function removeUndefinedValues<T>(objectWithUndefinedValues: object) {
+  const object = applyToDefaults({}, objectWithUndefinedValues, {
+    nullOverride: false, // Ignore null values
+  });
+
+  return object as T;
 }
