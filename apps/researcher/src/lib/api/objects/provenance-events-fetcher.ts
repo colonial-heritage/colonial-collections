@@ -1,12 +1,8 @@
 import {ontologyUrl, Place, ProvenanceEvent, Term} from '../definitions';
-import {getPropertyValue, onlyOne} from '../rdf-helpers';
-import {
-  createThingsFromProperties,
-  createAgentsFromProperties,
-} from './rdf-helpers';
+import {getPropertyValue, onlyOne, removeUndefinedValues} from '../rdf-helpers';
+import {createThings, createAgents} from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
-import {merge} from '@hapi/hoek';
 import type {Readable} from 'node:stream';
 import {Resource, RdfObjectLoader} from 'rdf-object';
 import type {Stream} from '@rdfjs/types';
@@ -320,22 +316,15 @@ export class ProvenanceEventsFetcher {
     const description = getPropertyValue(rawProvenanceEvent, 'cc:description');
     const startsAfter = getPropertyValue(rawProvenanceEvent, 'cc:startsAfter');
     const endsBefore = getPropertyValue(rawProvenanceEvent, 'cc:endsBefore');
-
-    const types = createThingsFromProperties<Term>(
-      rawProvenanceEvent,
-      'cc:additionalType'
-    );
-
+    const types = createThings<Term>(rawProvenanceEvent, 'cc:additionalType');
     const location = onlyOne(
-      createThingsFromProperties<Place>(rawProvenanceEvent, 'cc:location')
+      createThings<Place>(rawProvenanceEvent, 'cc:location')
     );
-
     const transferredFromAgent = onlyOne(
-      createAgentsFromProperties(rawProvenanceEvent, 'cc:transferredFrom')
+      createAgents(rawProvenanceEvent, 'cc:transferredFrom')
     );
-
     const transferredToAgent = onlyOne(
-      createAgentsFromProperties(rawProvenanceEvent, 'cc:transferredTo')
+      createAgents(rawProvenanceEvent, 'cc:transferredTo')
     );
 
     const provenanceEventWithUndefinedValues: ProvenanceEvent = {
@@ -351,9 +340,9 @@ export class ProvenanceEventsFetcher {
       transferredTo: transferredToAgent,
     };
 
-    const provenanceEvent = merge({}, provenanceEventWithUndefinedValues, {
-      nullOverride: false,
-    });
+    const provenanceEvent = removeUndefinedValues<ProvenanceEvent>(
+      provenanceEventWithUndefinedValues
+    );
 
     return provenanceEvent;
   }

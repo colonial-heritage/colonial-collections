@@ -51,12 +51,12 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ],
-          owner: {
-            type: 'Organization',
-            id: 'Museum',
-            name: 'Museum',
+          owner: {type: 'Organization', id: 'Museum', name: 'Museum'},
+          isPartOf: {
+            id: 'https://example.org/datasets/1',
+            name: 'Dataset 1',
+            publisher: {type: 'Organization', id: 'Museum', name: 'Museum'},
           },
-          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
         {
           id: 'https://example.org/objects/2',
@@ -81,7 +81,15 @@ describe('search', () => {
             id: 'Research Organisation',
             name: 'Research Organisation',
           },
-          isPartOf: {id: 'https://example.org/datasets/13', name: 'Dataset 13'},
+          isPartOf: {
+            id: 'https://example.org/datasets/13',
+            name: 'Dataset 13',
+            publisher: {
+              type: 'Organization',
+              id: 'Research Organisation',
+              name: 'Research Organisation',
+            },
+          },
         },
         {
           id: 'https://example.org/objects/3',
@@ -99,17 +107,21 @@ describe('search', () => {
             {id: 'Ink', name: 'Ink'},
             {id: 'Paper', name: 'Paper'},
           ],
-          owner: {
-            type: 'Organization',
-            id: 'Library',
-            name: 'Library',
+          owner: {type: 'Organization', id: 'Library', name: 'Library'},
+          isPartOf: {
+            id: 'https://example.org/datasets/10',
+            name: '(No name)',
+            publisher: {type: 'Organization', id: 'Library', name: 'Library'},
           },
-          isPartOf: {id: 'https://example.org/datasets/10', name: '(No name)'},
         },
         {
           id: 'https://example.org/objects/4',
           identifier: '3456',
-          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+          isPartOf: {
+            id: 'https://example.org/datasets/1',
+            name: 'Dataset 1',
+            publisher: undefined,
+          },
         },
         {
           id: 'https://example.org/objects/5',
@@ -140,12 +152,12 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ],
-          owner: {
-            type: 'Organization',
-            id: 'Museum',
-            name: 'Museum',
+          owner: {type: 'Organization', id: 'Museum', name: 'Museum'},
+          isPartOf: {
+            id: 'https://example.org/datasets/1',
+            name: 'Dataset 1',
+            publisher: {type: 'Organization', id: 'Museum', name: 'Museum'},
           },
-          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
         },
       ],
       filters: {

@@ -1,9 +1,10 @@
 import {ontologyUrl} from '../definitions';
 import {
-  createAgentsFromProperties,
-  createImagesFromProperties,
-  createThingsFromProperties,
-  createTimeSpansFromProperties,
+  createAgents,
+  createDatasets,
+  createImages,
+  createThings,
+  createTimeSpans,
 } from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
@@ -29,22 +30,23 @@ beforeAll(async () => {
       cc:subject ex:subject1, ex:subject2 ;
       cc:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
       cc:image ex:image1, ex:image2, ex:image3 ;
-      cc:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3 .
+      cc:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3 ;
+      cc:isPartOf ex:dataset1, ex:dataset2, ex:dataset3 .
 
     ex:subject1 a cc:Term ;
-      cc:name "Term 1" .
+      cc:name "Term" .
 
     ex:subject2 a cc:Term .
 
     ex:creator1 a cc:Person ;
-      cc:name "Person 1" .
+      cc:name "Person" .
 
     ex:creator2 a cc:Organization ;
-      cc:name "Organization 2" .
+      cc:name "Organization" .
 
     ex:creator3 a cc:Organization .
 
-    ex:creator4 cc:name "Organization 4" .
+    ex:creator4 cc:name "Organization" .
 
     ex:image1 a cc:Image ;
       cc:contentUrl <https://example.org/image1.jpg> .
@@ -65,6 +67,24 @@ beforeAll(async () => {
     # No start date
     ex:dateCreated3 a cc:TimeSpan ;
       cc:endDate "1900"^^xsd:gYear .
+
+    ex:dataset1 a cc:Dataset ;
+      cc:name "Dataset 1" ;
+      cc:publisher ex:publisher1 .
+
+    ex:publisher1 a cc:Organization ;
+      cc:name "Publishing organization" .
+
+    ex:dataset2 a cc:Dataset ;
+      cc:name "Dataset 2" ;
+      cc:publisher ex:publisher2 .
+
+    ex:publisher2 a cc:Person ;
+      cc:name "Publishing person" .
+
+    # No publisher
+    ex:dataset3 a cc:Dataset ;
+      cc:name "Dataset 3" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -74,39 +94,39 @@ beforeAll(async () => {
   resource = loader.resources['https://example.org/object1'];
 });
 
-describe('createThingsFromProperties', () => {
-  it('returns undefined if properties do not exist', async () => {
-    const things = createThingsFromProperties(resource, 'cc:unknown');
+describe('createThings', () => {
+  it('returns undefined if properties do not exist', () => {
+    const things = createThings(resource, 'cc:unknown');
 
     expect(things).toBeUndefined();
   });
 
-  it('returns things if properties exist', async () => {
-    const things = createThingsFromProperties(resource, 'cc:subject');
+  it('returns things if properties exist', () => {
+    const things = createThings(resource, 'cc:subject');
 
     expect(things).toStrictEqual([
-      {id: 'https://example.org/subject1', name: 'Term 1'},
+      {id: 'https://example.org/subject1', name: 'Term'},
       {id: 'https://example.org/subject2', name: undefined},
     ]);
   });
 });
 
-describe('createAgentsFromProperties', () => {
-  it('returns undefined if properties do not exist', async () => {
-    const agents = createAgentsFromProperties(resource, 'cc:unknown');
+describe('createAgents', () => {
+  it('returns undefined if properties do not exist', () => {
+    const agents = createAgents(resource, 'cc:unknown');
 
     expect(agents).toBeUndefined();
   });
 
-  it('returns agents if properties exist', async () => {
-    const agents = createAgentsFromProperties(resource, 'cc:creator');
+  it('returns agents if properties exist', () => {
+    const agents = createAgents(resource, 'cc:creator');
 
     expect(agents).toStrictEqual([
-      {type: 'Person', id: 'https://example.org/creator1', name: 'Person 1'},
+      {type: 'Person', id: 'https://example.org/creator1', name: 'Person'},
       {
         type: 'Organization',
         id: 'https://example.org/creator2',
-        name: 'Organization 2',
+        name: 'Organization',
       },
       {
         type: 'Organization',
@@ -116,21 +136,21 @@ describe('createAgentsFromProperties', () => {
       {
         type: 'Unknown',
         id: 'https://example.org/creator4',
-        name: 'Organization 4',
+        name: 'Organization',
       },
     ]);
   });
 });
 
-describe('createImagesFromProperties', () => {
-  it('returns undefined if properties do not exist', async () => {
-    const images = createImagesFromProperties(resource, 'cc:unknown');
+describe('createImages', () => {
+  it('returns undefined if properties do not exist', () => {
+    const images = createImages(resource, 'cc:unknown');
 
     expect(images).toBeUndefined();
   });
 
-  it('returns images if properties exist', async () => {
-    const images = createImagesFromProperties(resource, 'cc:image');
+  it('returns images if properties exist', () => {
+    const images = createImages(resource, 'cc:image');
 
     expect(images).toStrictEqual([
       {
@@ -146,15 +166,15 @@ describe('createImagesFromProperties', () => {
   });
 });
 
-describe('createTimeSpanFromProperties', () => {
-  it('returns undefined if properties do not exist', async () => {
-    const timeSpans = createTimeSpansFromProperties(resource, 'cc:unknown');
+describe('createTimeSpan', () => {
+  it('returns undefined if properties do not exist', () => {
+    const timeSpans = createTimeSpans(resource, 'cc:unknown');
 
     expect(timeSpans).toBeUndefined();
   });
 
-  it('returns time spans if properties exist', async () => {
-    const timeSpans = createTimeSpansFromProperties(resource, 'cc:dateCreated');
+  it('returns time spans if properties exist', () => {
+    const timeSpans = createTimeSpans(resource, 'cc:dateCreated');
 
     expect(timeSpans).toStrictEqual([
       {
@@ -171,6 +191,44 @@ describe('createTimeSpanFromProperties', () => {
         id: 'https://example.org/dateCreated3',
         startDate: undefined,
         endDate: new Date('1900-01-01'),
+      },
+    ]);
+  });
+});
+
+describe('createDataset', () => {
+  it('returns undefined if properties do not exist', () => {
+    const datasets = createDatasets(resource, 'cc:unknown');
+
+    expect(datasets).toBeUndefined();
+  });
+
+  it('returns datasets if properties exist', () => {
+    const datasets = createDatasets(resource, 'cc:isPartOf');
+
+    expect(datasets).toStrictEqual([
+      {
+        id: 'https://example.org/dataset1',
+        name: 'Dataset 1',
+        publisher: {
+          type: 'Organization',
+          id: 'https://example.org/publisher1',
+          name: 'Publishing organization',
+        },
+      },
+      {
+        id: 'https://example.org/dataset2',
+        name: 'Dataset 2',
+        publisher: {
+          type: 'Person',
+          id: 'https://example.org/publisher2',
+          name: 'Publishing person',
+        },
+      },
+      {
+        id: 'https://example.org/dataset3',
+        name: 'Dataset 3',
+        publisher: undefined,
       },
     ]);
   });

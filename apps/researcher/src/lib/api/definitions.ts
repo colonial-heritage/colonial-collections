@@ -9,10 +9,13 @@ export type Thing = {
 
 export type Term = Thing;
 export type Place = Thing;
-export type Dataset = Thing;
 export type Person = Thing & {type: 'Person'};
 export type Unknown = Thing & {type: 'Unknown'};
 export type Agent = Person | Organization | Unknown;
+
+export type Dataset = Thing & {
+  publisher?: Agent; // TBD: is this a required property?
+};
 
 export type PostalAddress = {
   id: string;

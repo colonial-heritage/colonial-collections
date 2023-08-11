@@ -1,5 +1,5 @@
 import {ontologyUrl} from '../definitions';
-import {createAddressesFromProperties} from './rdf-helpers';
+import {createAddresses} from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
 import streamifyString from 'streamify-string';
@@ -43,15 +43,15 @@ beforeAll(async () => {
   resource = loader.resources['https://example.org/organization1'];
 });
 
-describe('createAddressesFromProperties', () => {
-  it('returns undefined if property does not exist', async () => {
-    const addresses = createAddressesFromProperties(resource, 'cc:unknown');
+describe('createAddresses', () => {
+  it('returns undefined if property does not exist', () => {
+    const addresses = createAddresses(resource, 'cc:unknown');
 
     expect(addresses).toBeUndefined();
   });
 
-  it('returns addresses if property exists', async () => {
-    const addresses = createAddressesFromProperties(resource, 'cc:address');
+  it('returns addresses if property exists', () => {
+    const addresses = createAddresses(resource, 'cc:address');
 
     expect(addresses).toStrictEqual([
       {

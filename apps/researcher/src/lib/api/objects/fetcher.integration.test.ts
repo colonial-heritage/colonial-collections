@@ -112,7 +112,15 @@ describe('getById', () => {
         id: 'https://museum.example.org/',
         name: 'Museum',
       },
-      isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+      isPartOf: {
+        id: 'https://example.org/datasets/1',
+        name: 'Dataset 1',
+        publisher: {
+          id: 'https://museum.example.org/',
+          type: 'Organization',
+          name: 'Museum',
+        },
+      },
     });
   });
 });
