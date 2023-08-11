@@ -2,26 +2,22 @@ import {PostalAddress} from '../definitions';
 import {getPropertyValue} from '../rdf-helpers';
 import type {Resource} from 'rdf-object';
 
-function createAddressFromProperties(resource: Resource) {
+function createAddress(addressResource: Resource) {
+  // Ignore TS 'undefined' warnings - the properties always exist
   const postalAddress: PostalAddress = {
-    id: resource.value,
-    streetAddress: getPropertyValue(resource, 'cc:streetAddress')!,
-    postalCode: getPropertyValue(resource, 'cc:postalCode')!,
-    addressLocality: getPropertyValue(resource, 'cc:addressLocality')!,
-    addressCountry: getPropertyValue(resource, 'cc:addressCountry')!,
+    id: addressResource.value,
+    streetAddress: getPropertyValue(addressResource, 'cc:streetAddress')!,
+    postalCode: getPropertyValue(addressResource, 'cc:postalCode')!,
+    addressLocality: getPropertyValue(addressResource, 'cc:addressLocality')!,
+    addressCountry: getPropertyValue(addressResource, 'cc:addressCountry')!,
   };
 
   return postalAddress;
 }
 
-export function createAddressesFromProperties(
-  resource: Resource,
-  propertyName: string
-) {
+export function createAddresses(resource: Resource, propertyName: string) {
   const properties = resource.properties[propertyName];
-  const addresses = properties.map(property =>
-    createAddressFromProperties(property)
-  );
+  const addresses = properties.map(property => createAddress(property));
 
   return addresses.length > 0 ? addresses : undefined;
 }

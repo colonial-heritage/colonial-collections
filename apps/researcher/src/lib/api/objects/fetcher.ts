@@ -1,14 +1,19 @@
-import {ontologyUrl, Dataset, HeritageObject, Term} from '../definitions';
-import {getPropertyValue, getPropertyValues, onlyOne} from '../rdf-helpers';
+import {ontologyUrl, HeritageObject, Term} from '../definitions';
 import {
-  createAgentsFromProperties,
-  createImagesFromProperties,
-  createThingsFromProperties,
-  createTimeSpansFromProperties,
+  getPropertyValue,
+  getPropertyValues,
+  onlyOne,
+  removeUndefinedValues,
+} from '../rdf-helpers';
+import {
+  createAgents,
+  createDatasets,
+  createImages,
+  createThings,
+  createTimeSpans,
 } from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
-import {merge} from '@hapi/hoek';
 import type {Readable} from 'node:stream';
 import {RdfObjectLoader} from 'rdf-object';
 import type {Stream} from '@rdfjs/types';
@@ -83,7 +88,11 @@ export class HeritageObjectFetcher {
           cc:name ?ownerName .
 
         ?dataset a cc:Dataset ;
+          cc:publisher ?publisher ;
           cc:name ?datasetName .
+
+        ?publisher a ?publisherType ;
+          cc:name ?publisherName .
       }
       WHERE {
         BIND(<${iri}> as ?object)
@@ -239,7 +248,6 @@ export class HeritageObjectFetcher {
 
         ?object la:member_of ?dataset .
 
-        # TBD: add more info about the dataset, e.g. license?
         # Required property, but it may not exist in a specific language
         OPTIONAL {
           ?dataset dct:title ?tmpTitle
@@ -248,6 +256,21 @@ export class HeritageObjectFetcher {
 
         # TBD: add multi-language support?
         BIND(COALESCE(?tmpTitle, "(No name)"@en) AS ?datasetName).
+
+        ####################
+        # Publisher of dataset
+        ####################
+
+        ?dataset dct:publisher ?publisher .
+
+        ?publisher foaf:name ?publisherName ;
+          rdf:type ?publisherTypeTemp .
+
+        VALUES (?publisherTypeTemp ?publisherType) {
+          (foaf:Organization cc:Organization)
+          (crm:E21_Person cc:Person)
+          (UNDEF UNDEF)
+        }
       }
     `;
 
@@ -275,47 +298,18 @@ export class HeritageObjectFetcher {
     const identifier = getPropertyValue(rawHeritageObject, 'cc:identifier');
     const name = getPropertyValue(rawHeritageObject, 'cc:name');
     const description = getPropertyValue(rawHeritageObject, 'cc:description');
-
-    const types = createThingsFromProperties<Term>(
-      rawHeritageObject,
-      'cc:additionalType'
-    );
-
-    const subjects = createThingsFromProperties<Term>(
-      rawHeritageObject,
-      'cc:about'
-    );
-
+    const types = createThings<Term>(rawHeritageObject, 'cc:additionalType');
+    const subjects = createThings<Term>(rawHeritageObject, 'cc:about');
     const inscriptions = getPropertyValues(rawHeritageObject, 'cc:inscription');
-
-    const materials = createThingsFromProperties<Term>(
-      rawHeritageObject,
-      'cc:material'
-    );
-
-    const techniques = createThingsFromProperties<Term>(
-      rawHeritageObject,
-      'cc:technique'
-    );
-
-    const creators = createAgentsFromProperties(
-      rawHeritageObject,
-      'cc:creator'
-    );
-
+    const materials = createThings<Term>(rawHeritageObject, 'cc:material');
+    const techniques = createThings<Term>(rawHeritageObject, 'cc:technique');
+    const creators = createAgents(rawHeritageObject, 'cc:creator');
     const dateCreated = onlyOne(
-      createTimeSpansFromProperties(rawHeritageObject, 'cc:dateCreated')
+      createTimeSpans(rawHeritageObject, 'cc:dateCreated')
     );
-
-    const images = createImagesFromProperties(rawHeritageObject, 'cc:image');
-
-    const owner = onlyOne(
-      createAgentsFromProperties(rawHeritageObject, 'cc:owner')
-    );
-
-    const dataset = onlyOne(
-      createThingsFromProperties<Dataset>(rawHeritageObject, 'cc:isPartOf')
-    );
+    const images = createImages(rawHeritageObject, 'cc:image');
+    const owner = onlyOne(createAgents(rawHeritageObject, 'cc:owner'));
+    const dataset = onlyOne(createDatasets(rawHeritageObject, 'cc:isPartOf'));
 
     const heritageObjectWithUndefinedValues: HeritageObject = {
       id: iri,
@@ -334,10 +328,9 @@ export class HeritageObjectFetcher {
       isPartOf: dataset!, // Ignore 'Thing | undefined' warning - it's always of type 'Thing'
     };
 
-    // Remove undefined values, if any
-    const heritageObject = merge({}, heritageObjectWithUndefinedValues, {
-      nullOverride: false,
-    });
+    const heritageObject = removeUndefinedValues<HeritageObject>(
+      heritageObjectWithUndefinedValues
+    );
 
     return heritageObject;
   }

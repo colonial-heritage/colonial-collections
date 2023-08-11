@@ -1,10 +1,9 @@
 import {ontologyUrl, Organization} from '../definitions';
-import {onlyOne} from '../rdf-helpers';
-import {createAddressesFromProperties} from './rdf-helpers';
+import {onlyOne, removeUndefinedValues} from '../rdf-helpers';
+import {createAddresses} from './rdf-helpers';
 import {getPropertyValue} from '../rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
-import {merge} from '@hapi/hoek';
 import type {Readable} from 'node:stream';
 import {RdfObjectLoader} from 'rdf-object';
 import type {Stream} from '@rdfjs/types';
@@ -93,9 +92,7 @@ export class OrganizationFetcher {
 
     const name = getPropertyValue(rawOrganization, 'cc:name');
     const url = getPropertyValue(rawOrganization, 'cc:url');
-    const address = onlyOne(
-      createAddressesFromProperties(rawOrganization, 'cc:address')
-    );
+    const address = onlyOne(createAddresses(rawOrganization, 'cc:address'));
 
     const organizationWithUndefinedValues: Organization = {
       type: 'Organization',
@@ -105,10 +102,9 @@ export class OrganizationFetcher {
       address,
     };
 
-    // Remove undefined values, if any
-    const organization = merge({}, organizationWithUndefinedValues, {
-      nullOverride: false,
-    });
+    const organization = removeUndefinedValues<Organization>(
+      organizationWithUndefinedValues
+    );
 
     return organization;
   }

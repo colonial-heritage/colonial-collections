@@ -11,11 +11,12 @@ import {
   Term,
 } from '../definitions';
 import {SearchResult} from './definitions';
+import {removeUndefinedValues} from '../rdf-helpers';
 import {buildAggregation} from './searcher-request';
 import {buildFilters} from './searcher-result';
 import {getIrisFromObject} from '@colonial-collections/iris';
 import {LabelFetcher} from '@colonial-collections/label-fetcher';
-import {merge, reach} from '@hapi/hoek';
+import {reach} from '@hapi/hoek';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -186,6 +187,7 @@ export class HeritageObjectSearcher {
     const dataset: Dataset = {
       id: datasetIri,
       name: this.labelFetcher.getByIri({iri: datasetIri}),
+      publisher: owner, // TODO: update ES by indexing the publisher
     };
 
     // Replace 'names' with IRIs as soon as we have IRIs
@@ -241,9 +243,9 @@ export class HeritageObjectSearcher {
       isPartOf: dataset,
     };
 
-    const heritageObject = merge({}, heritageObjectWithUndefinedValues, {
-      nullOverride: false,
-    });
+    const heritageObject = removeUndefinedValues<HeritageObject>(
+      heritageObjectWithUndefinedValues
+    );
 
     return heritageObject;
   }
