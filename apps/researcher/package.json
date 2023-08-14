@@ -60,7 +60,7 @@
     "gts": "3.1.1",
     "jest": "29.6.1",
     "n3": "1.17.0",
-    "postcss": "8.4.25",
+    "postcss": "8.4.27",
     "rdf-dereference": "2.1.0",
     "rdf-serialize": "2.2.2",
     "streamify-string": "1.0.1",
