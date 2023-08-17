@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "eslint-config-custom": "*",
-    "gts": "3.1.1",
+    "gts": "5.0.0",
     "turbo": "1.10.1"
   },
   "engines": {
