@@ -129,5 +129,17 @@
   },
   "ErrorPage": {
     "message": "Something went wrong!"
+  },
+  "Communities": {
+    "title": "Communities"
+  },
+  "Community": {
+    "title": "Community of",
+    "backButton": "All communities",
+    "noEntity": "Community could not be found",
+    "editButton": "Edit community page",
+    "joinButton": "Join this community",
+    "objectListsTitle": "Lists of objects by community",
+    "membersTitle": "Members"
   }
 }
