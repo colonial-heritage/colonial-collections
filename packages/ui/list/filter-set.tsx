@@ -144,10 +144,11 @@ export function FilterSet({
   ]);
   const [query, setQuery] = useState('');
   const filteredSearchResultFilters: SearchResultFilter[] = useMemo(() => {
-    return searchResultFilters.filter(searchResultFilter =>
-      searchResultFilter.name
-        ?.toLocaleLowerCase()
-        .includes(query.toLocaleLowerCase())
+    return searchResultFilters.filter(
+      searchResultFilter =>
+        searchResultFilter.name
+          ?.toLocaleLowerCase()
+          .includes(query.toLocaleLowerCase())
     );
   }, [query, searchResultFilters]);
 
