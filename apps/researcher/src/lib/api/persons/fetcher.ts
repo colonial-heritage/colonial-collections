@@ -405,9 +405,8 @@ export class PersonFetcher {
       },
     };
 
-    const rawResponse = await this.makeRequest<RawSearchResponse>(
-      searchRequest
-    );
+    const rawResponse =
+      await this.makeRequest<RawSearchResponse>(searchRequest);
     const searchResponse = rawSearchResponseSchema.parse(rawResponse);
 
     if (searchResponse.hits.hits.length !== 1) {
