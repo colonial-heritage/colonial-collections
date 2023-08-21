@@ -16,12 +16,19 @@ export function JoinCommunityButton({organizationId}: Props) {
   const [isClicked, setIsClicked] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations('Community');
 
-  const userIsMember = user?.organizationMemberships.some(
-    membership => membership.organization.id === organizationId
-  );
+  const userIsMember =
+    !!user &&
+    user.organizationMemberships.some(
+      membership => membership.organization.id === organizationId
+    );
 
   const showJoinButton = isLoaded && isSignedIn && !userIsMember;
+
+  if (!showJoinButton) {
+    return null;
+  }
 
   const joinCommunityClick = () => {
     setIsClicked(true);
@@ -38,12 +45,6 @@ export function JoinCommunityButton({organizationId}: Props) {
       }
     });
   };
-
-  const t = useTranslations('Community');
-
-  if (!showJoinButton) {
-    return null;
-  }
 
   // TODO: add correct layout
   if (hasError) {
