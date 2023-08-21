@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "validate-iri": "1.0.1",
-    "zod": "3.21.4"
+    "zod": "3.22.2"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",
