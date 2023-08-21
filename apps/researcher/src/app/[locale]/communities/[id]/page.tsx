@@ -61,7 +61,7 @@ export default async function CommunityPage({params}: Props) {
               {/*Place the description here*/}
             </div>
             <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
-              <JoinCommunityButton organization={organization} />
+              <JoinCommunityButton organizationId={organization.id} />
             </div>
           </div>
           <h2 className="mb-6">{t('objectListsTitle')}</h2>
