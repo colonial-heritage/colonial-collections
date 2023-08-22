@@ -11,7 +11,7 @@ export default async function CommunitiesPage() {
       <h1>{t('title')}</h1>
       <ul>
         {organizations.map(organization => (
-          <li key={organization.id}>
+          <li key={organization.id} data-testid="community-item-name">
             <a href={`/communities/${organization.id}`}>{organization.name}</a>
           </li>
         ))}

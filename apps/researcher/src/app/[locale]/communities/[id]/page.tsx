@@ -41,7 +41,9 @@ export default async function CommunityPage({params}: Props) {
       <div className="px-4 my-10 sm:px-10 w-full max-w-[1800px] mx-auto">
         <h1 className="text-2xl md:text-4xl font-normal">
           {t('title')}
-          <span className="font-semibold"> {community.name}</span>
+          <span className="font-semibold ml-2" data-testid="community-name">
+            {community.name}
+          </span>
         </h1>
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10">
