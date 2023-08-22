@@ -7,11 +7,11 @@ import {useTransition} from 'react';
 import {joinCommunity} from './actions';
 
 interface Props {
-  organizationId: string;
+  communityId: string;
 }
 
 // If logged in and not part of the community, show the join button
-export function JoinCommunityButton({organizationId}: Props) {
+export function JoinCommunityButton({communityId}: Props) {
   const {isLoaded, isSignedIn, user} = useUser();
   const [isClicked, setIsClicked] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -21,7 +21,7 @@ export function JoinCommunityButton({organizationId}: Props) {
   const userIsMember =
     !!user &&
     user.organizationMemberships.some(
-      membership => membership.organization.id === organizationId
+      membership => membership.organization.id === communityId
     );
 
   const showJoinButton = isLoaded && isSignedIn && !userIsMember;
@@ -35,7 +35,7 @@ export function JoinCommunityButton({organizationId}: Props) {
     startTransition(async () => {
       try {
         await joinCommunity({
-          organizationId: organizationId,
+          organizationId: communityId,
           userId: user!.id,
         });
       } catch (error) {

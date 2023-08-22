@@ -1,9 +1,9 @@
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
-import {clerkClient, auth} from '@clerk/nextjs';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslations} from 'next-intl/server';
 import {JoinCommunityButton, EditCommunityButton} from './buttons';
+import {getMemberships, getCommunity, isAdminOf} from '@/lib/community';
 
 interface Props {
   params: {id: string};
@@ -12,28 +12,18 @@ interface Props {
 export default async function CommunityPage({params}: Props) {
   const t = await getTranslations('Community');
 
-  let organization;
-  try {
-    organization = await clerkClient.organizations.getOrganization({
-      organizationId: params.id,
-    });
-  } catch (error) {
+  const {community, error: communityError} = await getCommunity(params.id);
+  const {memberships, error: membershipsError} = await getMemberships(
+    params.id
+  );
+
+  if (communityError?.status === 404) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
+  } else if (communityError || membershipsError) {
+    return <div data-testid="error">{t('error')}</div>;
   }
 
-  const memberships =
-    await clerkClient.organizations.getOrganizationMembershipList({
-      organizationId: params.id,
-    });
-
-  const {userId} = auth();
-
-  const isAdmin = memberships.some(membership => {
-    return (
-      membership.publicUserData?.userId === userId &&
-      membership.role === 'admin'
-    );
-  });
+  const isAdmin = isAdminOf(memberships);
 
   return (
     <>
@@ -51,7 +41,7 @@ export default async function CommunityPage({params}: Props) {
       <div className="px-4 my-10 sm:px-10 w-full max-w-[1800px] mx-auto">
         <h1 className="text-2xl md:text-4xl font-normal">
           {t('title')}
-          <span className="font-semibold"> {organization.name}</span>
+          <span className="font-semibold"> {community.name}</span>
         </h1>
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10">
@@ -61,7 +51,7 @@ export default async function CommunityPage({params}: Props) {
               {/*Place the description here*/}
             </div>
             <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
-              <JoinCommunityButton organizationId={organization.id} />
+              <JoinCommunityButton communityId={community.id} />
             </div>
           </div>
           <h2 className="mb-6">{t('objectListsTitle')}</h2>

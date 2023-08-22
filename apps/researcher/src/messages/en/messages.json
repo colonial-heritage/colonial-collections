@@ -140,6 +140,7 @@
     "editButton": "Edit community page",
     "joinButton": "Join this community",
     "objectListsTitle": "Lists of objects by community",
-    "membersTitle": "Members"
+    "membersTitle": "Members",
+    "error": "Something went wrong while fetching the community. Please try again later."
   }
 }
