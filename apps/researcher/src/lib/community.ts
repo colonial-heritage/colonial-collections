@@ -1,19 +1,17 @@
 import {clerkClient, auth} from '@clerk/nextjs';
+import {
+  OrganizationMembership,
+  OrganizationMembershipPublicUserData,
+  Organization as FullCommunity,
+} from '@clerk/backend/dist/types';
 
-type Community = {
-  id: string;
-  name: string;
-};
+type Community = Pick<FullCommunity, 'id' | 'name'>;
 
-export type Membership = {
-  id: string;
-  role: string;
-  publicUserData?: {
-    userId: string;
-    firstName: string | null;
-    lastName: string | null;
-    profileImageUrl: string;
-  } | null;
+export type Membership = Pick<OrganizationMembership, 'id' | 'role'> & {
+  publicUserData?: Pick<
+    OrganizationMembershipPublicUserData,
+    'userId' | 'firstName' | 'lastName' | 'profileImageUrl'
+  > | null;
 };
 
 interface Error {
@@ -76,7 +74,7 @@ export async function getMemberships(
   return {memberships, error};
 }
 
-export function isAdminOf(memberships: Membership[]): boolean {
+export function isAdminOf(memberships: ReadonlyArray<Membership>): boolean {
   const {userId} = auth();
 
   return (

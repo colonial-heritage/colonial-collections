@@ -61,6 +61,7 @@ describe('getMemberships', () => {
     ]);
     expect(error).toBeUndefined();
   });
+
   it('should return an error', async () => {
     (
       clerkClient.organizations.getOrganizationMembershipList as jest.Mock
@@ -77,7 +78,7 @@ describe('getMemberships', () => {
 
 describe('isAdminOf', () => {
   it('should return true is the user is an admin', () => {
-    const memberships = [
+    const memberships: ReadonlyArray<Membership> = [
       {
         id: 'membership1',
         role: 'admin',
@@ -90,7 +91,7 @@ describe('isAdminOf', () => {
       },
       {
         id: 'membership2',
-        role: 'basis_member',
+        role: 'basic_member',
         publicUserData: {
           userId: 'notMe',
           firstName: 'Jane',
@@ -103,10 +104,10 @@ describe('isAdminOf', () => {
   });
 
   it('should return false if the user is not an admin', () => {
-    const memberships = [
+    const memberships: ReadonlyArray<Membership> = [
       {
         id: 'membership1',
-        role: 'basis_member',
+        role: 'basic_member',
         publicUserData: {
           userId: 'me',
           firstName: 'John',
@@ -119,10 +120,10 @@ describe('isAdminOf', () => {
   });
 
   it('should return false is user is not an member', () => {
-    const memberships = [
+    const memberships: ReadonlyArray<Membership> = [
       {
         id: 'membership1',
-        role: 'basis_member',
+        role: 'basic_member',
         publicUserData: {
           userId: 'notMe',
           firstName: 'John',
@@ -139,7 +140,7 @@ describe('isAdminOf', () => {
       userId: undefined,
     }));
 
-    const memberships = [
+    const memberships: ReadonlyArray<Membership> = [
       {
         id: 'membership1',
         role: 'admin',
