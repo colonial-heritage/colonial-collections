@@ -2,6 +2,12 @@ import {describe, expect, it} from '@jest/globals';
 import {auth} from '@clerk/nextjs';
 import {isAdminOf, Membership} from './community';
 
+jest.mock('@clerk/nextjs', () => ({
+  auth: jest.fn().mockImplementation(() => ({
+    userId: 'me',
+  })),
+}));
+
 describe('isAdminOf', () => {
   it('returns true is the user is an admin', () => {
     const memberships: ReadonlyArray<Membership> = [
