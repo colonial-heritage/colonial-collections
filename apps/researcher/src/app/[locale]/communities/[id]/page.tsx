@@ -4,6 +4,7 @@ import Image from 'next/image';
 import {getTranslations} from 'next-intl/server';
 import {JoinCommunityButton, EditCommunityButton} from './buttons';
 import {getMemberships, getCommunity, isAdminOf} from '@/lib/community';
+import ErrorMessage from '@/components/error-message';
 
 interface Props {
   params: {id: string};
@@ -11,15 +12,6 @@ interface Props {
 
 interface Error {
   status: number;
-}
-
-interface ErrorComponentProps {
-  error: string;
-  testid?: string;
-}
-
-function ErrorComponent({error, testid = 'error'}: ErrorComponentProps) {
-  return <div data-testid={testid}>{error}</div>;
 }
 
 export default async function CommunityPage({params}: Props) {
@@ -30,9 +22,9 @@ export default async function CommunityPage({params}: Props) {
     community = await getCommunity(params.id);
   } catch (err) {
     if ((err as Error).status === 404) {
-      return <ErrorComponent error={t('noEntity')} testid="no-entity" />;
+      return <ErrorMessage error={t('noEntity')} testId="no-entity" />;
     }
-    return <ErrorComponent error={t('error')} />;
+    return <ErrorMessage error={t('error')} />;
   }
 
   try {
@@ -40,7 +32,7 @@ export default async function CommunityPage({params}: Props) {
     isAdmin = isAdminOf(memberships);
   } catch (err) {
     if ((err as Error).status === 404) {
-      return <ErrorComponent error={t('error')} />;
+      return <ErrorMessage error={t('error')} />;
     }
   }
 

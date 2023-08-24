@@ -1,16 +1,6 @@
 'use server';
 
-import {clerkClient} from '@clerk/nextjs';
+import {joinCommunity} from '@/lib/community';
 
-interface Props {
-  organizationId: string;
-  userId: string;
-}
-
-export async function joinCommunity({organizationId, userId}: Props) {
-  await clerkClient.organizations.createOrganizationMembership({
-    organizationId,
-    userId,
-    role: 'basic_member',
-  });
-}
+// Export joinCommunity as server actions.
+export {joinCommunity};

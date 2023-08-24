@@ -28,6 +28,10 @@ export async function getMemberships(
   });
 }
 
+export function getAllCommunities(): Promise<Community[]> {
+  return clerkClient.organizations.getOrganizationList();
+}
+
 export function isAdminOf(memberships: ReadonlyArray<Membership>): boolean {
   const {userId} = auth();
 
@@ -40,4 +44,21 @@ export function isAdminOf(memberships: ReadonlyArray<Membership>): boolean {
       );
     })
   );
+}
+
+interface JoinCommunityProps {
+  organizationId: string;
+  userId: string;
+}
+
+export async function joinCommunity({
+  organizationId,
+  userId,
+}: JoinCommunityProps) {
+  console.log(organizationId, userId);
+  await clerkClient.organizations.createOrganizationMembership({
+    organizationId,
+    userId,
+    role: 'basic_member',
+  });
 }

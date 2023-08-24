@@ -131,7 +131,8 @@
     "message": "Er is iets fout gegaan!"
   },
   "Communities": {
-    "title": "Communities"
+    "title": "Communities",
+    "error": "Er is een fout opgetreden bij het ophalen van de communities. Probeer het later opnieuw."
   },
   "Community": {
     "title": "Community van",

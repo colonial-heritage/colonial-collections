@@ -1,18 +1,25 @@
-import {clerkClient} from '@clerk/nextjs';
+import {getAllCommunities} from '@/lib/community';
 import {getTranslations} from 'next-intl/server';
+import ErrorMessage from '@/components/error-message';
 
 // For now this is a basic page without design, just for navigating between communities.
 export default async function CommunitiesPage() {
-  const organizations = await clerkClient.organizations.getOrganizationList();
   const t = await getTranslations('Communities');
+
+  let communities;
+  try {
+    communities = await getAllCommunities();
+  } catch (err) {
+    return <ErrorMessage error={t('error')} />;
+  }
 
   return (
     <>
       <h1>{t('title')}</h1>
       <ul>
-        {organizations.map(organization => (
-          <li key={organization.id} data-testid="community-item-name">
-            <a href={`/communities/${organization.id}`}>{organization.name}</a>
+        {communities.map(community => (
+          <li key={community.id} data-testid="community-item-name">
+            <a href={`/communities/${community.id}`}>{community.name}</a>
           </li>
         ))}
       </ul>

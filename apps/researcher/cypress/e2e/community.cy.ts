@@ -1,3 +1,14 @@
+describe('Communities page', () => {
+  it('shows a list of communities', () => {
+    cy.visit('/communities', {
+      failOnStatusCode: false,
+    });
+
+    cy.getBySel('community-item-name').should('exist');
+    cy.getBySel('error').should('not.exist');
+  });
+});
+
 describe('Community details page', () => {
   it('opens the community page if clicked on in the communities list', () => {
     cy.visit('/communities', {
