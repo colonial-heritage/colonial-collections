@@ -9,21 +9,40 @@ interface Props {
   params: {id: string};
 }
 
+interface Error {
+  status: number;
+}
+
+interface ErrorComponentProps {
+  error: string;
+  testid?: string;
+}
+
+function ErrorComponent({error, testid = 'error'}: ErrorComponentProps) {
+  return <div data-testid={testid}>{error}</div>;
+}
+
 export default async function CommunityPage({params}: Props) {
   const t = await getTranslations('Community');
+  let community, memberships, isAdmin;
 
-  const {community, error: communityError} = await getCommunity(params.id);
-  const {memberships, error: membershipsError} = await getMemberships(
-    params.id
-  );
-
-  if (communityError?.status === 404) {
-    return <div data-testid="no-entity">{t('noEntity')}</div>;
-  } else if (communityError || membershipsError) {
-    return <div data-testid="error">{t('error')}</div>;
+  try {
+    community = await getCommunity(params.id);
+  } catch (err) {
+    if ((err as Error).status === 404) {
+      return <ErrorComponent error={t('noEntity')} testid="no-entity" />;
+    }
+    return <ErrorComponent error={t('error')} />;
   }
 
-  const isAdmin = isAdminOf(memberships);
+  try {
+    memberships = await getMemberships(params.id);
+    isAdmin = isAdminOf(memberships);
+  } catch (err) {
+    if ((err as Error).status === 404) {
+      return <ErrorComponent error={t('error')} />;
+    }
+  }
 
   return (
     <>
@@ -64,7 +83,7 @@ export default async function CommunityPage({params}: Props) {
         <aside className="w-full md:w-1/4 self-stretch">
           <h2 className="mb-4">{t('membersTitle')}</h2>
           <ul>
-            {memberships.map(membership => (
+            {memberships!.map(membership => (
               <li
                 className="font-normal flex items-center gap-2 mb-3"
                 key={membership.id}

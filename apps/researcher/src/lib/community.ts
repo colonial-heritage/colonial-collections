@@ -14,64 +14,18 @@ export type Membership = Pick<OrganizationMembership, 'id' | 'role'> & {
   > | null;
 };
 
-interface Error {
-  status: number;
-}
-
-interface CommunityResponse {
-  community: Community;
-  error: undefined;
-}
-
-interface CommunityErrorResponse {
-  community: undefined;
-  error: Error;
-}
-
-export async function getCommunity(
-  communityId: string
-): Promise<CommunityResponse | CommunityErrorResponse> {
-  let community, error;
-
-  try {
-    community = await clerkClient.organizations.getOrganization({
-      organizationId: communityId,
-    });
-  } catch (e) {
-    error = e as Error;
-    return {community: undefined, error};
-  }
-
-  return {community, error};
-}
-
-interface MembershipsResponse {
-  memberships: Membership[];
-  error: undefined;
-}
-
-interface MembershipsErrorResponse {
-  memberships: undefined;
-  error: Error;
+export async function getCommunity(communityId: string): Promise<Community> {
+  return clerkClient.organizations.getOrganization({
+    organizationId: communityId,
+  });
 }
 
 export async function getMemberships(
   communityId: string
-): Promise<MembershipsResponse | MembershipsErrorResponse> {
-  let memberships, error;
-
-  try {
-    memberships = await clerkClient.organizations.getOrganizationMembershipList(
-      {
-        organizationId: communityId,
-      }
-    );
-  } catch (e) {
-    error = e as Error;
-    return {memberships: undefined, error};
-  }
-
-  return {memberships, error};
+): Promise<Membership[]> {
+  return clerkClient.organizations.getOrganizationMembershipList({
+    organizationId: communityId,
+  });
 }
 
 export function isAdminOf(memberships: ReadonlyArray<Membership>): boolean {
