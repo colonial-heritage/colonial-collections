@@ -246,30 +246,34 @@ export class HeritageObjectFetcher {
         # Part of dataset
         ####################
 
-        ?object la:member_of ?dataset .
-
-        # Required property, but it may not exist in a specific language
         OPTIONAL {
-          ?dataset dct:title ?tmpTitle
-          FILTER(LANG(?tmpTitle) = "" || LANGMATCHES(LANG(?tmpTitle), "en"))
-        }
+          ?object la:member_of ?dataset .
 
-        # TBD: add multi-language support?
-        BIND(COALESCE(?tmpTitle, "(No name)"@en) AS ?datasetName).
+          ####################
+          # Name of dataset
+          ####################
 
-        ####################
-        # Publisher of dataset
-        ####################
+          OPTIONAL {
+            ?dataset dct:title ?datasetName
+            # TBD: how to handle languages?
+            FILTER(LANG(?datasetName) = "" || LANGMATCHES(LANG(?datasetName), "en"))
+          }
 
-        ?dataset dct:publisher ?publisher .
+          ####################
+          # Publisher of dataset
+          ####################
 
-        ?publisher foaf:name ?publisherName ;
-          rdf:type ?publisherTypeTemp .
+          OPTIONAL {
+            ?dataset dct:publisher ?publisher .
+            ?publisher foaf:name ?publisherName ;
+              rdf:type ?publisherTypeTemp .
 
-        VALUES (?publisherTypeTemp ?publisherType) {
-          (foaf:Organization cc:Organization)
-          (crm:E21_Person cc:Person)
-          (UNDEF UNDEF)
+            VALUES (?publisherTypeTemp ?publisherType) {
+              (foaf:Organization cc:Organization)
+              (crm:E21_Person cc:Person)
+              (UNDEF UNDEF)
+            }
+          }
         }
       }
     `;
@@ -325,7 +329,7 @@ export class HeritageObjectFetcher {
       dateCreated,
       images,
       owner,
-      isPartOf: dataset!, // Ignore 'Thing | undefined' warning - it's always of type 'Thing'
+      isPartOf: dataset,
     };
 
     const heritageObject = removeUndefinedValues<HeritageObject>(
