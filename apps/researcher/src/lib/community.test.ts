@@ -9,7 +9,7 @@ jest.mock('@clerk/nextjs', () => ({
 }));
 
 describe('isAdmin', () => {
-  it('returns true is the user is an admin', () => {
+  it('returns true if user is an admin', () => {
     const memberships: ReadonlyArray<Membership> = [
       {
         id: 'membership1',
@@ -35,7 +35,7 @@ describe('isAdmin', () => {
     expect(isAdmin(memberships)).toEqual(true);
   });
 
-  it('returns false if the user is not an admin', () => {
+  it('returns false if user is not an admin', () => {
     const memberships: ReadonlyArray<Membership> = [
       {
         id: 'membership1',
