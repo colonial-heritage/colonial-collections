@@ -1,6 +1,6 @@
 import {describe, expect, it} from '@jest/globals';
 import {auth} from '@clerk/nextjs';
-import {isAdminOf, Membership} from './community';
+import {isAdmin, Membership} from './community';
 
 jest.mock('@clerk/nextjs', () => ({
   auth: jest.fn().mockImplementation(() => ({
@@ -8,7 +8,7 @@ jest.mock('@clerk/nextjs', () => ({
   })),
 }));
 
-describe('isAdminOf', () => {
+describe('isAdmin', () => {
   it('returns true is the user is an admin', () => {
     const memberships: ReadonlyArray<Membership> = [
       {
@@ -32,7 +32,7 @@ describe('isAdminOf', () => {
         },
       },
     ];
-    expect(isAdminOf(memberships)).toEqual(true);
+    expect(isAdmin(memberships)).toEqual(true);
   });
 
   it('returns false if the user is not an admin', () => {
@@ -48,7 +48,7 @@ describe('isAdminOf', () => {
         },
       },
     ];
-    expect(isAdminOf(memberships)).toEqual(false);
+    expect(isAdmin(memberships)).toEqual(false);
   });
 
   it('returns false is user is not an member', () => {
@@ -64,7 +64,7 @@ describe('isAdminOf', () => {
         },
       },
     ];
-    expect(isAdminOf(memberships)).toEqual(false);
+    expect(isAdmin(memberships)).toEqual(false);
   });
 
   it('returns false if user is not logged in', () => {
@@ -84,11 +84,11 @@ describe('isAdminOf', () => {
         },
       },
     ];
-    expect(isAdminOf(memberships)).toEqual(false);
+    expect(isAdmin(memberships)).toEqual(false);
   });
 
   it('returns false if memberships is empty', () => {
     const memberships: Membership[] = [];
-    expect(isAdminOf(memberships)).toEqual(false);
+    expect(isAdmin(memberships)).toEqual(false);
   });
 });

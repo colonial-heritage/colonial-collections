@@ -2,5 +2,5 @@
 
 import {joinCommunity} from '@/lib/community';
 
-// Export joinCommunity as server actions.
+// Export as server actions.
 export {joinCommunity};

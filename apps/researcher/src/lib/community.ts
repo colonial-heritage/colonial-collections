@@ -32,7 +32,7 @@ export function getAllCommunities(): Promise<Community[]> {
   return clerkClient.organizations.getOrganizationList();
 }
 
-export function isAdminOf(memberships: ReadonlyArray<Membership>): boolean {
+export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
   const {userId} = auth();
 
   return (
@@ -55,7 +55,6 @@ export async function joinCommunity({
   organizationId,
   userId,
 }: JoinCommunityProps) {
-  console.log(organizationId, userId);
   await clerkClient.organizations.createOrganizationMembership({
     organizationId,
     userId,

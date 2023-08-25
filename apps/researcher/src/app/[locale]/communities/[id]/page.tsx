@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslations} from 'next-intl/server';
 import {JoinCommunityButton, EditCommunityButton} from './buttons';
-import {getMemberships, getCommunity, isAdminOf} from '@/lib/community';
+import {getMemberships, getCommunity, isAdmin} from '@/lib/community';
 import ErrorMessage from '@/components/error-message';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Error {
 
 export default async function CommunityPage({params}: Props) {
   const t = await getTranslations('Community');
-  let community, memberships, isAdmin;
+  let community, memberships;
 
   try {
     community = await getCommunity(params.id);
@@ -29,11 +29,8 @@ export default async function CommunityPage({params}: Props) {
 
   try {
     memberships = await getMemberships(params.id);
-    isAdmin = isAdminOf(memberships);
   } catch (err) {
-    if ((err as Error).status === 404) {
-      return <ErrorMessage error={t('error')} />;
-    }
+    return <ErrorMessage error={t('error')} />;
   }
 
   return (
@@ -46,7 +43,7 @@ export default async function CommunityPage({params}: Props) {
           </Link>
         </div>
         <div className="sm:flex justify-end gap-4 hidden">
-          {isAdmin && <EditCommunityButton />}
+          {isAdmin(memberships) && <EditCommunityButton />}
         </div>
       </div>
       <div className="px-4 my-10 sm:px-10 w-full max-w-[1800px] mx-auto">
