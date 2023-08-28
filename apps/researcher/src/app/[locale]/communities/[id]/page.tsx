@@ -5,13 +5,10 @@ import {getTranslations} from 'next-intl/server';
 import {JoinCommunityButton, EditCommunityButton} from './buttons';
 import {getMemberships, getCommunity, isAdmin} from '@/lib/community';
 import ErrorMessage from '@/components/error-message';
+import {ClerkAPIResponseError} from '@clerk/shared';
 
 interface Props {
   params: {id: string};
-}
-
-interface Error {
-  status: number;
 }
 
 export default async function CommunityPage({params}: Props) {
@@ -21,7 +18,7 @@ export default async function CommunityPage({params}: Props) {
   try {
     community = await getCommunity(params.id);
   } catch (err) {
-    if ((err as Error).status === 404) {
+    if ((err as ClerkAPIResponseError).status === 404) {
       return <ErrorMessage error={t('noEntity')} testId="no-entity" />;
     }
     return <ErrorMessage error={t('error')} />;
