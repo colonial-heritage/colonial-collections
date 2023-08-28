@@ -12,9 +12,8 @@ beforeEach(() => {
 
 describe('getByHeritageObjectId', () => {
   it('returns undefined if a malformed ID is used', async () => {
-    const heritageObject = await provenanceEventsFetcher.getByHeritageObjectId(
-      'malformedID'
-    );
+    const heritageObject =
+      await provenanceEventsFetcher.getByHeritageObjectId('malformedID');
 
     expect(heritageObject).toBeUndefined();
   });

@@ -6,16 +6,16 @@
   "private": true,
   "devDependencies": {
     "@types/react": "18.2.20",
-    "autoprefixer": "10.4.14",
+    "autoprefixer": "10.4.15",
     "eslint-config-custom": "*",
-    "postcss": "8.4.27",
+    "postcss": "8.4.28",
     "tailwind-config": "*",
     "tsconfig": "*",
     "typescript": "5.1.6"
   },
   "dependencies": {
     "@colonial-collections/list-store": "*",
-    "@floating-ui/react": "0.24.6",
+    "@floating-ui/react": "0.25.1",
     "@headlessui/react": "1.7.16",
     "@heroicons/react": "2.0.18",
     "classnames": "2.3.2",

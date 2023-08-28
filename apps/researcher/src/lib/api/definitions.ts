@@ -14,7 +14,7 @@ export type Unknown = Thing & {type: 'Unknown'};
 export type Agent = Person | Organization | Unknown;
 
 export type Dataset = Thing & {
-  publisher?: Agent; // TBD: is this a required property?
+  publisher?: Agent;
 };
 
 export type PostalAddress = {
@@ -56,7 +56,7 @@ export type HeritageObject = {
   dateCreated?: TimeSpan;
   images?: Image[];
   owner?: Agent;
-  isPartOf: Dataset;
+  isPartOf?: Dataset;
 };
 
 export enum SortBy {
