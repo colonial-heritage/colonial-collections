@@ -45,7 +45,7 @@
   "devDependencies": {
     "@clerk/shared": "0.21.0",
     "@comunica/query-sparql-file": "2.8.0",
-    "@jest/globals": "29.5.0",
+    "@jest/globals": "29.6.4",
     "@next/env": "13.4.7",
     "@rdfjs/types": "1.1.0",
     "@types/mdx": "2.0.5",
