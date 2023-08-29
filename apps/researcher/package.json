@@ -43,6 +43,7 @@
     "zustand": "4.3.9"
   },
   "devDependencies": {
+    "@clerk/shared": "0.21.0",
     "@comunica/query-sparql-file": "2.8.0",
     "@jest/globals": "29.5.0",
     "@next/env": "13.4.7",

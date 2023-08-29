@@ -129,5 +129,19 @@
   },
   "ErrorPage": {
     "message": "Something went wrong!"
+  },
+  "Communities": {
+    "title": "Communities",
+    "error": "Something went wrong while fetching communities. Please try again later."
+  },
+  "Community": {
+    "title": "Community of",
+    "backButton": "All communities",
+    "noEntity": "Community could not be found",
+    "editButton": "Edit community page",
+    "joinButton": "Join this community",
+    "objectListsTitle": "Lists of objects by community",
+    "membersTitle": "Members",
+    "error": "Something went wrong while fetching the community. Please try again later."
   }
 }
