@@ -129,5 +129,19 @@
   },
   "ErrorPage": {
     "message": "Er is iets fout gegaan!"
+  },
+  "Communities": {
+    "title": "Communities",
+    "error": "Er is een fout opgetreden bij het ophalen van de communities. Probeer het later opnieuw."
+  },
+  "Community": {
+    "title": "Community van",
+    "backButton": "Alle communities",
+    "noEntity": "Community kon niet gevonden worden",
+    "editButton": "Community page aanpassen",
+    "joinButton": "Word lid van deze community",
+    "objectListsTitle": "Lijsten van objecten door community",
+    "membersTitle": "Leden",
+    "error": "Er is een fout opgetreden bij het ophalen van de community. Probeer het later opnieuw."
   }
 }
