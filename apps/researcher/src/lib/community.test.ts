@@ -51,7 +51,7 @@ describe('isAdmin', () => {
     expect(isAdmin(memberships)).toEqual(false);
   });
 
-  it('returns false is user is not a member', () => {
+  it('returns false if user is not a member', () => {
     const memberships: ReadonlyArray<Membership> = [
       {
         id: 'membership1',
