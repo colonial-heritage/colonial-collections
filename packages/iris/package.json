@@ -22,7 +22,7 @@
     "zod": "3.22.2"
   },
   "devDependencies": {
-    "@jest/globals": "29.5.0",
+    "@jest/globals": "29.6.4",
     "@types/jest": "29.5.3",
     "@types/node": "20.5.7",
     "eslint-config-custom": "*",
