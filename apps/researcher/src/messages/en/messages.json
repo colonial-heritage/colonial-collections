@@ -54,13 +54,15 @@
   "ObjectDetails": {
     "backButton": "Search",
     "noEntity": "Object could not be found",
-    "subTitle": "Object, currently holded by ",
-    "noData": "No <subjectWrapper>{subject}</subjectWrapper> available",
+    "object": "Object",
+    "contactInfo": "Contact info",
+    "linkToWebsite": "Website",
+    "linkToDataset": "More about the dataset",
+    "noData": "No <subject></subject> available",
     "identifier": "ID: {identifier}",
     "metadata": "Metadata",
     "description": "Description",
     "date": "Date",
-    "owner": "Owner",
     "license": "License",
     "materials": "Materials",
     "techniques": "Techniques",
@@ -78,8 +80,8 @@
     "techniquesSubTitle": "",
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
-    "addedBy": "Added by",
-    "currentOwner": "Current owner"
+    "addedBy": "Added by <name></name> from <location></location>",
+    "currentLocation": "Current location of object"
   },
   "PersonDetails": {
     "backButton": "Back to results",

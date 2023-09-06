@@ -54,13 +54,15 @@
   "ObjectDetails": {
     "backButton": "Zoeken",
     "noEntity": "Object kon niet gevonden worden",
-    "subTitle": "Object, op dit moment in bezit door ",
-    "noData": "Geen <subjectWrapper>{subject}</subjectWrapper> beschikbaar",
+    "object": "Object",
+    "contactInfo": "Contact gegevens",
+    "linkToWebsite": "Website",
+    "linkToDataset": "Meer over de dataset",
+    "noData": "Geen <subject></subject> beschikbaar",
     "identifier": "ID: {identifier}",
     "metadata": "Metadata",
     "description": "Beschrijving",
     "date": "Datum",
-    "owner": "Eigenaar",
     "license": "Licentie",
     "materials": "Materialen",
     "techniques": "Technieken",
@@ -78,8 +80,8 @@
     "techniquesSubTitle": "",
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
-    "addedBy": "Toegevoegd door",
-    "currentOwner": "Huidige eigenaar"
+    "addedBy": "Toegevoegd door <name></name> uit <location></location>",
+    "currentLocation": "Huidige locatie van object"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",

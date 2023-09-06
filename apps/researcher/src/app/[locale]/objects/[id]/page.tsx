@@ -1,18 +1,61 @@
-import {useLocale} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
 import {ToFilteredListButton} from 'ui/list';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
-import {MetadataContainer, MetadataEntry, useCurrentOwner} from './metadata';
+import {MetadataContainer, MetadataEntry} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
+import organizations from '@/lib/organizations-instance';
+import {
+  SlideOverDialog,
+  SlideOverOpenButton,
+  SlideOverHeader,
+  SlideOverContent,
+  SlideOver,
+} from 'ui';
+import useCurrentPublisher from './useCurrentPublisher';
 
 // Revalidate the page
 export const revalidate = 0;
 
 interface Props {
   params: {id: string};
+}
+
+function ContactDetailsSlideOver({datasetId}: {datasetId?: string}) {
+  const organization = useCurrentPublisher.getState();
+  const t = useTranslations('ObjectDetails');
+
+  return (
+    <SlideOverDialog>
+      <SlideOverHeader />
+      <SlideOverContent>
+        <div className="flex-col gap-4 mt-4 flex">
+          <h2>{organization.name}</h2>
+          <span>
+            {organization.address?.streetAddress}
+            <br /> {organization.address?.postalCode}{' '}
+            {organization.address?.addressLocality},
+            <br /> {organization.address?.addressCountry}
+          </span>
+          {organization.url && (
+            <a href={organization.url}>{t('linkToWebsite')}</a>
+          )}{' '}
+          {datasetId && (
+            <a
+              href={`https://datasets.colonialcollections.nl/nl/datasets/${encodeURIComponent(
+                datasetId
+              )}`}
+            >
+              {t('linkToDataset')}
+            </a>
+          )}
+        </div>
+      </SlideOverContent>
+    </SlideOverDialog>
+  );
 }
 
 export default async function Details({params}: Props) {
@@ -25,7 +68,11 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  useCurrentOwner.setState({name: object.owner?.name});
+  let organization = null;
+  if (object.isPartOf?.publisher?.id) {
+    organization = await organizations.getById(object.isPartOf.publisher.id);
+    organization && useCurrentPublisher.setState(organization);
+  }
 
   const galleryImages =
     object.images?.map((image, i) => ({
@@ -71,15 +118,31 @@ export default async function Details({params}: Props) {
               <ObjectIcon className='w-5 h-5 stroke-neutral-500"' />
             </span>
             <span className="inline items-center flex-row flex-wrap gap-1">
-              {t('subTitle')}
-              <span className="inline items-start sm:items-center flex-wrap gap-1 hover:underline">
-                <strong className="text-left text-sky-700 cursor-pointer">
-                  {object.owner?.name}
-                </strong>
-                {/* Add this when location owner information */}
-                {/* <span className="hidden sm:inline"> - </span>
-                <span> Amsterdam</span> */}
-              </span>
+              {t('object')}
+              {organization && (
+                <>
+                  <SlideOver>
+                    <SlideOverOpenButton>
+                      {', '}
+                      <span className="inline items-start sm:items-center flex-wrap gap-1 hover:underline">
+                        <strong className="text-left text-sky-700 cursor-pointer">
+                          {organization.name}
+                        </strong>
+                        {organization.address && (
+                          <>
+                            <span className="hidden sm:inline px-1">-</span>
+                            <span>{organization.address?.addressLocality}</span>
+                          </>
+                        )}
+                        <span className="text-left text-sky-700 cursor-pointer pl-2">
+                          ({t('contactInfo')})
+                        </span>
+                      </span>
+                    </SlideOverOpenButton>
+                    <ContactDetailsSlideOver datasetId={object.isPartOf?.id} />
+                  </SlideOver>
+                </>
+              )}
             </span>
           </div>
           <div className="grow sm:text-right break-keep">
@@ -96,11 +159,13 @@ export default async function Details({params}: Props) {
           </div>
           <div className="flex flex-col gap-8 self-stretch">
             <MetadataContainer identifier="description">
-              <MetadataEntry isOwner>{object.description}</MetadataEntry>
+              <MetadataEntry isCurrentLocation>
+                {object.description}
+              </MetadataEntry>
             </MetadataContainer>
 
             <MetadataContainer identifier="materials">
-              <MetadataEntry isOwner>
+              <MetadataEntry isCurrentLocation>
                 {object.materials?.map(material => (
                   <div key={material.id}>{material.name}</div>
                 ))}
@@ -108,7 +173,7 @@ export default async function Details({params}: Props) {
             </MetadataContainer>
 
             <MetadataContainer identifier="types">
-              <MetadataEntry isOwner>
+              <MetadataEntry isCurrentLocation>
                 {object.types?.map(type => (
                   <div key={type.id}>{type.name}</div>
                 ))}
@@ -116,7 +181,7 @@ export default async function Details({params}: Props) {
             </MetadataContainer>
 
             <MetadataContainer identifier="techniques">
-              <MetadataEntry isOwner>
+              <MetadataEntry isCurrentLocation>
                 {object.techniques?.map(technique => (
                   <div key={technique.id}>{technique.name}</div>
                 ))}
@@ -124,7 +189,7 @@ export default async function Details({params}: Props) {
             </MetadataContainer>
 
             <MetadataContainer identifier="creators">
-              <MetadataEntry isOwner>
+              <MetadataEntry isCurrentLocation>
                 {object.creators?.map(creator => (
                   <div key={creator.id}>{creator.name}</div>
                 ))}
@@ -132,7 +197,7 @@ export default async function Details({params}: Props) {
             </MetadataContainer>
 
             <MetadataContainer identifier="inscriptions">
-              <MetadataEntry isOwner>
+              <MetadataEntry isCurrentLocation>
                 {object.inscriptions?.map(inscription => (
                   <div key={inscription}>{inscription}</div>
                 ))}
