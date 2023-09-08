@@ -1,0 +1,16 @@
+/* eslint-disable node/no-unpublished-import */
+import type {Config} from 'drizzle-kit';
+import * as dotenv from 'dotenv';
+
+dotenv.config({
+  path: '.env.local',
+});
+
+export default {
+  schema: './src/db/schema.ts',
+  out: './migrations',
+  driver: 'mysql2',
+  dbCredentials: {
+    connectionString: process.env['DATABASE_URL'] || '',
+  },
+} satisfies Config;
