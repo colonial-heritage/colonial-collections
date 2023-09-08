@@ -18,7 +18,9 @@
     "test:ci": "turbo run test:ci",
     "test:integration": "turbo run test:integration",
     "test:integration:watch": "turbo run test:integration:watch",
-    "test:e2e": "turbo run test:e2e"
+    "test:e2e": "turbo run test:e2e",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push"
   },
   "devDependencies": {
     "eslint-config-custom": "*",

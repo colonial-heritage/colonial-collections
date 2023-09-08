@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@clerk/localizations": "1.25.1",
-    "@clerk/nextjs": "4.21.13",
-    "@clerk/types": "3.46.1",
+    "@clerk/nextjs": "4.23.2",
+    "@clerk/types": "3.49.0",
     "@colonial-collections/content": "*",
     "@colonial-collections/iris": "*",
     "@colonial-collections/label-fetcher": "*",
@@ -35,6 +35,7 @@
     "fetch-sparql-endpoint": "3.3.3",
     "next": "13.4.7",
     "next-intl": "3.0.0-beta.7",
+    "@colonial-collections/object-lists": "*",
     "openseadragon": "4.1.0",
     "rdf-object": "1.14.0",
     "react": "18.2.0",
