@@ -1,0 +1,25 @@
+name: Migrate database
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "packages/object-lists/migrations/**"
+
+jobs:
+  migrate:
+    if: ${{ github.event.label.name == 'migrations:push' }}
+    env:
+      DATABASE_URL: ${{ secrets.PLANETSCALE_DATABASE_URL }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - run: npm ci
+      - run: npm run db:push
+      - name: add label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: migrations:finished

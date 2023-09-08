@@ -1,0 +1,30 @@
+name: Check for migrations
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "packages/object-lists/migrations/**"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: add label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ github.event.label.name != 'migrations:finished' && github.event.label.name != 'migrations:needed' }}
+        with:
+          labels: migrations:needed
+      - name: add comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **Migrations needed**
+            
+            There are migrations that need to be applied to the database. Please add the label `migrations:push` to start migrating the development database.
+
+            Warning: All preview and development environments use the same database. Migrating can affect other environments.
