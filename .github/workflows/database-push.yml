@@ -1,0 +1,31 @@
+name: Migrate database
+
+on:
+  pull_request:
+    branches: ["test-db-production"]
+    paths:
+      - "packages/object-lists/migrations/**"
+
+jobs:
+  migrate:
+    env:
+      DATABASE_URL: ${{ secrets.PLANETSCALE_DATABASE_URL }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - run: npm ci
+      - run: npm run db:push
+      - name: add comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            ## Development database is migrated
+
+            The development database migrated with the migrations found in this branch. 
+
+            **Warning**: All preview and development environments use the same database. This migration can affect all preview and development environments.
+
+            After merging this pull request, the development database changes will merge into the production database.
