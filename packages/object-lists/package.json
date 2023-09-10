@@ -8,15 +8,15 @@
     "db:generate": "drizzle-kit generate:mysql",
     "db:push": "drizzle-kit push:mysql",
     "db:drop": "drizzle-kit drop",
-    "db:studio": "dotenv -e ../../.env.local drizzle-kit studio"
+    "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
-    "dotenv": "16.3.1",
-    "drizzle-kit": "0.19.13",
     "eslint-config-custom": "*",
     "tsconfig": "*"
   },
   "dependencies": {
+    "dotenv": "16.3.1",
+    "drizzle-kit": "0.19.13",
     "drizzle-orm": "0.28.5",
     "mysql2": "3.6.0"
   }
