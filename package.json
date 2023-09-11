@@ -23,7 +23,7 @@
   "devDependencies": {
     "eslint-config-custom": "*",
     "gts": "5.0.1",
-    "turbo": "1.10.1"
+    "turbo": "1.10.13"
   },
   "engines": {
     "node": "18.x"
