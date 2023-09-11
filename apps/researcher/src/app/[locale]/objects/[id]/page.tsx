@@ -17,6 +17,7 @@ import {
 } from 'ui';
 import useCurrentPublisher from './useCurrentPublisher';
 import {env} from 'node:process';
+import dateCreatedToString from './date-created-to-string';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -183,6 +184,14 @@ export default async function Details({params}: Props) {
                 {object.materials?.map(material => (
                   <div key={material.id}>{material.name}</div>
                 ))}
+              </MetadataEntry>
+            </MetadataContainer>
+
+            <MetadataContainer identifier="dateCreated">
+              <MetadataEntry isCurrentPublisher>
+                {object.dateCreated && (
+                  <div>{dateCreatedToString(object.dateCreated, locale)}</div>
+                )}
               </MetadataEntry>
             </MetadataContainer>
 

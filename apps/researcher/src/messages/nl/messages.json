@@ -62,7 +62,6 @@
     "identifier": "ID: {identifier}",
     "metadata": "Metadata",
     "description": "Beschrijving",
-    "date": "Datum",
     "license": "Licentie",
     "materials": "Materialen",
     "techniques": "Technieken",
@@ -82,7 +81,9 @@
     "inscriptionsSubTitle": "",
     "addedBy": "Toegevoegd door <name></name> uit <location></location>",
     "currentPublisher": "Huidige locatie van object",
-    "noOrganizationFound": "Geen organisatie gevonden."
+    "noOrganizationFound": "Geen organisatie gevonden.",
+    "dateCreated": "Datum van creatie",
+    "dateCreatedSubTitle": "Wanneer is het voorwerp gemaakt? Dit kan een exacte datum of een datumbereik zijn."
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",

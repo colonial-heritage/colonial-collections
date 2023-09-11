@@ -62,7 +62,6 @@
     "identifier": "ID: {identifier}",
     "metadata": "Metadata",
     "description": "Description",
-    "date": "Date",
     "license": "License",
     "materials": "Materials",
     "techniques": "Techniques",
@@ -82,7 +81,9 @@
     "inscriptionsSubTitle": "",
     "addedBy": "Added by <name></name> from <location></location>",
     "currentPublisher": "Current location of object",
-    "noOrganizationFound": "No organization found."
+    "noOrganizationFound": "No organization found.",
+    "dateCreated": "Date Made",
+    "dateCreatedSubTitle": "When was the object made. Could be a exact or a date range."
   },
   "PersonDetails": {
     "backButton": "Back to results",
