@@ -68,10 +68,10 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  let organization = null;
+  let organization;
   if (object.isPartOf?.publisher?.id) {
     organization = await organizations.getById(object.isPartOf.publisher.id);
-    organization && useCurrentPublisher.setState(organization);
+    organization && useCurrentPublisher.setState({organization});
   }
 
   const galleryImages =
@@ -159,13 +159,13 @@ export default async function Details({params}: Props) {
           </div>
           <div className="flex flex-col gap-8 self-stretch">
             <MetadataContainer identifier="description">
-              <MetadataEntry isCurrentLocation>
+              <MetadataEntry isCurrentPublisher>
                 {object.description}
               </MetadataEntry>
             </MetadataContainer>
 
             <MetadataContainer identifier="materials">
-              <MetadataEntry isCurrentLocation>
+              <MetadataEntry isCurrentPublisher>
                 {object.materials?.map(material => (
                   <div key={material.id}>{material.name}</div>
                 ))}
@@ -173,7 +173,7 @@ export default async function Details({params}: Props) {
             </MetadataContainer>
 
             <MetadataContainer identifier="types">
-              <MetadataEntry isCurrentLocation>
+              <MetadataEntry isCurrentPublisher>
                 {object.types?.map(type => (
                   <div key={type.id}>{type.name}</div>
                 ))}
@@ -181,7 +181,7 @@ export default async function Details({params}: Props) {
             </MetadataContainer>
 
             <MetadataContainer identifier="techniques">
-              <MetadataEntry isCurrentLocation>
+              <MetadataEntry isCurrentPublisher>
                 {object.techniques?.map(technique => (
                   <div key={technique.id}>{technique.name}</div>
                 ))}
@@ -189,7 +189,7 @@ export default async function Details({params}: Props) {
             </MetadataContainer>
 
             <MetadataContainer identifier="creators">
-              <MetadataEntry isCurrentLocation>
+              <MetadataEntry isCurrentPublisher>
                 {object.creators?.map(creator => (
                   <div key={creator.id}>{creator.name}</div>
                 ))}
@@ -197,7 +197,7 @@ export default async function Details({params}: Props) {
             </MetadataContainer>
 
             <MetadataContainer identifier="inscriptions">
-              <MetadataEntry isCurrentLocation>
+              <MetadataEntry isCurrentPublisher>
                 {object.inscriptions?.map(inscription => (
                   <div key={inscription}>{inscription}</div>
                 ))}

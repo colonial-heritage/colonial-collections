@@ -37,15 +37,15 @@ export function MetadataContainer({identifier, children}: Props) {
 
 interface MetadataEntryProps {
   children: ReactNode;
-  isCurrentLocation: boolean;
+  isCurrentPublisher: boolean;
 }
 
 export function MetadataEntry({
   children,
-  isCurrentLocation = false,
+  isCurrentPublisher = false,
 }: MetadataEntryProps) {
   const {identifier} = useMetadata.getState();
-  const organization = useCurrentPublisher.getState();
+  const {organization} = useCurrentPublisher.getState();
   const t = useTranslations('ObjectDetails');
 
   if (!children) {
@@ -63,8 +63,6 @@ export function MetadataEntry({
       <div className="w-full lg:w-3/5  py-3">{children}</div>
       <div className="w-full lg:w-2/5 px-2 py-3 text-xs text-sand-700 mt-1 flex flex-row justify-between gap-2">
         <div className="flex flex-col gap-1">
-          <div>
-            {t.rich('addedBy', {
               name: () => <strong>{organization.name}</strong>,
               location: () => (
                 <em>
@@ -77,8 +75,9 @@ export function MetadataEntry({
             TODO: Add a 'changed on' date
             on <em>12-12-2018</em>
             */}
-          </div>
-          {isCurrentLocation && <div>{t('currentLocation')}</div>}
+            </div>
+          )}
+          {isCurrentPublisher && <div>{t('currentPublisher')}</div>}
         </div>
       </div>
     </div>

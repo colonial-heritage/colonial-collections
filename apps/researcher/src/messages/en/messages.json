@@ -81,7 +81,7 @@
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
     "addedBy": "Added by <name></name> from <location></location>",
-    "currentLocation": "Current location of object"
+    "currentPublisher": "Current location of object"
   },
   "PersonDetails": {
     "backButton": "Back to results",

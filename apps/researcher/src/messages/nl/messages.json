@@ -81,7 +81,7 @@
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
     "addedBy": "Toegevoegd door <name></name> uit <location></location>",
-    "currentLocation": "Huidige locatie van object"
+    "currentPublisher": "Huidige locatie van object"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
