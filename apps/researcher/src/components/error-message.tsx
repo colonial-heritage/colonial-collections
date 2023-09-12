@@ -4,5 +4,5 @@ interface Props {
 }
 
 export default function ErrorMessage({error, testId = 'error'}: Props) {
-  return <div data-testId={testId}>{error}</div>;
+  return <div data-testid={testId}>{error}</div>;
 }

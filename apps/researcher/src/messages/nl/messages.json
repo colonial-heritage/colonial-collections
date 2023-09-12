@@ -19,7 +19,8 @@
     "home": "Home",
     "about": "Over",
     "faq": "FAQ",
-    "contact": "Contact"
+    "contact": "Contact",
+    "communities": "Communities"
   },
   "Tabs": {
     "objects": "Objecten zoeken",
@@ -136,7 +137,9 @@
   },
   "Communities": {
     "title": "Communities",
-    "error": "Er is een fout opgetreden bij het ophalen van de communities. Probeer het later opnieuw."
+    "error": "Er is een fout opgetreden bij het ophalen van de communities. Probeer het later opnieuw.",
+    "communityName": "Community van <name></name>",
+    "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}"
   },
   "Community": {
     "title": "Community van",

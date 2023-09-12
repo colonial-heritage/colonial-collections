@@ -1,22 +1,25 @@
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getTranslations} from 'next-intl/server';
+import {getTranslator} from 'next-intl/server';
 import {JoinCommunityButton, EditCommunityButton} from './buttons';
-import {getMemberships, getCommunity, isAdmin} from '@/lib/community';
+import {getMemberships, getCommunityBySlug, isAdmin} from '@/lib/community';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
 
 interface Props {
-  params: {id: string};
+  params: {
+    slug: string;
+    locale: string;
+  };
 }
 
 export default async function CommunityPage({params}: Props) {
-  const t = await getTranslations('Community');
+  const t = await getTranslator(params.locale, 'Community');
   let community, memberships;
 
   try {
-    community = await getCommunity(params.id);
+    community = await getCommunityBySlug(params.slug);
   } catch (err) {
     if ((err as ClerkAPIResponseError).status === 404) {
       return <ErrorMessage error={t('noEntity')} testId="no-entity" />;
@@ -25,7 +28,7 @@ export default async function CommunityPage({params}: Props) {
   }
 
   try {
-    memberships = await getMemberships(params.id);
+    memberships = await getMemberships(community.id);
   } catch (err) {
     return <ErrorMessage error={t('error')} />;
   }

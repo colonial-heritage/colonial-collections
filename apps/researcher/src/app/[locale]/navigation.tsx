@@ -36,6 +36,7 @@ export default function Navigation({locales}: Props) {
     {name: tNavigation('about'), href: '/about'},
     {name: tNavigation('faq'), href: '/faq'},
     {name: tNavigation('contact'), href: '/contact'},
+    {name: tNavigation('communities'), href: '/communities'},
   ];
 
   return (

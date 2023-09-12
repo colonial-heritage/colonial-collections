@@ -5,7 +5,10 @@ import {
   Organization as FullCommunity,
 } from '@clerk/backend/dist/types';
 
-type Community = Pick<FullCommunity, 'id' | 'name'>;
+export type Community = Pick<
+  FullCommunity,
+  'id' | 'name' | 'slug' | 'imageUrl'
+>;
 
 export type Membership = Pick<OrganizationMembership, 'id' | 'role'> & {
   publicUserData?: Pick<
@@ -14,9 +17,9 @@ export type Membership = Pick<OrganizationMembership, 'id' | 'role'> & {
   > | null;
 };
 
-export async function getCommunity(communityId: string): Promise<Community> {
+export async function getCommunityBySlug(slug: string): Promise<Community> {
   return clerkClient.organizations.getOrganization({
-    organizationId: communityId,
+    slug,
   });
 }
 
@@ -28,8 +31,13 @@ export async function getMemberships(
   });
 }
 
-export function getAllCommunities(): Promise<Community[]> {
-  return clerkClient.organizations.getOrganizationList();
+export async function getAllCommunities({query = ''} = {}): Promise<
+  Community[]
+> {
+  return clerkClient.organizations.getOrganizationList({
+    query,
+    includeMembersCount: true,
+  });
 }
 
 export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
