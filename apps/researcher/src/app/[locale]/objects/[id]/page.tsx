@@ -25,8 +25,21 @@ interface Props {
 }
 
 function ContactDetailsSlideOver({datasetId}: {datasetId?: string}) {
-  const organization = useCurrentPublisher.getState();
+  const {organization} = useCurrentPublisher.getState();
   const t = useTranslations('ObjectDetails');
+
+  if (!organization) {
+    return (
+      <SlideOverDialog>
+        <SlideOverHeader />
+        <SlideOverContent>
+          <div className="flex-col gap-4 mt-4 flex">
+            <h2>{t('noOrganizationFound')}</h2>
+          </div>
+        </SlideOverContent>
+      </SlideOverDialog>
+    );
+  }
 
   return (
     <SlideOverDialog>

@@ -81,7 +81,8 @@
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
     "addedBy": "Toegevoegd door <name></name> uit <location></location>",
-    "currentPublisher": "Huidige locatie van object"
+    "currentPublisher": "Huidige locatie van object",
+    "noOrganizationFound": "Geen organisatie gevonden."
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",

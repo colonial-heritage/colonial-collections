@@ -63,15 +63,18 @@ export function MetadataEntry({
       <div className="w-full lg:w-3/5  py-3">{children}</div>
       <div className="w-full lg:w-2/5 px-2 py-3 text-xs text-sand-700 mt-1 flex flex-row justify-between gap-2">
         <div className="flex flex-col gap-1">
-              name: () => <strong>{organization.name}</strong>,
-              location: () => (
-                <em>
-                  {organization.address?.addressLocality},{' '}
-                  {organization.address?.addressCountry}
-                </em>
-              ),
-            })}
-            {/*
+          {organization && (
+            <div>
+              {t.rich('addedBy', {
+                name: () => <strong>{organization.name}</strong>,
+                location: () => (
+                  <em>
+                    {organization.address?.addressLocality},{' '}
+                    {organization.address?.addressCountry}
+                  </em>
+                ),
+              })}
+              {/*
             TODO: Add a 'changed on' date
             on <em>12-12-2018</em>
             */}
