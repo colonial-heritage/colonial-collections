@@ -45,9 +45,9 @@ function ContactDetailsSlideOver({datasetId}: {datasetId?: string}) {
           )}{' '}
           {datasetId && (
             <a
-              href={`https://datasets.colonialcollections.nl/nl/datasets/${encodeURIComponent(
-                datasetId
-              )}`}
+              href={`${
+                process.env['DATASET_BROWSER_URL']
+              }/datasets/${encodeURIComponent(datasetId)}`}
             >
               {t('linkToDataset')}
             </a>
