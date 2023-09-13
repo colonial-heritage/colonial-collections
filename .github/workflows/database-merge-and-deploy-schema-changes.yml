@@ -1,11 +1,9 @@
-name: Merge schema changes
+name: Merge and deploy database schema changes
 on:
   pull_request:
     branches: ["main"]
     types: [closed]
-    paths:
-      - "packages/object-lists/migrations/**"
-
+    paths: ["packages/object-lists/migrations/**"]
 
 jobs:
   merge_changes:
@@ -13,7 +11,7 @@ jobs:
     if: github.event.pull_request.merged == true
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Create a deploy request
         uses: planetscale/create-deploy-request-action@v1
         id: create_deploy_request

@@ -18,11 +18,11 @@ jobs:
           node-version: "18"
       - run: npm ci
       - run: npm run db:push
-      - name: add comment
+      - name: Add comment
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            ## Development database is migrated
+            ## Database schema changes have been applied
 
             The development database migrated with the migrations found in this branch. 
 

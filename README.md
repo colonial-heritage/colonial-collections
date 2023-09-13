@@ -68,7 +68,8 @@ Then run:
 
     docker run --rm -it -v "$PWD":/app -w /app node:18 /bin/bash
 
-### connecting to the mySQL server
+### Connecting to the MySQL server
+
 If you are not planning to alter the database. Connecting to the PlanetScale development database is the easiest option.
 
 Add `DATABASE_URL` environment variable the file `apps/researcher/.env.local`

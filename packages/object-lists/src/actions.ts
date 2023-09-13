@@ -3,7 +3,7 @@
 import {objectLists, objectListItems} from './db/schema';
 import db from './db/connection';
 
-export async function getAllCommunityLists(communityId: string) {
+export async function getCommunityLists(communityId: string) {
   return db.query.objectLists.findMany({
     where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
   });
@@ -18,7 +18,7 @@ export async function getAllCommunityListsWithObjects(communityId: string) {
   });
 }
 
-interface createListForCommunityProps {
+interface CreateListForCommunityProps {
   communityId: string;
   userId: string;
   name: string;
@@ -30,7 +30,7 @@ export async function createListForCommunity({
   name,
   description,
   userId,
-}: createListForCommunityProps) {
+}: CreateListForCommunityProps) {
   return db.insert(objectLists).values({
     communityId,
     name,
