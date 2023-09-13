@@ -83,7 +83,7 @@
     "currentPublisher": "Current location of object",
     "noOrganizationFound": "No organization found.",
     "dateCreated": "Date Made",
-    "dateCreatedSubTitle": "When was the object made. Could be a exact or a date range."
+    "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range."
   },
   "PersonDetails": {
     "backButton": "Back to results",
