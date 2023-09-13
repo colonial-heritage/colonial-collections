@@ -7,7 +7,7 @@ import {
 
 export type Community = Pick<
   FullCommunity,
-  'id' | 'name' | 'slug' | 'imageUrl'
+  'id' | 'name' | 'slug' | 'imageUrl' | 'createdAt'
 >;
 
 export type Membership = Pick<OrganizationMembership, 'id' | 'role'> & {
@@ -31,12 +31,40 @@ export async function getMemberships(
   });
 }
 
-export async function getAllCommunities({query = ''} = {}): Promise<
-  Community[]
-> {
-  return clerkClient.organizations.getOrganizationList({
+interface GetAllCommunitiesProps {
+  query?: string;
+  orderBy?: 'nameAsc' | 'nameDsc' | 'createdAt';
+  limit: number;
+  offset: number;
+}
+
+export async function getAllCommunities({
+  query = '',
+  orderBy = 'nameAsc',
+  limit,
+  offset,
+}: GetAllCommunitiesProps): Promise<Community[]> {
+  const communities = await clerkClient.organizations.getOrganizationList({
+    limit,
+    offset,
     query,
+    // TODO: `includeMembersCount` is not working, I have reported this bug to Clerk.
+    // They have confirmed it and are working on a fix.
+    // When the membership count is present, we can use it to sort the communities.
+    // https://discord.com/channels/856971667393609759/1151078450627624970
     includeMembersCount: true,
+  });
+
+  return communities.sort((a, b) => {
+    if (orderBy === 'nameAsc') {
+      return a.name.localeCompare(b.name);
+    } else if (orderBy === 'nameDsc') {
+      return b.name.localeCompare(a.name);
+    } else if (orderBy === 'createdAt') {
+      return b.createdAt - a.createdAt;
+    } else {
+      return 0;
+    }
   });
 }
 
