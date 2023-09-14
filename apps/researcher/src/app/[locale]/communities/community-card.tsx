@@ -30,7 +30,6 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
   return (
     <Link
       href={`/communities/${community.slug}`}
-      data-testid="community-item-name"
       className="rounded-lg mb-20 bg-[#f3eee2] hover:bg-[#f1e9d7] text-stone-800 transition"
     >
       <div className="-mt-20 w-full flex justify-center">
@@ -46,7 +45,12 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
       <h1 className="text-xl font-normal w-full flex justify-center mt-4 px-4">
         {t.rich('communityName', {
           name: () => (
-            <strong className="font-semibold ml-1">{community.name}</strong>
+            <strong
+              className="font-semibold ml-1"
+              data-testid="community-item-name"
+            >
+              {community.name}
+            </strong>
           ),
         })}
       </h1>

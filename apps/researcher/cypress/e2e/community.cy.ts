@@ -19,7 +19,7 @@ describe('Community details page', () => {
       .first()
       .then($name => {
         // Navigate to the first community details page.
-        cy.getBySel('community-item-name').first().find('a').click();
+        $name.parentsUntil('a').click();
         // Wait for the page to load.
         cy.location('pathname', {timeout: 60000}).should(
           'include',
