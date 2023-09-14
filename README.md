@@ -70,11 +70,7 @@ Then run:
 
 ### Connecting to the MySQL server
 
-If you are not planning to alter the database. Connecting to the PlanetScale development database is the easiest option.
-
-Add `DATABASE_URL` environment variable the file `apps/researcher/.env.local`
-
-If you want to test migration, you need a local database. You can read more about this in the [object-lists readme](packages/object-lists/README.md).
+Add `DATABASE_URL` environment variable to the file `apps/researcher/.env.local`. More information about connecting to the database is in the [datahub-data readme](packages/datahub-data/README.md).
 
 
 ### Install packages

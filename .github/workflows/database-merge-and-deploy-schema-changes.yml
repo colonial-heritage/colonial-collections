@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: ["main"]
     types: [closed]
-    paths: ["packages/object-lists/migrations/**"]
+    paths: ["packages/datahub-data/migrations/**"]
 
 jobs:
   merge_changes:

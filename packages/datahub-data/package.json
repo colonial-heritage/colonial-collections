@@ -1,5 +1,5 @@
 {
-  "name": "@colonial-collections/object-lists",
+  "name": "@colonial-collections/datahub-data",
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",
