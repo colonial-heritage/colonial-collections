@@ -3,8 +3,7 @@ name: Migrate database
 on:
   pull_request:
     branches: ["main"]
-    paths:
-      - "packages/object-lists/migrations/**"
+    paths: ["packages/object-lists/migrations/**"]
 
 jobs:
   migrate:
