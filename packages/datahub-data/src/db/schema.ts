@@ -32,15 +32,15 @@ export const objectLists = mysqlTable(
 );
 
 export const objectListsRelations = relations(objectLists, ({many}) => ({
-  objects: many(objectListItems),
+  objects: many(objectItems),
 }));
 
-export const objectListItems = mysqlTable(
-  'object_list_item',
+export const objectItems = mysqlTable(
+  'object_item',
   {
     id: serial('id').primaryKey(),
     objectId: varchar('object_id', {length: 256}).notNull(),
-    listId: int('list_id'),
+    objectListId: int('object_list_id'),
     createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -48,14 +48,14 @@ export const objectListItems = mysqlTable(
   },
   item => ({
     objectId: index('object_id').on(item.objectId),
-    listId: index('list_id').on(item.listId),
-    unique: unique().on(item.objectId, item.listId),
+    objectListId: index('object_list_id').on(item.objectListId),
+    unique: unique().on(item.objectId, item.objectListId),
   })
 );
 
-export const objectListItemsRelations = relations(objectListItems, ({one}) => ({
+export const objectItemsRelations = relations(objectItems, ({one}) => ({
   list: one(objectLists, {
-    fields: [objectListItems.listId],
+    fields: [objectItems.objectListId],
     references: [objectLists.id],
   }),
 }));

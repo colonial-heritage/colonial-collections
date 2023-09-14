@@ -1,11 +1,11 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "52a583ae-fe02-462b-ba89-6513c5b3466f",
+  "id": "4703ec87-b3bf-4f7d-99a9-14169d120da1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "object_list_item": {
-      "name": "object_list_item",
+    "object_item": {
+      "name": "object_item",
       "columns": {
         "id": {
           "name": "id",
@@ -21,8 +21,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "list_id": {
-          "name": "list_id",
+        "object_list_id": {
+          "name": "object_list_id",
           "type": "int",
           "primaryKey": false,
           "notNull": false,
@@ -52,29 +52,29 @@
           ],
           "isUnique": false
         },
-        "list_id": {
-          "name": "list_id",
+        "object_list_id": {
+          "name": "object_list_id",
           "columns": [
-            "list_id"
+            "object_list_id"
           ],
           "isUnique": false
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "object_list_item_id": {
-          "name": "object_list_item_id",
+        "object_item_id": {
+          "name": "object_item_id",
           "columns": [
             "id"
           ]
         }
       },
       "uniqueConstraints": {
-        "object_list_item_object_id_list_id_unique": {
-          "name": "object_list_item_object_id_list_id_unique",
+        "object_item_object_id_object_list_id_unique": {
+          "name": "object_item_object_id_object_list_id_unique",
           "columns": [
             "object_id",
-            "list_id"
+            "object_list_id"
           ]
         }
       }
