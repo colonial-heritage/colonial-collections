@@ -1,18 +1,17 @@
 import {create} from 'zustand';
-import {SortBy, defaultSortBy} from './sort';
 
 export interface Props {
   totalCount: number;
   offset: number;
   limit: number;
   query: string;
-  sortBy: SortBy;
+  sortBy?: string;
   // Setting newDataNeeded to true will trigger a page reload with new search params
   newDataNeeded: boolean;
   isInitialized: boolean;
   selectedFilters: {[filterKey: string]: string[] | undefined};
   filterChange: (key: string, value: string[]) => void;
-  sortChange: (sortBy: SortBy) => void;
+  sortChange: (sortBy: string) => void;
   queryChange: (query: string) => void;
   pageChange: (direction: 1 | -1) => void;
   setNewData: ({
@@ -27,7 +26,7 @@ export interface Props {
     offset: number;
     limit: number;
     query: string;
-    sortBy: SortBy;
+    sortBy: string;
     selectedFilters: {[filterKey: string]: string[] | undefined};
   }) => void;
   transitionStarted: () => void;
@@ -38,7 +37,7 @@ export const useListStore = create<Props>((set, get) => ({
   totalCount: 0,
   offset: 0,
   limit: 10,
-  sortBy: defaultSortBy,
+  sortBy: undefined,
   selectedFilters: {},
   newDataNeeded: false,
   isInitialized: false,

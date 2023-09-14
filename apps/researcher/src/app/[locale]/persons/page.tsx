@@ -19,7 +19,7 @@ import {
   FilterSet,
   Paginator,
   SelectedFilters,
-  SearchField,
+  SearchFieldWithLabel,
   OrderSelector,
 } from 'ui/list';
 import {
@@ -53,7 +53,7 @@ function FacetMenu({filterKeysOrder, filters}: FacetMenuProps) {
 
   return (
     <>
-      <SearchField />
+      <SearchFieldWithLabel />
       {filterKeysOrder.map(
         filterKey =>
           !!filters[filterKey]?.length && (

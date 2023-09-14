@@ -19,7 +19,7 @@ import {
   FilterSet,
   Paginator,
   SelectedFilters,
-  SearchField,
+  SearchFieldWithLabel,
   OrderSelector,
 } from 'ui/list';
 import {SmallScreenSubMenu, SubMenuButton, SubMenuDialog} from 'ui';
@@ -46,7 +46,7 @@ function FacetMenu({filterKeysOrder, filters}: FacetMenuProps) {
 
   return (
     <>
-      <SearchField />
+      <SearchFieldWithLabel />
       {filterKeysOrder.map(
         filterKey =>
           !!filters[filterKey]?.length && (

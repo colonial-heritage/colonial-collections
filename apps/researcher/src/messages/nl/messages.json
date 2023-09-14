@@ -117,12 +117,14 @@
     "clearAllFilters": "Alles verwijderen",
     "filterSearchPlaceholder": "Filteren op {filterName}",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
-    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
+    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
+    "accessibilityClickToSearch": "klik om te zoeken"
   },
   "Sort": {
-    "sortRelevanceDesc": "Relevantie",
-    "sortNameAsc": "Naam - Oplopend",
-    "sortNameDesc": "Naam - Aflopend",
+    "relevanceDesc": "Relevantie",
+    "nameAsc": "Naam - Oplopend",
+    "nameDesc": "Naam - Aflopend",
+    "createdAtDesc": "Datum gecreeërd",
     "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
   },
   "WorkInProgress": {
@@ -139,7 +141,8 @@
     "title": "Communities",
     "error": "Er is een fout opgetreden bij het ophalen van de communities. Probeer het later opnieuw.",
     "communityName": "Community van <name></name>",
-    "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}"
+    "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",
+    "searchPlaceholder": "Zoek naar community"
   },
   "Community": {
     "title": "Community van",

@@ -10,8 +10,6 @@ interface MembershipCountProps {
   locale: string;
 }
 
-// TODO: This is a workaround for the fact that `includeMembersCount` does not work.
-// See comment in `community.ts` for more information.
 async function MembershipCount({communityId, locale}: MembershipCountProps) {
   const t = await getTranslator(locale, 'Communities');
   const memberships = await getMemberships(communityId);

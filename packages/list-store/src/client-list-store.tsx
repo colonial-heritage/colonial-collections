@@ -2,17 +2,18 @@
 
 import {useEffect} from 'react';
 import {useListStore} from './useListStore';
-import {SortBy} from './sort';
 import {useSearchParamsUpdate} from './useSearchParamsUpdate';
+import {defaultSortBy as packageDefaultSortBy} from './sort';
 
 interface Props {
   totalCount: number;
   offset: number;
   limit: number;
   query: string;
-  sortBy: SortBy;
+  sortBy?: string;
   selectedFilters?: {[filterKey: string]: string[] | undefined};
   baseUrl: string;
+  defaultSortBy?: string;
 }
 
 // The server component that does the API call loads this component.
@@ -25,6 +26,7 @@ export function ClientListStore({
   sortBy,
   selectedFilters,
   baseUrl,
+  defaultSortBy = packageDefaultSortBy,
 }: Props) {
   const listStore = useListStore();
 
@@ -34,12 +36,21 @@ export function ClientListStore({
       offset,
       limit,
       query,
-      sortBy,
+      sortBy: sortBy ?? defaultSortBy,
       selectedFilters: selectedFilters ?? {},
     });
-  }, [limit, offset, query, selectedFilters, sortBy, listStore, totalCount]);
+  }, [
+    limit,
+    offset,
+    query,
+    selectedFilters,
+    sortBy,
+    listStore,
+    totalCount,
+    defaultSortBy,
+  ]);
 
-  useSearchParamsUpdate({baseUrl});
+  useSearchParamsUpdate({baseUrl, defaultSortBy});
 
   return null;
 }

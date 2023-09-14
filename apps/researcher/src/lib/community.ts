@@ -31,18 +31,45 @@ export async function getMemberships(
   });
 }
 
+export enum CommunitySortBy {
+  NameAsc = 'nameAsc',
+  NameDesc = 'nameDesc',
+  CreatedAtDesc = 'createdAtDesc',
+  MembershipCountDesc = 'membershipCountDesc',
+}
+
+export const defaultCommunitySortBy: CommunitySortBy =
+  CommunitySortBy.CreatedAtDesc;
+
+export function sortCommunities(
+  communities: Community[],
+  sortBy: CommunitySortBy
+) {
+  return [...communities].sort((a, b) => {
+    if (sortBy === CommunitySortBy.NameAsc) {
+      return a.name.localeCompare(b.name);
+    } else if (sortBy === CommunitySortBy.NameDesc) {
+      return b.name.localeCompare(a.name);
+    } else if (sortBy === CommunitySortBy.CreatedAtDesc) {
+      return b.createdAt - a.createdAt;
+    } else {
+      return 0;
+    }
+  });
+}
+
 interface GetAllCommunitiesProps {
   query?: string;
-  orderBy?: 'nameAsc' | 'nameDsc' | 'createdAt';
-  limit: number;
-  offset: number;
+  sortBy?: CommunitySortBy;
+  limit?: number;
+  offset?: number;
 }
 
 export async function getAllCommunities({
   query = '',
-  orderBy = 'nameAsc',
-  limit,
-  offset,
+  sortBy = defaultCommunitySortBy,
+  limit = 24,
+  offset = 0,
 }: GetAllCommunitiesProps): Promise<Community[]> {
   const communities = await clerkClient.organizations.getOrganizationList({
     limit,
@@ -55,17 +82,7 @@ export async function getAllCommunities({
     includeMembersCount: true,
   });
 
-  return communities.sort((a, b) => {
-    if (orderBy === 'nameAsc') {
-      return a.name.localeCompare(b.name);
-    } else if (orderBy === 'nameDsc') {
-      return b.name.localeCompare(a.name);
-    } else if (orderBy === 'createdAt') {
-      return b.createdAt - a.createdAt;
-    } else {
-      return 0;
-    }
-  });
+  return sortCommunities(communities, sortBy);
 }
 
 export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
