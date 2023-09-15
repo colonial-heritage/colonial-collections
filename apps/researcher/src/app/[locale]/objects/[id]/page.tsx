@@ -16,6 +16,7 @@ import {
   SlideOver,
 } from 'ui';
 import useCurrentPublisher from './useCurrentPublisher';
+import {env} from 'node:process';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -59,7 +60,7 @@ function ContactDetailsSlideOver({datasetId}: {datasetId?: string}) {
           {datasetId && (
             <a
               href={`${
-                process.env['DATASET_BROWSER_URL']
+                env['DATASET_BROWSER_URL']
               }/datasets/${encodeURIComponent(datasetId)}`}
             >
               {t('linkToDataset')}
