@@ -1,6 +1,6 @@
 'use server';
 
-import {objectLists, objectListItems} from './db/schema';
+import {objectLists, insertObjectItemSchema, objectItems} from './db/schema';
 import db from './db/connection';
 
 export async function getCommunityLists(communityId: string) {
@@ -50,9 +50,11 @@ export async function addObjectToList({
   objectId,
   userId,
 }: AddObjectToListProps) {
-  return db.insert(objectListItems).values({
+  const objectItem = insertObjectItemSchema.parse({
     listId,
     objectId,
     createdBy: userId,
   });
+
+  return db.insert(objectItems).values(objectItem);
 }

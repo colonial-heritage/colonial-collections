@@ -9,6 +9,7 @@ import {
   int,
 } from 'drizzle-orm/mysql-core';
 import {sql, relations} from 'drizzle-orm';
+import {createInsertSchema} from 'drizzle-zod';
 
 export const objectLists = mysqlTable(
   'object_list',
@@ -59,3 +60,5 @@ export const objectItemsRelations = relations(objectItems, ({one}) => ({
     references: [objectLists.id],
   }),
 }));
+
+export const insertObjectItemSchema = createInsertSchema(objectItems);
