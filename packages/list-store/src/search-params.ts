@@ -1,6 +1,5 @@
 import {z, Schema} from 'zod';
 import {SortBy} from './sort';
-import {defaultSortBy as packageDefaultSortBy} from './sort';
 
 const searchParamFilterSchema = z
   .array(z.string())
@@ -29,7 +28,7 @@ interface ClientSearchOptions {
   sortBy?: string;
   filters?: {[filterKey: string]: string[] | undefined};
   baseUrl?: string;
-  defaultSortBy?: string;
+  defaultSortBy: string;
 }
 
 export function getUrlWithSearchParams({
@@ -37,7 +36,7 @@ export function getUrlWithSearchParams({
   offset,
   sortBy,
   filters,
-  defaultSortBy = packageDefaultSortBy,
+  defaultSortBy,
   baseUrl = '/',
 }: ClientSearchOptions): string {
   const searchParams: {[key: string]: string} = getSearchParamsSchema(

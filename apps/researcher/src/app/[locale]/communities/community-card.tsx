@@ -15,7 +15,7 @@ async function MembershipCount({communityId, locale}: MembershipCountProps) {
   const memberships = await getMemberships(communityId);
 
   return t.rich('membershipCount', {
-    count: `${memberships.length}`,
+    count: memberships.length,
   });
 }
 

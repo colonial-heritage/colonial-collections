@@ -3,7 +3,6 @@
 import {useEffect} from 'react';
 import {useListStore} from './useListStore';
 import {useSearchParamsUpdate} from './useSearchParamsUpdate';
-import {defaultSortBy as packageDefaultSortBy} from './sort';
 
 interface Props {
   totalCount: number;
@@ -13,7 +12,7 @@ interface Props {
   sortBy?: string;
   selectedFilters?: {[filterKey: string]: string[] | undefined};
   baseUrl: string;
-  defaultSortBy?: string;
+  defaultSortBy: string;
 }
 
 // The server component that does the API call loads this component.
@@ -26,7 +25,7 @@ export function ClientListStore({
   sortBy,
   selectedFilters,
   baseUrl,
-  defaultSortBy = packageDefaultSortBy,
+  defaultSortBy,
 }: Props) {
   const listStore = useListStore();
 
@@ -38,6 +37,7 @@ export function ClientListStore({
       query,
       sortBy: sortBy ?? defaultSortBy,
       selectedFilters: selectedFilters ?? {},
+      defaultSortBy,
     });
   }, [
     limit,

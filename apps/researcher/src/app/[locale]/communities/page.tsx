@@ -1,8 +1,4 @@
-import {
-  getAllCommunities,
-  CommunitySortBy,
-  defaultCommunitySortBy,
-} from '@/lib/community';
+import {getCommunities, SortBy, defaultSortBy} from '@/lib/community';
 import {getTranslator} from 'next-intl/server';
 import ErrorMessage from '@/components/error-message';
 import CommunityCard from './community-card';
@@ -16,13 +12,10 @@ interface Props {
   };
   searchParams?: {
     query?: string;
-    sortBy?: CommunitySortBy;
+    sortBy?: SortBy;
     offset?: number;
   };
 }
-
-// Revalidate the page
-export const revalidate = 0;
 
 export default async function CommunitiesPage({
   params,
@@ -34,7 +27,7 @@ export default async function CommunitiesPage({
 
   let communities;
   try {
-    communities = await getAllCommunities({
+    communities = await getCommunities({
       query,
       sortBy,
       offset,
@@ -53,7 +46,7 @@ export default async function CommunitiesPage({
           query: query ?? '',
           sortBy: sortBy,
           baseUrl: '/communities',
-          defaultSortBy: defaultCommunitySortBy,
+          defaultSortBy,
         }}
       />
       <div className="px-4 my-10 sm:px-10 w-full max-w-[1800px] mx-auto">
@@ -65,11 +58,7 @@ export default async function CommunitiesPage({
         </div>
         <div>
           <OrderSelector
-            values={[
-              CommunitySortBy.CreatedAtDesc,
-              CommunitySortBy.NameAsc,
-              CommunitySortBy.NameDesc,
-            ]}
+            values={[SortBy.CreatedAtDesc, SortBy.NameAsc, SortBy.NameDesc]}
           />
         </div>
       </div>

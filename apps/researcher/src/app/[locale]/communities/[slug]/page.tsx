@@ -16,8 +16,8 @@ interface Props {
 
 export default async function CommunityPage({params}: Props) {
   const t = await getTranslator(params.locale, 'Community');
-  let community, memberships;
 
+  let community;
   try {
     community = await getCommunityBySlug(params.slug);
   } catch (err) {
@@ -27,6 +27,7 @@ export default async function CommunityPage({params}: Props) {
     return <ErrorMessage error={t('error')} />;
   }
 
+  let memberships;
   try {
     memberships = await getMemberships(community.id);
   } catch (err) {

@@ -46,14 +46,14 @@ const sortOptions = {
 
 describe('getUrlWithSearchParams', () => {
   it('returns "/" if there are no filter options', () => {
-    expect(getUrlWithSearchParams({defaultSortBy: defaultSortBy})).toBe('/');
+    expect(getUrlWithSearchParams({defaultSortBy})).toBe('/');
   });
 
   it('returns "/" with only default values', () => {
     const options = {
       offset: 0,
       sortBy: defaultSortBy,
-      defaultSortBy: defaultSortBy,
+      defaultSortBy,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/');
@@ -62,7 +62,7 @@ describe('getUrlWithSearchParams', () => {
   it('returns "/" with an empty query string', () => {
     const options = {
       query: '',
-      defaultSortBy: defaultSortBy,
+      defaultSortBy,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/');
@@ -71,7 +71,7 @@ describe('getUrlWithSearchParams', () => {
   it('returns "/" with empty filter arrays', () => {
     const options = {
       query: '',
-      defaultSortBy: defaultSortBy,
+      defaultSortBy,
       filters: {
         licenses: [],
         publishers: [],
@@ -86,7 +86,7 @@ describe('getUrlWithSearchParams', () => {
   it('adds "query" to the search params if `query` is not empty', () => {
     const options = {
       query: 'my query',
-      defaultSortBy: defaultSortBy,
+      defaultSortBy,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/?query=my+query');
@@ -95,7 +95,7 @@ describe('getUrlWithSearchParams', () => {
   it('adds "offset" to the search params if `offset` is not 0', () => {
     const options = {
       offset: 12,
-      defaultSortBy: defaultSortBy,
+      defaultSortBy,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/?offset=12');
@@ -104,7 +104,7 @@ describe('getUrlWithSearchParams', () => {
   it('adds "sortBy" to the search params if `sortBy` is not the default', () => {
     const options = {
       sortBy: SortBy.NameAsc,
-      defaultSortBy: defaultSortBy,
+      defaultSortBy,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/?sortBy=nameAsc');
@@ -112,7 +112,7 @@ describe('getUrlWithSearchParams', () => {
 
   it('adds "filters" to the search params if the filter arrays are not empty', () => {
     const options = {
-      defaultSortBy: defaultSortBy,
+      defaultSortBy,
       filters: {
         licenses: ['filter1'],
         publishers: ['filter2'],
@@ -131,7 +131,7 @@ describe('getUrlWithSearchParams', () => {
       query: 'my query',
       offset: 20,
       sortBy: SortBy.NameDesc,
-      defaultSortBy: defaultSortBy,
+      defaultSortBy,
       filters: {
         licenses: ['filter1', 'filter2'],
         publishers: ['filter3'],

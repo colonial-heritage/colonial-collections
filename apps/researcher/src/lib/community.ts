@@ -31,26 +31,24 @@ export async function getMemberships(
   });
 }
 
-export enum CommunitySortBy {
+export enum SortBy {
   NameAsc = 'nameAsc',
   NameDesc = 'nameDesc',
   CreatedAtDesc = 'createdAtDesc',
   MembershipCountDesc = 'membershipCountDesc',
 }
 
-export const defaultCommunitySortBy: CommunitySortBy =
-  CommunitySortBy.CreatedAtDesc;
+export const defaultSortBy = SortBy.CreatedAtDesc;
 
-export function sortCommunities(
-  communities: Community[],
-  sortBy: CommunitySortBy
-) {
+export function sort(communities: Community[], sortBy: SortBy) {
+  // TODO: Implement sorting by membership count.
+  // This can be done as soon as the `Community` includes membership count.
   return [...communities].sort((a, b) => {
-    if (sortBy === CommunitySortBy.NameAsc) {
+    if (sortBy === SortBy.NameAsc) {
       return a.name.localeCompare(b.name);
-    } else if (sortBy === CommunitySortBy.NameDesc) {
+    } else if (sortBy === SortBy.NameDesc) {
       return b.name.localeCompare(a.name);
-    } else if (sortBy === CommunitySortBy.CreatedAtDesc) {
+    } else if (sortBy === SortBy.CreatedAtDesc) {
       return b.createdAt - a.createdAt;
     } else {
       return 0;
@@ -58,19 +56,19 @@ export function sortCommunities(
   });
 }
 
-interface GetAllCommunitiesProps {
+interface GetCommunitiesProps {
   query?: string;
-  sortBy?: CommunitySortBy;
+  sortBy?: SortBy;
   limit?: number;
   offset?: number;
 }
 
-export async function getAllCommunities({
+export async function getCommunities({
   query = '',
-  sortBy = defaultCommunitySortBy,
+  sortBy = defaultSortBy,
   limit = 24,
   offset = 0,
-}: GetAllCommunitiesProps): Promise<Community[]> {
+}: GetCommunitiesProps): Promise<Community[]> {
   const communities = await clerkClient.organizations.getOrganizationList({
     limit,
     offset,
@@ -82,7 +80,7 @@ export async function getAllCommunities({
     includeMembersCount: true,
   });
 
-  return sortCommunities(communities, sortBy);
+  return sort(communities, sortBy);
 }
 
 export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {

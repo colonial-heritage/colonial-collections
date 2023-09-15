@@ -9,6 +9,7 @@ export interface Props {
   // Setting newDataNeeded to true will trigger a page reload with new search params
   newDataNeeded: boolean;
   isInitialized: boolean;
+  defaultSortBy?: string;
   selectedFilters: {[filterKey: string]: string[] | undefined};
   filterChange: (key: string, value: string[]) => void;
   sortChange: (sortBy: string) => void;
@@ -21,6 +22,7 @@ export interface Props {
     query,
     sortBy,
     selectedFilters,
+    defaultSortBy,
   }: {
     totalCount: number;
     offset: number;
@@ -28,6 +30,7 @@ export interface Props {
     query: string;
     sortBy: string;
     selectedFilters: {[filterKey: string]: string[] | undefined};
+    defaultSortBy: string;
   }) => void;
   transitionStarted: () => void;
 }
@@ -38,6 +41,7 @@ export const useListStore = create<Props>((set, get) => ({
   offset: 0,
   limit: 10,
   sortBy: undefined,
+  defaultSortBy: undefined,
   selectedFilters: {},
   newDataNeeded: false,
   isInitialized: false,
@@ -66,7 +70,15 @@ export const useListStore = create<Props>((set, get) => ({
 
     set({offset: newOffset, newDataNeeded: true});
   },
-  setNewData: ({totalCount, offset, limit, query, sortBy, selectedFilters}) => {
+  setNewData: ({
+    totalCount,
+    offset,
+    limit,
+    query,
+    sortBy,
+    selectedFilters,
+    defaultSortBy,
+  }) => {
     if (!get().isInitialized) {
       set({
         totalCount,
@@ -75,6 +87,7 @@ export const useListStore = create<Props>((set, get) => ({
         query,
         sortBy,
         selectedFilters,
+        defaultSortBy,
         isInitialized: true,
       });
     } else if (totalCount !== get().totalCount) {

@@ -7,6 +7,7 @@ import {
   ClientListStore,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
+  defaultSortBy,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -127,6 +128,7 @@ export default async function Home({searchParams = {}}: Props) {
               sortBy,
               selectedFilters: searchOptions.filters,
               baseUrl: '/',
+              defaultSortBy,
             }}
           />
           <aside

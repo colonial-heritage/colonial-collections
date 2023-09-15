@@ -118,7 +118,7 @@
     "filterSearchPlaceholder": "Filteren op {filterName}",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
     "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
-    "accessibilityClickToSearch": "klik om te zoeken"
+    "accessibilityClickToSearch": "Klik om te zoeken"
   },
   "Sort": {
     "relevanceDesc": "Relevantie",
