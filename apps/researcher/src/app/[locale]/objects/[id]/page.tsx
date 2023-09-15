@@ -17,7 +17,7 @@ import {
 } from 'ui';
 import useCurrentPublisher from './useCurrentPublisher';
 import {env} from 'node:process';
-import dateCreatedToString from './date-created-to-string';
+import {dateCreatedFormatter} from './date-created-formatter';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -190,7 +190,7 @@ export default async function Details({params}: Props) {
             <MetadataContainer identifier="dateCreated">
               <MetadataEntry isCurrentPublisher>
                 {object.dateCreated && (
-                  <div>{dateCreatedToString(object.dateCreated, locale)}</div>
+                  <div>{dateCreatedFormatter(object.dateCreated, locale)}</div>
                 )}
               </MetadataEntry>
             </MetadataContainer>

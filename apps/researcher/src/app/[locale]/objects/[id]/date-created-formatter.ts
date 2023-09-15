@@ -1,9 +1,6 @@
 import {TimeSpan} from '@/lib/api/definitions';
 
-export default function dateCreatedToString(
-  dateCreated: TimeSpan,
-  locale: string
-) {
+export function dateCreatedFormatter(dateCreated: TimeSpan, locale: string) {
   if (!dateCreated.startDate && !dateCreated.endDate) {
     return undefined;
   }
