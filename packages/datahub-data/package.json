@@ -5,17 +5,17 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "scripts": {
-    "db:generate": "drizzle-kit generate:mysql",
-    "db:push": "drizzle-kit push:mysql",
-    "db:drop": "drizzle-kit drop",
-    "db:studio": "drizzle-kit studio"
+    "db:generate": "dotenv -c -- drizzle-kit generate:mysql",
+    "db:push": "dotenv -c -- drizzle-kit push:mysql",
+    "db:drop": "dotenv -c -- drizzle-kit drop",
+    "db:studio": "dotenv -c -- drizzle-kit studio"
   },
   "devDependencies": {
+    "dotenv-cli": "7.3.0",
     "eslint-config-custom": "*",
     "tsconfig": "*"
   },
   "dependencies": {
-    "dotenv": "16.3.1",
     "drizzle-kit": "0.19.13",
     "drizzle-orm": "0.28.5",
     "mysql2": "3.6.0"
