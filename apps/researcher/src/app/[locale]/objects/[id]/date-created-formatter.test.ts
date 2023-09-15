@@ -67,4 +67,17 @@ describe('dateCreatedFormatter', () => {
 
     expect(formattedDate).toBe('Jan 1 – 2, 2021');
   });
+
+  it('returns dates in the correct locale', () => {
+    const formattedDate = dateCreatedFormatter(
+      {
+        startDate: new Date('2021-05-01'),
+        endDate: new Date('2021-10-02'),
+        id: 'timeSpan',
+      },
+      'nl'
+    );
+
+    expect(formattedDate).toBe('1 mei – 2 okt 2021');
+  });
 });
