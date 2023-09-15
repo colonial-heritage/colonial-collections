@@ -1,9 +1,9 @@
-import {dateCreatedFormatter} from './date-created-formatter';
+import {formatDateCreated} from './format-date-created';
 import {describe, expect, it} from '@jest/globals';
 
-describe('dateCreatedFormatter', () => {
+describe('formatDateCreated', () => {
   it('returns undefined if both startDate and endDate are undefined', () => {
-    const formattedDate = dateCreatedFormatter(
+    const formattedDate = formatDateCreated(
       {startDate: undefined, endDate: undefined, id: 'timeSpan'},
       'en'
     );
@@ -12,7 +12,7 @@ describe('dateCreatedFormatter', () => {
   });
 
   it('returns only startDate if endDate is undefined', () => {
-    const formattedDate = dateCreatedFormatter(
+    const formattedDate = formatDateCreated(
       {startDate: new Date('2021-01-01'), endDate: undefined, id: 'timeSpan'},
       'en'
     );
@@ -21,7 +21,7 @@ describe('dateCreatedFormatter', () => {
   });
 
   it('returns only endDate if startDate is undefined', () => {
-    const formattedDate = dateCreatedFormatter(
+    const formattedDate = formatDateCreated(
       {startDate: undefined, endDate: new Date('2021-01-02'), id: 'timeSpan'},
       'en'
     );
@@ -30,7 +30,7 @@ describe('dateCreatedFormatter', () => {
   });
 
   it('returns both startDate and endDate if both contain a date', () => {
-    const formattedDate = dateCreatedFormatter(
+    const formattedDate = formatDateCreated(
       {
         startDate: new Date('2021-01-01'),
         endDate: new Date('2021-01-02'),
@@ -43,7 +43,7 @@ describe('dateCreatedFormatter', () => {
   });
 
   it('returns one date if startDate and endDate are the same', () => {
-    const formattedDate = dateCreatedFormatter(
+    const formattedDate = formatDateCreated(
       {
         startDate: new Date('2021-01-01'),
         endDate: new Date('2021-01-01'),
@@ -56,7 +56,7 @@ describe('dateCreatedFormatter', () => {
   });
 
   it('returns only dates and not times', () => {
-    const formattedDate = dateCreatedFormatter(
+    const formattedDate = formatDateCreated(
       {
         startDate: new Date('2021-01-01T12:00:00'),
         endDate: new Date('2021-01-02T13:00:00'),
@@ -69,7 +69,7 @@ describe('dateCreatedFormatter', () => {
   });
 
   it('returns dates in the correct locale', () => {
-    const formattedDate = dateCreatedFormatter(
+    const formattedDate = formatDateCreated(
       {
         startDate: new Date('2021-05-01'),
         endDate: new Date('2021-10-02'),
