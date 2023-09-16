@@ -1,1 +1,1 @@
-export * from './actions';
+export {objectList} from './object-list';
