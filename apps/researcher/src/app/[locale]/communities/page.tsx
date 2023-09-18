@@ -2,7 +2,6 @@ import {getCommunities, SortBy, defaultSortBy} from '@/lib/community';
 import {getTranslator} from 'next-intl/server';
 import ErrorMessage from '@/components/error-message';
 import CommunityCard from './community-card';
-
 import {ClientListStore} from '@colonial-collections/list-store';
 import {Paginator, SearchField, OrderSelector} from 'ui/list';
 
