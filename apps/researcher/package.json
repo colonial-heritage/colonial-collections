@@ -22,7 +22,7 @@
   "dependencies": {
     "@clerk/localizations": "1.25.2",
     "@clerk/nextjs": "4.21.13",
-    "@clerk/types": "3.46.1",
+    "@clerk/types": "3.51.0",
     "@colonial-collections/content": "*",
     "@colonial-collections/iris": "*",
     "@colonial-collections/label-fetcher": "*",
