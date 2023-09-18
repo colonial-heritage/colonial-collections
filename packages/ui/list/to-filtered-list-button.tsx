@@ -4,6 +4,7 @@ import {ReactNode} from 'react';
 import {
   useListStore,
   getUrlWithSearchParams,
+  defaultSortBy,
 } from '@colonial-collections/list-store';
 import Link from 'next-intl/link';
 import {useMemo} from 'react';
@@ -23,10 +24,12 @@ export function ToFilteredListButton({children, baseUrl, className}: Props) {
         offset: listStore.offset,
         sortBy: listStore.sortBy,
         filters: listStore.selectedFilters,
+        defaultSortBy: listStore.defaultSortBy || defaultSortBy,
         baseUrl: baseUrl,
       }),
     [
       baseUrl,
+      listStore.defaultSortBy,
       listStore.offset,
       listStore.query,
       listStore.selectedFilters,

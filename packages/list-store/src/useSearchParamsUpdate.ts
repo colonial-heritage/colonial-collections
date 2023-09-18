@@ -7,9 +7,10 @@ import {getUrlWithSearchParams} from './search-params';
 
 interface Props {
   baseUrl: string;
+  defaultSortBy: string;
 }
 
-export function useSearchParamsUpdate({baseUrl}: Props) {
+export function useSearchParamsUpdate({baseUrl, defaultSortBy}: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const listStore = useListStore();
@@ -22,13 +23,14 @@ export function useSearchParamsUpdate({baseUrl}: Props) {
         sortBy: listStore.sortBy,
         filters: listStore.selectedFilters,
         baseUrl: baseUrl,
+        defaultSortBy,
       });
       startTransition(() => {
         listStore.transitionStarted();
         router.replace(url);
       });
     }
-  }, [isPending, router, listStore, baseUrl]);
+  }, [isPending, router, listStore, baseUrl, defaultSortBy]);
 
   return {isPending};
 }

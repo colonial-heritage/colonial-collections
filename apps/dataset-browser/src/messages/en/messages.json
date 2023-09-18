@@ -115,12 +115,13 @@
     "clearAllFilters": "Clear all",
     "filterSearchPlaceholder": "Filter on {filterName}",
     "accessibilityTypeToFilter": "Type to filter on text.",
-    "accessibilitySelectToFilter": "Select a checkbox to filter"
+    "accessibilitySelectToFilter": "Select a checkbox to filter",
+    "accessibilityClickToSearch": "Click to search"
   },
   "Sort": {
-    "sortRelevanceDesc": "Relevance",
-    "sortNameAsc": "Name - Ascending",
-    "sortNameDesc": "Name - Descending",
+    "relevanceDesc": "Relevance",
+    "nameAsc": "Name - Ascending",
+    "nameDesc": "Name - Descending",
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
   },
   "WorkInProgress": {

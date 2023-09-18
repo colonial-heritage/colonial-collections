@@ -7,6 +7,7 @@ import {
   ClientListStore,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
+  defaultSortBy,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -19,7 +20,7 @@ import {
   FilterSet,
   Paginator,
   SelectedFilters,
-  SearchField,
+  SearchFieldWithLabel,
   OrderSelector,
 } from 'ui/list';
 import {
@@ -53,7 +54,7 @@ function FacetMenu({filterKeysOrder, filters}: FacetMenuProps) {
 
   return (
     <>
-      <SearchField />
+      <SearchFieldWithLabel />
       {filterKeysOrder.map(
         filterKey =>
           !!filters[filterKey]?.length && (
@@ -130,6 +131,7 @@ export default async function Home({searchParams = {}}: Props) {
                 sortBy,
                 selectedFilters: searchOptions.filters,
                 baseUrl: '/persons',
+                defaultSortBy,
               }}
             />
             <aside
