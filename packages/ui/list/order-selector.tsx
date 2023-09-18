@@ -3,7 +3,9 @@
 import {useListStore, SortBy} from '@colonial-collections/list-store';
 import {useTranslations} from 'next-intl';
 
-export function OrderSelector() {
+const defaultValues = [SortBy.RelevanceDesc, SortBy.NameAsc, SortBy.NameDesc];
+
+export function OrderSelector({values = defaultValues}: {values?: string[]}) {
   const t = useTranslations('Sort');
   const {sortBy, sortChange} = useListStore();
 
@@ -19,9 +21,11 @@ export function OrderSelector() {
       onChange={handleSortByChange}
       aria-label={t('accessibilitySelectToChangeOrder')}
     >
-      <option value={SortBy.RelevanceDesc}>{t('sortRelevanceDesc')}</option>
-      <option value={SortBy.NameAsc}>{t('sortNameAsc')}</option>
-      <option value={SortBy.NameDesc}>{t('sortNameDesc')}</option>
+      {values.map(value => (
+        <option key={value} value={value}>
+          {t(value)}
+        </option>
+      ))}
     </select>
   );
 }

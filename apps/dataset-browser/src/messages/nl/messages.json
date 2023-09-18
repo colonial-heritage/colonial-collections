@@ -114,12 +114,13 @@
     "clearAllFilters": "Alles verwijderen",
     "filterSearchPlaceholder": "Filteren op {filterName}",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
-    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren"
+    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
+    "accessibilityClickToSearch": "Klik om te zoeken"
   },
   "Sort": {
-    "sortRelevanceDesc": "Relevantie",
-    "sortNameAsc": "Naam - Oplopend",
-    "sortNameDesc": "Naam - Aflopend",
+    "relevanceDesc": "Relevantie",
+    "nameAsc": "Naam - Oplopend",
+    "nameDesc": "Naam - Aflopend",
     "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
   },
   "WorkInProgress": {

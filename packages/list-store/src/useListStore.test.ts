@@ -4,7 +4,7 @@
 
 import {renderHook, act} from '@testing-library/react';
 import {useListStore} from './useListStore';
-import {SortBy} from './sort';
+import {SortBy, defaultSortBy} from './sort';
 
 describe('pageChange', () => {
   it('adds the `limit` to the `offset` if the new `offset` is not greater than the `totalCount`', () => {
@@ -72,6 +72,7 @@ describe('setNewData', () => {
       limit: 20,
       query: 'query',
       sortBy: SortBy.NameDesc,
+      defaultSortBy,
       selectedFilters: {
         key: ['filter'],
       },
@@ -109,6 +110,7 @@ describe('setNewData', () => {
       limit: 24,
       query: 'query',
       sortBy: SortBy.NameDesc,
+      defaultSortBy,
       selectedFilters: {
         key: ['filter'],
       },
@@ -136,6 +138,7 @@ describe('setNewData', () => {
       limit: 24,
       query: 'query',
       sortBy: SortBy.NameDesc,
+      defaultSortBy,
       selectedFilters: {
         key: ['filter'],
       },

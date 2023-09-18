@@ -1,31 +1,34 @@
 import {z, Schema} from 'zod';
-import {SortBy, defaultSortBy} from './sort';
+import {SortBy} from './sort';
 
 const searchParamFilterSchema = z
   .array(z.string())
   .default([])
   .transform(filterValues => filterValues.join(','));
 
-const searchParamsSchema = z.object({
-  query: z.string().default(''),
-  offset: z
-    .number()
-    .default(0)
-    // Don't add the default offset of 0 to the search params
-    .transform(offset => (offset > 0 ? `${offset}` : '')),
-  sortBy: z
-    .nativeEnum(SortBy)
-    .default(defaultSortBy)
-    // Don't add the default sort to the search params
-    .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
-});
+function getSearchParamsSchema(defaultSortBy: string) {
+  return z.object({
+    query: z.string().default(''),
+    offset: z
+      .number()
+      .default(0)
+      // Don't add the default offset of 0 to the search params
+      .transform(offset => (offset > 0 ? `${offset}` : '')),
+    sortBy: z
+      .string()
+      .default(defaultSortBy)
+      // Don't add the default sort to the search params
+      .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
+  });
+}
 
 interface ClientSearchOptions {
   query?: string;
   offset?: number;
-  sortBy?: SortBy;
+  sortBy?: string;
   filters?: {[filterKey: string]: string[] | undefined};
   baseUrl?: string;
+  defaultSortBy: string;
 }
 
 export function getUrlWithSearchParams({
@@ -33,9 +36,12 @@ export function getUrlWithSearchParams({
   offset,
   sortBy,
   filters,
+  defaultSortBy,
   baseUrl = '/',
 }: ClientSearchOptions): string {
-  const searchParams: {[key: string]: string} = searchParamsSchema.parse({
+  const searchParams: {[key: string]: string} = getSearchParamsSchema(
+    defaultSortBy
+  ).parse({
     query,
     offset,
     sortBy,

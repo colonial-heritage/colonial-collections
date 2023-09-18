@@ -19,7 +19,8 @@
     "home": "Home",
     "about": "About",
     "faq": "FAQ",
-    "contact": "Contact"
+    "contact": "Contact",
+    "communities": "Communities"
   },
   "Tabs": {
     "objects": "Search for objects",
@@ -116,12 +117,14 @@
     "clearAllFilters": "Clear all",
     "filterSearchPlaceholder": "Filter on {filterName}",
     "accessibilityTypeToFilter": "Type to filter on text.",
-    "accessibilitySelectToFilter": "Select a checkbox to filter"
+    "accessibilitySelectToFilter": "Select a checkbox to filter",
+    "accessibilityClickToSearch": "Click to search"
   },
   "Sort": {
-    "sortRelevanceDesc": "Relevance",
-    "sortNameAsc": "Name - Ascending",
-    "sortNameDesc": "Name - Descending",
+    "relevanceDesc": "Relevance",
+    "nameAsc": "Name - Ascending",
+    "nameDesc": "Name - Descending",
+    "createdAtDesc": "Date created",
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
   },
   "WorkInProgress": {
@@ -136,7 +139,10 @@
   },
   "Communities": {
     "title": "Communities",
-    "error": "Something went wrong while fetching communities. Please try again later."
+    "error": "Something went wrong while fetching communities. Please try again later.",
+    "communityName": "Community of <name></name>",
+    "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",
+    "searchPlaceholder": "Search for community"
   },
   "Community": {
     "title": "Community of",
