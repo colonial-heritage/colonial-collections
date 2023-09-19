@@ -1,6 +1,7 @@
 import {Dataset, Measurement} from '.';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
+import {EOL} from 'node:os';
 import type {Readable} from 'node:stream';
 import {lru, LRU} from 'tiny-lru';
 import type {Stream} from '@rdfjs/types';
@@ -60,11 +61,15 @@ export class DatasetEnricher {
       return; // No IRIs to fetch
     }
 
-    const irisForValues = iris.map(iri => `<${iri}>`).join(' ');
+    const irisForValues = iris.map(iri => `<${iri}>`).join(EOL);
 
     // Query can be expanded to also include other properties
     const query = `
-      PREFIX cc: <https://colonialcollections.nl/search#>
+      PREFIX cc: <https://colonialcollections.nl/schema#>
+      PREFIX dcat: <http://www.w3.org/ns/dcat#>
+      PREFIX dqv: <http://www.w3.org/ns/dqv#>
+      PREFIX qb: <http://purl.org/linked-data/cube#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       CONSTRUCT {
         ?iri cc:measurement ?measurement .
@@ -74,13 +79,22 @@ export class DatasetEnricher {
           cc:order ?order .
       }
       WHERE {
-        VALUES ?iri { ${irisForValues} }
-        ?iri a cc:Dataset ;
-          cc:measurement ?measurement .
-        ?measurement cc:value ?value ;
-          cc:measurementOf ?metric .
-        ?metric cc:name ?name ;
-          cc:order ?order .
+        VALUES ?iri {
+          ${irisForValues}
+        }
+        ?iri a dcat:Dataset .
+
+        {
+          ?iri dqv:hasQualityMeasurement ?measurement .
+        }
+        UNION {
+          ?iri dcat:distribution/dqv:hasQualityMeasurement ?measurement .
+        }
+
+        ?measurement dqv:value ?value ;
+          dqv:isMeasurementOf ?metric .
+        ?metric skos:prefLabel ?name ;
+          qb:order ?order .
       }
     `;
 
@@ -125,7 +139,7 @@ export class DatasetEnricher {
   private async processResponse(iris: string[], stream: Readable & Stream) {
     const loader = new RdfObjectLoader({
       context: {
-        cc: 'https://colonialcollections.nl/search#',
+        cc: 'https://colonialcollections.nl/schema#',
       },
     });
 

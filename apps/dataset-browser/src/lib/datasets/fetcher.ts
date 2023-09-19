@@ -19,17 +19,17 @@ export type FetcherConstructorOptions = z.infer<
 enum RawDatasetKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
-  Name = 'https://colonialcollections nl/search#name',
-  Description = 'https://colonialcollections nl/search#description',
-  Publisher = 'https://colonialcollections nl/search#publisher',
-  License = 'https://colonialcollections nl/search#license',
-  Keyword = 'https://colonialcollections nl/search#keyword',
-  MainEntityOfPage = 'https://colonialcollections nl/search#mainEntityOfPage',
-  DateCreated = 'https://colonialcollections nl/search#dateCreated',
-  DateModified = 'https://colonialcollections nl/search#dateModified',
-  DatePublished = 'https://colonialcollections nl/search#datePublished',
-  SpatialCoverage = 'https://colonialcollections nl/search#spatialCoverage',
-  Genre = 'https://colonialcollections nl/search#genre',
+  Name = 'https://colonialcollections nl/schema#name',
+  Description = 'https://colonialcollections nl/schema#description',
+  Publisher = 'https://colonialcollections nl/schema#publisher',
+  License = 'https://colonialcollections nl/schema#license',
+  Keyword = 'https://colonialcollections nl/schema#keyword',
+  MainEntityOfPage = 'https://colonialcollections nl/schema#mainEntityOfPage',
+  DateCreated = 'https://colonialcollections nl/schema#dateCreated',
+  DateModified = 'https://colonialcollections nl/schema#dateModified',
+  DatePublished = 'https://colonialcollections nl/schema#datePublished',
+  SpatialCoverage = 'https://colonialcollections nl/schema#spatialCoverage',
+  Genre = 'https://colonialcollections nl/schema#genre',
 }
 
 type Thing = {
@@ -228,7 +228,7 @@ export class DatasetFetcher {
     // Extract the IRIs, if any, from the response.
     // The IRIs are necessary for fetching their labels later on
     const iris = getIrisFromObject(responseData);
-    const predicates = ['https://colonialcollections.nl/search#name'];
+    const predicates = ['https://colonialcollections.nl/schema#name'];
     await this.labelFetcher.loadByIris({iris, predicates});
 
     return responseData;
@@ -251,28 +251,28 @@ export class DatasetFetcher {
       `${RawDatasetKeys.DatePublished}.0`
     );
 
-    const publisherIri = reach(rawDataset, `${RawDatasetKeys.Publisher}.0`);
+    const publisherName = reach(rawDataset, `${RawDatasetKeys.Publisher}.0`);
     const publisher: Publisher = {
-      id: publisherIri,
-      name: this.labelFetcher.getByIri({iri: publisherIri}),
+      id: publisherName, // TBD: fetch IRI via SPARQL
+      name: publisherName,
     };
 
-    const licenseIri = reach(rawDataset, `${RawDatasetKeys.License}.0`);
+    const licenseName = reach(rawDataset, `${RawDatasetKeys.License}.0`);
     const license: License = {
-      id: licenseIri,
-      name: this.labelFetcher.getByIri({iri: licenseIri}),
+      id: licenseName, // TBD: fetch IRI via SPARQL
+      name: licenseName,
     };
 
     const toThings = <T>(rawDatasetKey: string) => {
-      const iris: string[] | undefined = reach(rawDataset, `${rawDatasetKey}`);
-      if (iris === undefined) {
+      const names: string[] | undefined = reach(rawDataset, `${rawDatasetKey}`);
+      if (names === undefined) {
         return undefined;
       }
 
-      const things = iris.map((iri: string) => {
+      const things = names.map((name: string) => {
         return {
-          id: iri,
-          name: this.labelFetcher.getByIri({iri}),
+          id: name, // TBD: fetch IRI via SPARQL
+          name,
         };
       });
 
@@ -346,7 +346,7 @@ export class DatasetFetcher {
               // Only return documents of a specific type
               terms: {
                 [`${RawDatasetKeys.Type}.keyword`]: [
-                  'https://colonialcollections.nl/search#Dataset',
+                  'https://colonialcollections.nl/schema#Dataset',
                 ],
               },
             },
@@ -403,26 +403,22 @@ export class DatasetFetcher {
 
     const publisherFilters = buildFilters(
       aggregations.all.publishers.buckets,
-      aggregations.publishers.buckets,
-      this.labelFetcher
+      aggregations.publishers.buckets
     );
 
     const licenseFilters = buildFilters(
       aggregations.all.licenses.buckets,
-      aggregations.licenses.buckets,
-      this.labelFetcher
+      aggregations.licenses.buckets
     );
 
     const spatialCoverageFilters = buildFilters(
       aggregations.all.spatialCoverages.buckets,
-      aggregations.spatialCoverages.buckets,
-      this.labelFetcher
+      aggregations.spatialCoverages.buckets
     );
 
     const genresFilters = buildFilters(
       aggregations.all.genres.buckets,
-      aggregations.genres.buckets,
-      this.labelFetcher
+      aggregations.genres.buckets
     );
 
     const searchResult: SearchResult = {
