@@ -8,7 +8,8 @@
     "db:generate": "dotenv -c -- drizzle-kit generate:mysql",
     "db:push": "dotenv -c -- drizzle-kit push:mysql",
     "db:drop": "dotenv -c -- drizzle-kit drop",
-    "db:studio": "dotenv -c -- drizzle-kit studio"
+    "db:studio": "dotenv -c -- drizzle-kit studio",
+    "db:create": "bash ./scripts/create-database.sh"
   },
   "devDependencies": {
     "dotenv-cli": "7.3.0",
