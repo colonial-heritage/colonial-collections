@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "d51c4663-28f7-4309-a2a4-1cdd3472153b",
+  "id": "4ce42ab4-fdff-449e-9757-1afe2d24c8ff",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "object_list": {
@@ -30,7 +30,7 @@
         },
         "community_id": {
           "name": "community_id",
-          "type": "varchar(256)",
+          "type": "varchar(50)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

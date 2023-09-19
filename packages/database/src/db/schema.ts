@@ -17,7 +17,7 @@ export const objectLists = mysqlTable(
     id: serial('id').primaryKey(),
     name: varchar('name', {length: 256}),
     description: text('description'),
-    communityId: varchar('community_id', {length: 256}),
+    communityId: varchar('community_id', {length: 50}),
     createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -40,12 +40,16 @@ export const objectItems = mysqlTable(
   'object_item',
   {
     id: serial('id').primaryKey(),
-    objectId: varchar('object_id', {length: 256}).notNull(),
+    // The objectId is a uri, so it can be long.
+    objectId: text('object_id').notNull(),
     objectListId: int('object_list_id'),
     createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    createdBy: varchar('created_by', {length: 256}).notNull(),
+    // James from Clerk about the length of the user ID: You should store it to 50, but currently,
+    // they are 32 and shouldn’t need to grow in length as they are a UUID based,
+    // but you should increase it slightly just to be cautious.
+    createdBy: varchar('created_by', {length: 50}).notNull(),
   },
   item => ({
     objectId: index('object_id').on(item.objectId),

@@ -2,7 +2,7 @@ CREATE TABLE `object_list` (
   `id` serial AUTO_INCREMENT NOT NULL,
   `name` varchar(256),
   `description` text,
-  `community_id` varchar(256),
+  `community_id` varchar(50),
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(256) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
