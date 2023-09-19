@@ -72,7 +72,6 @@ Then run:
 
 Add `DATABASE_URL` environment variable to the file `apps/researcher/.env.local`. More information about connecting to the database is in the [datahub-data readme](packages/datahub-data/README.md).
 
-
 ### Install packages
 
     docker run --rm -it -v "$PWD":/app -w /app node:18 npm install --no-progress
