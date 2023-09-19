@@ -1,5 +1,4 @@
 import type {RawBucket, SearchResultFilter} from '.';
-import type {LabelFetcher} from '@colonial-collections/label-fetcher';
 
 function toUnmatchedFilter(bucket: RawBucket): SearchResultFilter {
   const totalCount = 0; // Initial count; will be overridden by the matching filter, if any
