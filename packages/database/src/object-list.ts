@@ -3,13 +3,13 @@
 import {objectLists, insertObjectItemSchema, objectItems} from './db/schema';
 import db from './db/connection';
 
-async function getCommunityLists(communityId: string) {
+async function getListsByCommunityId(communityId: string) {
   return db.query.objectLists.findMany({
     where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
   });
 }
 
-async function getAllCommunityListsWithObjects(communityId: string) {
+async function getCommunityListsWithObjects(communityId: string) {
   return db.query.objectLists.findMany({
     where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
     with: {
@@ -60,8 +60,8 @@ async function addObjectToList({
 }
 
 export const objectList = {
-  getCommunityLists,
-  getAllCommunityListsWithObjects,
+  getListsByCommunityId,
+  getCommunityListsWithObjects,
   createListForCommunity,
   addObjectToList,
 };
