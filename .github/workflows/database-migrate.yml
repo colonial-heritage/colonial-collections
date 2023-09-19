@@ -3,7 +3,7 @@ name: Migrate database
 on:
   pull_request:
     branches: ["main"]
-    paths: ["packages/datahub-data/migrations/**"]
+    paths: ["packages/database/migrations/**"]
 
 jobs:
   migrate:

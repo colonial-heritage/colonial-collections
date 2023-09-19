@@ -1,6 +1,6 @@
 # Datahub database
 
-This package is the database connector needed to read and write Datahub data. To connect to the database via the researcher app, ensure the environment variable DATABASE_URL is set in `apps/researcher/.env.local`. If you want to connect to the database outside the app to run scripts, add the DATABASE_URL to `packages/datahub-data/.env.local`.
+This package is the database connector needed to read and write Datahub data. To connect to the database via the researcher app, ensure the environment variable DATABASE_URL is set in `apps/researcher/.env.local`. If you want to connect to the database outside the app to run scripts, add the DATABASE_URL to `packages/database/.env.local`.
 
 # Connecting to the local MySQL database with docker.
 
@@ -20,7 +20,7 @@ Create a new database with:
 
 Set the DATABASE_URL to:
 
-      DATABASE_URL='mysql://root:{password}@localhost:3306/{database_name}'
+    DATABASE_URL='mysql://root:{password}@localhost:3306/{database_name}'
 
 # Schema migrations
 
@@ -30,4 +30,4 @@ To push the changes to your local database, run `npm run db:push`.
 
 # Drizzle Studio
 
-With Drizzle Studio, you can explore the SQL database. Depending on the DATABASE_URL, you can explore both local and PlanetScale databases. Open Drizzle Studio with `npm run db:studio -w datahub-data`.
+With Drizzle Studio, you can explore the SQL database. Depending on the DATABASE_URL, you can explore both local and PlanetScale databases. Open Drizzle Studio with `npm run db:studio -w @colonial-collections/database`.

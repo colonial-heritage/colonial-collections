@@ -70,7 +70,7 @@ Then run:
 
 ### Connecting to the MySQL server
 
-Add `DATABASE_URL` environment variable to the file `apps/researcher/.env.local`. More information about connecting to the database is in the [datahub-data readme](packages/datahub-data/README.md).
+Add `DATABASE_URL` environment variable to the file `apps/researcher/.env.local`. More information about connecting to the database is in the [database readme](packages/database/README.md).
 
 ### Install packages
 
