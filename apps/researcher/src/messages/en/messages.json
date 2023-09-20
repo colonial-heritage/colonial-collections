@@ -150,7 +150,9 @@
     "noEntity": "Community could not be found",
     "editButton": "Edit community page",
     "joinButton": "Join this community",
-    "objectListsTitle": "Lists of objects by community",
+    "goToListButton": "See all objects",
+    "objectListsTitle": "Lists",
+    "objectListsSubTitle": "This community has {count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
     "membersTitle": "Members",
     "error": "Something went wrong while fetching the community. Please try again later.",
     "addObjectListButton": "Add list"

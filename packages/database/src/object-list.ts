@@ -1,5 +1,3 @@
-'use server';
-
 import {objectLists, insertObjectItemSchema, objectItems} from './db/schema';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
@@ -10,11 +8,21 @@ async function getListsByCommunityId(communityId: string) {
   });
 }
 
-async function getCommunityListsWithObjects(communityId: string) {
+interface GetCommunityListsWithObjectsProps {
+  communityId: string;
+  limitObjects?: number;
+}
+
+async function getCommunityListsWithObjects({
+  communityId,
+  limitObjects,
+}: GetCommunityListsWithObjectsProps) {
+  const objectOptions = limitObjects ? {limit: limitObjects} : true;
+
   return db.query.objectLists.findMany({
     where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
     with: {
-      objects: true,
+      objects: objectOptions,
     },
   });
 }

@@ -141,7 +141,7 @@
     "title": "Communities",
     "error": "Er is een fout opgetreden bij het ophalen van de communities. Probeer het later opnieuw.",
     "communityName": "Community van <name></name>",
-    "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",
+    "membershipCount": "{count, plural, =0 {0 leden} =1 {1 lid} other {# leden}}",
     "searchPlaceholder": "Zoek naar community"
   },
   "Community": {
@@ -150,7 +150,9 @@
     "noEntity": "Community kon niet gevonden worden",
     "editButton": "Community page aanpassen",
     "joinButton": "Word lid van deze community",
-    "objectListsTitle": "Lijsten van objecten door community",
+    "goToListButton": "Bekijk alle objecten",
+    "objectListsTitle": "Lijsten",
+    "objectListsSubTitle": "Deze community heeft {count, plural, =0 {0 lijsten} =1 {1 lijst} other {# lijsten}}",
     "membersTitle": "Leden",
     "error": "Er is een fout opgetreden bij het ophalen van de community. Probeer het later opnieuw.",
     "addObjectListButton": "Lijst toevoegen"
