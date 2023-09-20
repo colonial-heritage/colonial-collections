@@ -23,7 +23,7 @@
     "db:generate": {
       "cache": false
     },
-    "db:push": {
+    "db:migrate": {
       "cache": false
     }
   }

@@ -20,7 +20,7 @@
     "test:integration:watch": "turbo run test:integration:watch",
     "test:e2e": "turbo run test:e2e",
     "db:generate": "turbo run db:generate",
-    "db:push": "turbo run db:push"
+    "db:migrate": "turbo run db:migrate"
   },
   "devDependencies": {
     "eslint-config-custom": "*",

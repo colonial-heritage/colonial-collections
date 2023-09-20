@@ -26,7 +26,7 @@ Set the DATABASE_URL to:
 
 Whenever you make changes to the database schema in `src/db/schema`, you need to run `npm run db:generate`, which will generate a SQL migration file for you.
 
-To push the changes to your local database, run `npm run db:push`.
+To push the changes to your local database, run `npm run db:migrate`.
 
 # Drizzle Studio
 

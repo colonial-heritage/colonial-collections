@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: "18"
       - run: npm ci
-      - run: npm run db:push
+      - run: npm run db:migrate
       - name: Add comment
         uses: mshick/add-pr-comment@v2
         with:
