@@ -152,6 +152,7 @@
     "joinButton": "Word lid van deze community",
     "objectListsTitle": "Lijsten van objecten door community",
     "membersTitle": "Leden",
-    "error": "Er is een fout opgetreden bij het ophalen van de community. Probeer het later opnieuw."
+    "error": "Er is een fout opgetreden bij het ophalen van de community. Probeer het later opnieuw.",
+    "addObjectListButton": "Lijst toevoegen"
   }
 }

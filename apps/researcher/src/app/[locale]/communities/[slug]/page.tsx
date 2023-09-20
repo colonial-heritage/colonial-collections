@@ -1,4 +1,4 @@
-import {ChevronLeftIcon} from '@heroicons/react/24/solid';
+import {ChevronLeftIcon, PlusIcon} from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslator} from 'next-intl/server';
@@ -7,6 +7,15 @@ import {getMemberships, getCommunityBySlug, isAdmin} from '@/lib/community';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
 import {revalidatePath} from 'next/cache';
+import {objectList} from '@colonial-collections/database';
+import ObjectCard from './object';
+import {
+  SlideOver,
+  SlideOverContent,
+  SlideOverDialog,
+  SlideOverOpenButton,
+} from 'ui';
+import AddObjectListForm from '@/components/add-object-list-form';
 
 interface Props {
   params: {
@@ -39,6 +48,10 @@ export default async function CommunityPage({params}: Props) {
     return <ErrorMessage error={t('error')} />;
   }
 
+  const objectLists = await objectList.getCommunityListsWithObjects(
+    community.id
+  );
+
   return (
     <>
       <div className=" px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
@@ -70,9 +83,44 @@ export default async function CommunityPage({params}: Props) {
               <JoinCommunityButton communityId={community.id} />
             </div>
           </div>
-          <h2 className="mb-6">{t('objectListsTitle')}</h2>
+          <div className="sm:flex sm:items-center sm:justify-between">
+            <h2 className="mb-6">{t('objectListsTitle')}</h2>
+            <div className="mt-3 sm:ml-4 sm:mt-0">
+              <SlideOver>
+                <SlideOverOpenButton className="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  {t('addObjectListButton')}
+                  <PlusIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
+                </SlideOverOpenButton>
+                <SlideOverDialog>
+                  <SlideOverContent>
+                    <AddObjectListForm />
+                  </SlideOverContent>
+                </SlideOverDialog>
+              </SlideOver>
+            </div>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full">
-            {/*Place the lists here */}
+            {objectLists.map(objectList => (
+              <div
+                key={objectList.id}
+                className=" bg-amber-50 rounded p-6 -m-2 cursor-pointer"
+              >
+                <h3 className="font-semibold text-xl mt-4 mb-2">
+                  {objectList.name}
+                </h3>
+                <p>{objectList.description}</p>
+                {objectList.objects.length > 0 && (
+                  <ul className=" grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4">
+                    {objectList.objects.map(object => (
+                      <ObjectCard
+                        key={object.objectId}
+                        objectId={object.objectId}
+                      />
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
           </div>
         </main>
         <aside className="w-full md:w-1/4 self-stretch">
