@@ -2,6 +2,7 @@
 
 import {objectLists, insertObjectItemSchema, objectItems} from './db/schema';
 import db from './db/connection';
+import {iriToHash} from './iriToHash';
 
 async function getListsByCommunityId(communityId: string) {
   return db.query.objectLists.findMany({
@@ -54,6 +55,7 @@ async function addObjectToList({
     listId,
     objectId,
     createdBy: userId,
+    objectHash: iriToHash(objectId),
   });
 
   return db.insert(objectItems).values(objectItem);

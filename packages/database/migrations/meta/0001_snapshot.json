@@ -1,18 +1,18 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "bb5484fc-0270-4cab-be00-c4879c8e2539",
-  "prevId": "4ce42ab4-fdff-449e-9757-1afe2d24c8ff",
+  "id": "cf9627d1-a3e1-4768-8539-90a87f3e0a97",
+  "prevId": "fa9b049d-c092-42f8-a57e-8cae800db6dd",
   "tables": {
     "object_item": {
       "name": "object_item",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
+        "object_hash": {
+          "name": "object_hash",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "object_id": {
           "name": "object_id",
@@ -45,10 +45,10 @@
         }
       },
       "indexes": {
-        "object_id": {
-          "name": "object_id",
+        "object_hash": {
+          "name": "object_hash",
           "columns": [
-            "object_id"
+            "object_hash"
           ],
           "isUnique": false
         },
@@ -62,18 +62,18 @@
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "object_item_id": {
-          "name": "object_item_id",
+        "object_item_object_hash": {
+          "name": "object_item_object_hash",
           "columns": [
-            "id"
+            "object_hash"
           ]
         }
       },
       "uniqueConstraints": {
-        "object_item_object_id_object_list_id_unique": {
-          "name": "object_item_object_id_object_list_id_unique",
+        "object_item_object_hash_object_list_id_unique": {
+          "name": "object_item_object_hash_object_list_id_unique",
           "columns": [
-            "object_id",
+            "object_hash",
             "object_list_id"
           ]
         }

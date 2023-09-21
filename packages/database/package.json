@@ -9,7 +9,10 @@
     "db:migrate": "dotenv -c -- ts-node ./scripts/migrate.ts",
     "db:drop": "dotenv -c -- drizzle-kit drop",
     "db:studio": "dotenv -c -- drizzle-kit studio",
-    "db:create": "bash ./scripts/create-database.sh"
+    "db:create": "bash ./scripts/create-database.sh",
+    "test": "jest",
+    "test:ci": "npm test -- --ci",
+    "test:watch": "npm test -- --watchAll"
   },
   "devDependencies": {
     "dotenv-cli": "7.3.0",
@@ -22,5 +25,12 @@
     "drizzle-orm": "0.28.5",
     "drizzle-zod": "0.5.1",
     "mysql2": "3.6.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testTimeout": 60000,
+    "testMatch": ["<rootDir>/src/**/*.test.ts"],
+    "collectCoverage": true,
+    "collectCoverageFrom": ["<rootDir>/src/**/*.ts"]
   }
 }

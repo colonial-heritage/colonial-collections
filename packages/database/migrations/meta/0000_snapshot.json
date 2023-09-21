@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "4ce42ab4-fdff-449e-9757-1afe2d24c8ff",
+  "id": "fa9b049d-c092-42f8-a57e-8cae800db6dd",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "object_list": {
