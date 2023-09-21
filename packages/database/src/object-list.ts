@@ -55,7 +55,7 @@ async function addObjectToList({
     listId,
     objectId,
     createdBy: userId,
-    objectHash: iriToHash(objectId),
+    id: iriToHash(objectId),
   });
 
   return db.insert(objectItems).values(objectItem);

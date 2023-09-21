@@ -7,8 +7,8 @@
     "object_item": {
       "name": "object_item",
       "columns": {
-        "object_hash": {
-          "name": "object_hash",
+        "id": {
+          "name": "id",
           "type": "varchar(32)",
           "primaryKey": false,
           "notNull": true,
@@ -45,10 +45,10 @@
         }
       },
       "indexes": {
-        "object_hash": {
-          "name": "object_hash",
+        "id": {
+          "name": "id",
           "columns": [
-            "object_hash"
+            "id"
           ],
           "isUnique": false
         },
@@ -62,18 +62,18 @@
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "object_item_object_hash": {
-          "name": "object_item_object_hash",
+        "object_item_id": {
+          "name": "object_item_id",
           "columns": [
-            "object_hash"
+            "id"
           ]
         }
       },
       "uniqueConstraints": {
-        "object_item_object_hash_object_list_id_unique": {
-          "name": "object_item_object_hash_object_list_id_unique",
+        "object_item_id_object_list_id_unique": {
+          "name": "object_item_id_object_list_id_unique",
           "columns": [
-            "object_hash",
+            "id",
             "object_list_id"
           ]
         }
