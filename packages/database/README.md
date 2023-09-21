@@ -4,7 +4,7 @@ This package is the database connector needed to read and write Datahub data. To
 
 # Connecting to the local MySQL database with Docker.
 
-You can create a MySQL database with docker. Use the following command to start your MySQL container. It will create a new Docker volume called 'mysql'.
+You can create a MySQL database with Docker. Use the following command to start your MySQL container. It will create a new Docker volume called 'mysql'.
 
     docker run --name mysql -d \
         -p 3306:3306 \
