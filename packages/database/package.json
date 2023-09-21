@@ -1,0 +1,36 @@
+{
+  "name": "@colonial-collections/database",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "db:generate": "dotenv -c -- drizzle-kit generate:mysql",
+    "db:migrate": "dotenv -c -- ts-node ./scripts/migrate.ts",
+    "db:drop": "dotenv -c -- drizzle-kit drop",
+    "db:studio": "dotenv -c -- drizzle-kit studio",
+    "db:create": "./scripts/create-database.sh",
+    "test": "jest",
+    "test:ci": "npm test -- --ci",
+    "test:watch": "npm test -- --watchAll"
+  },
+  "devDependencies": {
+    "dotenv-cli": "7.3.0",
+    "eslint-config-custom": "*",
+    "ts-node": "10.9.1",
+    "tsconfig": "*"
+  },
+  "dependencies": {
+    "drizzle-kit": "0.19.13",
+    "drizzle-orm": "0.28.5",
+    "drizzle-zod": "0.5.1",
+    "mysql2": "3.6.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testTimeout": 60000,
+    "testMatch": ["<rootDir>/src/**/*.test.ts"],
+    "collectCoverage": true,
+    "collectCoverageFrom": ["<rootDir>/src/**/*.ts"]
+  }
+}

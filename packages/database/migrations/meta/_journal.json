@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1695286867071,
+      "tag": "0000_create_object_list",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1695286872562,
+      "tag": "0001_create_object_item",
+      "breakpoints": true
+    }
+  ]
+}

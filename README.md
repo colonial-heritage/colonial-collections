@@ -68,6 +68,10 @@ Then run:
 
     docker run --rm -it -v "$PWD":/app -w /app node:18 /bin/bash
 
+### Connecting to the MySQL server
+
+Add `DATABASE_URL` environment variable to the file `apps/researcher/.env.local`. More information about connecting to the database is in the [database readme](packages/database/README.md).
+
 ### Install packages
 
     docker run --rm -it -v "$PWD":/app -w /app node:18 npm install --no-progress
