@@ -1,10 +1,10 @@
 # Datahub database
 
-This package is the database connector needed to read and write Datahub data. To connect to the database via the researcher app, ensure the environment variable DATABASE_URL is set in `apps/researcher/.env.local`. If you want to connect to the database outside the app to run scripts, add the DATABASE_URL to `packages/database/.env.local`.
+This package is the database connector needed to read and write Datahub data. To connect to the database via the Research App, ensure the environment variable `DATABASE_URL` is set in `apps/researcher/.env.local`. If you want to connect to the database outside the app to run scripts, add the `DATABASE_URL` to `packages/database/.env.local`.
 
-# Connecting to the local MySQL database with docker.
+# Connecting to the local MySQL database with Docker.
 
-You can create a MySQL database with docker. Use the following command to start your MySQL container. It will create a new Docker volume called MySQL.
+You can create a MySQL database with docker. Use the following command to start your MySQL container. It will create a new Docker volume called 'mysql'.
 
     docker run --name mysql -d \
         -p 3306:3306 \
@@ -18,13 +18,13 @@ Create a new database with:
 
     npm run db:create -w @colonial-collections/database
 
-Set the DATABASE_URL to:
+Set the `DATABASE_URL` to:
 
     DATABASE_URL='mysql://root:{password}@localhost:3306/{database_name}'
 
 # Schema migrations
 
-Whenever you make changes to the database schema in `src/db/schema`, you need to run `npm run db:generate`, which will generate a SQL migration file for you.
+Whenever you make changes to the database schema in `src/db/schema.ts`, you need to run `npm run db:generate`, which will generate a SQL migration file for you.
 
 To push the changes to your local database, run `npm run db:migrate`.
 

@@ -9,7 +9,7 @@
     "db:migrate": "dotenv -c -- ts-node ./scripts/migrate.ts",
     "db:drop": "dotenv -c -- drizzle-kit drop",
     "db:studio": "dotenv -c -- drizzle-kit studio",
-    "db:create": "bash ./scripts/create-database.sh",
+    "db:create": "./scripts/create-database.sh",
     "test": "jest",
     "test:ci": "npm test -- --ci",
     "test:watch": "npm test -- --watchAll"

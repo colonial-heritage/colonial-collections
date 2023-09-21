@@ -1,5 +1,5 @@
 import {migrate} from 'drizzle-orm/mysql2/migrator';
-import db from '../src/db/connection';
+import {db} from '../src/db/connection';
 import {exit} from 'node:process';
 
 async function runMigrations() {
@@ -8,8 +8,8 @@ async function runMigrations() {
       migrationsFolder: './../database/migrations',
     });
     exit();
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
     exit(1);
   }
 }

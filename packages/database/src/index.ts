@@ -1,1 +1,1 @@
-export {objectList} from './object-list';
+export * from './object-list';

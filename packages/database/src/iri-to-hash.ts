@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 export function iriToHash(iri: string) {
   const hash = crypto.createHash('md5');

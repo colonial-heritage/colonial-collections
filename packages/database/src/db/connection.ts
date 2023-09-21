@@ -8,7 +8,7 @@ const poolConnection = mysql.createPool({
   uri: env['DATABASE_URL'],
 });
 
-export default drizzle(poolConnection, {
+export const db = drizzle(poolConnection, {
   schema,
   mode: (env['DATABASE_MODE'] || 'default') as Mode,
 });

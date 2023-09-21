@@ -1,8 +1,8 @@
 'use server';
 
 import {objectLists, insertObjectItemSchema, objectItems} from './db/schema';
-import db from './db/connection';
-import {iriToHash} from './iriToHash';
+import {db} from './db/connection';
+import {iriToHash} from './iri-to-hash';
 
 async function getListsByCommunityId(communityId: string) {
   return db.query.objectLists.findMany({
