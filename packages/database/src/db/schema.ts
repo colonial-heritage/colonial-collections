@@ -39,8 +39,8 @@ export const objectListsRelations = relations(objectLists, ({many}) => ({
 export const objectItems = mysqlTable(
   'object_item',
   {
-    id: varchar('id', {length: 32}).primaryKey(),
-    objectId: text('object_id').notNull(),
+    objectId: varchar('object_id', {length: 32}).primaryKey(),
+    objectIri: text('object_iri').notNull(),
     objectListId: int('object_list_id'),
     createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
@@ -51,9 +51,9 @@ export const objectItems = mysqlTable(
     createdBy: varchar('created_by', {length: 50}).notNull(),
   },
   item => ({
-    id: index('id').on(item.id),
+    id: index('id').on(item.objectId),
     objectListId: index('object_list_id').on(item.objectListId),
-    unique: unique().on(item.id, item.objectListId),
+    unique: unique().on(item.objectId, item.objectListId),
   })
 );
 

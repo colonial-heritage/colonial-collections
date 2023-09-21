@@ -42,20 +42,20 @@ async function createListForCommunity({
 
 interface AddObjectToListProps {
   listId: number;
-  objectId: string;
+  objectIri: string;
   userId: string;
 }
 
 async function addObjectToList({
   listId,
-  objectId,
+  objectIri,
   userId,
 }: AddObjectToListProps) {
   const objectItem = insertObjectItemSchema.parse({
     listId,
-    objectId,
+    objectIri,
     createdBy: userId,
-    id: iriToHash(objectId),
+    objectId: iriToHash(objectIri),
   });
 
   return db.insert(objectItems).values(objectItem);
