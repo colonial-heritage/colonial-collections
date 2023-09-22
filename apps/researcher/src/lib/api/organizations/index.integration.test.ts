@@ -10,7 +10,7 @@ let organizations: Organizations;
 
 beforeEach(() => {
   organizations = new Organizations({
-    sparqlEndpointUrl: env.KG_SPARQL_ENDPOINT_URL as string,
+    sparqlEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
   });
 });
 
