@@ -187,7 +187,15 @@ export default function Navigation({locales}: Props) {
                         );
                       })}
                       <SignedIn>
-                        <OrganizationSwitcher />
+                        <OrganizationSwitcher
+                          afterCreateOrganizationUrl={organization =>
+                            `/revalidate/?path=/[locale]/communities&redirect=/communities/${organization.slug}`
+                          }
+                          afterLeaveOrganizationUrl="/communities"
+                          afterSelectOrganizationUrl={organization =>
+                            `/communities/${organization.slug}`
+                          }
+                        />
                         <UserButton afterSignOutUrl="/" />
                       </SignedIn>
                       <SignedOut>
