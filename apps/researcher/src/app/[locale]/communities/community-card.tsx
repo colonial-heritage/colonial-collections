@@ -4,6 +4,7 @@ import {useTranslations} from 'next-intl';
 import Link from 'next-intl/link';
 import Image from 'next/image';
 import {Suspense} from 'react';
+import {revalidatePath} from 'next/cache';
 
 interface MembershipCountProps {
   communityId: string;
@@ -12,7 +13,15 @@ interface MembershipCountProps {
 
 async function MembershipCount({communityId, locale}: MembershipCountProps) {
   const t = await getTranslator(locale, 'Communities');
-  const memberships = await getMemberships(communityId);
+
+  let memberships = [];
+  try {
+    memberships = await getMemberships(communityId);
+  } catch (error) {
+    // This could be a sign that the community has been deleted.
+    // In that case, we should revalidate the communities page.
+    revalidatePath('/communities');
+  }
 
   return t.rich('membershipCount', {
     count: memberships.length,

@@ -6,6 +6,7 @@ import {JoinCommunityButton, EditCommunityButton} from './buttons';
 import {getMemberships, getCommunityBySlug, isAdmin} from '@/lib/community';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
+import {revalidatePath} from 'next/cache';
 
 interface Props {
   params: {
@@ -22,6 +23,9 @@ export default async function CommunityPage({params}: Props) {
     community = await getCommunityBySlug(params.slug);
   } catch (err) {
     if ((err as ClerkAPIResponseError).status === 404) {
+      // This could be a sign that the community has been deleted.
+      // In that case, we should revalidate the communities page.
+      revalidatePath('/communities');
       return <ErrorMessage error={t('noEntity')} testId="no-entity" />;
     }
     return <ErrorMessage error={t('error')} />;
