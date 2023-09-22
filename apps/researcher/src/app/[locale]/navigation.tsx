@@ -189,7 +189,7 @@ export default function Navigation({locales}: Props) {
                       <SignedIn>
                         <OrganizationSwitcher
                           afterCreateOrganizationUrl={organization =>
-                            `/revalidate/?path=/communities&redirect=/communities/${organization.slug}`
+                            `/revalidate/?path=/[locale]/communities&redirect=/communities/${organization.slug}`
                           }
                           afterLeaveOrganizationUrl="/communities"
                           afterSelectOrganizationUrl={organization =>

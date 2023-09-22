@@ -18,9 +18,9 @@ async function MembershipCount({communityId, locale}: MembershipCountProps) {
   try {
     memberships = await getMemberships(communityId);
   } catch (error) {
-    // This could be a sign that the community has been deleted.
-    // In that case, we should revalidate the communities page.
-    revalidatePath('/communities');
+    // This could be a sign of a deleted community in the cache.
+    // So, revalidate the communities page.
+    revalidatePath('/[locale]/communities');
   }
 
   return t.rich('membershipCount', {
