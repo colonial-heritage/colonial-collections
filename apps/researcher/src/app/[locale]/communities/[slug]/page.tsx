@@ -22,7 +22,8 @@ export default async function CommunityPage({params}: Props) {
   try {
     community = await getCommunityBySlug(params.slug);
   } catch (err) {
-    if ((err as ClerkAPIResponseError).status === 404) {
+    const errorStatus = (err as ClerkAPIResponseError).status;
+    if (errorStatus === 404 || errorStatus === 410) {
       // This could be a sign of a deleted community in the cache.
       // So, revalidate the communities page.
       revalidatePath('/[locale]/communities', 'page');

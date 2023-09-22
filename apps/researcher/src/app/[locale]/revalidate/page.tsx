@@ -2,13 +2,13 @@ import {redirect} from 'next/navigation';
 import {revalidatePath} from 'next/cache';
 
 interface Props {
-  searchParams?: {
+  searchParams: {
     path?: string;
     redirect?: string;
   };
 }
 
-export default async function RevalidatePaths({searchParams = {}}: Props) {
+export default function RevalidatePath({searchParams}: Props) {
   if (searchParams.path) {
     revalidatePath(searchParams.path, 'page');
   }

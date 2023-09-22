@@ -5,6 +5,7 @@ import Link from 'next-intl/link';
 import Image from 'next/image';
 import {Suspense} from 'react';
 import {revalidatePath} from 'next/cache';
+import {ClerkAPIResponseError} from '@clerk/shared';
 
 interface MembershipCountProps {
   communityId: string;
@@ -17,10 +18,13 @@ async function MembershipCount({communityId, locale}: MembershipCountProps) {
   let memberships = [];
   try {
     memberships = await getMemberships(communityId);
-  } catch (error) {
-    // This could be a sign of a deleted community in the cache.
-    // So, revalidate the communities page.
-    revalidatePath('/[locale]/communities', 'page');
+  } catch (err) {
+    const errorStatus = (err as ClerkAPIResponseError).status;
+    if (errorStatus === 404 || errorStatus === 410) {
+      // This could be a sign of a deleted community in the cache.
+      // So, revalidate the communities page.
+      revalidatePath('/[locale]/communities', 'page');
+    }
   }
 
   return t.rich('membershipCount', {
