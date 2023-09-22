@@ -20,7 +20,7 @@ async function MembershipCount({communityId, locale}: MembershipCountProps) {
   } catch (error) {
     // This could be a sign of a deleted community in the cache.
     // So, revalidate the communities page.
-    revalidatePath('/[locale]/communities');
+    revalidatePath('/[locale]/communities', 'page');
   }
 
   return t.rich('membershipCount', {

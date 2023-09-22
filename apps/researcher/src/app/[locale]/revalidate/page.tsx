@@ -10,7 +10,7 @@ interface Props {
 
 export default async function RevalidatePaths({searchParams = {}}: Props) {
   if (searchParams.path) {
-    revalidatePath(searchParams.path);
+    revalidatePath(searchParams.path, 'page');
   }
 
   if (!searchParams.redirect) {

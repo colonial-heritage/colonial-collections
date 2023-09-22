@@ -25,7 +25,7 @@ export default async function CommunityPage({params}: Props) {
     if ((err as ClerkAPIResponseError).status === 404) {
       // This could be a sign of a deleted community in the cache.
       // So, revalidate the communities page.
-      revalidatePath('/[locale]/communities');
+      revalidatePath('/[locale]/communities', 'page');
       return <ErrorMessage error={t('noEntity')} testId="no-entity" />;
     }
     return <ErrorMessage error={t('error')} />;
