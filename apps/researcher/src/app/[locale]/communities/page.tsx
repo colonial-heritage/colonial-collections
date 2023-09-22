@@ -5,6 +5,9 @@ import CommunityCard from './community-card';
 import {ClientListStore} from '@colonial-collections/list-store';
 import {Paginator, SearchField, OrderSelector} from 'ui/list';
 
+// 1 day = 60*60*24 = 86400
+export const revalidate = 86400;
+
 interface Props {
   params: {
     locale: string;

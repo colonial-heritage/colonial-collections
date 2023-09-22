@@ -4,6 +4,8 @@ import {useTranslations} from 'next-intl';
 import Link from 'next-intl/link';
 import Image from 'next/image';
 import {Suspense} from 'react';
+import {revalidatePath} from 'next/cache';
+import {ClerkAPIResponseError} from '@clerk/shared';
 
 interface MembershipCountProps {
   communityId: string;
@@ -12,7 +14,18 @@ interface MembershipCountProps {
 
 async function MembershipCount({communityId, locale}: MembershipCountProps) {
   const t = await getTranslator(locale, 'Communities');
-  const memberships = await getMemberships(communityId);
+
+  let memberships = [];
+  try {
+    memberships = await getMemberships(communityId);
+  } catch (err) {
+    const errorStatus = (err as ClerkAPIResponseError).status;
+    if (errorStatus === 404 || errorStatus === 410) {
+      // This could be a sign of a deleted community in the cache.
+      // So, revalidate the communities page.
+      revalidatePath('/[locale]/communities', 'page');
+    }
+  }
 
   return t.rich('membershipCount', {
     count: memberships.length,
