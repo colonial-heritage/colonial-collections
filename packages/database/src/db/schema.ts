@@ -15,7 +15,7 @@ export const objectLists = mysqlTable(
   'object_list',
   {
     id: serial('id').primaryKey(),
-    name: varchar('name', {length: 256}),
+    name: varchar('name', {length: 256}).notNull(),
     description: text('description'),
     communityId: varchar('community_id', {length: 50}),
     createdAt: timestamp('created_at')
@@ -63,5 +63,10 @@ export const objectItemsRelations = relations(objectItems, ({one}) => ({
     references: [objectLists.id],
   }),
 }));
+
+export const insertObjectListSchema = createInsertSchema(objectLists, {
+  // Don't allow empty strings
+  name: schema => schema.name.trim().min(1),
+});
 
 export const insertObjectItemSchema = createInsertSchema(objectItems);

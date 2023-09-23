@@ -23,6 +23,12 @@ export async function getCommunityBySlug(slug: string): Promise<Community> {
   });
 }
 
+export async function getCommunityById(id: string): Promise<Community> {
+  return clerkClient.organizations.getOrganization({
+    organizationId: id,
+  });
+}
+
 export async function getMemberships(
   communityId: string
 ): Promise<Membership[]> {

@@ -115,7 +115,7 @@ export default async function CommunityPage({params}: Props) {
                   </SlideOverOpenButton>
                   <SlideOverDialog>
                     <SlideOverContent>
-                      <AddObjectListForm />
+                      <AddObjectListForm communityId={community.id} />
                     </SlideOverContent>
                   </SlideOverDialog>
                 </SlideOver>

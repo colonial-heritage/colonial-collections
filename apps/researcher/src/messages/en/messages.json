@@ -156,5 +156,9 @@
     "membersTitle": "Members",
     "error": "Something went wrong while fetching the community. Please try again later.",
     "addObjectListButton": "Add list"
+  },
+  "FormErrors": {
+    "too_small": "Required",
+    "too_big": "Too big"
   }
 }

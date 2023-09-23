@@ -29,22 +29,22 @@ async function getCommunityListsWithObjects({
 
 interface CreateListForCommunityProps {
   communityId: string;
-  userId: string;
+  createdBy: string;
   name: string;
-  description: string;
+  description?: string;
 }
 
 async function createListForCommunity({
   communityId,
   name,
   description,
-  userId,
+  createdBy,
 }: CreateListForCommunityProps) {
   return db.insert(objectLists).values({
     communityId,
     name,
     description,
-    createdBy: userId,
+    createdBy,
   });
 }
 
