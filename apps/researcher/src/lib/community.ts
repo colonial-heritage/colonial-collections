@@ -118,17 +118,3 @@ export async function joinCommunity({
     role: 'basic_member',
   });
 }
-
-export async function getUserMemberships(): Promise<OrganizationMembership[]> {
-  const {userId} = auth();
-
-  if (!userId) {
-    throw new Error('No user ID');
-  }
-
-  const memberships = await clerkClient.users.getOrganizationMembershipList({
-    userId,
-  });
-
-  return memberships;
-}

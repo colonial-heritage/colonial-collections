@@ -157,8 +157,16 @@
     "error": "Something went wrong while fetching the community. Please try again later.",
     "addObjectListButton": "Add list"
   },
-  "FormErrors": {
-    "too_small": "Required",
-    "too_big": "Too big"
+  "AddObjectListForm": {
+    "title": "Add list",
+    "labelName": "List name",
+    "labelDescription": "Description (optional)",
+    "labelDescriptionSubTitle": "Give a description about this list. For example. What is the history of this list. Tell a little bit about the kind of objects.",
+    "buttonSubmit": "Create list",
+    "buttonCancel": "Cancel",
+    "name_too_small": "List name is required",
+    "name_too_big": "List name has a maximum of 255 characters",
+    "serverError": "Something went wrong while creating the list. Please try again later.",
+    "listSuccessfullyAdded": "List <name></name> has been added to you community"
   }
 }

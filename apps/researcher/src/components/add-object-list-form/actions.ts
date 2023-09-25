@@ -13,8 +13,8 @@ export async function addList(
   listItem: ListItem
 ): Promise<{statusCode: number}> {
   try {
-    const community = await getCommunityById(listItem.communityId);
     await objectList.createListForCommunity(listItem);
+    const community = await getCommunityById(listItem.communityId);
     revalidatePath(`/[locale]/communities/${community.slug}`);
 
     return {statusCode: 200};

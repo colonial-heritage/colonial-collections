@@ -156,5 +156,16 @@
     "membersTitle": "Leden",
     "error": "Er is een fout opgetreden bij het ophalen van de community. Probeer het later opnieuw.",
     "addObjectListButton": "Lijst toevoegen"
+  },
+  "AddObjectListForm": {
+    "title": "Lijst toevoegen",
+    "labelName": "Lijstnaam",
+    "labelDescription": "Beschrijving (optioneel)",
+    "labelDescriptionSubTitle": "Geef een beschrijving over deze lijst. Bijvoorbeeld, wat is de geschiedenis van deze lijst. Vertel iets over het soort objecten.",
+    "buttonSubmit": "Lijst aanmaken",
+    "buttonCancel": "Annuleren",
+    "name_too_small": "Lijstnaam is vereist",
+    "name_too_big": "Lijstnaam mag maximaal 255 tekens bevatten",
+    "serverError": "Er is iets misgegaan bij het maken van de lijst. Probeer het later opnieuw."
   }
 }

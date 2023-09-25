@@ -9,13 +9,8 @@ import {ClerkAPIResponseError} from '@clerk/shared';
 import {revalidatePath} from 'next/cache';
 import {objectList} from '@colonial-collections/database';
 import ObjectCard from './object';
-import {
-  SlideOver,
-  SlideOverContent,
-  SlideOverDialog,
-  SlideOverOpenButton,
-} from 'ui';
 import AddObjectListForm from '@/components/add-object-list-form';
+import {SlideOutButton, SlideOut, Notifications} from 'ui';
 
 interface Props {
   params: {
@@ -23,6 +18,8 @@ interface Props {
     locale: string;
   };
 }
+
+const slideOutFormId = 'add-object-list';
 
 export default async function CommunityPage({params}: Props) {
   const t = await getTranslator(params.locale, 'Community');
@@ -108,19 +105,24 @@ export default async function CommunityPage({params}: Props) {
                 <p>{t('objectListsSubTitle', {count: objectLists.length})}</p>
               </div>
               <div>
-                <SlideOver>
-                  <SlideOverOpenButton className="flex items-center py-2 px-3 rounded-full bg-sand-100 text-sand-900 hover:bg-white transition text-xs">
+                {isAdmin(memberships) && (
+                  <SlideOutButton
+                    id={slideOutFormId}
+                    className="flex items-center py-2 px-3 rounded-full bg-sand-100 text-sand-900 hover:bg-white transition text-xs"
+                  >
                     {t('addObjectListButton')}
-                    <PlusIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
-                  </SlideOverOpenButton>
-                  <SlideOverDialog>
-                    <SlideOverContent>
-                      <AddObjectListForm communityId={community.id} />
-                    </SlideOverContent>
-                  </SlideOverDialog>
-                </SlideOver>
+                  </SlideOutButton>
+                )}
               </div>
             </div>
+
+            <Notifications />
+            <SlideOut id={slideOutFormId}>
+              <AddObjectListForm
+                slideOutId={slideOutFormId}
+                communityId={community.id}
+              />
+            </SlideOut>
 
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-16">
               {objectLists.map(objectList => (
