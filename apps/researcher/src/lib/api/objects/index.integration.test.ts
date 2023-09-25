@@ -1,5 +1,4 @@
 import {HeritageObjects} from '.';
-import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 
@@ -10,15 +9,9 @@ import {env} from 'node:process';
 let heritageObjects: HeritageObjects;
 
 beforeEach(() => {
-  const labelFetcher = new LabelFetcher({
-    endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
-  });
-
   heritageObjects = new HeritageObjects({
-    sparqlEndpointUrl: env.KG_SPARQL_ENDPOINT_URL as string,
-    elasticSearchEndpointUrl:
-      env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
-    labelFetcher,
+    sparqlEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
+    elasticSearchEndpointUrl: env.SEARCH_ENDPOINT_URL as string,
   });
 });
 

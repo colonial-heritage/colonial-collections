@@ -1,17 +1,12 @@
 import {PersonFetcher} from '.';
-import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 
-const labelFetcher = new LabelFetcher({
-  endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
-});
 let personFetcher: PersonFetcher;
 
 beforeEach(() => {
   personFetcher = new PersonFetcher({
-    endpointUrl: env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
-    labelFetcher,
+    endpointUrl: env.SEARCH_ENDPOINT_URL as string,
   });
 });
 
@@ -33,17 +28,17 @@ describe('search', () => {
           birthDate: new Date('1607-03-24T00:00:00.000Z'),
           deathPlace: {id: 'Syracuse', name: 'Syracuse'},
           deathDate: new Date('1676-04-29T00:00:00.000Z'),
-          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+          isPartOf: {id: 'Dataset 1', name: 'Dataset 1'},
         },
         {
           id: 'https://example.org/persons/10',
           name: 'Ida Oost',
-          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+          isPartOf: {id: 'Dataset 1', name: 'Dataset 1'},
         },
         {
           id: 'https://example.org/persons/11',
           name: 'Julienne Noordwest',
-          isPartOf: {id: 'https://example.org/datasets/3', name: 'Dataset 3'},
+          isPartOf: {id: 'Dataset 3', name: 'Dataset 3'},
         },
         {
           id: 'https://example.org/persons/2',
@@ -52,7 +47,7 @@ describe('search', () => {
           birthDate: new Date('1645-01-01T00:00:00.000Z'),
           deathPlace: {id: 'Amersfoort', name: 'Amersfoort'},
           deathDate: new Date('1701-01-01T00:00:00.000Z'),
-          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+          isPartOf: {id: 'Dataset 1', name: 'Dataset 1'},
         },
         {
           id: 'https://example.org/persons/3',
@@ -60,36 +55,36 @@ describe('search', () => {
           birthPlace: {id: 'Groningen', name: 'Groningen'},
           birthDate: new Date('1645-12-05T00:00:00.000Z'),
           deathPlace: {id: 'Jakarta', name: 'Jakarta'},
-          isPartOf: {id: 'https://example.org/datasets/3', name: 'Dataset 3'},
+          isPartOf: {id: 'Dataset 3', name: 'Dataset 3'},
         },
         {
           id: 'https://example.org/persons/4',
           name: 'Gert Nooitgedacht',
           birthPlace: {id: 'Batavia', name: 'Batavia'},
           birthDate: new Date('1815-09-27T00:00:00.000Z'),
-          isPartOf: {id: 'https://example.org/datasets/3', name: 'Dataset 3'},
+          isPartOf: {id: 'Dataset 3', name: 'Dataset 3'},
         },
         {
           id: 'https://example.org/persons/5',
           name: 'Beatrice Vlieger',
           birthPlace: {id: 'Rotterdam', name: 'Rotterdam'},
-          isPartOf: {id: 'https://example.org/datasets/4', name: 'Dataset 4'},
+          isPartOf: {id: 'Dataset 4', name: 'Dataset 4'},
         },
         {
           id: 'https://example.org/persons/6',
           name: 'Geeske van Châtellerault',
           birthPlace: {id: 'New York', name: 'New York'},
-          isPartOf: {id: 'https://example.org/datasets/4', name: 'Dataset 4'},
+          isPartOf: {id: 'Dataset 4', name: 'Dataset 4'},
         },
         {
           id: 'https://example.org/persons/7',
           name: 'Theodora Noord',
-          isPartOf: {id: 'https://example.org/datasets/5', name: 'Dataset 5'},
+          isPartOf: {id: 'Dataset 5', name: 'Dataset 5'},
         },
         {
           id: 'https://example.org/persons/8',
           name: 'Welmoed Zuid',
-          isPartOf: {id: 'https://example.org/datasets/5', name: 'Dataset 5'},
+          isPartOf: {id: 'Dataset 5', name: 'Dataset 5'},
         },
       ],
       filters: {
@@ -136,7 +131,7 @@ describe('search', () => {
           birthDate: new Date('1607-03-24T00:00:00.000Z'),
           deathPlace: {id: 'Syracuse', name: 'Syracuse'},
           deathDate: new Date('1676-04-29T00:00:00.000Z'),
-          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+          isPartOf: {id: 'Dataset 1', name: 'Dataset 1'},
         },
       ],
       filters: {
@@ -166,7 +161,7 @@ describe('search', () => {
           birthDate: new Date('1607-03-24T00:00:00.000Z'),
           deathPlace: {id: 'Syracuse', name: 'Syracuse'},
           deathDate: new Date('1676-04-29T00:00:00.000Z'),
-          isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+          isPartOf: {id: 'Dataset 1', name: 'Dataset 1'},
         },
       ],
       filters: {
@@ -200,7 +195,7 @@ describe('getById', () => {
       birthDate: new Date('1607-03-24'),
       deathPlace: {id: 'Syracuse', name: 'Syracuse'},
       deathDate: new Date('1676-04-29'),
-      isPartOf: {id: 'https://example.org/datasets/1', name: 'Dataset 1'},
+      isPartOf: {id: 'Dataset 1', name: 'Dataset 1'},
     });
   });
 });

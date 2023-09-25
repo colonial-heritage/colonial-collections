@@ -50,9 +50,8 @@ Open:
 
 Create the file `apps/dataset-browser/.env.production.local` in the root and set the endpoint URLs:
 
-    SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=
-    SEARCH_PLATFORM_SPARQL_ENDPOINT_URL=
-    KG_SPARQL_ENDPOINT_URL=
+    SEARCH_ENDPOINT_URL=
+    SPARQL_ENDPOINT_URL=
 
 Then run:
 
@@ -89,9 +88,8 @@ Open:
 
 Create the file `.env.production.local` in the root and set the endpoint URLs:
 
-    SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL=
-    SEARCH_PLATFORM_SPARQL_ENDPOINT_URL=
-    KG_SPARQL_ENDPOINT_URL=
+    SEARCH_ENDPOINT_URL=
+    SPARQL_ENDPOINT_URL=
 
 Then run:
 

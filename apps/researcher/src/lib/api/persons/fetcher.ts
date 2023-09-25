@@ -1,13 +1,10 @@
 import {buildAggregation} from './fetcher-request';
 import {buildFilters} from './fetcher-result';
-import {getIrisFromObject} from '@colonial-collections/iris';
-import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {merge, reach} from '@hapi/hoek';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
-  labelFetcher: z.instanceof(LabelFetcher),
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
@@ -15,14 +12,14 @@ export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 enum RawKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
-  Name = 'https://colonialcollections nl/search#name',
-  BirthPlace = 'https://colonialcollections nl/search#birthPlaceName', // Replace with 'birthPlace' as soon as we have IRIs
-  BirthDate = 'https://colonialcollections nl/search#birthDate',
-  BirthYear = 'https://colonialcollections nl/search#birthYear',
-  DeathPlace = 'https://colonialcollections nl/search#deathPlaceName', // Replace with 'deathPlace' as soon as we have IRIs
-  DeathDate = 'https://colonialcollections nl/search#deathDate',
-  DeathYear = 'https://colonialcollections nl/search#deathYear',
-  IsPartOf = 'https://colonialcollections nl/search#isPartOf',
+  Name = 'https://colonialcollections nl/schema#name',
+  BirthPlace = 'https://colonialcollections nl/schema#birthPlace',
+  BirthDate = 'https://colonialcollections nl/schema#birthDate',
+  BirthYear = 'https://colonialcollections nl/schema#birthYear',
+  DeathPlace = 'https://colonialcollections nl/schema#deathPlace',
+  DeathDate = 'https://colonialcollections nl/schema#deathDate',
+  DeathYear = 'https://colonialcollections nl/schema#deathYear',
+  IsPartOf = 'https://colonialcollections nl/schema#isPartOf',
 }
 
 type Thing = {
@@ -167,13 +164,11 @@ export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 
 export class PersonFetcher {
   private endpointUrl: string;
-  private labelFetcher: LabelFetcher;
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
-    this.labelFetcher = opts.labelFetcher;
   }
 
   async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
@@ -193,12 +188,6 @@ export class PersonFetcher {
 
     const responseData: T = await response.json();
 
-    // Extract the IRIs, if any, from the response.
-    // The IRIs are necessary for fetching their labels later on
-    const iris = getIrisFromObject(responseData);
-    const predicates = ['https://colonialcollections.nl/search#name'];
-    await this.labelFetcher.loadByIris({iris, predicates});
-
     return responseData;
   }
 
@@ -208,10 +197,10 @@ export class PersonFetcher {
     const birthDate = reach(rawPerson, `${RawKeys.BirthDate}.0`);
     const deathDate = reach(rawPerson, `${RawKeys.DeathDate}.0`);
 
-    const datasetIri = reach(rawPerson, `${RawKeys.IsPartOf}.0`);
+    const datasetName = reach(rawPerson, `${RawKeys.IsPartOf}.0`);
     const dataset: Dataset = {
-      id: datasetIri,
-      name: this.labelFetcher.getByIri({iri: datasetIri}),
+      id: datasetName, // TODO: replace with IRI
+      name: datasetName,
     };
 
     const toThing = <T>(rawKey: string) => {
@@ -221,8 +210,8 @@ export class PersonFetcher {
       }
 
       const thing = {
-        id: name, // Replace with IRI as soon as we have IRIs
-        name, // Replace with labelFetcher lookup as soon as we have IRIs
+        id: name, // TODO: replace with IRI
+        name,
       };
 
       return thing as T;
@@ -282,7 +271,7 @@ export class PersonFetcher {
               // Only return documents of a specific type
               terms: {
                 [`${RawKeys.Type}.keyword`]: [
-                  'https://colonialcollections.nl/search#Person',
+                  'https://colonialcollections.nl/schema#Person',
                 ],
               },
             },
@@ -290,7 +279,7 @@ export class PersonFetcher {
               // Only return documents of which the dataset they come from is known
               // (e.g. exclude persons that are creators of objects, coming from external terminology sources)
               exists: {
-                field: 'https://colonialcollections nl/search#isPartOf',
+                field: 'https://colonialcollections nl/schema#isPartOf',
               },
             },
           ],
@@ -396,7 +385,7 @@ export class PersonFetcher {
     const opts = getByIdOptionsSchema.parse(options);
 
     // We cannot use Elasticsearch's Get API: TriplyDB only supports the Search API.
-    // TBD: should we query the triplestore instead?
+    // TODO: query the triplestore instead
     const searchRequest = {
       query: {
         term: {
