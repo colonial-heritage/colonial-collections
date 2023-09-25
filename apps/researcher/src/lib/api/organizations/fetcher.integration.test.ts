@@ -6,7 +6,7 @@ let organizationFetcher: OrganizationFetcher;
 
 beforeEach(() => {
   organizationFetcher = new OrganizationFetcher({
-    endpointUrl: env.KG_SPARQL_ENDPOINT_URL as string,
+    endpointUrl: env.SPARQL_ENDPOINT_URL as string,
   });
 });
 

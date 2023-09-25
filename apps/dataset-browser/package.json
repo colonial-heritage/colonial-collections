@@ -54,7 +54,6 @@
     "gts": "5.0.1",
     "jest": "29.6.1",
     "postcss": "8.4.28",
-    "rdf-serialize": "2.2.2",
     "tailwind-config": "*",
     "tailwindcss": "3.3.3",
     "tsconfig": "*",

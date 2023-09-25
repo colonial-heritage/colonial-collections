@@ -4,18 +4,18 @@ import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 
 const labelFetcher = new LabelFetcher({
-  endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
+  endpointUrl: env.SPARQL_ENDPOINT_URL as string,
 });
 
 const datasetEnricher = new DatasetEnricher({
-  endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
+  endpointUrl: env.SPARQL_ENDPOINT_URL as string,
 });
 
 let datasetFetcher: DatasetFetcher;
 
 beforeEach(() => {
   datasetFetcher = new DatasetFetcher({
-    endpointUrl: env.SEARCH_PLATFORM_ELASTIC_ENDPOINT_URL as string,
+    endpointUrl: env.SEARCH_ENDPOINT_URL as string,
     labelFetcher,
     datasetEnricher,
   });

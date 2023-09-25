@@ -7,7 +7,7 @@ let datasetEnricher: DatasetEnricher;
 
 beforeEach(() => {
   datasetEnricher = new DatasetEnricher({
-    endpointUrl: env.SEARCH_PLATFORM_SPARQL_ENDPOINT_URL as string,
+    endpointUrl: env.SPARQL_ENDPOINT_URL as string,
   });
 });
 

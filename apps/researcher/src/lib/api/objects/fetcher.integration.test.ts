@@ -6,7 +6,7 @@ let heritageObjectFetcher: HeritageObjectFetcher;
 
 beforeEach(() => {
   heritageObjectFetcher = new HeritageObjectFetcher({
-    endpointUrl: env.KG_SPARQL_ENDPOINT_URL as string,
+    endpointUrl: env.SPARQL_ENDPOINT_URL as string,
   });
 });
 
