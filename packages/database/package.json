@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "drizzle-kit": "0.19.13",
-    "drizzle-orm": "0.28.5",
+    "drizzle-orm": "0.28.6",
     "drizzle-zod": "0.5.1",
     "mysql2": "3.6.0"
   },
