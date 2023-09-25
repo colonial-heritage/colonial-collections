@@ -6,7 +6,7 @@
   "private": true,
   "devDependencies": {
     "@types/react": "18.2.20",
-    "autoprefixer": "10.4.15",
+    "autoprefixer": "10.4.16",
     "eslint-config-custom": "*",
     "postcss": "8.4.28",
     "tailwind-config": "*",
