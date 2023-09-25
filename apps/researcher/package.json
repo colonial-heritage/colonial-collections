@@ -46,7 +46,7 @@
   "devDependencies": {
     "@clerk/shared": "0.22.0",
     "@jest/globals": "29.7.0",
-    "@next/env": "13.5.2",
+    "@next/env": "13.5.3",
     "@rdfjs/types": "1.1.0",
     "@types/mdx": "2.0.7",
     "@types/n3": "1.16.0",
