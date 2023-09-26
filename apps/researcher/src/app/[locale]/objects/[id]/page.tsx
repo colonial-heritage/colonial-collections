@@ -18,6 +18,9 @@ import {
 import useCurrentPublisher from './useCurrentPublisher';
 import {env} from 'node:process';
 import {formatDateCreated} from './format-date-created';
+import ObjectListsMenu from './object-lists-menu';
+import {SignedIn} from '@clerk/nextjs';
+import {Notifications} from 'ui';
 
 // Revalidate the page
 export const revalidate = 0;
@@ -106,16 +109,9 @@ export default async function Details({params}: Props) {
           </ToFilteredListButton>
         </div>
         <div className="sm:flex justify-end gap-4 hidden">
-          <button className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-sand-100 hover:bg-sand-200 transition text-sand-800 flex items-center gap-1">
-            {t('bookmarkButton')}
-          </button>
-          <button className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-sand-100 hover:bg-sand-200 transition text-sand-800 flex items-center gap-1">
-            {t('shareButton')}
-          </button>
-          <select className="p-1 sm:py-2 sm:px-3 rounded-xl text-xs bg-sand-100  text-sand-800 flex items-center gap-1">
-            <option className="p-2">{t('addToListButton')}</option>
-            <option className="p-2">{t('createNewListButton')}</option>
-          </select>
+          <SignedIn>
+            <ObjectListsMenu objectId={id} />
+          </SignedIn>
         </div>
       </div>
 
@@ -126,6 +122,8 @@ export default async function Details({params}: Props) {
         >
           {object.name}
         </h1>
+
+        <Notifications />
 
         <div className="text-neutral-500 text-sm flex flex-col sm:flex-row justify-between items-start sm:items-center">
           <div className="flex flex-row justify-start  gap-1 ">
