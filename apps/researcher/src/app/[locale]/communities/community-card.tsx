@@ -6,6 +6,7 @@ import Image from 'next/image';
 import {Suspense} from 'react';
 import {revalidatePath} from 'next/cache';
 import {ClerkAPIResponseError} from '@clerk/shared';
+import {objectList} from '@colonial-collections/database';
 
 interface MembershipCountProps {
   communityId: string;
@@ -29,6 +30,26 @@ async function MembershipCount({communityId, locale}: MembershipCountProps) {
 
   return t.rich('membershipCount', {
     count: memberships.length,
+  });
+}
+
+interface MembershipCountProps {
+  communityId: string;
+  locale: string;
+}
+
+async function ObjectListCount({communityId, locale}: MembershipCountProps) {
+  const t = await getTranslator(locale, 'Communities');
+
+  let objectLists = [];
+  try {
+    objectLists = await objectList.getListsByCommunityId(communityId);
+  } catch (err) {
+    // Don't error on the overview page. Catch this error on the detail page.
+  }
+
+  return t.rich('objectListCount', {
+    count: objectLists.length,
   });
 }
 
@@ -77,7 +98,9 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
             <MembershipCount communityId={community.id} locale={locale} />
           </Suspense>
         </div>
-        <div className="w-1/2 p-4">{/* TODO add number of lists here */}</div>
+        <div className="w-1/2 p-4">
+          <ObjectListCount communityId={community.id} locale={locale} />
+        </div>
       </div>
     </Link>
   );
