@@ -2,7 +2,8 @@
 
 import {create} from 'zustand';
 import {XMarkIcon} from '@heroicons/react/24/outline';
-import {ReactNode} from 'react';
+import {ReactNode, useEffect} from 'react';
+import {usePathname} from 'next/navigation';
 
 type Notification = {
   id: string;
@@ -14,6 +15,7 @@ interface State {
   notifications: Notification[];
   addNotification(item: Notification): void;
   removeNotification(item: Notification): void;
+  reset(): void;
 }
 
 export const useNotifications = create<State>(set => ({
@@ -26,10 +28,20 @@ export const useNotifications = create<State>(set => ({
     set(state => ({
       notifications: state.notifications.filter(i => i.id !== notification.id),
     })),
+  reset: () =>
+    set(() => ({
+      notifications: [],
+    })),
 }));
 
 export function Notifications() {
-  const {notifications, removeNotification} = useNotifications();
+  const {notifications, removeNotification, reset} = useNotifications();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Reset notifications when the route changes
+    reset();
+  }, [pathname, reset]);
 
   if (notifications.length === 0) {
     return null;
