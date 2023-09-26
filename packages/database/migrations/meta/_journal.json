@@ -22,6 +22,13 @@
       "when": 1695393273717,
       "tag": "0002_object_list_name_not_null",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1695717398044,
+      "tag": "0003_object_list_id_not_null",
+      "breakpoints": true
     }
   ]
 }

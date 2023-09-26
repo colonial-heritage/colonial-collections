@@ -40,7 +40,7 @@ export const objectItems = mysqlTable(
   {
     objectId: varchar('object_id', {length: 32}).primaryKey(),
     objectIri: text('object_iri').notNull(),
-    objectListId: int('object_list_id'),
+    objectListId: int('object_list_id').notNull(),
     createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),

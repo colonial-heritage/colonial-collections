@@ -66,16 +66,20 @@ export async function create({
 }
 
 interface AddObjectProps {
-  listId: number;
+  objectListId: number;
   objectIri: string;
-  userId: string;
+  createdBy: string;
 }
 
-export async function addObject({listId, objectIri, userId}: AddObjectProps) {
+export async function addObject({
+  objectListId,
+  objectIri,
+  createdBy,
+}: AddObjectProps) {
   const objectItem = insertObjectItemSchema.parse({
-    listId,
+    objectListId,
     objectIri,
-    createdBy: userId,
+    createdBy,
     objectId: iriToHash(objectIri),
   });
 

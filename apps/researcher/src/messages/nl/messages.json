@@ -84,7 +84,11 @@
     "currentPublisher": "Huidige locatie van object",
     "noOrganizationFound": "Geen organisatie gevonden.",
     "dateCreated": "Datum van creatie",
-    "dateCreatedSubTitle": "Wanneer is het voorwerp gemaakt? Dit kan een exacte datum of een datumbereik zijn."
+    "dateCreatedSubTitle": "Wanneer is het voorwerp gemaakt? Dit kan een exacte datum of een datumbereik zijn.",
+    "noListsInCommunity": "Geen lijsten",
+    "objectAddedToList": "Object toegevoegd aan lijst <name></name>.",
+     "objectAlreadyInList": "Object staat al in lijst <name></name>.",
+     "objectNotAddedToList": "Er is een probleem opgetreden bij het toevoegen van het object aan de lijst. Probeer het later opnieuw."
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
