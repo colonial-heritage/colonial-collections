@@ -2,7 +2,7 @@ import {objectLists, insertObjectItemSchema, objectItems} from './db/schema';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
 
-async function getListsByCommunityId(communityId: string) {
+async function getCommunityLists(communityId: string) {
   return db.query.objectLists.findMany({
     where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
   });
@@ -24,6 +24,23 @@ async function getCommunityListsWithObjects({
     with: {
       objects: objectOptions,
     },
+  });
+}
+
+interface getObjectItemProps {
+  objectListId: number;
+  objectIri: string;
+}
+
+async function getObjectItem({objectListId, objectIri}: getObjectItemProps) {
+  const objectId = iriToHash(objectIri);
+
+  return db.query.objectItems.findFirst({
+    where: (objectItems, {and, eq}) =>
+      and(
+        eq(objectItems.objectListId, objectListId),
+        eq(objectItems.objectId, objectId)
+      ),
   });
 }
 
@@ -49,20 +66,20 @@ async function createListForCommunity({
 }
 
 interface AddObjectToListProps {
-  listId: number;
+  objectListId: number;
   objectIri: string;
-  userId: string;
+  createdBy: string;
 }
 
 async function addObjectToList({
-  listId,
+  objectListId,
   objectIri,
-  userId,
+  createdBy,
 }: AddObjectToListProps) {
   const objectItem = insertObjectItemSchema.parse({
-    listId,
+    objectListId,
     objectIri,
-    createdBy: userId,
+    createdBy,
     objectId: iriToHash(objectIri),
   });
 
@@ -70,8 +87,9 @@ async function addObjectToList({
 }
 
 export const objectList = {
-  getListsByCommunityId,
+  getCommunityLists,
   getCommunityListsWithObjects,
   createListForCommunity,
   addObjectToList,
+  getObjectItem,
 };
