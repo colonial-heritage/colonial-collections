@@ -1,11 +1,11 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
 
 interface Props {
-  objectId: string;
+  objectIri: string;
 }
 
-export default async function ObjectCard({objectId}: Props) {
-  const object = await heritageObjects.getById(objectId);
+export default async function ObjectCard({objectIri}: Props) {
+  const object = await heritageObjects.getById(objectIri);
 
   if (!object) {
     return null;

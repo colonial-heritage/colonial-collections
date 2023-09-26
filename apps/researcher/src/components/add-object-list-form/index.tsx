@@ -77,10 +77,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
       )}
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="flex flex-col w-full lg:w-2/3">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
+          <label className="block text-sm font-medium leading-6 text-gray-900">
             <strong>{t('labelName')}</strong>
           </label>
           <input
@@ -94,7 +91,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
 
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col w-full lg:w-2/3">
-          <label htmlFor="description" className="flex flex-col text-sm">
+          <label className="flex flex-col text-sm">
             <strong>{t('labelDescription')}</strong>
           </label>
           {t('labelDescriptionSubTitle')}

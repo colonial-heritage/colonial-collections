@@ -1,4 +1,4 @@
-import {ChevronLeftIcon, PlusIcon} from '@heroicons/react/24/solid';
+import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslator} from 'next-intl/server';
@@ -141,7 +141,7 @@ export default async function CommunityPage({params}: Props) {
                       {objectList.objects.map(object => (
                         <ObjectCard
                           key={object.objectId}
-                          objectId={object.objectId}
+                          objectIri={object.objectIri}
                         />
                       ))}
                     </ul>
