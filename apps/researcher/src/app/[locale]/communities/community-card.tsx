@@ -88,8 +88,8 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
           ),
         })}
       </h1>
-      <div className="text-center p-4">
-        {/* TODO add community description */}
+      <div className="text-center m-4 line-clamp-3">
+        {community.publicMetadata?.description}
       </div>
 
       <div className="flex border-stone-300 border-t text-sm text-stone-600">

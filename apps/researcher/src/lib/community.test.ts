@@ -101,6 +101,7 @@ describe('sort', () => {
       slug: 'community-2',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1690000000000,
+      publicMetadata: null,
     },
     {
       id: 'community1',
@@ -108,6 +109,7 @@ describe('sort', () => {
       slug: 'community-1',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1600000000000,
+      publicMetadata: null,
     },
     {
       id: 'community4',
@@ -115,6 +117,7 @@ describe('sort', () => {
       slug: 'community-4',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1680000000000,
+      publicMetadata: null,
     },
     {
       id: 'community3',
@@ -122,6 +125,7 @@ describe('sort', () => {
       slug: 'community-3',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1650000000000,
+      publicMetadata: null,
     },
     {
       id: 'community5',
@@ -129,6 +133,7 @@ describe('sort', () => {
       slug: 'community-5',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1670000000000,
+      publicMetadata: null,
     },
   ];
 
@@ -142,6 +147,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
+        publicMetadata: null,
       },
       {
         id: 'community2',
@@ -149,6 +155,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
+        publicMetadata: null,
       },
       {
         id: 'community3',
@@ -156,6 +163,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
+        publicMetadata: null,
       },
       {
         id: 'community4',
@@ -163,6 +171,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
+        publicMetadata: null,
       },
       {
         id: 'community5',
@@ -170,6 +179,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
+        publicMetadata: null,
       },
     ];
 
@@ -186,6 +196,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
+        publicMetadata: null,
       },
       {
         id: 'community4',
@@ -193,6 +204,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
+        publicMetadata: null,
       },
       {
         id: 'community3',
@@ -200,6 +212,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
+        publicMetadata: null,
       },
       {
         id: 'community2',
@@ -207,6 +220,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
+        publicMetadata: null,
       },
       {
         id: 'community1',
@@ -214,6 +228,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
+        publicMetadata: null,
       },
     ];
 
@@ -230,6 +245,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
+        publicMetadata: null,
       },
       {
         id: 'community4',
@@ -237,6 +253,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
+        publicMetadata: null,
       },
       {
         id: 'community5',
@@ -244,6 +261,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
+        publicMetadata: null,
       },
       {
         id: 'community3',
@@ -251,6 +269,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
+        publicMetadata: null,
       },
       {
         id: 'community1',
@@ -258,6 +277,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
+        publicMetadata: null,
       },
     ];
 

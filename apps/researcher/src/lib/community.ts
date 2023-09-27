@@ -8,7 +8,11 @@ import {
 export type Community = Pick<
   FullCommunity,
   'id' | 'name' | 'slug' | 'imageUrl' | 'createdAt'
->;
+> & {
+  publicMetadata: {
+    description?: string;
+  } | null;
+};
 
 export type Membership = Pick<OrganizationMembership, 'id' | 'role'> & {
   publicUserData?: Pick<
@@ -116,5 +120,19 @@ export async function joinCommunity({
     organizationId,
     userId,
     role: 'basic_member',
+  });
+}
+
+export async function editDescription({
+  communityId,
+  description,
+}: {
+  communityId: string;
+  description: string;
+}) {
+  return clerkClient.organizations.updateOrganizationMetadata(communityId, {
+    publicMetadata: {
+      description,
+    },
   });
 }

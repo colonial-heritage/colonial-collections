@@ -15,7 +15,7 @@ export async function addList(
   try {
     await objectList.createListForCommunity(listItem);
     const community = await getCommunityById(listItem.communityId);
-    revalidatePath(`/[locale]/communities/${community.slug}`);
+    revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 
     return {statusCode: 200};
   } catch (err) {

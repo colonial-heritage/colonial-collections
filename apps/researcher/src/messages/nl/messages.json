@@ -156,7 +156,14 @@
     "objectListsSubTitle": "Deze community heeft {count, plural, =0 {0 lijsten} =1 {1 lijst} other {# lijsten}}",
     "membersTitle": "Leden",
     "error": "Er is een fout opgetreden bij het ophalen van de community. Probeer het later opnieuw.",
-    "addObjectListButton": "Lijst toevoegen"
+    "addObjectListButton": "Lijst toevoegen",
+    "editDescriptionButton": "Beschrijving aanpassen",
+    "labelDescription":"Beschrijving",
+    "changeDescriptionSaveButton": "Opslaan",
+    "changeDescriptionCancelButton": "Annuleren",
+    "descriptionSuccessfullyEdited": "Beschrijving is succesvol aangepast",
+    "descriptionServerError": "Er is iets misgegaan bij het aanpassen van de beschrijving. Probeer het later opnieuw.",
+    "description_maxLength": "Beschrijving mag maximaal 2000 tekens bevatten"
   },
   "AddObjectListForm": {
     "title": "Lijst toevoegen",

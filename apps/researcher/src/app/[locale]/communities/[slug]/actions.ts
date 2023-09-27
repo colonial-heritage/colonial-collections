@@ -1,6 +1,29 @@
 'use server';
 
-import {joinCommunity} from '@/lib/community';
+import {joinCommunity, editDescription} from '@/lib/community';
+import {revalidatePath} from 'next/cache';
+
+interface editDescriptionActionProps {
+  communityId: string;
+  communitySlug: string;
+  description: string;
+}
+
+async function editDescriptionAction({
+  communityId,
+  communitySlug,
+  description,
+}: editDescriptionActionProps) {
+  try {
+    await editDescription({communityId, description});
+    revalidatePath(`/[locale]/communities/${communitySlug}`, 'page');
+    revalidatePath('/[locale]/communities', 'page');
+
+    return {statusCode: 200};
+  } catch (err) {
+    return {statusCode: 500};
+  }
+}
 
 // Export as server actions.
-export {joinCommunity};
+export {joinCommunity, editDescriptionAction};
