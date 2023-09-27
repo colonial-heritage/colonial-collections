@@ -104,3 +104,17 @@ export async function joinCommunity({
     role: 'basic_member',
   });
 }
+
+export async function editDescription({
+  communityId,
+  description,
+}: {
+  communityId: string;
+  description: string;
+}) {
+  return clerkClient.organizations.updateOrganizationMetadata(communityId, {
+    publicMetadata: {
+      description,
+    },
+  });
+}
