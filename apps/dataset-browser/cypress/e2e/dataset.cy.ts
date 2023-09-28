@@ -37,6 +37,8 @@ describe('Dataset details page', () => {
       .then(url => {
         // Open the details page
         cy.getBySel('dataset-card-name').first().click();
+        // Wait for the page to load.
+        cy.location('pathname', {timeout: 60000}).should('include', '/dataset');
         // Go back to the list
         cy.getBySel('to-filtered-list-button').first().click();
 
