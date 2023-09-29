@@ -1,10 +1,12 @@
 'use server';
 
+import {getCommunityBySlug} from '@/lib/community';
 import {objectList} from '@colonial-collections/database';
 import {
   InsertObjectItem,
   SelectObjectList,
 } from '@colonial-collections/database';
+import {revalidatePath} from 'next/cache';
 
 export async function getCommunityLists(
   communityId: string
@@ -12,6 +14,16 @@ export async function getCommunityLists(
   return objectList.getByCommunityId(communityId);
 }
 
-export async function addObjectToList(listItem: InsertObjectItem) {
-  return objectList.addObject(listItem);
+interface AddObjectToListProps {
+  listItem: InsertObjectItem;
+  communityId: string;
+}
+
+export async function addObjectToList({
+  listItem,
+  communityId,
+}: AddObjectToListProps) {
+  objectList.addObject(listItem);
+  const community = await getCommunityBySlug(communityId);
+  revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 }
