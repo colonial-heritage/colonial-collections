@@ -27,9 +27,12 @@ function CommunityMenuItems({
   async function addObjectToListClick(objectList: SelectObjectList) {
     try {
       await addObjectToList({
-        objectIri: objectId,
-        objectListId: objectList.id,
-        createdBy: userId,
+        listItem: {
+          objectIri: objectId,
+          objectListId: objectList.id,
+          createdBy: userId,
+        },
+        communityId,
       });
 
       addNotification({
