@@ -16,5 +16,6 @@ export type SearchResult = {
     owners: SearchResultFilter[];
     types: SearchResultFilter[];
     subjects: SearchResultFilter[];
+    locations: SearchResultFilter[];
   };
 };
