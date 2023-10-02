@@ -65,7 +65,6 @@ export const objectItemsRelations = relations(objectItems, ({one}) => ({
 }));
 
 export const insertObjectListSchema = createInsertSchema(objectLists, {
-  // Don't allow empty strings
   name: schema => schema.name.trim().min(1),
 });
 
