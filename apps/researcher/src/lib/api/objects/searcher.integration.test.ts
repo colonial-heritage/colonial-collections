@@ -388,6 +388,33 @@ describe('search', () => {
             name: 'Vincent van Gogh',
           },
         ],
+        publishers: [
+          {
+            totalCount: 0,
+            id: 'Archive',
+            name: 'Archive',
+          },
+          {
+            totalCount: 1,
+            id: 'Library',
+            name: 'Library',
+          },
+          {
+            totalCount: 3,
+            id: 'Museum',
+            name: 'Museum',
+          },
+          {
+            totalCount: 1,
+            id: 'Onderzoeksinstelling',
+            name: 'Onderzoeksinstelling',
+          },
+          {
+            totalCount: 1,
+            id: 'Research Organisation',
+            name: 'Research Organisation',
+          },
+        ],
       },
     });
   });
@@ -535,6 +562,47 @@ describe('search', () => {
             totalCount: 0,
             id: 'Vincent van Gogh',
             name: 'Vincent van Gogh',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "publishers" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        publishers: ['Library'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        publishers: [
+          {
+            totalCount: 0,
+            id: 'Archive',
+            name: 'Archive',
+          },
+          {
+            totalCount: 1,
+            id: 'Library',
+            name: 'Library',
+          },
+          {
+            totalCount: 0,
+            id: 'Museum',
+            name: 'Museum',
+          },
+          {
+            totalCount: 0,
+            id: 'Onderzoeksinstelling',
+            name: 'Onderzoeksinstelling',
+          },
+          {
+            totalCount: 0,
+            id: 'Research Organisation',
+            name: 'Research Organisation',
           },
         ],
       },

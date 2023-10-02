@@ -62,6 +62,7 @@ const searchOptionsSchema = z.object({
       locations: z.array(z.string()).optional().default([]),
       materials: z.array(z.string()).optional().default([]),
       creators: z.array(z.string()).optional().default([]),
+      publishers: z.array(z.string()).optional().default([]),
     })
     .optional(),
 });
@@ -121,6 +122,7 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
         locations: rawAggregationSchema,
         materials: rawAggregationSchema,
         creators: rawAggregationSchema,
+        publishers: rawAggregationSchema,
       }),
       owners: rawAggregationSchema,
       types: rawAggregationSchema,
@@ -128,6 +130,7 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
       locations: rawAggregationSchema,
       materials: rawAggregationSchema,
       creators: rawAggregationSchema,
+      publishers: rawAggregationSchema,
     }),
   })
 );
@@ -264,6 +267,7 @@ export class HeritageObjectSearcher {
       locations: buildAggregation(RawKeys.CountryCreated),
       materials: buildAggregation(RawKeys.Material),
       creators: buildAggregation(RawKeys.Creator),
+      publishers: buildAggregation(RawKeys.Publisher),
     };
 
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
@@ -318,6 +322,7 @@ export class HeritageObjectSearcher {
       [RawKeys.CountryCreated, options.filters?.locations],
       [RawKeys.Material, options.filters?.materials],
       [RawKeys.Creator, options.filters?.creators],
+      [RawKeys.Publisher, options.filters?.publishers],
     ]);
 
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
@@ -374,6 +379,11 @@ export class HeritageObjectSearcher {
       aggregations.creators.buckets
     );
 
+    const publisherFilters = buildFilters(
+      aggregations.all.publishers.buckets,
+      aggregations.publishers.buckets
+    );
+
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
@@ -388,6 +398,7 @@ export class HeritageObjectSearcher {
         locations: locationFilters,
         materials: materialFilters,
         creators: creatorFilters,
+        publishers: publisherFilters,
       },
     };
 
