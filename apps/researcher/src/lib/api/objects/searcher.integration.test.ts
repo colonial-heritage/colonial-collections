@@ -371,6 +371,23 @@ describe('search', () => {
             name: 'Paper',
           },
         ],
+        creators: [
+          {
+            totalCount: 1,
+            id: 'Adriaan Boer',
+            name: 'Adriaan Boer',
+          },
+          {
+            totalCount: 1,
+            id: 'Geeske van Châtellerault',
+            name: 'Geeske van Châtellerault',
+          },
+          {
+            totalCount: 1,
+            id: 'Vincent van Gogh',
+            name: 'Vincent van Gogh',
+          },
+        ],
       },
     });
   });
@@ -487,6 +504,37 @@ describe('search', () => {
             totalCount: 0,
             id: 'Paper',
             name: 'Paper',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "creators" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        creators: ['Adriaan Boer'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        creators: [
+          {
+            totalCount: 1,
+            id: 'Adriaan Boer',
+            name: 'Adriaan Boer',
+          },
+          {
+            totalCount: 0,
+            id: 'Geeske van Châtellerault',
+            name: 'Geeske van Châtellerault',
+          },
+          {
+            totalCount: 0,
+            id: 'Vincent van Gogh',
+            name: 'Vincent van Gogh',
           },
         ],
       },

@@ -61,6 +61,7 @@ const searchOptionsSchema = z.object({
       subjects: z.array(z.string()).optional().default([]),
       locations: z.array(z.string()).optional().default([]),
       materials: z.array(z.string()).optional().default([]),
+      creators: z.array(z.string()).optional().default([]),
     })
     .optional(),
 });
@@ -119,12 +120,14 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
         subjects: rawAggregationSchema,
         locations: rawAggregationSchema,
         materials: rawAggregationSchema,
+        creators: rawAggregationSchema,
       }),
       owners: rawAggregationSchema,
       types: rawAggregationSchema,
       subjects: rawAggregationSchema,
       locations: rawAggregationSchema,
       materials: rawAggregationSchema,
+      creators: rawAggregationSchema,
     }),
   })
 );
@@ -260,6 +263,7 @@ export class HeritageObjectSearcher {
       subjects: buildAggregation(RawKeys.About),
       locations: buildAggregation(RawKeys.CountryCreated),
       materials: buildAggregation(RawKeys.Material),
+      creators: buildAggregation(RawKeys.Creator),
     };
 
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
@@ -313,6 +317,7 @@ export class HeritageObjectSearcher {
       [RawKeys.About, options.filters?.subjects],
       [RawKeys.CountryCreated, options.filters?.locations],
       [RawKeys.Material, options.filters?.materials],
+      [RawKeys.Creator, options.filters?.creators],
     ]);
 
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
@@ -364,6 +369,11 @@ export class HeritageObjectSearcher {
       aggregations.materials.buckets
     );
 
+    const creatorFilters = buildFilters(
+      aggregations.all.creators.buckets,
+      aggregations.creators.buckets
+    );
+
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
@@ -377,6 +387,7 @@ export class HeritageObjectSearcher {
         subjects: subjectFilters,
         locations: locationFilters,
         materials: materialFilters,
+        creators: creatorFilters,
       },
     };
 
