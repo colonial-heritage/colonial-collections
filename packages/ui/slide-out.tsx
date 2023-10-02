@@ -1,7 +1,8 @@
 'use client';
 
 import {create} from 'zustand';
-import {ReactNode, ButtonHTMLAttributes} from 'react';
+import {ReactNode, ButtonHTMLAttributes, useEffect} from 'react';
+import {usePathname} from 'next/navigation';
 
 interface SlideOutState {
   visibleIds: {
@@ -50,6 +51,13 @@ interface SlideOutProps {
 }
 
 export function SlideOut({id, children}: SlideOutProps) {
-  const {isVisible} = useSlideOut();
+  const {isVisible, setIsVisible} = useSlideOut();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Close slide out when the route changes
+    setIsVisible(id, false);
+  }, [id, pathname, setIsVisible]);
+
   return isVisible(id) ? <>{children}</> : null;
 }
