@@ -41,8 +41,8 @@ function Form({communityId, userId, slideOutId}: FormProps) {
   const {setIsVisible} = useSlideOut();
   const {addNotification} = useNotifications();
 
-  const onSubmit: SubmitHandler<FormValues> = async data => {
-    const response = await addList(data);
+  const onSubmit: SubmitHandler<FormValues> = async listItem => {
+    const response = await addList(listItem);
 
     if (response.statusCode > 200) {
       setError('root.serverError', {
@@ -54,7 +54,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
         message: (
           <>
             {t.rich('listSuccessfullyAdded', {
-              name: () => <em>{data.name}</em>,
+              name: () => <em>{listItem.name}</em>,
             })}
           </>
         ),
@@ -129,6 +129,7 @@ interface AddObjectListFormProps {
   communityId: string;
   slideOutId: string;
 }
+
 export default function AddObjectListForm({
   communityId,
   slideOutId,
@@ -136,8 +137,8 @@ export default function AddObjectListForm({
   const {userId} = useAuth();
   const t = useTranslations('AddObjectListForm');
 
-  // Wait for userId to be available
-  // in most cases, this will be available immediately
+  // Wait for userId to be available.
+  // In most cases, this will be available immediately
   // so no loading state is needed
   return (
     <div className="w-full bg-greenGrey-50 border border-greenGrey-100 p-4 rounded-xl text-greenGrey-800 self-end flex-col gap-6 flex">

@@ -163,7 +163,7 @@
     "title": "Add list",
     "labelName": "List name",
     "labelDescription": "Description (optional)",
-    "labelDescriptionSubTitle": "Give a description about this list. For example. What is the history of this list. Tell a little bit about the kind of objects.",
+    "labelDescriptionSubTitle": "Give a description about this list. For example, what is the history of this list. Tell a little bit about the kind of objects.",
     "buttonSubmit": "Create list",
     "buttonCancel": "Cancel",
     "name_too_small": "List name is required",
