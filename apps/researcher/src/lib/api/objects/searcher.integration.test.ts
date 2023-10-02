@@ -332,6 +332,23 @@ describe('search', () => {
             name: 'Palace',
           },
         ],
+        locations: [
+          {
+            totalCount: 2,
+            id: 'Indonesia',
+            name: 'Indonesia',
+          },
+          {
+            totalCount: 1,
+            id: 'Malaysia',
+            name: 'Malaysia',
+          },
+          {
+            totalCount: 1,
+            id: 'Suriname',
+            name: 'Suriname',
+          },
+        ],
       },
     });
   });

@@ -39,6 +39,7 @@ enum RawKeys {
   Owner = 'https://colonialcollections nl/schema#owner',
   Publisher = 'https://colonialcollections nl/schema#publisher',
   DateCreated = 'https://colonialcollections nl/schema#dateCreatedStart', // Earliest date of creation
+  CountryCreated = 'https://colonialcollections nl/schema#countryCreated',
   IsPartOf = 'https://colonialcollections nl/schema#isPartOf',
 }
 
@@ -59,6 +60,7 @@ const searchOptionsSchema = z.object({
       owners: z.array(z.string()).optional().default([]),
       types: z.array(z.string()).optional().default([]),
       subjects: z.array(z.string()).optional().default([]),
+      locations: z.array(z.string()).optional().default([]),
     })
     .optional(),
 });
@@ -116,10 +118,12 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
         owners: rawAggregationSchema,
         types: rawAggregationSchema,
         subjects: rawAggregationSchema,
+        locations: rawAggregationSchema,
       }),
       owners: rawAggregationSchema,
       types: rawAggregationSchema,
       subjects: rawAggregationSchema,
+      locations: rawAggregationSchema,
     }),
   })
 );
@@ -253,6 +257,7 @@ export class HeritageObjectSearcher {
       owners: buildAggregation(RawKeys.Owner),
       types: buildAggregation(RawKeys.AdditionalType),
       subjects: buildAggregation(RawKeys.About),
+      locations: buildAggregation(RawKeys.CountryCreated),
     };
 
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
@@ -304,6 +309,7 @@ export class HeritageObjectSearcher {
       [RawKeys.Owner, options.filters?.owners],
       [RawKeys.AdditionalType, options.filters?.types],
       [RawKeys.About, options.filters?.subjects],
+      [RawKeys.CountryCreated, options.filters?.locations],
     ]);
 
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
@@ -345,6 +351,11 @@ export class HeritageObjectSearcher {
       aggregations.subjects.buckets
     );
 
+    const locationFilters = buildFilters(
+      aggregations.all.locations.buckets,
+      aggregations.locations.buckets
+    );
+
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
@@ -356,6 +367,7 @@ export class HeritageObjectSearcher {
         owners: ownerFilters,
         types: typeFilters,
         subjects: subjectFilters,
+        locations: locationFilters,
       },
     };
 
