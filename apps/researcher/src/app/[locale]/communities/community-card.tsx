@@ -45,7 +45,7 @@ async function ObjectListCount({communityId, locale}: MembershipCountProps) {
   try {
     objectLists = await objectList.getListsByCommunityId(communityId);
   } catch (err) {
-    // Don't error on the overview page. Catch this error on the detail page.
+    return t('objectListCountError');
   }
 
   return t.rich('objectListCount', {

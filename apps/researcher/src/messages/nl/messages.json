@@ -143,6 +143,7 @@
     "communityName": "Community van <name></name>",
     "membershipCount": "{count, plural, =0 {0 leden} =1 {1 lid} other {# leden}}",
     "objectListCount": "{count, plural, =0 {0 lijsten} =1 {1 lijst} other {# lijsten}}",
+    "objectListCountError": "Error",
     "searchPlaceholder": "Zoek naar community"
   },
   "Community": {

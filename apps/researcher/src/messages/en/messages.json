@@ -143,6 +143,7 @@
     "communityName": "Community of <name></name>",
     "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",
     "objectListCount": "{count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
+    "objectListCountError": "Error",
     "searchPlaceholder": "Search for community"
   },
   "Community": {
