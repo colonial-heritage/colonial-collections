@@ -10,16 +10,10 @@ interface ListItem {
   name: string;
   description?: string;
 }
-export async function addList(
-  listItem: ListItem
-): Promise<{statusCode: number}> {
-  try {
-    await objectList.createListForCommunity(listItem);
-    const community = await getCommunityById(listItem.communityId);
-    revalidatePath(`/[locale]/communities/${community.slug}`);
+export async function addList(listItem: ListItem) {
+  const response = await objectList.createListForCommunity(listItem);
+  const community = await getCommunityById(listItem.communityId);
+  revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 
-    return {statusCode: 200};
-  } catch (err) {
-    return {statusCode: 500};
-  }
+  return JSON.stringify(response);
 }

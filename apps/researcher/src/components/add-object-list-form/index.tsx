@@ -42,25 +42,20 @@ function Form({communityId, userId, slideOutId}: FormProps) {
   const {addNotification} = useNotifications();
 
   const onSubmit: SubmitHandler<FormValues> = async listItem => {
-    const response = await addList(listItem);
-
-    if (response.statusCode > 200) {
-      setError('root.serverError', {
-        message: t('serverError'),
-      });
-    } else {
+    try {
+      await addList(listItem);
       addNotification({
         id: 'add-object-list-success',
-        message: (
-          <>
-            {t.rich('listSuccessfullyAdded', {
-              name: () => <em>{listItem.name}</em>,
-            })}
-          </>
-        ),
+        message: t.rich('listSuccessfullyAdded', {
+          name: () => <em>{listItem.name}</em>,
+        }),
         type: 'success',
       });
       setIsVisible(slideOutId, false);
+    } catch (error) {
+      setError('root.serverError', {
+        message: t('serverError'),
+      });
     }
   };
 
