@@ -349,6 +349,146 @@ describe('search', () => {
             name: 'Suriname',
           },
         ],
+        materials: [
+          {
+            totalCount: 2,
+            id: 'Canvas',
+            name: 'Canvas',
+          },
+          {
+            totalCount: 1,
+            id: 'Ink',
+            name: 'Ink',
+          },
+          {
+            totalCount: 2,
+            id: 'Oilpaint',
+            name: 'Oilpaint',
+          },
+          {
+            totalCount: 2,
+            id: 'Paper',
+            name: 'Paper',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "owners" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        owners: ['Library'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        owners: [
+          {totalCount: 1, id: 'Library', name: 'Library'},
+          {totalCount: 0, id: 'Museum', name: 'Museum'},
+          {
+            totalCount: 0,
+            id: 'Research Organisation',
+            name: 'Research Organisation',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "types" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        types: ['Painting'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        types: [
+          {totalCount: 0, id: 'Canvas Painting', name: 'Canvas Painting'},
+          {totalCount: 0, id: 'Drawing', name: 'Drawing'},
+          {totalCount: 1, id: 'Painting', name: 'Painting'},
+          {totalCount: 0, id: 'Photo', name: 'Photo'},
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "subjects" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        subjects: ['Castle'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        subjects: [
+          {totalCount: 1, id: 'Castle', name: 'Castle'},
+          {totalCount: 0, id: 'Celebrations', name: 'Celebrations'},
+          {totalCount: 1, id: 'Cottage', name: 'Cottage'},
+          {totalCount: 0, id: 'Palace', name: 'Palace'},
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "locations" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        locations: ['Malaysia'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        locations: [
+          {totalCount: 0, id: 'Indonesia', name: 'Indonesia'},
+          {totalCount: 1, id: 'Malaysia', name: 'Malaysia'},
+          {totalCount: 0, id: 'Suriname', name: 'Suriname'},
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "materials" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        materials: ['Canvas'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 2,
+      filters: {
+        materials: [
+          {
+            totalCount: 2,
+            id: 'Canvas',
+            name: 'Canvas',
+          },
+          {
+            totalCount: 0,
+            id: 'Ink',
+            name: 'Ink',
+          },
+          {
+            totalCount: 2,
+            id: 'Oilpaint',
+            name: 'Oilpaint',
+          },
+          {
+            totalCount: 0,
+            id: 'Paper',
+            name: 'Paper',
+          },
+        ],
       },
     });
   });
