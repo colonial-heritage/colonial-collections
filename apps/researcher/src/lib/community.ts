@@ -1,37 +1,21 @@
 import {clerkClient, auth} from '@clerk/nextjs';
-import {
-  OrganizationMembership,
-  OrganizationMembershipPublicUserData,
-  Organization as FullCommunity,
-} from '@clerk/backend/dist/types';
+import {OrganizationMembership, Organization} from '@clerk/backend/dist/types';
 
-export type Community = Pick<
-  FullCommunity,
-  'id' | 'name' | 'slug' | 'imageUrl' | 'createdAt'
->;
+export type Community = Organization;
 
-export type Membership = Pick<OrganizationMembership, 'id' | 'role'> & {
-  publicUserData?: Pick<
-    OrganizationMembershipPublicUserData,
-    'userId' | 'firstName' | 'lastName' | 'profileImageUrl'
-  > | null;
-};
-
-export async function getCommunityBySlug(slug: string): Promise<Community> {
+export async function getCommunityBySlug(slug: string) {
   return clerkClient.organizations.getOrganization({
     slug,
   });
 }
 
-export async function getCommunityById(id: string): Promise<Community> {
+export async function getCommunityById(id: string) {
   return clerkClient.organizations.getOrganization({
     organizationId: id,
   });
 }
 
-export async function getMemberships(
-  communityId: string
-): Promise<Membership[]> {
+export async function getMemberships(communityId: string) {
   return clerkClient.organizations.getOrganizationMembershipList({
     organizationId: communityId,
   });
@@ -46,7 +30,7 @@ export enum SortBy {
 
 export const defaultSortBy = SortBy.CreatedAtDesc;
 
-export function sort(communities: Community[], sortBy: SortBy) {
+export function sort(communities: Organization[], sortBy: SortBy) {
   // TODO: Implement sorting by membership count.
   // This can be done as soon as the `Community` includes membership count.
   return [...communities].sort((a, b) => {
@@ -74,7 +58,7 @@ export async function getCommunities({
   sortBy = defaultSortBy,
   limit = 24,
   offset = 0,
-}: GetCommunitiesProps): Promise<Community[]> {
+}: GetCommunitiesProps) {
   const communities = await clerkClient.organizations.getOrganizationList({
     limit,
     offset,
@@ -89,7 +73,9 @@ export async function getCommunities({
   return sort(communities, sortBy);
 }
 
-export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
+export function isAdmin(
+  memberships: ReadonlyArray<OrganizationMembership>
+): boolean {
   const {userId} = auth();
 
   return (
