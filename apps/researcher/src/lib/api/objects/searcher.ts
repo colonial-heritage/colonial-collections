@@ -38,6 +38,8 @@ enum RawKeys {
   Image = 'https://colonialcollections nl/schema#image',
   Owner = 'https://colonialcollections nl/schema#owner',
   Publisher = 'https://colonialcollections nl/schema#publisher',
+  YearCreatedStart = 'https://colonialcollections nl/schema#yearCreatedStart',
+  YearCreatedEnd = 'https://colonialcollections nl/schema#yearCreatedEnd',
   CountryCreated = 'https://colonialcollections nl/schema#countryCreated',
   IsPartOf = 'https://colonialcollections nl/schema#isPartOf',
 }
@@ -63,6 +65,8 @@ const searchOptionsSchema = z.object({
       materials: z.array(z.string()).optional().default([]),
       creators: z.array(z.string()).optional().default([]),
       publishers: z.array(z.string()).optional().default([]),
+      dateCreatedStart: z.string().optional(),
+      dateCreatedEnd: z.string().optional(),
     })
     .optional(),
 });
@@ -123,6 +127,8 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
         materials: rawAggregationSchema,
         creators: rawAggregationSchema,
         publishers: rawAggregationSchema,
+        dateCreatedStart: rawAggregationSchema,
+        dateCreatedEnd: rawAggregationSchema,
       }),
       owners: rawAggregationSchema,
       types: rawAggregationSchema,
@@ -131,6 +137,8 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
       materials: rawAggregationSchema,
       creators: rawAggregationSchema,
       publishers: rawAggregationSchema,
+      dateCreatedStart: rawAggregationSchema,
+      dateCreatedEnd: rawAggregationSchema,
     }),
   })
 );
@@ -268,6 +276,8 @@ export class HeritageObjectSearcher {
       materials: buildAggregation(RawKeys.Material),
       creators: buildAggregation(RawKeys.Creator),
       publishers: buildAggregation(RawKeys.Publisher),
+      dateCreatedStart: buildAggregation(RawKeys.YearCreatedStart),
+      dateCreatedEnd: buildAggregation(RawKeys.YearCreatedEnd),
     };
 
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
@@ -335,6 +345,30 @@ export class HeritageObjectSearcher {
       }
     }
 
+    const dateCreatedStart = options.filters?.dateCreatedStart;
+    if (dateCreatedStart !== undefined) {
+      searchRequest.query.bool.filter.push({
+        // @ts-expect-error:TS2345
+        range: {
+          [`${RawKeys.YearCreatedStart}.keyword`]: {
+            gte: dateCreatedStart,
+          },
+        },
+      });
+    }
+
+    const dateCreatedEnd = options.filters?.dateCreatedEnd;
+    if (dateCreatedEnd !== undefined) {
+      searchRequest.query.bool.filter.push({
+        // @ts-expect-error:TS2345
+        range: {
+          [`${RawKeys.YearCreatedEnd}.keyword`]: {
+            lte: dateCreatedEnd,
+          },
+        },
+      });
+    }
+
     return searchRequest;
   }
 
@@ -384,6 +418,16 @@ export class HeritageObjectSearcher {
       aggregations.publishers.buckets
     );
 
+    const dateCreatedStartFilters = buildFilters(
+      aggregations.all.dateCreatedStart.buckets,
+      aggregations.dateCreatedStart.buckets
+    );
+
+    const dateCreatedEndFilters = buildFilters(
+      aggregations.all.dateCreatedEnd.buckets,
+      aggregations.dateCreatedEnd.buckets
+    );
+
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
@@ -399,6 +443,8 @@ export class HeritageObjectSearcher {
         materials: materialFilters,
         creators: creatorFilters,
         publishers: publisherFilters,
+        dateCreatedStart: dateCreatedStartFilters,
+        dateCreatedEnd: dateCreatedEndFilters,
       },
     };
 

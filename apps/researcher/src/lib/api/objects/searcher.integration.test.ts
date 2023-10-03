@@ -415,6 +415,50 @@ describe('search', () => {
             name: 'Research Organisation',
           },
         ],
+        dateCreatedStart: [
+          {
+            totalCount: 1,
+            id: '1725',
+            name: '1725',
+          },
+          {
+            totalCount: 1,
+            id: '1889',
+            name: '1889',
+          },
+          {
+            totalCount: 1,
+            id: '1895',
+            name: '1895',
+          },
+          {
+            totalCount: 1,
+            id: '1901',
+            name: '1901',
+          },
+        ],
+        dateCreatedEnd: [
+          {
+            totalCount: 1,
+            id: '1736',
+            name: '1736',
+          },
+          {
+            totalCount: 1,
+            id: '1890',
+            name: '1890',
+          },
+          {
+            totalCount: 1,
+            id: '1895',
+            name: '1895',
+          },
+          {
+            totalCount: 1,
+            id: '1902',
+            name: '1902',
+          },
+        ],
       },
     });
   });
@@ -603,6 +647,137 @@ describe('search', () => {
             totalCount: 0,
             id: 'Research Organisation',
             name: 'Research Organisation',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "dateCreatedStart" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        dateCreatedStart: '1901',
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        dateCreatedStart: [
+          {
+            totalCount: 0,
+            id: '1725',
+            name: '1725',
+          },
+          {
+            totalCount: 0,
+            id: '1889',
+            name: '1889',
+          },
+          {
+            totalCount: 0,
+            id: '1895',
+            name: '1895',
+          },
+          {
+            totalCount: 1,
+            id: '1901',
+            name: '1901',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "dateCreatedEnd" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        dateCreatedEnd: '1736',
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        dateCreatedEnd: [
+          {
+            totalCount: 1,
+            id: '1736',
+            name: '1736',
+          },
+          {
+            totalCount: 0,
+            id: '1890',
+            name: '1890',
+          },
+          {
+            totalCount: 0,
+            id: '1895',
+            name: '1895',
+          },
+          {
+            totalCount: 0,
+            id: '1902',
+            name: '1902',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "dateCreatedStart" and "dateCreatedEnd" filters match', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        dateCreatedStart: '1700',
+        dateCreatedEnd: '1800',
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        dateCreatedStart: [
+          {
+            totalCount: 1,
+            id: '1725',
+            name: '1725',
+          },
+          {
+            totalCount: 0,
+            id: '1889',
+            name: '1889',
+          },
+          {
+            totalCount: 0,
+            id: '1895',
+            name: '1895',
+          },
+          {
+            totalCount: 0,
+            id: '1901',
+            name: '1901',
+          },
+        ],
+        dateCreatedEnd: [
+          {
+            totalCount: 1,
+            id: '1736',
+            name: '1736',
+          },
+          {
+            totalCount: 0,
+            id: '1890',
+            name: '1890',
+          },
+          {
+            totalCount: 0,
+            id: '1895',
+            name: '1895',
+          },
+          {
+            totalCount: 0,
+            id: '1902',
+            name: '1902',
           },
         ],
       },
