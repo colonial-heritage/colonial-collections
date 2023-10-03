@@ -17,5 +17,8 @@ export type SearchResult = {
     types: SearchResultFilter[];
     subjects: SearchResultFilter[];
     locations: SearchResultFilter[];
+    materials: SearchResultFilter[];
+    creators: SearchResultFilter[];
+    publishers: SearchResultFilter[];
   };
 };

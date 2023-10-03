@@ -349,6 +349,262 @@ describe('search', () => {
             name: 'Suriname',
           },
         ],
+        materials: [
+          {
+            totalCount: 2,
+            id: 'Canvas',
+            name: 'Canvas',
+          },
+          {
+            totalCount: 1,
+            id: 'Ink',
+            name: 'Ink',
+          },
+          {
+            totalCount: 2,
+            id: 'Oilpaint',
+            name: 'Oilpaint',
+          },
+          {
+            totalCount: 2,
+            id: 'Paper',
+            name: 'Paper',
+          },
+        ],
+        creators: [
+          {
+            totalCount: 1,
+            id: 'Adriaan Boer',
+            name: 'Adriaan Boer',
+          },
+          {
+            totalCount: 1,
+            id: 'Geeske van Châtellerault',
+            name: 'Geeske van Châtellerault',
+          },
+          {
+            totalCount: 1,
+            id: 'Vincent van Gogh',
+            name: 'Vincent van Gogh',
+          },
+        ],
+        publishers: [
+          {
+            totalCount: 0,
+            id: 'Archive',
+            name: 'Archive',
+          },
+          {
+            totalCount: 1,
+            id: 'Library',
+            name: 'Library',
+          },
+          {
+            totalCount: 3,
+            id: 'Museum',
+            name: 'Museum',
+          },
+          {
+            totalCount: 1,
+            id: 'Onderzoeksinstelling',
+            name: 'Onderzoeksinstelling',
+          },
+          {
+            totalCount: 1,
+            id: 'Research Organisation',
+            name: 'Research Organisation',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "owners" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        owners: ['Library'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        owners: [
+          {totalCount: 1, id: 'Library', name: 'Library'},
+          {totalCount: 0, id: 'Museum', name: 'Museum'},
+          {
+            totalCount: 0,
+            id: 'Research Organisation',
+            name: 'Research Organisation',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "types" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        types: ['Painting'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        types: [
+          {totalCount: 0, id: 'Canvas Painting', name: 'Canvas Painting'},
+          {totalCount: 0, id: 'Drawing', name: 'Drawing'},
+          {totalCount: 1, id: 'Painting', name: 'Painting'},
+          {totalCount: 0, id: 'Photo', name: 'Photo'},
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "subjects" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        subjects: ['Castle'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        subjects: [
+          {totalCount: 1, id: 'Castle', name: 'Castle'},
+          {totalCount: 0, id: 'Celebrations', name: 'Celebrations'},
+          {totalCount: 1, id: 'Cottage', name: 'Cottage'},
+          {totalCount: 0, id: 'Palace', name: 'Palace'},
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "locations" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        locations: ['Malaysia'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        locations: [
+          {totalCount: 0, id: 'Indonesia', name: 'Indonesia'},
+          {totalCount: 1, id: 'Malaysia', name: 'Malaysia'},
+          {totalCount: 0, id: 'Suriname', name: 'Suriname'},
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "materials" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        materials: ['Canvas'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 2,
+      filters: {
+        materials: [
+          {
+            totalCount: 2,
+            id: 'Canvas',
+            name: 'Canvas',
+          },
+          {
+            totalCount: 0,
+            id: 'Ink',
+            name: 'Ink',
+          },
+          {
+            totalCount: 2,
+            id: 'Oilpaint',
+            name: 'Oilpaint',
+          },
+          {
+            totalCount: 0,
+            id: 'Paper',
+            name: 'Paper',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "creators" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        creators: ['Adriaan Boer'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        creators: [
+          {
+            totalCount: 1,
+            id: 'Adriaan Boer',
+            name: 'Adriaan Boer',
+          },
+          {
+            totalCount: 0,
+            id: 'Geeske van Châtellerault',
+            name: 'Geeske van Châtellerault',
+          },
+          {
+            totalCount: 0,
+            id: 'Vincent van Gogh',
+            name: 'Vincent van Gogh',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds heritage objects if "publishers" filter matches', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        publishers: ['Library'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        publishers: [
+          {
+            totalCount: 0,
+            id: 'Archive',
+            name: 'Archive',
+          },
+          {
+            totalCount: 1,
+            id: 'Library',
+            name: 'Library',
+          },
+          {
+            totalCount: 0,
+            id: 'Museum',
+            name: 'Museum',
+          },
+          {
+            totalCount: 0,
+            id: 'Onderzoeksinstelling',
+            name: 'Onderzoeksinstelling',
+          },
+          {
+            totalCount: 0,
+            id: 'Research Organisation',
+            name: 'Research Organisation',
+          },
+        ],
       },
     });
   });
