@@ -1,4 +1,5 @@
-import {objectLists, insertObjectItemSchema, objectItems} from './db/schema';
+import {objectLists, objectItems, insertObjectItemSchema} from './db/schema';
+import {InferSelectModel} from 'drizzle-orm';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
 import {DBQueryConfig} from 'drizzle-orm';
@@ -8,10 +9,14 @@ interface Option {
   limitObjects?: number;
 }
 
+interface ObjectList extends InferSelectModel<typeof objectLists> {
+  objects?: InferSelectModel<typeof objectItems>[];
+}
+
 export async function getByCommunityId(
   communityId: string,
   {withObjects, limitObjects}: Option = {withObjects: false}
-) {
+): Promise<ObjectList[]> {
   const options: DBQueryConfig = {};
 
   if (withObjects) {

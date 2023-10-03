@@ -47,8 +47,8 @@ export default async function CommunityPage({params}: Props) {
 
   let objectLists;
   try {
-    objectLists = await objectList.getCommunityListsWithObjects({
-      communityId: community.id,
+    objectLists = await objectList.getByCommunityId(community.id, {
+      withObjects: true,
       limitObjects: 4,
     });
   } catch (err) {
@@ -138,7 +138,7 @@ export default async function CommunityPage({params}: Props) {
 
                   <div className="w-full relative">
                     <ul className=" mt-4 grid grid-cols-4 gap-2">
-                      {objectList.objects.map(object => (
+                      {objectList.objects?.map(object => (
                         <ObjectCard
                           key={object.objectId}
                           objectIri={object.objectIri}
