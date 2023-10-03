@@ -28,9 +28,9 @@ export class ProvenanceEventsFetcher {
     const query = `
       PREFIX cc: <${ontologyUrl}>
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
-      PREFIX foaf: <http://xmlns.com/foaf/0.1/>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX schema: <https://schema.org/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       CONSTRUCT {
@@ -107,7 +107,6 @@ export class ProvenanceEventsFetcher {
               skos:prefLabel ?acquisitionTypeName ;
               skos:inScheme <http://vocab.getty.edu/aat/> .
 
-            # TBD: how to handle languages?
             FILTER(LANG(?acquisitionTypeName) = "" || LANGMATCHES(LANG(?acquisitionTypeName), "en"))
           }
 
@@ -117,11 +116,11 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisition crm:P23_transferred_title_from ?acquisitionOwnerFrom .
-            ?acquisitionOwnerFrom rdfs:label|foaf:name ?acquisitionOwnerFromName ;
+            ?acquisitionOwnerFrom rdfs:label|schema:name ?acquisitionOwnerFromName ;
               rdf:type ?acquisitionOwnerFromTypeTmp .
 
             VALUES (?acquisitionOwnerFromTypeTmp ?acquisitionOwnerFromType) {
-              (foaf:Organization cc:Organization)
+              (schema:Organization cc:Organization)
               (crm:E21_Person cc:Person)
               (UNDEF UNDEF)
             }
@@ -133,11 +132,11 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisition crm:P22_transferred_title_to ?acquisitionOwnerTo .
-            ?acquisitionOwnerTo rdfs:label|foaf:name ?acquisitionOwnerToName ;
+            ?acquisitionOwnerTo rdfs:label|schema:name ?acquisitionOwnerToName ;
               rdf:type ?acquisitionOwnerToTypeTmp .
 
             VALUES (?acquisitionOwnerToTypeTmp ?acquisitionOwnerToType) {
-              (foaf:Organization cc:Organization)
+              (schema:Organization cc:Organization)
               (crm:E21_Person cc:Person)
               (UNDEF UNDEF)
             }
@@ -215,7 +214,6 @@ export class ProvenanceEventsFetcher {
               skos:prefLabel ?transferOfCustodyTypeName ;
               skos:inScheme <http://vocab.getty.edu/aat/> .
 
-            # TBD: how to handle languages?
             FILTER(LANG(?transferOfCustodyTypeName) = "" || LANGMATCHES(LANG(?transferOfCustodyTypeName), "en"))
           }
 
@@ -225,11 +223,11 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustody crm:P28_custody_surrendered_by ?transferOfCustodyCustodianFrom .
-            ?transferOfCustodyCustodianFrom rdfs:label|foaf:name ?transferOfCustodyCustodianFromName ;
+            ?transferOfCustodyCustodianFrom rdfs:label|schema:name ?transferOfCustodyCustodianFromName ;
               rdf:type ?transferOfCustodyCustodianFromTypeTemp .
 
             VALUES (?transferOfCustodyCustodianFromTypeTemp ?transferOfCustodyCustodianFromType) {
-              (foaf:Organization cc:Organization)
+              (schema:Organization cc:Organization)
               (crm:E21_Person cc:Person)
               (UNDEF UNDEF)
             }
@@ -241,11 +239,11 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustody crm:P29_custody_received_by ?transferOfCustodyCustodianTo .
-            ?transferOfCustodyCustodianTo rdfs:label|foaf:name ?transferOfCustodyCustodianToName ;
+            ?transferOfCustodyCustodianTo rdfs:label|schema:name ?transferOfCustodyCustodianToName ;
               rdf:type ?transferOfCustodyCustodianToTypeTemp .
 
             VALUES (?transferOfCustodyCustodianToTypeTemp ?transferOfCustodyCustodianToType) {
-              (foaf:Organization cc:Organization)
+              (schema:Organization cc:Organization)
               (crm:E21_Person cc:Person)
               (UNDEF UNDEF)
             }

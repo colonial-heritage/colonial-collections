@@ -28,7 +28,6 @@ export class OrganizationFetcher {
   private async fetchTriples(iri: string) {
     const query = `
       PREFIX cc: <${ontologyUrl}>
-      PREFIX foaf: <http://xmlns.com/foaf/0.1/>
       PREFIX schema: <https://schema.org/>
 
       CONSTRUCT {
@@ -49,7 +48,7 @@ export class OrganizationFetcher {
         ?organization a schema:Organization .
 
         OPTIONAL {
-          ?organization foaf:name ?name
+          ?organization schema:name ?name
         }
 
         OPTIONAL {
@@ -63,7 +62,6 @@ export class OrganizationFetcher {
             schema:addressLocality ?addressLocality ;
             schema:addressCountry ?addressCountry .
 
-          # TBD: how to handle languages?
           FILTER(LANG(?addressCountry) = "" || LANGMATCHES(LANG(?addressCountry), "en"))
         }
       }

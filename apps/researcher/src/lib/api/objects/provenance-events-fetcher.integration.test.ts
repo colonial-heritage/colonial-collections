@@ -6,7 +6,7 @@ let provenanceEventsFetcher: ProvenanceEventsFetcher;
 
 beforeEach(() => {
   provenanceEventsFetcher = new ProvenanceEventsFetcher({
-    endpointUrl: env.KG_SPARQL_ENDPOINT_URL as string,
+    endpointUrl: env.SPARQL_ENDPOINT_URL as string,
   });
 });
 
@@ -43,60 +43,24 @@ describe('getByHeritageObjectId', () => {
 
     expect(provenanceEvents).toStrictEqual([
       {
-        id: 'https://example.org/objects/1/provenance/event/1/activity/1',
-        types: [
-          {
-            id: 'http://vocab.getty.edu/aat/300417642',
-            name: 'purchase (method of acquisition)',
-          },
-          {
-            id: 'http://vocab.getty.edu/aat/300417644',
-            name: 'transfer (method of acquisition)',
-          },
-        ],
-        description: 'Bought for 1500 US dollars',
-        startDate: new Date('1855-01-01T00:00:00.000Z'),
-        endDate: new Date('1855-01-01T00:00:00.000Z'),
-        endsBefore: 'https://example.org/objects/1/provenance/event/2',
-        location: {
-          id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
-          ),
-          name: 'Jakarta',
-        },
-        transferredFrom: {
-          type: 'Person',
-          id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
-          ),
-          name: 'Peter Hoekstra',
-        },
-        transferredTo: {
-          type: 'Person',
-          id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
-          ),
-          name: 'Jan de Vries',
-        },
-      },
-      {
         id: 'https://example.org/objects/1/provenance/event/4/activity/1',
         types: [
-          {id: 'http://vocab.getty.edu/aat/300445014', name: 'returning'},
+          {
+            id: 'http://vocab.getty.edu/aat/300445014',
+            name: 'returning',
+          },
         ],
         description: 'Found in a basement',
         startDate: new Date('1939-01-01T00:00:00.000Z'),
         endDate: new Date('1939-01-01T00:00:00.000Z'),
         startsAfter: 'https://example.org/objects/1/provenance/event/3',
         location: {
-          id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
-          ),
+          id: 'https://colonial-heritage.triply.cc/.well-known/genid/37089eb37f9f3698fab5e4c7f71ee71a',
           name: 'Paris',
         },
         transferredTo: {
-          type: 'Organization',
           id: 'https://museum.example.org/',
+          type: 'Organization',
           name: 'Museum',
         },
       },
@@ -114,16 +78,12 @@ describe('getByHeritageObjectId', () => {
         startsAfter: 'https://example.org/objects/1/provenance/event/1',
         endsBefore: 'https://example.org/objects/1/provenance/event/3',
         location: {
-          id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
-          ),
+          id: 'https://colonial-heritage.triply.cc/.well-known/genid/b021732a97a8b2b1244b60c64adb95bb',
           name: 'Amsterdam',
         },
         transferredFrom: {
+          id: 'https://colonial-heritage.triply.cc/.well-known/genid/4e2e99583b9b0491a9ea06f41e9c1b9c',
           type: 'Person',
-          id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
-          ),
           name: 'Jan de Vries',
         },
       },
@@ -140,15 +100,44 @@ describe('getByHeritageObjectId', () => {
         startsAfter: 'https://example.org/objects/1/provenance/event/2',
         endsBefore: 'https://example.org/objects/1/provenance/event/4',
         location: {
-          id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
-          ),
+          id: 'https://colonial-heritage.triply.cc/.well-known/genid/242a0c6c6b6536e2e42202521f5ee29e',
           name: 'Amsterdam',
         },
         transferredFrom: {
-          type: 'Organization',
           id: 'https://museum.example.org/',
+          type: 'Organization',
           name: 'Museum',
+        },
+      },
+      {
+        id: 'https://example.org/objects/1/provenance/event/1/activity/1',
+        types: [
+          {
+            id: 'http://vocab.getty.edu/aat/300417642',
+            name: 'purchase (method of acquisition)',
+          },
+          {
+            id: 'http://vocab.getty.edu/aat/300417644',
+            name: 'transfer (method of acquisition)',
+          },
+        ],
+        description: 'Bought for 1500 US dollars',
+        startDate: new Date('1855-01-01T00:00:00.000Z'),
+        endDate: new Date('1855-01-01T00:00:00.000Z'),
+        endsBefore: 'https://example.org/objects/1/provenance/event/2',
+        location: {
+          id: 'https://colonial-heritage.triply.cc/.well-known/genid/e14682a5898674f0a1db2bae57df3df7',
+          name: 'Jakarta',
+        },
+        transferredFrom: {
+          id: 'https://colonial-heritage.triply.cc/.well-known/genid/e2139ec691f860d6bcdd915e6e38a42d',
+          type: 'Person',
+          name: 'Peter Hoekstra',
+        },
+        transferredTo: {
+          id: 'https://colonial-heritage.triply.cc/.well-known/genid/172854a675881c202013b5f6901247a2',
+          type: 'Person',
+          name: 'Jan de Vries',
         },
       },
     ]);

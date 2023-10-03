@@ -41,10 +41,10 @@ export class HeritageObjectFetcher {
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
       PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX dig: <http://www.ics.forth.gr/isl/CRMdig/>
-      PREFIX foaf: <http://xmlns.com/foaf/0.1/>
       PREFIX la: <https://linked.art/ns/terms/>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX schema: <https://schema.org/>
 
       CONSTRUCT {
         ?object a cc:HeritageObject ;
@@ -103,7 +103,6 @@ export class HeritageObjectFetcher {
         # Identifier
         ####################
 
-        # TBD: this should be a required property
         OPTIONAL {
           ?object crm:P1_is_identified_by ?identifier .
           ?identifier a crm:E42_Identifier ;
@@ -190,7 +189,7 @@ export class HeritageObjectFetcher {
             rdf:type ?creatorTypeTemp .
 
           VALUES (?creatorTypeTemp ?creatorType) {
-            (foaf:Organization cc:Organization)
+            (schema:Organization cc:Organization)
             (crm:E21_Person cc:Person)
             (UNDEF UNDEF)
           }
@@ -229,15 +228,14 @@ export class HeritageObjectFetcher {
 
         OPTIONAL {
           ?object crm:P52_has_current_owner ?owner .
-          ?owner foaf:name ?ownerName ;
+          ?owner schema:name ?ownerName ;
             rdf:type ?ownerTypeTemp .
 
-          # TBD: how to handle languages?
           FILTER(LANG(?ownerName) = "" || LANGMATCHES(LANG(?ownerName), "en"))
 
           VALUES (?ownerTypeTemp ?ownerType) {
-            (foaf:Organization cc:Organization)
-            (crm:E21_Person cc:Person)
+            (schema:Organization cc:Organization)
+            (schema:Person cc:Person)
             (UNDEF UNDEF)
           }
         }
@@ -255,7 +253,6 @@ export class HeritageObjectFetcher {
 
           OPTIONAL {
             ?dataset dct:title ?datasetName
-            # TBD: how to handle languages?
             FILTER(LANG(?datasetName) = "" || LANGMATCHES(LANG(?datasetName), "en"))
           }
 
@@ -265,12 +262,12 @@ export class HeritageObjectFetcher {
 
           OPTIONAL {
             ?dataset dct:publisher ?publisher .
-            ?publisher foaf:name ?publisherName ;
+            ?publisher schema:name ?publisherName ;
               rdf:type ?publisherTypeTemp .
 
             VALUES (?publisherTypeTemp ?publisherType) {
-              (foaf:Organization cc:Organization)
-              (crm:E21_Person cc:Person)
+              (schema:Organization cc:Organization)
+              (schema:Person cc:Person)
               (UNDEF UNDEF)
             }
           }

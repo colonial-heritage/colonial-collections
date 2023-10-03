@@ -1,4 +1,3 @@
-import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {HeritageObjectFetcher} from './fetcher';
 import {ProvenanceEventsFetcher} from './provenance-events-fetcher';
 import {HeritageObjectSearcher, SearchOptions} from './searcher';
@@ -11,7 +10,6 @@ export * from '../definitions';
 const constructorOptionsSchema = z.object({
   sparqlEndpointUrl: z.string(),
   elasticSearchEndpointUrl: z.string(),
-  labelFetcher: z.instanceof(LabelFetcher),
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
@@ -32,7 +30,6 @@ export class HeritageObjects {
     });
     this.heritageObjectSearcher = new HeritageObjectSearcher({
       endpointUrl: opts.elasticSearchEndpointUrl,
-      labelFetcher: opts.labelFetcher,
     });
   }
 

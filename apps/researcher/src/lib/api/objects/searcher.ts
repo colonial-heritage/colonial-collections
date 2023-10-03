@@ -14,14 +14,11 @@ import {SearchResult} from './definitions';
 import {removeUndefinedValues} from '../rdf-helpers';
 import {buildAggregation} from './searcher-request';
 import {buildFilters} from './searcher-result';
-import {getIrisFromObject} from '@colonial-collections/iris';
-import {LabelFetcher} from '@colonial-collections/label-fetcher';
 import {reach} from '@hapi/hoek';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
-  labelFetcher: z.instanceof(LabelFetcher),
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
@@ -29,18 +26,20 @@ export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 enum RawKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
-  AdditionalType = 'https://colonialcollections nl/search#typeName', // Replace with 'additionalType' as soon as we have IRIs
-  Identifier = 'https://colonialcollections nl/search#identifier',
-  Name = 'https://colonialcollections nl/search#name',
-  Description = 'https://colonialcollections nl/search#description',
-  Inscription = 'https://colonialcollections nl/search#inscription',
-  About = 'https://colonialcollections nl/search#aboutName', // Replace with 'about' as soon as we have IRIs
-  Creator = 'https://colonialcollections nl/search#creatorName', // Replace with 'creator' as soon as we have IRIs
-  Material = 'https://colonialcollections nl/search#materialName', // Replace with 'material' as soon as we have IRIs
-  Technique = 'https://colonialcollections nl/search#techniqueName', // Replace with 'technique' as soon as we have IRIs
-  Image = 'https://colonialcollections nl/search#image',
-  Owner = 'https://colonialcollections nl/search#ownerName', // Replace with 'owner' as soon as we have IRIs
-  IsPartOf = 'https://colonialcollections nl/search#isPartOf',
+  AdditionalType = 'https://colonialcollections nl/schema#additionalType',
+  Identifier = 'https://colonialcollections nl/schema#identifier',
+  Name = 'https://colonialcollections nl/schema#name',
+  Description = 'https://colonialcollections nl/schema#description',
+  Inscription = 'https://colonialcollections nl/schema#inscription',
+  About = 'https://colonialcollections nl/schema#about',
+  Creator = 'https://colonialcollections nl/schema#creator',
+  Material = 'https://colonialcollections nl/schema#material',
+  Technique = 'https://colonialcollections nl/schema#technique',
+  Image = 'https://colonialcollections nl/schema#image',
+  Owner = 'https://colonialcollections nl/schema#owner',
+  Publisher = 'https://colonialcollections nl/schema#publisher',
+  CountryCreated = 'https://colonialcollections nl/schema#countryCreated',
+  IsPartOf = 'https://colonialcollections nl/schema#isPartOf',
 }
 
 const sortByToRawKeys = new Map<string, string>([
@@ -60,6 +59,10 @@ const searchOptionsSchema = z.object({
       owners: z.array(z.string()).optional().default([]),
       types: z.array(z.string()).optional().default([]),
       subjects: z.array(z.string()).optional().default([]),
+      locations: z.array(z.string()).optional().default([]),
+      materials: z.array(z.string()).optional().default([]),
+      creators: z.array(z.string()).optional().default([]),
+      publishers: z.array(z.string()).optional().default([]),
     })
     .optional(),
 });
@@ -80,6 +83,7 @@ const rawHeritageObjectSchema = z
   .setKey(RawKeys.Technique, z.array(z.string()).optional())
   .setKey(RawKeys.Image, z.array(z.string()).optional())
   .setKey(RawKeys.Owner, z.array(z.string()).optional())
+  .setKey(RawKeys.Publisher, z.array(z.string()).optional())
   .setKey(RawKeys.IsPartOf, z.array(z.string()).min(1));
 
 type RawHeritageObject = z.infer<typeof rawHeritageObjectSchema>;
@@ -115,10 +119,18 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
         owners: rawAggregationSchema,
         types: rawAggregationSchema,
         subjects: rawAggregationSchema,
+        locations: rawAggregationSchema,
+        materials: rawAggregationSchema,
+        creators: rawAggregationSchema,
+        publishers: rawAggregationSchema,
       }),
       owners: rawAggregationSchema,
       types: rawAggregationSchema,
       subjects: rawAggregationSchema,
+      locations: rawAggregationSchema,
+      materials: rawAggregationSchema,
+      creators: rawAggregationSchema,
+      publishers: rawAggregationSchema,
     }),
   })
 );
@@ -129,13 +141,11 @@ type RawSearchResponseWithAggregations = z.infer<
 
 export class HeritageObjectSearcher {
   private endpointUrl: string;
-  private labelFetcher: LabelFetcher;
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
-    this.labelFetcher = opts.labelFetcher;
   }
 
   async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
@@ -155,12 +165,6 @@ export class HeritageObjectSearcher {
 
     const responseData: T = await response.json();
 
-    // Extract the IRIs, if any, from the response.
-    // The IRIs are necessary for fetching their labels later on
-    const iris = getIrisFromObject(responseData);
-    const predicates = ['https://colonialcollections.nl/search#name'];
-    await this.labelFetcher.loadByIris({iris, predicates});
-
     return responseData;
   }
 
@@ -179,15 +183,20 @@ export class HeritageObjectSearcher {
       owner = {
         type: 'Organization', // TODO: determine dynamically - could also be a 'Person'
         id: ownerName,
-        name: ownerName, // Replace with labelFetcher lookup as soon as we have IRIs
+        name: ownerName,
       };
     }
 
-    const datasetIri = reach(rawHeritageObject, `${RawKeys.IsPartOf}.0`);
+    const publisherName = reach(rawHeritageObject, `${RawKeys.Publisher}.0`);
+    const datasetName = reach(rawHeritageObject, `${RawKeys.IsPartOf}.0`);
     const dataset: Dataset = {
-      id: datasetIri,
-      name: this.labelFetcher.getByIri({iri: datasetIri}),
-      publisher: owner, // TODO: update ES by indexing the publisher
+      id: datasetName,
+      name: datasetName,
+      publisher: {
+        type: 'Organization', // TODO: determine dynamically - could also be a 'Person'
+        id: publisherName,
+        name: publisherName,
+      },
     };
 
     // Replace 'names' with IRIs as soon as we have IRIs
@@ -199,8 +208,8 @@ export class HeritageObjectSearcher {
 
       const things = names.map(name => {
         return {
-          id: name, // Replace with IRI as soon as we have IRIs
-          name, // Replace with labelFetcher lookup as soon as we have IRIs
+          id: name,
+          name,
         };
       });
 
@@ -255,6 +264,10 @@ export class HeritageObjectSearcher {
       owners: buildAggregation(RawKeys.Owner),
       types: buildAggregation(RawKeys.AdditionalType),
       subjects: buildAggregation(RawKeys.About),
+      locations: buildAggregation(RawKeys.CountryCreated),
+      materials: buildAggregation(RawKeys.Material),
+      creators: buildAggregation(RawKeys.Creator),
+      publishers: buildAggregation(RawKeys.Publisher),
     };
 
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
@@ -283,7 +296,7 @@ export class HeritageObjectSearcher {
               // Only return documents of a specific type
               terms: {
                 [`${RawKeys.Type}.keyword`]: [
-                  'https://colonialcollections.nl/search#HeritageObject',
+                  'https://colonialcollections.nl/schema#HeritageObject',
                 ],
               },
             },
@@ -306,6 +319,10 @@ export class HeritageObjectSearcher {
       [RawKeys.Owner, options.filters?.owners],
       [RawKeys.AdditionalType, options.filters?.types],
       [RawKeys.About, options.filters?.subjects],
+      [RawKeys.CountryCreated, options.filters?.locations],
+      [RawKeys.Material, options.filters?.materials],
+      [RawKeys.Creator, options.filters?.creators],
+      [RawKeys.Publisher, options.filters?.publishers],
     ]);
 
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
@@ -347,6 +364,26 @@ export class HeritageObjectSearcher {
       aggregations.subjects.buckets
     );
 
+    const locationFilters = buildFilters(
+      aggregations.all.locations.buckets,
+      aggregations.locations.buckets
+    );
+
+    const materialFilters = buildFilters(
+      aggregations.all.materials.buckets,
+      aggregations.materials.buckets
+    );
+
+    const creatorFilters = buildFilters(
+      aggregations.all.creators.buckets,
+      aggregations.creators.buckets
+    );
+
+    const publisherFilters = buildFilters(
+      aggregations.all.publishers.buckets,
+      aggregations.publishers.buckets
+    );
+
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
@@ -358,6 +395,10 @@ export class HeritageObjectSearcher {
         owners: ownerFilters,
         types: typeFilters,
         subjects: subjectFilters,
+        locations: locationFilters,
+        materials: materialFilters,
+        creators: creatorFilters,
+        publishers: publisherFilters,
       },
     };
 

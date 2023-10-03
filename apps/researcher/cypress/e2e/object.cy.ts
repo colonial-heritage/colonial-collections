@@ -47,6 +47,8 @@ describe('Object details page', () => {
       .then(url => {
         // Open the details page
         cy.getBySel('object-card').first().click();
+        // Wait for the page to load.
+        cy.location('pathname', {timeout: 60000}).should('include', '/object');
         // Go back to the list
         cy.getBySel('to-filtered-list-button').first().click();
 
