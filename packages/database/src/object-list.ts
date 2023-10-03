@@ -1,45 +1,44 @@
 import {objectLists, insertObjectItemSchema, objectItems} from './db/schema';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
+import {DBQueryConfig} from 'drizzle-orm';
 
-async function getListsByCommunityId(communityId: string) {
-  return db.query.objectLists.findMany({
-    where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
-  });
-}
-
-interface GetCommunityListsWithObjectsProps {
-  communityId: string;
+interface Option {
+  withObjects?: boolean;
   limitObjects?: number;
 }
 
-async function getCommunityListsWithObjects({
-  communityId,
-  limitObjects,
-}: GetCommunityListsWithObjectsProps) {
-  const objectOptions = limitObjects ? {limit: limitObjects} : true;
+export async function getByCommunityId(
+  communityId: string,
+  {withObjects, limitObjects}: Option = {withObjects: false}
+) {
+  const options: DBQueryConfig = {};
+
+  if (withObjects) {
+    options.with = {
+      objects: limitObjects ? {limit: limitObjects} : true,
+    };
+  }
 
   return db.query.objectLists.findMany({
+    ...options,
     where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
-    with: {
-      objects: objectOptions,
-    },
   });
 }
 
-interface CreateListForCommunityProps {
+interface CreateProps {
   communityId: string;
-  createdBy: string;
   name: string;
+  createdBy: string;
   description?: string;
 }
 
-async function createListForCommunity({
+export async function create({
   communityId,
   name,
-  description,
   createdBy,
-}: CreateListForCommunityProps) {
+  description,
+}: CreateProps) {
   return db.insert(objectLists).values({
     communityId,
     name,
@@ -48,17 +47,13 @@ async function createListForCommunity({
   });
 }
 
-interface AddObjectToListProps {
+interface AddObjectProps {
   listId: number;
   objectIri: string;
   userId: string;
 }
 
-async function addObjectToList({
-  listId,
-  objectIri,
-  userId,
-}: AddObjectToListProps) {
+export async function addObject({listId, objectIri, userId}: AddObjectProps) {
   const objectItem = insertObjectItemSchema.parse({
     listId,
     objectIri,
@@ -68,10 +63,3 @@ async function addObjectToList({
 
   return db.insert(objectItems).values(objectItem);
 }
-
-export const objectList = {
-  getListsByCommunityId,
-  getCommunityListsWithObjects,
-  createListForCommunity,
-  addObjectToList,
-};

@@ -44,7 +44,7 @@ async function ObjectListCount({communityId, locale}: MembershipCountProps) {
 
   let objectLists = [];
   try {
-    objectLists = await objectList.getListsByCommunityId(communityId);
+    objectLists = await objectList.getByCommunityId(communityId);
   } catch (err) {
     console.error(err);
     return t('objectListCountError');

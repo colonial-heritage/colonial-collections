@@ -11,7 +11,7 @@ interface ListItem {
   description?: string;
 }
 export async function addList(listItem: ListItem) {
-  const response = await objectList.createListForCommunity(listItem);
+  const response = await objectList.create(listItem);
   const community = await getCommunityById(listItem.communityId);
   revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 
