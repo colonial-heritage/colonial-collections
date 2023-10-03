@@ -20,6 +20,7 @@ async function MembershipCount({communityId, locale}: MembershipCountProps) {
   try {
     memberships = await getMemberships(communityId);
   } catch (err) {
+    console.error(err);
     const errorStatus = (err as ClerkAPIResponseError).status;
     if (errorStatus === 404 || errorStatus === 410) {
       // This could be a sign of a deleted community in the cache.
@@ -45,6 +46,7 @@ async function ObjectListCount({communityId, locale}: MembershipCountProps) {
   try {
     objectLists = await objectList.getListsByCommunityId(communityId);
   } catch (err) {
+    console.error(err);
     return t('objectListCountError');
   }
 
