@@ -7,6 +7,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {insertObjectListSchema} from '@colonial-collections/database/src/db/schema';
 import {useTranslations} from 'next-intl';
 import {useSlideOut, useNotifications} from 'ui';
+import {camelCase} from 'tiny-case';
 
 interface FormProps {
   communityId: string;
@@ -79,7 +80,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
             {...register('name')}
             className="border border-greenGrey-200 rounded p-2"
           />
-          <p>{errors.name && t(`name_${errors.name.type}`)}</p>
+          <p>{errors.name && t(camelCase(`name_${errors.name.type}`))}</p>
         </div>
         <div className="flex flex-col w-full lg:w-1/3"></div>
       </div>

@@ -166,8 +166,8 @@
     "labelDescriptionSubTitle": "Geef een beschrijving over deze lijst. Bijvoorbeeld, wat is de geschiedenis van deze lijst. Vertel iets over het soort objecten.",
     "buttonSubmit": "Lijst aanmaken",
     "buttonCancel": "Annuleren",
-    "name_too_small": "Lijstnaam is vereist",
-    "name_too_big": "Lijstnaam mag maximaal 255 tekens bevatten",
+    "nameTooSmall": "Lijstnaam is vereist",
+    "nameTooBig": "Lijstnaam mag maximaal 255 tekens bevatten",
     "serverError": "Er is iets misgegaan bij het maken van de lijst. Probeer het later opnieuw.",
     "listSuccessfullyAdded": "Lijst <name></name> is aan je community toegevoegd"
   }

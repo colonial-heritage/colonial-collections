@@ -166,8 +166,8 @@
     "labelDescriptionSubTitle": "Give a description about this list. For example, what is the history of this list. Tell a little bit about the kind of objects.",
     "buttonSubmit": "Create list",
     "buttonCancel": "Cancel",
-    "name_too_small": "List name is required",
-    "name_too_big": "List name has a maximum of 255 characters",
+    "nameTooSmall": "List name is required",
+    "nameTooBig": "List name has a maximum of 255 characters",
     "serverError": "Something went wrong while creating the list. Please try again later.",
     "listSuccessfullyAdded": "List <name></name> has been added to you community"
   }
