@@ -38,7 +38,6 @@ enum RawKeys {
   Image = 'https://colonialcollections nl/schema#image',
   Owner = 'https://colonialcollections nl/schema#owner',
   Publisher = 'https://colonialcollections nl/schema#publisher',
-  DateCreated = 'https://colonialcollections nl/schema#dateCreatedStart', // Earliest date of creation
   CountryCreated = 'https://colonialcollections nl/schema#countryCreated',
   IsPartOf = 'https://colonialcollections nl/schema#isPartOf',
 }
@@ -61,6 +60,9 @@ const searchOptionsSchema = z.object({
       types: z.array(z.string()).optional().default([]),
       subjects: z.array(z.string()).optional().default([]),
       locations: z.array(z.string()).optional().default([]),
+      materials: z.array(z.string()).optional().default([]),
+      creators: z.array(z.string()).optional().default([]),
+      publishers: z.array(z.string()).optional().default([]),
     })
     .optional(),
 });
@@ -82,7 +84,6 @@ const rawHeritageObjectSchema = z
   .setKey(RawKeys.Image, z.array(z.string()).optional())
   .setKey(RawKeys.Owner, z.array(z.string()).optional())
   .setKey(RawKeys.Publisher, z.array(z.string()).optional())
-  .setKey(RawKeys.DateCreated, z.array(z.string()).optional())
   .setKey(RawKeys.IsPartOf, z.array(z.string()).min(1));
 
 type RawHeritageObject = z.infer<typeof rawHeritageObjectSchema>;
@@ -119,11 +120,17 @@ const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
         types: rawAggregationSchema,
         subjects: rawAggregationSchema,
         locations: rawAggregationSchema,
+        materials: rawAggregationSchema,
+        creators: rawAggregationSchema,
+        publishers: rawAggregationSchema,
       }),
       owners: rawAggregationSchema,
       types: rawAggregationSchema,
       subjects: rawAggregationSchema,
       locations: rawAggregationSchema,
+      materials: rawAggregationSchema,
+      creators: rawAggregationSchema,
+      publishers: rawAggregationSchema,
     }),
   })
 );
@@ -258,6 +265,9 @@ export class HeritageObjectSearcher {
       types: buildAggregation(RawKeys.AdditionalType),
       subjects: buildAggregation(RawKeys.About),
       locations: buildAggregation(RawKeys.CountryCreated),
+      materials: buildAggregation(RawKeys.Material),
+      creators: buildAggregation(RawKeys.Creator),
+      publishers: buildAggregation(RawKeys.Publisher),
     };
 
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
@@ -310,6 +320,9 @@ export class HeritageObjectSearcher {
       [RawKeys.AdditionalType, options.filters?.types],
       [RawKeys.About, options.filters?.subjects],
       [RawKeys.CountryCreated, options.filters?.locations],
+      [RawKeys.Material, options.filters?.materials],
+      [RawKeys.Creator, options.filters?.creators],
+      [RawKeys.Publisher, options.filters?.publishers],
     ]);
 
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
@@ -356,6 +369,21 @@ export class HeritageObjectSearcher {
       aggregations.locations.buckets
     );
 
+    const materialFilters = buildFilters(
+      aggregations.all.materials.buckets,
+      aggregations.materials.buckets
+    );
+
+    const creatorFilters = buildFilters(
+      aggregations.all.creators.buckets,
+      aggregations.creators.buckets
+    );
+
+    const publisherFilters = buildFilters(
+      aggregations.all.publishers.buckets,
+      aggregations.publishers.buckets
+    );
+
     const searchResult: SearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
@@ -368,6 +396,9 @@ export class HeritageObjectSearcher {
         types: typeFilters,
         subjects: subjectFilters,
         locations: locationFilters,
+        materials: materialFilters,
+        creators: creatorFilters,
+        publishers: publisherFilters,
       },
     };
 
