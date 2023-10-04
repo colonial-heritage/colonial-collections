@@ -13,22 +13,22 @@ describe('Researcher homepage', () => {
 });
 
 describe('Object list filters', () => {
-  it('filters by one owner', () => {
+  it('filters by one material', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
-    cy.getBySel('ownersFilter').within(() => {
+    cy.getBySel('materialsFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
 
     cy.getBySel('selectedFilter').should('have.length', 1);
   });
 
-  it('filters by two owners', () => {
+  it('filters by two materials', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
-    cy.getBySel('ownersFilter').within(() => {
+    cy.getBySel('materialsFilter').within(() => {
       cy.get('[type="checkbox"]').eq(0).check();
       cy.get('[type="checkbox"]').eq(1).check();
     });
@@ -36,26 +36,26 @@ describe('Object list filters', () => {
     cy.getBySel('selectedFilter').should('have.length', 2);
   });
 
-  it('removes an owner filter by deselecting the filter in the sidebar', () => {
+  it('removes a material filter by deselecting the filter in the sidebar', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
-    cy.getBySel('ownersFilter').within(() => {
+    cy.getBySel('materialsFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
 
-    cy.getBySel('ownersFilter').within(() => {
+    cy.getBySel('materialsFilter').within(() => {
       cy.get('[type="checkbox"]').first().uncheck();
     });
 
     cy.getBySel('selectedFilter').should('have.length', 0);
   });
 
-  it('removes an owner filter by deselecting it in the selected filter bar', () => {
+  it('removes a material filter by deselecting it in the selected filter bar', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
-    cy.getBySel('ownersFilter').within(() => {
+    cy.getBySel('materialsFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
 
@@ -89,7 +89,7 @@ describe('Object list filters', () => {
     cy.getBySel('selectedFilter').should('have.text', searchText);
   });
 
-  it('filters multiple categories together (query, owners and types)', () => {
+  it('filters multiple categories together (query, materials and types)', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
@@ -99,7 +99,7 @@ describe('Object list filters', () => {
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
-    cy.getBySel('ownersFilter').within(() => {
+    cy.getBySel('materialsFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
 
