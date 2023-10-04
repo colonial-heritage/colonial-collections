@@ -29,6 +29,13 @@
       "when": 1695717398044,
       "tag": "0003_object_list_id_not_null",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1696425284032,
+      "tag": "0004_object_item_change_primary_key",
+      "breakpoints": true
     }
   ]
 }
