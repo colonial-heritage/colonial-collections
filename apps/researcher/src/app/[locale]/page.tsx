@@ -32,9 +32,12 @@ export const revalidate = 60;
 
 // Set the order of the filters
 const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
-  'owners',
-  'types',
+  'locations',
   'subjects',
+  'materials',
+  'creators',
+  'publishers',
+  'types',
 ];
 
 interface FacetMenuProps {
