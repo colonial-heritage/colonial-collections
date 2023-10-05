@@ -99,7 +99,9 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
           </Suspense>
         </div>
         <div className="w-1/2 p-4">
-          <ObjectListCount communityId={community.id} locale={locale} />
+          <Suspense>
+            <ObjectListCount communityId={community.id} locale={locale} />
+          </Suspense>
         </div>
       </div>
     </Link>
