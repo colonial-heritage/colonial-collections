@@ -1,4 +1,9 @@
-import {objectLists, objectItems, insertObjectItemSchema} from './db/schema';
+import {
+  objectLists,
+  objectItems,
+  insertObjectItemSchema,
+  insertObjectListSchema,
+} from './db/schema';
 import {InferSelectModel, sql} from 'drizzle-orm';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
@@ -52,12 +57,14 @@ export async function create({
   createdBy,
   description,
 }: CreateProps) {
-  return db.insert(objectLists).values({
+  const objectList = insertObjectListSchema.parse({
     communityId,
     name,
     description,
     createdBy,
   });
+
+  return db.insert(objectLists).values(objectList);
 }
 
 interface AddObjectProps {
