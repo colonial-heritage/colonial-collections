@@ -111,6 +111,7 @@
     "birthPlacesFilter": "Geboorteplaatsen",
     "deathYearsFilter": "Overlijdensjaren",
     "deathPlacesFilter": "Overlijdensplaatsen",
+    "publishersFilter": "Object data providers",
     "search": "Zoeken",
     "filters": "Filters",
     "expandFilter": "Uitklappen",

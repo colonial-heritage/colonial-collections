@@ -35,6 +35,7 @@ const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
   'owners',
   'types',
   'subjects',
+  'publishers',
 ];
 
 interface FacetMenuProps {
