@@ -4,14 +4,15 @@ import {getCommunityById} from '@/lib/community';
 import {objectList} from '@colonial-collections/database';
 import {revalidatePath} from 'next/cache';
 
-interface ListItem {
+interface List {
   communityId: string;
   createdBy: string;
   name: string;
   description?: string;
 }
-export async function addList(listItem: ListItem) {
-  await objectList.create(listItem);
-  const community = await getCommunityById(listItem.communityId);
+
+export async function addList(list: List) {
+  await objectList.create(list);
+  const community = await getCommunityById(list.communityId);
   revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 }

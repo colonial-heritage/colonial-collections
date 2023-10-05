@@ -167,7 +167,7 @@
     "buttonSubmit": "Create list",
     "buttonCancel": "Cancel",
     "nameTooSmall": "List name is required",
-    "nameTooBig": "List name has a maximum of 255 characters",
+    "nameTooBig": "List name has a maximum of 250 characters",
     "serverError": "Something went wrong while creating the list. Please try again later.",
     "listSuccessfullyAdded": "List <name></name> has been added to you community"
   }

@@ -167,7 +167,7 @@
     "buttonSubmit": "Lijst aanmaken",
     "buttonCancel": "Annuleren",
     "nameTooSmall": "Lijstnaam is vereist",
-    "nameTooBig": "Lijstnaam mag maximaal 255 tekens bevatten",
+    "nameTooBig": "Lijstnaam mag maximaal 250 tekens bevatten",
     "serverError": "Er is iets misgegaan bij het maken van de lijst. Probeer het later opnieuw.",
     "listSuccessfullyAdded": "Lijst <name></name> is aan je community toegevoegd"
   }

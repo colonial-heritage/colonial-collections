@@ -53,7 +53,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
         type: 'success',
       });
       setIsVisible(slideOutId, false);
-    } catch (error) {
+    } catch (err) {
       setError('root.serverError', {
         message: t('serverError'),
       });

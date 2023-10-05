@@ -38,10 +38,10 @@ export function JoinCommunityButton({communityId}: Props) {
           organizationId: communityId,
           userId: user!.id,
         });
-      } catch (error) {
+      } catch (err) {
         setIsClicked(false);
         setHasError(true);
-        console.error(error);
+        console.error(err);
       }
     });
   };
