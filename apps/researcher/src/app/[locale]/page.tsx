@@ -32,7 +32,7 @@ export const revalidate = 60;
 
 // Set the order of the filters
 const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
-  'owners',
+  'creators',
   'types',
   'subjects',
 ];
