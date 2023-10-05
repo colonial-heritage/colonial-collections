@@ -42,17 +42,15 @@ interface MembershipCountProps {
 async function ObjectListCount({communityId, locale}: MembershipCountProps) {
   const t = await getTranslator(locale, 'Communities');
 
-  let objectLists = [];
   try {
-    objectLists = await objectList.getByCommunityId(communityId);
+    const objectListCount = await objectList.countByCommunityId(communityId);
+    return t.rich('objectListCount', {
+      count: objectListCount,
+    });
   } catch (err) {
     console.error(err);
     return t('objectListCountError');
   }
-
-  return t.rich('objectListCount', {
-    count: objectLists.length,
-  });
 }
 
 interface CommunityCardProps {

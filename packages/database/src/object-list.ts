@@ -1,8 +1,8 @@
 import {objectLists, objectItems, insertObjectItemSchema} from './db/schema';
-import {InferSelectModel} from 'drizzle-orm';
+import {InferSelectModel, sql} from 'drizzle-orm';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
-import {DBQueryConfig} from 'drizzle-orm';
+import {DBQueryConfig, eq} from 'drizzle-orm';
 
 interface Option {
   withObjects?: boolean;
@@ -29,6 +29,14 @@ export async function getByCommunityId(
     ...options,
     where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
   });
+}
+
+export async function countByCommunityId(communityId: string) {
+  const result = await db
+    .select({count: sql<number>`count(*)`})
+    .from(objectLists)
+    .where(eq(objectLists.communityId, communityId));
+  return result[0].count;
 }
 
 interface CreateProps {
