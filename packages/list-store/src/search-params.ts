@@ -1,10 +1,12 @@
 import {z, Schema} from 'zod';
 import {SortBy} from './sort';
 
+const searchParamValueSeparator = '||';
+
 const searchParamFilterSchema = z
   .array(z.string())
   .default([])
-  .transform(filterValues => filterValues.join(','));
+  .transform(filterValues => filterValues.join(searchParamValueSeparator));
 
 function getSearchParamsSchema(defaultSortBy: string) {
   return z.object({
@@ -76,7 +78,10 @@ function fallback<T>(value: T) {
 const searchOptionsFilterSchema = z
   .string()
   .optional()
-  .transform(filterValue => filterValue?.split(',').filter(id => !!id))
+  .transform(
+    filterValue =>
+      filterValue?.split(searchParamValueSeparator).filter(id => !!id)
+  )
   .pipe(z.array(z.string()).optional().default([]));
 
 interface FromSearchParamsToSearchOptionsProps {
