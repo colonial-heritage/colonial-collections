@@ -104,7 +104,6 @@
     "next": "Next"
   },
   "Filters": {
-    "ownersFilter": "Owners",
     "typesFilter": "Types",
     "subjectsFilter": "Subjects",
     "birthYearsFilter": "Birth years",
