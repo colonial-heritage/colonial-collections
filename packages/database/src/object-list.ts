@@ -41,6 +41,7 @@ export async function countByCommunityId(communityId: string) {
     .select({count: sql<number>`count(*)`})
     .from(objectLists)
     .where(eq(objectLists.communityId, communityId));
+
   return result[0].count;
 }
 

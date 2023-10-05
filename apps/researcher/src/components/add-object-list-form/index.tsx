@@ -42,13 +42,13 @@ function Form({communityId, userId, slideOutId}: FormProps) {
   const {setIsVisible} = useSlideOut();
   const {addNotification} = useNotifications();
 
-  const onSubmit: SubmitHandler<FormValues> = async listItem => {
+  const onSubmit: SubmitHandler<FormValues> = async list => {
     try {
-      await addList(listItem);
+      await addList(list);
       addNotification({
         id: 'add-object-list-success',
         message: t.rich('listSuccessfullyAdded', {
-          name: () => <em>{listItem.name}</em>,
+          name: () => <em>{list.name}</em>,
         }),
         type: 'success',
       });
