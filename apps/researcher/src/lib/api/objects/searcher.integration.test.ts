@@ -725,16 +725,16 @@ describe('search', () => {
     });
   });
 
-  it('finds heritage objects if "dateCreatedStart" and "dateCreatedEnd" filters match', async () => {
+  it('finds heritage objects between "dateCreatedStart" and "dateCreatedEnd", inclusive', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        dateCreatedStart: '1700',
-        dateCreatedEnd: '1800',
+        dateCreatedStart: '1725',
+        dateCreatedEnd: '1895',
       },
     });
 
     expect(result).toMatchObject({
-      totalCount: 1,
+      totalCount: 3,
       filters: {
         dateCreatedStart: [
           {
@@ -743,12 +743,12 @@ describe('search', () => {
             name: '1725',
           },
           {
-            totalCount: 0,
+            totalCount: 1,
             id: '1889',
             name: '1889',
           },
           {
-            totalCount: 0,
+            totalCount: 1,
             id: '1895',
             name: '1895',
           },
@@ -765,12 +765,12 @@ describe('search', () => {
             name: '1736',
           },
           {
-            totalCount: 0,
+            totalCount: 1,
             id: '1890',
             name: '1890',
           },
           {
-            totalCount: 0,
+            totalCount: 1,
             id: '1895',
             name: '1895',
           },
