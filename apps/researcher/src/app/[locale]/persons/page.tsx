@@ -98,9 +98,9 @@ export default async function Home({searchParams = {}}: Props) {
   let searchResult: SearchResult | undefined;
   try {
     searchResult = await personFetcher.search(searchOptions);
-  } catch (error) {
+  } catch (err) {
     hasError = true;
-    console.error(error);
+    console.error(err);
   }
 
   const locale = useLocale();
