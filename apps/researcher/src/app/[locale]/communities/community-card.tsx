@@ -6,6 +6,7 @@ import Image from 'next/image';
 import {Suspense} from 'react';
 import {revalidatePath} from 'next/cache';
 import {ClerkAPIResponseError} from '@clerk/shared';
+import {objectList} from '@colonial-collections/database';
 
 interface MembershipCountProps {
   communityId: string;
@@ -19,6 +20,7 @@ async function MembershipCount({communityId, locale}: MembershipCountProps) {
   try {
     memberships = await getMemberships(communityId);
   } catch (err) {
+    console.error(err);
     const errorStatus = (err as ClerkAPIResponseError).status;
     if (errorStatus === 404 || errorStatus === 410) {
       // This could be a sign of a deleted community in the cache.
@@ -30,6 +32,25 @@ async function MembershipCount({communityId, locale}: MembershipCountProps) {
   return t.rich('membershipCount', {
     count: memberships.length,
   });
+}
+
+interface MembershipCountProps {
+  communityId: string;
+  locale: string;
+}
+
+async function ObjectListCount({communityId, locale}: MembershipCountProps) {
+  const t = await getTranslator(locale, 'Communities');
+
+  try {
+    const objectListCount = await objectList.countByCommunityId(communityId);
+    return t.rich('objectListCount', {
+      count: objectListCount,
+    });
+  } catch (err) {
+    console.error(err);
+    return t('objectListCountError');
+  }
 }
 
 interface CommunityCardProps {
@@ -77,7 +98,11 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
             <MembershipCount communityId={community.id} locale={locale} />
           </Suspense>
         </div>
-        <div className="w-1/2 p-4">{/* TODO add number of lists here */}</div>
+        <div className="w-1/2 p-4">
+          <Suspense>
+            <ObjectListCount communityId={community.id} locale={locale} />
+          </Suspense>
+        </div>
       </div>
     </Link>
   );
