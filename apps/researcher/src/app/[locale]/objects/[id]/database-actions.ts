@@ -18,7 +18,7 @@ export async function addObjectToList({
   listItem,
   communityId,
 }: AddObjectToListProps) {
-  objectList.addObject(listItem);
+  await objectList.addObject(listItem);
   const community = await getCommunityBySlug(communityId);
   revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 }
