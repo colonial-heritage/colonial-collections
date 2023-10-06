@@ -96,7 +96,7 @@ export default async function CommunityPage({params}: Props) {
             <div className="w-full flex flex-col md:flex-row justify-center px-4">
               <SlideOutClosed id={slideOutDescriptionId}>
                 <div className="mb-4 max-w-3xl text-left whitespace-pre-line">
-                  {community.publicMetadata?.description}
+                  {community.description}
                 </div>
               </SlideOutClosed>
               <SlideOut id={slideOutDescriptionId}>
@@ -104,7 +104,7 @@ export default async function CommunityPage({params}: Props) {
                   slideOutId={slideOutDescriptionId}
                   communityId={community.id}
                   communitySlug={community.slug!}
-                  description={community.publicMetadata?.description}
+                  description={community.description}
                 />
               </SlideOut>
             </div>
@@ -188,9 +188,9 @@ export default async function CommunityPage({params}: Props) {
                 key={membership.id}
               >
                 <div className="w-10">
-                  {membership.publicUserData?.profileImageUrl && (
+                  {membership.imageUrl && (
                     <Image
-                      src={membership.publicUserData.profileImageUrl}
+                      src={membership.imageUrl}
                       alt=""
                       className="w-full rounded-full"
                       width={40}
@@ -200,8 +200,7 @@ export default async function CommunityPage({params}: Props) {
                 </div>
                 <div className="flex flex-col">
                   <div className="">
-                    {membership.publicUserData?.firstName}{' '}
-                    {membership.publicUserData?.lastName}
+                    {membership.firstName} {membership.lastName}
                   </div>
                   <div className="text-neutral-600">
                     {/* Place country name here */}

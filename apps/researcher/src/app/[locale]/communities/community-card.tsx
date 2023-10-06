@@ -89,7 +89,7 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
         })}
       </h1>
       <div className="text-center m-4 line-clamp-3 grow">
-        {community.publicMetadata?.description}
+        {community.description}
       </div>
 
       <div className="flex border-stone-300 border-t text-sm text-stone-600">
