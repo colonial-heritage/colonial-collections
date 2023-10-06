@@ -4,7 +4,7 @@ import {useAuth} from '@clerk/nextjs';
 import {addList} from './actions';
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {insertObjectListSchema} from '@colonial-collections/database/src/db/schema';
+import {insertObjectListSchema} from '@colonial-collections/database';
 import {useTranslations} from 'next-intl';
 import {useSlideOut, useNotifications} from 'ui';
 import {camelCase} from 'tiny-case';

@@ -1,9 +1,5 @@
-import {
-  objectLists,
-  objectItems,
-  insertObjectItemSchema,
-  insertObjectListSchema,
-} from './db/schema';
+import {objectLists, objectItems} from './db/schema';
+import {insertObjectItemSchema, insertObjectListSchema} from './db/validation';
 import {InferSelectModel, sql} from 'drizzle-orm';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
@@ -42,6 +38,7 @@ export async function countByCommunityId(communityId: string) {
     .from(objectLists)
     .where(eq(objectLists.communityId, communityId));
 
+  // We assume that the aggregations with `count` always returns an array with one value that is an object with the count prop
   return result[0].count;
 }
 
