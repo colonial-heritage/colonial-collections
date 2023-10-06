@@ -2,15 +2,10 @@
 
 import {getCommunityBySlug} from '@/lib/community';
 import {objectList} from '@colonial-collections/database';
-import {
-  InsertObjectItem,
-  SelectObjectList,
-} from '@colonial-collections/database';
+import {InsertObjectItem} from '@colonial-collections/database';
 import {revalidatePath} from 'next/cache';
 
-export async function getCommunityLists(
-  communityId: string
-): Promise<SelectObjectList[]> {
+export async function getCommunityLists(communityId: string) {
   return objectList.getByCommunityId(communityId);
 }
 
