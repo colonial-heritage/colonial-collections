@@ -44,9 +44,12 @@ function CommunityMenuItems({
       });
     } catch (err) {
       if ((err as Error).message.includes('Duplicate entry')) {
+        console.log(err);
         addNotification({
           id: 'objectAlreadyInList',
-          message: t('objectAlreadyInList'),
+          message: t.rich('objectAlreadyInList', {
+            name: () => <em>{objectList.name}</em>,
+          }),
           type: 'warning',
         });
       } else {
