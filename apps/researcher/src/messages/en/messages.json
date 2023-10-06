@@ -111,6 +111,7 @@
     "birthPlacesFilter": "Birth places",
     "deathYearsFilter": "Death years",
     "deathPlacesFilter": "Death places",
+    "publishersFilter": "Object data providers",
     "search": "Search for text",
     "filters": "Filters",
     "expandFilter": "Expand",
