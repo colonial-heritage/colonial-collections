@@ -1,5 +1,5 @@
 export interface SearchResultFilter {
-  name?: string;
-  id: string;
+  name?: string | number;
+  id: string | number;
   totalCount: number;
 }

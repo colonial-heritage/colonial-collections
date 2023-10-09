@@ -99,7 +99,7 @@ function FilterOption({
       <input
         value={searchResultFilter.id}
         id={`${title}-${searchResultFilter.id}`}
-        name={searchResultFilter.id}
+        name={searchResultFilter.id.toString()}
         checked={selectedFilters.some(
           filterId => searchResultFilter.id === filterId
         )}
@@ -147,6 +147,7 @@ export function FilterSet({
     return searchResultFilters.filter(
       searchResultFilter =>
         searchResultFilter.name
+          ?.toString()
           ?.toLocaleLowerCase()
           .includes(query.toLocaleLowerCase())
     );
