@@ -23,7 +23,8 @@ function organizationToCommunity(organization: Organization): Community {
   return {
     id: organization.id,
     name: organization.name,
-    description: organization.publicMetadata!.description as string | undefined,
+    // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata `description`.
+    description: organization.publicMetadata?.description as string | undefined,
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
     createdAt: organization.createdAt,
