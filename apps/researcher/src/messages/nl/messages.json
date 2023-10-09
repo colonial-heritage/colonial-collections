@@ -163,7 +163,7 @@
     "labelDescription":"Beschrijving",
     "changeDescriptionSaveButton": "Opslaan",
     "changeDescriptionCancelButton": "Annuleren",
-    "descriptionSuccessfullyEdited": "Beschrijving is succesvol aangepast",
+    "descriptionUpdated": "Beschrijving is aangepast",
     "descriptionServerError": "Er is iets misgegaan bij het aanpassen van de beschrijving. Probeer het later opnieuw.",
     "description_maxLength": "Beschrijving mag maximaal 2000 tekens bevatten"
   },

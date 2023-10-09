@@ -35,9 +35,7 @@ function organizationMembershipToCommunityMembership(
   membership: OrganizationMembership
 ): Membership {
   if (!membership.publicUserData) {
-    throw new Error(
-      'organizationMembershipToCommunityMembership: publicUserData is undefined'
-    );
+    throw new Error('publicUserData is undefined');
   }
 
   return {
@@ -159,7 +157,7 @@ export async function joinCommunity({
   });
 }
 
-export async function editDescription({
+export async function updateDescription({
   communityId,
   description,
 }: {

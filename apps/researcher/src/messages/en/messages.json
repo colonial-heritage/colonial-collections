@@ -163,7 +163,7 @@
     "labelDescription":"Description",
     "changeDescriptionSaveButton": "Save",
     "changeDescriptionCancelButton": "Cancel",
-    "descriptionSuccessfullyEdited": "Description has been updated",
+    "descriptionUpdated": "Description has been updated",
     "descriptionServerError": "Something went wrong while updating the description. Please try again later.",
     "description_maxLength": "Description has a maximum of 2000 characters"
   },

@@ -3,7 +3,7 @@
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {useTranslations} from 'next-intl';
 import {useSlideOut, useNotifications} from 'ui';
-import {editDescriptionAction} from './actions';
+import {updateDescriptionAction} from './actions';
 
 interface Props {
   communityId: string;
@@ -43,10 +43,10 @@ export default function EditDescriptionForm({
 
   const onSubmit: SubmitHandler<FormValues> = async descriptionFormValues => {
     try {
-      await editDescriptionAction(descriptionFormValues);
+      await updateDescriptionAction(descriptionFormValues);
       addNotification({
         id: 'add-object-list-success',
-        message: <>{t('descriptionSuccessfullyEdited')}</>,
+        message: <>{t('descriptionUpdated')}</>,
         type: 'success',
       });
       setIsVisible(slideOutId, false);
