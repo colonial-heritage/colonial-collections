@@ -20,5 +20,7 @@ export type SearchResult = {
     materials: SearchResultFilter[];
     creators: SearchResultFilter[];
     publishers: SearchResultFilter[];
+    dateCreatedStart: SearchResultFilter[];
+    dateCreatedEnd: SearchResultFilter[];
   };
 };

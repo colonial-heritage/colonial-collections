@@ -73,7 +73,11 @@ export enum SortOrder {
 
 export const SortOrderEnum = z.nativeEnum(SortOrder);
 
-export type SearchResultFilter = Thing & {totalCount: number};
+export type SearchResultFilter = {
+  id: string | number;
+  name?: string | number; // Name may not exist (e.g. in a specific locale)
+  totalCount: number;
+};
 
 export type ProvenanceEvent = {
   id: string;
