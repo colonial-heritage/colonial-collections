@@ -4,7 +4,7 @@ import {OrganizationMembership, Organization} from '@clerk/backend/dist/types';
 export interface Community {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   slug: string;
   imageUrl: string;
   createdAt: number;
@@ -23,8 +23,7 @@ function organizationToCommunity(organization: Organization): Community {
   return {
     id: organization.id,
     name: organization.name,
-    description:
-      (organization.publicMetadata!.description as string | undefined) || '',
+    description: organization.publicMetadata!.description as string | undefined,
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
     createdAt: organization.createdAt,
