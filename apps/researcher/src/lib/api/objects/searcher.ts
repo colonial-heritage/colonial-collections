@@ -65,8 +65,8 @@ const searchOptionsSchema = z.object({
       materials: z.array(z.string()).optional().default([]),
       creators: z.array(z.string()).optional().default([]),
       publishers: z.array(z.string()).optional().default([]),
-      dateCreatedStart: z.string().optional(),
-      dateCreatedEnd: z.string().optional(),
+      dateCreatedStart: z.number().optional(),
+      dateCreatedEnd: z.number().optional(),
     })
     .optional(),
 });
@@ -93,7 +93,7 @@ const rawHeritageObjectSchema = z
 type RawHeritageObject = z.infer<typeof rawHeritageObjectSchema>;
 
 const rawBucketSchema = z.object({
-  key: z.string(),
+  key: z.string().or(z.number()),
   doc_count: z.number(),
 });
 
@@ -269,13 +269,13 @@ export class HeritageObjectSearcher {
 
   private buildRequest(options: SearchOptions) {
     const aggregations = {
-      owners: buildAggregation(RawKeys.Owner),
-      types: buildAggregation(RawKeys.AdditionalType),
-      subjects: buildAggregation(RawKeys.About),
-      locations: buildAggregation(RawKeys.CountryCreated),
-      materials: buildAggregation(RawKeys.Material),
-      creators: buildAggregation(RawKeys.Creator),
-      publishers: buildAggregation(RawKeys.Publisher),
+      owners: buildAggregation(`${RawKeys.Owner}.keyword`),
+      types: buildAggregation(`${RawKeys.AdditionalType}.keyword`),
+      subjects: buildAggregation(`${RawKeys.About}.keyword`),
+      locations: buildAggregation(`${RawKeys.CountryCreated}.keyword`),
+      materials: buildAggregation(`${RawKeys.Material}.keyword`),
+      creators: buildAggregation(`${RawKeys.Creator}.keyword`),
+      publishers: buildAggregation(`${RawKeys.Publisher}.keyword`),
       dateCreatedStart: buildAggregation(RawKeys.YearCreatedStart),
       dateCreatedEnd: buildAggregation(RawKeys.YearCreatedEnd),
     };
@@ -350,7 +350,7 @@ export class HeritageObjectSearcher {
       searchRequest.query.bool.filter.push({
         // @ts-expect-error:TS2345
         range: {
-          [`${RawKeys.YearCreatedStart}.keyword`]: {
+          [RawKeys.YearCreatedStart]: {
             gte: dateCreatedStart,
           },
         },
@@ -362,7 +362,7 @@ export class HeritageObjectSearcher {
       searchRequest.query.bool.filter.push({
         // @ts-expect-error:TS2345
         range: {
-          [`${RawKeys.YearCreatedEnd}.keyword`]: {
+          [RawKeys.YearCreatedEnd]: {
             lte: dateCreatedEnd,
           },
         },

@@ -418,45 +418,45 @@ describe('search', () => {
         dateCreatedStart: [
           {
             totalCount: 1,
-            id: '1725',
-            name: '1725',
+            id: 1725,
+            name: 1725,
           },
           {
             totalCount: 1,
-            id: '1889',
-            name: '1889',
+            id: 1889,
+            name: 1889,
           },
           {
             totalCount: 1,
-            id: '1895',
-            name: '1895',
+            id: 1895,
+            name: 1895,
           },
           {
             totalCount: 1,
-            id: '1901',
-            name: '1901',
+            id: 1901,
+            name: 1901,
           },
         ],
         dateCreatedEnd: [
           {
             totalCount: 1,
-            id: '1736',
-            name: '1736',
+            id: 1736,
+            name: 1736,
           },
           {
             totalCount: 1,
-            id: '1890',
-            name: '1890',
+            id: 1890,
+            name: 1890,
           },
           {
             totalCount: 1,
-            id: '1895',
-            name: '1895',
+            id: 1895,
+            name: 1895,
           },
           {
             totalCount: 1,
-            id: '1902',
-            name: '1902',
+            id: 1902,
+            name: 1902,
           },
         ],
       },
@@ -656,7 +656,7 @@ describe('search', () => {
   it('finds heritage objects if "dateCreatedStart" filter matches', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        dateCreatedStart: '1901',
+        dateCreatedStart: 1901,
       },
     });
 
@@ -666,23 +666,23 @@ describe('search', () => {
         dateCreatedStart: [
           {
             totalCount: 0,
-            id: '1725',
-            name: '1725',
+            id: 1725,
+            name: 1725,
           },
           {
             totalCount: 0,
-            id: '1889',
-            name: '1889',
+            id: 1889,
+            name: 1889,
           },
           {
             totalCount: 0,
-            id: '1895',
-            name: '1895',
+            id: 1895,
+            name: 1895,
           },
           {
             totalCount: 1,
-            id: '1901',
-            name: '1901',
+            id: 1901,
+            name: 1901,
           },
         ],
       },
@@ -692,7 +692,7 @@ describe('search', () => {
   it('finds heritage objects if "dateCreatedEnd" filter matches', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        dateCreatedEnd: '1736',
+        dateCreatedEnd: 1736,
       },
     });
 
@@ -702,23 +702,23 @@ describe('search', () => {
         dateCreatedEnd: [
           {
             totalCount: 1,
-            id: '1736',
-            name: '1736',
+            id: 1736,
+            name: 1736,
           },
           {
             totalCount: 0,
-            id: '1890',
-            name: '1890',
+            id: 1890,
+            name: 1890,
           },
           {
             totalCount: 0,
-            id: '1895',
-            name: '1895',
+            id: 1895,
+            name: 1895,
           },
           {
             totalCount: 0,
-            id: '1902',
-            name: '1902',
+            id: 1902,
+            name: 1902,
           },
         ],
       },
@@ -728,8 +728,8 @@ describe('search', () => {
   it('finds heritage objects between "dateCreatedStart" and "dateCreatedEnd", inclusive', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        dateCreatedStart: '1725',
-        dateCreatedEnd: '1895',
+        dateCreatedStart: 1725,
+        dateCreatedEnd: 1895,
       },
     });
 
@@ -739,45 +739,45 @@ describe('search', () => {
         dateCreatedStart: [
           {
             totalCount: 1,
-            id: '1725',
-            name: '1725',
+            id: 1725,
+            name: 1725,
           },
           {
             totalCount: 1,
-            id: '1889',
-            name: '1889',
+            id: 1889,
+            name: 1889,
           },
           {
             totalCount: 1,
-            id: '1895',
-            name: '1895',
+            id: 1895,
+            name: 1895,
           },
           {
             totalCount: 0,
-            id: '1901',
-            name: '1901',
+            id: 1901,
+            name: 1901,
           },
         ],
         dateCreatedEnd: [
           {
             totalCount: 1,
-            id: '1736',
-            name: '1736',
+            id: 1736,
+            name: 1736,
           },
           {
             totalCount: 1,
-            id: '1890',
-            name: '1890',
+            id: 1890,
+            name: 1890,
           },
           {
             totalCount: 1,
-            id: '1895',
-            name: '1895',
+            id: 1895,
+            name: 1895,
           },
           {
             totalCount: 0,
-            id: '1902',
-            name: '1902',
+            id: 1902,
+            name: 1902,
           },
         ],
       },
