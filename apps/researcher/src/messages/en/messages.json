@@ -111,6 +111,7 @@
     "birthPlacesFilter": "Birth places",
     "deathYearsFilter": "Death years",
     "deathPlacesFilter": "Death places",
+    "publishersFilter": "Object data providers",
     "search": "Search for text",
     "filters": "Filters",
     "expandFilter": "Expand",
@@ -142,6 +143,8 @@
     "error": "Something went wrong while fetching communities. Please try again later.",
     "communityName": "Community of <name></name>",
     "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",
+    "objectListCount": "{count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
+    "objectListCountError": "Error",
     "searchPlaceholder": "Search for community"
   },
   "Community": {
@@ -150,8 +153,23 @@
     "noEntity": "Community could not be found",
     "editButton": "Edit community page",
     "joinButton": "Join this community",
-    "objectListsTitle": "Lists of objects by community",
+    "goToListButton": "See all objects",
+    "objectListsTitle": "Lists",
+    "objectListsSubTitle": "This community has {count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
     "membersTitle": "Members",
-    "error": "Something went wrong while fetching the community. Please try again later."
+    "error": "Something went wrong while fetching the community. Please try again later.",
+    "addObjectListButton": "Add list"
+  },
+  "AddObjectListForm": {
+    "title": "Add list",
+    "labelName": "List name",
+    "labelDescription": "Description (optional)",
+    "labelDescriptionSubTitle": "Give a description about this list. For example, what is the history of this list. Tell a little bit about the kind of objects.",
+    "buttonSubmit": "Create list",
+    "buttonCancel": "Cancel",
+    "nameTooSmall": "List name is required",
+    "nameTooBig": "List name has a maximum of 250 characters",
+    "serverError": "Something went wrong while creating the list. Please try again later.",
+    "listSuccessfullyAdded": "List <name></name> has been added to you community"
   }
 }
