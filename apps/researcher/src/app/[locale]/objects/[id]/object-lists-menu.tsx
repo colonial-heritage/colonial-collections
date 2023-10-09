@@ -4,8 +4,13 @@ import {useTranslations} from 'next-intl';
 import {Fragment, useState, useEffect} from 'react';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/20/solid';
+import {CheckIcon} from '@heroicons/react/24/outline';
 import {useUser} from '@clerk/nextjs';
-import {getCommunityLists, addObjectToList} from './database-actions';
+import {
+  getCommunityLists,
+  addObjectToList,
+  removeObjectFromList,
+} from './object-lists-actions';
 import {SelectObjectList} from '@colonial-collections/database';
 import {useNotifications} from 'ui';
 
@@ -24,38 +29,49 @@ function CommunityMenuItems({
   const t = useTranslations('ObjectDetails');
   const {addNotification} = useNotifications();
 
-  async function addObjectToListClick(objectList: SelectObjectList) {
-    try {
-      await addObjectToList({
-        listItem: {
-          objectIri: objectId,
-          objectListId: objectList.id,
-          createdBy: userId,
-        },
-        communityId,
-      });
+  async function listClick(objectList: SelectObjectList) {
+    const objectInList = !!objectList.objects!.length;
 
-      addNotification({
-        id: 'objectAddedToList',
-        message: t.rich('objectAddedToList', {
-          name: () => <em>{objectList.name}</em>,
-        }),
-        type: 'success',
-      });
-    } catch (err) {
-      if ((err as Error).message.includes('Duplicate entry')) {
-        console.log(err);
+    if (objectInList) {
+      try {
+        await removeObjectFromList(objectList.objects![0].id, communityId);
+
         addNotification({
-          id: 'objectAlreadyInList',
-          message: t.rich('objectAlreadyInList', {
+          id: 'objectRemovedFromList',
+          message: t.rich('objectRemovedFromList', {
             name: () => <em>{objectList.name}</em>,
           }),
-          type: 'warning',
+          type: 'success',
         });
-      } else {
+      } catch (err) {
         addNotification({
-          id: 'objectNotAddedToList',
-          message: t('objectNotAddedToList'),
+          id: 'errorObjectRemovedFromList',
+          message: t('errorObjectRemovedFromList'),
+          type: 'error',
+        });
+      }
+    } else {
+      try {
+        await addObjectToList({
+          listItem: {
+            objectIri: objectId,
+            objectListId: objectList.id,
+            createdBy: userId,
+          },
+          communityId,
+        });
+
+        addNotification({
+          id: 'objectAddedToList',
+          message: t.rich('objectAddedToList', {
+            name: () => <em>{objectList.name}</em>,
+          }),
+          type: 'success',
+        });
+      } catch (err) {
+        addNotification({
+          id: 'errorObjectAddedToList',
+          message: t('errorObjectAddedToList'),
           type: 'error',
         });
       }
@@ -64,11 +80,11 @@ function CommunityMenuItems({
 
   useEffect(() => {
     async function getLists() {
-      const lists = await getCommunityLists(communityId);
+      const lists = await getCommunityLists(communityId, objectId);
       setObjectLists(lists);
     }
     getLists();
-  }, [communityId]);
+  }, [communityId, objectId]);
 
   if (!objectLists.length) {
     return (
@@ -83,9 +99,14 @@ function CommunityMenuItems({
       {objectLists.map(objectList => (
         <Menu.Item key={objectList.id}>
           <button
-            onClick={() => addObjectToListClick(objectList)}
-            className="block px-4 py-2 text-sm w-full text-left text-gray-700"
+            onClick={() => listClick(objectList)}
+            className="group flex items-center px-4 py-2 text-sm text-gray-700"
           >
+            <span className="mr-3 h-5 w-5 blueGrey-500 group-hover:blueGrey-700">
+              {objectList.objects!.length ? (
+                <CheckIcon className="h-5 w-5" aria-hidden="true" />
+              ) : null}
+            </span>
             {objectList.name}
           </button>
         </Menu.Item>
