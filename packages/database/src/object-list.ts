@@ -9,12 +9,12 @@ import {SelectObjectList} from './db/types';
 interface Option {
   withObjects?: boolean;
   limitObjects?: number;
-  includeObjectIri?: string;
+  objectIri?: string;
 }
 
 export async function getByCommunityId(
   communityId: string,
-  {withObjects, limitObjects, includeObjectIri}: Option = {withObjects: false}
+  {withObjects, limitObjects, objectIri}: Option = {withObjects: false}
   // Explicitly set the return type, or else `objects` will not be included.
 ): Promise<SelectObjectList[]> {
   const options: DBQueryConfig = {};
@@ -25,8 +25,8 @@ export async function getByCommunityId(
     };
   }
 
-  if (includeObjectIri) {
-    const objectId = iriToHash(includeObjectIri);
+  if (objectIri) {
+    const objectId = iriToHash(objectIri);
     options.with = {
       objects: {
         where: (objectItems, {eq}) => eq(objectItems.objectId, objectId),

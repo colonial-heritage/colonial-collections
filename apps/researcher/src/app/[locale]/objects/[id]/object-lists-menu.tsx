@@ -30,30 +30,12 @@ function CommunityMenuItems({
   const {addNotification} = useNotifications();
 
   async function listClick(objectList: SelectObjectList) {
-    const objectInList = !!objectList.objects!.length;
+    const isEmptyList = !objectList.objects!.length;
 
-    if (objectInList) {
-      try {
-        await removeObjectFromList(objectList.objects![0].id, communityId);
-
-        addNotification({
-          id: 'objectRemovedFromList',
-          message: t.rich('objectRemovedFromList', {
-            name: () => <em>{objectList.name}</em>,
-          }),
-          type: 'success',
-        });
-      } catch (err) {
-        addNotification({
-          id: 'errorObjectRemovedFromList',
-          message: t('errorObjectRemovedFromList'),
-          type: 'error',
-        });
-      }
-    } else {
+    if (isEmptyList) {
       try {
         await addObjectToList({
-          listItem: {
+          objectItem: {
             objectIri: objectId,
             objectListId: objectList.id,
             createdBy: userId,
@@ -72,6 +54,24 @@ function CommunityMenuItems({
         addNotification({
           id: 'errorObjectAddedToList',
           message: t('errorObjectAddedToList'),
+          type: 'error',
+        });
+      }
+    } else {
+      try {
+        await removeObjectFromList(objectList.objects![0].id, communityId);
+
+        addNotification({
+          id: 'objectRemovedFromList',
+          message: t.rich('objectRemovedFromList', {
+            name: () => <em>{objectList.name}</em>,
+          }),
+          type: 'success',
+        });
+      } catch (err) {
+        addNotification({
+          id: 'errorObjectRemovedFromList',
+          message: t('errorObjectRemovedFromList'),
           type: 'error',
         });
       }
@@ -127,7 +127,9 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
     return null;
   }
 
-  const communities = user.organizationMemberships.map(m => m.organization);
+  const communities = user.organizationMemberships.map(
+    membership => membership.organization
+  );
 
   return (
     <Menu as="div" className="relative inline-block text-left">

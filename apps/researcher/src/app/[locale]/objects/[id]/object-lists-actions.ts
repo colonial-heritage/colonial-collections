@@ -6,20 +6,25 @@ import {InsertObjectItem} from '@colonial-collections/database';
 import {revalidatePath} from 'next/cache';
 
 export async function getCommunityLists(communityId: string, objectId: string) {
-  return objectList.getByCommunityId(communityId, {includeObjectIri: objectId});
+  return objectList.getByCommunityId(communityId, {objectIri: objectId});
 }
 
 interface AddObjectToListProps {
-  listItem: InsertObjectItem;
+  objectItem: InsertObjectItem;
   communityId: string;
 }
 
 export async function addObjectToList({
-  listItem,
+  objectItem,
   communityId,
 }: AddObjectToListProps) {
-  await objectList.addObject(listItem);
-  const community = await getCommunityBySlug(communityId);
+  const addObjectPromise = objectList.addObject(objectItem);
+  const getCommunityPromise = getCommunityBySlug(communityId);
+  const [community] = await Promise.all([
+    getCommunityPromise,
+    addObjectPromise,
+  ]);
+
   revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 }
 
