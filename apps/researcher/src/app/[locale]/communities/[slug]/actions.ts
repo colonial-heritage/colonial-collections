@@ -20,4 +20,4 @@ export async function updateDescriptionAction({
 }
 
 // Export as server actions.
-export {joinCommunity};
+export {joinCommunity as joinCommunityAction};

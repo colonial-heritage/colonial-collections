@@ -4,7 +4,7 @@ import {useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {useClerk, useUser} from '@clerk/nextjs';
 import {useTransition} from 'react';
-import {joinCommunity} from './actions';
+import {joinCommunityAction} from './actions';
 
 interface Props {
   communityId: string;
@@ -34,7 +34,7 @@ export function JoinCommunityButton({communityId}: Props) {
     setIsClicked(true);
     startTransition(async () => {
       try {
-        await joinCommunity({
+        await joinCommunityAction({
           organizationId: communityId,
           userId: user!.id,
         });
