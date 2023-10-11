@@ -34,18 +34,19 @@ function organizationToCommunity(organization: Organization): Community {
 function organizationMembershipToCommunityMembership(
   membership: OrganizationMembership
 ): Membership {
-  if (!membership.publicUserData) {
-    throw new Error('publicUserData is undefined');
-  }
+  // There are some assumptions made in this function:
+  // - The membership has a `publicUserData` field. Even though it is optional in the Clerk type `OrganizationMembership`.
+  // - The `publicUserData` has the fields `userId` and `imageUrl`.
+  // - The `publicUserData` has the fields `firstName` and `lastName`.
+  //   These are optional in the Clerk type `OrganizationMembershipPublicUserData` but set to required in the Clerk settings for this application.
 
   return {
     id: membership.id,
     role: membership.role,
-    userId: membership.publicUserData.userId,
-    // First and last name are set to required in Clerk.
-    firstName: membership.publicUserData.firstName!,
-    lastName: membership.publicUserData.lastName!,
-    imageUrl: membership.publicUserData.imageUrl,
+    userId: membership.publicUserData!.userId,
+    firstName: membership.publicUserData!.firstName!,
+    lastName: membership.publicUserData!.lastName!,
+    imageUrl: membership.publicUserData!.imageUrl,
   };
 }
 
