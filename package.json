@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "eslint-config-custom": "*",
-    "gts": "5.0.1",
+    "gts": "5.2.0",
     "turbo": "1.10.13"
   },
   "engines": {
