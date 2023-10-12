@@ -2,6 +2,7 @@ import {
   getUrlWithSearchParams,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
+  SearchParamTypes,
 } from './search-params';
 import {SortBy, defaultSortBy} from './sort';
 import {describe, expect, it} from '@jest/globals';
@@ -36,6 +37,18 @@ const sortMapping = {
   },
 };
 
+interface FilterKey {
+  name: string;
+  searchParamType: SearchParamTypes;
+}
+
+const filterKeys: FilterKey[] = [
+  {name: 'types', searchParamType: 'array'},
+  {name: 'locations', searchParamType: 'array'},
+  {name: 'dateCreatedStart', searchParamType: 'number'},
+  {name: 'dateCreatedEnd', searchParamType: 'number'},
+];
+
 const sortOptions = {
   SortByEnum,
   SortOrderEnum,
@@ -68,15 +81,14 @@ describe('getUrlWithSearchParams', () => {
     expect(getUrlWithSearchParams(options)).toBe('/');
   });
 
-  it('returns "/" with empty filter arrays', () => {
+  it('returns "/" with empty filters', () => {
     const options = {
       query: '',
       defaultSortBy,
       filters: {
-        licenses: [],
-        publishers: [],
-        spatialCoverages: [],
-        genres: [],
+        types: [],
+        locations: [],
+        dateCreatedStart: undefined,
       },
     };
 
@@ -114,15 +126,15 @@ describe('getUrlWithSearchParams', () => {
     const options = {
       defaultSortBy,
       filters: {
-        licenses: ['filter1'],
-        publishers: ['filter2'],
-        spatialCoverages: ['filter3'],
-        genres: ['filter4'],
+        types: ['filter1'],
+        locations: ['filter2', 'filter3'],
+        dateCreatedStart: 1600,
+        dateCreatedEnd: 1700,
       },
     };
 
     expect(getUrlWithSearchParams(options)).toBe(
-      '/?licenses=filter1&publishers=filter2&spatialCoverages=filter3&genres=filter4'
+      '/?types=filter1&locations=filter2&locations=filter3&dateCreatedStart=1600&dateCreatedEnd=1700'
     );
   });
 
@@ -133,15 +145,15 @@ describe('getUrlWithSearchParams', () => {
       sortBy: SortBy.NameDesc,
       defaultSortBy,
       filters: {
-        licenses: ['filter1', 'filter2'],
-        publishers: ['filter3'],
-        spatialCoverages: ['filter4'],
-        genres: ['filter5'],
+        types: ['filter1'],
+        locations: ['filter2', 'filter3'],
+        dateCreatedStart: 1600,
+        dateCreatedEnd: 1700,
       },
     };
 
     expect(getUrlWithSearchParams(options)).toBe(
-      '/?query=my+query&offset=20&sortBy=nameDesc&licenses=filter1%2Cfilter2&publishers=filter3&spatialCoverages=filter4&genres=filter5'
+      '/?query=my+query&offset=20&sortBy=nameDesc&types=filter1&locations=filter2&locations=filter3&dateCreatedStart=1600&dateCreatedEnd=1700'
     );
   });
 });
@@ -149,7 +161,11 @@ describe('getUrlWithSearchParams', () => {
 describe('fromSearchParamsToSearchOptions', () => {
   it('returns default search options if there are no search params', () => {
     expect(
-      fromSearchParamsToSearchOptions({sortOptions, searchParams: {}})
+      fromSearchParamsToSearchOptions({
+        sortOptions,
+        searchParams: {},
+        filterKeys: [],
+      })
     ).toStrictEqual({
       filters: {},
       offset: 0,
@@ -167,7 +183,11 @@ describe('fromSearchParamsToSearchOptions', () => {
     };
 
     expect(
-      fromSearchParamsToSearchOptions({sortOptions, searchParams})
+      fromSearchParamsToSearchOptions({
+        sortOptions,
+        searchParams,
+        filterKeys: [],
+      })
     ).toStrictEqual({
       filters: {},
       offset: 0,
@@ -185,7 +205,11 @@ describe('fromSearchParamsToSearchOptions', () => {
     };
 
     expect(
-      fromSearchParamsToSearchOptions({sortOptions, searchParams})
+      fromSearchParamsToSearchOptions({
+        sortOptions,
+        searchParams,
+        filterKeys: [],
+      })
     ).toStrictEqual({
       filters: {},
       offset: 0,
@@ -201,19 +225,25 @@ describe('fromSearchParamsToSearchOptions', () => {
       query: 'My query',
       offset: '12',
       sortBy: SortBy.NameAsc,
-      owners: 'owner1,owner2',
-      types: 'type',
-      subjects: 'subject',
+      types: ['type1', 'type2'],
+      locations: 'location1',
+      dateCreatedStart: '1500',
+      dateCreatedEnd: '1550',
     };
 
     expect(
-      fromSearchParamsToSearchOptions({sortOptions, searchParams})
+      fromSearchParamsToSearchOptions({
+        sortOptions,
+        searchParams,
+        filterKeys,
+      })
     ).toStrictEqual({
       query: 'My query',
       filters: {
-        owners: ['owner1', 'owner2'],
-        types: ['type'],
-        subjects: ['subject'],
+        types: ['type1', 'type2'],
+        locations: ['location1'],
+        dateCreatedStart: 1500,
+        dateCreatedEnd: 1550,
       },
       offset: 12,
       sortBy: 'name',

@@ -8,6 +8,7 @@ import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   defaultSortBy,
+  SearchParamTypes,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -26,38 +27,43 @@ import {
 import {SmallScreenSubMenu, SubMenuButton, SubMenuDialog} from 'ui';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import Tabs from './tabs';
+import {ElementType} from 'react';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
 
-// Set the order of the filters
-const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
-  'owners',
-  'types',
-  'subjects',
-  'publishers',
+interface FacetProps {
+  name: keyof SearchResult['filters'];
+  searchParamType: SearchParamTypes;
+  Component: ElementType;
+}
+
+const facets: ReadonlyArray<FacetProps> = [
+  {name: 'owners', searchParamType: 'array', Component: FilterSet},
+  {name: 'types', searchParamType: 'array', Component: FilterSet},
+  {name: 'subjects', searchParamType: 'array', Component: FilterSet},
+  {name: 'publishers', searchParamType: 'array', Component: FilterSet},
 ];
 
 interface FacetMenuProps {
   filters: SearchResult['filters'];
-  filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']>;
 }
 
-function FacetMenu({filterKeysOrder, filters}: FacetMenuProps) {
+function FacetMenu({filters}: FacetMenuProps) {
   const t = useTranslations('Filters');
 
   return (
     <>
       <SearchFieldWithLabel />
-      {filterKeysOrder.map(
-        filterKey =>
-          !!filters[filterKey]?.length && (
-            <FilterSet
-              key={filterKey}
-              title={t(`${filterKey}Filter`)}
-              searchResultFilters={filters[filterKey]}
-              filterKey={filterKey}
-              testId={`${filterKey}Filter`}
+      {facets.map(
+        ({name, Component}) =>
+          !!filters[name]?.length && (
+            <Component
+              key={name}
+              title={t(`${name}Filter`)}
+              searchResultFilters={filters[name]}
+              filterKey={name}
+              testId={`${name}Filter`}
             />
           )
       )}
@@ -78,8 +84,13 @@ export default async function Home({searchParams = {}}: Props) {
       defaultSortBy: SortBy.Relevance,
       sortMapping: sortMapping,
     },
+    filterKeys: facets.map(({name, searchParamType}) => ({
+      name,
+      searchParamType,
+    })),
     searchParams,
   });
+
   const sortBy = getClientSortBy({
     sortMapping,
     sortPair: {
@@ -132,10 +143,7 @@ export default async function Home({searchParams = {}}: Props) {
               id="facets"
               className="hidden md:block w-full md:w-1/3 lg:w-1/5 order-2 md:order-1"
             >
-              <FacetMenu
-                filters={searchResult.filters}
-                filterKeysOrder={filterKeysOrder}
-              />
+              <FacetMenu filters={searchResult.filters} />
             </aside>
 
             <main className="w-full md:w-2/3 lg:w-4/5  order-2 md:order-1">
@@ -150,10 +158,7 @@ export default async function Home({searchParams = {}}: Props) {
                   />
                 </SubMenuButton>
                 <SubMenuDialog title={t('filters')}>
-                  <FacetMenu
-                    filters={searchResult.filters}
-                    filterKeysOrder={filterKeysOrder}
-                  />
+                  <FacetMenu filters={searchResult.filters} />
                 </SubMenuDialog>
               </SmallScreenSubMenu>
               <div
@@ -168,9 +173,10 @@ export default async function Home({searchParams = {}}: Props) {
                 </div>
               </div>
               <SelectedFilters
-                filters={filterKeysOrder.map(filterKey => ({
-                  searchResultFilters: searchResult!.filters[filterKey] ?? [],
-                  filterKey,
+                filters={facets.map(filterKey => ({
+                  searchResultFilters:
+                    searchResult!.filters[filterKey.name] ?? [],
+                  filterKey: filterKey.name,
                 }))}
               />
               <HeritageObjectList
