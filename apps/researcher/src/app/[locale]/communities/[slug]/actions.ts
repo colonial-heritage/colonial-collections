@@ -3,21 +3,34 @@
 import {joinCommunity, updateDescription} from '@/lib/community';
 import {revalidatePath} from 'next/cache';
 
-interface UpdateDescriptionActionProps {
+interface UpdateDescriptionAndRevalidateProps {
   communityId: string;
   communitySlug: string;
   description: string;
 }
 
-export async function updateDescriptionAction({
+export async function updateDescriptionAndRevalidate({
   communityId,
   communitySlug,
   description,
-}: UpdateDescriptionActionProps) {
+}: UpdateDescriptionAndRevalidateProps) {
   await updateDescription({communityId, description});
   revalidatePath(`/[locale]/communities/${communitySlug}`, 'page');
   revalidatePath('/[locale]/communities', 'page');
 }
 
-// Export as server actions.
-export {joinCommunity as joinCommunityAction};
+interface JoinCommunityAndRevalidateProps {
+  communityId: string;
+  communitySlug: string;
+  userId: string;
+}
+
+export async function joinCommunityAndRevalidate({
+  communityId,
+  communitySlug,
+  userId,
+}: JoinCommunityAndRevalidateProps) {
+  await joinCommunity({communityId, userId});
+  revalidatePath(`/[locale]/communities/${communitySlug}`, 'page');
+  revalidatePath('/[locale]/communities', 'page');
+}

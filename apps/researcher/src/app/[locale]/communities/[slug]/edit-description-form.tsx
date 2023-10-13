@@ -3,7 +3,7 @@
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {useTranslations} from 'next-intl';
 import {useSlideOut, useNotifications} from 'ui';
-import {updateDescriptionAction} from './actions';
+import {updateDescriptionAndRevalidate} from './actions';
 
 interface Props {
   communityId: string;
@@ -43,7 +43,7 @@ export default function EditDescriptionForm({
 
   const onSubmit: SubmitHandler<FormValues> = async descriptionFormValues => {
     try {
-      await updateDescriptionAction(descriptionFormValues);
+      await updateDescriptionAndRevalidate(descriptionFormValues);
       addNotification({
         id: 'add-object-list-success',
         message: <>{t('descriptionUpdated')}</>,

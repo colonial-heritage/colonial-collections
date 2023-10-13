@@ -143,16 +143,13 @@ export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
 }
 
 interface JoinCommunityProps {
-  organizationId: string;
+  communityId: string;
   userId: string;
 }
 
-export async function joinCommunity({
-  organizationId,
-  userId,
-}: JoinCommunityProps) {
+export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
   await clerkClient.organizations.createOrganizationMembership({
-    organizationId,
+    organizationId: communityId,
     userId,
     role: 'basic_member',
   });

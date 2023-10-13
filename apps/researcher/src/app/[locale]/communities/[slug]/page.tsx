@@ -109,7 +109,10 @@ export default async function CommunityPage({params}: Props) {
               </SlideOut>
             </div>
             <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
-              <JoinCommunityButton communityId={community.id} />
+              <JoinCommunityButton
+                communityId={community.id}
+                communitySlug={params.slug}
+              />
               <SlideOutButton
                 hideIfOpen
                 id={slideOutDescriptionId}
