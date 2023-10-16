@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@jest/globals": "29.7.0",
-    "@next/env": "13.5.3",
+    "@next/env": "13.5.5",
     "@rdfjs/types": "1.1.0",
     "@types/mdx": "2.0.8",
     "@types/node": "20.8.3",
