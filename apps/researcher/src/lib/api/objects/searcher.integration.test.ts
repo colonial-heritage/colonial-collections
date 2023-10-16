@@ -190,7 +190,6 @@ describe('search', () => {
         },
         {
           id: 'https://example.org/objects/4',
-          identifier: '3456',
           isPartOf: {
             id: 'Dataset 1',
             name: 'Dataset 1',

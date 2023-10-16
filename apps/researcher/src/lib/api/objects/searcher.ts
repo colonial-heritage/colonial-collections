@@ -77,7 +77,7 @@ const rawHeritageObjectSchema = z
   .object({})
   .setKey(RawKeys.Id, z.string())
   .setKey(RawKeys.AdditionalType, z.array(z.string()).optional())
-  .setKey(RawKeys.Identifier, z.array(z.string()).min(1))
+  .setKey(RawKeys.Identifier, z.array(z.string()).optional())
   .setKey(RawKeys.Name, z.array(z.string()).optional())
   .setKey(RawKeys.Description, z.array(z.string()).optional())
   .setKey(RawKeys.Inscription, z.array(z.string()).optional())
