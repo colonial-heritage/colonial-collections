@@ -1,3 +1,4 @@
+import type * as RDF from '@rdfjs/types';
 import {DataFactory} from 'rdf-data-factory';
 import rdfSerializer from 'rdf-serialize';
 import {RdfStore} from 'rdf-stores';
@@ -5,6 +6,15 @@ import streamToString from 'stream-to-string';
 import {z} from 'zod';
 
 const DF = new DataFactory();
+const headGraph = DF.namedNode(
+  'http://purl.org/nanopub/temp/temp-nanopub-id/Head'
+);
+const pubInfoGraph = DF.namedNode(
+  'http://purl.org/nanopub/temp/temp-nanopub-id/pubinfo'
+);
+const assertionGraph = DF.namedNode(
+  'http://purl.org/nanopub/temp/temp-nanopub-id/assertion'
+);
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
@@ -13,15 +23,18 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
-const createOptionsSchema = z.object({
-  signerIri: z.string(),
+const addOptionsSchema = z.object({
+  enrichmentStore: z.instanceof(RdfStore),
+  about: z.string().url(),
+  creator: z.string().url(),
+  license: z.string().url(),
 });
 
-export type CreateOptions = z.infer<typeof createOptionsSchema>;
+export type AddOptions = z.infer<typeof addOptionsSchema>;
 
 const postNanopubOptionsSchema = z.object({
-  signerIri: z.string().url(),
-  data: z.string(),
+  creator: z.string().url(),
+  data: z.instanceof(ReadableStream),
 });
 
 type PostNanopubOptions = z.infer<typeof postNanopubOptionsSchema>;
@@ -44,13 +57,13 @@ export class NanopubClient {
 
     const searchParams = new URLSearchParams({
       'server-url': this.endpointUrl,
-      signer: opts.signerIri,
+      signer: opts.creator,
     });
     const url = `${this.proxyEndpointUrl}/publish?${searchParams.toString()}`;
 
     const response = await fetch(url, {
       method: 'POST',
-      body: opts.data, // TODO: change to ReadableStream
+      body: opts.data,
       headers: {'Content-Type': 'application/trig'},
     });
 
@@ -66,26 +79,28 @@ export class NanopubClient {
     return nanopubIri;
   }
 
-  async create(options: CreateOptions) {
-    const opts = createOptionsSchema.parse(options);
+  async add(options: AddOptions) {
+    const opts = addOptionsSchema.parse(options);
 
+    const enrichmentStore = opts.enrichmentStore;
     const store = RdfStore.createDefault();
 
+    // Head graph
     const headId = DF.blankNode();
     store.addQuad(
       DF.quad(
         headId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('http://www.nanopub.org/nschema#Nanopublication'),
-        DF.namedNode('http://purl.org/nanopub/temp/temp-nanopub-id/Head')
+        headGraph
       )
     );
     store.addQuad(
       DF.quad(
         headId,
         DF.namedNode('http://www.nanopub.org/nschema#hasAssertion'),
-        DF.namedNode('http://purl.org/nanopub/temp/temp-nanopub-id/assertion'),
-        DF.namedNode('http://purl.org/nanopub/temp/temp-nanopub-id/Head')
+        assertionGraph,
+        headGraph
       )
     );
     store.addQuad(
@@ -93,17 +108,62 @@ export class NanopubClient {
         headId,
         DF.namedNode('http://www.nanopub.org/nschema#hasProvenance'),
         DF.namedNode('http://purl.org/nanopub/temp/temp-nanopub-id/provenance'),
-        DF.namedNode('http://purl.org/nanopub/temp/temp-nanopub-id/Head')
+        headGraph
       )
     );
     store.addQuad(
       DF.quad(
         headId,
         DF.namedNode('http://www.nanopub.org/nschema#hasPublicationInfo'),
-        DF.namedNode('http://purl.org/nanopub/temp/temp-nanopub-id/pubinfo'),
-        DF.namedNode('http://purl.org/nanopub/temp/temp-nanopub-id/Head')
+        pubInfoGraph,
+        headGraph
       )
     );
+
+    // Provenance graph
+    store.addQuad(
+      DF.quad(
+        assertionGraph,
+        DF.namedNode('http://www.w3.org/ns/prov#wasDerivedFrom'),
+        DF.namedNode(opts.about),
+        DF.namedNode('http://purl.org/nanopub/temp/temp-nanopub-id/provenance')
+      )
+    );
+
+    // Publication info graph
+    const pubInfoId = DF.blankNode();
+    store.addQuad(
+      DF.quad(
+        pubInfoId,
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode('http://purl.org/nanopub/x/ExampleNanopub'), // TODO: change type
+        pubInfoGraph
+      )
+    );
+    store.addQuad(
+      DF.quad(
+        pubInfoId,
+        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+        DF.literal('Added via https://app.colonialcollections.nl/', 'en'), // TBD
+        pubInfoGraph
+      )
+    );
+    store.addQuad(
+      DF.quad(
+        pubInfoId,
+        DF.namedNode('http://purl.org/dc/terms/license'),
+        DF.namedNode(opts.license),
+        pubInfoGraph
+      )
+    );
+
+    // Assertion graph
+    const enrichmentQuads = enrichmentStore.getQuads();
+    enrichmentQuads.forEach(quad => {
+      const q = DF.fromQuad(quad as RDF.Quad);
+      q.graph = assertionGraph; // Assign triples to the assertion graph
+      store.addQuad(q);
+    });
 
     const quadStream = store.match(); // All quads
     const dataStream = rdfSerializer.serialize(quadStream, {
@@ -113,8 +173,8 @@ export class NanopubClient {
     console.log(data);
 
     // Const nanopubIri = await this.postNanopub({
-    //   signerIri: opts.signerIri,
-    //   data: store.match().toString(),
+    //   creator: opts.creator,
+    //   data: dataStream as unknown as ReadableStream,
     // });
   }
 }
