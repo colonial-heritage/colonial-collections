@@ -8,7 +8,7 @@ import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   defaultSortBy,
-  SearchParamTypes,
+  Type as SearchParamTypes,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -86,7 +86,7 @@ export default async function Home({searchParams = {}}: Props) {
     },
     filterKeys: facets.map(({name, searchParamType}) => ({
       name,
-      searchParamType,
+      type: searchParamType,
     })),
     searchParams,
   });

@@ -1,7 +1,7 @@
 import {z, Schema} from 'zod';
 import {SortBy} from './sort';
 
-export type SearchParamTypes = 'string' | 'array' | 'number';
+export type Type = 'string' | 'array' | 'number';
 
 // Only strings are allowed in the search params
 const searchParamFilterSchema = z
@@ -68,13 +68,15 @@ export function getUrlWithSearchParams({
 
   const urlSearchParams = new URLSearchParams();
 
-  // Append the search params one by one to the URLSearchParams object. So key can be added multiple times.
+  // Append the search params one by one to the URLSearchParams object. So the same key can be added multiple times.
   Object.entries(searchParams).forEach(([filterKey, filterValue]) => {
-    if (Array.isArray(filterValue) && filterValue.length > 0) {
-      filterValue.forEach(singleValue =>
-        // This will result in a query string like: '?key=value1&key=value2'
-        urlSearchParams.append(filterKey, singleValue)
-      );
+    if (Array.isArray(filterValue)) {
+      filterValue.forEach(singleValue => {
+        if (singleValue !== '') {
+          // This will result in a query string like: '?key=value1&key=value2'
+          urlSearchParams.append(filterKey, singleValue);
+        }
+      });
     } else if (typeof filterValue === 'string' && filterValue !== '') {
       urlSearchParams.append(filterKey, filterValue);
     }
@@ -94,11 +96,11 @@ function fallback<T>(value: T) {
   return z.any().transform(() => value);
 }
 
-interface FromSearchParamsToSearchOptionsProps {
+export interface FromSearchParamsToSearchOptionsProps {
   // `searchParams` is a key value object based on the url search params.
   searchParams: {
-    // Search params are always strings or array of strings. Note that numbers are also strings.
-    [filter: string]: string | string[] | undefined;
+    // Search params are always strings or arrays of strings. Note that numbers are also strings, so we need to transform them to numbers.
+    [filter: string]: string | string[];
   };
   // The searchOption `sortBy` and `sortOrder` are enums values.
   // Set the correct enums, default values and sortMapper in the `sortOptions`.
@@ -119,7 +121,7 @@ interface FromSearchParamsToSearchOptionsProps {
   };
   filterKeys: {
     name: string;
-    searchParamType: SearchParamTypes;
+    type: Type;
   }[];
 }
 
@@ -151,16 +153,16 @@ export function fromSearchParamsToSearchOptions({
     filters: z.object(
       filterKeys.reduce(
         (acc, filterKey) => {
-          if (filterKey.searchParamType === 'string') {
+          if (filterKey.type === 'string') {
             acc[filterKey.name] = z.string().optional();
-          } else if (filterKey.searchParamType === 'array') {
+          } else if (filterKey.type === 'array') {
             acc[filterKey.name] = z
               .string()
               .transform(value => [value])
               .or(z.array(z.string().optional()))
               .optional()
               .or(fallback([]));
-          } else if (filterKey.searchParamType === 'number') {
+          } else if (filterKey.type === 'number') {
             acc[filterKey.name] = z
               .string()
               .transform(value => +value)

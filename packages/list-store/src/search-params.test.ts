@@ -2,7 +2,7 @@ import {
   getUrlWithSearchParams,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
-  SearchParamTypes,
+  FromSearchParamsToSearchOptionsProps,
 } from './search-params';
 import {SortBy, defaultSortBy} from './sort';
 import {describe, expect, it} from '@jest/globals';
@@ -37,16 +37,11 @@ const sortMapping = {
   },
 };
 
-interface FilterKey {
-  name: string;
-  searchParamType: SearchParamTypes;
-}
-
-const filterKeys: FilterKey[] = [
-  {name: 'types', searchParamType: 'array'},
-  {name: 'locations', searchParamType: 'array'},
-  {name: 'dateCreatedStart', searchParamType: 'number'},
-  {name: 'dateCreatedEnd', searchParamType: 'number'},
+const filterKeys: FromSearchParamsToSearchOptionsProps['filterKeys'] = [
+  {name: 'types', type: 'array'},
+  {name: 'locations', type: 'array'},
+  {name: 'dateCreatedStart', type: 'number'},
+  {name: 'dateCreatedEnd', type: 'number'},
 ];
 
 const sortOptions = {
