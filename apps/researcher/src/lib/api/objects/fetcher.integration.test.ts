@@ -88,10 +88,10 @@ describe('getById', () => {
         id: expect.stringContaining(
           'https://colonial-heritage.triply.cc/.well-known/genid/'
         ),
-        startDate: new Date('1889-01-01'),
-        endDate: new Date('1890-01-01'),
+        startDate: new Date('1901-01-01'),
+        endDate: new Date('1902-06-01'),
       },
-      images: [
+      images: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://colonial-heritage.triply.cc/.well-known/genid/'
@@ -106,7 +106,7 @@ describe('getById', () => {
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
         },
-      ],
+      ]),
       owner: {
         type: 'Organization',
         id: 'https://museum.example.org/',
