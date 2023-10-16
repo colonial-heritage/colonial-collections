@@ -41,105 +41,109 @@ describe('getByHeritageObjectId', () => {
         'https://example.org/objects/1'
       );
 
-    expect(provenanceEvents).toStrictEqual([
-      {
-        id: 'https://example.org/objects/1/provenance/event/4/activity/1',
-        types: [
-          {
-            id: 'http://vocab.getty.edu/aat/300445014',
-            name: 'returning',
+    // For now ignore order of elements in the array (until the events are sorted)
+    expect(provenanceEvents).toHaveLength(4);
+    expect(provenanceEvents).toEqual(
+      expect.arrayContaining([
+        {
+          id: 'https://example.org/objects/1/provenance/event/3/activity/1',
+          types: [
+            {
+              id: 'http://vocab.getty.edu/aat/300055292',
+              name: 'theft (social issue)',
+            },
+          ],
+          startDate: new Date('1901-01-01'),
+          endDate: new Date('1901-01-01'),
+          startsAfter: 'https://example.org/objects/1/provenance/event/2',
+          endsBefore: 'https://example.org/objects/1/provenance/event/4',
+          location: {
+            id: 'https://colonial-heritage.triply.cc/.well-known/genid/ceaf631aca53f3ce08e746c704112976',
+            name: 'Amsterdam',
           },
-        ],
-        description: 'Found in a basement',
-        startDate: new Date('1939-01-01T00:00:00.000Z'),
-        endDate: new Date('1939-01-01T00:00:00.000Z'),
-        startsAfter: 'https://example.org/objects/1/provenance/event/3',
-        location: {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/37089eb37f9f3698fab5e4c7f71ee71a',
-          name: 'Paris',
-        },
-        transferredTo: {
-          id: 'https://museum.example.org/',
-          type: 'Organization',
-          name: 'Museum',
-        },
-      },
-      {
-        id: 'https://example.org/objects/1/provenance/event/2/activity/1',
-        types: [
-          {
-            id: 'http://vocab.getty.edu/aat/300417642',
-            name: 'purchase (method of acquisition)',
+          transferredFrom: {
+            id: 'https://museum.example.org/',
+            type: 'Organization',
+            name: 'Museum',
           },
-        ],
-        description: 'Bought at an auction',
-        startDate: new Date('1879-01-01T00:00:00.000Z'),
-        endDate: new Date('1879-01-01T00:00:00.000Z'),
-        startsAfter: 'https://example.org/objects/1/provenance/event/1',
-        endsBefore: 'https://example.org/objects/1/provenance/event/3',
-        location: {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/b021732a97a8b2b1244b60c64adb95bb',
-          name: 'Amsterdam',
         },
-        transferredFrom: {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/4e2e99583b9b0491a9ea06f41e9c1b9c',
-          type: 'Person',
-          name: 'Jan de Vries',
-        },
-      },
-      {
-        id: 'https://example.org/objects/1/provenance/event/3/activity/1',
-        types: [
-          {
-            id: 'http://vocab.getty.edu/aat/300055292',
-            name: 'theft (social issue)',
+        {
+          id: 'https://example.org/objects/1/provenance/event/4/activity/1',
+          types: [
+            {
+              id: 'http://vocab.getty.edu/aat/300445014',
+              name: 'returning',
+            },
+          ],
+          description: 'Found in a basement',
+          startDate: new Date('1939-01-01'),
+          endDate: new Date('1939-01-01'),
+          startsAfter: 'https://example.org/objects/1/provenance/event/3',
+          location: {
+            id: 'https://colonial-heritage.triply.cc/.well-known/genid/8b43a21440e4fc05eef803e11dd9bc81',
+            name: 'Paris',
           },
-        ],
-        startDate: new Date('1901-01-01T00:00:00.000Z'),
-        endDate: new Date('1901-01-01T00:00:00.000Z'),
-        startsAfter: 'https://example.org/objects/1/provenance/event/2',
-        endsBefore: 'https://example.org/objects/1/provenance/event/4',
-        location: {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/242a0c6c6b6536e2e42202521f5ee29e',
-          name: 'Amsterdam',
-        },
-        transferredFrom: {
-          id: 'https://museum.example.org/',
-          type: 'Organization',
-          name: 'Museum',
-        },
-      },
-      {
-        id: 'https://example.org/objects/1/provenance/event/1/activity/1',
-        types: [
-          {
-            id: 'http://vocab.getty.edu/aat/300417642',
-            name: 'purchase (method of acquisition)',
+          transferredTo: {
+            id: 'https://museum.example.org/',
+            type: 'Organization',
+            name: 'Museum',
           },
-          {
-            id: 'http://vocab.getty.edu/aat/300417644',
-            name: 'transfer (method of acquisition)',
+        },
+        {
+          id: 'https://example.org/objects/1/provenance/event/1/activity/1',
+          types: [
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'purchase (method of acquisition)',
+            },
+            {
+              id: 'http://vocab.getty.edu/aat/300417644',
+              name: 'transfer (method of acquisition)',
+            },
+          ],
+          description: 'Bought for 1500 US dollars',
+          startDate: new Date('1855-01-01'),
+          endDate: new Date('1855-01-01'),
+          endsBefore: 'https://example.org/objects/1/provenance/event/2',
+          location: {
+            id: 'https://colonial-heritage.triply.cc/.well-known/genid/284f309a0b4ecf92d513599a16d72cf0',
+            name: 'Jakarta',
           },
-        ],
-        description: 'Bought for 1500 US dollars',
-        startDate: new Date('1855-01-01T00:00:00.000Z'),
-        endDate: new Date('1855-01-01T00:00:00.000Z'),
-        endsBefore: 'https://example.org/objects/1/provenance/event/2',
-        location: {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/e14682a5898674f0a1db2bae57df3df7',
-          name: 'Jakarta',
+          transferredFrom: {
+            id: 'https://colonial-heritage.triply.cc/.well-known/genid/c7540c5ed76b0e24f19eec08a72e6e9d',
+            type: 'Person',
+            name: 'Peter Hoekstra',
+          },
+          transferredTo: {
+            id: 'https://colonial-heritage.triply.cc/.well-known/genid/f759902c257ad6daff7d98c7e48cc9dc',
+            type: 'Person',
+            name: 'Jan de Vries',
+          },
         },
-        transferredFrom: {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/e2139ec691f860d6bcdd915e6e38a42d',
-          type: 'Person',
-          name: 'Peter Hoekstra',
+        {
+          id: 'https://example.org/objects/1/provenance/event/2/activity/1',
+          types: [
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'purchase (method of acquisition)',
+            },
+          ],
+          description: 'Bought at an auction',
+          startDate: new Date('1879-01-01'),
+          endDate: new Date('1879-01-01'),
+          startsAfter: 'https://example.org/objects/1/provenance/event/1',
+          endsBefore: 'https://example.org/objects/1/provenance/event/3',
+          location: {
+            id: 'https://colonial-heritage.triply.cc/.well-known/genid/54da9245ecfc5f53678052ed81f71e56',
+            name: 'Amsterdam',
+          },
+          transferredFrom: {
+            id: 'https://colonial-heritage.triply.cc/.well-known/genid/bda53ad8480465982765f52ef0ad42dd',
+            type: 'Person',
+            name: 'Jan de Vries',
+          },
         },
-        transferredTo: {
-          id: 'https://colonial-heritage.triply.cc/.well-known/genid/172854a675881c202013b5f6901247a2',
-          type: 'Person',
-          name: 'Jan de Vries',
-        },
-      },
-    ]);
+      ])
+    );
   });
 });
