@@ -3,7 +3,7 @@ import {SortBy} from './sort';
 
 export type Type = 'string' | 'array' | 'number';
 
-// Only strings are allowed in the search params
+// Only strings are allowed in the search params.
 const searchParamFilterSchema = z
   .array(z.string())
   .or(z.array(z.number().transform(value => `${value}`)))
@@ -17,12 +17,12 @@ function getSearchParamsSchema(defaultSortBy: string) {
     offset: z
       .number()
       .default(0)
-      // Don't add the default offset of 0 to the search params
+      // Don't add the default offset of 0 to the search params.
       .transform(offset => (offset > 0 ? `${offset}` : '')),
     sortBy: z
       .string()
       .default(defaultSortBy)
-      // Don't add the default sort to the search params
+      // Don't add the default sort to the search params.
       .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
   });
 }
@@ -59,7 +59,7 @@ export function getUrlWithSearchParams({
     });
   }
 
-  // Only add relevant values to the search params.
+  // Remove irrelevant values from the search params.
   Object.keys(searchParams).forEach(key => {
     if (searchParams[key] === '' || searchParams[key].length === 0) {
       delete searchParams[key];
@@ -73,7 +73,7 @@ export function getUrlWithSearchParams({
     if (Array.isArray(filterValue)) {
       filterValue.forEach(singleValue => {
         if (singleValue !== '') {
-          // This will result in a query string like: '?key=value1&key=value2'
+          // This will result in a query string like: '?key=value1&key=value2'.
           urlSearchParams.append(filterKey, singleValue);
         }
       });
@@ -99,7 +99,6 @@ function fallback<T>(value: T) {
 export interface FromSearchParamsToSearchOptionsProps {
   // `searchParams` is a key value object based on the url search params.
   searchParams: {
-    // Search params are always strings or arrays of strings. Note that numbers are also strings, so we need to transform them to numbers.
     [filter: string]: string | string[];
   };
   // The searchOption `sortBy` and `sortOrder` are enums values.
