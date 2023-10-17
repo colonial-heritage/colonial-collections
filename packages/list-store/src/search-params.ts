@@ -59,13 +59,6 @@ export function getUrlWithSearchParams({
     });
   }
 
-  // Remove irrelevant values from the search params.
-  Object.keys(searchParams).forEach(key => {
-    if (searchParams[key] === '' || searchParams[key].length === 0) {
-      delete searchParams[key];
-    }
-  });
-
   const urlSearchParams = new URLSearchParams();
 
   // Append the search params one by one to the URLSearchParams object. So the same key can be added multiple times.
