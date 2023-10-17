@@ -8,7 +8,7 @@ import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   defaultSortBy,
-  Type as SearchParamTypes,
+  Type as SearchParamType,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -34,7 +34,7 @@ export const revalidate = 60;
 
 interface FacetProps {
   name: keyof SearchResult['filters'];
-  searchParamType: SearchParamTypes;
+  searchParamType: SearchParamType;
   Component: ElementType;
 }
 
@@ -104,6 +104,7 @@ export default async function Home({searchParams = {}}: Props) {
   try {
     searchResult = await heritageObjects.search(searchOptions);
   } catch (err) {
+    console.log(err);
     hasError = true;
     console.error(err);
   }

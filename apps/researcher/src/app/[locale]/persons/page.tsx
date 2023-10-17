@@ -8,7 +8,7 @@ import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   defaultSortBy,
-  Type as SearchParamTypes,
+  Type as SearchParamType,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -40,7 +40,7 @@ export const revalidate = 60;
 
 interface FacetProps {
   name: keyof SearchResult['filters'];
-  searchParamType: SearchParamTypes;
+  searchParamType: SearchParamType;
   Component: ElementType;
 }
 
