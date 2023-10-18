@@ -90,7 +90,7 @@ function fallback<T>(value: T) {
 }
 
 export interface FromSearchParamsToSearchOptionsProps {
-  // `searchParams` is a key value object based on the url search params.
+  // `searchParams` is a key-value object based on the URLs search params.
   searchParams: {
     [filter: string]: string | string[];
   };

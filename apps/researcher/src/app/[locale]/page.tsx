@@ -104,7 +104,6 @@ export default async function Home({searchParams = {}}: Props) {
   try {
     searchResult = await heritageObjects.search(searchOptions);
   } catch (err) {
-    console.log(err);
     hasError = true;
     console.error(err);
   }
