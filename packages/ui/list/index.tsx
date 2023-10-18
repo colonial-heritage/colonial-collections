@@ -7,3 +7,5 @@ export * from './selected-filters';
 export * from './search-field';
 export * from './order-selector';
 export * from './to-filtered-list-button';
+export * from './simple-facet';
+export * from './searchable-facet';

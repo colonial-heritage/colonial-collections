@@ -5,3 +5,4 @@ export * from './sort';
 export {ClientListStore} from './client-list-store';
 export * from './useSearchParamsUpdate';
 export * from './search-params';
+export * from './use-searchable-facet';

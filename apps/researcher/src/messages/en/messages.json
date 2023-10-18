@@ -112,6 +112,8 @@
     "deathYearsFilter": "Death years",
     "deathPlacesFilter": "Death places",
     "publishersFilter": "Object data providers",
+    "materialsFilter": "Materials",
+    "creatorsFilter": "Creators",
     "search": "Search for text",
     "filters": "Filters",
     "expandFilter": "Expand",
@@ -119,7 +121,14 @@
     "filterSearchPlaceholder": "Filter on {filterName}",
     "accessibilityTypeToFilter": "Type to filter on text.",
     "accessibilitySelectToFilter": "Select a checkbox to filter",
-    "accessibilityClickToSearch": "Click to search"
+    "accessibilityClickToSearch": "Click to search",
+    "selectAll": "Select all items with \"{searchValue}\"",
+    "filterPlaceholder": "Filter {filterName}",
+    "orderAlphabetically": "Order alphabetically",
+    "orderByCount": "Order by count",
+    "selectedFilters": "Selected filters",
+    "aboutFacetsHeader": "About these facets",
+    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items."
   },
   "Sort": {
     "relevanceDesc": "Relevance",

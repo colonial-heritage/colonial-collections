@@ -18,7 +18,8 @@ import {
   SortOrderEnum,
 } from '@/lib/api/objects';
 import {
-  FilterSet,
+  SimpleFacet,
+  SearchableFacet,
   Paginator,
   SelectedFilters,
   SearchFieldWithLabel,
@@ -39,10 +40,12 @@ interface FacetProps {
 }
 
 const facets: ReadonlyArray<FacetProps> = [
-  {name: 'owners', searchParamType: 'array', Component: FilterSet},
-  {name: 'types', searchParamType: 'array', Component: FilterSet},
-  {name: 'subjects', searchParamType: 'array', Component: FilterSet},
-  {name: 'publishers', searchParamType: 'array', Component: FilterSet},
+  {name: 'owners', searchParamType: 'array', Component: SimpleFacet},
+  {name: 'types', searchParamType: 'array', Component: SearchableFacet},
+  {name: 'subjects', searchParamType: 'array', Component: SimpleFacet},
+  {name: 'materials', searchParamType: 'array', Component: SearchableFacet},
+  {name: 'creators', searchParamType: 'array', Component: SearchableFacet},
+  {name: 'publishers', searchParamType: 'array', Component: SimpleFacet},
 ];
 
 interface FacetMenuProps {
@@ -53,7 +56,7 @@ function FacetMenu({filters}: FacetMenuProps) {
   const t = useTranslations('Filters');
 
   return (
-    <>
+    <div className="w-full flex flex-col gap-6">
       <SearchFieldWithLabel />
       {facets.map(
         ({name, Component}) =>
@@ -61,13 +64,13 @@ function FacetMenu({filters}: FacetMenuProps) {
             <Component
               key={name}
               title={t(`${name}Filter`)}
-              searchResultFilters={filters[name]}
+              filters={filters[name]}
               filterKey={name}
               testId={`${name}Filter`}
             />
           )
       )}
-    </>
+    </div>
   );
 }
 

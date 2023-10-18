@@ -112,6 +112,8 @@
     "deathYearsFilter": "Overlijdensjaren",
     "deathPlacesFilter": "Overlijdensplaatsen",
     "publishersFilter": "Bronhouder objecten",
+    "materialsFilter": "Materialen",
+    "creatorsFilter": "Makers",
     "search": "Zoeken",
     "filters": "Filters",
     "expandFilter": "Uitklappen",
@@ -119,7 +121,14 @@
     "filterSearchPlaceholder": "Filteren op {filterName}",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
     "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
-    "accessibilityClickToSearch": "Klik om te zoeken"
+    "accessibilityClickToSearch": "Klik om te zoeken",
+    "selectAll": "Selecteer alles met \"{searchValue}\"",
+    "filterPlaceholder": "Filter {filterName}",
+    "orderAlphabetically": "Sorteer alfabetisch",
+    "orderByCount": "Sorteer op aantal",
+    "selectedFilters": "Geselecteerde filters",
+    "aboutFacetsHeader": "Over de facetten",
+    "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren."
   },
   "Sort": {
     "relevanceDesc": "Relevantie",

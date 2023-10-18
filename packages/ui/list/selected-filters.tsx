@@ -4,6 +4,7 @@ import {useTranslations} from 'next-intl';
 import {Badge} from '../badge';
 import {useListStore} from '@colonial-collections/list-store';
 import {SearchResultFilter} from './SearchResultFilter';
+import {MagnifyingGlassIcon, TagIcon} from '@heroicons/react/24/solid';
 
 interface Props {
   filters: {
@@ -15,6 +16,48 @@ interface Props {
 interface ClearSelectedFilterProps {
   id: string;
   filterKey: string;
+}
+
+interface SelectedFiltersForKeyProps {
+  searchResultFilters: SearchResultFilter[];
+  filterKey: string;
+}
+
+export function SelectedFiltersForKey({
+  searchResultFilters,
+  filterKey,
+}: SelectedFiltersForKeyProps) {
+  const {selectedFilters, filterChange} = useListStore();
+  const selectedFilter = selectedFilters[filterKey];
+
+  function clearSelectedFilter({id, filterKey}: ClearSelectedFilterProps) {
+    filterChange(
+      filterKey,
+      selectedFilters[filterKey]?.filter(filterId => id !== filterId) || []
+    );
+  }
+
+  return (
+    !!selectedFilter?.length &&
+    selectedFilter.map(id => (
+      <Badge key={id} testId="selectedFilter">
+        <Badge.Icon Icon={TagIcon} />
+        {
+          searchResultFilters.find(
+            searchResultFilter => searchResultFilter.id === id
+          )!.name
+        }
+        <Badge.Action
+          onClick={() =>
+            clearSelectedFilter({
+              id,
+              filterKey,
+            })
+          }
+        />
+      </Badge>
+    ))
+  );
 }
 
 export function SelectedFilters({filters}: Props) {
@@ -29,13 +72,6 @@ export function SelectedFilters({filters}: Props) {
     return null;
   }
 
-  function clearSelectedFilter({id, filterKey}: ClearSelectedFilterProps) {
-    filterChange(
-      filterKey,
-      selectedFilters[filterKey]?.filter(filterId => id !== filterId) || []
-    );
-  }
-
   function clearQuery() {
     queryChange('');
   }
@@ -46,38 +82,19 @@ export function SelectedFilters({filters}: Props) {
   }
 
   return (
-    <div className="mt-3 flex items-center">
-      <h3 className="text-xs font-medium text-gray-500">{t('filters')}</h3>
-      <div
-        aria-hidden="true"
-        className="hidden h-5 w-px bg-gray-300 sm:ml-3 sm:block mr-2"
-      />
-      <div className="flex flex-wrap grow">
-        {filters.map(({searchResultFilters, filterKey}) => {
-          const selectedFilter = selectedFilters[filterKey];
-          return (
-            !!selectedFilter?.length &&
-            selectedFilter.map(id => (
-              <Badge key={id} testId="selectedFilter">
-                {
-                  searchResultFilters.find(
-                    searchResultFilter => searchResultFilter.id === id
-                  )!.name
-                }
-                <Badge.Action
-                  onClick={() =>
-                    clearSelectedFilter({
-                      id,
-                      filterKey,
-                    })
-                  }
-                />
-              </Badge>
-            ))
-          );
-        })}
+    <div className="flex flex-row items-center gap-2 mb-6 py-6 flex-wrap border-b">
+      <h3 className="text-sm text-neutral-500">{t('filters')}</h3>
+      <div className="grow flex flex-row items-center gap-2">
+        {filters.map(({searchResultFilters, filterKey}) => (
+          <SelectedFiltersForKey
+            key={filterKey}
+            searchResultFilters={searchResultFilters}
+            filterKey={filterKey}
+          />
+        ))}
         {query && (
           <Badge testId="selectedFilter">
+            <Badge.Icon Icon={MagnifyingGlassIcon} />
             {query}
             <Badge.Action onClick={clearQuery} />
           </Badge>
