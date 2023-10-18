@@ -11,7 +11,7 @@ export interface Props {
   isInitialized: boolean;
   defaultSortBy?: string;
   selectedFilters: {[filterKey: string]: string[] | undefined};
-  filterChange: (key: string, value: string[]) => void;
+  filterChange: (key: string, value: (string | number)[]) => void;
   sortChange: (sortBy: string) => void;
   queryChange: (query: string) => void;
   pageChange: (direction: 1 | -1) => void;

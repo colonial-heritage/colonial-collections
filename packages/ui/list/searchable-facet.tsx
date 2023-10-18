@@ -14,6 +14,7 @@ import {
   useSearchableFacet,
   FacetSortBy,
   FacetProvider,
+  useListStore,
 } from '@colonial-collections/list-store';
 
 interface ExpandedFacetProps {
@@ -34,6 +35,18 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
   } = useSearchableFacet();
 
   const t = useTranslations('Filters');
+  const listStore = useListStore();
+
+  function selectAllClick() {
+    const selectedFilters = [
+      ...(listStore.selectedFilters[filterKey] || []),
+      ...filteredFilters.map(filter => filter.id),
+    ];
+
+    const uniqueFilters = Array.from(new Set(selectedFilters));
+
+    listStore.filterChange(filterKey, uniqueFilters);
+  }
 
   return (
     <div className="flex flex-col md:flex-row gap-4 md:gap-10 max-h-[95%]">
@@ -50,7 +63,10 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
               onChange={e => setSearchValue(e.target.value)}
             />
             {searchValue && (
-              <button className="px-4 py-2 text-sm rounded-full bg-neutral-100 hover:bg-neutral-200 transition text-neutral-800 flex items-center gap-1">
+              <button
+                onClick={() => selectAllClick()}
+                className="px-4 py-2 text-sm rounded-full bg-neutral-100 hover:bg-neutral-200 transition text-neutral-800 flex items-center gap-1"
+              >
                 {t('selectAll', {searchValue})}
               </button>
             )}
