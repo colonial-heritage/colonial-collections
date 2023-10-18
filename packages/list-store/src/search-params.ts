@@ -1,10 +1,15 @@
 import {z, Schema} from 'zod';
 import {SortBy} from './sort';
 
+export type Type = 'string' | 'array' | 'number';
+
+// Only strings are allowed in the search params.
 const searchParamFilterSchema = z
   .array(z.string())
-  .default([])
-  .transform(filterValues => filterValues.join(','));
+  .or(z.array(z.number().transform(value => `${value}`)))
+  .or(z.string())
+  .or(z.number().transform(value => `${value}`))
+  .default('');
 
 function getSearchParamsSchema(defaultSortBy: string) {
   return z.object({
@@ -12,12 +17,12 @@ function getSearchParamsSchema(defaultSortBy: string) {
     offset: z
       .number()
       .default(0)
-      // Don't add the default offset of 0 to the search params
+      // Don't add the default offset of 0 to the search params.
       .transform(offset => (offset > 0 ? `${offset}` : '')),
     sortBy: z
       .string()
       .default(defaultSortBy)
-      // Don't add the default sort to the search params
+      // Don't add the default sort to the search params.
       .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
   });
 }
@@ -26,7 +31,7 @@ interface ClientSearchOptions {
   query?: string;
   offset?: number;
   sortBy?: string;
-  filters?: {[filterKey: string]: string[] | undefined};
+  filters?: {[filterKey: string]: string[] | string | number | undefined};
   baseUrl?: string;
   defaultSortBy: string;
 }
@@ -39,13 +44,12 @@ export function getUrlWithSearchParams({
   defaultSortBy,
   baseUrl = '/',
 }: ClientSearchOptions): string {
-  const searchParams: {[key: string]: string} = getSearchParamsSchema(
-    defaultSortBy
-  ).parse({
-    query,
-    offset,
-    sortBy,
-  });
+  const searchParams: {[key: string]: string | string[]} =
+    getSearchParamsSchema(defaultSortBy).parse({
+      query,
+      offset,
+      sortBy,
+    });
 
   if (filters) {
     Object.keys(filters).forEach(filterKey => {
@@ -55,11 +59,23 @@ export function getUrlWithSearchParams({
     });
   }
 
-  // Only add relevant values to the search params. Remove all keys with empty strings as values
-  Object.keys(searchParams).forEach(key =>
-    searchParams[key] === '' ? delete searchParams[key] : {}
-  );
-  const encodedSearchParams = new URLSearchParams(searchParams).toString();
+  const urlSearchParams = new URLSearchParams();
+
+  // Append the search params one by one to the URLSearchParams object. So the same key can be added multiple times.
+  Object.entries(searchParams).forEach(([filterKey, filterValue]) => {
+    if (Array.isArray(filterValue)) {
+      filterValue.forEach(singleValue => {
+        if (singleValue !== '') {
+          // This will result in a query string like: '?key=value1&key=value2'.
+          urlSearchParams.append(filterKey, singleValue);
+        }
+      });
+    } else if (typeof filterValue === 'string' && filterValue !== '') {
+      urlSearchParams.append(filterKey, filterValue);
+    }
+  });
+
+  const encodedSearchParams = urlSearchParams.toString();
 
   if (encodedSearchParams) {
     return baseUrl + '?' + encodedSearchParams;
@@ -73,16 +89,10 @@ function fallback<T>(value: T) {
   return z.any().transform(() => value);
 }
 
-const searchOptionsFilterSchema = z
-  .string()
-  .optional()
-  .transform(filterValue => filterValue?.split(',').filter(id => !!id))
-  .pipe(z.array(z.string()).optional().default([]));
-
-interface FromSearchParamsToSearchOptionsProps {
-  // `searchParams` is a key value object based on the url search params.
+export interface FromSearchParamsToSearchOptionsProps {
+  // `searchParams` is a key-value object based on the URLs search params.
   searchParams: {
-    [filter: string]: string;
+    [filter: string]: string | string[];
   };
   // The searchOption `sortBy` and `sortOrder` are enums values.
   // Set the correct enums, default values and sortMapper in the `sortOptions`.
@@ -101,6 +111,10 @@ interface FromSearchParamsToSearchOptionsProps {
       };
     };
   };
+  filterKeys: {
+    name: string;
+    type: Type;
+  }[];
 }
 
 // This function translates the search params to valid search options.
@@ -113,6 +127,7 @@ export function fromSearchParamsToSearchOptions({
     defaultSortOrder,
     sortMapping,
   },
+  filterKeys,
 }: FromSearchParamsToSearchOptionsProps) {
   // Always return a valid SearchOptions object, even if the search params aren't correct,
   // so the application doesn't fail on invalid search params.
@@ -127,7 +142,31 @@ export function fromSearchParamsToSearchOptions({
       .transform(limitString => +limitString)
       .pipe(z.number().int().positive())
       .or(fallback(12)),
-    filters: z.record(searchOptionsFilterSchema).optional(),
+    filters: z.object(
+      filterKeys.reduce(
+        (acc, filterKey) => {
+          if (filterKey.type === 'string') {
+            acc[filterKey.name] = z.string().optional();
+          } else if (filterKey.type === 'array') {
+            acc[filterKey.name] = z
+              .string()
+              .transform(value => [value])
+              .or(z.array(z.string().optional()))
+              .optional()
+              .or(fallback([]));
+          } else if (filterKey.type === 'number') {
+            acc[filterKey.name] = z
+              .string()
+              .transform(value => +value)
+              .optional()
+              .or(fallback(undefined));
+          }
+
+          return acc;
+        },
+        {} as {[key: string]: Schema}
+      )
+    ),
     sortBy: SortByEnum.or(fallback(defaultSortBy)),
     sortOrder: SortOrderEnum.or(fallback(defaultSortOrder)),
     query: z.string().optional(),
