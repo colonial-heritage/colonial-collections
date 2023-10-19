@@ -78,13 +78,30 @@ export function FacetProvider({children, ...props}: FacetProviderProps) {
   );
 }
 
-export function getLetterCategories(filters: SearchableFilter[]) {
+interface GetLetterCategoriesProps {
+  filters: SearchableFilter[];
+  letterCategory?: string;
+  searchValue?: string;
+}
+
+export function getLetterCategories({
+  filters,
+  letterCategory,
+  searchValue,
+}: GetLetterCategoriesProps) {
+  const filtersFilteredBySearchValue = filterBySearchValue(
+    filters,
+    searchValue
+  );
+
   return [
-    ...new Set(
-      filters
+    ...new Set([
+      // Always include the letter category of the current filter
+      ...(letterCategory ? [letterCategory] : []),
+      ...filtersFilteredBySearchValue
         .map(filter => filter.letterCategory)
-        .filter(category => !!category)
-    ),
+        .filter(category => !!category),
+    ]),
   ].sort();
 }
 
@@ -118,40 +135,54 @@ interface GetFilteredFiltersProps {
   sortBy: FacetSortBy;
 }
 
+function filterBySearchValue(
+  filters: SearchableFilter[],
+  searchValue?: string
+) {
+  if (searchValue) {
+    return filters.filter(
+      filter => filter.name?.toLowerCase().includes(searchValue.toLowerCase())
+    );
+  } else return filters;
+}
+
+function filterByLetterCategory(
+  filters: SearchableFilter[],
+  letterCategory: string
+) {
+  if (letterCategory) {
+    return filters.filter(filter => filter.letterCategory === letterCategory);
+  } else return filters;
+}
+
 export function getFilteredFilters({
   filtersWithLetterCategory,
   searchValue,
   letterCategory,
   sortBy,
 }: GetFilteredFiltersProps) {
-  let filtered = filtersWithLetterCategory;
+  const filtersFilteredBySearchValue = filterBySearchValue(
+    filtersWithLetterCategory,
+    searchValue
+  );
 
-  if (searchValue) {
-    filtered = filtered.filter(
-      filter => filter.name?.toLowerCase().includes(searchValue.toLowerCase())
-    );
-  }
-
-  if (letterCategory) {
-    filtered = filtered.filter(
-      filter => filter.letterCategory === letterCategory
-    );
-  }
+  const filtersFilteredByLetterCategory = filterByLetterCategory(
+    filtersFilteredBySearchValue,
+    letterCategory
+  );
 
   if (sortBy === 'alphabetical') {
-    filtered = filtered.sort((a, b) => {
+    return filtersFilteredByLetterCategory.sort((a, b) => {
       if (a.name && b.name) {
         return a.name.localeCompare(b.name);
       }
       return 0;
     });
   } else {
-    filtered = filtered.sort((a, b) => {
+    return filtersFilteredByLetterCategory.sort((a, b) => {
       return b.totalCount - a.totalCount;
     });
   }
-
-  return filtered;
 }
 
 export function useSearchableFacet() {
@@ -166,11 +197,6 @@ export function useSearchableFacet() {
     [filters]
   );
 
-  const letterCategories = useMemo(
-    () => getLetterCategories(filtersWithLetterCategory),
-    [filtersWithLetterCategory]
-  );
-
   const filteredFilters = useMemo(() => {
     return getFilteredFilters({
       filtersWithLetterCategory,
@@ -179,6 +205,16 @@ export function useSearchableFacet() {
       sortBy,
     });
   }, [filtersWithLetterCategory, searchValue, letterCategory, sortBy]);
+
+  const letterCategories = useMemo(
+    () =>
+      getLetterCategories({
+        filters: filtersWithLetterCategory,
+        letterCategory,
+        searchValue,
+      }),
+    [filtersWithLetterCategory, letterCategory, searchValue]
+  );
 
   return {
     ...store,

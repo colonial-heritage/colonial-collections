@@ -14,16 +14,33 @@ describe('getLetterCategories', () => {
       {letterCategory: '[0-9]', name: '1 Filter', id: '3', totalCount: 1},
       {letterCategory: 'B', name: 'B2 Filter', id: '4', totalCount: 1},
     ];
-    const result = getLetterCategories(filters);
+    const result = getLetterCategories({filters});
     expect(result).toEqual(['A', 'B', '[0-9]']);
   });
 
-  it('returns an empty array if no filters are provided', () => {
-    const filters: SearchableFilter[] = [];
-    const result = getLetterCategories(filters);
-    expect(result).toEqual([]);
+  it('returns an array of unique letter categories sorted alphabetically including the letterCategory', () => {
+    const filters = [
+      {letterCategory: 'B', name: 'B Filter', id: '1', totalCount: 1},
+      {letterCategory: 'A', name: ' "A Filter" ', id: '2', totalCount: 1},
+      {letterCategory: '[0-9]', name: '1 Filter', id: '3', totalCount: 1},
+      {letterCategory: 'B', name: 'B2 Filter', id: '4', totalCount: 1},
+    ];
+    const result = getLetterCategories({filters, letterCategory: 'D'});
+    expect(result).toEqual(['A', 'B', 'D', '[0-9]']);
+  });
+
+  it('returns an array of unique letter categories sorted alphabetically when searchValue is provided', () => {
+    const filters = [
+      {letterCategory: 'B', name: 'B Filter', id: '1', totalCount: 1},
+      {letterCategory: 'A', name: ' "A Filter" ', id: '2', totalCount: 1},
+      {letterCategory: '[0-9]', name: '1 Filter', id: '3', totalCount: 1},
+      {letterCategory: 'B', name: 'B2 Filter', id: '4', totalCount: 1},
+    ];
+    const result = getLetterCategories({filters, searchValue: 'B Fil'});
+    expect(result).toEqual(['B']);
   });
 });
+
 describe('getFiltersWithLetterCategory', () => {
   it('adds a letter category to each filter based on the first letter of its name', () => {
     const filters = [
@@ -62,6 +79,7 @@ describe('getFiltersWithLetterCategory', () => {
     expect(result).toEqual(expectedFilters);
   });
 });
+
 describe('getFilteredFilters', () => {
   const filters = [
     {name: 'Apple', id: '1', totalCount: 1, letterCategory: 'A'},

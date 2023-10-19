@@ -10,7 +10,7 @@ export interface Props {
   newDataNeeded: boolean;
   isInitialized: boolean;
   defaultSortBy?: string;
-  selectedFilters: {[filterKey: string]: string[] | undefined};
+  selectedFilters: {[filterKey: string]: (string | number)[] | undefined};
   filterChange: (key: string, value: (string | number)[]) => void;
   sortChange: (sortBy: string) => void;
   queryChange: (query: string) => void;
@@ -29,7 +29,7 @@ export interface Props {
     limit: number;
     query: string;
     sortBy: string;
-    selectedFilters: {[filterKey: string]: string[] | undefined};
+    selectedFilters: {[filterKey: string]: (string | number)[] | undefined};
     defaultSortBy: string;
   }) => void;
   transitionStarted: () => void;
