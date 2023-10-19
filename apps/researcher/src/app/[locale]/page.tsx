@@ -40,7 +40,7 @@ interface FacetProps {
 }
 
 const facets: ReadonlyArray<FacetProps> = [
-  {name: 'owners', searchParamType: 'array', Component: SimpleFacet},
+  {name: 'locations', searchParamType: 'array', Component: SearchableFacet},
   {name: 'types', searchParamType: 'array', Component: SearchableFacet},
   {name: 'subjects', searchParamType: 'array', Component: SimpleFacet},
   {name: 'materials', searchParamType: 'array', Component: SearchableFacet},

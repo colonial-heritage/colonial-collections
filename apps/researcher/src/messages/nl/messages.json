@@ -104,7 +104,6 @@
     "next": "Volgende"
   },
  "Filters": {
-    "ownersFilter": "Eigenaren",
     "typesFilter": "Types",
     "subjectsFilter": "Onderwerpen",
     "birthYearsFilter": "Geboortejaren",
@@ -112,6 +111,7 @@
     "deathYearsFilter": "Overlijdensjaren",
     "deathPlacesFilter": "Overlijdensplaatsen",
     "publishersFilter": "Bronhouder objecten",
+    "locationsFilter": "Locaties",
     "materialsFilter": "Materialen",
     "creatorsFilter": "Makers",
     "search": "Zoeken",

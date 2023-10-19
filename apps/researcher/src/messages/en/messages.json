@@ -104,7 +104,6 @@
     "next": "Next"
   },
   "Filters": {
-    "ownersFilter": "Owners",
     "typesFilter": "Types",
     "subjectsFilter": "Subjects",
     "birthYearsFilter": "Birth years",
@@ -114,6 +113,7 @@
     "publishersFilter": "Object data providers",
     "materialsFilter": "Materials",
     "creatorsFilter": "Creators",
+    "locationsFilter": "Locations",
     "search": "Search for text",
     "filters": "Filters",
     "expandFilter": "Expand",
