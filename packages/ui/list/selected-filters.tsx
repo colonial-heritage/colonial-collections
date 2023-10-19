@@ -84,7 +84,7 @@ export function SelectedFilters({filters}: Props) {
   return (
     <div className="flex flex-row items-center gap-2 mb-6 py-6 flex-wrap border-b">
       <h3 className="text-sm text-neutral-500">{t('filters')}</h3>
-      <div className="grow flex flex-row items-center gap-2">
+      <div className="grow flex flex-row items-center gap-2 flex-wrap">
         {filters.map(({searchResultFilters, filterKey}) => (
           <SelectedFiltersForKey
             key={filterKey}

@@ -122,7 +122,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
         <div className="pb-4">{t('aboutFacetsText')}</div>
         <h3>{t('selectedFilters')}</h3>
 
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap  overflow-y-auto">
           <SelectedFiltersForKey
             searchResultFilters={filters}
             filterKey={filterKey}
