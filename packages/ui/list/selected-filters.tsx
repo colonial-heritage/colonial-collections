@@ -14,7 +14,7 @@ interface Props {
 }
 
 interface ClearSelectedFilterProps {
-  id: string;
+  id: string | number;
   filterKey: string;
 }
 
