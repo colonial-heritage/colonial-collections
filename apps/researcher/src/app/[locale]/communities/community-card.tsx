@@ -64,7 +64,7 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
   return (
     <Link
       href={`/communities/${community.slug}`}
-      className="rounded-lg mb-20 bg-[#f3eee2] hover:bg-[#f1e9d7] text-stone-800 transition"
+      className="rounded-lg mb-20 bg-[#f3eee2] hover:bg-[#f1e9d7] text-stone-800 transition flex flex-col"
     >
       <div className="-mt-20 w-full flex justify-center">
         <Image
@@ -88,8 +88,8 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
           ),
         })}
       </h1>
-      <div className="text-center p-4">
-        {/* TODO add community description */}
+      <div className="text-center m-4 line-clamp-3 grow">
+        {community.description}
       </div>
 
       <div className="flex border-stone-300 border-t text-sm text-stone-600">

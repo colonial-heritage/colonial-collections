@@ -1,24 +1,80 @@
 import {clerkClient, auth} from '@clerk/nextjs';
 import {OrganizationMembership, Organization} from '@clerk/backend/dist/types';
 
-export type Community = Organization;
+export interface Community {
+  id: string;
+  name: string;
+  description?: string;
+  slug: string;
+  imageUrl: string;
+  createdAt: number;
+}
+
+export interface Membership {
+  id: string;
+  role: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  imageUrl: string;
+}
+
+function organizationToCommunity(organization: Organization): Community {
+  return {
+    id: organization.id,
+    name: organization.name,
+    // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata `description`.
+    description: organization.publicMetadata?.description as string | undefined,
+    slug: organization.slug!,
+    imageUrl: organization.imageUrl,
+    createdAt: organization.createdAt,
+  };
+}
+
+function organizationMembershipToCommunityMembership(
+  membership: OrganizationMembership
+): Membership {
+  // There are some assumptions made in this function:
+  // - The membership has a `publicUserData` field. Even though it is optional in the Clerk type `OrganizationMembership`.
+  // - The `publicUserData` has the fields `userId` and `imageUrl`.
+  // - The `publicUserData` has the fields `firstName` and `lastName`.
+  //   These are optional in the Clerk type `OrganizationMembershipPublicUserData` but set to required in the Clerk settings for this application.
+
+  return {
+    id: membership.id,
+    role: membership.role,
+    userId: membership.publicUserData!.userId,
+    firstName: membership.publicUserData!.firstName!,
+    lastName: membership.publicUserData!.lastName!,
+    imageUrl: membership.publicUserData!.imageUrl,
+  };
+}
 
 export async function getCommunityBySlug(slug: string) {
-  return clerkClient.organizations.getOrganization({
+  const organization = await clerkClient.organizations.getOrganization({
     slug,
   });
+
+  return organizationToCommunity(organization);
 }
 
 export async function getCommunityById(id: string) {
-  return clerkClient.organizations.getOrganization({
+  const organization = await clerkClient.organizations.getOrganization({
     organizationId: id,
   });
+
+  return organizationToCommunity(organization);
 }
 
 export async function getMemberships(communityId: string) {
-  return clerkClient.organizations.getOrganizationMembershipList({
-    organizationId: communityId,
-  });
+  const organizationMembership =
+    await clerkClient.organizations.getOrganizationMembershipList({
+      organizationId: communityId,
+    });
+
+  return organizationMembership.map(
+    organizationMembershipToCommunityMembership
+  );
 }
 
 export enum SortBy {
@@ -30,7 +86,7 @@ export enum SortBy {
 
 export const defaultSortBy = SortBy.CreatedAtDesc;
 
-export function sort(communities: Organization[], sortBy: SortBy) {
+export function sort(communities: Community[], sortBy: SortBy) {
   // TODO: Implement sorting by membership count.
   // This can be done as soon as the `Community` includes membership count.
   return [...communities].sort((a, b) => {
@@ -59,7 +115,7 @@ export async function getCommunities({
   limit = 24,
   offset = 0,
 }: GetCommunitiesProps) {
-  const communities = await clerkClient.organizations.getOrganizationList({
+  const organizations = await clerkClient.organizations.getOrganizationList({
     limit,
     offset,
     query,
@@ -70,37 +126,45 @@ export async function getCommunities({
     includeMembersCount: true,
   });
 
+  const communities = organizations.map(organizationToCommunity);
+
   return sort(communities, sortBy);
 }
 
-export function isAdmin(
-  memberships: ReadonlyArray<OrganizationMembership>
-): boolean {
+export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
   const {userId} = auth();
 
   return (
     !!userId &&
     memberships.some(membership => {
-      return (
-        membership.publicUserData?.userId === userId &&
-        membership.role === 'admin'
-      );
+      return membership.userId === userId && membership.role === 'admin';
     })
   );
 }
 
 interface JoinCommunityProps {
-  organizationId: string;
+  communityId: string;
   userId: string;
 }
 
-export async function joinCommunity({
-  organizationId,
-  userId,
-}: JoinCommunityProps) {
+export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
   await clerkClient.organizations.createOrganizationMembership({
-    organizationId,
+    organizationId: communityId,
     userId,
     role: 'basic_member',
+  });
+}
+
+export async function updateDescription({
+  communityId,
+  description,
+}: {
+  communityId: string;
+  description: string;
+}) {
+  return clerkClient.organizations.updateOrganizationMetadata(communityId, {
+    publicMetadata: {
+      description,
+    },
   });
 }

@@ -158,7 +158,14 @@
     "objectListsSubTitle": "This community has {count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
     "membersTitle": "Members",
     "error": "Something went wrong while fetching the community. Please try again later.",
-    "addObjectListButton": "Add list"
+    "addObjectListButton": "Add list",
+    "editDescriptionButton": "Edit description",
+    "labelDescription":"Description",
+    "changeDescriptionSaveButton": "Save",
+    "changeDescriptionCancelButton": "Cancel",
+    "descriptionUpdated": "Description has been updated",
+    "descriptionServerError": "Something went wrong while updating the description. Please try again later.",
+    "description_maxLength": "Description has a maximum of 2000 characters"
   },
   "AddObjectListForm": {
     "title": "Add list",

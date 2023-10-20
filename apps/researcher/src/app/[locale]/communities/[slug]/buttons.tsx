@@ -4,14 +4,15 @@ import {useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {useClerk, useUser} from '@clerk/nextjs';
 import {useTransition} from 'react';
-import {joinCommunity} from './actions';
+import {joinCommunityAndRevalidate} from './actions';
 
 interface Props {
   communityId: string;
+  communitySlug: string;
 }
 
 // If logged in and not part of the community, show the join button
-export function JoinCommunityButton({communityId}: Props) {
+export function JoinCommunityButton({communityId, communitySlug}: Props) {
   const {isLoaded, isSignedIn, user} = useUser();
   const [isClicked, setIsClicked] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -34,8 +35,9 @@ export function JoinCommunityButton({communityId}: Props) {
     setIsClicked(true);
     startTransition(async () => {
       try {
-        await joinCommunity({
-          organizationId: communityId,
+        await joinCommunityAndRevalidate({
+          communityId,
+          communitySlug,
           userId: user!.id,
         });
       } catch (err) {
