@@ -84,7 +84,12 @@
     "currentPublisher": "Current location of object",
     "noOrganizationFound": "No organization found.",
     "dateCreated": "Date Made",
-    "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range."
+    "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range.",
+    "noListsInCommunity": "No lists",
+    "objectAddedToList": "Object added to list <name></name>.",
+    "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
+    "objectRemovedFromList": "Object removed from list <name></name>.",
+    "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later."
   },
   "PersonDetails": {
     "backButton": "Back to results",
