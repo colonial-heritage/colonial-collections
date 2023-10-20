@@ -2,7 +2,7 @@
 
 import {getCommunityBySlug} from '@/lib/community';
 import {objectList} from '@colonial-collections/database';
-import {InsertObjectItem as ObjectItem} from '@colonial-collections/database';
+import {ObjectItemBeingCreated} from '@colonial-collections/database';
 import {revalidatePath} from 'next/cache';
 
 export async function getCommunityLists(communityId: string, objectId: string) {
@@ -10,7 +10,7 @@ export async function getCommunityLists(communityId: string, objectId: string) {
 }
 
 interface AddObjectToListProps {
-  objectItem: ObjectItem;
+  objectItem: ObjectItemBeingCreated;
   communityId: string;
 }
 

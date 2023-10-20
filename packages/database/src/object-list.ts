@@ -4,7 +4,7 @@ import {sql} from 'drizzle-orm';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
 import {DBQueryConfig, eq} from 'drizzle-orm';
-import {SelectObjectList} from './db/types';
+import {ObjectList} from './db/types';
 
 interface Option {
   withObjects?: boolean;
@@ -16,7 +16,7 @@ export async function getByCommunityId(
   communityId: string,
   {withObjects, limitObjects, objectIri}: Option = {withObjects: false}
   // Explicitly set the return type, or else `objects` will not be included.
-): Promise<SelectObjectList[]> {
+): Promise<ObjectList[]> {
   const options: DBQueryConfig = {};
 
   if (withObjects) {

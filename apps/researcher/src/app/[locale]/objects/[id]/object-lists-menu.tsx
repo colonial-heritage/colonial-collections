@@ -11,7 +11,7 @@ import {
   addObjectToList,
   removeObjectFromList,
 } from './object-lists-actions';
-import {SelectObjectList} from '@colonial-collections/database';
+import {ObjectList} from '@colonial-collections/database';
 import {useNotifications} from 'ui';
 
 interface CommunityMenuItemsProps {
@@ -25,11 +25,11 @@ function CommunityMenuItems({
   objectId,
   userId,
 }: CommunityMenuItemsProps) {
-  const [objectLists, setObjectLists] = useState<SelectObjectList[]>([]);
+  const [objectLists, setObjectLists] = useState<ObjectList[]>([]);
   const t = useTranslations('ObjectDetails');
   const {addNotification} = useNotifications();
 
-  async function listClick(objectList: SelectObjectList) {
+  async function listClick(objectList: ObjectList) {
     const isEmptyList = !objectList.objects!.length;
 
     if (isEmptyList) {
