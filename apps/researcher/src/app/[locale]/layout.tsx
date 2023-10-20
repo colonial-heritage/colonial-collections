@@ -43,7 +43,7 @@ export default async function RootLayout({children, params: {locale}}: Props) {
                 </li>
               </ul>
             </div>
-            <div className="max-w-[1800px] mx-auto h-full min-h-screen flex flex-col justify-stretch items-stretch gap-8 pb-40">
+            <div className="max-w-[1800px] mx-auto min-h-screen flex flex-col justify-stretch items-stretch gap-8 pb-40">
               <header className="w-full px-10 py-4 bg-neutral-50">
                 <Navigation locales={locales} />
               </header>
