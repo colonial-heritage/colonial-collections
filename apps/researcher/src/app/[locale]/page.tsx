@@ -149,7 +149,7 @@ export default async function Home({searchParams = {}}: Props) {
               <FacetMenu filters={searchResult.filters} />
             </aside>
 
-            <main className="w-full md:w-2/3 lg:w-4/5  order-2 md:order-1">
+            <main className="w-full md:w-2/3 lg:w-4/5 order-2 md:order-1">
               <SmallScreenSubMenu>
                 <SubMenuButton className="inline-flex items-center md:hidden">
                   <span className="text-base font-medium text-gray-900">
