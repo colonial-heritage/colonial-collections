@@ -62,17 +62,24 @@ export function SelectedFilters({filters, filterSettings}: Props) {
 
     const badges = [];
     Object.entries(selectedFilters).forEach(([filterKey, value]) => {
-      const key = `${filterKey}-${value}`;
-      if (typeof value === 'number') {
+      if (
+        filterSettings.find(setting => setting.name === filterKey)
+          ?.searchParamType === 'number' &&
+        value
+      ) {
         badges.push({
-          key,
+          key: `${filterKey}-${value}`,
           label: value.toString(),
           action: () => clearSelectedNumberFilter(filterKey),
         });
-      } else if (Array.isArray(value)) {
-        value.forEach(id => {
+      } else if (
+        filterSettings.find(setting => setting.name === filterKey)
+          ?.searchParamType === 'array' &&
+        value
+      ) {
+        (value as string[]).forEach(id => {
           badges.push({
-            key,
+            key: `${filterKey}-${id}`,
             label: filters[filterKey as keyof typeof filters].find(
               ({id: i}) => i === id
             )!.name,
@@ -89,7 +96,14 @@ export function SelectedFilters({filters, filterSettings}: Props) {
       });
     }
     return badges;
-  }, [filterChange, filters, query, queryChange, selectedFilters]);
+  }, [
+    filterChange,
+    filterSettings,
+    filters,
+    query,
+    queryChange,
+    selectedFilters,
+  ]);
 
   // Only show this component if there are active filters.
   if (!badges.length) {
