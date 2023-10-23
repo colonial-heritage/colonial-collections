@@ -23,6 +23,7 @@ import {
   SelectedFilters,
   SearchFieldWithLabel,
   OrderSelector,
+  DateRangeFilter,
 } from 'ui/list';
 import {SmallScreenSubMenu, SubMenuButton, SubMenuDialog} from 'ui';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
@@ -32,17 +33,39 @@ import {ElementType} from 'react';
 // Revalidate the page every n seconds
 export const revalidate = 60;
 
-interface FacetProps {
+interface FilterSetting {
   name: keyof SearchResult['filters'];
   searchParamType: SearchParamType;
-  Component: ElementType;
 }
 
-const facets: ReadonlyArray<FacetProps> = [
-  {name: 'owners', searchParamType: 'array', Component: FilterSet},
-  {name: 'types', searchParamType: 'array', Component: FilterSet},
-  {name: 'subjects', searchParamType: 'array', Component: FilterSet},
-  {name: 'publishers', searchParamType: 'array', Component: FilterSet},
+interface FacetComponent {
+  name: string;
+  Component: ElementType;
+  customProps?: Record<string, unknown>;
+}
+
+const filterSettings: ReadonlyArray<FilterSetting> = [
+  {name: 'owners', searchParamType: 'array'},
+  {name: 'types', searchParamType: 'array'},
+  {name: 'subjects', searchParamType: 'array'},
+  {name: 'publishers', searchParamType: 'array'},
+  {name: 'dateCreatedStart', searchParamType: 'number'},
+  {name: 'dateCreatedEnd', searchParamType: 'number'},
+];
+
+const facetComponents: ReadonlyArray<FacetComponent> = [
+  {name: 'owners', Component: FilterSet},
+  {
+    name: 'dateCreated',
+    Component: DateRangeFilter,
+    customProps: {
+      startDateKey: 'dateCreatedStart',
+      endDateKey: 'dateCreatedEnd',
+    },
+  },
+  {name: 'types', Component: FilterSet},
+  {name: 'subjects', Component: FilterSet},
+  {name: 'publishers', Component: FilterSet},
 ];
 
 interface FacetMenuProps {
@@ -55,17 +78,22 @@ function FacetMenu({filters}: FacetMenuProps) {
   return (
     <>
       <SearchFieldWithLabel />
-      {facets.map(
-        ({name, Component}) =>
-          !!filters[name]?.length && (
-            <Component
-              key={name}
-              title={t(`${name}Filter`)}
-              searchResultFilters={filters[name]}
-              filterKey={name}
-              testId={`${name}Filter`}
-            />
-          )
+      {facetComponents.map(
+        ({
+          name,
+          Component,
+          customProps = {
+            searchResultFilters: filters[name as keyof SearchResult['filters']],
+            filterKey: name,
+          },
+        }) => (
+          <Component
+            key={name}
+            title={t(`${name}Filter`)}
+            testId={`${name}Filter`}
+            {...customProps}
+          />
+        )
       )}
     </>
   );
@@ -84,7 +112,7 @@ export default async function Home({searchParams = {}}: Props) {
       defaultSortBy: SortBy.Relevance,
       sortMapping: sortMapping,
     },
-    filterKeys: facets.map(({name, searchParamType}) => ({
+    filterKeys: filterSettings.map(({name, searchParamType}) => ({
       name,
       type: searchParamType,
     })),
@@ -173,11 +201,8 @@ export default async function Home({searchParams = {}}: Props) {
                 </div>
               </div>
               <SelectedFilters
-                filters={facets.map(filterKey => ({
-                  searchResultFilters:
-                    searchResult!.filters[filterKey.name] ?? [],
-                  filterKey: filterKey.name,
-                }))}
+                filters={searchResult.filters}
+                filterSettings={filterSettings}
               />
               <HeritageObjectList
                 heritageObjects={searchResult.heritageObjects}
