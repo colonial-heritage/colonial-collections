@@ -14,13 +14,13 @@ import {
   SlideOverHeader,
   SlideOverContent,
   SlideOver,
+  Notifications,
 } from '@colonial-collections/ui';
 import useCurrentPublisher from './useCurrentPublisher';
 import {env} from 'node:process';
 import {formatDateCreated} from './format-date-created';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
-import {Notifications} from '@colonial-collections/ui';
 
 // Revalidate the page
 export const revalidate = 0;
