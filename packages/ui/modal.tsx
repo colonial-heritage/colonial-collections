@@ -5,15 +5,15 @@ import {ReactNode, ButtonHTMLAttributes, useEffect, Fragment} from 'react';
 import {usePathname} from 'next/navigation';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
+import {useTranslations} from 'next-intl';
 
-interface SlideOutState {
+interface ModalState {
   visibleId: string | null;
   show: (id: string) => void;
   hide: () => void;
 }
 
-// Only one modal can be visible at a time
-export const useModal = create<SlideOutState>(set => ({
+export const useModal = create<ModalState>(set => ({
   visibleId: null,
   show: id =>
     set(() => ({
@@ -58,7 +58,6 @@ export function Modal({children, id}: ModalProps) {
   }, [hide, pathname]);
 
   return (
-    // <Transition.Root show={true} as={Fragment}>
     <Transition.Root show={visibleId === id} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => hide()}>
         <Transition.Child
@@ -101,6 +100,7 @@ interface ModalHeaderProps {
 
 export function ModalHeader({title}: ModalHeaderProps = {}) {
   const {hide} = useModal();
+  const t = useTranslations('Modal');
 
   return (
     <div className="flex justify-between grow">
@@ -111,7 +111,7 @@ export function ModalHeader({title}: ModalHeaderProps = {}) {
           className="ml-3 items-center flex text-sky-700"
           onClick={() => hide()}
         >
-          <span>Close</span>
+          <span>{t('close')}</span>
           <XMarkIcon className="w-4 h-4 fill-bg-sky-700 mt-1" />
         </button>
       </div>

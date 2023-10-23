@@ -13,6 +13,7 @@ export interface Filter {
 
 export interface SearchableFilter extends Filter {
   letterCategory: string;
+  // In order to make the filter searchable, we need to convert the name to a string
   name: string;
 }
 
@@ -105,7 +106,7 @@ export function getLetterCategories({
   ].sort();
 }
 
-export function getFiltersWithLetterCategory(filters?: Filter[]) {
+export function extendFiltersWithLetterCategory(filters?: Filter[]) {
   if (!filters?.length) {
     return [];
   }
@@ -193,7 +194,7 @@ export function useSearchableFacet() {
   const {searchValue, letterCategory, sortBy, filters} = store;
 
   const filtersWithLetterCategory = useMemo(
-    () => getFiltersWithLetterCategory(filters),
+    () => extendFiltersWithLetterCategory(filters),
     [filters]
   );
 
