@@ -23,7 +23,7 @@ import {
   SelectedFilters,
   SearchFieldWithLabel,
   OrderSelector,
-  DateRangeFilter,
+  DateRangeFacet,
 } from '@colonial-collections/ui/list';
 import {
   SmallScreenSubMenu,
@@ -42,7 +42,7 @@ interface FilterSetting {
   searchParamType: SearchParamType;
 }
 
-interface FacetComponent {
+interface Facet {
   name: string;
   Component: ElementType;
   customProps?: Record<string, unknown>;
@@ -57,11 +57,11 @@ const filterSettings: ReadonlyArray<FilterSetting> = [
   {name: 'dateCreatedEnd', searchParamType: 'number'},
 ];
 
-const facetComponents: ReadonlyArray<FacetComponent> = [
+const facets: ReadonlyArray<Facet> = [
   {name: 'owners', Component: FilterSet},
   {
     name: 'dateCreated',
-    Component: DateRangeFilter,
+    Component: DateRangeFacet,
     customProps: {
       startDateKey: 'dateCreatedStart',
       endDateKey: 'dateCreatedEnd',
@@ -82,7 +82,7 @@ function FacetMenu({filters}: FacetMenuProps) {
   return (
     <>
       <SearchFieldWithLabel />
-      {facetComponents.map(
+      {facets.map(
         ({
           name,
           Component,

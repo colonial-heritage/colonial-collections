@@ -121,7 +121,7 @@
     "search": "Zoeken",
     "filters": "Filters",
     "fromYear": "Van jaar",
-    "tillYear": "Tot jaar",
+    "tillYear": "Tot en met jaar",
     "expandFilter": "Uitklappen",
     "clearAllFilters": "Alles verwijderen",
     "filterSearchPlaceholder": "Filteren op {filterName}",

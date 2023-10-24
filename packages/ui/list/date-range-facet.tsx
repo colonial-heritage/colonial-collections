@@ -3,19 +3,19 @@
 import {useListStore} from '@colonial-collections/list-store';
 import {useTranslations} from 'next-intl';
 
-interface DateRangeFilterProps {
+interface DateRangeFacetProps {
   startDateKey: string;
   endDateKey: string;
   title: string;
   testId?: string;
 }
 
-export function DateRangeFilter({
+export function DateRangeFacet({
   startDateKey,
   endDateKey,
   title,
   testId,
-}: DateRangeFilterProps) {
+}: DateRangeFacetProps) {
   const listStore = useListStore();
   const startDate = listStore.selectedFilters[startDateKey];
   const endDate = listStore.selectedFilters[endDateKey];
