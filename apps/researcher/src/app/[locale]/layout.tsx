@@ -5,7 +5,7 @@ import Navigation from './navigation';
 import {NextIntlClientProvider} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import {locales} from '@/middleware';
-import WipMessage from 'ui/wip-message';
+import {WipMessage} from '@colonial-collections/ui';
 import {ClerkProvider} from '@clerk/nextjs';
 
 interface Props {

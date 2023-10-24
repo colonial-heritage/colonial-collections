@@ -9,7 +9,7 @@ const withNextIntl = NextIntlPlugin('./src/i18n.ts');
 const withMDX = MDXPlugin();
 
 const nextConfig = {
-  transpilePackages: ['ui'],
+  transpilePackages: ['@colonial-collections/ui'],
   experimental: {
     mdxRs: true,
   },
