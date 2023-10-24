@@ -3,7 +3,7 @@
 import {Tab} from '@headlessui/react';
 import classNames from 'classnames';
 import Image from 'next/image';
-import {SlideOver, SlideOverOpenButton} from 'ui';
+import {SlideOver, SlideOverOpenButton} from '@colonial-collections/ui';
 import dynamic from 'next/dynamic';
 import {Fragment} from 'react';
 

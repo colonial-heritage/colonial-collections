@@ -10,7 +10,12 @@ import {revalidatePath} from 'next/cache';
 import {objectList} from '@colonial-collections/database';
 import ObjectCard from './object';
 import AddObjectListForm from '@/components/add-object-list-form';
-import {SlideOutButton, SlideOut, SlideOutClosed, Notifications} from 'ui';
+import {
+  SlideOutButton,
+  SlideOut,
+  SlideOutClosed,
+  Notifications,
+} from '@colonial-collections/ui';
 import EditDescriptionForm from './edit-description-form';
 
 interface Props {
