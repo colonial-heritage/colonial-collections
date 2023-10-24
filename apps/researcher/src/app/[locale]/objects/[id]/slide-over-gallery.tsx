@@ -2,7 +2,11 @@
 
 import React, {useEffect, useState} from 'react';
 import OpenSeaDragon, {Viewer} from 'openseadragon';
-import {SlideOverDialog, SlideOverHeader, SlideOverContent} from 'ui';
+import {
+  SlideOverDialog,
+  SlideOverHeader,
+  SlideOverContent,
+} from '@colonial-collections/ui';
 import Image from 'next/image';
 import {Tab} from '@headlessui/react';
 import classNames from 'classnames';

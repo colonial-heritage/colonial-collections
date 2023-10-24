@@ -12,7 +12,7 @@ import {
   removeObjectFromList,
 } from './object-lists-actions';
 import {ObjectList} from '@colonial-collections/database';
-import {useNotifications} from 'ui';
+import {useNotifications} from '@colonial-collections/ui';
 
 interface CommunityMenuItemsProps {
   communityId: string;

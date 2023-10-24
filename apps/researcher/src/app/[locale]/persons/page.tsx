@@ -23,14 +23,14 @@ import {
   SelectedFilters,
   SearchFieldWithLabel,
   OrderSelector,
-} from 'ui/list';
+} from '@colonial-collections/ui/list';
 import {
   PageTitle,
   PageHeader,
   SmallScreenSubMenu,
   SubMenuButton,
   SubMenuDialog,
-} from 'ui';
+} from '@colonial-collections/ui';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import Tabs from '../tabs';
 import {ElementType} from 'react';

@@ -2,7 +2,7 @@ import {useLocale, useTranslations} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
-import {ToFilteredListButton} from 'ui/list';
+import {ToFilteredListButton} from '@colonial-collections/ui/list';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
 import {MetadataContainer, MetadataEntry} from './metadata';
@@ -14,13 +14,13 @@ import {
   SlideOverHeader,
   SlideOverContent,
   SlideOver,
-} from 'ui';
+  Notifications,
+} from '@colonial-collections/ui';
 import useCurrentPublisher from './useCurrentPublisher';
 import {env} from 'node:process';
 import {formatDateCreated} from './format-date-created';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
-import {Notifications} from 'ui';
 
 // Revalidate the page
 export const revalidate = 0;
