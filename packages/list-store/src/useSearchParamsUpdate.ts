@@ -27,7 +27,7 @@ export function useSearchParamsUpdate({baseUrl, defaultSortBy}: Props) {
       });
       startTransition(() => {
         listStore.transitionStarted();
-        router.replace(url);
+        router.replace(url, {scroll: false});
       });
     }
   }, [isPending, router, listStore, baseUrl, defaultSortBy]);
