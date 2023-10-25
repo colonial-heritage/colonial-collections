@@ -67,7 +67,7 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
       <div className="flex border-stone-300 border-t text-sm text-stone-600">
         <div className="w-1/2 p-4 border-stone-300 border-r">
           {t.rich('membershipCount', {
-            count: community.membersCount,
+            count: community.membershipCount,
           })}
         </div>
         <div className="w-1/2 p-4">

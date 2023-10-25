@@ -91,7 +91,7 @@ describe('sort', () => {
       slug: 'community-2',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1690000000000,
-      membersCount: 10,
+      membershipCount: 10,
     },
     {
       id: 'community1',
@@ -99,7 +99,7 @@ describe('sort', () => {
       slug: 'community-1',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1600000000000,
-      membersCount: 5,
+      membershipCount: 5,
     },
     {
       id: 'community4',
@@ -107,7 +107,7 @@ describe('sort', () => {
       slug: 'community-4',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1680000000000,
-      membersCount: 15,
+      membershipCount: 15,
     },
     {
       id: 'community3',
@@ -115,7 +115,7 @@ describe('sort', () => {
       slug: 'community-3',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1650000000000,
-      membersCount: 20,
+      membershipCount: 20,
     },
     {
       id: 'community5',
@@ -123,7 +123,7 @@ describe('sort', () => {
       slug: 'community-5',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1670000000000,
-      membersCount: undefined,
+      membershipCount: undefined,
     },
   ];
 
@@ -137,7 +137,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
-        membersCount: 5,
+        membershipCount: 5,
       },
       {
         id: 'community2',
@@ -145,7 +145,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
-        membersCount: 10,
+        membershipCount: 10,
       },
       {
         id: 'community3',
@@ -153,7 +153,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
-        membersCount: 20,
+        membershipCount: 20,
       },
       {
         id: 'community4',
@@ -161,7 +161,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
-        membersCount: 15,
+        membershipCount: 15,
       },
       {
         id: 'community5',
@@ -169,7 +169,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
-        membersCount: undefined,
+        membershipCount: undefined,
       },
     ];
 
@@ -186,7 +186,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
-        membersCount: undefined,
+        membershipCount: undefined,
       },
       {
         id: 'community4',
@@ -194,7 +194,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
-        membersCount: 15,
+        membershipCount: 15,
       },
       {
         id: 'community3',
@@ -202,7 +202,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
-        membersCount: 20,
+        membershipCount: 20,
       },
       {
         id: 'community2',
@@ -210,7 +210,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
-        membersCount: 10,
+        membershipCount: 10,
       },
       {
         id: 'community1',
@@ -218,7 +218,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
-        membersCount: 5,
+        membershipCount: 5,
       },
     ];
 
@@ -235,7 +235,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
-        membersCount: 10,
+        membershipCount: 10,
       },
       {
         id: 'community4',
@@ -243,7 +243,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
-        membersCount: 15,
+        membershipCount: 15,
       },
       {
         id: 'community5',
@@ -251,7 +251,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
-        membersCount: undefined,
+        membershipCount: undefined,
       },
       {
         id: 'community3',
@@ -259,7 +259,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
-        membersCount: 20,
+        membershipCount: 20,
       },
       {
         id: 'community1',
@@ -267,7 +267,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
-        membersCount: 5,
+        membershipCount: 5,
       },
     ];
 
@@ -284,7 +284,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
-        membersCount: 20,
+        membershipCount: 20,
       },
       {
         id: 'community4',
@@ -292,7 +292,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
-        membersCount: 15,
+        membershipCount: 15,
       },
       {
         id: 'community2',
@@ -300,7 +300,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
-        membersCount: 10,
+        membershipCount: 10,
       },
       {
         id: 'community1',
@@ -308,7 +308,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
-        membersCount: 5,
+        membershipCount: 5,
       },
       {
         id: 'community5',
@@ -316,7 +316,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
-        membersCount: undefined,
+        membershipCount: undefined,
       },
     ];
 

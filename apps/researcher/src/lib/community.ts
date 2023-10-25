@@ -8,7 +8,7 @@ export interface Community {
   slug: string;
   imageUrl: string;
   createdAt: number;
-  membersCount?: number;
+  membershipCount?: number;
 }
 
 export interface Membership {
@@ -29,7 +29,7 @@ function organizationToCommunity(organization: Organization): Community {
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
     createdAt: organization.createdAt,
-    membersCount: organization.members_count,
+    membershipCount: organization.members_count,
   };
 }
 
@@ -97,7 +97,7 @@ export function sort(communities: Community[], sortBy: SortBy) {
     } else if (sortBy === SortBy.CreatedAtDesc) {
       return b.createdAt - a.createdAt;
     } else if (sortBy === SortBy.MembershipCountDesc) {
-      return (b.membersCount ?? 0) - (a.membersCount ?? 0);
+      return (b.membershipCount ?? 0) - (a.membershipCount ?? 0);
     } else {
       return 0;
     }
