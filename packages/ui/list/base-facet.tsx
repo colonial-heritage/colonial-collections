@@ -42,7 +42,7 @@ export function FacetCheckBox({
   const selectedFilters = useMemo(
     () => listStore.selectedFilters[filterKey] || [],
     [filterKey, listStore.selectedFilters]
-  );
+  ) as (string | number)[];
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

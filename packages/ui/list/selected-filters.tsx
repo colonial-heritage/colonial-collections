@@ -2,14 +2,17 @@
 
 import {useTranslations} from 'next-intl';
 import {Badge} from '../badge';
-import {useListStore} from '@colonial-collections/list-store';
+import {
+  useListStore,
+  Type as SearchParamType,
+} from '@colonial-collections/list-store';
 import {SearchResultFilter} from './SearchResultFilter';
 import {useMemo} from 'react';
 import {MagnifyingGlassIcon, TagIcon} from '@heroicons/react/24/solid';
 
 interface SelectedFiltersForKeyProps {
   filters: SearchResultFilter[];
-  searchParamType: 'array' | 'number';
+  searchParamType: SearchParamType;
   filterKey: string;
 }
 
@@ -83,7 +86,7 @@ interface Props {
   filters: {[key: string]: SearchResultFilter[]};
   filterSettings: ReadonlyArray<{
     name: string;
-    searchParamType: 'array' | 'number';
+    searchParamType: SearchParamType;
   }>;
 }
 
