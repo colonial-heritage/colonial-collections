@@ -8,7 +8,8 @@ import {
   SlideOver,
   SlideOverOpenButton,
   SlideOverDialog,
-} from 'ui';
+  LocalizedMarkdown,
+} from '@colonial-collections/ui';
 import {
   ChevronLeftIcon,
   InformationCircleIcon,
@@ -16,9 +17,8 @@ import {
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
-import {LocalizedMarkdown} from 'ui';
 import metricIds from '@/lib/transparency-metrics';
-import {ToFilteredListButton} from 'ui/list';
+import {ToFilteredListButton} from '@colonial-collections/ui/list';
 
 interface Props {
   params: {id: string};

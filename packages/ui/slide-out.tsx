@@ -29,15 +29,20 @@ export const useSlideOut = create<SlideOutState>((set, get) => ({
 
 interface SlideOutButtonProps {
   id: string;
+  hideIfOpen?: Boolean;
   children: ReactNode;
 }
 
 export function SlideOutButton({
   id,
+  hideIfOpen = false,
   children,
   ...buttonProps
 }: SlideOutButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) {
   const {setIsVisible, isVisible} = useSlideOut();
+
+  if (hideIfOpen && isVisible(id)) return null;
+
   return (
     <button {...buttonProps} onClick={() => setIsVisible(id, !isVisible(id))}>
       {children}
@@ -60,4 +65,10 @@ export function SlideOut({id, children}: SlideOutProps) {
   }, [id, pathname, setIsVisible]);
 
   return isVisible(id) ? <>{children}</> : null;
+}
+
+// Use this component to render content when the slide out is closed
+export function SlideOutClosed({id, children}: SlideOutProps) {
+  const {isVisible} = useSlideOut();
+  return !isVisible(id) ? <>{children}</> : null;
 }

@@ -6,7 +6,7 @@ import {useForm, SubmitHandler} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {insertObjectListSchema} from '@colonial-collections/database/client';
 import {useTranslations} from 'next-intl';
-import {useSlideOut, useNotifications} from 'ui';
+import {useSlideOut, useNotifications} from '@colonial-collections/ui';
 import {camelCase} from 'tiny-case';
 
 interface FormProps {

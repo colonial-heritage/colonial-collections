@@ -1,11 +1,11 @@
 import {DateTimeFormatOptions, useTranslations, useLocale} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
-import {PageHeader, PageTitle} from 'ui';
+import {PageHeader, PageTitle} from '@colonial-collections/ui';
 import personFetcher from '@/lib/person-fetcher-instance';
 import {getFormatter} from 'next-intl/server';
 import {PersonIcon} from '@/components/icons';
 import {H2, H3} from '@/components/titles';
-import {ToFilteredListButton} from 'ui/list';
+import {ToFilteredListButton} from '@colonial-collections/ui/list';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 
 // Revalidate the page
