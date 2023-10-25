@@ -91,6 +91,7 @@ describe('sort', () => {
       slug: 'community-2',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1690000000000,
+      membersCount: 10,
     },
     {
       id: 'community1',
@@ -98,6 +99,7 @@ describe('sort', () => {
       slug: 'community-1',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1600000000000,
+      membersCount: 5,
     },
     {
       id: 'community4',
@@ -105,6 +107,7 @@ describe('sort', () => {
       slug: 'community-4',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1680000000000,
+      membersCount: 15,
     },
     {
       id: 'community3',
@@ -112,6 +115,7 @@ describe('sort', () => {
       slug: 'community-3',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1650000000000,
+      membersCount: 20,
     },
     {
       id: 'community5',
@@ -119,6 +123,7 @@ describe('sort', () => {
       slug: 'community-5',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1670000000000,
+      membersCount: undefined,
     },
   ];
 
@@ -132,6 +137,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
+        membersCount: 5,
       },
       {
         id: 'community2',
@@ -139,6 +145,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
+        membersCount: 10,
       },
       {
         id: 'community3',
@@ -146,6 +153,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
+        membersCount: 20,
       },
       {
         id: 'community4',
@@ -153,6 +161,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
+        membersCount: 15,
       },
       {
         id: 'community5',
@@ -160,6 +169,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
+        membersCount: undefined,
       },
     ];
 
@@ -176,6 +186,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
+        membersCount: undefined,
       },
       {
         id: 'community4',
@@ -183,6 +194,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
+        membersCount: 15,
       },
       {
         id: 'community3',
@@ -190,6 +202,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
+        membersCount: 20,
       },
       {
         id: 'community2',
@@ -197,6 +210,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
+        membersCount: 10,
       },
       {
         id: 'community1',
@@ -204,6 +218,7 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
+        membersCount: 5,
       },
     ];
 
@@ -220,6 +235,7 @@ describe('sort', () => {
         slug: 'community-2',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
+        membersCount: 10,
       },
       {
         id: 'community4',
@@ -227,6 +243,7 @@ describe('sort', () => {
         slug: 'community-4',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
+        membersCount: 15,
       },
       {
         id: 'community5',
@@ -234,6 +251,7 @@ describe('sort', () => {
         slug: 'community-5',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
+        membersCount: undefined,
       },
       {
         id: 'community3',
@@ -241,6 +259,7 @@ describe('sort', () => {
         slug: 'community-3',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
+        membersCount: 20,
       },
       {
         id: 'community1',
@@ -248,14 +267,64 @@ describe('sort', () => {
         slug: 'community-1',
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
+        membersCount: 5,
       },
     ];
 
     expect(sortedCommunities).toStrictEqual(expectedSortedCommunities);
   });
 
-  it('returns the list unsorted if sortBy is an incorrect value', () => {
-    const sortedCommunities = sort(communities, 'incorrect' as SortBy);
+  it('sorts communities by membership count in descending order', () => {
+    const sortedCommunities = sort(communities, SortBy.MembershipCountDesc);
+
+    const expectedSortedCommunities = [
+      {
+        id: 'community3',
+        name: 'Community 3',
+        slug: 'community-3',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1650000000000,
+        membersCount: 20,
+      },
+      {
+        id: 'community4',
+        name: 'Community 4',
+        slug: 'community-4',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1680000000000,
+        membersCount: 15,
+      },
+      {
+        id: 'community2',
+        name: 'Community 2',
+        slug: 'community-2',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1690000000000,
+        membersCount: 10,
+      },
+      {
+        id: 'community1',
+        name: 'Community 1',
+        slug: 'community-1',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1600000000000,
+        membersCount: 5,
+      },
+      {
+        id: 'community5',
+        name: 'Community 5',
+        slug: 'community-5',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1670000000000,
+        membersCount: undefined,
+      },
+    ];
+
+    expect(sortedCommunities).toStrictEqual(expectedSortedCommunities);
+  });
+
+  it('returns the original array if sortBy is not valid', () => {
+    const sortedCommunities = sort(communities, 'invalid' as SortBy);
 
     expect(sortedCommunities).toStrictEqual(communities);
   });
