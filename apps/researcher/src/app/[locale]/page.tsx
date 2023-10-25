@@ -42,12 +42,6 @@ interface FilterSetting {
   searchParamType: SearchParamType;
 }
 
-interface Facet {
-  name: string;
-  Component: ElementType;
-  customProps?: Record<string, unknown>;
-}
-
 const filterSettings: ReadonlyArray<FilterSetting> = [
   {name: 'owners', searchParamType: 'array'},
   {name: 'types', searchParamType: 'array'},
@@ -57,15 +51,25 @@ const filterSettings: ReadonlyArray<FilterSetting> = [
   {name: 'dateCreatedEnd', searchParamType: 'number'},
 ];
 
-const facets: ReadonlyArray<Facet> = [
+interface Facet {
+  name: string;
+  Component: ElementType;
+}
+
+interface DateRangeFacet {
+  name: string;
+  Component: ElementType;
+  startDateKey: string;
+  endDateKey: string;
+}
+
+const facets: ReadonlyArray<Facet | DateRangeFacet> = [
   {name: 'owners', Component: FilterSet},
   {
     name: 'dateCreated',
     Component: DateRangeFacet,
-    customProps: {
-      startDateKey: 'dateCreatedStart',
-      endDateKey: 'dateCreatedEnd',
-    },
+    startDateKey: 'dateCreatedStart',
+    endDateKey: 'dateCreatedEnd',
   },
   {name: 'types', Component: FilterSet},
   {name: 'subjects', Component: FilterSet},
@@ -82,23 +86,24 @@ function FacetMenu({filters}: FacetMenuProps) {
   return (
     <>
       <SearchFieldWithLabel />
-      {facets.map(
-        ({
-          name,
-          Component,
-          customProps = {
-            searchResultFilters: filters[name as keyof SearchResult['filters']],
-            filterKey: name,
-          },
-        }) => (
+      {facets.map(({name, Component, ...customProps}) => {
+        const facetProps = Object.keys(customProps).length
+          ? customProps
+          : {
+              searchResultFilters:
+                filters[name as keyof SearchResult['filters']],
+              filterKey: name,
+            };
+
+        return (
           <Component
             key={name}
             title={t(`${name}Filter`)}
             testId={`${name}Filter`}
-            {...customProps}
+            {...facetProps}
           />
-        )
-      )}
+        );
+      })}
     </>
   );
 }
