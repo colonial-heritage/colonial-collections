@@ -9,6 +9,8 @@ interface Props {
 }
 
 export function SimpleFacet({title, filters, filterKey, testId}: Props) {
+  if (!filters.length) return null;
+
   return (
     <FacetWrapper testId={testId}>
       <FacetTitle title={title} />
