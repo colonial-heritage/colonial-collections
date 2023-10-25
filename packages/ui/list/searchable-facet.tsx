@@ -39,7 +39,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
 
   function selectAllClick() {
     const selectedFilters = [
-      ...(listStore.selectedFilters[filterKey] || []),
+      ...((listStore.selectedFilters[filterKey] as (string | number)[]) || []),
       ...filteredFilters.map(filter => filter.id),
     ];
 
@@ -124,7 +124,8 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
 
         <div className="flex gap-2 flex-wrap  overflow-y-auto">
           <SelectedFiltersForKey
-            searchResultFilters={filters}
+            searchParamType="array"
+            filters={filters}
             filterKey={filterKey}
           />
         </div>

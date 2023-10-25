@@ -24,6 +24,7 @@ import {
   SelectedFilters,
   SearchFieldWithLabel,
   OrderSelector,
+  DateRangeFacet,
 } from '@colonial-collections/ui/list';
 import {
   SmallScreenSubMenu,
@@ -37,19 +38,47 @@ import {ElementType} from 'react';
 // Revalidate the page every n seconds
 export const revalidate = 60;
 
-interface FacetProps {
+interface FilterSetting {
   name: keyof SearchResult['filters'];
   searchParamType: SearchParamType;
+}
+
+const filterSettings: ReadonlyArray<FilterSetting> = [
+  {name: 'locations', searchParamType: 'array'},
+  {name: 'types', searchParamType: 'array'},
+  {name: 'subjects', searchParamType: 'array'},
+  {name: 'publishers', searchParamType: 'array'},
+  {name: 'materials', searchParamType: 'array'},
+  {name: 'creators', searchParamType: 'array'},
+  {name: 'dateCreatedStart', searchParamType: 'number'},
+  {name: 'dateCreatedEnd', searchParamType: 'number'},
+];
+
+interface Facet {
+  name: string;
   Component: ElementType;
 }
 
-const facets: ReadonlyArray<FacetProps> = [
-  {name: 'locations', searchParamType: 'array', Component: SearchableFacet},
-  {name: 'types', searchParamType: 'array', Component: SearchableFacet},
-  {name: 'subjects', searchParamType: 'array', Component: SimpleFacet},
-  {name: 'materials', searchParamType: 'array', Component: SearchableFacet},
-  {name: 'creators', searchParamType: 'array', Component: SearchableFacet},
-  {name: 'publishers', searchParamType: 'array', Component: SimpleFacet},
+interface DateRangeFacet {
+  name: string;
+  Component: ElementType;
+  startDateKey: string;
+  endDateKey: string;
+}
+
+const facets: ReadonlyArray<Facet | DateRangeFacet> = [
+  {name: 'locations', Component: SearchableFacet},
+  {
+    name: 'dateCreated',
+    Component: DateRangeFacet,
+    startDateKey: 'dateCreatedStart',
+    endDateKey: 'dateCreatedEnd',
+  },
+  {name: 'types', Component: SearchableFacet},
+  {name: 'subjects', Component: SimpleFacet},
+  {name: 'materials', Component: SearchableFacet},
+  {name: 'creators', Component: SearchableFacet},
+  {name: 'publishers', Component: SimpleFacet},
 ];
 
 interface FacetMenuProps {
@@ -62,18 +91,23 @@ function FacetMenu({filters}: FacetMenuProps) {
   return (
     <div className="w-full flex flex-col gap-6">
       <SearchFieldWithLabel />
-      {facets.map(
-        ({name, Component}) =>
-          !!filters[name]?.length && (
-            <Component
-              key={name}
-              title={t(`${name}Filter`)}
-              filters={filters[name]}
-              filterKey={name}
-              testId={`${name}Filter`}
-            />
-          )
-      )}
+      {facets.map(({name, Component, ...customProps}) => {
+        const facetProps = Object.keys(customProps).length
+          ? customProps
+          : {
+              filters: filters[name as keyof SearchResult['filters']],
+              filterKey: name,
+            };
+
+        return (
+          <Component
+            key={name}
+            title={t(`${name}Filter`)}
+            testId={`${name}Filter`}
+            {...facetProps}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -91,7 +125,7 @@ export default async function Home({searchParams = {}}: Props) {
       defaultSortBy: SortBy.Relevance,
       sortMapping: sortMapping,
     },
-    filterKeys: facets.map(({name, searchParamType}) => ({
+    filterKeys: filterSettings.map(({name, searchParamType}) => ({
       name,
       type: searchParamType,
     })),
@@ -180,11 +214,8 @@ export default async function Home({searchParams = {}}: Props) {
                 </div>
               </div>
               <SelectedFilters
-                filters={facets.map(filterKey => ({
-                  searchResultFilters:
-                    searchResult!.filters[filterKey.name] ?? [],
-                  filterKey: filterKey.name,
-                }))}
+                filters={searchResult.filters}
+                filterSettings={filterSettings}
               />
               <HeritageObjectList
                 heritageObjects={searchResult.heritageObjects}

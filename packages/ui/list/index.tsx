@@ -9,3 +9,4 @@ export * from './order-selector';
 export * from './to-filtered-list-button';
 export * from './simple-facet';
 export * from './searchable-facet';
+export * from './date-range-facet';

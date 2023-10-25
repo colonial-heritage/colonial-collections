@@ -10,8 +10,13 @@ export interface Props {
   newDataNeeded: boolean;
   isInitialized: boolean;
   defaultSortBy?: string;
-  selectedFilters: {[filterKey: string]: (string | number)[] | undefined};
-  filterChange: (key: string, value: (string | number)[]) => void;
+  selectedFilters: {
+    [filterKey: string]: (string | number)[] | number | undefined;
+  };
+  filterChange: (
+    key: string,
+    value: (string | number)[] | number | undefined
+  ) => void;
   sortChange: (sortBy: string) => void;
   queryChange: (query: string) => void;
   pageChange: (direction: 1 | -1) => void;
