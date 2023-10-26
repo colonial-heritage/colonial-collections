@@ -4,12 +4,14 @@ import {useTranslations} from 'next-intl';
 import {Badge} from '../badge';
 import {useListStore} from '@colonial-collections/list-store';
 import {SearchResultFilter} from './SearchResultFilter';
+import {useMemo} from 'react';
 
 interface Props {
-  filters: {
-    searchResultFilters: SearchResultFilter[];
-    filterKey: string;
-  }[];
+  filters: {[key: string]: SearchResultFilter[]};
+  filterSettings: ReadonlyArray<{
+    name: string;
+    searchParamType: string;
+  }>;
 }
 
 interface ClearSelectedFilterProps {
@@ -17,32 +19,95 @@ interface ClearSelectedFilterProps {
   filterKey: string;
 }
 
-export function SelectedFilters({filters}: Props) {
+export function SelectedFilters({filters, filterSettings}: Props) {
   const t = useTranslations('Filters');
   const {query, selectedFilters, filterChange, queryChange} = useListStore();
 
-  // Only show this component if there are active filters.
-  if (
-    !query &&
-    !filters.filter(filter => selectedFilters[filter.filterKey]?.length).length
-  ) {
-    return null;
-  }
-
-  function clearSelectedFilter({id, filterKey}: ClearSelectedFilterProps) {
-    filterChange(
-      filterKey,
-      selectedFilters[filterKey]?.filter(filterId => id !== filterId) || []
-    );
-  }
-
-  function clearQuery() {
-    queryChange('');
-  }
-
   function clearAllFilters() {
-    clearQuery();
-    filters.forEach(filter => filterChange(filter.filterKey, []));
+    queryChange('');
+    filterSettings.forEach(({name, searchParamType}) => {
+      if (searchParamType === 'array') {
+        filterChange(name, []);
+      } else {
+        filterChange(name, undefined);
+      }
+    });
+  }
+
+  const badges = useMemo(() => {
+    function clearSelectedArrayFilter({
+      id,
+      filterKey,
+    }: ClearSelectedFilterProps) {
+      const selectedFilterForKey = selectedFilters[filterKey];
+      if (!Array.isArray(selectedFilterForKey)) {
+        throw new Error(
+          `Selected filter for key ${filterKey} is not an array.`
+        );
+      }
+      filterChange(
+        filterKey,
+        selectedFilterForKey?.filter((filterId: string) => id !== filterId) ||
+          []
+      );
+    }
+
+    function clearSelectedNumberFilter(filterKey: string) {
+      filterChange(filterKey, undefined);
+    }
+
+    function clearQuery() {
+      queryChange('');
+    }
+
+    const badges = [];
+    Object.entries(selectedFilters).forEach(([filterKey, value]) => {
+      if (
+        filterSettings.find(setting => setting.name === filterKey)
+          ?.searchParamType === 'number' &&
+        value
+      ) {
+        badges.push({
+          key: `${filterKey}-${value}`,
+          label: value.toString(),
+          action: () => clearSelectedNumberFilter(filterKey),
+        });
+      } else if (
+        filterSettings.find(setting => setting.name === filterKey)
+          ?.searchParamType === 'array' &&
+        value
+      ) {
+        (value as string[]).forEach(id => {
+          badges.push({
+            key: `${filterKey}-${id}`,
+            label: filters[filterKey as keyof typeof filters].find(
+              ({id: i}) => i === id
+            )!.name,
+            action: () => clearSelectedArrayFilter({id, filterKey}),
+          });
+        });
+      }
+    });
+    if (query) {
+      badges.push({
+        key: 'query',
+        label: query,
+        action: clearQuery,
+      });
+    }
+    return badges;
+  }, [
+    filterChange,
+    filterSettings,
+    filters,
+    query,
+    queryChange,
+    selectedFilters,
+  ]);
+
+  // Only show this component if there are active filters.
+  if (!badges.length) {
+    return null;
   }
 
   return (
@@ -53,35 +118,12 @@ export function SelectedFilters({filters}: Props) {
         className="hidden h-5 w-px bg-gray-300 sm:ml-3 sm:block mr-2"
       />
       <div className="flex flex-wrap grow">
-        {filters.map(({searchResultFilters, filterKey}) => {
-          const selectedFilter = selectedFilters[filterKey];
-          return (
-            !!selectedFilter?.length &&
-            selectedFilter.map(id => (
-              <Badge key={id} testId="selectedFilter">
-                {
-                  searchResultFilters.find(
-                    searchResultFilter => searchResultFilter.id === id
-                  )!.name
-                }
-                <Badge.Action
-                  onClick={() =>
-                    clearSelectedFilter({
-                      id,
-                      filterKey,
-                    })
-                  }
-                />
-              </Badge>
-            ))
-          );
-        })}
-        {query && (
-          <Badge testId="selectedFilter">
-            {query}
-            <Badge.Action onClick={clearQuery} />
+        {badges.map(({label, action, key}) => (
+          <Badge key={key} testId="selectedFilter">
+            {label}
+            <Badge.Action onClick={action} />
           </Badge>
-        )}
+        ))}
       </div>
       <button
         type="button"
