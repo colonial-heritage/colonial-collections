@@ -182,11 +182,8 @@ export default async function Home({searchParams = {}}: Props) {
                   </div>
                 </div>
                 <SelectedFilters
-                  filters={facets.map(filterKey => ({
-                    searchResultFilters:
-                      searchResult!.filters[filterKey.name] ?? [],
-                    filterKey: filterKey.name,
-                  }))}
+                  filters={searchResult.filters}
+                  filterSettings={facets}
                 />
               </PageHeader>
 

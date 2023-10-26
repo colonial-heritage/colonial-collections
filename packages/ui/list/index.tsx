@@ -7,3 +7,4 @@ export * from './selected-filters';
 export * from './search-field';
 export * from './order-selector';
 export * from './to-filtered-list-button';
+export * from './date-range-facet';
