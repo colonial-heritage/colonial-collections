@@ -8,7 +8,7 @@ interface Props {
   testId?: string;
 }
 
-export function SimpleFacet({title, filters, filterKey, testId}: Props) {
+export function MultiSelectFacet({title, filters, filterKey, testId}: Props) {
   if (!filters.length) return null;
 
   return (

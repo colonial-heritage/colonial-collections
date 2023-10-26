@@ -11,7 +11,7 @@ import {
 import {SelectedFiltersForKey} from './selected-filters';
 import {useTranslations} from 'next-intl';
 import {
-  useSearchableFacet,
+  useSearchableMultiSelectFacet,
   FacetSortBy,
   FacetProvider,
   useListStore,
@@ -32,7 +32,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
     filteredFilters,
     letterCategories,
     filters,
-  } = useSearchableFacet();
+  } = useSearchableMultiSelectFacet();
 
   const t = useTranslations('Filters');
   const listStore = useListStore();
@@ -141,7 +141,7 @@ export function FirstFilters({
   filterKey: string;
   filters: SearchResultFilter[];
 }) {
-  const {filteredFilters, setFilters} = useSearchableFacet();
+  const {filteredFilters, setFilters} = useSearchableMultiSelectFacet();
   useEffect(() => {
     setFilters(filters);
   }, [filters, setFilters]);
@@ -149,7 +149,7 @@ export function FirstFilters({
     <>
       {filteredFilters.slice(0, 5).map(filter => (
         <FacetCheckBox
-          key={`SearchableFacet-${filter.id}`}
+          key={`SearchableMultiSelectFacet-${filter.id}`}
           filterKey={filterKey}
           name={filter.name}
           id={filter.id}
@@ -167,7 +167,12 @@ interface Props {
   testId?: string;
 }
 
-export function SearchableFacet({title, filters, filterKey, testId}: Props) {
+export function SearchableMultiSelectFacet({
+  title,
+  filters,
+  filterKey,
+  testId,
+}: Props) {
   const t = useTranslations('Filters');
 
   return (

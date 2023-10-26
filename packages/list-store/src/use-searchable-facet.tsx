@@ -186,7 +186,7 @@ export function getFilteredFilters({
   }
 }
 
-export function useSearchableFacet() {
+export function useSearchableMultiSelectFacet() {
   const storeContext = useContext(FacetContext);
   if (!storeContext) throw new Error('Missing FacetContext in the tree');
 
