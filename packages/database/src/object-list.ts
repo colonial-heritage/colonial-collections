@@ -40,6 +40,15 @@ export async function getByCommunityId(
   });
 }
 
+export async function find(id: number) {
+  return db.query.objectLists.findFirst({
+    where: (objectLists, {eq}) => eq(objectLists.id, id),
+    with: {
+      objects: true,
+    },
+  });
+}
+
 export async function countByCommunityId(communityId: string) {
   const result = await db
     .select({count: sql<number>`count(*)`})

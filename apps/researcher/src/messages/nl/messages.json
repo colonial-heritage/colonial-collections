@@ -198,5 +198,13 @@
   },
   "Modal": {
     "close": "Sluiten"
+  },
+  "ObjectList": {
+    "backButton": "Terug naar community",
+    "noEntity": "Lijst kon niet gevonden worden",
+    "noCommunity": "Community kon niet gevonden worden",
+    "error": "Er is een fout opgetreden bij het ophalen van de de lijst. Probeer het later opnieuw.",
+    "objectCount": "{count, plural, =0 {0 objecten} =1 {1 object} other {# objecten}}",
+    "listCreatedBy": "Lijst gemaakt door"
   }
 }

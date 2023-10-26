@@ -56,12 +56,11 @@ const filterSettings: ReadonlyArray<FilterSetting> = [
 
 interface Facet {
   name: string;
+  //`Component` needs to be uppercase to be valid JSX
   Component: ElementType;
 }
 
-interface DateRangeFacet {
-  name: string;
-  Component: ElementType;
+interface DateRangeFacet extends Facet {
   startDateKey: string;
   endDateKey: string;
 }

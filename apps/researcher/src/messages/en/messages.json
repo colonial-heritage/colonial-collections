@@ -198,5 +198,13 @@
   },
   "Modal": {
     "close": "Close"
+  },
+  "ObjectList": {
+    "backButton": "Back to community",
+    "noEntity": "List could not be found",
+    "noCommunity": "Community could not be found",
+    "error": "Something went wrong while fetching the list. Please try again later.",
+    "objectCount": "{count, plural, =0 {0 objects} =1 {1 object} other {# objects}}",
+    "listCreatedBy": "List created by"
   }
 }
