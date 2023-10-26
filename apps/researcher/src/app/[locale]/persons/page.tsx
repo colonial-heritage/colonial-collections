@@ -18,11 +18,11 @@ import {
   SortOrderEnum,
 } from '@/lib/api/persons';
 import {
-  FilterSet,
   Paginator,
   SelectedFilters,
   SearchFieldWithLabel,
   OrderSelector,
+  SearchableMultiSelectFacet,
 } from '@colonial-collections/ui/list';
 import {
   PageTitle,
@@ -45,10 +45,26 @@ interface FacetProps {
 }
 
 const facets: ReadonlyArray<FacetProps> = [
-  {name: 'birthYears', searchParamType: 'array', Component: FilterSet},
-  {name: 'birthPlaces', searchParamType: 'array', Component: FilterSet},
-  {name: 'deathYears', searchParamType: 'array', Component: FilterSet},
-  {name: 'deathPlaces', searchParamType: 'array', Component: FilterSet},
+  {
+    name: 'birthYears',
+    searchParamType: 'array',
+    Component: SearchableMultiSelectFacet,
+  },
+  {
+    name: 'birthPlaces',
+    searchParamType: 'array',
+    Component: SearchableMultiSelectFacet,
+  },
+  {
+    name: 'deathYears',
+    searchParamType: 'array',
+    Component: SearchableMultiSelectFacet,
+  },
+  {
+    name: 'deathPlaces',
+    searchParamType: 'array',
+    Component: SearchableMultiSelectFacet,
+  },
 ];
 
 interface FacetMenuProps {
@@ -67,7 +83,7 @@ function FacetMenu({filters}: FacetMenuProps) {
             <Component
               key={name}
               title={t(`${name}Filter`)}
-              searchResultFilters={filters[name]}
+              filters={filters[name]}
               filterKey={name}
               testId={`${name}Filter`}
             />

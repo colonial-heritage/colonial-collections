@@ -198,6 +198,8 @@ export function useSearchableMultiSelectFacet() {
     [filters]
   );
 
+  console.log(filters);
+
   const filteredFilters = useMemo(() => {
     return getFilteredFilters({
       filtersWithLetterCategory,

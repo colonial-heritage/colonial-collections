@@ -18,8 +18,8 @@ import {
   SortOrderEnum,
 } from '@/lib/api/objects';
 import {
-  SimpleFacet,
-  SearchableFacet,
+  MultiSelectFacet,
+  SearchableMultiSelectFacet,
   Paginator,
   SelectedFilters,
   SearchFieldWithLabel,
@@ -66,18 +66,18 @@ interface DateRangeFacet extends Facet {
 }
 
 const facets: ReadonlyArray<Facet | DateRangeFacet> = [
-  {name: 'locations', Component: SearchableFacet},
+  {name: 'locations', Component: SearchableMultiSelectFacet},
   {
     name: 'dateCreated',
     Component: DateRangeFacet,
     startDateKey: 'dateCreatedStart',
     endDateKey: 'dateCreatedEnd',
   },
-  {name: 'types', Component: SearchableFacet},
-  {name: 'subjects', Component: SimpleFacet},
-  {name: 'materials', Component: SearchableFacet},
-  {name: 'creators', Component: SearchableFacet},
-  {name: 'publishers', Component: SimpleFacet},
+  {name: 'types', Component: SearchableMultiSelectFacet},
+  {name: 'subjects', Component: MultiSelectFacet},
+  {name: 'materials', Component: SearchableMultiSelectFacet},
+  {name: 'creators', Component: SearchableMultiSelectFacet},
+  {name: 'publishers', Component: MultiSelectFacet},
 ];
 
 interface FacetMenuProps {

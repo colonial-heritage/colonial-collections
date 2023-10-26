@@ -1,3 +1,5 @@
+'use client';
+
 import {FacetCheckBox, FacetTitle, FacetWrapper} from './base-facet';
 import {SearchResultFilter} from './SearchResultFilter';
 

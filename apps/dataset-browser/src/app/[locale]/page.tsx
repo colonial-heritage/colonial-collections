@@ -18,11 +18,11 @@ import {
   SortOrderEnum,
 } from '@/lib/datasets';
 import {
-  FilterSet,
   Paginator,
   SelectedFilters,
   SearchFieldWithLabel,
   OrderSelector,
+  MultiSelectFacet,
 } from '@colonial-collections/ui/list';
 import {
   PageTitle,
@@ -44,10 +44,26 @@ interface FacetProps {
 }
 
 const facets: ReadonlyArray<FacetProps> = [
-  {name: 'publishers', searchParamType: 'array', Component: FilterSet},
-  {name: 'spatialCoverages', searchParamType: 'array', Component: FilterSet},
-  {name: 'genres', searchParamType: 'array', Component: FilterSet},
-  {name: 'licenses', searchParamType: 'array', Component: FilterSet},
+  {
+    name: 'publishers',
+    searchParamType: 'array',
+    Component: MultiSelectFacet,
+  },
+  {
+    name: 'spatialCoverages',
+    searchParamType: 'array',
+    Component: MultiSelectFacet,
+  },
+  {
+    name: 'genres',
+    searchParamType: 'array',
+    Component: MultiSelectFacet,
+  },
+  {
+    name: 'licenses',
+    searchParamType: 'array',
+    Component: MultiSelectFacet,
+  },
 ];
 
 interface FacetMenuProps {
@@ -66,7 +82,7 @@ function FacetMenu({filters}: FacetMenuProps) {
             <Component
               key={name}
               title={t(`${name}Filter`)}
-              searchResultFilters={filters[name]}
+              filters={filters[name]}
               filterKey={name}
               testId={`${name}Filter`}
             />
@@ -143,7 +159,7 @@ export default async function Home({searchParams = {}}: Props) {
           />
           <aside
             id="facets"
-            className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2"
+            className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2 pr-5"
           >
             <FacetMenu filters={searchResult.filters} />
           </aside>
