@@ -54,7 +54,7 @@
     "@rdfjs/types": "1.1.0",
     "@types/mdx": "2.0.8",
     "@types/n3": "1.16.0",
-    "@types/node": "20.8.3",
+    "@types/node": "20.8.9",
     "@types/openseadragon": "3.0.7",
     "@types/react": "18.2.31",
     "@types/react-dom": "18.2.7",
