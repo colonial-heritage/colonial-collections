@@ -15,7 +15,7 @@ export interface Filter {
 }
 
 export interface SearchableFilter extends Filter {
-  letterCategory: string;
+  letterCategory?: string;
   // In order to make the filter searchable, we need to convert the name to a string
   name: string;
 }
@@ -29,7 +29,7 @@ interface FacetProps {
 
 interface FacetState extends FacetProps {
   setSearchValue: (value: string) => void;
-  toggleLetterCategory: (value: string) => void;
+  toggleLetterCategory: (value?: string) => void;
   setSortBy: (value: FacetSortBy) => void;
   setFilters: (value: Filter[]) => void;
 }
@@ -51,7 +51,7 @@ export const createFacetStore = (initProps?: Partial<FacetProps>) => {
       set(() => ({
         searchValue,
       })),
-    toggleLetterCategory: (category: string) =>
+    toggleLetterCategory: (category?: string) =>
       set(state => ({
         letterCategory: state.letterCategory === category ? '' : category,
       })),
@@ -114,10 +114,10 @@ export function extendFiltersWithLetterCategory(filters?: Filter[]) {
     return [];
   }
   return filters.map(filter => {
-    let letterCategory = '';
+    let letterCategory;
     const name = filter.name?.toString();
     if (name) {
-      const firstLetter = name.toUpperCase().replace(/[^0-9A-Z]/g, '')[0];
+      const firstLetter = name.toUpperCase().replace(/[^0-9A-Z]/, '')[0];
       if (/^\d+$/.test(firstLetter)) {
         letterCategory = '[0-9]';
       } else {

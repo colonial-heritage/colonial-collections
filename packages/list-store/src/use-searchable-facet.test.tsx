@@ -40,6 +40,16 @@ describe('getLetterCategories', () => {
     const result = getLetterCategories({filters, searchValue: 'B Fil'});
     expect(result).toEqual(['B']);
   });
+
+  it('ignores undefined letterCategories', () => {
+    const filters = [
+      {letterCategory: 'A', name: 'B Filter', id: '1', totalCount: 1},
+      {letterCategory: undefined, name: '', id: '2', totalCount: 1},
+      {letterCategory: undefined, name: '#', id: '3', totalCount: 1},
+    ];
+    const result = getLetterCategories({filters});
+    expect(result).toEqual(['A']);
+  });
 });
 
 describe('extendFiltersWithLetterCategory', () => {
@@ -49,12 +59,16 @@ describe('extendFiltersWithLetterCategory', () => {
       {name: 'Banana', id: '2', totalCount: 1},
       {name: 'Cherry', id: '3', totalCount: 1},
       {name: '1 Filter', id: '4', totalCount: 1},
+      {name: '#', id: '5', totalCount: 1},
+      {name: '', id: '6', totalCount: 1},
     ];
     const expectedFilters = [
       {name: 'Apple', id: '1', totalCount: 1, letterCategory: 'A'},
       {name: 'Banana', id: '2', totalCount: 1, letterCategory: 'B'},
       {name: 'Cherry', id: '3', totalCount: 1, letterCategory: 'C'},
       {name: '1 Filter', id: '4', totalCount: 1, letterCategory: '[0-9]'},
+      {name: '#', id: '5', totalCount: 1, letterCategory: undefined},
+      {name: '', id: '6', totalCount: 1, letterCategory: undefined},
     ];
     const result = extendFiltersWithLetterCategory(filters);
     expect(result).toEqual(expectedFilters);
@@ -67,7 +81,7 @@ describe('extendFiltersWithLetterCategory', () => {
     ];
     const expectedFilters = [
       {name: '123', id: '1', totalCount: 1, letterCategory: '[0-9]'},
-      {name: '', id: '2', totalCount: 1, letterCategory: ''},
+      {name: '', id: '2', totalCount: 1, letterCategory: undefined},
     ];
     const result = extendFiltersWithLetterCategory(filters);
     expect(result).toEqual(expectedFilters);
