@@ -143,20 +143,24 @@ function filterBySearchValue(
   filters: SearchableFilter[],
   searchValue?: string
 ) {
-  if (searchValue) {
-    return filters.filter(
-      filter => filter.name?.toLowerCase().includes(searchValue.toLowerCase())
-    );
-  } else return filters;
+  if (!searchValue) {
+    return filters;
+  }
+
+  return filters.filter(
+    filter => filter.name?.toLowerCase().includes(searchValue.toLowerCase())
+  );
 }
 
 function filterByLetterCategory(
   filters: SearchableFilter[],
   letterCategory: string
 ) {
-  if (letterCategory) {
-    return filters.filter(filter => filter.letterCategory === letterCategory);
-  } else return filters;
+  if (!letterCategory) {
+    return filters;
+  }
+
+  return filters.filter(filter => filter.letterCategory === letterCategory);
 }
 
 export function getFilteredFilters({
@@ -191,7 +195,9 @@ export function getFilteredFilters({
 
 export function useSearchableMultiSelectFacet() {
   const storeContext = useContext(FacetContext);
-  if (!storeContext) throw new Error('Missing FacetContext in the tree');
+  if (!storeContext) {
+    throw new Error('Missing FacetContext in the tree');
+  }
 
   const store = useStore(storeContext);
   const {searchValue, letterCategory, sortBy, filters} = store;
@@ -200,8 +206,6 @@ export function useSearchableMultiSelectFacet() {
     () => extendFiltersWithLetterCategory(filters),
     [filters]
   );
-
-  console.log(filters);
 
   const filteredFilters = useMemo(() => {
     return getFilteredFilters({

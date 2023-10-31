@@ -11,7 +11,9 @@ interface Props {
 }
 
 export function MultiSelectFacet({title, filters, filterKey, testId}: Props) {
-  if (!filters.length) return null;
+  if (!filters.length) {
+    return null;
+  }
 
   return (
     <FacetWrapper testId={testId}>
