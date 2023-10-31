@@ -8,6 +8,7 @@ import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   defaultSortBy,
+  Type as SearchParamType,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -22,47 +23,52 @@ import {
   SelectedFilters,
   SearchFieldWithLabel,
   OrderSelector,
-} from 'ui/list';
+} from '@colonial-collections/ui/list';
 import {
   PageTitle,
   PageHeader,
   SmallScreenSubMenu,
   SubMenuButton,
   SubMenuDialog,
-} from 'ui';
+} from '@colonial-collections/ui';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
+import {ElementType} from 'react';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
 
-// Set the order of the filters
-const filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']> = [
-  'publishers',
-  'spatialCoverages',
-  'genres',
-  'licenses',
+interface FacetProps {
+  name: keyof SearchResult['filters'];
+  searchParamType: SearchParamType;
+  Component: ElementType;
+}
+
+const facets: ReadonlyArray<FacetProps> = [
+  {name: 'publishers', searchParamType: 'array', Component: FilterSet},
+  {name: 'spatialCoverages', searchParamType: 'array', Component: FilterSet},
+  {name: 'genres', searchParamType: 'array', Component: FilterSet},
+  {name: 'licenses', searchParamType: 'array', Component: FilterSet},
 ];
 
 interface FacetMenuProps {
   filters: SearchResult['filters'];
-  filterKeysOrder: ReadonlyArray<keyof SearchResult['filters']>;
 }
 
-function FacetMenu({filterKeysOrder, filters}: FacetMenuProps) {
+function FacetMenu({filters}: FacetMenuProps) {
   const t = useTranslations('Filters');
 
   return (
     <>
       <SearchFieldWithLabel />
-      {filterKeysOrder.map(
-        filterKey =>
-          !!filters[filterKey]?.length && (
-            <FilterSet
-              key={filterKey}
-              title={t(`${filterKey}Filter`)}
-              searchResultFilters={filters[filterKey]}
-              filterKey={filterKey}
-              testId={`${filterKey}Filter`}
+      {facets.map(
+        ({name, Component}) =>
+          !!filters[name]?.length && (
+            <Component
+              key={name}
+              title={t(`${name}Filter`)}
+              searchResultFilters={filters[name]}
+              filterKey={name}
+              testId={`${name}Filter`}
             />
           )
       )}
@@ -83,6 +89,10 @@ export default async function Home({searchParams = {}}: Props) {
       defaultSortBy: SortBy.Relevance,
       sortMapping: sortMapping,
     },
+    filterKeys: facets.map(({name, searchParamType}) => ({
+      name,
+      type: searchParamType,
+    })),
     searchParams,
   });
   const sortBy = getClientSortBy({
@@ -135,10 +145,7 @@ export default async function Home({searchParams = {}}: Props) {
             id="facets"
             className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2"
           >
-            <FacetMenu
-              filters={searchResult.filters}
-              filterKeysOrder={filterKeysOrder}
-            />
+            <FacetMenu filters={searchResult.filters} />
           </aside>
 
           <section className="w-full md:w-2/3 gap-6 flex flex-col">
@@ -153,10 +160,7 @@ export default async function Home({searchParams = {}}: Props) {
                 />
               </SubMenuButton>
               <SubMenuDialog title={t('filters')}>
-                <FacetMenu
-                  filters={searchResult.filters}
-                  filterKeysOrder={filterKeysOrder}
-                />
+                <FacetMenu filters={searchResult.filters} />
               </SubMenuDialog>
             </SmallScreenSubMenu>
             <PageHeader>
@@ -174,10 +178,8 @@ export default async function Home({searchParams = {}}: Props) {
                 </div>
               </div>
               <SelectedFilters
-                filters={filterKeysOrder.map(filterKey => ({
-                  searchResultFilters: searchResult!.filters[filterKey] ?? [],
-                  filterKey,
-                }))}
+                filters={searchResult.filters}
+                filterSettings={facets}
               />
             </PageHeader>
 

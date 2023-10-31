@@ -1,40 +1,6 @@
 import {describe, expect, it} from '@jest/globals';
 import {auth} from '@clerk/nextjs';
-import {isAdmin, sort, SortBy} from './community';
-import {OrganizationMembership} from '@clerk/nextjs/dist/types/server';
-
-const basicOrganization = {
-  id: 'organization1',
-  name: 'Organization 1',
-  slug: 'organization-1',
-  imageUrl: 'https://example.com/image.png',
-  createdAt: 1690000000000,
-  updatedAt: 1690000000000,
-  logoUrl: null,
-  createdBy: 'me',
-  publicMetadata: null,
-  privateMetadata: {},
-  maxAllowedMemberships: 100,
-  adminDeleteEnabled: true,
-};
-
-const basicMembership = {
-  id: 'membership1',
-  role: 'admin',
-  publicUserData: {
-    identifier: 'me',
-    userId: 'me',
-    firstName: 'John',
-    lastName: 'Doe',
-    profileImageUrl: 'https://example.com/image.png',
-    imageUrl: 'https://example.com/image.png',
-  },
-  publicMetadata: {},
-  privateMetadata: {},
-  createdAt: 1690000000000,
-  updatedAt: 1690000000000,
-  organization: basicOrganization,
-};
+import {isAdmin, Membership, sort, SortBy} from './community';
 
 jest.mock('@clerk/nextjs', () => ({
   auth: jest.fn().mockImplementation(() => ({
@@ -44,54 +10,50 @@ jest.mock('@clerk/nextjs', () => ({
 
 describe('isAdmin', () => {
   it('returns true if user is an admin', () => {
-    const memberships: ReadonlyArray<OrganizationMembership> = [
+    const memberships: ReadonlyArray<Membership> = [
       {
-        ...basicMembership,
         id: 'membership1',
         role: 'admin',
-        publicUserData: {
-          ...basicMembership.publicUserData,
-          userId: 'me',
-        },
+        userId: 'me',
+        firstName: 'John',
+        lastName: 'Doe',
+        imageUrl: 'https://example.com/image.png',
       },
       {
-        ...basicMembership,
         id: 'membership2',
         role: 'basic_member',
-        publicUserData: {
-          ...basicMembership.publicUserData,
-          userId: 'me',
-        },
+        userId: 'notMe',
+        firstName: 'Jane',
+        lastName: 'Doe',
+        imageUrl: 'https://example.com/image.png',
       },
     ];
     expect(isAdmin(memberships)).toEqual(true);
   });
 
   it('returns false if user is not an admin', () => {
-    const memberships: ReadonlyArray<OrganizationMembership> = [
+    const memberships: ReadonlyArray<Membership> = [
       {
-        ...basicMembership,
         id: 'membership1',
         role: 'basic_member',
-        publicUserData: {
-          ...basicMembership.publicUserData,
-          userId: 'me',
-        },
+        userId: 'me',
+        firstName: 'John',
+        lastName: 'Doe',
+        imageUrl: 'https://example.com/image.png',
       },
     ];
     expect(isAdmin(memberships)).toEqual(false);
   });
 
   it('returns false if user is not a member', () => {
-    const memberships: ReadonlyArray<OrganizationMembership> = [
+    const memberships: ReadonlyArray<Membership> = [
       {
-        ...basicMembership,
         id: 'membership1',
         role: 'basic_member',
-        publicUserData: {
-          ...basicMembership.publicUserData,
-          userId: 'notMe',
-        },
+        userId: 'notMe',
+        firstName: 'John',
+        lastName: 'Doe',
+        imageUrl: 'https://example.com/image.png',
       },
     ];
     expect(isAdmin(memberships)).toEqual(false);
@@ -102,18 +64,21 @@ describe('isAdmin', () => {
       userId: undefined,
     }));
 
-    const memberships: ReadonlyArray<OrganizationMembership> = [
+    const memberships: ReadonlyArray<Membership> = [
       {
-        ...basicMembership,
         id: 'membership1',
         role: 'admin',
+        userId: 'notMe',
+        firstName: 'John',
+        lastName: 'Doe',
+        imageUrl: 'https://example.com/image.png',
       },
     ];
     expect(isAdmin(memberships)).toEqual(false);
   });
 
   it('returns false if there are no memberships', () => {
-    const memberships: OrganizationMembership[] = [];
+    const memberships: Membership[] = [];
     expect(isAdmin(memberships)).toEqual(false);
   });
 });
@@ -121,34 +86,44 @@ describe('isAdmin', () => {
 describe('sort', () => {
   const communities = [
     {
-      ...basicOrganization,
       id: 'community2',
       name: 'Community 2',
+      slug: 'community-2',
+      imageUrl: 'https://example.com/image.png',
       createdAt: 1690000000000,
+      membershipCount: 10,
     },
     {
-      ...basicOrganization,
       id: 'community1',
       name: 'Community 1',
+      slug: 'community-1',
+      imageUrl: 'https://example.com/image.png',
       createdAt: 1600000000000,
+      membershipCount: 5,
     },
     {
-      ...basicOrganization,
       id: 'community4',
       name: 'Community 4',
+      slug: 'community-4',
+      imageUrl: 'https://example.com/image.png',
       createdAt: 1680000000000,
+      membershipCount: 15,
     },
     {
-      ...basicOrganization,
       id: 'community3',
       name: 'Community 3',
+      slug: 'community-3',
+      imageUrl: 'https://example.com/image.png',
       createdAt: 1650000000000,
+      membershipCount: 20,
     },
     {
-      ...basicOrganization,
       id: 'community5',
       name: 'Community 5',
+      slug: 'community-5',
+      imageUrl: 'https://example.com/image.png',
       createdAt: 1670000000000,
+      membershipCount: undefined,
     },
   ];
 
@@ -156,107 +131,201 @@ describe('sort', () => {
     const sortedCommunities = sort(communities, SortBy.NameAsc);
 
     const expectedSortedCommunities = [
-      expect.objectContaining({
+      {
         id: 'community1',
         name: 'Community 1',
+        slug: 'community-1',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 5,
+      },
+      {
         id: 'community2',
         name: 'Community 2',
+        slug: 'community-2',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 10,
+      },
+      {
         id: 'community3',
         name: 'Community 3',
+        slug: 'community-3',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 20,
+      },
+      {
         id: 'community4',
         name: 'Community 4',
+        slug: 'community-4',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 15,
+      },
+      {
         id: 'community5',
         name: 'Community 5',
+        slug: 'community-5',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
-      }),
+        membershipCount: undefined,
+      },
     ];
 
-    expect(sortedCommunities).toEqual(expectedSortedCommunities);
+    expect(sortedCommunities).toStrictEqual(expectedSortedCommunities);
   });
 
   it('sorts communities by name in descending order', () => {
     const sortedCommunities = sort(communities, SortBy.NameDesc);
 
     const expectedSortedCommunities = [
-      expect.objectContaining({
+      {
         id: 'community5',
         name: 'Community 5',
+        slug: 'community-5',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: undefined,
+      },
+      {
         id: 'community4',
         name: 'Community 4',
+        slug: 'community-4',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 15,
+      },
+      {
         id: 'community3',
         name: 'Community 3',
+        slug: 'community-3',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 20,
+      },
+      {
         id: 'community2',
         name: 'Community 2',
+        slug: 'community-2',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 10,
+      },
+      {
         id: 'community1',
         name: 'Community 1',
+        slug: 'community-1',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
-      }),
+        membershipCount: 5,
+      },
     ];
 
-    expect(sortedCommunities).toEqual(expectedSortedCommunities);
+    expect(sortedCommunities).toStrictEqual(expectedSortedCommunities);
   });
 
   it('sorts communities by creation date in descending order', () => {
     const sortedCommunities = sort(communities, SortBy.CreatedAtDesc);
 
     const expectedSortedCommunities = [
-      expect.objectContaining({
+      {
         id: 'community2',
         name: 'Community 2',
+        slug: 'community-2',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 10,
+      },
+      {
         id: 'community4',
         name: 'Community 4',
+        slug: 'community-4',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 15,
+      },
+      {
         id: 'community5',
         name: 'Community 5',
+        slug: 'community-5',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: undefined,
+      },
+      {
         id: 'community3',
         name: 'Community 3',
+        slug: 'community-3',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
-      }),
-      expect.objectContaining({
+        membershipCount: 20,
+      },
+      {
         id: 'community1',
         name: 'Community 1',
+        slug: 'community-1',
+        imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
-      }),
+        membershipCount: 5,
+      },
     ];
 
-    expect(sortedCommunities).toEqual(expectedSortedCommunities);
+    expect(sortedCommunities).toStrictEqual(expectedSortedCommunities);
   });
 
-  it('returns the list unsorted if sortBy is an incorrect value', () => {
-    const sortedCommunities = sort(communities, 'incorrect' as SortBy);
+  it('sorts communities by membership count in descending order', () => {
+    const sortedCommunities = sort(communities, SortBy.MembershipCountDesc);
 
-    expect(sortedCommunities).toEqual(communities);
+    const expectedSortedCommunities = [
+      {
+        id: 'community3',
+        name: 'Community 3',
+        slug: 'community-3',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1650000000000,
+        membershipCount: 20,
+      },
+      {
+        id: 'community4',
+        name: 'Community 4',
+        slug: 'community-4',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1680000000000,
+        membershipCount: 15,
+      },
+      {
+        id: 'community2',
+        name: 'Community 2',
+        slug: 'community-2',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1690000000000,
+        membershipCount: 10,
+      },
+      {
+        id: 'community1',
+        name: 'Community 1',
+        slug: 'community-1',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1600000000000,
+        membershipCount: 5,
+      },
+      {
+        id: 'community5',
+        name: 'Community 5',
+        slug: 'community-5',
+        imageUrl: 'https://example.com/image.png',
+        createdAt: 1670000000000,
+        membershipCount: undefined,
+      },
+    ];
+
+    expect(sortedCommunities).toStrictEqual(expectedSortedCommunities);
+  });
+
+  it('returns the original array if sortBy is not valid', () => {
+    const sortedCommunities = sort(communities, 'invalid' as SortBy);
+
+    expect(sortedCommunities).toStrictEqual(communities);
   });
 });

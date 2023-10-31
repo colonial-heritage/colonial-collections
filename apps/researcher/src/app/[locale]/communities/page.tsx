@@ -3,7 +3,11 @@ import {getTranslator} from 'next-intl/server';
 import ErrorMessage from '@/components/error-message';
 import CommunityCard from './community-card';
 import {ClientListStore} from '@colonial-collections/list-store';
-import {Paginator, SearchField, OrderSelector} from 'ui/list';
+import {
+  Paginator,
+  SearchField,
+  OrderSelector,
+} from '@colonial-collections/ui/list';
 
 // 1 day = 60*60*24 = 86400
 export const revalidate = 86400;

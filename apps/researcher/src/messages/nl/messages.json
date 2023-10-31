@@ -84,7 +84,12 @@
     "currentPublisher": "Huidige locatie van object",
     "noOrganizationFound": "Geen organisatie gevonden.",
     "dateCreated": "Datum van creatie",
-    "dateCreatedSubTitle": "Wanneer is het voorwerp gemaakt? Dit kan een exacte datum of een datumbereik zijn."
+    "dateCreatedSubTitle": "Wanneer is het voorwerp gemaakt? Dit kan een exacte datum of een datumbereik zijn.",
+    "noListsInCommunity": "Geen lijsten",
+    "objectAddedToList": "Object toegevoegd aan lijst <name></name>.",
+    "errorObjectAddedToList": "Er is een probleem opgetreden bij het toevoegen van het object aan de lijst. Probeer het later opnieuw.",
+    "objectRemovedFromList": "Object verwijderd van lijst <name></name>.",
+    "errorObjectRemovedFromList": "Er is een probleem opgetreden bij het verwijderen van het object van de lijst. Probeer het later opnieuw."
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
@@ -112,8 +117,11 @@
     "deathYearsFilter": "Overlijdensjaren",
     "deathPlacesFilter": "Overlijdensplaatsen",
     "publishersFilter": "Bronhouder objecten",
+    "dateCreatedFilter": "Datum gemaakt",
     "search": "Zoeken",
     "filters": "Filters",
+    "fromYear": "Van jaar",
+    "tillYear": "Tot en met jaar",
     "expandFilter": "Uitklappen",
     "clearAllFilters": "Alles verwijderen",
     "filterSearchPlaceholder": "Filteren op {filterName}",
@@ -158,7 +166,14 @@
     "objectListsSubTitle": "Deze community heeft {count, plural, =0 {0 lijsten} =1 {1 lijst} other {# lijsten}}",
     "membersTitle": "Leden",
     "error": "Er is een fout opgetreden bij het ophalen van de community. Probeer het later opnieuw.",
-    "addObjectListButton": "Lijst toevoegen"
+    "addObjectListButton": "Lijst toevoegen",
+    "editDescriptionButton": "Beschrijving aanpassen",
+    "labelDescription":"Beschrijving",
+    "changeDescriptionSaveButton": "Opslaan",
+    "changeDescriptionCancelButton": "Annuleren",
+    "descriptionUpdated": "Beschrijving is aangepast",
+    "descriptionServerError": "Er is iets misgegaan bij het aanpassen van de beschrijving. Probeer het later opnieuw.",
+    "description_maxLength": "Beschrijving mag maximaal 2000 tekens bevatten"
   },
   "AddObjectListForm": {
     "title": "Lijst toevoegen",
@@ -171,5 +186,13 @@
     "nameTooBig": "Lijstnaam mag maximaal 250 tekens bevatten",
     "serverError": "Er is iets misgegaan bij het maken van de lijst. Probeer het later opnieuw.",
     "listSuccessfullyAdded": "Lijst <name></name> is aan je community toegevoegd"
+  },
+  "ObjectList": {
+    "backButton": "Terug naar community",
+    "noEntity": "Lijst kon niet gevonden worden",
+    "noCommunity": "Community kon niet gevonden worden",
+    "error": "Er is een fout opgetreden bij het ophalen van de de lijst. Probeer het later opnieuw.",
+    "objectCount": "{count, plural, =0 {0 objecten} =1 {1 object} other {# objecten}}",
+    "listCreatedBy": "Lijst gemaakt door"
   }
 }

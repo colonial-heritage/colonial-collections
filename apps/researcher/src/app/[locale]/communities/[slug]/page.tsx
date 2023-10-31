@@ -10,7 +10,13 @@ import {revalidatePath} from 'next/cache';
 import {objectList} from '@colonial-collections/database';
 import ObjectCard from './object';
 import AddObjectListForm from '@/components/add-object-list-form';
-import {SlideOutButton, SlideOut, Notifications} from 'ui';
+import {
+  SlideOutButton,
+  SlideOut,
+  SlideOutClosed,
+  Notifications,
+} from '@colonial-collections/ui';
+import EditDescriptionForm from './edit-description-form';
 
 interface Props {
   params: {
@@ -20,6 +26,11 @@ interface Props {
 }
 
 const slideOutFormId = 'add-object-list';
+const slideOutDescriptionId = 'edit-community-description';
+
+// Don't cache this page, so we always get the latest community data from the third-party Clerk.
+// With 'force-dynamic', the description in the Clerk metadata will change after editing.
+export const dynamic = 'force-dynamic';
 
 export default async function CommunityPage({params}: Props) {
   const t = await getTranslator(params.locale, 'Community');
@@ -87,14 +98,33 @@ export default async function CommunityPage({params}: Props) {
                 {community.name}
               </span>
             </h1>
-
             <div className="w-full flex flex-col md:flex-row justify-center px-4">
-              <div className="mb-4 max-w-3xl text-left">
-                {/*Place the description here*/}
-              </div>
-              <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
-                <JoinCommunityButton communityId={community.id} />
-              </div>
+              <SlideOutClosed id={slideOutDescriptionId}>
+                <div className="mb-4 max-w-3xl text-left whitespace-pre-line">
+                  {community.description}
+                </div>
+              </SlideOutClosed>
+              <SlideOut id={slideOutDescriptionId}>
+                <EditDescriptionForm
+                  slideOutId={slideOutDescriptionId}
+                  communityId={community.id}
+                  communitySlug={community.slug!}
+                  description={community.description}
+                />
+              </SlideOut>
+            </div>
+            <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
+              <JoinCommunityButton
+                communityId={community.id}
+                communitySlug={params.slug}
+              />
+              <SlideOutButton
+                hideIfOpen
+                id={slideOutDescriptionId}
+                className="flex items-center py-2 px-3 rounded-full bg-sand-100 text-sand-900 hover:bg-white transition text-xs"
+              >
+                {t('editDescriptionButton')}
+              </SlideOutButton>
             </div>
           </div>
 
@@ -166,9 +196,9 @@ export default async function CommunityPage({params}: Props) {
                 key={membership.id}
               >
                 <div className="w-10">
-                  {membership.publicUserData?.profileImageUrl && (
+                  {membership.imageUrl && (
                     <Image
-                      src={membership.publicUserData.profileImageUrl}
+                      src={membership.imageUrl}
                       alt=""
                       className="w-full rounded-full"
                       width={40}
@@ -178,8 +208,7 @@ export default async function CommunityPage({params}: Props) {
                 </div>
                 <div className="flex flex-col">
                   <div className="">
-                    {membership.publicUserData?.firstName}{' '}
-                    {membership.publicUserData?.lastName}
+                    {membership.firstName} {membership.lastName}
                   </div>
                   <div className="text-neutral-600">
                     {/* Place country name here */}

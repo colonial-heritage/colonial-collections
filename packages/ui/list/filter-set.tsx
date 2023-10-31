@@ -75,10 +75,12 @@ function FilterOption({
   filterKey,
 }: FilterOptionProps) {
   const listStore = useListStore();
-  const selectedFilters = useMemo(
-    () => listStore.selectedFilters[filterKey] || [],
-    [filterKey, listStore.selectedFilters]
-  );
+  const selectedFilters = useMemo(() => {
+    if (typeof listStore.selectedFilters[filterKey] === 'number') {
+      throw new Error('`FilterOption` is not compatible with number filters.');
+    }
+    return (listStore.selectedFilters[filterKey] as string[]) || [];
+  }, [filterKey, listStore.selectedFilters]);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,6 +154,10 @@ export function FilterSet({
           .includes(query.toLocaleLowerCase())
     );
   }, [query, searchResultFilters]);
+
+  if (searchResultFilters.length === 0) {
+    return null;
+  }
 
   return (
     <div

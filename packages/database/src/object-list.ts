@@ -1,22 +1,21 @@
 import {objectLists, objectItems} from './db/schema';
 import {insertObjectItemSchema, insertObjectListSchema} from './db/validation';
-import {InferSelectModel, sql} from 'drizzle-orm';
+import {sql} from 'drizzle-orm';
 import {db} from './db/connection';
 import {iriToHash} from './iri-to-hash';
 import {DBQueryConfig, eq} from 'drizzle-orm';
+import {ObjectList} from './db/types';
 
 interface Option {
   withObjects?: boolean;
   limitObjects?: number;
-}
-
-interface ObjectList extends InferSelectModel<typeof objectLists> {
-  objects?: InferSelectModel<typeof objectItems>[];
+  objectIri?: string;
 }
 
 export async function getByCommunityId(
   communityId: string,
-  {withObjects, limitObjects}: Option = {withObjects: false}
+  {withObjects, limitObjects, objectIri}: Option = {withObjects: false}
+  // Explicitly set the return type, or else `objects` will not be included.
 ): Promise<ObjectList[]> {
   const options: DBQueryConfig = {};
 
@@ -26,9 +25,27 @@ export async function getByCommunityId(
     };
   }
 
+  if (objectIri) {
+    const objectId = iriToHash(objectIri);
+    options.with = {
+      objects: {
+        where: (objectItems, {eq}) => eq(objectItems.objectId, objectId),
+      },
+    };
+  }
+
   return db.query.objectLists.findMany({
     ...options,
     where: (objectLists, {eq}) => eq(objectLists.communityId, communityId),
+  });
+}
+
+export async function find(id: number) {
+  return db.query.objectLists.findFirst({
+    where: (objectLists, {eq}) => eq(objectLists.id, id),
+    with: {
+      objects: true,
+    },
   });
 }
 
@@ -66,18 +83,26 @@ export async function create({
 }
 
 interface AddObjectProps {
-  listId: number;
+  objectListId: number;
   objectIri: string;
-  userId: string;
+  createdBy: string;
 }
 
-export async function addObject({listId, objectIri, userId}: AddObjectProps) {
+export async function addObject({
+  objectListId,
+  objectIri,
+  createdBy,
+}: AddObjectProps) {
   const objectItem = insertObjectItemSchema.parse({
-    listId,
+    objectListId,
     objectIri,
-    createdBy: userId,
+    createdBy,
     objectId: iriToHash(objectIri),
   });
 
   return db.insert(objectItems).values(objectItem);
+}
+
+export async function removeObject(id: number) {
+  return db.delete(objectItems).where(eq(objectItems.id, id));
 }

@@ -84,7 +84,12 @@
     "currentPublisher": "Current location of object",
     "noOrganizationFound": "No organization found.",
     "dateCreated": "Date Made",
-    "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range."
+    "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range.",
+    "noListsInCommunity": "No lists",
+    "objectAddedToList": "Object added to list <name></name>.",
+    "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
+    "objectRemovedFromList": "Object removed from list <name></name>.",
+    "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later."
   },
   "PersonDetails": {
     "backButton": "Back to results",
@@ -112,8 +117,11 @@
     "deathYearsFilter": "Death years",
     "deathPlacesFilter": "Death places",
     "publishersFilter": "Object data providers",
+    "dateCreatedFilter": "Date made",
     "search": "Search for text",
     "filters": "Filters",
+    "fromYear": "From year",
+    "tillYear": "Till year",
     "expandFilter": "Expand",
     "clearAllFilters": "Clear all",
     "filterSearchPlaceholder": "Filter on {filterName}",
@@ -158,7 +166,14 @@
     "objectListsSubTitle": "This community has {count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
     "membersTitle": "Members",
     "error": "Something went wrong while fetching the community. Please try again later.",
-    "addObjectListButton": "Add list"
+    "addObjectListButton": "Add list",
+    "editDescriptionButton": "Edit description",
+    "labelDescription":"Description",
+    "changeDescriptionSaveButton": "Save",
+    "changeDescriptionCancelButton": "Cancel",
+    "descriptionUpdated": "Description has been updated",
+    "descriptionServerError": "Something went wrong while updating the description. Please try again later.",
+    "description_maxLength": "Description has a maximum of 2000 characters"
   },
   "AddObjectListForm": {
     "title": "Add list",
@@ -171,5 +186,13 @@
     "nameTooBig": "List name has a maximum of 250 characters",
     "serverError": "Something went wrong while creating the list. Please try again later.",
     "listSuccessfullyAdded": "List <name></name> has been added to you community"
+  },
+  "ObjectList": {
+    "backButton": "Back to community",
+    "noEntity": "List could not be found",
+    "noCommunity": "Community could not be found",
+    "error": "Something went wrong while fetching the list. Please try again later.",
+    "objectCount": "{count, plural, =0 {0 objects} =1 {1 object} other {# objects}}",
+    "listCreatedBy": "List created by"
   }
 }
