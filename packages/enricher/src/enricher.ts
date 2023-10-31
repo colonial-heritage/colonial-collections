@@ -12,13 +12,18 @@ const constructorOptionsSchema = z.object({
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
 const addTextOptionsSchema = z.object({
-  value: z.string(),
+  description: z.string(),
+  source: z.string(), // Required or optional property?
   about: z.string().url(),
   creator: z.string().url(),
   license: z.string().url(),
 });
 
 export type AddTextOptions = z.infer<typeof addTextOptionsSchema>;
+
+export type Enrichment = {
+  id: string;
+};
 
 export class Enricher {
   private nanopubClient: NanopubClient;
@@ -33,29 +38,62 @@ export class Enricher {
     const opts = addTextOptionsSchema.parse(options);
 
     const enrichmentStore = RdfStore.createDefault();
-    const enrichmentId = DF.blankNode();
+    const annotationId = DF.blankNode();
+    const bodyId = DF.blankNode();
 
     enrichmentStore.addQuad(
       DF.quad(
-        enrichmentId,
+        annotationId,
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode('https://www.w3.org/ns/oa#Annotation')
+      )
+    );
+    enrichmentStore.addQuad(
+      DF.quad(
+        annotationId,
+        DF.namedNode('https://www.w3.org/ns/oa#body'),
+        bodyId
+      )
+    );
+    enrichmentStore.addQuad(
+      DF.quad(
+        bodyId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('https://www.w3.org/ns/oa#TextualBody')
       )
     );
     enrichmentStore.addQuad(
       DF.quad(
-        enrichmentId,
+        bodyId,
         DF.namedNode('https://www.w3.org/ns/oa#value'),
-        DF.literal(opts.value)
+        DF.literal(opts.description)
+      )
+    );
+    enrichmentStore.addQuad(
+      DF.quad(
+        bodyId,
+        DF.namedNode('http://purl.org/dc/elements/1.1/source'),
+        DF.literal(opts.source)
+      )
+    );
+    enrichmentStore.addQuad(
+      DF.quad(
+        annotationId,
+        DF.namedNode('https://www.w3.org/ns/oa#target'),
+        DF.literal(opts.about)
       )
     );
 
-    return this.nanopubClient.add({
-      // @ts-expect-error:TS2322
+    const nanopub = await this.nanopubClient.add({
       enrichmentStore,
-      about: opts.about,
       creator: opts.creator,
       license: opts.license,
     });
+
+    const enrichment: Enrichment = {
+      id: nanopub.id,
+    };
+
+    return enrichment;
   }
 }

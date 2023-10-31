@@ -8,17 +8,20 @@ const nanopubClient = new NanopubClient({
   proxyEndpointUrl: env.NANOPUB_PROXY_ENDPOINT_URL as string,
 });
 
-const enricher = new Enricher({
-  nanopubClient,
-});
+const enricher = new Enricher({nanopubClient});
 
 describe('add', () => {
-  it('adds a text enrichment', async () => {
-    await enricher.addText({
-      value: 'A comment',
+  it('adds a textual enrichment', async () => {
+    const enrichment = await enricher.addText({
+      description: 'A comment about the object',
+      source: 'A source that supports the comment',
       about: 'http://example.org/object',
       creator: 'http://example.com/person',
       license: 'http://example.org/license',
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://w3id.org/np/'),
     });
   });
 });

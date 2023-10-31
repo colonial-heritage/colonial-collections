@@ -18,16 +18,18 @@ describe('add', () => {
       DF.quad(
         DF.blankNode(),
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode('https://www.w3.org/ns/oa#TextualBody')
+        DF.namedNode('https://www.w3.org/ns/oa#Annotation')
       )
     );
 
-    await nanopubClient.add({
-      // @ts-expect-error:TS2322
+    const nanopub = await nanopubClient.add({
       enrichmentStore,
-      about: 'http://example.org/object',
       creator: 'http://example.com/person',
       license: 'http://example.org/license',
+    });
+
+    expect(nanopub).toEqual({
+      id: expect.stringContaining('https://w3id.org/np/'),
     });
   });
 });

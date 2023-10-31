@@ -1,5 +1,5 @@
 {
-  "name": "@colonial-collections/nanopub-client",
+  "name": "@colonial-collections/enricher",
   "version": "1.0.0",
   "private": true,
   "engines": {
