@@ -9,7 +9,9 @@ const constructorOptionsSchema = z.object({
   nanopubClient: z.instanceof(NanopubClient),
 });
 
-export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
+export type EnricherConstructorOptions = z.infer<
+  typeof constructorOptionsSchema
+>;
 
 const addTextOptionsSchema = z.object({
   description: z.string(),
@@ -28,7 +30,7 @@ export type Enrichment = {
 export class Enricher {
   private nanopubClient: NanopubClient;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: EnricherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.nanopubClient = opts.nanopubClient;

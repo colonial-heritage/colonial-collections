@@ -18,7 +18,9 @@ const constructorOptionsSchema = z.object({
   proxyEndpointUrl: z.string(),
 });
 
-export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
+export type NanopubClientConstructorOptions = z.infer<
+  typeof constructorOptionsSchema
+>;
 
 const addOptionsSchema = z.object({
   enrichmentStore: z.instanceof(RdfStore<number>),
@@ -46,7 +48,7 @@ export class NanopubClient {
   private endpointUrl: string;
   private proxyEndpointUrl: string;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: NanopubClientConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
