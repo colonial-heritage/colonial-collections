@@ -1,4 +1,4 @@
-import {NanopubClient} from './client';
+import {NanopubWriter} from './writer';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
 import {z} from 'zod';
@@ -6,7 +6,7 @@ import {z} from 'zod';
 const DF = new DataFactory();
 
 const constructorOptionsSchema = z.object({
-  nanopubClient: z.instanceof(NanopubClient),
+  nanopubWriter: z.instanceof(NanopubWriter),
 });
 
 export type EnricherConstructorOptions = z.infer<
@@ -28,12 +28,12 @@ export type Enrichment = {
 };
 
 export class Enricher {
-  private nanopubClient: NanopubClient;
+  private nanopubWriter: NanopubWriter;
 
   constructor(options: EnricherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
-    this.nanopubClient = opts.nanopubClient;
+    this.nanopubWriter = opts.nanopubWriter;
   }
 
   async addText(options: AddTextOptions) {
@@ -86,7 +86,7 @@ export class Enricher {
       )
     );
 
-    const nanopub = await this.nanopubClient.add({
+    const nanopub = await this.nanopubWriter.add({
       enrichmentStore,
       creator: opts.creator,
       license: opts.license,

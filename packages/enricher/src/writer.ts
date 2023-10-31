@@ -18,7 +18,7 @@ const constructorOptionsSchema = z.object({
   proxyEndpointUrl: z.string(),
 });
 
-export type NanopubClientConstructorOptions = z.infer<
+export type NanopubWriterConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
@@ -44,11 +44,11 @@ export type Nanopub = {
 };
 
 // A low-level client for interacting with the remote Nanopub writer
-export class NanopubClient {
+export class NanopubWriter {
   private endpointUrl: string;
   private proxyEndpointUrl: string;
 
-  constructor(options: NanopubClientConstructorOptions) {
+  constructor(options: NanopubWriterConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
