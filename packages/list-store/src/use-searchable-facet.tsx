@@ -3,7 +3,10 @@
 import {createStore, useStore} from 'zustand';
 import {useMemo, useRef, createContext, useContext} from 'react';
 
-export type FacetSortBy = 'alphabetical' | 'count';
+export enum FacetSortBy {
+  alphabetical = 'alphabetical',
+  count = 'count',
+}
 
 export interface Filter {
   name?: string | number;

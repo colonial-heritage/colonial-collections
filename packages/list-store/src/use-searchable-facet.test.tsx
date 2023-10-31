@@ -4,6 +4,7 @@ import {
   getFilteredFilters,
   SearchableFilter,
   Filter,
+  FacetSortBy,
 } from './use-searchable-facet';
 
 describe('getLetterCategories', () => {
@@ -93,7 +94,7 @@ describe('getFilteredFilters', () => {
       filtersWithLetterCategory: filters,
       searchValue: 'app',
       letterCategory: '',
-      sortBy: 'count',
+      sortBy: FacetSortBy.count,
     });
     expect(result).toEqual([
       {name: 'Apple', id: '1', totalCount: 1, letterCategory: 'A'},
@@ -105,7 +106,7 @@ describe('getFilteredFilters', () => {
       filtersWithLetterCategory: filters,
       searchValue: '',
       letterCategory: 'B',
-      sortBy: 'count',
+      sortBy: FacetSortBy.count,
     });
     expect(result).toEqual([
       {name: 'Banana', id: '2', totalCount: 2, letterCategory: 'B'},
@@ -117,7 +118,7 @@ describe('getFilteredFilters', () => {
       filtersWithLetterCategory: filters,
       searchValue: '',
       letterCategory: '',
-      sortBy: 'alphabetical',
+      sortBy: FacetSortBy.alphabetical,
     });
     expect(result).toEqual([
       {name: '1 Filter', id: '3', totalCount: 4, letterCategory: '[0-9]'},
@@ -132,7 +133,7 @@ describe('getFilteredFilters', () => {
       filtersWithLetterCategory: filters,
       searchValue: '',
       letterCategory: '',
-      sortBy: 'count',
+      sortBy: FacetSortBy.count,
     });
     expect(result).toEqual([
       {name: '1 Filter', id: '3', totalCount: 4, letterCategory: '[0-9]'},
@@ -147,7 +148,7 @@ describe('getFilteredFilters', () => {
       filtersWithLetterCategory: filters,
       searchValue: 'a',
       letterCategory: 'B',
-      sortBy: 'count',
+      sortBy: FacetSortBy.count,
     });
     expect(result).toEqual([
       {name: 'Banana', id: '2', totalCount: 2, letterCategory: 'B'},
