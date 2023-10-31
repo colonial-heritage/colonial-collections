@@ -7,8 +7,8 @@ import {RdfStore} from 'rdf-stores';
 const DF = new DataFactory();
 
 const nanopubWriter = new NanopubWriter({
-  endpointUrl: env.NANOPUB_ENDPOINT_URL as string,
-  proxyEndpointUrl: env.NANOPUB_PROXY_ENDPOINT_URL as string,
+  endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
+  proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
 });
 
 describe('add', () => {
