@@ -2,6 +2,7 @@
 
 import {useListStore} from '@colonial-collections/list-store';
 import {useTranslations} from 'next-intl';
+import {FacetTitle, FacetWrapper} from './base-facet';
 
 interface DateRangeFacetProps {
   startDateKey: string;
@@ -23,14 +24,9 @@ export function DateRangeFacet({
   const t = useTranslations('Filters');
 
   return (
-    <div
-      className="flex flex-col w-full max-w-[450px] mt-6"
-      data-testid={testId}
-    >
+    <FacetWrapper testId={testId}>
       <div className="w-full flex flex-col md:flex-row gap-4 justify-between">
-        <legend className="block font-semibold text-gray-900 w-full">
-          {title}
-        </legend>
+        <FacetTitle title={title} />
       </div>
       <div className="flex flex-col lg:flex-row gap-2 lg:justify-between">
         <div className="flex justify-between lg:flex-col">
@@ -74,6 +70,6 @@ export function DateRangeFacet({
           </div>
         </div>
       </div>
-    </div>
+    </FacetWrapper>
   );
 }

@@ -18,7 +18,8 @@ import {
   SortOrderEnum,
 } from '@/lib/api/objects';
 import {
-  FilterSet,
+  MultiSelectFacet,
+  SearchableMultiSelectFacet,
   Paginator,
   SelectedFilters,
   SearchFieldWithLabel,
@@ -43,10 +44,12 @@ interface FilterSetting {
 }
 
 const filterSettings: ReadonlyArray<FilterSetting> = [
-  {name: 'owners', searchParamType: 'array'},
+  {name: 'locations', searchParamType: 'array'},
   {name: 'types', searchParamType: 'array'},
   {name: 'subjects', searchParamType: 'array'},
   {name: 'publishers', searchParamType: 'array'},
+  {name: 'materials', searchParamType: 'array'},
+  {name: 'creators', searchParamType: 'array'},
   {name: 'dateCreatedStart', searchParamType: 'number'},
   {name: 'dateCreatedEnd', searchParamType: 'number'},
 ];
@@ -63,16 +66,18 @@ interface DateRangeFacet extends Facet {
 }
 
 const facets: ReadonlyArray<Facet | DateRangeFacet> = [
-  {name: 'owners', Component: FilterSet},
+  {name: 'locations', Component: SearchableMultiSelectFacet},
   {
     name: 'dateCreated',
     Component: DateRangeFacet,
     startDateKey: 'dateCreatedStart',
     endDateKey: 'dateCreatedEnd',
   },
-  {name: 'types', Component: FilterSet},
-  {name: 'subjects', Component: FilterSet},
-  {name: 'publishers', Component: FilterSet},
+  {name: 'types', Component: SearchableMultiSelectFacet},
+  {name: 'subjects', Component: MultiSelectFacet},
+  {name: 'materials', Component: SearchableMultiSelectFacet},
+  {name: 'creators', Component: SearchableMultiSelectFacet},
+  {name: 'publishers', Component: MultiSelectFacet},
 ];
 
 interface FacetMenuProps {
@@ -83,14 +88,13 @@ function FacetMenu({filters}: FacetMenuProps) {
   const t = useTranslations('Filters');
 
   return (
-    <>
+    <div className="w-full flex flex-col gap-6">
       <SearchFieldWithLabel />
       {facets.map(({name, Component, ...customProps}) => {
         const facetProps = Object.keys(customProps).length
           ? customProps
           : {
-              searchResultFilters:
-                filters[name as keyof SearchResult['filters']],
+              filters: filters[name as keyof SearchResult['filters']],
               filterKey: name,
             };
 
@@ -103,7 +107,7 @@ function FacetMenu({filters}: FacetMenuProps) {
           />
         );
       })}
-    </>
+    </div>
   );
 }
 
@@ -182,7 +186,7 @@ export default async function Home({searchParams = {}}: Props) {
               <FacetMenu filters={searchResult.filters} />
             </aside>
 
-            <main className="w-full md:w-2/3 lg:w-4/5  order-2 md:order-1">
+            <main className="w-full md:w-2/3 lg:w-4/5 order-2 md:order-1">
               <SmallScreenSubMenu>
                 <SubMenuButton className="inline-flex items-center md:hidden">
                   <span className="text-base font-medium text-gray-900">
