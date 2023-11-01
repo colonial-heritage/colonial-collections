@@ -179,7 +179,7 @@ export function getFilteredFilters({
     letterCategory
   );
 
-  if (sortBy === 'alphabetical') {
+  if (sortBy === FacetSortBy.alphabetical) {
     return filtersFilteredByLetterCategory.sort((a, b) => {
       if (a.name && b.name) {
         return a.name.localeCompare(b.name);
