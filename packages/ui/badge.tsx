@@ -5,15 +5,16 @@ import classNames from 'classnames';
 interface Props {
   children: ReactNode;
   testId?: string;
-  variant?: 'transparent' | 'gray';
+  variant?: 'transparent' | 'gray' | 'blue';
 }
 
-export function Badge({children, variant = 'transparent', testId}: Props) {
+export function Badge({children, variant = 'blue', testId}: Props) {
   const variantClassName = classNames(
-    'inline-flex items-center rounded-md mr-3 mb-1 px-2 py-1',
+    'flex flex-row items-center rounded py-1 px-1',
     {
       'bg-gray-medium text-xs text-gray-900': variant === 'transparent',
       'text-sm bg-stone-100': variant === 'gray',
+      'bg-blueGrey-100 text-blueGrey-900 text-sm': variant === 'blue',
     }
   );
   return (
@@ -29,10 +30,13 @@ interface BadgeIconProps {
 }
 
 function BadgeIcon({Icon = XMarkIcon, variant = 'outline'}: BadgeIconProps) {
-  const variantClassName = classNames('h-5 w-5 -ml-1 mr-1', {
-    'stroke-stone-400': variant === 'outline',
-    'fill-stone-400': variant === 'solid',
-  });
+  const variantClassName = classNames(
+    "w-4 h-4 fill-(lookup . 'twColor')-600 mr-1",
+    {
+      'stroke-stone-400': variant === 'outline',
+      'fill-stone-400': variant === 'solid',
+    }
+  );
   return <Icon className={variantClassName} />;
 }
 
@@ -43,12 +47,8 @@ interface BadgeActionProps {
 
 function BadgeAction({Icon = XMarkIcon, onClick}: BadgeActionProps) {
   return (
-    <button
-      type="button"
-      className="ml-1 inline-flex flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500"
-      onClick={onClick}
-    >
-      <Icon className="h-3 w-3" />
+    <button type="button" className="ml-1" onClick={onClick}>
+      <Icon className="w-5 h-5 fill-(lookup . 'twColor')-800" />
     </button>
   );
 }

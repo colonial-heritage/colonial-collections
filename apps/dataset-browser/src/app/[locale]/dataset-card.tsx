@@ -60,7 +60,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
             );
           })}
         </div>
-        <div className="mt-2 flex flex-wrap">
+        <div className="mt-2 flex flex-wrap gap-3">
           <Badge variant="gray">
             <Badge.Icon Icon={BuildingLibraryIcon} variant="solid" />
             {dataset.publisher.name}

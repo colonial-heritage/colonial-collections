@@ -109,7 +109,6 @@
     "next": "Volgende"
   },
  "Filters": {
-    "ownersFilter": "Eigenaren",
     "typesFilter": "Types",
     "subjectsFilter": "Onderwerpen",
     "birthYearsFilter": "Geboortejaren",
@@ -117,6 +116,9 @@
     "deathYearsFilter": "Overlijdensjaren",
     "deathPlacesFilter": "Overlijdensplaatsen",
     "publishersFilter": "Bronhouder objecten",
+    "locationsFilter": "Locaties van creatie",
+    "materialsFilter": "Materialen",
+    "creatorsFilter": "Makers",
     "dateCreatedFilter": "Datum gemaakt",
     "search": "Zoeken",
     "filters": "Filters",
@@ -127,7 +129,14 @@
     "filterSearchPlaceholder": "Filteren op {filterName}",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
     "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
-    "accessibilityClickToSearch": "Klik om te zoeken"
+    "accessibilityClickToSearch": "Klik om te zoeken",
+    "selectAll": "Selecteer alles met \"{searchValue}\"",
+    "filterPlaceholder": "Filter {filterName}",
+    "orderAlphabetically": "Sorteer alfabetisch",
+    "orderByCount": "Sorteer op aantal",
+    "selectedFilters": "Geselecteerde filters",
+    "aboutFacetsHeader": "Over de facetten",
+    "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren."
   },
   "Sort": {
     "relevanceDesc": "Relevantie",
@@ -186,6 +195,9 @@
     "nameTooBig": "Lijstnaam mag maximaal 250 tekens bevatten",
     "serverError": "Er is iets misgegaan bij het maken van de lijst. Probeer het later opnieuw.",
     "listSuccessfullyAdded": "Lijst <name></name> is aan je community toegevoegd"
+  },
+  "Modal": {
+    "close": "Sluiten"
   },
   "ObjectList": {
     "backButton": "Terug naar community",

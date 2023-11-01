@@ -11,9 +11,12 @@ export interface Props {
   isInitialized: boolean;
   defaultSortBy?: string;
   selectedFilters: {
-    [filterKey: string]: string[] | number | undefined;
+    [filterKey: string]: (string | number)[] | number | undefined;
   };
-  filterChange: (key: string, value: string[] | number | undefined) => void;
+  filterChange: (
+    key: string,
+    value: (string | number)[] | number | undefined
+  ) => void;
   sortChange: (sortBy: string) => void;
   queryChange: (query: string) => void;
   pageChange: (direction: 1 | -1) => void;
@@ -31,7 +34,7 @@ export interface Props {
     limit: number;
     query: string;
     sortBy: string;
-    selectedFilters: {[filterKey: string]: string[] | undefined};
+    selectedFilters: {[filterKey: string]: (string | number)[] | undefined};
     defaultSortBy: string;
   }) => void;
   transitionStarted: () => void;

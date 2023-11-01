@@ -31,7 +31,9 @@ interface ClientSearchOptions {
   query?: string;
   offset?: number;
   sortBy?: string;
-  filters?: {[filterKey: string]: string[] | string | number | undefined};
+  filters?: {
+    [filterKey: string]: (string | number)[] | string | number | undefined;
+  };
   baseUrl?: string;
   defaultSortBy: string;
 }

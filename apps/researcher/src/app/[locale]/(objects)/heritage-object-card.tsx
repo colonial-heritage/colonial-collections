@@ -34,7 +34,9 @@ export default function HeritageObjectCard({heritageObject}: Props) {
         <div className="font-semibold mt-4" data-testid="object-card-name">
           {heritageObject.name}
         </div>
-        <div className="text-sm opacity-70">{heritageObject.owner?.name}</div>
+        <div className="text-sm opacity-70">
+          {heritageObject.isPartOf?.publisher?.name}
+        </div>
       </div>
       {imageUrl ? (
         <div className="w-full sm:w-1/2 flex justify-center items-center bg-neutral-200">
