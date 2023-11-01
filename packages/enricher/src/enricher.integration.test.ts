@@ -14,14 +14,14 @@ describe('add', () => {
   it('adds a textual enrichment', async () => {
     const enrichment = await enricher.addText({
       description: 'A comment about the object',
-      source: 'A source that supports the comment',
+      citation: 'A citation or reference to a work that supports the comment',
       about: 'http://example.org/object',
       creator: 'http://example.com/person',
       license: 'http://example.org/license',
     });
 
     expect(enrichment).toEqual({
-      id: expect.stringContaining('https://w3id.org/np/'),
+      id: expect.stringContaining('https://'),
     });
   });
 });

@@ -15,7 +15,7 @@ export type EnricherConstructorOptions = z.infer<
 
 const addTextOptionsSchema = z.object({
   description: z.string(),
-  source: z.string(), // Required or optional property?
+  citation: z.string(), // Required or optional property?
   about: z.string().url(),
   creator: z.string().url(),
   license: z.string().url(),
@@ -75,7 +75,7 @@ export class Enricher {
       DF.quad(
         bodyId,
         DF.namedNode('http://purl.org/dc/elements/1.1/source'),
-        DF.literal(opts.source)
+        DF.literal(opts.citation)
       )
     );
     enrichmentStore.addQuad(
