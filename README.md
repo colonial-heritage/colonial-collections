@@ -48,10 +48,17 @@ Open:
 
 ### Create production build (for testing locally)
 
-Create the file `apps/dataset-browser/.env.production.local` in the root and set the endpoint URLs:
+Create the file `apps/dataset-browser/.env.production.local` and set the endpoint URLs:
 
     SEARCH_ENDPOINT_URL=
     SPARQL_ENDPOINT_URL=
+
+Create the file `apps/researcher/.env.production.local` and set the endpoint URLs:
+
+    SEARCH_ENDPOINT_URL=
+    SPARQL_ENDPOINT_URL=
+    NANOPUB_WRITE_ENDPOINT_URL=
+    NANOPUB_WRITE_PROXY_ENDPOINT_URL=
 
 Then run:
 
@@ -65,11 +72,15 @@ Then run:
 
 ### Run container (optional)
 
-    docker run --rm -it -v "$PWD":/app -w /app node:18 /bin/bash
+    docker run --rm -it -v "$PWD":/app -w /app --env-file .env.local node:18 /bin/bash
 
-### Connecting to the MySQL server
+### Connect to the MySQL server
 
-Add `DATABASE_URL` environment variable to the file `apps/researcher/.env.local`. More information about connecting to the database is in the [database readme](packages/database/README.md).
+Add the environment variable `DATABASE_URL` to `apps/researcher/.env.local`. More information about connecting to the database is in the [database readme](packages/database/README.md).
+
+### Use the Nanopublications infrastructure for storing and retrieving user enrichments
+
+Add the environment variables `NANOPUB_WRITE_ENDPOINT_URL` and `NANOPUB_WRITE_PROXY_ENDPOINT_URL` to `apps/researcher/.env.local`.
 
 ### Install packages
 
@@ -90,6 +101,8 @@ Create the file `.env.production.local` in the root and set the endpoint URLs:
 
     SEARCH_ENDPOINT_URL=
     SPARQL_ENDPOINT_URL=
+    NANOPUB_WRITE_ENDPOINT_URL=
+    NANOPUB_WRITE_PROXY_ENDPOINT_URL=
 
 Then run:
 
