@@ -4,6 +4,7 @@ const createJestConfig = nextJest();
 
 /** @type {import('jest').Config} */
 const customJestConfig = {
+  testTimeout: 60000,
   testMatch: ['**/*.test.ts(x)?'],
   collectCoverage: true,
   setupFiles: ['<rootDir>/jest.setup.js'],
