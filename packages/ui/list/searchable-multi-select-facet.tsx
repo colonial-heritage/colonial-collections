@@ -154,6 +154,10 @@ export function SearchableMultiSelectFacet({
 }: Props) {
   const t = useTranslations('Filters');
 
+  if (!filters.length) {
+    return null;
+  }
+
   return (
     <FacetWrapper testId={testId}>
       <div className="flex items-center w-full my-1">
