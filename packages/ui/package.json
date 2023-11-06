@@ -8,7 +8,7 @@
     "@types/react": "18.2.31",
     "autoprefixer": "10.4.16",
     "eslint-config-custom": "*",
-    "postcss": "8.4.28",
+    "postcss": "8.4.31",
     "tailwind-config": "*",
     "tsconfig": "*",
     "typescript": "5.1.6"
