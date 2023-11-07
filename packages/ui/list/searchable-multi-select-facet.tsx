@@ -14,7 +14,6 @@ import {
   useSearchableMultiSelectFacet,
   FacetSortBy,
   FacetProvider,
-  useListStore,
 } from '@colonial-collections/list-store';
 
 interface ExpandedFacetProps {
@@ -35,18 +34,6 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
   } = useSearchableMultiSelectFacet();
 
   const t = useTranslations('Filters');
-  const listStore = useListStore();
-
-  function selectAllClick() {
-    const selectedFilters = [
-      ...((listStore.selectedFilters[filterKey] as (string | number)[]) || []),
-      ...filteredFilters.map(filter => filter.id),
-    ];
-
-    const uniqueFilters = Array.from(new Set(selectedFilters));
-
-    listStore.filterChange(filterKey, uniqueFilters);
-  }
 
   return (
     <div className="flex flex-col md:flex-row gap-4 md:gap-10 max-h-[95%]">
@@ -62,14 +49,6 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
               value={searchValue}
               onChange={e => setSearchValue(e.target.value)}
             />
-            {searchValue && (
-              <button
-                onClick={() => selectAllClick()}
-                className="px-4 py-2 text-sm rounded-full bg-neutral-100 hover:bg-neutral-200 transition text-neutral-800 flex items-center gap-1"
-              >
-                {t('selectAll', {searchValue})}
-              </button>
-            )}
           </div>
           <div className="py-4 my-4 border-y flex flex-col lg:flex-row justify-between">
             <div className="flex flex-row gap-2">
@@ -174,6 +153,10 @@ export function SearchableMultiSelectFacet({
   testId,
 }: Props) {
   const t = useTranslations('Filters');
+
+  if (!filters.length) {
+    return null;
+  }
 
   return (
     <FacetWrapper testId={testId}>

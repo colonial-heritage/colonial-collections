@@ -130,7 +130,6 @@
     "accessibilityTypeToFilter": "Type to filter on text.",
     "accessibilitySelectToFilter": "Select a checkbox to filter",
     "accessibilityClickToSearch": "Click to search",
-    "selectAll": "Select all items with \"{searchValue}\"",
     "filterPlaceholder": "Filter {filterName}",
     "orderAlphabetically": "Order alphabetically",
     "orderByCount": "Order by count",
