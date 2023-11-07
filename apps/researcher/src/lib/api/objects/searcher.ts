@@ -119,17 +119,6 @@ const rawSearchResponseSchema = z.object({
 const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
   z.object({
     aggregations: z.object({
-      all: z.object({
-        owners: rawAggregationSchema,
-        types: rawAggregationSchema,
-        subjects: rawAggregationSchema,
-        locations: rawAggregationSchema,
-        materials: rawAggregationSchema,
-        creators: rawAggregationSchema,
-        publishers: rawAggregationSchema,
-        dateCreatedStart: rawAggregationSchema,
-        dateCreatedEnd: rawAggregationSchema,
-      }),
       owners: rawAggregationSchema,
       types: rawAggregationSchema,
       subjects: rawAggregationSchema,
@@ -314,13 +303,6 @@ export class HeritageObjectSearcher {
         },
       },
       aggregations: {
-        all: {
-          // Aggregate all filters, regardless of the query.
-          // We may need to refine this at some point, if performance needs it,
-          // e.g. by using a separate call and caching the results
-          global: {},
-          aggregations,
-        },
         ...aggregations,
       },
     };
@@ -383,48 +365,17 @@ export class HeritageObjectSearcher {
       return this.fromRawHeritageObjectToHeritageObject(rawHeritageObject);
     });
 
-    const ownerFilters = buildFilters(
-      aggregations.all.owners.buckets,
-      aggregations.owners.buckets
-    );
-
-    const typeFilters = buildFilters(
-      aggregations.all.types.buckets,
-      aggregations.types.buckets
-    );
-
-    const subjectFilters = buildFilters(
-      aggregations.all.subjects.buckets,
-      aggregations.subjects.buckets
-    );
-
-    const locationFilters = buildFilters(
-      aggregations.all.locations.buckets,
-      aggregations.locations.buckets
-    );
-
-    const materialFilters = buildFilters(
-      aggregations.all.materials.buckets,
-      aggregations.materials.buckets
-    );
-
-    const creatorFilters = buildFilters(
-      aggregations.all.creators.buckets,
-      aggregations.creators.buckets
-    );
-
-    const publisherFilters = buildFilters(
-      aggregations.all.publishers.buckets,
-      aggregations.publishers.buckets
-    );
-
+    const ownerFilters = buildFilters(aggregations.owners.buckets);
+    const typeFilters = buildFilters(aggregations.types.buckets);
+    const subjectFilters = buildFilters(aggregations.subjects.buckets);
+    const locationFilters = buildFilters(aggregations.locations.buckets);
+    const materialFilters = buildFilters(aggregations.materials.buckets);
+    const creatorFilters = buildFilters(aggregations.creators.buckets);
+    const publisherFilters = buildFilters(aggregations.publishers.buckets);
     const dateCreatedStartFilters = buildFilters(
-      aggregations.all.dateCreatedStart.buckets,
       aggregations.dateCreatedStart.buckets
     );
-
     const dateCreatedEndFilters = buildFilters(
-      aggregations.all.dateCreatedEnd.buckets,
       aggregations.dateCreatedEnd.buckets
     );
 

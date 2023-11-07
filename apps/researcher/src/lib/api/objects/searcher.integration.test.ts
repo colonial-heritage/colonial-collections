@@ -272,14 +272,14 @@ describe('search', () => {
       filters: {
         owners: [
           {
-            totalCount: 1,
-            id: 'Library',
-            name: 'Library',
-          },
-          {
             totalCount: 2,
             id: 'Museum',
             name: 'Museum',
+          },
+          {
+            totalCount: 1,
+            id: 'Library',
+            name: 'Library',
           },
           {
             totalCount: 1,
@@ -311,14 +311,14 @@ describe('search', () => {
         ],
         subjects: [
           {
-            totalCount: 1,
-            id: 'Castle',
-            name: 'Castle',
-          },
-          {
             totalCount: 2,
             id: 'Celebrations',
             name: 'Celebrations',
+          },
+          {
+            totalCount: 1,
+            id: 'Castle',
+            name: 'Castle',
           },
           {
             totalCount: 1,
@@ -355,11 +355,6 @@ describe('search', () => {
             name: 'Canvas',
           },
           {
-            totalCount: 1,
-            id: 'Ink',
-            name: 'Ink',
-          },
-          {
             totalCount: 2,
             id: 'Oilpaint',
             name: 'Oilpaint',
@@ -368,6 +363,11 @@ describe('search', () => {
             totalCount: 2,
             id: 'Paper',
             name: 'Paper',
+          },
+          {
+            totalCount: 1,
+            id: 'Ink',
+            name: 'Ink',
           },
         ],
         creators: [
@@ -389,19 +389,14 @@ describe('search', () => {
         ],
         publishers: [
           {
-            totalCount: 0,
-            id: 'Archive',
-            name: 'Archive',
+            totalCount: 3,
+            id: 'Museum',
+            name: 'Museum',
           },
           {
             totalCount: 1,
             id: 'Library',
             name: 'Library',
-          },
-          {
-            totalCount: 3,
-            id: 'Museum',
-            name: 'Museum',
           },
           {
             totalCount: 1,
@@ -472,15 +467,7 @@ describe('search', () => {
     expect(result).toMatchObject({
       totalCount: 1,
       filters: {
-        owners: [
-          {totalCount: 1, id: 'Library', name: 'Library'},
-          {totalCount: 0, id: 'Museum', name: 'Museum'},
-          {
-            totalCount: 0,
-            id: 'Research Organisation',
-            name: 'Research Organisation',
-          },
-        ],
+        owners: [{totalCount: 1, id: 'Library', name: 'Library'}],
       },
     });
   });
@@ -495,12 +482,7 @@ describe('search', () => {
     expect(result).toMatchObject({
       totalCount: 1,
       filters: {
-        types: [
-          {totalCount: 0, id: 'Canvas Painting', name: 'Canvas Painting'},
-          {totalCount: 0, id: 'Drawing', name: 'Drawing'},
-          {totalCount: 1, id: 'Painting', name: 'Painting'},
-          {totalCount: 0, id: 'Photo', name: 'Photo'},
-        ],
+        types: [{totalCount: 1, id: 'Painting', name: 'Painting'}],
       },
     });
   });
@@ -517,9 +499,7 @@ describe('search', () => {
       filters: {
         subjects: [
           {totalCount: 1, id: 'Castle', name: 'Castle'},
-          {totalCount: 0, id: 'Celebrations', name: 'Celebrations'},
           {totalCount: 1, id: 'Cottage', name: 'Cottage'},
-          {totalCount: 0, id: 'Palace', name: 'Palace'},
         ],
       },
     });
@@ -535,11 +515,7 @@ describe('search', () => {
     expect(result).toMatchObject({
       totalCount: 1,
       filters: {
-        locations: [
-          {totalCount: 0, id: 'Indonesia', name: 'Indonesia'},
-          {totalCount: 1, id: 'Malaysia', name: 'Malaysia'},
-          {totalCount: 0, id: 'Suriname', name: 'Suriname'},
-        ],
+        locations: [{totalCount: 1, id: 'Malaysia', name: 'Malaysia'}],
       },
     });
   });
@@ -561,19 +537,9 @@ describe('search', () => {
             name: 'Canvas',
           },
           {
-            totalCount: 0,
-            id: 'Ink',
-            name: 'Ink',
-          },
-          {
             totalCount: 2,
             id: 'Oilpaint',
             name: 'Oilpaint',
-          },
-          {
-            totalCount: 0,
-            id: 'Paper',
-            name: 'Paper',
           },
         ],
       },
@@ -596,16 +562,6 @@ describe('search', () => {
             id: 'Adriaan Boer',
             name: 'Adriaan Boer',
           },
-          {
-            totalCount: 0,
-            id: 'Geeske van Châtellerault',
-            name: 'Geeske van Châtellerault',
-          },
-          {
-            totalCount: 0,
-            id: 'Vincent van Gogh',
-            name: 'Vincent van Gogh',
-          },
         ],
       },
     });
@@ -623,29 +579,9 @@ describe('search', () => {
       filters: {
         publishers: [
           {
-            totalCount: 0,
-            id: 'Archive',
-            name: 'Archive',
-          },
-          {
             totalCount: 1,
             id: 'Library',
             name: 'Library',
-          },
-          {
-            totalCount: 0,
-            id: 'Museum',
-            name: 'Museum',
-          },
-          {
-            totalCount: 0,
-            id: 'Onderzoeksinstelling',
-            name: 'Onderzoeksinstelling',
-          },
-          {
-            totalCount: 0,
-            id: 'Research Organisation',
-            name: 'Research Organisation',
           },
         ],
       },
@@ -663,21 +599,6 @@ describe('search', () => {
       totalCount: 1,
       filters: {
         dateCreatedStart: [
-          {
-            totalCount: 0,
-            id: 1725,
-            name: 1725,
-          },
-          {
-            totalCount: 0,
-            id: 1889,
-            name: 1889,
-          },
-          {
-            totalCount: 0,
-            id: 1895,
-            name: 1895,
-          },
           {
             totalCount: 1,
             id: 1901,
@@ -703,21 +624,6 @@ describe('search', () => {
             totalCount: 1,
             id: 1736,
             name: 1736,
-          },
-          {
-            totalCount: 0,
-            id: 1890,
-            name: 1890,
-          },
-          {
-            totalCount: 0,
-            id: 1895,
-            name: 1895,
-          },
-          {
-            totalCount: 0,
-            id: 1902,
-            name: 1902,
           },
         ],
       },
@@ -751,11 +657,6 @@ describe('search', () => {
             id: 1895,
             name: 1895,
           },
-          {
-            totalCount: 0,
-            id: 1901,
-            name: 1901,
-          },
         ],
         dateCreatedEnd: [
           {
@@ -772,11 +673,6 @@ describe('search', () => {
             totalCount: 1,
             id: 1895,
             name: 1895,
-          },
-          {
-            totalCount: 0,
-            id: 1902,
-            name: 1902,
           },
         ],
       },
