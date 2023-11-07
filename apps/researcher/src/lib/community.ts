@@ -4,8 +4,9 @@ import {OrganizationMembership, Organization} from '@clerk/backend/dist/types';
 export interface Community {
   id: string;
   name: string;
-  description?: string;
   slug: string;
+  description?: string;
+  orcid?: string;
   imageUrl: string;
   createdAt: number;
   membershipCount?: number;
@@ -24,8 +25,11 @@ function organizationToCommunity(organization: Organization): Community {
   return {
     id: organization.id,
     name: organization.name,
-    // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata `description`.
+    // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata.
     description: organization.publicMetadata?.description as string | undefined,
+    orcid: organization.publicMetadata?.orcid
+      ? decodeURIComponent(organization.publicMetadata?.orcid as string)
+      : undefined,
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
     createdAt: organization.createdAt,
@@ -144,6 +148,17 @@ export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
   );
 }
 
+export function isMember(memberships: ReadonlyArray<Membership>): boolean {
+  const {userId} = auth();
+
+  return (
+    !!userId &&
+    memberships.some(membership => {
+      return membership.userId === userId;
+    })
+  );
+}
+
 interface JoinCommunityProps {
   communityId: string;
   userId: string;
@@ -157,16 +172,32 @@ export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
   });
 }
 
-export async function updateDescription({
-  communityId,
-  description,
-}: {
+interface UpdateCommunityProps {
   communityId: string;
+  name: string;
+  slug: string;
   description: string;
-}) {
-  return clerkClient.organizations.updateOrganizationMetadata(communityId, {
-    publicMetadata: {
-      description,
-    },
-  });
+  orcid: string;
+}
+
+export async function updateCommunity({
+  communityId,
+  name,
+  slug,
+  description,
+  orcid,
+}: UpdateCommunityProps) {
+  const organization = await clerkClient.organizations.updateOrganization(
+    communityId,
+    {
+      name,
+      slug,
+      publicMetadata: {
+        description,
+        orcid: encodeURIComponent(orcid),
+      },
+    }
+  );
+
+  return organizationToCommunity(organization);
 }

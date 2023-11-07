@@ -1,9 +1,17 @@
-import {ChevronLeftIcon} from '@heroicons/react/24/solid';
+import {
+  ChevronLeftIcon,
+  ExclamationTriangleIcon,
+} from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslator} from 'next-intl/server';
-import {JoinCommunityButton, EditCommunityButton} from './buttons';
-import {getMemberships, getCommunityBySlug, isAdmin} from '@/lib/community';
+import {JoinCommunityButton, ButtonGroup} from './buttons';
+import {
+  getMemberships,
+  getCommunityBySlug,
+  isAdmin,
+  isMember,
+} from '@/lib/community';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
 import {revalidatePath} from 'next/cache';
@@ -16,7 +24,7 @@ import {
   SlideOutClosed,
   Notifications,
 } from '@colonial-collections/ui';
-import EditDescriptionForm from './edit-description-form';
+import EditCommunityForm from './edit-community-form';
 
 interface Props {
   params: {
@@ -26,7 +34,7 @@ interface Props {
 }
 
 const slideOutFormId = 'add-object-list';
-const slideOutDescriptionId = 'edit-community-description';
+const slideOutEditFormId = 'edit-community-description';
 
 // Don't cache this page, so we always get the latest community data from the third-party Clerk.
 // With 'force-dynamic', the description in the Clerk metadata will change after editing.
@@ -75,12 +83,39 @@ export default async function CommunityPage({params}: Props) {
             {t('backButton')}
           </Link>
         </div>
-        <div className="sm:flex justify-end gap-4 hidden">
-          {isAdmin(memberships) && <EditCommunityButton />}
-        </div>
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
         <main className="w-full">
+          {isMember(memberships) && (
+            <div className="w-full block">
+              <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-neutral-200 w-full mx-auto ">
+                <div className="bg-orange-400 p-3 rounded-l">
+                  <ExclamationTriangleIcon className="w-6 h-6 fill-neutral-700" />
+                </div>
+                <div className="p-2">
+                  <p>{t('noOrcidWarning')}</p>
+                </div>
+                <div className="p-2">
+                  <SlideOutButton
+                    id={slideOutEditFormId}
+                    className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700 hover:bg-neutral-800
+                  text-neutral-100 transition flex items-center gap-1"
+                  >
+                    {t('addOrcidButton')}
+                  </SlideOutButton>
+                </div>
+              </div>
+            </div>
+          )}
+          {isAdmin(memberships) && (
+            <div className="w-full flex justify-end -mb-8">
+              <ButtonGroup
+                communitySlug={community.slug}
+                slideOutEditFormId={slideOutEditFormId}
+                communityId={community.id}
+              />
+            </div>
+          )}
           <div className="-mb-16 md:-mb-24 w-full flex justify-center">
             <div className="w-32 h-32 lg:w-48 lg:h-48 rounded-full overflow-hidden relative">
               <Image
@@ -91,42 +126,42 @@ export default async function CommunityPage({params}: Props) {
               />
             </div>
           </div>
-          <div className="w-full rounded-lg bg-[#f3eee2] text-stone-800 pt-16 md:pt-24 pb-6">
-            <h1 className="text-2xl font-normal w-full text-center mt-4 px-4 my-6">
-              {t('title')}
-              <span className="font-semibold ml-2" data-testid="community-name">
-                {community.name}
-              </span>
-            </h1>
-            <div className="w-full flex flex-col md:flex-row justify-center px-4">
-              <SlideOutClosed id={slideOutDescriptionId}>
+          <SlideOutClosed id={slideOutEditFormId}>
+            <div className="w-full rounded-lg bg-[#f3eee2] text-stone-800 pt-16 md:pt-24 pb-6 transition">
+              <h1 className="text-2xl font-normal w-full text-center mt-4 px-4 my-6">
+                {t('title')}
+                <span
+                  className="font-semibold ml-2"
+                  data-testid="community-name"
+                >
+                  {community.name}
+                </span>
+              </h1>
+              <div className="w-full flex flex-col md:flex-row justify-center px-4">
                 <div className="mb-4 max-w-3xl text-left whitespace-pre-line">
                   {community.description}
                 </div>
-              </SlideOutClosed>
-              <SlideOut id={slideOutDescriptionId}>
-                <EditDescriptionForm
-                  slideOutId={slideOutDescriptionId}
+              </div>
+              <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
+                <JoinCommunityButton
                   communityId={community.id}
-                  communitySlug={community.slug!}
-                  description={community.description}
+                  communitySlug={params.slug}
                 />
-              </SlideOut>
+              </div>
             </div>
-            <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
-              <JoinCommunityButton
+          </SlideOutClosed>
+          <SlideOut id={slideOutEditFormId}>
+            <div className="w-full rounded-lg text-stone-800 pt-16 md:pt-24 pb-6 transition bg-neutral-50">
+              <EditCommunityForm
                 communityId={community.id}
-                communitySlug={params.slug}
+                slideOutId={slideOutEditFormId}
+                description={community.description}
+                name={community.name}
+                slug={community.slug!}
+                orcid={community.orcid}
               />
-              <SlideOutButton
-                hideIfOpen
-                id={slideOutDescriptionId}
-                className="flex items-center py-2 px-3 rounded-full bg-sand-100 text-sand-900 hover:bg-white transition text-xs"
-              >
-                {t('editDescriptionButton')}
-              </SlideOutButton>
             </div>
-          </div>
+          </SlideOut>
 
           <div className="mt-12">
             <div className="flex justify-between my-4">
@@ -188,7 +223,7 @@ export default async function CommunityPage({params}: Props) {
           </div>
         </main>
         <aside className="w-full md:w-1/4 self-stretch">
-          <h2 className="mb-4">{t('membersTitle')}</h2>
+          <h2 className="mb-4 flex items-center gap-3">{t('membersTitle')}</h2>
           <ul>
             {memberships!.map(membership => (
               <li
