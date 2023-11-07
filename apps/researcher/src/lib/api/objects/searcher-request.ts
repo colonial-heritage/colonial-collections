@@ -1,9 +1,8 @@
 export function buildAggregation(id: string) {
   const aggregation = {
     terms: {
-      size: 1000, // TBD: what's a good size?
+      size: 10000, // TBD: revisit this - return fewer terms instead
       field: id,
-      order: {_key: 'asc'},
     },
   };
 
