@@ -130,7 +130,6 @@
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
     "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
     "accessibilityClickToSearch": "Klik om te zoeken",
-    "selectAll": "Selecteer alles met \"{searchValue}\"",
     "filterPlaceholder": "Filter {filterName}",
     "orderAlphabetically": "Sorteer alfabetisch",
     "orderByCount": "Sorteer op aantal",
