@@ -6,7 +6,7 @@ export interface Community {
   name: string;
   slug: string;
   description?: string;
-  orcid?: string;
+  attributionId?: string;
   imageUrl: string;
   createdAt: number;
   membershipCount?: number;
@@ -27,8 +27,8 @@ function organizationToCommunity(organization: Organization): Community {
     name: organization.name,
     // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata.
     description: organization.publicMetadata?.description as string | undefined,
-    orcid: organization.publicMetadata?.orcid
-      ? decodeURIComponent(organization.publicMetadata?.orcid as string)
+    attributionId: organization.publicMetadata?.attributionId
+      ? decodeURIComponent(organization.publicMetadata?.attributionId as string)
       : undefined,
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
@@ -173,31 +173,28 @@ export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
 }
 
 interface UpdateCommunityProps {
-  communityId: string;
+  id: string;
   name: string;
   slug: string;
   description: string;
-  orcid: string;
+  attributionId: string;
 }
 
 export async function updateCommunity({
-  communityId,
+  id,
   name,
   slug,
   description,
-  orcid,
+  attributionId,
 }: UpdateCommunityProps) {
-  const organization = await clerkClient.organizations.updateOrganization(
-    communityId,
-    {
-      name,
-      slug,
-      publicMetadata: {
-        description,
-        orcid: encodeURIComponent(orcid),
-      },
-    }
-  );
+  const organization = await clerkClient.organizations.updateOrganization(id, {
+    name,
+    slug,
+    publicMetadata: {
+      description,
+      attributionId: encodeURIComponent(attributionId),
+    },
+  });
 
   return organizationToCommunity(organization);
 }

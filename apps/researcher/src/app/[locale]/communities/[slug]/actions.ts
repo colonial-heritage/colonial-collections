@@ -3,27 +3,27 @@
 import {joinCommunity, updateCommunity} from '@/lib/community';
 import {revalidatePath} from 'next/cache';
 
-interface UpdateDescriptionAndRevalidateProps {
-  communityId: string;
+interface UpdateCommunityAndRevalidateProps {
+  id: string;
   name: string;
   slug: string;
   description: string;
-  orcid: string;
+  attributionId: string;
 }
 
 export async function updateCommunityAndRevalidate({
-  communityId,
+  id,
   name,
   slug,
   description,
-  orcid,
-}: UpdateDescriptionAndRevalidateProps) {
+  attributionId,
+}: UpdateCommunityAndRevalidateProps) {
   const community = await updateCommunity({
-    communityId,
+    id,
     description,
     slug,
     name,
-    orcid,
+    attributionId,
   });
 
   revalidatePath(`/[locale]/communities/${slug}`, 'page');

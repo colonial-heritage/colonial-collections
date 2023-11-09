@@ -181,7 +181,7 @@
     "labelName":"Name",
     "labelSlug":"Slug",
     "labelDescription":"Description",
-    "labelOrcid":"ORCID iD",
+    "labelAttributionId":"ORCID iD",
     "editCommunitySaveButton": "Save",
     "editCommunityCancelButton": "Cancel",
     "communityUpdated": "Description has been updated",
@@ -192,9 +192,9 @@
     "slugMaxLength": "Slug has a maximum of 250 characters",
     "slugInvalidString": "Slug is invalid. Can contain only lowercase characters, digits and '-''",
     "descriptionMaxLength": "Description has a maximum of 2000 characters",
-    "orcidInvalidString": "ORCID iD should be a valid url",
-    "noOrcidWarning": "To add narratives or provenance to object you need to add an ORCID iD to your community profile.",
-    "addOrcidButton": "Add ORCID iD"
+    "attributionIdInvalidString": "ORCID iD should be a valid url",
+    "noAttributionIdWarning": "To add narratives or provenance to object you need to add an ORCID iD to your community profile.",
+    "addAttributionIdButton": "Add ORCID iD"
   },
   "AddObjectListForm": {
     "title": "Add list",

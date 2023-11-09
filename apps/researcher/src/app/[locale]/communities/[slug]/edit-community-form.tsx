@@ -15,14 +15,14 @@ interface Props {
   name: string;
   slug: string;
   description?: string;
-  orcid?: string;
+  attributionId?: string;
 }
 
 interface FormValues {
   name: string;
   slug: string;
   description: string;
-  orcid: string;
+  attributionId: string;
 }
 
 const communitySchema = z.object({
@@ -34,7 +34,7 @@ const communitySchema = z.object({
     .max(250)
     .regex(/^[a-z0-9-]*$/),
   description: z.string().max(2000),
-  orcid: z.string().url().optional().or(z.literal('')),
+  attributionId: z.string().url().optional().or(z.literal('')),
 });
 
 export default function EditCommunityForm({
@@ -43,7 +43,7 @@ export default function EditCommunityForm({
   name,
   slug,
   description,
-  orcid,
+  attributionId,
 }: Props) {
   const {
     register,
@@ -56,7 +56,7 @@ export default function EditCommunityForm({
       name,
       slug,
       description: description ?? '',
-      orcid: orcid ?? '',
+      attributionId: attributionId ?? '',
     },
   });
 
@@ -68,7 +68,7 @@ export default function EditCommunityForm({
   const onSubmit: SubmitHandler<FormValues> = async formValues => {
     try {
       const newCommunity = await updateCommunityAndRevalidate({
-        communityId,
+        id: communityId,
         ...formValues,
       });
       router.push(`/communities/${newCommunity.slug}`, {scroll: false});
@@ -138,13 +138,16 @@ export default function EditCommunityForm({
       </div>
 
       <div className="flex flex-col max-w-2xl w-full">
-        <label className="italic">{t('labelOrcid')}</label>
+        <label className="italic">{t('labelAttributionId')}</label>
         <input
-          id="orcid"
-          {...register('orcid')}
+          id="attributionId"
+          {...register('attributionId')}
           className="border border-neutral-300 p-2 text-sm"
         />
-        <p>{errors.orcid && t(camelCase(`orcid_${errors.orcid.type}`))}</p>
+        <p>
+          {errors.attributionId &&
+            t(camelCase(`attributionId_${errors.attributionId.type}`))}
+        </p>
       </div>
 
       <div className="flex flex-row max-w-2xl w-full gap-2">

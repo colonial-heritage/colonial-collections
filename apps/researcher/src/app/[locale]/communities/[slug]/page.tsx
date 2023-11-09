@@ -93,7 +93,7 @@ export default async function CommunityPage({params}: Props) {
                   <ExclamationTriangleIcon className="w-6 h-6 fill-neutral-700" />
                 </div>
                 <div className="p-2">
-                  <p>{t('noOrcidWarning')}</p>
+                  <p>{t('noAttributionIdWarning')}</p>
                 </div>
                 <div className="p-2">
                   <SlideOutButton
@@ -101,7 +101,7 @@ export default async function CommunityPage({params}: Props) {
                     className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700 hover:bg-neutral-800
                   text-neutral-100 transition flex items-center gap-1"
                   >
-                    {t('addOrcidButton')}
+                    {t('addAttributionIdButton')}
                   </SlideOutButton>
                 </div>
               </div>
@@ -158,7 +158,7 @@ export default async function CommunityPage({params}: Props) {
                 description={community.description}
                 name={community.name}
                 slug={community.slug!}
-                orcid={community.orcid}
+                attributionId={community.attributionId}
               />
             </div>
           </SlideOut>
