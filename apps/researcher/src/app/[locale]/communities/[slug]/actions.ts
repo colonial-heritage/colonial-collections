@@ -1,22 +1,35 @@
 'use server';
 
-import {joinCommunity, updateDescription} from '@/lib/community';
+import {joinCommunity, updateCommunity} from '@/lib/community';
 import {revalidatePath} from 'next/cache';
 
-interface UpdateDescriptionAndRevalidateProps {
-  communityId: string;
-  communitySlug: string;
+interface UpdateCommunityAndRevalidateProps {
+  id: string;
+  name: string;
+  slug: string;
   description: string;
+  attributionId: string;
 }
 
-export async function updateDescriptionAndRevalidate({
-  communityId,
-  communitySlug,
+export async function updateCommunityAndRevalidate({
+  id,
+  name,
+  slug,
   description,
-}: UpdateDescriptionAndRevalidateProps) {
-  await updateDescription({communityId, description});
-  revalidatePath(`/[locale]/communities/${communitySlug}`, 'page');
+  attributionId,
+}: UpdateCommunityAndRevalidateProps) {
+  const community = await updateCommunity({
+    id,
+    description,
+    slug,
+    name,
+    attributionId,
+  });
+
+  revalidatePath(`/[locale]/communities/${slug}`, 'page');
   revalidatePath('/[locale]/communities', 'page');
+
+  return community;
 }
 
 interface JoinCommunityAndRevalidateProps {
