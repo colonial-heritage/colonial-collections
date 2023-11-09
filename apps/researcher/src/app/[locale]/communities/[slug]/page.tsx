@@ -96,13 +96,15 @@ export default async function CommunityPage({params}: Props) {
                   <p>{t('noAttributionIdWarning')}</p>
                 </div>
                 <div className="p-2">
-                  <SlideOutButton
-                    id={slideOutEditFormId}
-                    className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700 hover:bg-neutral-800
+                  {isAdmin(memberships) && (
+                    <SlideOutButton
+                      id={slideOutEditFormId}
+                      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700 hover:bg-neutral-800
                   text-neutral-100 transition flex items-center gap-1"
-                  >
-                    {t('addAttributionIdButton')}
-                  </SlideOutButton>
+                    >
+                      {t('addAttributionIdButton')}
+                    </SlideOutButton>
+                  )}
                 </div>
               </div>
             </div>
