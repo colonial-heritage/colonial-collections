@@ -132,7 +132,7 @@ export class NanopubWriter {
     primaryStore.addQuad(
       DF.quad(
         assertionGraph,
-        DF.namedNode('http://www.w3.org/ns/prov#prov:wasAttributedTo'),
+        DF.namedNode('http://www.w3.org/ns/prov#wasAttributedTo'),
         DF.namedNode(opts.creator),
         provenanceGraph
       )

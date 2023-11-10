@@ -1,3 +1,4 @@
+import type {BasicEnrichment} from './definitions';
 import {NanopubWriter} from './writer';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
@@ -23,11 +24,7 @@ const addTextOptionsSchema = z.object({
 
 export type AddTextOptions = z.infer<typeof addTextOptionsSchema>;
 
-export type Enrichment = {
-  id: string;
-};
-
-export class Enricher {
+export class EnrichmentStorer {
   private nanopubWriter: NanopubWriter;
 
   constructor(options: EnricherConstructorOptions) {
@@ -47,13 +44,13 @@ export class Enricher {
       DF.quad(
         annotationId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode('https://www.w3.org/ns/oa#Annotation')
+        DF.namedNode('http://www.w3.org/ns/oa#Annotation')
       )
     );
     enrichmentStore.addQuad(
       DF.quad(
         annotationId,
-        DF.namedNode('https://www.w3.org/ns/oa#body'),
+        DF.namedNode('http://www.w3.org/ns/oa#hasBody'),
         bodyId
       )
     );
@@ -61,28 +58,28 @@ export class Enricher {
       DF.quad(
         bodyId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode('https://www.w3.org/ns/oa#TextualBody')
+        DF.namedNode('http://www.w3.org/ns/oa#TextualBody')
       )
     );
     enrichmentStore.addQuad(
       DF.quad(
         bodyId,
-        DF.namedNode('https://www.w3.org/ns/oa#value'),
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#value'),
         DF.literal(opts.description)
       )
     );
     enrichmentStore.addQuad(
       DF.quad(
         bodyId,
-        DF.namedNode('http://purl.org/dc/elements/1.1/source'),
+        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#seeAlso'),
         DF.literal(opts.citation)
       )
     );
     enrichmentStore.addQuad(
       DF.quad(
         annotationId,
-        DF.namedNode('https://www.w3.org/ns/oa#target'),
-        DF.literal(opts.about)
+        DF.namedNode('http://www.w3.org/ns/oa#hasTarget'),
+        DF.namedNode(opts.about)
       )
     );
 
@@ -92,7 +89,7 @@ export class Enricher {
       license: opts.license,
     });
 
-    const enrichment: Enrichment = {
+    const enrichment: BasicEnrichment = {
       id: nanopub.id,
     };
 
