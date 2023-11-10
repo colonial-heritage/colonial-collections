@@ -1,17 +1,8 @@
 import type {Enrichment} from './definitions';
 import type {Resource} from 'rdf-object';
 
-function getProperty(resource: Resource, propertyName: string) {
-  const property = resource.property[propertyName];
-  if (property === undefined) {
-    return undefined;
-  }
-
-  return property;
-}
-
 function getPropertyValue(resource: Resource, propertyName: string) {
-  const property = getProperty(resource, propertyName);
+  const property = resource.property[propertyName];
   if (property === undefined) {
     return undefined;
   }

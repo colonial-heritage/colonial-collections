@@ -103,9 +103,9 @@ export class EnrichmentFetcher {
     }
 
     const rawEnrichments = resource.properties['cc:hasEnrichment'];
-    const enrichments = rawEnrichments.map(rawEnrichment => {
-      return createEnrichment(rawEnrichment);
-    });
+    const enrichments = rawEnrichments.map(rawEnrichment =>
+      createEnrichment(rawEnrichment)
+    );
 
     // Sort the enrichments by date, from old to new
     enrichments.sort((enrichmentA, enrichmentB) => {
@@ -115,7 +115,7 @@ export class EnrichmentFetcher {
       return dateCreatedA - dateCreatedB;
     });
 
-    // TBD: group the enrichments by fragment (e.g. by 'title', by 'description')?
+    // TBD: group the enrichments by predicate (e.g. by 'title' or 'description')?
 
     return enrichments;
   }
