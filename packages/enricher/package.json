@@ -27,7 +27,7 @@
     "rdf-serialize": "2.2.2",
     "rdf-stores": "1.0.0",
     "stream-to-string": "1.2.1",
-    "zod": "3.22.2"
+    "zod": "3.21.4"
   },
   "devDependencies": {
     "@jest/globals": "29.7.0",
@@ -44,8 +44,12 @@
   "jest": {
     "preset": "ts-jest",
     "testTimeout": 60000,
-    "testMatch": ["<rootDir>/src/**/*.test.ts"],
+    "testMatch": [
+      "<rootDir>/src/**/*.test.ts"
+    ],
     "collectCoverage": true,
-    "collectCoverageFrom": ["<rootDir>/src/**/*.ts"]
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.ts"
+    ]
   }
 }
