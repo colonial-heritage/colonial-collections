@@ -30,7 +30,7 @@ export function createEnrichment(rawEnrichment: Resource) {
   // @ts-expect-error:TS2322
   const dateCreated = new Date(rawDateCreated);
 
-  // Silence TS errors about 'string | undefined': the values always are string
+  // Silence TS errors about 'string | undefined': the values always are strings
   const enrichment: Enrichment = {
     id: rawEnrichment.value,
     // @ts-expect-error:TS2322
