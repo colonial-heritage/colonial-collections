@@ -1,3 +1,4 @@
+import {ontologyUrl} from './definitions';
 import {createEnrichment} from './rdf-helpers';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
@@ -27,7 +28,7 @@ export class EnrichmentFetcher {
   private async fetchTriples(iri: string) {
     // TBD: is there a limit to the number of enrichments that can be retrieved?
     const query = `
-      PREFIX cc: <https://colonialcollections.nl/schema#>
+      PREFIX cc: <${ontologyUrl}>
       PREFIX dcterms: <http://purl.org/dc/terms/>
       PREFIX oa: <http://www.w3.org/ns/oa#>
       PREFIX np: <http://www.nanopub.org/nschema#>
@@ -90,8 +91,7 @@ export class EnrichmentFetcher {
   ) {
     const loader = new RdfObjectLoader({
       context: {
-        cc: 'https://colonialcollections.nl/schema#',
-        rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+        cc: ontologyUrl,
       },
     });
 

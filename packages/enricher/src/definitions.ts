@@ -1,3 +1,5 @@
+export const ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
+
 export interface BasicEnrichment {
   id: string;
 }
