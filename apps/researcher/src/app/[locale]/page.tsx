@@ -4,11 +4,11 @@ import {getTranslator} from 'next-intl/server';
 import HeritageObjectList from './(objects)/heritage-object-list';
 import {sortMapping} from './(objects)/sort-mapping';
 import {
-  ClientListStore,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   defaultSortBy,
   Type as SearchParamType,
+  ListProvider,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -166,19 +166,18 @@ export default async function Home({searchParams = {}}: Props) {
         )}
 
         {searchResult && (
-          <>
-            <ClientListStore
-              {...{
-                totalCount: searchResult.totalCount,
-                offset: searchResult.offset,
-                limit: searchResult.limit,
-                query: searchOptions.query ?? '',
-                sortBy,
-                selectedFilters: searchOptions.filters,
-                baseUrl: '/',
-                defaultSortBy,
-              }}
-            />
+          <ListProvider
+            {...{
+              totalCount: searchResult.totalCount,
+              offset: searchResult.offset,
+              limit: searchResult.limit,
+              query: searchOptions.query ?? '',
+              sortBy,
+              selectedFilters: searchOptions.filters,
+              baseUrl: '/',
+              defaultSortBy,
+            }}
+          >
             <aside
               id="facets"
               className="hidden md:block w-full md:w-1/3 lg:w-1/5 order-2 md:order-1"
@@ -222,7 +221,7 @@ export default async function Home({searchParams = {}}: Props) {
               />
               <Paginator />
             </main>
-          </>
+          </ListProvider>
         )}
       </div>
     </>

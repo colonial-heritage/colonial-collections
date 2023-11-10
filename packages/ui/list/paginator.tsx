@@ -4,7 +4,11 @@ import {useListStore} from '@colonial-collections/list-store';
 import {useTranslations} from 'next-intl';
 
 export function Paginator() {
-  const {totalCount, offset, pageChange, limit} = useListStore();
+  const totalCount = useListStore(s => s.totalCount);
+  const offset = useListStore(s => s.offset);
+  const pageChange = useListStore(s => s.pageChange);
+  const limit = useListStore(s => s.limit);
+
   const endMax = offset + limit;
   const start = offset + 1;
   const end = endMax < totalCount ? endMax : totalCount;

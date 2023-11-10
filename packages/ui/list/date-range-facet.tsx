@@ -17,9 +17,10 @@ export function DateRangeFacet({
   title,
   testId,
 }: DateRangeFacetProps) {
-  const listStore = useListStore();
-  const startDate = listStore.selectedFilters[startDateKey];
-  const endDate = listStore.selectedFilters[endDateKey];
+  const selectedFilters = useListStore(s => s.selectedFilters);
+  const filterChange = useListStore(s => s.filterChange);
+  const startDate = selectedFilters[startDateKey];
+  const endDate = selectedFilters[endDateKey];
 
   const t = useTranslations('Filters');
 
@@ -40,7 +41,7 @@ export function DateRangeFacet({
               name={startDateKey}
               className="w-24 border rounded-md grow border-gray-300 px-4 py-1 sm:text-sm"
               onChange={e => {
-                listStore.filterChange(
+                filterChange(
                   startDateKey,
                   e.target.value ? (+e.target.value as number) : undefined
                 );
@@ -60,7 +61,7 @@ export function DateRangeFacet({
               name={endDateKey}
               className="w-24 border rounded-md grow border-gray-300 px-4 py-1 sm:text-sm"
               onChange={e => {
-                listStore.filterChange(
+                filterChange(
                   endDateKey,
                   e.target.value ? (+e.target.value as number) : undefined
                 );

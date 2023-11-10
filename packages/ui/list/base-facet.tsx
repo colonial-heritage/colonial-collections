@@ -37,25 +37,26 @@ export function FacetCheckBox({
   count,
   filterKey,
 }: FacetCheckBoxProps) {
-  const listStore = useListStore();
+  const selectedFilters = useListStore(s => s.selectedFilters);
+  const filterChange = useListStore(s => s.filterChange);
 
-  const selectedFilters = useMemo(
-    () => listStore.selectedFilters[filterKey] || [],
-    [filterKey, listStore.selectedFilters]
+  const selectedFiltersForKey = useMemo(
+    () => selectedFilters[filterKey] || [],
+    [filterKey, selectedFilters]
   ) as (string | number)[];
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.checked) {
-        listStore.filterChange(filterKey, [...selectedFilters, e.target.value]);
+        filterChange(filterKey, [...selectedFiltersForKey, e.target.value]);
       } else {
-        listStore.filterChange(
+        filterChange(
           filterKey,
-          selectedFilters.filter(filterId => e.target.value !== filterId)
+          selectedFiltersForKey.filter(filterId => e.target.value !== filterId)
         );
       }
     },
-    [filterKey, listStore, selectedFilters]
+    [filterChange, filterKey, selectedFiltersForKey]
   );
 
   return (
@@ -67,7 +68,7 @@ export function FacetCheckBox({
           id={`facet-${id}`}
           name={`facet-${id}`}
           value={id}
-          checked={selectedFilters.some(filterId => id === filterId)}
+          checked={selectedFiltersForKey.some(filterId => id === filterId)}
           onChange={handleChange}
         />
         <label className="truncate max-w-[230px]" htmlFor={`facet-${id}`}>

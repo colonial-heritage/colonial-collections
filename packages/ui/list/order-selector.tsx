@@ -7,7 +7,8 @@ const defaultValues = [SortBy.RelevanceDesc, SortBy.NameAsc, SortBy.NameDesc];
 
 export function OrderSelector({values = defaultValues}: {values?: string[]}) {
   const t = useTranslations('Sort');
-  const {sortBy, sortChange} = useListStore();
+  const sortBy = useListStore(s => s.sortBy);
+  const sortChange = useListStore(s => s.sortChange);
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
     sortChange(e.target.value as SortBy);
