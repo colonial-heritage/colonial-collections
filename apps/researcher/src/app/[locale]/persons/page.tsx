@@ -6,9 +6,8 @@ import {sortMapping} from './sort-mapping';
 import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
-  defaultSortBy,
   Type as SearchParamType,
-  ListProvider,
+  ListStoreUpdater,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -148,18 +147,17 @@ export default async function Home({searchParams = {}}: Props) {
         )}
 
         {searchResult && (
-          <ListProvider
-            {...{
-              totalCount: searchResult.totalCount,
-              offset: searchResult.offset,
-              limit: searchResult.limit,
-              query: searchOptions.query ?? '',
-              sortBy,
-              selectedFilters: searchOptions.filters,
-              baseUrl: '/persons',
-              defaultSortBy,
-            }}
-          >
+          <>
+            <ListStoreUpdater
+              {...{
+                totalCount: searchResult.totalCount,
+                offset: searchResult.offset,
+                limit: searchResult.limit,
+                query: searchOptions.query ?? '',
+                sortBy,
+                selectedFilters: searchOptions.filters,
+              }}
+            />
             <aside
               id="facets"
               className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2"
@@ -208,7 +206,7 @@ export default async function Home({searchParams = {}}: Props) {
               />
               <Paginator />
             </section>
-          </ListProvider>
+          </>
         )}
       </div>
     </>

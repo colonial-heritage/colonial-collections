@@ -6,6 +6,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import {locales} from '@/middleware';
 import {WipMessage} from '@colonial-collections/ui';
+import {ListProvider, defaultSortBy} from '@colonial-collections/list-store';
 
 interface Props {
   children: ReactNode;
@@ -44,7 +45,11 @@ export default async function RootLayout({children, params: {locale}}: Props) {
             <Navigation locales={locales} />
           </header>
           <main className="bg-sand-50 pb-32">
-            <div className="max-w-7xl container mx-auto p-8">{children}</div>
+            <div className="max-w-7xl container mx-auto p-8">
+              <ListProvider baseUrl="/" defaultSortBy={defaultSortBy}>
+                {children}
+              </ListProvider>
+            </div>
           </main>
         </NextIntlClientProvider>
       </body>

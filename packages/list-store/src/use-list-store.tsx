@@ -2,18 +2,18 @@
 
 import {createStore, useStore} from 'zustand';
 import {useRef, createContext, useContext, PropsWithChildren} from 'react';
-import {SearchParamsUpdater} from './search-params-updater';
 
 interface ListProps {
   totalCount: number;
   offset: number;
   limit: number;
   query: string;
-  sortBy?: string;
+  sortBy: string;
   // Setting newDataNeeded to true will trigger a page reload with new search params
   newDataNeeded: boolean;
   isInitialized: boolean;
   defaultSortBy: string;
+  baseUrl: string;
   selectedFilters: {
     [filterKey: string]: (string | number)[] | number | undefined;
   };
@@ -28,6 +28,21 @@ export interface ListState extends ListProps {
   queryChange: (query: string) => void;
   pageChange: (direction: 1 | -1) => void;
   transitionStarted: () => void;
+  setNewData: ({
+    totalCount,
+    offset,
+    limit,
+    query,
+    sortBy,
+    selectedFilters,
+  }: {
+    totalCount: number;
+    offset: number;
+    limit: number;
+    query: string;
+    sortBy?: string;
+    selectedFilters: {[filterKey: string]: (string | number)[] | undefined};
+  }) => void;
 }
 
 export type ListStore = ReturnType<typeof createListStore>;
@@ -63,12 +78,33 @@ export const createListStore = (initProps: ListProps) => {
     transitionStarted: () => {
       set({newDataNeeded: false});
     },
+    setNewData: ({
+      totalCount,
+      offset,
+      limit,
+      query,
+      sortBy,
+      selectedFilters,
+    }) => {
+      if (!get().isInitialized) {
+        set({
+          totalCount,
+          offset,
+          limit,
+          query,
+          sortBy: sortBy || get().defaultSortBy,
+          selectedFilters,
+          isInitialized: true,
+        });
+      } else if (totalCount !== get().totalCount) {
+        // Don't reset the values the user can edit after initializing the client store.
+        // Resetting these values could override user actions like typing.
+        set({
+          totalCount,
+        });
+      }
+    },
   }));
-};
-
-type ListProviderProps = PropsWithChildren<Partial<ListProps>> & {
-  defaultSortBy: string;
-  baseUrl: string;
 };
 
 export const ListContext = createContext<ListStore | null>(null);
@@ -85,18 +121,28 @@ export const initialList = {
   isInitialized: false,
 };
 
-export function ListProvider({children, baseUrl, ...list}: ListProviderProps) {
+export type ListProviderProps = PropsWithChildren<{
+  defaultSortBy: string;
+  baseUrl: string;
+}>;
+
+export function ListProvider({
+  children,
+  defaultSortBy,
+  baseUrl,
+}: ListProviderProps) {
   const storeRef = useRef<ListStore>();
   if (!storeRef.current) {
-    storeRef.current = createListStore({...initialList, ...list});
+    storeRef.current = createListStore({
+      ...initialList,
+      defaultSortBy,
+      sortBy: defaultSortBy,
+      baseUrl,
+    });
   }
 
   return (
     <ListContext.Provider value={storeRef.current}>
-      <SearchParamsUpdater
-        baseUrl={baseUrl}
-        defaultSortBy={list.defaultSortBy}
-      />
       {children}
     </ListContext.Provider>
   );

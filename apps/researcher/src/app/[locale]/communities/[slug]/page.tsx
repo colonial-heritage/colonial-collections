@@ -25,6 +25,7 @@ import {
   Notifications,
 } from '@colonial-collections/ui';
 import EditCommunityForm from './edit-community-form';
+import {ToFilteredListButton} from '@colonial-collections/ui/list';
 
 interface Props {
   params: {
@@ -78,10 +79,10 @@ export default async function CommunityPage({params}: Props) {
     <>
       <div className="px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
         <div>
-          <Link href="/communities" className="flex items-center gap-1">
+          <ToFilteredListButton className="flex items-center gap-1">
             <ChevronLeftIcon className="w-4 h-4 fill-neutral-500" />
             {t('backButton')}
-          </Link>
+          </ToFilteredListButton>
         </div>
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">

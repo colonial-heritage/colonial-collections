@@ -6,11 +6,15 @@ import {useListStore} from './use-list-store';
 import {getUrlWithSearchParams} from './search-params';
 
 interface Props {
-  baseUrl: string;
-  defaultSortBy: string;
+  totalCount: number;
+  offset: number;
+  limit: number;
+  query: string;
+  sortBy?: string;
+  selectedFilters?: {[filterKey: string]: string[] | undefined};
 }
 
-export function useSearchParamsUpdate({baseUrl, defaultSortBy}: Props) {
+export function useSearchParamsUpdate() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -20,15 +24,17 @@ export function useSearchParamsUpdate({baseUrl, defaultSortBy}: Props) {
   const sortBy = useListStore(s => s.sortBy);
   const selectedFilters = useListStore(s => s.selectedFilters);
   const transitionStarted = useListStore(s => s.transitionStarted);
+  const defaultSortBy = useListStore(s => s.defaultSortBy);
+  const baseUrl = useListStore(s => s.baseUrl);
 
   useEffect(() => {
     if (newDataNeeded && !isPending) {
       const url = getUrlWithSearchParams({
-        query: query,
-        offset: offset,
-        sortBy: sortBy,
+        query,
+        offset,
+        sortBy,
         filters: selectedFilters,
-        baseUrl: baseUrl,
+        baseUrl,
         defaultSortBy,
       });
       startTransition(() => {
@@ -50,12 +56,31 @@ export function useSearchParamsUpdate({baseUrl, defaultSortBy}: Props) {
   ]);
 }
 
-// Wrap the hook in an component so can be placed in a context provider
-export function SearchParamsUpdater({baseUrl, defaultSortBy}: Props) {
-  useSearchParamsUpdate({
-    baseUrl,
-    defaultSortBy,
-  });
+const useUpdateListStore = ({
+  totalCount,
+  offset,
+  limit,
+  query,
+  sortBy,
+  selectedFilters,
+}: Props) => {
+  const setNewData = useListStore(s => s.setNewData);
+
+  useEffect(() => {
+    setNewData({
+      totalCount,
+      offset,
+      limit,
+      query,
+      sortBy,
+      selectedFilters: selectedFilters ?? {},
+    });
+  }, [limit, offset, query, selectedFilters, setNewData, sortBy, totalCount]);
+};
+
+export function ListStoreUpdater({...updateProps}: Props) {
+  useUpdateListStore(updateProps);
+  useSearchParamsUpdate();
 
   return null;
 }

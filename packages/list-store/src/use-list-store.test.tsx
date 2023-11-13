@@ -11,24 +11,23 @@ import {
 import {SortBy, defaultSortBy} from './sort';
 import {renderHook} from '@testing-library/react';
 
-const initialState = {...initialList, defaultSortBy, sortBy: defaultSortBy};
-
-jest.mock('./search-params-updater', () => ({
-  SearchParamsUpdater: () => {
-    return <></>;
-  },
-}));
+const initialState = {
+  ...initialList,
+  defaultSortBy,
+  sortBy: defaultSortBy,
+  baseUrl: '/',
+};
 
 describe('useListStore', () => {
   it('returns the selected state from the store', () => {
     const {result} = renderHook(() => useListStore(s => s.defaultSortBy), {
       wrapper: ({children}) => (
-        <ListProvider {...{baseUrl: 'http://myApp.com', ...initialState}}>
+        <ListProvider baseUrl="/" defaultSortBy={SortBy.NameAsc}>
           {children}
         </ListProvider>
       ),
     });
-    expect(result.current).toBe(defaultSortBy);
+    expect(result.current).toBe(SortBy.NameAsc);
   });
 
   it('throws an error if the store is missing', () => {
