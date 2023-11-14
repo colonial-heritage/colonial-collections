@@ -59,7 +59,7 @@ export function SelectedFiltersForKey({
       (selectedFilter as string[]).forEach(id => {
         badges.push({
           key: `${filterKey}-${id}`,
-          label: filters.find(({id: i}) => i === id)!.name,
+          label: filters.find(({id: i}) => i === id)?.name ?? id,
           action: () => clearSelectedArrayFilter({id, filterKey}),
         });
       });
