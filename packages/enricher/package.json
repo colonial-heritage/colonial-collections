@@ -20,7 +20,10 @@
     "test:integration:watch": "npm run test:integration -- --watchAll"
   },
   "dependencies": {
+    "@colonial-collections/iris": "*",
+    "fetch-sparql-endpoint": "4.1.0",
     "rdf-data-factory": "1.1.2",
+    "rdf-object": "1.14.0",
     "rdf-serialize": "2.2.2",
     "rdf-stores": "1.0.0",
     "stream-to-string": "1.2.1",
