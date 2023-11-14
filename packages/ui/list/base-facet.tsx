@@ -39,6 +39,7 @@ export function FacetCheckBox({
 }: FacetCheckBoxProps) {
   const selectedFilters = useListStore(s => s.selectedFilters);
   const filterChange = useListStore(s => s.filterChange);
+  const newDataNeeded = useListStore(s => s.newDataNeeded);
 
   const selectedFiltersForKey = useMemo(
     () => selectedFilters[filterKey] || [],
@@ -70,6 +71,7 @@ export function FacetCheckBox({
           value={id}
           checked={selectedFiltersForKey.some(filterId => id === filterId)}
           onChange={handleChange}
+          disabled={newDataNeeded}
         />
         <label className="truncate max-w-[230px]" htmlFor={`facet-${id}`}>
           {name}
