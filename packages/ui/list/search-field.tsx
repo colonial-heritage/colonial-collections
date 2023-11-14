@@ -5,7 +5,8 @@ import {MagnifyingGlassIcon} from '@heroicons/react/24/solid';
 import {useTranslations} from 'next-intl';
 
 export function SearchField({placeholder = ''}: {placeholder?: string}) {
-  const {query, queryChange} = useListStore();
+  const query = useListStore(s => s.query);
+  const queryChange = useListStore(s => s.queryChange);
   const t = useTranslations('Filters');
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {

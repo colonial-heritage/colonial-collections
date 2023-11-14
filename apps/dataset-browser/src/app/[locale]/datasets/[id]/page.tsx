@@ -33,7 +33,7 @@ export default async function Details({params}: Props) {
   const locale = useLocale();
   const t = await getTranslator(locale, 'Details');
   const tMetrics = await getTranslator(locale, 'TransparencyMetrics');
-  const format = await getFormatter();
+  const format = await getFormatter(locale);
 
   if (!dataset) {
     return <div data-testid="no-dataset">{t('noDataset')}</div>;
@@ -96,10 +96,7 @@ export default async function Details({params}: Props) {
     <div className="flex flex-col md:flex-row justify-between gap-6">
       <aside className="w-full sm:w-1/5 flex flex-row md:flex-col border-r-2 border-white">
         <div>
-          <ToFilteredListButton
-            baseUrl="/"
-            className="inline-flex items-center mb-5 text-gray-900"
-          >
+          <ToFilteredListButton className="inline-flex items-center mb-5 text-gray-900">
             <ChevronLeftIcon className="h-5 w-5" />
             {t('back')}
           </ToFilteredListButton>

@@ -4,11 +4,10 @@ import {getTranslator} from 'next-intl/server';
 import PersonList from './person-list';
 import {sortMapping} from './sort-mapping';
 import {
-  ClientListStore,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
-  defaultSortBy,
   Type as SearchParamType,
+  ListStoreUpdater,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -149,7 +148,7 @@ export default async function Home({searchParams = {}}: Props) {
 
         {searchResult && (
           <>
-            <ClientListStore
+            <ListStoreUpdater
               {...{
                 totalCount: searchResult.totalCount,
                 offset: searchResult.offset,
@@ -157,8 +156,6 @@ export default async function Home({searchParams = {}}: Props) {
                 query: searchOptions.query ?? '',
                 sortBy,
                 selectedFilters: searchOptions.filters,
-                baseUrl: '/persons',
-                defaultSortBy,
               }}
             />
             <aside

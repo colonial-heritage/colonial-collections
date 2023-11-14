@@ -1,8 +1,8 @@
-import {getCommunities, SortBy, defaultSortBy} from '@/lib/community';
+import {getCommunities, SortBy} from '@/lib/community';
 import {getTranslator} from 'next-intl/server';
 import ErrorMessage from '@/components/error-message';
 import CommunityCard from './community-card';
-import {ClientListStore} from '@colonial-collections/list-store';
+import {ListStoreUpdater} from '@colonial-collections/list-store';
 import {
   Paginator,
   SearchField,
@@ -44,15 +44,13 @@ export default async function CommunitiesPage({
 
   return (
     <>
-      <ClientListStore
+      <ListStoreUpdater
         {...{
           totalCount: communities.length,
           offset: offset ?? 0,
           limit: 12,
           query: query ?? '',
-          sortBy: sortBy,
-          baseUrl: '/communities',
-          defaultSortBy,
+          sortBy,
         }}
       />
       <div className="px-4 my-10 sm:px-10 w-full max-w-[1800px] mx-auto">

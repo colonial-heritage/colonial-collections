@@ -93,7 +93,7 @@ describe('Object list filters', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
-    const searchText = 'My query';
+    const searchText = 'object';
 
     cy.getBySel('searchQuery').type(searchText);
     cy.getBySel('typesFilter').within(() => {

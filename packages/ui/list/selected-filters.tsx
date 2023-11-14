@@ -21,7 +21,8 @@ export function SelectedFiltersForKey({
   filterKey,
   searchParamType,
 }: SelectedFiltersForKeyProps) {
-  const {selectedFilters, filterChange} = useListStore();
+  const selectedFilters = useListStore(s => s.selectedFilters);
+  const filterChange = useListStore(s => s.filterChange);
   const selectedFilter = selectedFilters[filterKey];
 
   const badges = useMemo(() => {
@@ -97,7 +98,10 @@ interface ClearSelectedFilterProps {
 
 export function SelectedFilters({filters, filterSettings}: Props) {
   const t = useTranslations('Filters');
-  const {query, selectedFilters, filterChange, queryChange} = useListStore();
+  const query = useListStore(s => s.query);
+  const selectedFilters = useListStore(s => s.selectedFilters);
+  const filterChange = useListStore(s => s.filterChange);
+  const queryChange = useListStore(s => s.queryChange);
 
   function clearAllFilters() {
     queryChange('');

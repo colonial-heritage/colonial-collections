@@ -1,14 +1,13 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
 import {useLocale, useTranslations} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
-import HeritageObjectList from './(objects)/heritage-object-list';
-import {sortMapping} from './(objects)/sort-mapping';
+import HeritageObjectList from './heritage-object-list';
+import {sortMapping} from './sort-mapping';
 import {
-  ClientListStore,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
-  defaultSortBy,
   Type as SearchParamType,
+  ListStoreUpdater,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -32,7 +31,7 @@ import {
   SubMenuDialog,
 } from '@colonial-collections/ui';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import Tabs from './tabs';
+import Tabs from '../tabs';
 import {ElementType} from 'react';
 
 // Revalidate the page every n seconds
@@ -167,7 +166,7 @@ export default async function Home({searchParams = {}}: Props) {
 
         {searchResult && (
           <>
-            <ClientListStore
+            <ListStoreUpdater
               {...{
                 totalCount: searchResult.totalCount,
                 offset: searchResult.offset,
@@ -175,8 +174,6 @@ export default async function Home({searchParams = {}}: Props) {
                 query: searchOptions.query ?? '',
                 sortBy,
                 selectedFilters: searchOptions.filters,
-                baseUrl: '/',
-                defaultSortBy,
               }}
             />
             <aside
