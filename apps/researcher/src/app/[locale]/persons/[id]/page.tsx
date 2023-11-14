@@ -51,7 +51,7 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  const format = await getFormatter();
+  const format = await getFormatter(locale);
 
   const columnClassName = 'px-10 first:pl-0 last:pr-0 space-y-6 flex-1';
   const dateFormat: DateTimeFormatOptions = {
@@ -60,9 +60,7 @@ export default async function Details({params}: Props) {
 
   return (
     <>
-      <ToFilteredListButton baseUrl="/persons">
-        {t('backButton')}
-      </ToFilteredListButton>
+      <ToFilteredListButton>{t('backButton')}</ToFilteredListButton>
       <div className="mt-10 mb-4">
         <PageHeader>
           <PageTitle id="about">
