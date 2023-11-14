@@ -24,11 +24,11 @@ describe('Object list filters', () => {
     cy.getBySel('selectedFilter').should('have.length', 1);
   });
 
-  it('filters by two publishers', () => {
+  it('filters by two materials', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
-    cy.getBySel('publishersFilter').within(() => {
+    cy.getBySel('materialsFilter').within(() => {
       cy.get('[type="checkbox"]').eq(0).check();
       cy.get('[type="checkbox"]').eq(1).check();
     });
