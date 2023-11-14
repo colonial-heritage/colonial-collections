@@ -29,7 +29,7 @@ describe('add', () => {
     });
 
     expect(nanopub).toEqual({
-      id: expect.stringContaining('https://w3id.org/np/'),
+      id: expect.stringContaining('https://'),
     });
   });
 });

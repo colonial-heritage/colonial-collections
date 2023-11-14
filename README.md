@@ -59,6 +59,7 @@ Create the file `apps/researcher/.env.production.local` and set the endpoint URL
     SPARQL_ENDPOINT_URL=
     NANOPUB_WRITE_ENDPOINT_URL=
     NANOPUB_WRITE_PROXY_ENDPOINT_URL=
+    NANOPUB_SPARQL_ENDPOINT_URL=
 
 Then run:
 
@@ -80,7 +81,7 @@ Add the environment variable `DATABASE_URL` to `apps/researcher/.env.local`. Mor
 
 ### Use the Nanopublications infrastructure for storing and retrieving user enrichments
 
-Add the environment variables `NANOPUB_WRITE_ENDPOINT_URL` and `NANOPUB_WRITE_PROXY_ENDPOINT_URL` to `apps/researcher/.env.local`.
+Add the environment variables `NANOPUB_WRITE_ENDPOINT_URL`, `NANOPUB_WRITE_PROXY_ENDPOINT_URL` and `NANOPUB_SPARQL_ENDPOINT_URL` to `apps/researcher/.env.local`.
 
 ### Install packages
 
@@ -103,6 +104,7 @@ Create the file `.env.production.local` in the root and set the endpoint URLs:
     SPARQL_ENDPOINT_URL=
     NANOPUB_WRITE_ENDPOINT_URL=
     NANOPUB_WRITE_PROXY_ENDPOINT_URL=
+    NANOPUB_SPARQL_ENDPOINT_URL=
 
 Then run:
 
