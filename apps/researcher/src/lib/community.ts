@@ -12,6 +12,7 @@ export interface Community {
   createdAt: number;
   membershipCount?: number;
   licence?: string;
+  canAddEnrichments: boolean;
 }
 
 export interface Membership {
@@ -31,7 +32,7 @@ function disableCache() {
   cookies();
 }
 
-function organizationToCommunity(organization: Organization): Community {
+export function organizationToCommunity(organization: Organization): Community {
   return {
     id: organization.id,
     name: organization.name,
@@ -47,6 +48,10 @@ function organizationToCommunity(organization: Organization): Community {
     imageUrl: organization.imageUrl,
     createdAt: organization.createdAt,
     membershipCount: organization.members_count,
+    canAddEnrichments: !!(
+      organization.publicMetadata?.attributionId &&
+      organization.publicMetadata?.licence
+    ),
   };
 }
 

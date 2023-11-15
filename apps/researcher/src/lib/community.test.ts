@@ -1,6 +1,14 @@
 import {describe, expect, it} from '@jest/globals';
 import {auth} from '@clerk/nextjs';
-import {isAdmin, Membership, sort, SortBy} from './community';
+import {Organization} from '@clerk/backend/dist/types';
+import {
+  isAdmin,
+  Membership,
+  sort,
+  SortBy,
+  organizationToCommunity,
+  Community,
+} from './community';
 
 jest.mock('@clerk/nextjs', () => ({
   auth: jest.fn().mockImplementation(() => ({
@@ -92,6 +100,7 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1690000000000,
       membershipCount: 10,
+      canAddEnrichments: false,
     },
     {
       id: 'community1',
@@ -100,6 +109,7 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1600000000000,
       membershipCount: 5,
+      canAddEnrichments: false,
     },
     {
       id: 'community4',
@@ -108,6 +118,7 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1680000000000,
       membershipCount: 15,
+      canAddEnrichments: false,
     },
     {
       id: 'community3',
@@ -116,6 +127,7 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1650000000000,
       membershipCount: 20,
+      canAddEnrichments: false,
     },
     {
       id: 'community5',
@@ -124,6 +136,7 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1670000000000,
       membershipCount: undefined,
+      canAddEnrichments: false,
     },
   ];
 
@@ -138,6 +151,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
         membershipCount: 5,
+        canAddEnrichments: false,
       },
       {
         id: 'community2',
@@ -146,6 +160,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
         membershipCount: 10,
+        canAddEnrichments: false,
       },
       {
         id: 'community3',
@@ -154,6 +169,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
         membershipCount: 20,
+        canAddEnrichments: false,
       },
       {
         id: 'community4',
@@ -162,6 +178,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
         membershipCount: 15,
+        canAddEnrichments: false,
       },
       {
         id: 'community5',
@@ -170,6 +187,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
         membershipCount: undefined,
+        canAddEnrichments: false,
       },
     ];
 
@@ -187,6 +205,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
         membershipCount: undefined,
+        canAddEnrichments: false,
       },
       {
         id: 'community4',
@@ -195,6 +214,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
         membershipCount: 15,
+        canAddEnrichments: false,
       },
       {
         id: 'community3',
@@ -203,6 +223,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
         membershipCount: 20,
+        canAddEnrichments: false,
       },
       {
         id: 'community2',
@@ -211,6 +232,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
         membershipCount: 10,
+        canAddEnrichments: false,
       },
       {
         id: 'community1',
@@ -219,6 +241,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
         membershipCount: 5,
+        canAddEnrichments: false,
       },
     ];
 
@@ -236,6 +259,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
         membershipCount: 10,
+        canAddEnrichments: false,
       },
       {
         id: 'community4',
@@ -244,6 +268,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
         membershipCount: 15,
+        canAddEnrichments: false,
       },
       {
         id: 'community5',
@@ -252,6 +277,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
         membershipCount: undefined,
+        canAddEnrichments: false,
       },
       {
         id: 'community3',
@@ -260,6 +286,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
         membershipCount: 20,
+        canAddEnrichments: false,
       },
       {
         id: 'community1',
@@ -268,6 +295,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
         membershipCount: 5,
+        canAddEnrichments: false,
       },
     ];
 
@@ -285,6 +313,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
         membershipCount: 20,
+        canAddEnrichments: false,
       },
       {
         id: 'community4',
@@ -293,6 +322,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
         membershipCount: 15,
+        canAddEnrichments: false,
       },
       {
         id: 'community2',
@@ -301,6 +331,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
         membershipCount: 10,
+        canAddEnrichments: false,
       },
       {
         id: 'community1',
@@ -309,6 +340,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
         membershipCount: 5,
+        canAddEnrichments: false,
       },
       {
         id: 'community5',
@@ -317,6 +349,7 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
         membershipCount: undefined,
+        canAddEnrichments: false,
       },
     ];
 
@@ -327,5 +360,69 @@ describe('sort', () => {
     const sortedCommunities = sort(communities, 'invalid' as SortBy);
 
     expect(sortedCommunities).toStrictEqual(communities);
+  });
+});
+
+describe('organizationToCommunity', () => {
+  const organization: Organization = {
+    id: 'org1',
+    name: 'Organization 1',
+    publicMetadata: {
+      description: 'This is a description',
+      attributionId: 'https://example.com/attribution',
+      licence: 'https://example.com/licence',
+    },
+    slug: 'organization-1',
+    imageUrl: 'https://example.com/image.png',
+    createdAt: 1620000000000,
+    updatedAt: 1620000000000,
+    members_count: 10,
+    hasImage: true,
+    logoUrl: 'https://example.com/logo.png',
+    createdBy: 'me',
+    privateMetadata: {},
+    maxAllowedMemberships: 10,
+    adminDeleteEnabled: true,
+  };
+
+  it('converts an organization to a community', () => {
+    const expectedCommunity: Community = {
+      id: 'org1',
+      name: 'Organization 1',
+      description: 'This is a description',
+      attributionId: 'https://example.com/attribution',
+      licence: 'https://example.com/licence',
+      slug: 'organization-1',
+      imageUrl: 'https://example.com/image.png',
+      createdAt: 1620000000000,
+      membershipCount: 10,
+      canAddEnrichments: true,
+    };
+
+    expect(organizationToCommunity(organization)).toEqual(expectedCommunity);
+  });
+
+  it('handles missing publicMetadata', () => {
+    const organizationWithoutMetadata: Organization = {
+      ...organization,
+      publicMetadata: null,
+    };
+
+    const expectedCommunity: Community = {
+      id: 'org1',
+      name: 'Organization 1',
+      description: undefined,
+      attributionId: undefined,
+      licence: undefined,
+      slug: 'organization-1',
+      imageUrl: 'https://example.com/image.png',
+      createdAt: 1620000000000,
+      membershipCount: 10,
+      canAddEnrichments: false,
+    };
+
+    expect(organizationToCommunity(organizationWithoutMetadata)).toEqual(
+      expectedCommunity
+    );
   });
 });

@@ -89,7 +89,7 @@ export default async function CommunityPage({params}: Props) {
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
         <main className="w-full">
-          {isMember(memberships) && (
+          {isMember(memberships) && !community.canAddEnrichments && (
             <div className="w-full block">
               <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-neutral-200 w-full mx-auto ">
                 <div className="bg-orange-400 p-3 rounded-l">
