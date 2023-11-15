@@ -26,6 +26,7 @@ import {
 } from '@colonial-collections/ui';
 import EditCommunityForm from './edit-community-form';
 import {ToFilteredListButton} from '@colonial-collections/ui/list';
+import {env} from 'node:process';
 
 interface Props {
   params: {
@@ -162,6 +163,8 @@ export default async function CommunityPage({params}: Props) {
                 name={community.name}
                 slug={community.slug!}
                 attributionId={community.attributionId}
+                licence={community.licence}
+                licenceToAccept={env['COMMUNITY_LICENCE'] || ''}
               />
             </div>
           </SlideOut>

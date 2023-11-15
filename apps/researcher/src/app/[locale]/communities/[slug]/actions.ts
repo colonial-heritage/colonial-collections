@@ -9,6 +9,7 @@ interface UpdateCommunityAndRevalidateProps {
   slug: string;
   description: string;
   attributionId: string;
+  licence?: string;
 }
 
 export async function updateCommunityAndRevalidate({
@@ -17,13 +18,14 @@ export async function updateCommunityAndRevalidate({
   slug,
   description,
   attributionId,
+  licence,
 }: UpdateCommunityAndRevalidateProps) {
   const community = await updateCommunity({
     id,
     description,
-    slug,
     name,
     attributionId,
+    licence,
   });
 
   revalidatePath(`/[locale]/communities/${slug}`, 'page');

@@ -35,7 +35,7 @@ export function JoinCommunityButton({communityId, communitySlug}: Props) {
     return null;
   }
 
-  const joinCommunityClick = () => {
+  async function joinCommunityClick() {
     setIsClicked(true);
     startTransition(async () => {
       try {
@@ -50,7 +50,7 @@ export function JoinCommunityButton({communityId, communitySlug}: Props) {
         console.error(err);
       }
     });
-  };
+  }
 
   // TODO: add correct layout
   if (hasError) {

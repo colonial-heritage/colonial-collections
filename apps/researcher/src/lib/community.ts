@@ -1,5 +1,6 @@
 import {clerkClient, auth} from '@clerk/nextjs';
 import {OrganizationMembership, Organization} from '@clerk/backend/dist/types';
+import {cookies} from 'next/headers';
 
 export interface Community {
   id: string;
@@ -10,6 +11,7 @@ export interface Community {
   imageUrl: string;
   createdAt: number;
   membershipCount?: number;
+  licence?: string;
 }
 
 export interface Membership {
@@ -21,6 +23,14 @@ export interface Membership {
   imageUrl: string;
 }
 
+function disableCache() {
+  // Some functions are still cached even when using `revalidatePath()`
+  // Running this function will disable the cache
+  // https://github.com/vercel/next.js/discussions/50045#discussioncomment-7218266
+  // After updating to Next.js 14 we can use the official `noStore()` instead of `cookies()`
+  cookies();
+}
+
 function organizationToCommunity(organization: Organization): Community {
   return {
     id: organization.id,
@@ -29,6 +39,9 @@ function organizationToCommunity(organization: Organization): Community {
     description: organization.publicMetadata?.description as string | undefined,
     attributionId: organization.publicMetadata?.attributionId
       ? decodeURIComponent(organization.publicMetadata?.attributionId as string)
+      : undefined,
+    licence: organization.publicMetadata?.licence
+      ? decodeURIComponent(organization.publicMetadata?.licence as string)
       : undefined,
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
@@ -165,6 +178,8 @@ interface JoinCommunityProps {
 }
 
 export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
+  disableCache();
+
   await clerkClient.organizations.createOrganizationMembership({
     organizationId: communityId,
     userId,
@@ -175,24 +190,26 @@ export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
 interface UpdateCommunityProps {
   id: string;
   name: string;
-  slug: string;
   description: string;
   attributionId: string;
+  licence?: string;
 }
 
 export async function updateCommunity({
   id,
   name,
-  slug,
   description,
   attributionId,
+  licence,
 }: UpdateCommunityProps) {
+  disableCache();
+
   const organization = await clerkClient.organizations.updateOrganization(id, {
     name,
-    slug,
     publicMetadata: {
       description,
       attributionId: encodeURIComponent(attributionId),
+      licence: licence ? encodeURIComponent(licence) : '',
     },
   });
 
