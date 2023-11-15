@@ -130,7 +130,7 @@ export default async function Home({searchParams = {}}: Props) {
   }
 
   const locale = useLocale();
-  const t = await getTranslator(locale, 'Persons');
+  const t = await getTranslator(locale, 'Constituents');
 
   return (
     <>
@@ -187,7 +187,7 @@ export default async function Home({searchParams = {}}: Props) {
                 >
                   <div className="ml-4 mt-2">
                     <PageTitle>
-                      {t('title', {totalPersons: searchResult.totalCount})}
+                      {t('title', {totalConstituents: searchResult.totalCount})}
                     </PageTitle>
                   </div>
                   <div>
