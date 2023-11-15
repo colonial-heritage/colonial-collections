@@ -234,12 +234,13 @@ export default async function CommunityPage({params}: Props) {
         <aside className="w-full md:w-1/4 self-stretch">
           <div className="flex justify-between">
             <h2 className="mb-4">{t('membersTitle')}</h2>
-
             <div>
-              <ManageMembersButton
-                communityId={community.id}
-                communitySlug={params.slug}
-              />
+              {isAdmin(memberships) && (
+                <ManageMembersButton
+                  communityId={community.id}
+                  communitySlug={params.slug}
+                />
+              )}
             </div>
           </div>
           <ul>
