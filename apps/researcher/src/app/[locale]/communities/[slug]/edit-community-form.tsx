@@ -7,6 +7,7 @@ import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {updateCommunityAndRevalidate} from './actions';
 import {camelCase} from 'tiny-case';
+import {useCommunityProfile} from '@/lib/community-hooks';
 
 interface Props {
   communityId: string;
@@ -61,6 +62,11 @@ export default function EditCommunityForm({
   const t = useTranslations('Community');
   const {setIsVisible} = useSlideOut();
   const {addNotification} = useNotifications();
+  const {openProfile} = useCommunityProfile({communitySlug: slug, communityId});
+
+  const openSettings = () => {
+    openProfile('settings');
+  };
 
   const onSubmit: SubmitHandler<FormValues> = async formValues => {
     try {
@@ -169,22 +175,32 @@ export default function EditCommunityForm({
         <p>{errors.licenceChecked?.message}</p>
       </div>
 
-      <div className="flex flex-row max-w-2xl w-full gap-2">
-        <button
-          disabled={isSubmitting}
-          type="submit"
-          className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300
-text-neutral-800 transition flex items-center gap-1"
-        >
-          {t('editCommunitySaveButton')}
-        </button>
-        <button
-          className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300
-text-neutral-800 transition flex items-center gap-1"
-          onClick={() => setIsVisible(slideOutId, false)}
-        >
-          {t('editCommunityCancelButton')}
-        </button>
+      <div className="flex flex-row max-w-2xl w-full">
+        <div className=" flex flex-col md:flex-row justify-between  gap-2">
+          <button
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1"
+            disabled={isSubmitting}
+            type="submit"
+          >
+            {t('editCommunitySaveButton')}
+          </button>
+          <button
+            type="button"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-none hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1 border border-neutral-300"
+            onClick={() => setIsVisible(slideOutId, false)}
+          >
+            {t('editCommunityCancelButton')}
+          </button>
+        </div>
+        <div className="flex justify-end w-full">
+          <button
+            type="button"
+            onClick={openSettings}
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1"
+          >
+            {t('settingsButton')}
+          </button>
+        </div>
       </div>
     </form>
   );
