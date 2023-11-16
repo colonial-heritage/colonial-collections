@@ -1,5 +1,5 @@
 import {ListProvider} from '@colonial-collections/list-store';
-import {defaultSortBy} from '@/lib/community';
+import {defaultSortBy} from '@/lib/community/community-actions';
 import {ReactNode} from 'react';
 
 export default function ObjectLayout({children}: {children: ReactNode}) {

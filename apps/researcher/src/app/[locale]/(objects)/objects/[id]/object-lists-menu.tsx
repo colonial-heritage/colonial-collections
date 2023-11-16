@@ -13,6 +13,7 @@ import {
 } from './object-lists-actions';
 import {ObjectList} from '@colonial-collections/database';
 import {useNotifications} from '@colonial-collections/ui';
+import {useUserCommunities} from '@/lib/community/community-hooks';
 
 interface CommunityMenuItemsProps {
   communityId: string;
@@ -123,13 +124,11 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
   const t = useTranslations('ObjectDetails');
   const {user} = useUser();
 
-  if (!user || !user.organizationMemberships.length) {
+  const communities = useUserCommunities();
+
+  if (!user || !communities.length) {
     return null;
   }
-
-  const communities = user.organizationMemberships.map(
-    membership => membership.organization
-  );
 
   return (
     <Menu as="div" className="relative inline-block text-left">

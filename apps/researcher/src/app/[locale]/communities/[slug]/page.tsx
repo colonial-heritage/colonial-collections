@@ -12,7 +12,7 @@ import {
   getCommunityBySlug,
   isAdmin,
   isMember,
-} from '@/lib/community';
+} from '@/lib/community/community-actions';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
 import {revalidatePath} from 'next/cache';

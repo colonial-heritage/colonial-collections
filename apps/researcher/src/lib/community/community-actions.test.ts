@@ -1,14 +1,7 @@
 import {describe, expect, it} from '@jest/globals';
 import {auth} from '@clerk/nextjs';
-import {Organization} from '@clerk/backend/dist/types';
-import {
-  isAdmin,
-  Membership,
-  sort,
-  SortBy,
-  organizationToCommunity,
-  Community,
-} from './community';
+import {isAdmin, sort} from './community-actions';
+import {Membership, SortBy} from './definitions';
 
 jest.mock('@clerk/nextjs', () => ({
   auth: jest.fn().mockImplementation(() => ({
@@ -360,69 +353,5 @@ describe('sort', () => {
     const sortedCommunities = sort(communities, 'invalid' as SortBy);
 
     expect(sortedCommunities).toStrictEqual(communities);
-  });
-});
-
-describe('organizationToCommunity', () => {
-  const organization: Organization = {
-    id: 'org1',
-    name: 'Organization 1',
-    publicMetadata: {
-      description: 'This is a description',
-      attributionId: 'https://example.com/attribution',
-      licence: 'https://example.com/licence',
-    },
-    slug: 'organization-1',
-    imageUrl: 'https://example.com/image.png',
-    createdAt: 1620000000000,
-    updatedAt: 1620000000000,
-    members_count: 10,
-    hasImage: true,
-    logoUrl: 'https://example.com/logo.png',
-    createdBy: 'me',
-    privateMetadata: {},
-    maxAllowedMemberships: 10,
-    adminDeleteEnabled: true,
-  };
-
-  it('converts an organization to a community', () => {
-    const expectedCommunity: Community = {
-      id: 'org1',
-      name: 'Organization 1',
-      description: 'This is a description',
-      attributionId: 'https://example.com/attribution',
-      licence: 'https://example.com/licence',
-      slug: 'organization-1',
-      imageUrl: 'https://example.com/image.png',
-      createdAt: 1620000000000,
-      membershipCount: 10,
-      canAddEnrichments: true,
-    };
-
-    expect(organizationToCommunity(organization)).toEqual(expectedCommunity);
-  });
-
-  it('handles missing publicMetadata', () => {
-    const organizationWithoutMetadata: Organization = {
-      ...organization,
-      publicMetadata: null,
-    };
-
-    const expectedCommunity: Community = {
-      id: 'org1',
-      name: 'Organization 1',
-      description: undefined,
-      attributionId: undefined,
-      licence: undefined,
-      slug: 'organization-1',
-      imageUrl: 'https://example.com/image.png',
-      createdAt: 1620000000000,
-      membershipCount: 10,
-      canAddEnrichments: false,
-    };
-
-    expect(organizationToCommunity(organizationWithoutMetadata)).toEqual(
-      expectedCommunity
-    );
   });
 });

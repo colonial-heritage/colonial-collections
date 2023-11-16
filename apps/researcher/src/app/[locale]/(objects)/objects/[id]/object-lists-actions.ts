@@ -1,6 +1,6 @@
 'use server';
 
-import {getCommunityBySlug} from '@/lib/community';
+import {getCommunityBySlug} from '@/lib/community/community-actions';
 import {objectList} from '@colonial-collections/database';
 import {ObjectItemBeingCreated} from '@colonial-collections/database';
 import {revalidatePath} from 'next/cache';

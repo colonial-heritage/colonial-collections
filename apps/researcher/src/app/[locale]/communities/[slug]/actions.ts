@@ -1,6 +1,9 @@
 'use server';
 
-import {joinCommunity, updateCommunity} from '@/lib/community';
+import {
+  joinCommunity,
+  updateCommunity,
+} from '@/lib/community/community-actions';
 import {revalidatePath} from 'next/cache';
 
 interface UpdateCommunityAndRevalidateProps {

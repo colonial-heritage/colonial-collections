@@ -1,4 +1,6 @@
-import {useClerk} from '@clerk/nextjs';
+import {useClerk, useUser} from '@clerk/nextjs';
+import {organizationToCommunity} from './clerk-converters';
+import {useMemo} from 'react';
 
 interface UseCommunityProfile {
   communitySlug: string;
@@ -34,4 +36,33 @@ export function useCommunityProfile({
   }
 
   return {openProfile};
+}
+
+interface UseUserCommunitiesProps {
+  canAddEnrichments?: boolean;
+}
+
+export function useUserCommunities({
+  canAddEnrichments = false,
+}: UseUserCommunitiesProps = {}) {
+  const {user} = useUser();
+
+  const communities = useMemo(() => {
+    if (!user || !user.organizationMemberships.length) {
+      return [];
+    }
+
+    const communities = user.organizationMemberships.map(membership =>
+      organizationToCommunity(membership.organization)
+    );
+
+    if (canAddEnrichments) {
+      return communities.filter(community => {
+        return community.canAddEnrichments;
+      });
+    }
+    return communities;
+  }, [user, canAddEnrichments]);
+
+  return communities;
 }

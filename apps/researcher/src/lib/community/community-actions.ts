@@ -1,28 +1,10 @@
 import {clerkClient, auth} from '@clerk/nextjs';
-import {OrganizationMembership, Organization} from '@clerk/backend/dist/types';
 import {cookies} from 'next/headers';
-
-export interface Community {
-  id: string;
-  name: string;
-  slug: string;
-  description?: string;
-  attributionId?: string;
-  imageUrl: string;
-  createdAt: number;
-  membershipCount?: number;
-  licence?: string;
-  canAddEnrichments: boolean;
-}
-
-export interface Membership {
-  id: string;
-  role: string;
-  userId: string;
-  firstName: string;
-  lastName: string;
-  imageUrl: string;
-}
+import {
+  organizationMembershipToCommunityMembership,
+  organizationToCommunity,
+} from './clerk-converters';
+import {Community, Membership, SortBy} from './definitions';
 
 function disableCache() {
   // Some functions are still cached even when using `revalidatePath()`
@@ -30,48 +12,6 @@ function disableCache() {
   // https://github.com/vercel/next.js/discussions/50045#discussioncomment-7218266
   // After updating to Next.js 14 we can use the official `noStore()` instead of `cookies()`
   cookies();
-}
-
-export function organizationToCommunity(organization: Organization): Community {
-  return {
-    id: organization.id,
-    name: organization.name,
-    // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata.
-    description: organization.publicMetadata?.description as string | undefined,
-    attributionId: organization.publicMetadata?.attributionId
-      ? decodeURIComponent(organization.publicMetadata?.attributionId as string)
-      : undefined,
-    licence: organization.publicMetadata?.licence
-      ? decodeURIComponent(organization.publicMetadata?.licence as string)
-      : undefined,
-    slug: organization.slug!,
-    imageUrl: organization.imageUrl,
-    createdAt: organization.createdAt,
-    membershipCount: organization.members_count,
-    canAddEnrichments: !!(
-      organization.publicMetadata?.attributionId &&
-      organization.publicMetadata?.licence
-    ),
-  };
-}
-
-function organizationMembershipToCommunityMembership(
-  membership: OrganizationMembership
-): Membership {
-  // There are some assumptions made in this function:
-  // - The membership has a `publicUserData` field. Even though it is optional in the Clerk type `OrganizationMembership`.
-  // - The `publicUserData` has the fields `userId` and `imageUrl`.
-  // - The `publicUserData` has the fields `firstName` and `lastName`.
-  //   These are optional in the Clerk type `OrganizationMembershipPublicUserData` but set to required in the Clerk settings for this application.
-
-  return {
-    id: membership.id,
-    role: membership.role,
-    userId: membership.publicUserData!.userId,
-    firstName: membership.publicUserData!.firstName!,
-    lastName: membership.publicUserData!.lastName!,
-    imageUrl: membership.publicUserData!.imageUrl,
-  };
 }
 
 export async function getCommunityBySlug(slug: string) {
@@ -101,13 +41,6 @@ export async function getMemberships(communityId: string) {
   );
 }
 
-export enum SortBy {
-  NameAsc = 'nameAsc',
-  NameDesc = 'nameDesc',
-  CreatedAtDesc = 'createdAtDesc',
-  MembershipCountDesc = 'membershipCountDesc',
-}
-
 export const defaultSortBy = SortBy.CreatedAtDesc;
 
 export function sort(communities: Community[], sortBy: SortBy) {
@@ -117,6 +50,9 @@ export function sort(communities: Community[], sortBy: SortBy) {
     } else if (sortBy === SortBy.NameDesc) {
       return b.name.localeCompare(a.name);
     } else if (sortBy === SortBy.CreatedAtDesc) {
+      if (typeof a.createdAt !== 'number' || typeof b.createdAt !== 'number') {
+        throw new Error('createdAt must be of type number');
+      }
       return b.createdAt - a.createdAt;
     } else if (sortBy === SortBy.MembershipCountDesc) {
       return (b.membershipCount ?? 0) - (a.membershipCount ?? 0);

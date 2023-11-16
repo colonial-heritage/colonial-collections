@@ -5,7 +5,7 @@ import {useTranslations} from 'next-intl';
 import {useUser} from '@clerk/nextjs';
 import {useTransition} from 'react';
 import {joinCommunityAndRevalidate} from './actions';
-import {useCommunityProfile} from '@/lib/community-hooks';
+import {useCommunityProfile} from '@/lib/community/community-hooks';
 
 interface Props {
   communityId: string;
