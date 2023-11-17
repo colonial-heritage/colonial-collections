@@ -13,7 +13,7 @@ import {
 } from './object-lists-actions';
 import {ObjectList} from '@colonial-collections/database';
 import {useNotifications} from '@colonial-collections/ui';
-import {useUserCommunities} from '@/lib/community/community-hooks';
+import {useUserCommunities} from '@/lib/community/hooks';
 
 interface CommunityMenuItemsProps {
   communityId: string;

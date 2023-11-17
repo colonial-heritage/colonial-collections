@@ -1,6 +1,6 @@
 import {describe, expect, it} from '@jest/globals';
 import {auth} from '@clerk/nextjs';
-import {isAdmin, sort} from './community-actions';
+import {isAdmin, sort} from './actions';
 import {Membership, SortBy} from './definitions';
 
 jest.mock('@clerk/nextjs', () => ({

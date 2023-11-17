@@ -4,7 +4,7 @@ import ErrorMessage from '@/components/error-message';
 import Link from 'next/link';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import ObjectCard from './object-card';
-import {getCommunityBySlug} from '@/lib/community/community-actions';
+import {getCommunityBySlug} from '@/lib/community/actions';
 
 interface Props {
   params: {

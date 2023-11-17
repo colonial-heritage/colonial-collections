@@ -1,6 +1,6 @@
 'use server';
 
-import {getCommunityById} from '@/lib/community/community-actions';
+import {getCommunityById} from '@/lib/community/actions';
 import {objectList} from '@colonial-collections/database';
 import {revalidatePath} from 'next/cache';
 

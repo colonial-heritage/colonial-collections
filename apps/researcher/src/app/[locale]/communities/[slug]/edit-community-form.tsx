@@ -7,7 +7,7 @@ import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {updateCommunityAndRevalidate} from './actions';
 import {camelCase} from 'tiny-case';
-import {useCommunityProfile} from '@/lib/community/community-hooks';
+import {useCommunityProfile} from '@/lib/community/hooks';
 
 interface Props {
   communityId: string;

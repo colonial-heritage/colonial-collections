@@ -1,4 +1,4 @@
-import {getCommunities} from '@/lib/community/community-actions';
+import {getCommunities} from '@/lib/community/actions';
 import {SortBy} from '@/lib/community/definitions';
 import {getTranslator} from 'next-intl/server';
 import ErrorMessage from '@/components/error-message';
