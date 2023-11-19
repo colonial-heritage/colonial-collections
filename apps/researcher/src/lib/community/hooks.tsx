@@ -45,7 +45,7 @@ interface UseUserCommunitiesProps {
 export function useUserCommunities({
   canAddEnrichments = false,
 }: UseUserCommunitiesProps = {}) {
-  const {user} = useUser();
+  const {user, isLoaded} = useUser();
 
   const communities = useMemo(() => {
     if (!user || !user.organizationMemberships.length) {
@@ -62,5 +62,5 @@ export function useUserCommunities({
     return communities;
   }, [user, canAddEnrichments]);
 
-  return communities;
+  return {communities, isLoaded};
 }

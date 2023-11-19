@@ -38,6 +38,7 @@ export default async function CommunitiesPage({
       query,
       sortBy,
       offset,
+      limit: 24,
     });
   } catch (err) {
     return <ErrorMessage error={t('error')} />;
