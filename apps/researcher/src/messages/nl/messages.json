@@ -180,9 +180,10 @@
     "editCommunityTitle": "Community aanpassen",
     "labelName": "Naam",
     "labelDescription": "Beschrijving",
-    "labelAttributionId":"ORCID iD",
-    "descriptionAttributionId": "TODO: beschrijving toevoegen over de ORCID iD",
-    "labelLicence": "Ik ga akkoord met de xx-licentie",
+    "labelAttributionId":"ORCID",
+    "descriptionAttributionId": "Om commentaar en nieuwe informatie aan de objecten in de applicatie toe te voegen, moet een community minimaal één deelnemer hebben met een ORCID. Een ORCID is bedoeld voor onderzoekers en kan via de <link>ORCID-website</link> worden aangemaakt.\n\nWanneer je jouw ORCID aan de community koppelt, ga je optreden als woordvoerder. Al het commentaar dat andere deelnemers van je community toevoegen, wordt opgeslagen met jouw ORCID. Op die manier ondersteunt de applicatie een zekere mate van anonimiteit maar kan nog steeds naar een bron verwezen worden. Daarnaast kunnen zo deelnemers zonder formele (westerse) academische opleiding aan de community deelnemen.",
+    "labelLicence": "Ik ga akkoord met de publicatie van alle toegevoegde informatie in de applicatie onder een <link>CC-BY-4.0 licentie</link>",
+    "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.nl",
     "descriptionLicence": "TODO: beschrijving toevoegen over de licentie",    
     "editCommunitySaveButton": "Opslaan",
     "editCommunityCancelButton": "Annuleren",
@@ -191,9 +192,9 @@
     "nameMaxLength": "Naam mag maximaal 250 tekens bevatten",
     "nameTooSmall": "Naam is vereist",
     "descriptionMaxLength": "Beschrijving mag maximaal 2000 tekens bevatten",
-    "attributionIdInvalidString": "ORCID iD moet een geldige URL zijn",
-    "noAttributionIdWarning": "Om verhalen of herkomst aan object toe te voegen, moet u een ORCID iD aan uw communityprofiel toevoegen.",
-    "addAttributionIdButton": "ORCID iD toevoegen"
+    "attributionIdInvalidString": "ORCID moet een geldige URL zijn",
+    "noAttributionIdWarning": "Om verhalen of herkomst aan object toe te voegen, moet u een ORCID aan uw communityprofiel toevoegen.",
+    "addAttributionIdButton": "ORCID toevoegen"
   },
   "AddObjectListForm": {
     "title": "Lijst toevoegen",

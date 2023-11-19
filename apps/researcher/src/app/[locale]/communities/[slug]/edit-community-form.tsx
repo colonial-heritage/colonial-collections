@@ -8,6 +8,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {updateCommunityAndRevalidate} from './actions';
 import {camelCase} from 'tiny-case';
 import {useCommunityProfile} from '@/lib/community/hooks';
+import {LocalizedMarkdown} from '@colonial-collections/ui';
 
 interface Props {
   communityId: string;
@@ -147,7 +148,15 @@ export default function EditCommunityForm({
             {t('labelAttributionId')}
             <span className="font-normal text-neutral-600"> *</span>
           </strong>
-          <div className="text-sm mb-1">{t('descriptionAttributionId')}</div>
+          <div className="text-sm mb-1 whitespace-pre-line">
+            {t.rich('descriptionAttributionId', {
+              link: text => (
+                <a href="https://orcid.org" target="_blank" rel="noreferrer">
+                  {text}
+                </a>
+              ),
+            })}
+          </div>
         </label>
         <input
           id="attributionId"
@@ -160,7 +169,6 @@ export default function EditCommunityForm({
         </p>
 
         <div className="mt-4">
-          <div className="text-sm mb-1">{t('descriptionLicence')}</div>
           <div className="flex justify-start gap-2 items-center">
             <input
               type="checkbox"
@@ -168,8 +176,21 @@ export default function EditCommunityForm({
               {...register('licenceChecked')}
             />
             <label className="flex flex-col gap-1 mb-1" htmlFor="licence">
-              {t('labelLicence')}
+              {t.rich('labelLicence', {
+                link: text => (
+                  <a href={t('licenceLink')} target="_blank" rel="noreferrer">
+                    {text}
+                  </a>
+                ),
+              })}
             </label>
+          </div>
+          <div className="text-sm mb-1">
+            <LocalizedMarkdown
+              name="licence"
+              contentPath="@/messages"
+              textSize="small"
+            />
           </div>
         </div>
         <p>{errors.licenceChecked?.message}</p>
