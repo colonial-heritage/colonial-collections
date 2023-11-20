@@ -44,7 +44,7 @@
     "@jest/globals": "29.7.0",
     "@next/env": "14.0.2",
     "@rdfjs/types": "1.1.0",
-    "@types/mdx": "2.0.8",
+    "@types/mdx": "2.0.10",
     "@types/node": "20.8.9",
     "@types/react": "18.2.37",
     "@types/react-dom": "18.2.15",
