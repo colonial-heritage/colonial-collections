@@ -78,9 +78,7 @@ export function ManageMembersButton({communityId, communitySlug}: Props) {
   const {openProfile} = useCommunityProfile({communitySlug, communityId});
   const t = useTranslations('Community');
 
-  const manageMembersClick = () => {
-    openProfile('members');
-  };
+  const manageMembersClick = () => openProfile('members');
 
   return (
     <button

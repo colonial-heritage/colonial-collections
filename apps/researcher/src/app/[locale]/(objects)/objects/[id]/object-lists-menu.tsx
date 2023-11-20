@@ -124,9 +124,9 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
   const t = useTranslations('ObjectDetails');
   const {user} = useUser();
 
-  const communities = useUserCommunities();
+  const userCommunities = useUserCommunities();
 
-  if (!user || !communities.length) {
+  if (!user || !userCommunities.length) {
     return null;
   }
 
@@ -152,7 +152,7 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          {communities.map(community => (
+          {userCommunities.map(community => (
             <div key={community.id}>
               <div className="font-semibold px-2 pt-2">{community.name}</div>
               <CommunityMenuItems

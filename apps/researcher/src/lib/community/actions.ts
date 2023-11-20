@@ -81,7 +81,6 @@ export async function getCommunities({
 
 export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
   noStore();
-
   const {userId} = auth();
 
   return (
@@ -94,7 +93,6 @@ export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
 
 export function isMember(memberships: ReadonlyArray<Membership>): boolean {
   noStore();
-
   const {userId} = auth();
 
   return (

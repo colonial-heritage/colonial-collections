@@ -65,9 +65,7 @@ export default function EditCommunityForm({
   const {addNotification} = useNotifications();
   const {openProfile} = useCommunityProfile({communitySlug: slug, communityId});
 
-  const openSettings = () => {
-    openProfile('settings');
-  };
+  const openSettings = () => openProfile('settings');
 
   const onSubmit: SubmitHandler<FormValues> = async formValues => {
     try {

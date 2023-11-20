@@ -57,9 +57,7 @@ export function useUserCommunities({
     );
 
     if (canAddEnrichments) {
-      return communities.filter(community => {
-        return community.canAddEnrichments;
-      });
+      return communities.filter(community => community.canAddEnrichments);
     }
     return communities;
   }, [user, canAddEnrichments]);
