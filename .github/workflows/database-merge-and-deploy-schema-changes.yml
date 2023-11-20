@@ -23,7 +23,7 @@ jobs:
           PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
           PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
       - name: Deploy a deploy request
-        uses: planetscale/deploy-deploy-request-action@v3
+        uses: planetscale/deploy-deploy-request-action@v4
         with:
           org_name: colonial-collections
           database_name: datahub
