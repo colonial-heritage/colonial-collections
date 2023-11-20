@@ -1,18 +1,10 @@
 import {clerkClient, auth} from '@clerk/nextjs';
-import {cookies} from 'next/headers';
+import {unstable_noStore as noStore} from 'next/cache';
 import {
   organizationMembershipToCommunityMembership,
   organizationToCommunity,
 } from './clerk-converters';
 import {Community, Membership, SortBy} from './definitions';
-
-function disableCache() {
-  // Some functions are still cached even when using `revalidatePath()`
-  // Running this function will disable the cache
-  // https://github.com/vercel/next.js/discussions/50045#discussioncomment-7218266
-  // After updating to Next.js 14 we can use the official `noStore()` instead of `cookies()`
-  cookies();
-}
 
 export async function getCommunityBySlug(slug: string) {
   const organization = await clerkClient.organizations.getOrganization({
@@ -79,10 +71,6 @@ export async function getCommunities({
     limit,
     offset,
     query,
-    // TODO: `includeMembersCount` is not working, I have reported this bug to Clerk.
-    // They have confirmed it and are working on a fix.
-    // When the membership count is present, we can use it to sort the communities.
-    // https://discord.com/channels/856971667393609759/1151078450627624970
     includeMembersCount: true,
   });
 
@@ -92,6 +80,8 @@ export async function getCommunities({
 }
 
 export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
+  noStore();
+
   const {userId} = auth();
 
   return (
@@ -103,6 +93,8 @@ export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
 }
 
 export function isMember(memberships: ReadonlyArray<Membership>): boolean {
+  noStore();
+
   const {userId} = auth();
 
   return (
@@ -119,7 +111,7 @@ interface JoinCommunityProps {
 }
 
 export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
-  disableCache();
+  noStore();
 
   await clerkClient.organizations.createOrganizationMembership({
     organizationId: communityId,
@@ -143,7 +135,7 @@ export async function updateCommunity({
   attributionId,
   licence,
 }: UpdateCommunityProps) {
-  disableCache();
+  noStore();
 
   const organization = await clerkClient.organizations.updateOrganization(id, {
     name,
