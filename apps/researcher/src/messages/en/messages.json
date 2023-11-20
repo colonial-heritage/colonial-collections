@@ -9,7 +9,7 @@
     "filters": "Filters"
   },
   "Constituents": {
-    "title": "{totalConstituents, plural, =0 {0 constituents} =1 {1 constituent} other {# constituents}}",
+    "title": "{constituentsTotalCount, plural, =0 {0 constituents} =1 {1 constituent} other {# constituents}}",
     "noResults": "There are no results",
     "fetchError": "There was a problem fetching the constituents. Please reload the page to try again.",
     "filters": "Filters"

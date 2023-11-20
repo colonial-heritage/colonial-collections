@@ -187,7 +187,9 @@ export default async function Home({searchParams = {}}: Props) {
                 >
                   <div className="ml-4 mt-2">
                     <PageTitle>
-                      {t('title', {totalConstituents: searchResult.totalCount})}
+                      {t('title', {
+                        constituentsTotalCount: searchResult.totalCount,
+                      })}
                     </PageTitle>
                   </div>
                   <div>

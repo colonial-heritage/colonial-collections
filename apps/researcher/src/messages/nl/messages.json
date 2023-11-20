@@ -9,7 +9,7 @@
     "filters": "Filters"
   },
   "Constituents": {
-    "title": "{totalConstituents, plural, =0 {0 Personen en Instellingen} =1 {1 Persoon of Instelling} other {# Personen en Instellingen}}",
+    "title": "{constituentsTotalCount, plural, =0 {0 Personen en instellingen} =1 {1 Persoon of instelling} other {# Personen en instellingen}}",
     "noResults": "Er zijn geen resultaten",
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de resultaten. Laad de pagina opnieuw om het opnieuw te proberen.",
     "filters": "Filters"
@@ -24,7 +24,7 @@
   },
   "Tabs": {
     "objects": "Objecten zoeken",
-    "persons": "Personen en Instellingen zoeken"
+    "persons": "Personen en instellingen zoeken"
   },
   "LanguageSelector": {
     "nl": "Nederlands",
