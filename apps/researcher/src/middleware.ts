@@ -1,5 +1,4 @@
 import createIntlMiddleware from 'next-intl/middleware';
-import {NextRequest} from 'next/server';
 import {authMiddleware} from '@clerk/nextjs';
 
 // Set the available locales here. These values should match a .json file in /messages.
@@ -14,7 +13,7 @@ export const config = {
 };
 
 export default authMiddleware({
-  beforeAuth(request: NextRequest) {
+  beforeAuth(request) {
     // This middleware intercepts requests to `/` and will redirect
     // to one of the configured locales instead (e.g. `/en`).
     // In the background a cookie is set that will remember the
