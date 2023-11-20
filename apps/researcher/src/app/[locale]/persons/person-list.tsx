@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function PersonList({persons, totalCount}: Props) {
-  const t = useTranslations('Persons');
+  const t = useTranslations('Constituents');
 
   if (totalCount > 0) {
     return (
