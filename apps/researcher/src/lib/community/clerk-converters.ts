@@ -17,8 +17,8 @@ export function organizationToCommunity(
     attributionId: organization.publicMetadata?.attributionId
       ? decodeURIComponent(organization.publicMetadata?.attributionId as string)
       : undefined,
-    licence: organization.publicMetadata?.licence
-      ? decodeURIComponent(organization.publicMetadata?.licence as string)
+    license: organization.publicMetadata?.license
+      ? decodeURIComponent(organization.publicMetadata?.license as string)
       : undefined,
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
@@ -39,7 +39,7 @@ export function organizationToCommunity(
         : undefined,
     canAddEnrichments: !!(
       organization.publicMetadata?.attributionId &&
-      organization.publicMetadata?.licence
+      organization.publicMetadata?.license
     ),
   };
 }

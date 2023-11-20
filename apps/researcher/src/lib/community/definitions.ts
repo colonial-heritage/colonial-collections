@@ -7,7 +7,7 @@ export interface Community {
   imageUrl: string;
   createdAt: number;
   membershipCount?: number;
-  licence?: string;
+  license?: string;
   canAddEnrichments: boolean;
 }
 

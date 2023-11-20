@@ -125,7 +125,7 @@ interface UpdateCommunityProps {
   name: string;
   description: string;
   attributionId: string;
-  licence?: string;
+  license?: string;
 }
 
 export async function updateCommunity({
@@ -133,7 +133,7 @@ export async function updateCommunity({
   name,
   description,
   attributionId,
-  licence,
+  license,
 }: UpdateCommunityProps) {
   noStore();
 
@@ -142,7 +142,7 @@ export async function updateCommunity({
     publicMetadata: {
       description,
       attributionId: encodeURIComponent(attributionId),
-      licence: licence ? encodeURIComponent(licence) : '',
+      license: license ? encodeURIComponent(license) : '',
     },
   });
 

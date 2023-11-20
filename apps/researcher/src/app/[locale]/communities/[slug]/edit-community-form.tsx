@@ -17,22 +17,22 @@ interface Props {
   slug: string;
   description?: string;
   attributionId?: string;
-  licence?: string;
-  licenceToAccept: string;
+  license?: string;
+  licenseToAccept: string;
 }
 
 interface FormValues {
   name: string;
   description: string;
   attributionId: string;
-  licenceChecked: boolean;
+  licenseChecked: boolean;
 }
 
 const communitySchema = z.object({
   name: z.string().trim().min(1).max(250),
   description: z.string().max(2000),
   attributionId: z.string().url().optional().or(z.literal('')),
-  licenceChecked: z.boolean(),
+  licenseChecked: z.boolean(),
 });
 
 export default function EditCommunityForm({
@@ -42,8 +42,8 @@ export default function EditCommunityForm({
   slug,
   description,
   attributionId,
-  licence,
-  licenceToAccept,
+  license,
+  licenseToAccept,
 }: Props) {
   const {
     register,
@@ -56,7 +56,7 @@ export default function EditCommunityForm({
       name,
       description: description ?? '',
       attributionId: attributionId ?? '',
-      licenceChecked: licence === licenceToAccept,
+      licenseChecked: license === licenseToAccept,
     },
   });
 
@@ -74,7 +74,7 @@ export default function EditCommunityForm({
       await updateCommunityAndRevalidate({
         id: communityId,
         slug,
-        licence: formValues.licenceChecked ? licenceToAccept : undefined,
+        license: formValues.licenseChecked ? licenseToAccept : undefined,
         ...formValues,
       });
       addNotification({
@@ -172,13 +172,13 @@ export default function EditCommunityForm({
           <div className="flex justify-start gap-2 items-center">
             <input
               type="checkbox"
-              id="licence"
-              {...register('licenceChecked')}
+              id="license"
+              {...register('licenseChecked')}
             />
-            <label className="flex flex-col gap-1 mb-1" htmlFor="licence">
-              {t.rich('labelLicence', {
+            <label className="flex flex-col gap-1 mb-1" htmlFor="license">
+              {t.rich('labelLicense', {
                 link: text => (
-                  <a href={t('licenceLink')} target="_blank" rel="noreferrer">
+                  <a href={t('licenseLink')} target="_blank" rel="noreferrer">
                     {text}
                   </a>
                 ),
@@ -187,13 +187,13 @@ export default function EditCommunityForm({
           </div>
           <div className="text-sm mb-1">
             <LocalizedMarkdown
-              name="licence"
+              name="license"
               contentPath="@/messages"
               textSize="small"
             />
           </div>
         </div>
-        <p>{errors.licenceChecked?.message}</p>
+        <p>{errors.licenseChecked?.message}</p>
       </div>
 
       <div className="flex flex-row max-w-2xl w-full">
