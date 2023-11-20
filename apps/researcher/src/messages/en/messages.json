@@ -8,10 +8,10 @@
     "fetchError": "There was a problem fetching the objects. Please reload the page to try again.",
     "filters": "Filters"
   },
-  "Persons": {
-    "title": "{totalPersons, plural, =0 {0 persons} =1 {1 person} other {# persons}}",
+  "Constituents": {
+    "title": "{constituentsTotalCount, plural, =0 {0 constituents} =1 {1 constituent} other {# constituents}}",
     "noResults": "There are no results",
-    "fetchError": "There was a problem fetching the objects. Please reload the page to try again.",
+    "fetchError": "There was a problem fetching the constituents. Please reload the page to try again.",
     "filters": "Filters"
   },
   "Navigation": {
@@ -24,7 +24,7 @@
   },
   "Tabs": {
     "objects": "Search for objects",
-    "persons": "Search for persons"
+    "persons": "Search for constituents"
   },
   "LanguageSelector": {
     "nl": "Nederlands",
