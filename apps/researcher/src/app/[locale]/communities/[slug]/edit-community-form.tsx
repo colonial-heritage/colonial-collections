@@ -9,6 +9,7 @@ import {updateCommunityAndRevalidate} from './actions';
 import {camelCase} from 'tiny-case';
 import {useCommunityProfile} from '@/lib/community/hooks';
 import {LocalizedMarkdown} from '@colonial-collections/ui';
+import {env} from 'node:process';
 
 interface Props {
   communityId: string;
@@ -18,21 +19,20 @@ interface Props {
   description?: string;
   attributionId?: string;
   license?: string;
-  licenseToAccept: string;
 }
 
 interface FormValues {
   name: string;
   description: string;
   attributionId: string;
-  licenseChecked: boolean;
+  agreedToLicense: boolean;
 }
 
 const communitySchema = z.object({
   name: z.string().trim().min(1).max(250),
   description: z.string().max(2000),
   attributionId: z.string().url().optional().or(z.literal('')),
-  licenseChecked: z.boolean(),
+  agreedToLicense: z.boolean(),
 });
 
 export default function EditCommunityForm({
@@ -43,7 +43,6 @@ export default function EditCommunityForm({
   description,
   attributionId,
   license,
-  licenseToAccept,
 }: Props) {
   const {
     register,
@@ -56,7 +55,7 @@ export default function EditCommunityForm({
       name,
       description: description ?? '',
       attributionId: attributionId ?? '',
-      licenseChecked: license === licenseToAccept,
+      agreedToLicense: !!license,
     },
   });
 
@@ -65,6 +64,12 @@ export default function EditCommunityForm({
   const {addNotification} = useNotifications();
   const {openProfile} = useCommunityProfile({communitySlug: slug, communityId});
 
+  if (!env['COMMUNITY_ENRICHMENT_LICENSE']) {
+    throw new Error(
+      'COMMUNITY_ENRICHMENT_LICENSE is not defined in the environment'
+    );
+  }
+
   const openSettings = () => openProfile('settings');
 
   const onSubmit: SubmitHandler<FormValues> = async formValues => {
@@ -72,7 +77,9 @@ export default function EditCommunityForm({
       await updateCommunityAndRevalidate({
         id: communityId,
         slug,
-        license: formValues.licenseChecked ? licenseToAccept : undefined,
+        license: formValues.agreedToLicense
+          ? env['COMMUNITY_ENRICHMENT_LICENSE']
+          : undefined,
         ...formValues,
       });
       addNotification({
@@ -171,7 +178,7 @@ export default function EditCommunityForm({
             <input
               type="checkbox"
               id="license"
-              {...register('licenseChecked')}
+              {...register('agreedToLicense')}
             />
             <label className="flex flex-col gap-1 mb-1" htmlFor="license">
               {t.rich('labelLicense', {
@@ -191,7 +198,7 @@ export default function EditCommunityForm({
             />
           </div>
         </div>
-        <p>{errors.licenseChecked?.message}</p>
+        <p>{errors.agreedToLicense?.message}</p>
       </div>
 
       <div className="flex flex-row max-w-2xl w-full">

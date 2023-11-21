@@ -167,7 +167,6 @@ export default async function CommunityPage({params}: Props) {
                 slug={community.slug!}
                 attributionId={community.attributionId}
                 license={community.license}
-                licenseToAccept={env['COMMUNITY_LICENSE'] || ''}
               />
             </div>
           </SlideOut>

@@ -42,9 +42,6 @@ export function sort(communities: Community[], sortBy: SortBy) {
     } else if (sortBy === SortBy.NameDesc) {
       return b.name.localeCompare(a.name);
     } else if (sortBy === SortBy.CreatedAtDesc) {
-      if (typeof a.createdAt !== 'number' || typeof b.createdAt !== 'number') {
-        throw new Error('createdAt must be of type number');
-      }
       return b.createdAt - a.createdAt;
     } else if (sortBy === SortBy.MembershipCountDesc) {
       return (b.membershipCount ?? 0) - (a.membershipCount ?? 0);
