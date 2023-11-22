@@ -45,7 +45,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "7.48.2",
     "tiny-case": "1.0.3",
-    "zod": "3.21.4",
+    "zod": "3.22.4",
     "zustand": "4.3.9"
   },
   "devDependencies": {

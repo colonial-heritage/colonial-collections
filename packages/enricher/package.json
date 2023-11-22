@@ -27,7 +27,7 @@
     "rdf-serialize": "2.2.2",
     "rdf-stores": "1.0.0",
     "stream-to-string": "1.2.1",
-    "zod": "3.21.4"
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@jest/globals": "29.7.0",
