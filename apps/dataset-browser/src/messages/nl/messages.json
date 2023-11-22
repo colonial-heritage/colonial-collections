@@ -106,5 +106,9 @@
   },
   "ErrorPage": {
     "message": "Er is iets fout gegaan!"
+  },
+  "WorkInProgress": {
+    "message": "Aan deze website wordt gewerkt",
+    "roadmapLink": "Lees over de huidige status en roadmap van dit project."
   }
 }

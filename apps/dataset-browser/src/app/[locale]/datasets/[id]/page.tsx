@@ -9,7 +9,10 @@ import {
   SlideOverDialog,
   LocalizedMarkdown,
 } from '@colonial-collections/ui';
-import {InformationCircleIcon} from '@heroicons/react/24/solid';
+import {
+  InformationCircleIcon,
+  ChevronLeftIcon,
+} from '@heroicons/react/24/solid';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
@@ -91,7 +94,10 @@ export default async function Details({params}: Props) {
     <div className="flex flex-col md:flex-row justify-between gap-6">
       <aside className="w-full sm:w-1/5 flex flex-row md:flex-col border-r-2 border-white">
         <div>
-          <BackButton />
+          <BackButton>
+            <ChevronLeftIcon className="h-5 w-5" />
+            {t('back')}
+          </BackButton>
           <nav className="flex-1 space-y-1 pb-4">
             {navigation.map(item => (
               <a

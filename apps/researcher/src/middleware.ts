@@ -1,11 +1,7 @@
 import createIntlMiddleware from 'next-intl/middleware';
 import {authMiddleware} from '@clerk/nextjs';
-
-// Set the available locales here. These values should match a .json file in /messages.
-// The const `locales` cannot be set dynamically based on files in /messages,
-// because native Node.js APIs are not supported in Next.js middleware.
-// So you can't read the filesystem.
-export const locales = ['en', 'nl'];
+import {locales} from './navigation';
+import {NextRequest} from 'next/server';
 
 export const config = {
   // Skip all internal paths
@@ -30,7 +26,7 @@ export default authMiddleware({
     // See issue: https://github.com/vercel/next.js/issues/43704
     request.headers.set('x-pathname', request.nextUrl.pathname);
 
-    const response = handleI18nRouting(request);
+    const response = handleI18nRouting(request as unknown as NextRequest);
 
     return response;
   },

@@ -201,5 +201,9 @@
     "communityIdTooSmall": "Community is vereist",
     "citationTooSmall": "Bron is vereist",
     "noCommunities": "U bent nog geen lid van een community die gemachtigd is een verhaal toe te voegen. U kunt een community maken of lid worden van een bestaande community."
+  },
+  "WorkInProgress": {
+    "message": "Aan deze website wordt gewerkt",
+    "roadmapLink": "Lees over de huidige status en roadmap van dit project."
   }
 }

@@ -2,7 +2,7 @@
 
 import {create} from 'zustand';
 import {ReactNode, ButtonHTMLAttributes, useEffect, Fragment} from 'react';
-import {usePathname} from 'next/navigation';
+import {usePathname} from '@/navigation';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {useTranslations} from 'next-intl';

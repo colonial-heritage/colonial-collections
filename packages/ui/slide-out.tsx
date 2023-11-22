@@ -2,7 +2,7 @@
 
 import {create} from 'zustand';
 import {ReactNode, ButtonHTMLAttributes, useEffect} from 'react';
-import {usePathname} from 'next/navigation';
+import {usePathname} from '@/navigation';
 
 interface SlideOutState {
   visibleIds: {

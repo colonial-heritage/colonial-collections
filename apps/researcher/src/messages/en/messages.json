@@ -201,5 +201,9 @@
     "communityIdTooSmall": "Community is required",
     "citationTooSmall": "Resource is required",
     "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community."
+  },
+  "WorkInProgress": {
+    "message": "This website is a work in progress",
+    "roadmapLink": "Read about the current status and roadmap of this project."
   }
 }

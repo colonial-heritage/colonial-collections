@@ -3,7 +3,7 @@
 import {create} from 'zustand';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {ReactNode, useEffect} from 'react';
-import {usePathname} from 'next/navigation';
+import {usePathname} from '@/navigation';
 
 const typeColors = {
   success: 'greenGrey',

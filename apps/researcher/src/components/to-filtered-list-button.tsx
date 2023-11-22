@@ -4,11 +4,16 @@ import {Link} from '@/navigation';
 import {useListHref} from '@colonial-collections/list-store';
 import {ReactNode} from 'react';
 
-export default function BackButton({children}: {children: ReactNode}) {
+interface Props {
+  children: ReactNode;
+  className?: string;
+}
+
+export default function ToFilteredListButton({className, children}: Props) {
   const href = useListHref();
 
   return (
-    <Link href={href} className="inline-flex items-center mb-5 text-gray-900">
+    <Link href={href} className={className}>
       {children}
     </Link>
   );

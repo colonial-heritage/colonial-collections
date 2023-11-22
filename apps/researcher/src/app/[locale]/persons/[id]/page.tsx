@@ -1,11 +1,11 @@
-import {DateTimeFormatOptions, useTranslations, useLocale} from 'next-intl';
-import {getTranslator} from 'next-intl/server';
+import {DateTimeFormatOptions, useTranslations} from 'next-intl';
+import {getTranslations} from 'next-intl/server';
 import {PageHeader, PageTitle} from '@colonial-collections/ui';
 import personFetcher from '@/lib/person-fetcher-instance';
 import {getFormatter} from 'next-intl/server';
 import {PersonIcon} from '@/components/icons';
 import {H2, H3} from '@/components/titles';
-import {ToFilteredListButton} from '@colonial-collections/ui/list';
+import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 
 // Revalidate the page
@@ -44,14 +44,13 @@ interface Props {
 export default async function Details({params}: Props) {
   const id = decodeRouteSegment(params.id);
   const person = await personFetcher.getById({id});
-  const locale = useLocale();
-  const t = await getTranslator(locale, 'PersonDetails');
+  const t = await getTranslations('PersonDetails');
 
   if (!person) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  const format = await getFormatter(locale);
+  const format = await getFormatter();
 
   const columnClassName = 'px-10 first:pl-0 last:pr-0 space-y-6 flex-1';
   const dateFormat: DateTimeFormatOptions = {

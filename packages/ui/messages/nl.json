@@ -2,10 +2,6 @@
   "Modal": {
     "close": "Sluiten"
   },
-  "WorkInProgress": {
-    "message": "Aan deze website wordt gewerkt",
-    "roadmapLink": "Lees over de huidige status en roadmap van dit project."
-  },
   "SearchField": {
     "search": "Zoeken",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",

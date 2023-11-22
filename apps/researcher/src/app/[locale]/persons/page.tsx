@@ -1,13 +1,12 @@
 import personFetcher from '@/lib/person-fetcher-instance';
-import {useLocale, useTranslations} from 'next-intl';
-import {getTranslator} from 'next-intl/server';
+import {useTranslations} from 'next-intl';
+import {getTranslations} from 'next-intl/server';
 import PersonList from './person-list';
 import {sortMapping} from './sort-mapping';
 import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   Type as SearchParamType,
-  ListStoreUpdater,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -33,6 +32,7 @@ import {
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import Tabs from '../tabs';
 import {ElementType} from 'react';
+import {ListStoreUpdater} from '@/components/list-store-updater';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -129,8 +129,7 @@ export default async function Home({searchParams = {}}: Props) {
     console.error(err);
   }
 
-  const locale = useLocale();
-  const t = await getTranslator(locale, 'Constituents');
+  const t = await getTranslations('Constituents');
 
   return (
     <>
