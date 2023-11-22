@@ -13,7 +13,11 @@ export default function ToFilteredListButton({className, children}: Props) {
   const href = useListHref();
 
   return (
-    <Link href={href} className={className}>
+    <Link
+      href={href}
+      className={className}
+      data-testid="to-filtered-list-button"
+    >
       {children}
     </Link>
   );

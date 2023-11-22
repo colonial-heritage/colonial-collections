@@ -8,7 +8,11 @@ export default function BackButton({children}: {children: ReactNode}) {
   const href = useListHref();
 
   return (
-    <Link href={href} className="inline-flex items-center mb-5 text-gray-900">
+    <Link
+      data-testid="to-filtered-list-button"
+      href={href}
+      className="inline-flex items-center mb-5 text-gray-900"
+    >
       {children}
     </Link>
   );
