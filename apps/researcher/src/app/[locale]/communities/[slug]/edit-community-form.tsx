@@ -9,7 +9,6 @@ import {updateCommunityAndRevalidate} from './actions';
 import {camelCase} from 'tiny-case';
 import {useCommunityProfile} from '@/lib/community/hooks';
 import {LocalizedMarkdown} from '@colonial-collections/ui';
-import {env} from 'node:process';
 
 interface Props {
   communityId: string;
@@ -64,7 +63,7 @@ export default function EditCommunityForm({
   const {addNotification} = useNotifications();
   const {openProfile} = useCommunityProfile({communitySlug: slug, communityId});
 
-  if (!env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE']) {
+  if (!process.env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE']) {
     throw new Error(
       'NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE is not defined in the environment'
     );
@@ -78,7 +77,7 @@ export default function EditCommunityForm({
         id: communityId,
         slug,
         license: formValues.agreedToLicense
-          ? env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE']
+          ? process.env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE']
           : undefined,
         ...formValues,
       });
