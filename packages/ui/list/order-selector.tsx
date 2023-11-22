@@ -6,7 +6,7 @@ import {useTranslations} from 'next-intl';
 const defaultValues = [SortBy.RelevanceDesc, SortBy.NameAsc, SortBy.NameDesc];
 
 export function OrderSelector({values = defaultValues}: {values?: string[]}) {
-  const  t= useTranslations('Sort');
+  const t = useTranslations('Sort');
   const sortBy = useListStore(s => s.sortBy);
   const sortChange = useListStore(s => s.sortChange);
 
