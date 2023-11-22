@@ -23,7 +23,7 @@
     "@colonial-collections/iris": "*",
     "fetch-sparql-endpoint": "4.1.0",
     "tiny-lru": "11.2.0",
-    "zod": "3.21.4"
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@jest/globals": "29.7.0",
