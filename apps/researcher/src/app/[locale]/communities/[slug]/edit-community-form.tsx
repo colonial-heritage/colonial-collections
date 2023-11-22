@@ -64,9 +64,9 @@ export default function EditCommunityForm({
   const {addNotification} = useNotifications();
   const {openProfile} = useCommunityProfile({communitySlug: slug, communityId});
 
-  if (!env['COMMUNITY_ENRICHMENT_LICENSE']) {
+  if (!env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE']) {
     throw new Error(
-      'COMMUNITY_ENRICHMENT_LICENSE is not defined in the environment'
+      'NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE is not defined in the environment'
     );
   }
 
@@ -78,7 +78,7 @@ export default function EditCommunityForm({
         id: communityId,
         slug,
         license: formValues.agreedToLicense
-          ? env['COMMUNITY_ENRICHMENT_LICENSE']
+          ? env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE']
           : undefined,
         ...formValues,
       });
