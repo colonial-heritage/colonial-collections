@@ -98,34 +98,11 @@
       "descriptionFalse": "De dataset is niet beschikbaar in een RDF-formaat."
     }
   },
-  "Paginator": {
-    "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
-    "previous": "Vorige",
-    "next": "Volgende"
-  },
   "Filters": {
     "licensesFilter": "Licenties",
     "publishersFilter": "Eigenaren",
     "spatialCoveragesFilter": "Locaties",
-    "genresFilter": "Genres",
-    "search": "Zoeken",
-    "filters": "Filters",
-    "expandFilter": "Uitklappen",
-    "clearAllFilters": "Alles verwijderen",
-    "filterSearchPlaceholder": "Filteren op {filterName}",
-    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
-    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
-    "accessibilityClickToSearch": "Klik om te zoeken"
-  },
-  "Sort": {
-    "relevanceDesc": "Relevantie",
-    "nameAsc": "Naam - Oplopend",
-    "nameDesc": "Naam - Aflopend",
-    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
-  },
-  "WorkInProgress": {
-    "message": "Aan deze website wordt gewerkt",
-    "roadmapLink": "Lees over de huidige status en roadmap van dit project."
+    "genresFilter": "Genres"
   },
   "ErrorPage": {
     "message": "Er is iets fout gegaan!"

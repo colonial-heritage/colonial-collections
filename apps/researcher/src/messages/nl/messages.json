@@ -104,12 +104,7 @@
     "dataset": "In dataset",
     "relatedObjects": "Verwante objecten"
   },
-  "Paginator": {
-    "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
-    "previous": "Vorige",
-    "next": "Volgende"
-  },
- "Filters": {
+  "Filters": {
     "typesFilter": "Types",
     "subjectsFilter": "Onderwerpen",
     "birthYearsFilter": "Geboortejaren",
@@ -120,35 +115,7 @@
     "locationsFilter": "Locaties van creatie",
     "materialsFilter": "Materialen",
     "creatorsFilter": "Makers",
-    "dateCreatedFilter": "Datum gemaakt",
-    "search": "Zoeken",
-    "filters": "Filters",
-    "fromYear": "Van jaar",
-    "tillYear": "Tot en met jaar",
-    "expandFilter": "Uitklappen",
-    "clearAllFilters": "Alles verwijderen",
-    "filterSearchPlaceholder": "Filteren op {filterName}",
-    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
-    "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
-    "accessibilityClickToSearch": "Klik om te zoeken",
-    "filterPlaceholder": "Filter {filterName}",
-    "orderAlphabetically": "Sorteer alfabetisch",
-    "orderByCount": "Sorteer op aantal",
-    "selectedFilters": "Geselecteerde filters",
-    "aboutFacetsHeader": "Over de facetten",
-    "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren."
-  },
-  "Sort": {
-    "relevanceDesc": "Relevantie",
-    "nameAsc": "Naam - Oplopend",
-    "nameDesc": "Naam - Aflopend",
-    "createdAtDesc": "Datum gecreeërd",
-    "membershipCountDesc": "Aantal leden",
-    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
-  },
-  "WorkInProgress": {
-    "message": "Aan deze website wordt gewerkt",
-    "roadmapLink": "Lees over de huidige status en roadmap van dit project."
+    "dateCreatedFilter": "Datum gemaakt"
   },
   "Gallery": {
     "resetZoomButton": "Reset"
@@ -210,9 +177,6 @@
     "nameTooBig": "Lijstnaam mag maximaal 250 tekens bevatten",
     "serverError": "Er is iets misgegaan bij het maken van de lijst. Probeer het later opnieuw.",
     "listSuccessfullyAdded": "Lijst <name></name> is aan je community toegevoegd"
-  },
-  "Modal": {
-    "close": "Sluiten"
   },
   "ObjectList": {
     "backButton": "Terug naar community",

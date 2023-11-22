@@ -99,34 +99,11 @@
       "descriptionFalse": "The dataset is not available in an RDF format."
     }
   },
-  "Paginator": {
-    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
-    "previous": "Previous",
-    "next": "Next"
-  },
   "Filters": {
     "licensesFilter": "Licenses",
     "publishersFilter": "Publishers",
     "spatialCoveragesFilter": "Locations",
-    "genresFilter": "Genres",
-    "search": "Search",
-    "filters": "Filters",
-    "expandFilter": "Expand",
-    "clearAllFilters": "Clear all",
-    "filterSearchPlaceholder": "Filter on {filterName}",
-    "accessibilityTypeToFilter": "Type to filter on text.",
-    "accessibilitySelectToFilter": "Select a checkbox to filter",
-    "accessibilityClickToSearch": "Click to search"
-  },
-  "Sort": {
-    "relevanceDesc": "Relevance",
-    "nameAsc": "Name - Ascending",
-    "nameDesc": "Name - Descending",
-    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
-  },
-  "WorkInProgress": {
-    "message": "This website is a work in progress",
-    "roadmapLink": "Read about the current status and roadmap of this project."
+    "genresFilter": "Genres"
   },
   "ErrorPage": {
     "message": "Something went wrong!"

@@ -1,5 +1,4 @@
-import {getTranslator, getFormatter} from 'next-intl/server';
-import {useLocale} from 'next-intl';
+import {getTranslations, getFormatter} from 'next-intl/server';
 import {
   PageHeader,
   PageTitle,
@@ -10,15 +9,12 @@ import {
   SlideOverDialog,
   LocalizedMarkdown,
 } from '@colonial-collections/ui';
-import {
-  ChevronLeftIcon,
-  InformationCircleIcon,
-} from '@heroicons/react/24/solid';
+import {InformationCircleIcon} from '@heroicons/react/24/solid';
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
 import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import metricIds from '@/lib/transparency-metrics';
-import {ToFilteredListButton} from '@colonial-collections/ui/list';
+import BackButton from './back-button';
 
 interface Props {
   params: {id: string};
@@ -30,10 +26,9 @@ export const revalidate = 0;
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
   const dataset = await datasetFetcher.getById({id});
-  const locale = useLocale();
-  const t = await getTranslator(locale, 'Details');
-  const tMetrics = await getTranslator(locale, 'TransparencyMetrics');
-  const format = await getFormatter(locale);
+  const t = await getTranslations('Details');
+  const tMetrics = await getTranslations('TransparencyMetrics');
+  const format = await getFormatter();
 
   if (!dataset) {
     return <div data-testid="no-dataset">{t('noDataset')}</div>;
@@ -96,10 +91,7 @@ export default async function Details({params}: Props) {
     <div className="flex flex-col md:flex-row justify-between gap-6">
       <aside className="w-full sm:w-1/5 flex flex-row md:flex-col border-r-2 border-white">
         <div>
-          <ToFilteredListButton className="inline-flex items-center mb-5 text-gray-900">
-            <ChevronLeftIcon className="h-5 w-5" />
-            {t('back')}
-          </ToFilteredListButton>
+          <BackButton />
           <nav className="flex-1 space-y-1 pb-4">
             {navigation.map(item => (
               <a

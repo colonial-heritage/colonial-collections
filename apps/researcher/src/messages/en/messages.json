@@ -104,11 +104,6 @@
     "dataset": "In Dataset",
     "relatedObjects": "Related objects"
   },
-  "Paginator": {
-    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
-    "previous": "Previous",
-    "next": "Next"
-  },
   "Filters": {
     "typesFilter": "Types",
     "subjectsFilter": "Subjects",
@@ -120,35 +115,7 @@
     "materialsFilter": "Materials",
     "creatorsFilter": "Makers",
     "locationsFilter": "Locations of creation",
-    "dateCreatedFilter": "Date made",
-    "search": "Search for text",
-    "filters": "Filters",
-    "fromYear": "From year",
-    "tillYear": "Till year",
-    "expandFilter": "Expand",
-    "clearAllFilters": "Clear all",
-    "filterSearchPlaceholder": "Filter on {filterName}",
-    "accessibilityTypeToFilter": "Type to filter on text.",
-    "accessibilitySelectToFilter": "Select a checkbox to filter",
-    "accessibilityClickToSearch": "Click to search",
-    "filterPlaceholder": "Filter {filterName}",
-    "orderAlphabetically": "Order alphabetically",
-    "orderByCount": "Order by count",
-    "selectedFilters": "Selected filters",
-    "aboutFacetsHeader": "About these facets",
-    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items."
-  },
-  "Sort": {
-    "relevanceDesc": "Relevance",
-    "nameAsc": "Name - Ascending",
-    "nameDesc": "Name - Descending",
-    "createdAtDesc": "Date created",
-    "membershipCountDesc": "Number of members",
-    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
-  },
-  "WorkInProgress": {
-    "message": "This website is a work in progress",
-    "roadmapLink": "Read about the current status and roadmap of this project."
+    "dateCreatedFilter": "Date made"
   },
   "Gallery": {
     "resetZoomButton": "Reset"
@@ -210,9 +177,6 @@
     "nameTooBig": "List name has a maximum of 250 characters",
     "serverError": "Something went wrong while creating the list. Please try again later.",
     "listSuccessfullyAdded": "List <name></name> has been added to you community"
-  },
-  "Modal": {
-    "close": "Close"
   },
   "ObjectList": {
     "backButton": "Back to community",

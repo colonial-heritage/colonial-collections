@@ -1,0 +1,44 @@
+{
+  "Modal": {
+    "close": "Sluiten"
+  },
+  "WorkInProgress": {
+    "message": "Aan deze website wordt gewerkt",
+    "roadmapLink": "Lees over de huidige status en roadmap van dit project."
+  },
+  "SearchField": {
+    "search": "Zoeken",
+    "accessibilityTypeToFilter": "Typ om op tekst te filteren",
+    "accessibilityClickToSearch": "Klik om op tekst te filteren"
+  },
+  "DateRangeFacet": {
+    "fromYear": "Van jaar",
+    "tillYear": "Tot en met jaar"
+  },
+  "Sort": {
+    "relevanceDesc": "Relevantie",
+    "nameAsc": "Naam - Oplopend",
+    "nameDesc": "Naam - Aflopend",
+    "createdAtDesc": "Datum gecreeërd",
+    "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen",
+    "membershipCountDesc": "Aantal leden"
+  },
+  "Paginator": {
+    "results": "Resultaat <number>{start}</number> tot <number>{end}</number> van de <number>{totalCount}</number>",
+    "previous": "Vorige",
+    "next": "Volgende"
+  },
+  "SearchableMultiSelectFacet": {
+    "expandFilter": "Uitklappen",
+    "filterPlaceholder": "Filter {filterName}",
+    "orderAlphabetically": "Sorteer alfabetisch",
+    "orderByCount": "Sorteer op aantal",
+    "aboutFacetsHeader": "Over de facetten",
+    "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren.",
+    "selectedFilters": "Geselecteerde filters"
+  },
+  "SelectedFilters": {
+    "filters": "Filters",
+    "clearAllFilters": "Alles verwijderen"
+  }
+}

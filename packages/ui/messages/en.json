@@ -1,0 +1,44 @@
+{
+  "Modal": {
+    "close": "Close"
+  },
+  "WorkInProgress": {
+    "message": "This website is a work in progress",
+    "roadmapLink": "Read about the current status and roadmap of this project."
+  },
+  "SearchField": {
+    "search": "Search for text",
+    "accessibilityTypeToFilter": "Type to filter on text",
+    "accessibilityClickToSearch": "Click to filter on text"
+  },
+  "DateRangeFacet": {
+    "fromYear": "From year",
+    "tillYear": "Till year"
+  },
+  "Sort": {
+    "relevanceDesc": "Relevance",
+    "nameAsc": "Name - Ascending",
+    "nameDesc": "Name - Descending",
+    "createdAtDesc": "Date created",
+    "accessibilitySelectToChangeOrder": "Select to change the ordering of the result",
+    "membershipCountDesc": "Number of members"
+  },
+  "Paginator": {
+    "results": "Showing <number>{start}</number> to <number>{end}</number> of <number>{totalCount}</number> results",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "SearchableMultiSelectFacet": {
+    "expandFilter": "Expand",
+    "filterPlaceholder": "Filter {filterName}",
+    "orderAlphabetically": "Order alphabetically",
+    "orderByCount": "Order by count",
+    "aboutFacetsHeader": "About these facets",
+    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items.",
+    "selectedFilters": "Selected filters"
+  },
+  "SelectedFilters": {
+    "filters": "Filters",
+    "clearAllFilters": "Clear all"
+  }
+}

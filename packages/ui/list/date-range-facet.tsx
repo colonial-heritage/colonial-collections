@@ -22,7 +22,7 @@ export function DateRangeFacet({
   const startDate = selectedFilters[startDateKey];
   const endDate = selectedFilters[endDateKey];
 
-  const t = useTranslations('Filters');
+  const t = useTranslations('DateRangeFacet');
 
   return (
     <FacetWrapper testId={testId}>

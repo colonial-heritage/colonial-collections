@@ -1,19 +1,19 @@
 'use client';
 
-import {ReactNode} from 'react';
+import {ElementType, ReactNode} from 'react';
 import {
   useListStore,
   getUrlWithSearchParams,
 } from '@colonial-collections/list-store';
-import Link from 'next-intl/link';
 import {useMemo} from 'react';
 
 interface Props {
   children: ReactNode;
   className?: string;
+  Link: ElementType;
 }
 
-export function ToFilteredListButton({children, className}: Props) {
+export function ToFilteredListButton({children, className, Link}: Props) {
   const query = useListStore(s => s.query);
   const offset = useListStore(s => s.offset);
   const sortBy = useListStore(s => s.sortBy);

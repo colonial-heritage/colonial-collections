@@ -97,7 +97,7 @@ interface ClearSelectedFilterProps {
 }
 
 export function SelectedFilters({filters, filterSettings}: Props) {
-  const t = useTranslations('Filters');
+  const t = useTranslations('SelectedFilters');
   const query = useListStore(s => s.query);
   const selectedFilters = useListStore(s => s.selectedFilters);
   const filterChange = useListStore(s => s.filterChange);

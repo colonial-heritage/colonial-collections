@@ -1,7 +1,6 @@
 'use client';
 
-import {useRouter} from 'next-intl/client';
-import {useEffect, useTransition} from 'react';
+import {useEffect, useMemo, useTransition} from 'react';
 import {useListStore} from './use-list-store';
 import {getUrlWithSearchParams} from './search-params';
 
@@ -14,58 +13,58 @@ interface Props {
   selectedFilters?: {
     [filterKey: string]: string[] | string | number | undefined;
   };
+  routerReplace: (url: string, options?: {scroll?: boolean}) => void;
 }
 
-export function useSearchParamsUpdate() {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-
-  const newDataNeeded = useListStore(s => s.newDataNeeded);
+export const useListHref = () => {
   const query = useListStore(s => s.query);
   const offset = useListStore(s => s.offset);
   const sortBy = useListStore(s => s.sortBy);
-  const selectedFilters = useListStore(s => s.selectedFilters);
-  const transitionStarted = useListStore(s => s.transitionStarted);
-  const defaultSortBy = useListStore(s => s.defaultSortBy);
   const baseUrl = useListStore(s => s.baseUrl);
+  const selectedFilters = useListStore(s => s.selectedFilters);
+  const defaultSortBy = useListStore(s => s.defaultSortBy);
 
-  useEffect(() => {
-    if (newDataNeeded && !isPending) {
-      const url = getUrlWithSearchParams({
+  const href = useMemo(
+    () =>
+      getUrlWithSearchParams({
         query,
         offset,
         sortBy,
         filters: selectedFilters,
-        baseUrl,
         defaultSortBy,
-      });
+        baseUrl,
+      }),
+    [baseUrl, defaultSortBy, offset, query, selectedFilters, sortBy]
+  );
+
+  return href;
+};
+
+export function useSearchParamsUpdate(routerReplace: Props['routerReplace']) {
+  const [isPending, startTransition] = useTransition();
+  const href = useListHref();
+
+  const newDataNeeded = useListStore(s => s.newDataNeeded);
+  const transitionStarted = useListStore(s => s.transitionStarted);
+
+  useEffect(() => {
+    if (newDataNeeded && !isPending) {
       startTransition(() => {
         transitionStarted();
-        router.replace(url, {scroll: false});
+        routerReplace(href, {scroll: false});
       });
     }
-  }, [
-    isPending,
-    router,
-    baseUrl,
-    defaultSortBy,
-    newDataNeeded,
-    query,
-    offset,
-    sortBy,
-    selectedFilters,
-    transitionStarted,
-  ]);
+  }, [href, isPending, newDataNeeded, routerReplace, transitionStarted]);
 }
 
-const useUpdateListStore = ({
+export const useUpdateListStore = ({
   totalCount,
   offset,
   limit,
   query,
   sortBy,
   selectedFilters,
-}: Props) => {
+}: Omit<Props, 'routerReplace'>) => {
   const setNewData = useListStore(s => s.setNewData);
 
   useEffect(() => {
@@ -79,10 +78,3 @@ const useUpdateListStore = ({
     });
   }, [limit, offset, query, selectedFilters, setNewData, sortBy, totalCount]);
 };
-
-export function ListStoreUpdater({...updateProps}: Props) {
-  useUpdateListStore(updateProps);
-  useSearchParamsUpdate();
-
-  return null;
-}

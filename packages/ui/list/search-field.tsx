@@ -7,7 +7,7 @@ import {useTranslations} from 'next-intl';
 export function SearchField({placeholder = ''}: {placeholder?: string}) {
   const query = useListStore(s => s.query);
   const queryChange = useListStore(s => s.queryChange);
-  const t = useTranslations('Filters');
+  const t = useTranslations('SearchField');
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     queryChange(e.target.value);
@@ -28,7 +28,7 @@ export function SearchField({placeholder = ''}: {placeholder?: string}) {
       />
       <button
         className="bg-neutral-700 py-1 px-3 rounded-r border-t  border-b border-r border-neutral-700"
-        aria-label={t('accessibilityTypeToFilter')}
+        aria-label={t('accessibilityClickToSearch')}
       >
         <MagnifyingGlassIcon className="w-4 h-4 fill-white" />
       </button>
@@ -37,7 +37,7 @@ export function SearchField({placeholder = ''}: {placeholder?: string}) {
 }
 
 function Label() {
-  const t = useTranslations('Filters');
+  const t = useTranslations('SearchField');
 
   return (
     <label htmlFor="search" className="font-semibold">

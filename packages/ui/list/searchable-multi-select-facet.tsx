@@ -33,7 +33,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
     filters,
   } = useSearchableMultiSelectFacet();
 
-  const t = useTranslations('Filters');
+  const t = useTranslations('SearchableMultiSelectFacet');
 
   return (
     <div className="flex flex-col md:flex-row gap-4 md:gap-10 max-h-[95%]">
@@ -152,7 +152,7 @@ export function SearchableMultiSelectFacet({
   filterKey,
   testId,
 }: Props) {
-  const t = useTranslations('Filters');
+  const t = useTranslations('SearchableMultiSelectFacet');
 
   if (!filters.length) {
     return null;
