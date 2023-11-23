@@ -1,15 +1,6 @@
 import {describe, expect, it} from '@jest/globals';
 import {Organization, OrganizationMembership} from '@clerk/backend/dist/types';
-import {
-  ClerkPaginatedResponse,
-  GetMembersParams,
-  GetMembershipsParams,
-  OrganizationDomainResource,
-  OrganizationInvitationResource,
-  OrganizationMembershipRequestResource,
-  OrganizationMembershipResource,
-  OrganizationResource,
-} from '@clerk/types';
+import {OrganizationResource} from '@clerk/types';
 import {Community, Membership} from './definitions';
 import {
   organizationMembershipToCommunityMembership,
