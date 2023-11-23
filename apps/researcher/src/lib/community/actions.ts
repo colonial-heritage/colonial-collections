@@ -1,60 +1,10 @@
 import {clerkClient, auth} from '@clerk/nextjs';
-import {OrganizationMembership, Organization} from '@clerk/backend/dist/types';
-
-export interface Community {
-  id: string;
-  name: string;
-  slug: string;
-  description?: string;
-  attributionId?: string;
-  imageUrl: string;
-  createdAt: number;
-  membershipCount?: number;
-}
-
-export interface Membership {
-  id: string;
-  role: string;
-  userId: string;
-  firstName: string;
-  lastName: string;
-  imageUrl: string;
-}
-
-function organizationToCommunity(organization: Organization): Community {
-  return {
-    id: organization.id,
-    name: organization.name,
-    // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata.
-    description: organization.publicMetadata?.description as string | undefined,
-    attributionId: organization.publicMetadata?.attributionId
-      ? decodeURIComponent(organization.publicMetadata?.attributionId as string)
-      : undefined,
-    slug: organization.slug!,
-    imageUrl: organization.imageUrl,
-    createdAt: organization.createdAt,
-    membershipCount: organization.members_count,
-  };
-}
-
-function organizationMembershipToCommunityMembership(
-  membership: OrganizationMembership
-): Membership {
-  // There are some assumptions made in this function:
-  // - The membership has a `publicUserData` field. Even though it is optional in the Clerk type `OrganizationMembership`.
-  // - The `publicUserData` has the fields `userId` and `imageUrl`.
-  // - The `publicUserData` has the fields `firstName` and `lastName`.
-  //   These are optional in the Clerk type `OrganizationMembershipPublicUserData` but set to required in the Clerk settings for this application.
-
-  return {
-    id: membership.id,
-    role: membership.role,
-    userId: membership.publicUserData!.userId,
-    firstName: membership.publicUserData!.firstName!,
-    lastName: membership.publicUserData!.lastName!,
-    imageUrl: membership.publicUserData!.imageUrl,
-  };
-}
+import {unstable_noStore as noStore} from 'next/cache';
+import {
+  organizationMembershipToCommunityMembership,
+  organizationToCommunity,
+} from './clerk-converters';
+import {Community, Membership, SortBy} from './definitions';
 
 export async function getCommunityBySlug(slug: string) {
   const organization = await clerkClient.organizations.getOrganization({
@@ -81,13 +31,6 @@ export async function getMemberships(communityId: string) {
   return organizationMembership.map(
     organizationMembershipToCommunityMembership
   );
-}
-
-export enum SortBy {
-  NameAsc = 'nameAsc',
-  NameDesc = 'nameDesc',
-  CreatedAtDesc = 'createdAtDesc',
-  MembershipCountDesc = 'membershipCountDesc',
 }
 
 export const defaultSortBy = SortBy.CreatedAtDesc;
@@ -125,10 +68,6 @@ export async function getCommunities({
     limit,
     offset,
     query,
-    // TODO: `includeMembersCount` is not working, I have reported this bug to Clerk.
-    // They have confirmed it and are working on a fix.
-    // When the membership count is present, we can use it to sort the communities.
-    // https://discord.com/channels/856971667393609759/1151078450627624970
     includeMembersCount: true,
   });
 
@@ -138,6 +77,7 @@ export async function getCommunities({
 }
 
 export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
+  noStore();
   const {userId} = auth();
 
   return (
@@ -149,6 +89,7 @@ export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
 }
 
 export function isMember(memberships: ReadonlyArray<Membership>): boolean {
+  noStore();
   const {userId} = auth();
 
   return (
@@ -165,6 +106,8 @@ interface JoinCommunityProps {
 }
 
 export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
+  noStore();
+
   await clerkClient.organizations.createOrganizationMembership({
     organizationId: communityId,
     userId,
@@ -175,24 +118,26 @@ export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
 interface UpdateCommunityProps {
   id: string;
   name: string;
-  slug: string;
   description: string;
   attributionId: string;
+  license?: string;
 }
 
 export async function updateCommunity({
   id,
   name,
-  slug,
   description,
   attributionId,
+  license,
 }: UpdateCommunityProps) {
+  noStore();
+
   const organization = await clerkClient.organizations.updateOrganization(id, {
     name,
-    slug,
     publicMetadata: {
       description,
       attributionId: encodeURIComponent(attributionId),
+      license: license ? encodeURIComponent(license) : '',
     },
   });
 
