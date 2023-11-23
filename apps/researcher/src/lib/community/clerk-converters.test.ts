@@ -56,6 +56,7 @@ describe('organizationToCommunity', () => {
   });
 
   it('converts an OrganizationResource to a Community', () => {
+    // @ts-expect-error:TS2740
     const organization: OrganizationResource = {
       id: 'org1',
       name: 'Organization 1',
@@ -67,76 +68,7 @@ describe('organizationToCommunity', () => {
       slug: 'organization-1',
       imageUrl: 'https://example.com/image.png',
       createdAt: new Date(1620000000000),
-      logoUrl: null,
-      hasImage: false,
       membersCount: 10,
-      pendingInvitationsCount: 0,
-      adminDeleteEnabled: false,
-      maxAllowedMemberships: 0,
-      updatedAt: new Date(1620000000000),
-      update: function (): Promise<OrganizationResource> {
-        throw new Error('Function not implemented.');
-      },
-      getMemberships: function <
-        T extends (GetMembershipsParams | GetMembersParams) & {
-          paginated?: boolean | undefined;
-        },
-      >(): T['paginated'] extends true
-        ? Promise<ClerkPaginatedResponse<OrganizationMembershipResource>>
-        : Promise<OrganizationMembershipResource[]> {
-        throw new Error('Function not implemented.');
-      },
-      getPendingInvitations: function (): Promise<
-        OrganizationInvitationResource[]
-      > {
-        throw new Error('Function not implemented.');
-      },
-      getInvitations: function (): Promise<
-        ClerkPaginatedResponse<OrganizationInvitationResource>
-      > {
-        throw new Error('Function not implemented.');
-      },
-      getDomains: function (): Promise<
-        ClerkPaginatedResponse<OrganizationDomainResource>
-      > {
-        throw new Error('Function not implemented.');
-      },
-      getMembershipRequests: function (): Promise<
-        ClerkPaginatedResponse<OrganizationMembershipRequestResource>
-      > {
-        throw new Error('Function not implemented.');
-      },
-      addMember: function (): Promise<OrganizationMembershipResource> {
-        throw new Error('Function not implemented.');
-      },
-      inviteMember: function (): Promise<OrganizationInvitationResource> {
-        throw new Error('Function not implemented.');
-      },
-      inviteMembers: function (): Promise<OrganizationInvitationResource[]> {
-        throw new Error('Function not implemented.');
-      },
-      updateMember: function (): Promise<OrganizationMembershipResource> {
-        throw new Error('Function not implemented.');
-      },
-      removeMember: function (): Promise<OrganizationMembershipResource> {
-        throw new Error('Function not implemented.');
-      },
-      createDomain: function (): Promise<OrganizationDomainResource> {
-        throw new Error('Function not implemented.');
-      },
-      getDomain: function (): Promise<OrganizationDomainResource> {
-        throw new Error('Function not implemented.');
-      },
-      destroy: function (): Promise<void> {
-        throw new Error('Function not implemented.');
-      },
-      setLogo: function (): Promise<OrganizationResource> {
-        throw new Error('Function not implemented.');
-      },
-      pathRoot: '',
-      reload: function (): Promise<OrganizationResource> {
-        throw new Error('Function not implemented.');
-      },
     };
 
     const expectedCommunity: Community = {

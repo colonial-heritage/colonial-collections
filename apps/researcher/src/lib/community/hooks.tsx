@@ -23,9 +23,9 @@ export function useCommunityProfile({
     openOrganizationProfile({
       afterLeaveOrganizationUrl: `/revalidate/?path=/[locale]/communities/${communitySlug}&redirect=/communities/${communitySlug}`,
       customPages: ['settings', 'members']
-        .sort((a, b) => {
-          return a === firstPage ? -1 : b === firstPage ? 1 : 0;
-        })
+        .sort((customPageA, customPageB) =>
+          customPageA === firstPage ? -1 : customPageB === firstPage ? 1 : 0
+        )
         .map(page => ({label: page})),
       appearance: {
         elements: {
