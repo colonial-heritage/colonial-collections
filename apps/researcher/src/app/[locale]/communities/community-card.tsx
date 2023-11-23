@@ -1,4 +1,4 @@
-import {Community} from '@/lib/community';
+import {Community} from '@/lib/community/definitions';
 import {getTranslator} from 'next-intl/server';
 import {useTranslations} from 'next-intl';
 import Link from 'next-intl/link';

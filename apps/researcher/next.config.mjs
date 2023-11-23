@@ -12,7 +12,6 @@ const nextConfig = {
   transpilePackages: ['@colonial-collections/ui'],
   experimental: {
     mdxRs: true,
-    serverActions: true,
   },
   images: {
     remotePatterns: [

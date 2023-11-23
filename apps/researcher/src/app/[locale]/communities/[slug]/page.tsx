@@ -1,17 +1,18 @@
 import {
   ChevronLeftIcon,
   ExclamationTriangleIcon,
+  PencilSquareIcon,
 } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslator} from 'next-intl/server';
-import {JoinCommunityButton, ButtonGroup} from './buttons';
+import {JoinCommunityButton, ManageMembersButton} from './buttons';
 import {
   getMemberships,
   getCommunityBySlug,
   isAdmin,
   isMember,
-} from '@/lib/community';
+} from '@/lib/community/actions';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
 import {revalidatePath} from 'next/cache';
@@ -87,7 +88,7 @@ export default async function CommunityPage({params}: Props) {
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
         <main className="w-full">
-          {isMember(memberships) && (
+          {isMember(memberships) && !community.canAddEnrichments && (
             <div className="w-full block">
               <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-neutral-200 w-full mx-auto ">
                 <div className="bg-orange-400 p-3 rounded-l">
@@ -112,11 +113,13 @@ export default async function CommunityPage({params}: Props) {
           )}
           {isAdmin(memberships) && (
             <div className="w-full flex justify-end -mb-8">
-              <ButtonGroup
-                communitySlug={community.slug}
-                slideOutEditFormId={slideOutEditFormId}
-                communityId={community.id}
-              />
+              <SlideOutButton
+                id={slideOutEditFormId}
+                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1"
+              >
+                <PencilSquareIcon className="w-5 h-5 fill-neutral-700" />
+                {t('editButton')}
+              </SlideOutButton>
             </div>
           )}
           <div className="-mb-16 md:-mb-24 w-full flex justify-center">
@@ -162,6 +165,7 @@ export default async function CommunityPage({params}: Props) {
                 name={community.name}
                 slug={community.slug!}
                 attributionId={community.attributionId}
+                license={community.license}
               />
             </div>
           </SlideOut>
@@ -226,7 +230,17 @@ export default async function CommunityPage({params}: Props) {
           </div>
         </main>
         <aside className="w-full md:w-1/4 self-stretch">
-          <h2 className="mb-4 flex items-center gap-3">{t('membersTitle')}</h2>
+          <div className="flex justify-between">
+            <h2 className="mb-4">{t('membersTitle')}</h2>
+            <div>
+              {isAdmin(memberships) && (
+                <ManageMembersButton
+                  communityId={community.id}
+                  communitySlug={params.slug}
+                />
+              )}
+            </div>
+          </div>
           <ul>
             {memberships!.map(membership => (
               <li
