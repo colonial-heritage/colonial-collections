@@ -232,7 +232,7 @@
     "buttonCancel": "Annuleren",
     "descriptionTooSmall": "Verhaal is vereist",
     "communityIdTooSmall": "Community is vereist",
-    "resourceTooSmall": "Bron is vereist",
+    "citationTooSmall": "Bron is vereist",
     "noCommunities": "U bent nog geen lid van een community die gemachtigd is een verhaal toe te voegen. U kunt een community maken of lid worden van een bestaande community."
   }
 }

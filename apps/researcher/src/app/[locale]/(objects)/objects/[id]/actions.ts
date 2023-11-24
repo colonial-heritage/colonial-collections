@@ -5,8 +5,8 @@ import {objectList} from '@colonial-collections/database';
 import {ObjectItemBeingCreated} from '@colonial-collections/database';
 import {revalidatePath} from 'next/cache';
 import {storer} from '@/lib/enricher-instances';
-import {env} from 'node:process';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
+import {enrichmentLicence} from '@/lib/enrichment-licence';
 
 export async function getCommunityLists(communityId: string, objectId: string) {
   return objectList.getByCommunityId(communityId, {objectIri: objectId});
@@ -52,18 +52,12 @@ export async function addUserEnrichment({
   attributionId,
   objectId,
 }: AddUserEnrichmentProps) {
-  const licence = env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE'];
-
-  if (!licence) {
-    throw new Error('No community licence set in environment');
-  }
-
   const enrichment = await storer.addText({
     description,
     citation,
     about,
     creator: attributionId,
-    license: licence,
+    license: enrichmentLicence,
   });
 
   revalidatePath(`/[locale]objects/${encodeRouteSegment(objectId)}`, 'page');
