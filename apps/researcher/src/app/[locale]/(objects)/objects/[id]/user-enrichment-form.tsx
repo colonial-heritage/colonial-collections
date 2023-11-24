@@ -62,7 +62,7 @@ function Form({
       });
       setIsVisible(slideOutId, false);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setError('root.serverError', {
         message: t('serverError'),
       });

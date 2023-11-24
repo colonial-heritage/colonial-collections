@@ -4,7 +4,7 @@ import {create} from 'zustand';
 import useObject from './use-object';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/solid';
 import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
-import {UserEnricherForm} from './user-enricher-form';
+import {UserEnricherForm} from './user-enrichment-form';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
 import {Enrichment} from '@colonial-collections/enricher/src/definitions';
@@ -14,22 +14,22 @@ import classNames from 'classnames';
 import {InformationCircleIcon} from '@heroicons/react/24/outline';
 
 const useMetadata = create(() => ({
-  identifier: '',
+  translationKey: '',
   enrichmentIdentifier: '',
 }));
 
 interface Props {
-  identifier: string;
+  translationKey: string;
   enrichmentIdentifier?: string;
   children: ReactNode;
 }
 
 export function MetadataContainer({
-  identifier,
+  translationKey,
   enrichmentIdentifier,
   children,
 }: Props) {
-  useMetadata.setState({identifier, enrichmentIdentifier});
+  useMetadata.setState({translationKey, enrichmentIdentifier});
   const t = useTranslations('ObjectDetails');
 
   return (
@@ -38,10 +38,10 @@ export function MetadataContainer({
         <div className="w-full xl:w-1/5 border-t border-blueGrey-100 pt-4">
           <div className="sticky top-0 bg-white py-1">
             <h3 className="text-lg w-full my-1 flex items-center">
-              {t(identifier)}
+              {t(translationKey)}
             </h3>
             <div className="text-blueGrey-700 text-sm">
-              {t(`${identifier}SubTitle`)}
+              {t(`${translationKey}SubTitle`)}
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@ export function MetadataContainer({
 interface MetadataEntryProps {
   isCurrentPublisher?: boolean;
   dateCreated?: Date;
-  source?: string;
+  citation?: string;
   attributionId?: string;
   children?: ReactNode;
 }
@@ -63,11 +63,11 @@ interface MetadataEntryProps {
 export async function MetadataEntry({
   isCurrentPublisher = false,
   dateCreated,
-  source,
+  citation,
   attributionId,
   children,
 }: MetadataEntryProps) {
-  const {identifier} = useMetadata.getState();
+  const {translationKey} = useMetadata.getState();
   const {organization, locale} = useObject.getState();
   const t = useTranslations('ObjectDetails');
   const format = await getFormatter(locale);
@@ -76,13 +76,13 @@ export async function MetadataEntry({
     return (
       <div className="text-neutral-600 italic w-full border-t py-6 text-sm">
         {t.rich('noData', {
-          subject: () => <span className="lowercase">{t(identifier)}</span>,
+          subject: () => <span className="lowercase">{t(translationKey)}</span>,
         })}
       </div>
     );
   }
 
-  const author = attributionId
+  const creator = attributionId
     ? await getCommunityByAttributionId(attributionId)
     : organization;
 
@@ -100,19 +100,19 @@ export async function MetadataEntry({
       >
         <div>
           {t.rich('addedBy', {
-            name: () => <strong>{author?.name}</strong>,
+            name: () => <strong>{creator?.name}</strong>,
           })}
         </div>
-        {(dateCreated || source) && (
+        {(dateCreated || citation) && (
           <div className="flex justify-between">
             {dateCreated &&
               format.dateTime(dateCreated, {
                 dateStyle: 'medium',
               })}
-            {source && (
+            {citation && (
               <div>
                 <SlideOutButton
-                  id={`${identifier}-${dateCreated}-source`}
+                  id={`${translationKey}-${dateCreated}-citation`}
                   className="p-1 rounded hover:bg-sand-200 -mt-1"
                 >
                   <InformationCircleIcon className="w-5 h-5 stroke-sand-700" />
@@ -121,9 +121,9 @@ export async function MetadataEntry({
             )}
           </div>
         )}
-        {source && (
-          <SlideOut id={`${identifier}-${dateCreated}-source`}>
-            {source}
+        {citation && (
+          <SlideOut id={`${translationKey}-${dateCreated}-citation`}>
+            {citation}
           </SlideOut>
         )}
       </div>
@@ -144,7 +144,7 @@ export async function MetadataEntries({children}: {children: ReactNode}) {
         <MetadataEntry
           key={enrichment.id}
           dateCreated={enrichment.dateCreated}
-          source={enrichment.source}
+          citation={enrichment.source}
           attributionId={enrichment.creator}
         >
           {enrichment.description}
@@ -156,7 +156,7 @@ export async function MetadataEntries({children}: {children: ReactNode}) {
 
 export function AddMetadataEnrichment() {
   const t = useTranslations('ObjectDetails');
-  const {identifier, enrichmentIdentifier} = useMetadata.getState();
+  const {translationKey, enrichmentIdentifier} = useMetadata.getState();
   const objectId = useObject.getState().objectId;
 
   if (!enrichmentIdentifier) {
@@ -167,17 +167,17 @@ export function AddMetadataEnrichment() {
     <SignedIn>
       <div className="flex justify-end">
         <SlideOutButton
-          id={identifier}
+          id={translationKey}
           className="py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 flex items-center transition gap-1"
         >
           {t('addUserEnrichmentButton')}
           <ChatBubbleBottomCenterTextIcon className="w-4 h-4 fill-neutral-500" />
         </SlideOutButton>
       </div>
-      <SlideOut id={identifier}>
+      <SlideOut id={translationKey}>
         <UserEnricherForm
           objectId={objectId}
-          slideOutId={identifier}
+          slideOutId={translationKey}
           identifier={enrichmentIdentifier}
         />
       </SlideOut>

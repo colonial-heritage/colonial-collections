@@ -173,13 +173,13 @@ export default async function Details({params}: Props) {
           </div>
           <div className="flex flex-col gap-8 self-stretch">
             <MetadataContainer
-              identifier="description"
+              translationKey="description"
               enrichmentIdentifier={`${object.id}#description`}
             >
               <MetadataEntries>{object.description}</MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="materials">
+            <MetadataContainer translationKey="materials">
               <MetadataEntries>
                 {object.materials?.map(material => (
                   <div key={material.id}>{material.name}</div>
@@ -187,7 +187,7 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="dateCreated">
+            <MetadataContainer translationKey="dateCreated">
               <MetadataEntries>
                 {object.dateCreated && (
                   <div>{formatDateCreated(object.dateCreated, locale)}</div>
@@ -195,7 +195,7 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="types">
+            <MetadataContainer translationKey="types">
               <MetadataEntries>
                 {object.types?.map(type => (
                   <div key={type.id}>{type.name}</div>
@@ -203,7 +203,7 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="techniques">
+            <MetadataContainer translationKey="techniques">
               <MetadataEntries>
                 {object.techniques?.map(technique => (
                   <div key={technique.id}>{technique.name}</div>
@@ -211,7 +211,7 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="creators">
+            <MetadataContainer translationKey="creators">
               <MetadataEntries>
                 {object.creators?.map(creator => (
                   <div key={creator.id}>{creator.name}</div>
@@ -219,7 +219,7 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="inscriptions">
+            <MetadataContainer translationKey="inscriptions">
               <MetadataEntries>
                 {object.inscriptions?.map(inscription => (
                   <div key={inscription}>{inscription}</div>

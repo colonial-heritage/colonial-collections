@@ -23,9 +23,9 @@ export async function getCommunityById(id: string) {
 }
 
 export async function getCommunityByAttributionId(attributionId: string) {
-  const allCommunities = await getCommunities();
+  const communities = await getCommunities();
 
-  return allCommunities.find(
+  return communities.find(
     community => community.attributionId === attributionId
   );
 }
