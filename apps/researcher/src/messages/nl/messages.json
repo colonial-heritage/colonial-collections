@@ -142,6 +142,7 @@
     "nameAsc": "Naam - Oplopend",
     "nameDesc": "Naam - Aflopend",
     "createdAtDesc": "Datum gecreeërd",
+    "membershipCountDesc": "Aantal leden",
     "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
   },
   "WorkInProgress": {
@@ -161,7 +162,9 @@
     "membershipCount": "{count, plural, =0 {0 leden} =1 {1 lid} other {# leden}}",
     "objectListCount": "{count, plural, =0 {0 lijsten} =1 {1 lijst} other {# lijsten}}",
     "objectListCountError": "Error",
-    "searchPlaceholder": "Zoek naar community"
+    "searchPlaceholder": "Zoek naar community",
+    "addCommunity": "Een community aanmaken",
+    "toggleMyCommunities": "Toon alleen mijn communities"
   },
   "Community": {
     "title": "Community van",

@@ -5,6 +5,7 @@ import {
   organizationToCommunity,
 } from './clerk-converters';
 import {Community, Membership, SortBy} from './definitions';
+import {Organization} from '@clerk/backend/dist/types';
 
 export async function getCommunityBySlug(slug: string) {
   const organization = await clerkClient.organizations.getOrganization({
@@ -56,6 +57,7 @@ interface GetCommunitiesProps {
   sortBy?: SortBy;
   limit?: number;
   offset?: number;
+  onlyMyCommunities?: boolean;
 }
 
 export async function getCommunities({
@@ -63,13 +65,26 @@ export async function getCommunities({
   sortBy = defaultSortBy,
   limit = 24,
   offset = 0,
+  onlyMyCommunities = false,
 }: GetCommunitiesProps) {
-  const organizations = await clerkClient.organizations.getOrganizationList({
-    limit,
-    offset,
-    query,
-    includeMembersCount: true,
-  });
+  let organizations: Organization[] = [];
+
+  if (onlyMyCommunities) {
+    const {userId} = await auth();
+    const memberships = userId
+      ? await clerkClient.users.getOrganizationMembershipList({
+          userId,
+        })
+      : [];
+    organizations = memberships.map(membership => membership.organization);
+  } else {
+    organizations = await clerkClient.organizations.getOrganizationList({
+      limit,
+      offset,
+      query,
+      includeMembersCount: true,
+    });
+  }
 
   const communities = organizations.map(organizationToCommunity);
 

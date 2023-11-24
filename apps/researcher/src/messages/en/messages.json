@@ -142,6 +142,7 @@
     "nameAsc": "Name - Ascending",
     "nameDesc": "Name - Descending",
     "createdAtDesc": "Date created",
+    "membershipCountDesc": "Number of members",
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
   },
   "WorkInProgress": {
@@ -161,7 +162,9 @@
     "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",
     "objectListCount": "{count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
     "objectListCountError": "Error",
-    "searchPlaceholder": "Search for community"
+    "searchPlaceholder": "Search for community",
+    "addCommunity": "Create a community",
+    "toggleMyCommunities": "Show only my communities"
   },
   "Community": {
     "title": "Community of",
