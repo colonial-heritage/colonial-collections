@@ -66,9 +66,9 @@ export class DatasetEnricher {
     // Query can be expanded to also include other properties
     const query = `
       PREFIX cc: <https://colonialcollections.nl/schema#>
-      PREFIX dcat: <http://www.w3.org/ns/dcat#>
       PREFIX dqv: <http://www.w3.org/ns/dqv#>
       PREFIX qb: <http://purl.org/linked-data/cube#>
+      PREFIX schema: <https://schema.org/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       CONSTRUCT {
@@ -82,14 +82,11 @@ export class DatasetEnricher {
         VALUES ?iri {
           ${irisForValues}
         }
-        ?iri a dcat:Dataset .
+        ?iri a schema:Dataset .
 
-        {
-          ?iri dqv:hasQualityMeasurement ?measurement .
-        }
-        UNION {
-          ?iri dcat:distribution/dqv:hasQualityMeasurement ?measurement .
-        }
+        { ?iri dqv:hasQualityMeasurement ?measurement }
+        UNION
+        { ?iri schema:distribution/dqv:hasQualityMeasurement ?measurement }
 
         ?measurement dqv:value ?value ;
           dqv:isMeasurementOf ?metric .
