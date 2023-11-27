@@ -18,14 +18,14 @@ describe('add', () => {
       DF.quad(
         DF.blankNode(),
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode('https://www.w3.org/ns/oa#Annotation')
+        DF.namedNode('http://www.w3.org/ns/oa#Annotation')
       )
     );
 
     const nanopub = await nanopubWriter.add({
       enrichmentStore,
       creator: 'http://example.com/person',
-      license: 'http://example.org/license',
+      license: 'https://creativecommons.org/licenses/by/4.0/',
     });
 
     expect(nanopub).toEqual({

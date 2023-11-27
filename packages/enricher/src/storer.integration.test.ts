@@ -13,11 +13,17 @@ const storer = new EnrichmentStorer({nanopubWriter});
 describe('add', () => {
   it('adds a textual enrichment', async () => {
     const enrichment = await storer.addText({
-      description: 'A comment about the object',
+      description: 'A comment about the title of an object',
       citation: 'A citation or reference to a work that supports the comment',
-      about: 'http://example.org/object',
+      inLanguage: 'en-gb',
+      about: {
+        id: 'http://example.org/object#title',
+        isPartOf: {
+          id: 'http://example.org/object',
+        },
+      },
       creator: 'http://example.com/person',
-      license: 'http://example.org/license',
+      license: 'https://creativecommons.org/licenses/by/4.0/',
     });
 
     expect(enrichment).toEqual({

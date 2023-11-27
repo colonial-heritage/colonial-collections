@@ -133,7 +133,7 @@ export class NanopubWriter {
       DF.quad(
         assertionGraph,
         DF.namedNode('http://www.w3.org/ns/prov#wasAttributedTo'),
-        DF.namedNode(opts.creator),
+        DF.namedNode(opts.creator), // TBD: also register the name of the creator?
         provenanceGraph
       )
     );

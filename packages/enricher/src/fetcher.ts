@@ -29,6 +29,7 @@ export class EnrichmentFetcher {
     // TBD: is there a limit to the number of enrichments that can be retrieved?
     const query = `
       PREFIX cc: <${ontologyUrl}>
+      PREFIX dc: <http://purl.org/dc/elements/1.1/>
       PREFIX dcterms: <http://purl.org/dc/terms/>
       PREFIX oa: <http://www.w3.org/ns/oa#>
       PREFIX np: <http://www.nanopub.org/nschema#>
@@ -43,8 +44,10 @@ export class EnrichmentFetcher {
 
         ?annotation a cc:Enrichment ;
           cc:about ?target ;
+          cc:isPartOf ?isPartOf ;
           cc:description ?value ;
-          cc:source ?seeAlso ;
+          cc:citation ?seeAlso ;
+          cc:inLanguage ?language ;
           cc:license ?license ;
           cc:creator ?creator ;
           cc:dateCreated ?dateCreated .
@@ -74,10 +77,17 @@ export class EnrichmentFetcher {
 
         graph ?assertion {
           ?annotation a oa:Annotation ;
+            rdfs:seeAlso ?seeAlso ;
             oa:hasBody ?body ;
             oa:hasTarget ?target .
+
           ?body rdf:value ?value .
-          ?body rdfs:seeAlso ?seeAlso .
+          OPTIONAL {
+            ?body dc:language ?language .
+          }
+
+          ?target a oa:SpecificResource ;
+            oa:hasSource ?isPartOf .
         }
       }
     `;

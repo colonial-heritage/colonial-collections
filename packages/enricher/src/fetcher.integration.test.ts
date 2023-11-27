@@ -10,6 +10,7 @@ const fetcher = new EnrichmentFetcher({
 });
 
 const resourceId = `http://example.org/${Date.now()}`;
+const parentResourceId = `http://example.org/${Date.now()}`;
 
 // Create some enrichments
 beforeAll(async () => {
@@ -23,17 +24,28 @@ beforeAll(async () => {
   await storer.addText({
     description: 'Comment 1 about the resource',
     citation: 'A citation or reference to a work that supports the comment',
-    about: resourceId,
+    inLanguage: 'en-gb',
     creator: 'http://example.com/person1',
-    license: 'http://example.org/license',
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    about: {
+      id: resourceId,
+      isPartOf: {
+        id: parentResourceId,
+      },
+    },
   });
 
   await storer.addText({
     description: 'Comment 2 about the resource',
     citation: 'A citation or reference to a work that supports the comment',
-    about: resourceId,
     creator: 'http://example.com/person2',
-    license: 'http://example.org/license',
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    about: {
+      id: resourceId,
+      isPartOf: {
+        id: parentResourceId,
+      },
+    },
   });
 
   // Wait a bit: storing the nanopubs takes some time
@@ -59,21 +71,33 @@ describe('getById', () => {
     expect(enrichments).toStrictEqual([
       {
         id: expect.stringContaining('https://'),
-        about: resourceId,
         description: 'Comment 1 about the resource',
-        source: 'A citation or reference to a work that supports the comment',
+        citation: 'A citation or reference to a work that supports the comment',
+        inLanguage: 'en-gb',
         creator: 'http://example.com/person1',
-        license: 'http://example.org/license',
+        license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
+        about: {
+          id: resourceId,
+          isPartOf: {
+            id: parentResourceId,
+          },
+        },
       },
       {
         id: expect.stringContaining('https://'),
-        about: resourceId,
         description: 'Comment 2 about the resource',
-        source: 'A citation or reference to a work that supports the comment',
+        citation: 'A citation or reference to a work that supports the comment',
+        inLanguage: undefined, // FIXME - remove
         creator: 'http://example.com/person2',
-        license: 'http://example.org/license',
+        license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
+        about: {
+          id: resourceId,
+          isPartOf: {
+            id: parentResourceId,
+          },
+        },
       },
     ]);
   });

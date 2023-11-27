@@ -5,10 +5,16 @@ export interface BasicEnrichment {
 }
 
 export interface Enrichment extends BasicEnrichment {
-  about: string;
   description: string;
-  source: string;
+  citation: string;
+  language?: string;
   creator: string;
   license: string;
   dateCreated: Date;
+  about: {
+    id: string;
+    isPartOf: {
+      id: string;
+    };
+  };
 }

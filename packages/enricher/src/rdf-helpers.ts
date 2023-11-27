@@ -12,8 +12,10 @@ function getPropertyValue(resource: Resource, propertyName: string) {
 
 export function createEnrichment(rawEnrichment: Resource) {
   const about = getPropertyValue(rawEnrichment, 'cc:about');
+  const isPartOf = getPropertyValue(rawEnrichment, 'cc:isPartOf');
   const description = getPropertyValue(rawEnrichment, 'cc:description');
-  const source = getPropertyValue(rawEnrichment, 'cc:source');
+  const citation = getPropertyValue(rawEnrichment, 'cc:citation');
+  const inLanguage = getPropertyValue(rawEnrichment, 'cc:inLanguage');
   const creator = getPropertyValue(rawEnrichment, 'cc:creator');
   const license = getPropertyValue(rawEnrichment, 'cc:license');
 
@@ -24,18 +26,27 @@ export function createEnrichment(rawEnrichment: Resource) {
   // Silence TS errors about 'string | undefined': the values always are strings
   const enrichment: Enrichment = {
     id: rawEnrichment.value,
-    // @ts-expect-error:TS2322
-    about,
+    about: {
+      // @ts-expect-error:TS2322
+      id: about,
+      isPartOf: {
+        // @ts-expect-error:TS2322
+        id: isPartOf,
+      },
+    },
     // @ts-expect-error:TS2322
     description,
     // @ts-expect-error:TS2322
-    source,
+    citation,
+    inLanguage,
     // @ts-expect-error:TS2322
     creator,
     // @ts-expect-error:TS2322
     license,
     dateCreated,
   };
+
+  // TODO: remove undefined values, e.g. inLanguage
 
   return enrichment;
 }
