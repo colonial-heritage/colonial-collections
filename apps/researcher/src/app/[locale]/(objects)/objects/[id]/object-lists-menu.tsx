@@ -10,7 +10,7 @@ import {
   getCommunityLists,
   addObjectToList,
   removeObjectFromList,
-} from './object-lists-actions';
+} from './actions';
 import {ObjectList} from '@colonial-collections/database';
 import {useNotifications} from '@colonial-collections/ui';
 import {useUserCommunities} from '@/lib/community/hooks';
@@ -124,7 +124,7 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
   const t = useTranslations('ObjectDetails');
   const {user} = useUser();
 
-  const communities = useUserCommunities();
+  const {communities} = useUserCommunities();
 
   if (!user || !communities.length) {
     return null;
