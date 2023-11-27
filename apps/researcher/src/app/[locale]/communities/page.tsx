@@ -87,7 +87,7 @@ export default async function CommunitiesPage({
       <div className="text-sm w-full px-4 sm:px-10 pb-4 mb-4 text-right max-w-[1800px] mx-auto">
         <MyCommunityToggle />
         <label className="ml-2" htmlFor="onlyMy">
-          {t('toggleMyCommunities')}
+          {t('showMyCommunities')}
         </label>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 h-full grow content-stretch gap-6 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-10">

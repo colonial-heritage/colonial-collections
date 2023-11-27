@@ -165,7 +165,7 @@
     "objectListCountError": "Error",
     "searchPlaceholder": "Search for community",
     "addCommunity": "Create a community",
-    "toggleMyCommunities": "Show only my communities"
+    "showMyCommunities": "Show only my communities"
   },
   "Community": {
     "title": "Community of",

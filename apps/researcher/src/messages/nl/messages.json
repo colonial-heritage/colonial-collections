@@ -165,7 +165,7 @@
     "objectListCountError": "Error",
     "searchPlaceholder": "Zoek naar community",
     "addCommunity": "Een community aanmaken",
-    "toggleMyCommunities": "Toon alleen mijn communities"
+    "showMyCommunities": "Toon alleen mijn communities"
   },
   "Community": {
     "title": "Community van",
