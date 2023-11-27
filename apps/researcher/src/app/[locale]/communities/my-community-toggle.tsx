@@ -6,12 +6,15 @@ import {useListStore} from '@colonial-collections/list-store';
 // The value must be a string so the list updater can place it into the search params.
 export function MyCommunityToggle() {
   const filterChange = useListStore(s => s.filterChange);
+  const selectedFilters = useListStore(s => s.selectedFilters);
+  const isChecked = selectedFilters.onlyMyCommunities === 'true';
 
   return (
     <input
       type="checkbox"
       id="onlyMy"
       name="onlyMy"
+      checked={isChecked}
       onChange={event =>
         filterChange(
           'onlyMyCommunities',

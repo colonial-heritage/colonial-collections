@@ -23,7 +23,7 @@ interface Props {
     query?: string;
     sortBy?: SortBy;
     offset?: number;
-    onlyMyCommunities?: number;
+    onlyMyCommunities?: 'true';
   };
 }
 
@@ -33,7 +33,7 @@ export default async function CommunitiesPage({
 }: Props) {
   const t = await getTranslator(params.locale, 'Communities');
 
-  const {query, sortBy, offset} = searchParams;
+  const {query, sortBy, offset, onlyMyCommunities} = searchParams;
 
   let communities;
   try {
@@ -41,7 +41,7 @@ export default async function CommunitiesPage({
       query,
       sortBy,
       offset,
-      onlyMyCommunities: !!searchParams.onlyMyCommunities,
+      onlyMyCommunities: !!onlyMyCommunities,
       limit: 24,
     });
   } catch (err) {
@@ -57,6 +57,7 @@ export default async function CommunitiesPage({
           limit: 12,
           query: query ?? '',
           sortBy,
+          selectedFilters: {onlyMyCommunities},
         }}
       />
       <div className="flex flex-col sm:flex-row justify-between items-center h-full gap-6 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-6">
