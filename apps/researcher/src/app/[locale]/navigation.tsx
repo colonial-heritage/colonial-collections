@@ -13,13 +13,7 @@ import {usePathname} from 'next-intl/client';
 import Link from 'next-intl/link';
 import {useLocale, useTranslations} from 'next-intl';
 import {Fragment} from 'react';
-import {
-  UserButton,
-  SignInButton,
-  OrganizationSwitcher,
-  SignedIn,
-  SignedOut,
-} from '@clerk/nextjs';
+import {UserButton, SignInButton, SignedIn, SignedOut} from '@clerk/nextjs';
 
 interface Props {
   locales: string[];
@@ -187,15 +181,6 @@ export default function Navigation({locales}: Props) {
                         );
                       })}
                       <SignedIn>
-                        <OrganizationSwitcher
-                          afterCreateOrganizationUrl={organization =>
-                            `/revalidate/?path=/[locale]/communities&redirect=/communities/${organization.slug}`
-                          }
-                          afterLeaveOrganizationUrl="/communities"
-                          afterSelectOrganizationUrl={organization =>
-                            `/communities/${organization.slug}`
-                          }
-                        />
                         <UserButton afterSignOutUrl="/" />
                       </SignedIn>
                       <SignedOut>
@@ -256,11 +241,6 @@ export default function Navigation({locales}: Props) {
                       </Disclosure.Button>
                     );
                   })}
-                  <SignedIn>
-                    <button className="pl-3">
-                      <OrganizationSwitcher />
-                    </button>
-                  </SignedIn>
                 </div>
               </Disclosure.Panel>
             </>

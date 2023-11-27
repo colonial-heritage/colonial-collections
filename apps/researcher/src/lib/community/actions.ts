@@ -84,6 +84,28 @@ export async function getCommunities({
   return sort(communities, sortBy);
 }
 
+export async function getMyCommunities({
+  sortBy = defaultSortBy,
+  limit,
+  offset = 0,
+}: GetCommunitiesProps = {}) {
+  noStore();
+  const {userId} = await auth();
+  const memberships = userId
+    ? await clerkClient.users.getOrganizationMembershipList({
+        userId,
+        limit,
+        offset,
+      })
+    : [];
+
+  const organizations = memberships.map(membership => membership.organization);
+
+  const communities = organizations.map(organizationToCommunity);
+
+  return sort(communities, sortBy);
+}
+
 export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
   noStore();
   const {userId} = auth();
