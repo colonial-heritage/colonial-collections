@@ -665,13 +665,18 @@ describe('search', () => {
       ],
       filters: {
         publishers: [
-          {totalCount: 5, id: 'Archive', name: 'Archive'},
           {totalCount: 5, id: 'Library', name: 'Library'},
           {totalCount: 3, id: 'Museum', name: 'Museum'},
+          {totalCount: 5, id: 'Archive', name: 'Archive'},
           {
             totalCount: 1,
             id: 'Research Organisation',
             name: 'Research Organisation',
+          },
+          {
+            totalCount: 0,
+            id: 'Onderzoeksinstelling',
+            name: 'Onderzoeksinstelling',
           },
         ],
         licenses: [
@@ -728,13 +733,18 @@ describe('search', () => {
       datasets: [],
       filters: {
         publishers: [
-          {totalCount: 0, id: 'Archive', name: 'Archive'},
           {totalCount: 0, id: 'Library', name: 'Library'},
           {totalCount: 0, id: 'Museum', name: 'Museum'},
+          {totalCount: 0, id: 'Archive', name: 'Archive'},
           {
             totalCount: 0,
             id: 'Research Organisation',
             name: 'Research Organisation',
+          },
+          {
+            totalCount: 0,
+            id: 'Onderzoeksinstelling',
+            name: 'Onderzoeksinstelling',
           },
         ],
         licenses: [
@@ -855,13 +865,18 @@ describe('search', () => {
       ],
       filters: {
         publishers: [
-          {totalCount: 1, id: 'Archive', name: 'Archive'},
           {totalCount: 0, id: 'Library', name: 'Library'},
           {totalCount: 0, id: 'Museum', name: 'Museum'},
+          {totalCount: 1, id: 'Archive', name: 'Archive'},
           {
             totalCount: 0,
             id: 'Research Organisation',
             name: 'Research Organisation',
+          },
+          {
+            totalCount: 0,
+            id: 'Onderzoeksinstelling',
+            name: 'Onderzoeksinstelling',
           },
         ],
         licenses: [
@@ -937,13 +952,18 @@ describe('search', () => {
       ],
       filters: {
         publishers: [
-          {totalCount: 0, id: 'Archive', name: 'Archive'},
           {totalCount: 5, id: 'Library', name: 'Library'},
           {totalCount: 0, id: 'Museum', name: 'Museum'},
+          {totalCount: 0, id: 'Archive', name: 'Archive'},
           {
             totalCount: 0,
             id: 'Research Organisation',
             name: 'Research Organisation',
+          },
+          {
+            totalCount: 0,
+            id: 'Onderzoeksinstelling',
+            name: 'Onderzoeksinstelling',
           },
         ],
       },
