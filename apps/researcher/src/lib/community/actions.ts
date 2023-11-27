@@ -65,7 +65,6 @@ interface GetCommunitiesProps {
   sortBy?: SortBy;
   limit?: number;
   offset?: number;
-  onlyMyCommunities?: boolean;
 }
 
 export async function getCommunities({
@@ -73,26 +72,35 @@ export async function getCommunities({
   sortBy = defaultSortBy,
   limit,
   offset = 0,
-  onlyMyCommunities = false,
 }: GetCommunitiesProps = {}) {
-  let organizations: Organization[] = [];
+  const organizations = await clerkClient.organizations.getOrganizationList({
+    limit,
+    offset,
+    query,
+    includeMembersCount: true,
+  });
 
-  if (onlyMyCommunities) {
-    const {userId} = await auth();
-    const memberships = userId
-      ? await clerkClient.users.getOrganizationMembershipList({
-          userId,
-        })
-      : [];
-    organizations = memberships.map(membership => membership.organization);
-  } else {
-    organizations = await clerkClient.organizations.getOrganizationList({
-      limit,
-      offset,
-      query,
-      includeMembersCount: true,
-    });
-  }
+  const communities = organizations.map(organizationToCommunity);
+
+  return sort(communities, sortBy);
+}
+
+export async function getMyCommunities({
+  sortBy = defaultSortBy,
+  limit,
+  offset = 0,
+}: GetCommunitiesProps = {}) {
+  noStore();
+  const {userId} = await auth();
+  const memberships = userId
+    ? await clerkClient.users.getOrganizationMembershipList({
+        userId,
+        limit,
+        offset,
+      })
+    : [];
+
+  const organizations = memberships.map(membership => membership.organization);
 
   const communities = organizations.map(organizationToCommunity);
 

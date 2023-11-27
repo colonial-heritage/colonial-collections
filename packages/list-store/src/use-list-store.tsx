@@ -41,7 +41,7 @@ export interface ListState extends ListProps {
     limit: number;
     query: string;
     sortBy?: string;
-    selectedFilters: {[filterKey: string]: (string | number)[] | undefined};
+    selectedFilters: ListProps['selectedFilters'];
   }) => void;
 }
 

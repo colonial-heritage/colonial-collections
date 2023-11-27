@@ -1,4 +1,4 @@
-import {getCommunities} from '@/lib/community/actions';
+import {getCommunities, getMyCommunities} from '@/lib/community/actions';
 import {SortBy} from '@/lib/community/definitions';
 import {getTranslator} from 'next-intl/server';
 import ErrorMessage from '@/components/error-message';
@@ -37,13 +37,20 @@ export default async function CommunitiesPage({
 
   let communities;
   try {
-    communities = await getCommunities({
-      query,
-      sortBy,
-      offset,
-      onlyMyCommunities: !!onlyMyCommunities,
-      limit: 24,
-    });
+    if (onlyMyCommunities === 'true') {
+      communities = await getMyCommunities({
+        sortBy,
+        offset,
+        limit: 24,
+      });
+    } else {
+      communities = await getCommunities({
+        query,
+        sortBy,
+        offset,
+        limit: 24,
+      });
+    }
   } catch (err) {
     return <ErrorMessage error={t('error')} />;
   }
@@ -70,9 +77,11 @@ export default async function CommunitiesPage({
           </div>
         </div>
         <div className=" flex flex-col xl:flex-row items-center md:items-end gap-4 justify-end">
-          <div>
-            <SearchField placeholder={t('searchPlaceholder')} />
-          </div>
+          {onlyMyCommunities === undefined && (
+            <div>
+              <SearchField placeholder={t('searchPlaceholder')} />
+            </div>
+          )}
           <div>
             <OrderSelector
               values={[
