@@ -64,3 +64,9 @@ export function useUserCommunities({
 
   return {communities, isLoaded};
 }
+
+export function useCreateCommunity() {
+  const {openCreateOrganization} = useClerk();
+
+  return {openCreateCommunity: openCreateOrganization};
+}

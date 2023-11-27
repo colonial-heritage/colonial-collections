@@ -15,14 +15,14 @@ interface ListProps {
   defaultSortBy: string;
   baseUrl: string;
   selectedFilters: {
-    [filterKey: string]: (string | number)[] | number | undefined;
+    [filterKey: string]: (string | number)[] | number | string | undefined;
   };
 }
 
 export interface ListState extends ListProps {
   filterChange: (
     key: string,
-    value: (string | number)[] | number | undefined
+    value: (string | number)[] | number | string | undefined
   ) => void;
   sortChange: (sortBy: string) => void;
   queryChange: (query: string) => void;
@@ -41,7 +41,7 @@ export interface ListState extends ListProps {
     limit: number;
     query: string;
     sortBy?: string;
-    selectedFilters: {[filterKey: string]: (string | number)[] | undefined};
+    selectedFilters: ListProps['selectedFilters'];
   }) => void;
 }
 

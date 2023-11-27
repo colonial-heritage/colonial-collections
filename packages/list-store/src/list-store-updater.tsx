@@ -11,7 +11,9 @@ interface Props {
   limit: number;
   query: string;
   sortBy?: string;
-  selectedFilters?: {[filterKey: string]: string[] | undefined};
+  selectedFilters?: {
+    [filterKey: string]: string[] | string | number | undefined;
+  };
 }
 
 export function useSearchParamsUpdate() {

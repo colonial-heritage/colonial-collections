@@ -17,7 +17,7 @@ export function OrderSelector({values = defaultValues}: {values?: string[]}) {
   return (
     <select
       name="location"
-      className="mt-1 block rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-600 focus:outline-none focus:ring-sky-600 sm:text-sm"
+      className="rounded p-2 text-sm border bg-neutral-100 pr-6"
       value={sortBy}
       onChange={handleSortByChange}
       aria-label={t('accessibilitySelectToChangeOrder')}
