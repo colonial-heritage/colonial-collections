@@ -7,7 +7,6 @@ import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
 import {UserEnricherForm} from './user-enrichment-form';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
-import {Enrichment} from '@colonial-collections/enricher/src/definitions';
 import {getCommunityByAttributionId} from '@/lib/community/actions';
 import {getFormatter} from 'next-intl/server';
 import classNames from 'classnames';
@@ -134,7 +133,7 @@ export async function MetadataEntry({
 export async function MetadataEntries({children}: {children: ReactNode}) {
   const {enrichmentIdentifier} = useMetadata.getState();
 
-  const enrichments: Enrichment[] | undefined = enrichmentIdentifier
+  const enrichments = enrichmentIdentifier
     ? await fetcher.getById(enrichmentIdentifier)
     : undefined;
   return (
