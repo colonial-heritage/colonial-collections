@@ -9,6 +9,7 @@ import {updateCommunityAndRevalidate} from './actions';
 import {camelCase} from 'tiny-case';
 import {useCommunityProfile} from '@/lib/community/hooks';
 import {LocalizedMarkdown} from '@colonial-collections/ui';
+import {enrichmentLicence} from '@/lib/enrichment-licence';
 
 interface Props {
   communityId: string;
@@ -63,12 +64,6 @@ export default function EditCommunityForm({
   const {addNotification} = useNotifications();
   const {openProfile} = useCommunityProfile({communitySlug: slug, communityId});
 
-  if (!process.env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE']) {
-    throw new Error(
-      'NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE is not defined or invalid in the environment'
-    );
-  }
-
   const openSettings = () => openProfile('settings');
 
   const onSubmit: SubmitHandler<FormValues> = async formValues => {
@@ -76,9 +71,7 @@ export default function EditCommunityForm({
       await updateCommunityAndRevalidate({
         id: communityId,
         slug,
-        license: formValues.agreedToLicense
-          ? process.env['NEXT_PUBLIC_COMMUNITY_ENRICHMENT_LICENSE']
-          : undefined,
+        license: formValues.agreedToLicense ? enrichmentLicence : undefined,
         ...formValues,
       });
       addNotification({

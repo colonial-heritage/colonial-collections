@@ -5,7 +5,7 @@ import Gallery from './gallery';
 import {ToFilteredListButton} from '@colonial-collections/ui/list';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
-import {MetadataContainer, MetadataEntry} from './metadata';
+import {MetadataContainer, MetadataEntries} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import organizations from '@/lib/organizations-instance';
 import {
@@ -16,21 +16,20 @@ import {
   SlideOver,
   Notifications,
 } from '@colonial-collections/ui';
-import useCurrentPublisher from './useCurrentPublisher';
+import useObject from './use-object';
 import {env} from 'node:process';
 import {formatDateCreated} from './format-date-created';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
 
-// Revalidate the page
-export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: {id: string};
 }
 
 function ContactDetailsSlideOver({datasetId}: {datasetId?: string}) {
-  const {organization} = useCurrentPublisher.getState();
+  const {organization} = useObject.getState();
   const t = useTranslations('ObjectDetails');
 
   if (!organization) {
@@ -86,10 +85,12 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
+  useObject.setState({objectId: object.id, locale});
+
   let organization;
   if (object.isPartOf?.publisher?.id) {
     organization = await organizations.getById(object.isPartOf.publisher.id);
-    organization && useCurrentPublisher.setState({organization});
+    organization && useObject.setState({organization});
   }
 
   const galleryImages =
@@ -171,58 +172,59 @@ export default async function Details({params}: Props) {
             <h2 className="text-2xl">{t('metadata')}</h2>
           </div>
           <div className="flex flex-col gap-8 self-stretch">
-            <MetadataContainer identifier="description">
-              <MetadataEntry isCurrentPublisher>
-                {object.description}
-              </MetadataEntry>
+            <MetadataContainer
+              translationKey="description"
+              enrichmentIdentifier={`${object.id}#description`}
+            >
+              <MetadataEntries>{object.description}</MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="materials">
-              <MetadataEntry isCurrentPublisher>
+            <MetadataContainer translationKey="materials">
+              <MetadataEntries>
                 {object.materials?.map(material => (
                   <div key={material.id}>{material.name}</div>
                 ))}
-              </MetadataEntry>
+              </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="dateCreated">
-              <MetadataEntry isCurrentPublisher>
+            <MetadataContainer translationKey="dateCreated">
+              <MetadataEntries>
                 {object.dateCreated && (
                   <div>{formatDateCreated(object.dateCreated, locale)}</div>
                 )}
-              </MetadataEntry>
+              </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="types">
-              <MetadataEntry isCurrentPublisher>
+            <MetadataContainer translationKey="types">
+              <MetadataEntries>
                 {object.types?.map(type => (
                   <div key={type.id}>{type.name}</div>
                 ))}
-              </MetadataEntry>
+              </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="techniques">
-              <MetadataEntry isCurrentPublisher>
+            <MetadataContainer translationKey="techniques">
+              <MetadataEntries>
                 {object.techniques?.map(technique => (
                   <div key={technique.id}>{technique.name}</div>
                 ))}
-              </MetadataEntry>
+              </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="creators">
-              <MetadataEntry isCurrentPublisher>
+            <MetadataContainer translationKey="creators">
+              <MetadataEntries>
                 {object.creators?.map(creator => (
                   <div key={creator.id}>{creator.name}</div>
                 ))}
-              </MetadataEntry>
+              </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer identifier="inscriptions">
-              <MetadataEntry isCurrentPublisher>
+            <MetadataContainer translationKey="inscriptions">
+              <MetadataEntries>
                 {object.inscriptions?.map(inscription => (
                   <div key={inscription}>{inscription}</div>
                 ))}
-              </MetadataEntry>
+              </MetadataEntries>
             </MetadataContainer>
           </div>
         </main>
