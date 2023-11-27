@@ -5,7 +5,6 @@ import {
   organizationToCommunity,
 } from './clerk-converters';
 import {Community, Membership, SortBy} from './definitions';
-import {Organization} from '@clerk/backend/dist/types';
 
 export async function getCommunityBySlug(slug: string) {
   const organization = await clerkClient.organizations.getOrganization({
