@@ -252,7 +252,7 @@ export class HeritageObjectFetcher {
           ####################
 
           OPTIONAL {
-            ?dataset dct:title ?datasetName
+            ?dataset schema:name ?datasetName
             FILTER(LANG(?datasetName) = "" || LANGMATCHES(LANG(?datasetName), "en"))
           }
 
@@ -261,7 +261,7 @@ export class HeritageObjectFetcher {
           ####################
 
           OPTIONAL {
-            ?dataset dct:publisher ?publisher .
+            ?dataset schema:publisher ?publisher .
             ?publisher schema:name ?publisherName ;
               rdf:type ?publisherTypeTemp .
 

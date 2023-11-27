@@ -47,12 +47,6 @@ describe('search', () => {
           dateCreated: new Date('2019-03-12T00:00:00.000Z'),
           dateModified: new Date('2023-02-17T00:00:00.000Z'),
           datePublished: new Date('2023-02-17T00:00:00.000Z'),
-          genres: [
-            {
-              id: 'man-made objects',
-              name: 'man-made objects',
-            },
-          ],
           measurements: [
             {
               id: 'https://example.org/datasets/1/measurements/2',
@@ -112,12 +106,9 @@ describe('search', () => {
         },
         {
           id: 'https://example.org/datasets/10',
-          name: '(No name)',
+          name: 'Dataset 10',
           publisher: {id: 'Library', name: 'Library'},
-          license: {
-            id: 'Custom License',
-            name: 'Custom License',
-          },
+          license: {id: 'Custom License', name: 'Custom License'},
           measurements: [
             {
               id: 'https://example.org/datasets/10/measurements/2',
@@ -184,12 +175,6 @@ describe('search', () => {
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
           },
           dateCreated: new Date('2019-03-12T00:00:00.000Z'),
-          genres: [
-            {
-              id: 'notes (documents)',
-              name: 'notes (documents)',
-            },
-          ],
           measurements: [
             {
               id: 'https://example.org/datasets/11/measurements/2',
@@ -330,13 +315,6 @@ describe('search', () => {
             'Cras erat elit, finibus eget ipsum vel, gravida dapibus leo. Etiam sem erat, suscipit id eros sit amet, scelerisque ornare sem. Aenean commodo elementum neque ac accumsan.',
           keywords: ['Fringilla'],
           dateCreated: new Date('2022-10-01T09:01:02.000Z'),
-          genres: [
-            {id: 'articles', name: 'articles'},
-            {
-              id: 'publications (documents)',
-              name: 'publications (documents)',
-            },
-          ],
           measurements: [
             {
               id: 'https://example.org/datasets/13/measurements/2',
@@ -464,7 +442,7 @@ describe('search', () => {
         },
         {
           id: 'https://example.org/datasets/2',
-          name: '(No name)',
+          name: 'Dataset 2',
           publisher: {id: 'Museum', name: 'Museum'},
           license: {
             id: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
@@ -473,13 +451,6 @@ describe('search', () => {
           dateCreated: new Date('2019-03-12T00:00:00.000Z'),
           dateModified: new Date('2023-02-17T00:00:00.000Z'),
           datePublished: new Date('2023-02-17T00:00:00.000Z'),
-          genres: [
-            {
-              id: 'art (broad object genre)',
-              name: 'art (broad object genre)',
-            },
-            {id: 'tableware', name: 'tableware'},
-          ],
           measurements: [
             {
               id: 'https://example.org/datasets/2/measurements/2',
@@ -569,7 +540,6 @@ describe('search', () => {
             'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
           keywords: ['Hendrerit', 'Suspendisse'],
           dateModified: new Date('2023-02-01T00:00:00.000Z'),
-          genres: [{id: 'tableware', name: 'tableware'}],
           measurements: [
             {
               id: 'https://example.org/datasets/4/measurements/2',
@@ -631,14 +601,10 @@ describe('search', () => {
           id: 'https://example.org/datasets/5',
           name: 'Dataset 5',
           publisher: {id: 'Archive', name: 'Archive'},
-          license: {
-            id: 'In Copyright',
-            name: 'In Copyright',
-          },
+          license: {id: 'In Copyright', name: 'In Copyright'},
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           keywords: ['Keyword'],
-          genres: [{id: 'digital media', name: 'digital media'}],
           measurements: [
             {
               id: 'https://example.org/datasets/5/measurements/2',
@@ -699,21 +665,9 @@ describe('search', () => {
       ],
       filters: {
         publishers: [
-          {
-            totalCount: 5,
-            id: 'Library',
-            name: 'Library',
-          },
-          {
-            totalCount: 3,
-            id: 'Museum',
-            name: 'Museum',
-          },
-          {
-            totalCount: 5,
-            id: 'Archive',
-            name: 'Archive',
-          },
+          {totalCount: 5, id: 'Library', name: 'Library'},
+          {totalCount: 3, id: 'Museum', name: 'Museum'},
+          {totalCount: 5, id: 'Archive', name: 'Archive'},
           {
             totalCount: 1,
             id: 'Research Organisation',
@@ -746,16 +700,8 @@ describe('search', () => {
             id: 'Copyright Undetermined',
             name: 'Copyright Undetermined',
           },
-          {
-            totalCount: 1,
-            id: 'Custom License',
-            name: 'Custom License',
-          },
-          {
-            totalCount: 1,
-            id: 'In Copyright',
-            name: 'In Copyright',
-          },
+          {totalCount: 1, id: 'Custom License', name: 'Custom License'},
+          {totalCount: 1, id: 'In Copyright', name: 'In Copyright'},
           {
             totalCount: 1,
             id: 'Open Data Commons Attribution License (ODC-By) v1.0',
@@ -768,48 +714,7 @@ describe('search', () => {
           },
         ],
         spatialCoverages: [],
-        genres: [
-          {
-            totalCount: 2,
-            id: 'articles',
-            name: 'articles',
-          },
-          {
-            totalCount: 2,
-            id: 'tableware',
-            name: 'tableware',
-          },
-          {
-            totalCount: 1,
-            id: 'art (broad object genre)',
-            name: 'art (broad object genre)',
-          },
-          {
-            totalCount: 1,
-            id: 'digital media',
-            name: 'digital media',
-          },
-          {
-            totalCount: 1,
-            id: 'man-made objects',
-            name: 'man-made objects',
-          },
-          {
-            totalCount: 1,
-            id: 'notes (documents)',
-            name: 'notes (documents)',
-          },
-          {
-            totalCount: 1,
-            id: 'publications (documents)',
-            name: 'publications (documents)',
-          },
-          {
-            totalCount: 1,
-            id: 'unidentified works',
-            name: 'unidentified works',
-          },
-        ],
+        genres: [],
       },
     });
   });
@@ -828,21 +733,9 @@ describe('search', () => {
       datasets: [],
       filters: {
         publishers: [
-          {
-            totalCount: 0,
-            id: 'Library',
-            name: 'Library',
-          },
-          {
-            totalCount: 0,
-            id: 'Museum',
-            name: 'Museum',
-          },
-          {
-            totalCount: 0,
-            id: 'Archive',
-            name: 'Archive',
-          },
+          {totalCount: 0, id: 'Library', name: 'Library'},
+          {totalCount: 0, id: 'Museum', name: 'Museum'},
+          {totalCount: 0, id: 'Archive', name: 'Archive'},
           {
             totalCount: 0,
             id: 'Research Organisation',
@@ -875,16 +768,8 @@ describe('search', () => {
             id: 'Copyright Undetermined',
             name: 'Copyright Undetermined',
           },
-          {
-            totalCount: 0,
-            id: 'Custom License',
-            name: 'Custom License',
-          },
-          {
-            totalCount: 0,
-            id: 'In Copyright',
-            name: 'In Copyright',
-          },
+          {totalCount: 0, id: 'Custom License', name: 'Custom License'},
+          {totalCount: 0, id: 'In Copyright', name: 'In Copyright'},
           {
             totalCount: 0,
             id: 'Open Data Commons Attribution License (ODC-By) v1.0',
@@ -897,48 +782,7 @@ describe('search', () => {
           },
         ],
         spatialCoverages: [],
-        genres: [
-          {
-            totalCount: 0,
-            id: 'articles',
-            name: 'articles',
-          },
-          {
-            totalCount: 0,
-            id: 'tableware',
-            name: 'tableware',
-          },
-          {
-            totalCount: 0,
-            id: 'art (broad object genre)',
-            name: 'art (broad object genre)',
-          },
-          {
-            totalCount: 0,
-            id: 'digital media',
-            name: 'digital media',
-          },
-          {
-            totalCount: 0,
-            id: 'man-made objects',
-            name: 'man-made objects',
-          },
-          {
-            totalCount: 0,
-            id: 'notes (documents)',
-            name: 'notes (documents)',
-          },
-          {
-            totalCount: 0,
-            id: 'publications (documents)',
-            name: 'publications (documents)',
-          },
-          {
-            totalCount: 0,
-            id: 'unidentified works',
-            name: 'unidentified works',
-          },
-        ],
+        genres: [],
       },
     });
   });
@@ -956,23 +800,11 @@ describe('search', () => {
         {
           id: 'https://example.org/datasets/5',
           name: 'Dataset 5',
-          publisher: {
-            id: 'Archive',
-            name: 'Archive',
-          },
-          license: {
-            id: 'In Copyright',
-            name: 'In Copyright',
-          },
+          publisher: {id: 'Archive', name: 'Archive'},
+          license: {id: 'In Copyright', name: 'In Copyright'},
           description:
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           keywords: ['Keyword'],
-          genres: [
-            {
-              id: 'digital media',
-              name: 'digital media',
-            },
-          ],
           measurements: [
             {
               id: 'https://example.org/datasets/5/measurements/2',
@@ -1033,21 +865,9 @@ describe('search', () => {
       ],
       filters: {
         publishers: [
-          {
-            totalCount: 0,
-            id: 'Library',
-            name: 'Library',
-          },
-          {
-            totalCount: 0,
-            id: 'Museum',
-            name: 'Museum',
-          },
-          {
-            totalCount: 1,
-            id: 'Archive',
-            name: 'Archive',
-          },
+          {totalCount: 0, id: 'Library', name: 'Library'},
+          {totalCount: 0, id: 'Museum', name: 'Museum'},
+          {totalCount: 1, id: 'Archive', name: 'Archive'},
           {
             totalCount: 0,
             id: 'Research Organisation',
@@ -1080,16 +900,8 @@ describe('search', () => {
             id: 'Copyright Undetermined',
             name: 'Copyright Undetermined',
           },
-          {
-            totalCount: 0,
-            id: 'Custom License',
-            name: 'Custom License',
-          },
-          {
-            totalCount: 1,
-            id: 'In Copyright',
-            name: 'In Copyright',
-          },
+          {totalCount: 0, id: 'Custom License', name: 'Custom License'},
+          {totalCount: 1, id: 'In Copyright', name: 'In Copyright'},
           {
             totalCount: 0,
             id: 'Open Data Commons Attribution License (ODC-By) v1.0',
@@ -1102,48 +914,7 @@ describe('search', () => {
           },
         ],
         spatialCoverages: [],
-        genres: [
-          {
-            totalCount: 0,
-            id: 'articles',
-            name: 'articles',
-          },
-          {
-            totalCount: 0,
-            id: 'tableware',
-            name: 'tableware',
-          },
-          {
-            totalCount: 0,
-            id: 'art (broad object genre)',
-            name: 'art (broad object genre)',
-          },
-          {
-            totalCount: 1,
-            id: 'digital media',
-            name: 'digital media',
-          },
-          {
-            totalCount: 0,
-            id: 'man-made objects',
-            name: 'man-made objects',
-          },
-          {
-            totalCount: 0,
-            id: 'notes (documents)',
-            name: 'notes (documents)',
-          },
-          {
-            totalCount: 0,
-            id: 'publications (documents)',
-            name: 'publications (documents)',
-          },
-          {
-            totalCount: 0,
-            id: 'unidentified works',
-            name: 'unidentified works',
-          },
-        ],
+        genres: [],
       },
     });
   });
@@ -1181,21 +952,9 @@ describe('search', () => {
       ],
       filters: {
         publishers: [
-          {
-            totalCount: 5,
-            id: 'Library',
-            name: 'Library',
-          },
-          {
-            totalCount: 0,
-            id: 'Museum',
-            name: 'Museum',
-          },
-          {
-            totalCount: 0,
-            id: 'Archive',
-            name: 'Archive',
-          },
+          {totalCount: 5, id: 'Library', name: 'Library'},
+          {totalCount: 0, id: 'Museum', name: 'Museum'},
+          {totalCount: 0, id: 'Archive', name: 'Archive'},
           {
             totalCount: 0,
             id: 'Research Organisation',
@@ -1282,67 +1041,6 @@ describe('search', () => {
       },
     });
   });
-
-  it('finds datasets if "genres" filter matches', async () => {
-    const result = await datasetFetcher.search({
-      filters: {
-        genres: ['art (broad object genre)'],
-      },
-    });
-
-    expect(result).toMatchObject({
-      totalCount: 1,
-      datasets: [
-        {
-          id: 'https://example.org/datasets/2',
-        },
-      ],
-      filters: {
-        genres: [
-          {
-            totalCount: 0,
-            id: 'articles',
-            name: 'articles',
-          },
-          {
-            totalCount: 1,
-            id: 'tableware',
-            name: 'tableware',
-          },
-          {
-            totalCount: 1,
-            id: 'art (broad object genre)',
-            name: 'art (broad object genre)',
-          },
-          {
-            totalCount: 0,
-            id: 'digital media',
-            name: 'digital media',
-          },
-          {
-            totalCount: 0,
-            id: 'man-made objects',
-            name: 'man-made objects',
-          },
-          {
-            totalCount: 0,
-            id: 'notes (documents)',
-            name: 'notes (documents)',
-          },
-          {
-            totalCount: 0,
-            id: 'publications (documents)',
-            name: 'publications (documents)',
-          },
-          {
-            totalCount: 0,
-            id: 'unidentified works',
-            name: 'unidentified works',
-          },
-        ],
-      },
-    });
-  });
 });
 
 describe('getById', () => {
@@ -1372,7 +1070,6 @@ describe('getById', () => {
       dateCreated: new Date('2019-03-12T00:00:00.000Z'),
       dateModified: new Date('2023-02-17T00:00:00.000Z'),
       datePublished: new Date('2023-02-17T00:00:00.000Z'),
-      genres: [{id: 'man-made objects', name: 'man-made objects'}],
       measurements: [
         {
           id: 'https://example.org/datasets/1/measurements/2',
