@@ -23,6 +23,14 @@ export async function getCommunityById(id: string) {
   return organizationToCommunity(organization);
 }
 
+export async function getCommunityByAttributionId(attributionId: string) {
+  const communities = await getCommunities();
+
+  return communities.find(
+    community => community.attributionId === attributionId
+  );
+}
+
 export async function getMemberships(communityId: string) {
   const organizationMembership =
     await clerkClient.organizations.getOrganizationMembershipList({
@@ -63,10 +71,10 @@ interface GetCommunitiesProps {
 export async function getCommunities({
   query = '',
   sortBy = defaultSortBy,
-  limit = 24,
+  limit,
   offset = 0,
   onlyMyCommunities = false,
-}: GetCommunitiesProps) {
+}: GetCommunitiesProps = {}) {
   let organizations: Organization[] = [];
 
   if (onlyMyCommunities) {

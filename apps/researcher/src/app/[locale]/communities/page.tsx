@@ -42,6 +42,7 @@ export default async function CommunitiesPage({
       sortBy,
       offset,
       onlyMyCommunities: !!searchParams.onlyMyCommunities,
+      limit: 24,
     });
   } catch (err) {
     return <ErrorMessage error={t('error')} />;
