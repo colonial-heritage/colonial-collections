@@ -223,6 +223,7 @@
     "listCreatedBy": "List created by"
   },
   "UserEnricherForm": {
+    "title": "Add a narrative",
     "description": "Narrative",
     "descriptionSubTitle": "Here you can add your own narrative to the Description of this object.",
     "community": "Community",

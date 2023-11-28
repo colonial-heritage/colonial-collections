@@ -223,6 +223,7 @@
     "listCreatedBy": "Lijst gemaakt door"
   },
   "UserEnricherForm": {
+    "title": "Voeg een verhaal toe",
     "description": "Verhaal",
     "descriptionSubTitle": "Hier kunt u uw eigen verhaal toevoegen aan de beschrijving van dit object.",
     "community": "Community",

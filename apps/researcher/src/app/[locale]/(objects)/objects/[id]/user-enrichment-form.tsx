@@ -1,19 +1,25 @@
 'use client';
 
-import {useSlideOut, useNotifications} from '@colonial-collections/ui';
+import {
+  useSlideOut,
+  useNotifications,
+  SlideOutButton,
+} from '@colonial-collections/ui';
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {z} from 'zod';
 import {addUserEnrichment} from './actions';
 import {useUserCommunities} from '@/lib/community/hooks';
 import {camelCase} from 'tiny-case';
 import {Community} from '@/lib/community/definitions';
+import {XMarkIcon} from '@heroicons/react/24/outline';
 
 interface FormValues {
   description: string;
   attributionId: string;
   citation: string;
+  language: string;
 }
 
 interface Props {
@@ -26,6 +32,7 @@ const userEnricherSchema = z.object({
   description: z.string().trim().min(1),
   attributionId: z.string().trim().min(1),
   citation: z.string().trim().min(1),
+  language: z.string(),
 });
 
 function Form({
@@ -34,6 +41,7 @@ function Form({
   objectId,
   communities,
 }: Props & {communities: Community[]}) {
+  const locale = useLocale();
   const {
     register,
     handleSubmit,
@@ -45,6 +53,7 @@ function Form({
       description: '',
       attributionId: communities[0].attributionId || '',
       citation: '',
+      language: locale,
     },
   });
 
@@ -72,8 +81,17 @@ function Form({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full lg:w-4/5 bg-greenGrey-50 border border-greenGrey-100 p-4 rounded-xl text-greenGrey-800 self-end flex-col gap-6 flex"
+      className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-100 text-neutral-800 self-end flex-col gap-6 flex"
     >
+      <div className="flex justify-between items-center border-b -mx-4 px-4 pb-2 mb-2">
+        <h3>{t('title')}</h3>
+        <SlideOutButton
+          className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+          id={slideOutId}
+        >
+          <XMarkIcon className='class="w-4 h-4 stroke-neutral-900' />
+        </SlideOutButton>
+      </div>
       <div className="flex flex-col lg:flex-row gap-4">
         {errors.root?.serverError.message && (
           <div className="rounded-md bg-red-50 p-4 mt-3">
@@ -84,26 +102,34 @@ function Form({
             </div>
           </div>
         )}
-        <div className="flex flex-col w-full lg:w-2/3">
-          <label htmlFor="nar" className="flex flex-col">
-            <strong>{t('description')}</strong>
-            {t('descriptionSubTitle')}
+      </div>
+
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className='class="flex flex-col w-full lg:w-2/3'>
+          <label htmlFor="description" className="flex flex-col gap-1 mb-1">
+            <strong>
+              {t('description')}
+              <span className="font-normal text-neutral-600">*</span>
+            </strong>
+            <div>{t('descriptionSubTitle')}</div>
           </label>
           <textarea
             {...register('description')}
-            cols={30}
             rows={4}
-            className="border border-greenGrey-200 rounded p-2"
+            className="border border-neutral-400 rounded p-2 text-sm w-full"
           />
           <p>
             {errors.description &&
               t(camelCase(`description_${errors.description.type}`))}
           </p>
         </div>
-        <div className="flex flex-col w-full lg:w-1/3">
-          <label htmlFor="nar" className="flex flex-col">
-            <strong>{t('community')}</strong>
-            {t('communitySubTitle')}
+        <div className="flex flex-col w-full lg:w-1/3 gap-4">
+          <label htmlFor="attributionId" className="flex flex-col">
+            <strong>
+              {t('community')}
+              <span className="font-normal text-neutral-600">*</span>
+            </strong>
+            <div>{t('communitySubTitle')}</div>
           </label>
           <select
             {...register('attributionId')}
@@ -121,11 +147,15 @@ function Form({
           </p>
         </div>
       </div>
+
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col w-full lg:w-2/3">
-          <label htmlFor="nar" className="flex flex-col">
-            <strong>{t('citation')}</strong>
-            {t('citationSubTitle')}
+          <label htmlFor="citation" className="flex flex-col gap-1 mb-1">
+            <strong>
+              {t('citation')}
+              <span className="font-normal text-neutral-600">*</span>
+            </strong>
+            <div>{t('citationSubTitle')}</div>
           </label>
           <textarea
             {...register('citation')}
@@ -140,18 +170,19 @@ function Form({
         </div>
         <div className="flex flex-col w-full lg:w-1/3"></div>
       </div>
+
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="w-full lg:w-2/3 flex gap-2">
           <button
             disabled={isSubmitting}
             type="submit"
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-greenGrey-100 hover:bg-greenGrey-200 transition text-greenGrey-800 flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
           >
             {t('buttonSubmit')}
           </button>
           <button
             onClick={() => setIsVisible(slideOutId, false)}
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs border border-greenGrey-300 hover:bg-greenGrey-200 transition text-greenGrey-800 flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-none hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1 border border-neutral-300"
           >
             {t('buttonCancel')}
           </button>

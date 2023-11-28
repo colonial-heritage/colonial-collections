@@ -164,13 +164,13 @@ export function AddMetadataEnrichment() {
 
   return (
     <SignedIn>
-      <div className="flex justify-end">
+      <div className="flex justify-end text-consortiumBlue-800">
         <SlideOutButton
           id={translationKey}
-          className="py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 flex items-center transition gap-1"
+          className="py-2 px-3  transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800"
         >
           {t('addUserEnrichmentButton')}
-          <ChatBubbleBottomCenterTextIcon className="w-4 h-4 fill-neutral-500" />
+          <ChatBubbleBottomCenterTextIcon className="w-4 h-4 fill-consortiumBlue-800" />
         </SlideOutButton>
       </div>
       <SlideOut id={translationKey}>
