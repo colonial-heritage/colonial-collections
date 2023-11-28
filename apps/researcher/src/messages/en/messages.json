@@ -80,11 +80,12 @@
     "techniquesSubTitle": "",
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
-    "addedBy": "Added by <name></name> from <location></location>",
+    "addedBy": "Added by <name></name>",
     "currentPublisher": "Current location of object",
     "noOrganizationFound": "No organization found.",
     "dateCreated": "Date Made",
     "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range.",
+    "addUserEnrichmentButton": "Add",
     "noListsInCommunity": "No lists",
     "objectAddedToList": "Object added to list <name></name>.",
     "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
@@ -142,6 +143,7 @@
     "nameAsc": "Name - Ascending",
     "nameDesc": "Name - Descending",
     "createdAtDesc": "Date created",
+    "membershipCountDesc": "Number of members",
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
   },
   "WorkInProgress": {
@@ -161,7 +163,9 @@
     "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",
     "objectListCount": "{count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
     "objectListCountError": "Error",
-    "searchPlaceholder": "Search for community"
+    "searchPlaceholder": "Search for community",
+    "addCommunity": "Create a community",
+    "showMyCommunities": "Show only my communities"
   },
   "Community": {
     "title": "Community of",
@@ -217,5 +221,21 @@
     "error": "Something went wrong while fetching the list. Please try again later.",
     "objectCount": "{count, plural, =0 {0 objects} =1 {1 object} other {# objects}}",
     "listCreatedBy": "List created by"
+  },
+  "UserEnricherForm": {
+    "description": "Narrative",
+    "descriptionSubTitle": "Here you can add your own narrative to the Description of this object.",
+    "community": "Community",
+    "communitySubTitle": "Select the community you speak on behalf of.",
+    "citation": "Resource",
+    "citationSubTitle": "Please provide information that supports your narrative.",
+    "successfullyAdded": "Your narrative has been added to the object",
+    "serverError": "Something went wrong while creating the narrative. Please try again later.",
+    "buttonSubmit": "Add your narrative",
+    "buttonCancel": "Cancel",
+    "descriptionTooSmall": "Narrative is required",
+    "communityIdTooSmall": "Community is required",
+    "citationTooSmall": "Resource is required",
+    "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community."
   }
 }
