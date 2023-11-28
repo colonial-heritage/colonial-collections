@@ -26,7 +26,7 @@ export default authMiddleware({
     // See issue: https://github.com/vercel/next.js/issues/43704
     request.headers.set('x-pathname', request.nextUrl.pathname);
 
-    const response = handleI18nRouting(request as unknown as NextRequest);
+    const response = handleI18nRouting(request);
 
     return response;
   },

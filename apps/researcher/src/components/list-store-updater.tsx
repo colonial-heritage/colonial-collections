@@ -12,7 +12,9 @@ interface Props {
   limit: number;
   query: string;
   sortBy?: string;
-  selectedFilters?: {[filterKey: string]: string[] | undefined};
+  selectedFilters?: {
+    [filterKey: string]: (string | number)[] | number | string | undefined;
+  };
 }
 
 export function ListStoreUpdater(updateProps: Props) {

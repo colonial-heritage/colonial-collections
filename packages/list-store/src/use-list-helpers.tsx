@@ -11,7 +11,7 @@ interface Props {
   query: string;
   sortBy?: string;
   selectedFilters?: {
-    [filterKey: string]: string[] | string | number | undefined;
+    [filterKey: string]: (string | number)[] | number | string | undefined;
   };
   routerReplace: (url: string, options?: {scroll?: boolean}) => void;
 }
