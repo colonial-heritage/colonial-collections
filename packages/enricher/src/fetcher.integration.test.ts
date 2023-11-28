@@ -1,4 +1,4 @@
-import {AboutType} from './definitions';
+import {AdditionalType} from './definitions';
 import {EnrichmentFetcher} from './fetcher';
 import {EnrichmentStorer} from './storer';
 import {NanopubWriter} from './writer';
@@ -23,7 +23,7 @@ beforeAll(async () => {
   const storer = new EnrichmentStorer({nanopubWriter});
 
   await storer.addText({
-    additionalType: AboutType.Name,
+    additionalType: AdditionalType.Name,
     description: 'Comment about the name of the resource',
     citation: 'A citation or reference to a work that supports the comment',
     inLanguage: 'en-gb',
@@ -41,7 +41,7 @@ beforeAll(async () => {
   });
 
   await storer.addText({
-    additionalType: AboutType.Description,
+    additionalType: AdditionalType.Description,
     description: 'Comment about the description of the resource',
     citation: 'A citation or reference to a work that supports the comment',
     creator: {
@@ -80,7 +80,7 @@ describe('getById', () => {
     expect(enrichments).toStrictEqual([
       {
         id: expect.stringContaining('https://'),
-        additionalType: AboutType.Name,
+        additionalType: AdditionalType.Name,
         description: 'Comment about the name of the resource',
         citation: 'A citation or reference to a work that supports the comment',
         inLanguage: 'en-gb',
@@ -99,7 +99,7 @@ describe('getById', () => {
       },
       {
         id: expect.stringContaining('https://'),
-        additionalType: AboutType.Description,
+        additionalType: AdditionalType.Description,
         description: 'Comment about the description of the resource',
         citation: 'A citation or reference to a work that supports the comment',
         creator: {

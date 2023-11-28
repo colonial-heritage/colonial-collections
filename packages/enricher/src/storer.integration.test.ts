@@ -1,4 +1,4 @@
-import {AboutType} from './definitions';
+import {AdditionalType} from './definitions';
 import {NanopubWriter} from './writer';
 import {EnrichmentStorer} from './storer';
 import {describe, expect, it} from '@jest/globals';
@@ -14,7 +14,7 @@ const storer = new EnrichmentStorer({nanopubWriter});
 describe('add', () => {
   it('adds a textual enrichment', async () => {
     const enrichment = await storer.addText({
-      additionalType: AboutType.Name,
+      additionalType: AdditionalType.Name,
       description: 'A comment about the name of an object',
       citation: 'A citation or reference to a work that supports the comment',
       inLanguage: 'en',

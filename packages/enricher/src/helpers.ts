@@ -1,36 +1,36 @@
 import {
   ontologyVersionIdentifier,
   ontologyUrl,
-  AboutType,
+  AdditionalType,
   Enrichment,
 } from './definitions';
 import {defu} from 'defu';
 import type {Resource} from 'rdf-object';
 
-export function fromAboutTypeToClass(aboutType: AboutType) {
+export function fromAboutTypeToClass(additionalType: AdditionalType) {
   let className;
-  if (aboutType === AboutType.Description) {
+  if (additionalType === AdditionalType.Description) {
     className = 'Description';
-  } else if (aboutType === AboutType.Name) {
+  } else if (additionalType === AdditionalType.Name) {
     className = 'Name';
   } else {
-    throw new TypeError(`Unknown type: "${aboutType}"`);
+    throw new TypeError(`Unknown type: "${additionalType}"`);
   }
 
   return `${ontologyUrl}${className}${ontologyVersionIdentifier}`;
 }
 
 function fromClassToAboutType(className: string | undefined) {
-  let aboutType: AboutType;
+  let additionalType: AdditionalType;
   if (className === `${ontologyUrl}Description${ontologyVersionIdentifier}`) {
-    aboutType = AboutType.Description;
+    additionalType = AdditionalType.Description;
   } else if (className === `${ontologyUrl}Name${ontologyVersionIdentifier}`) {
-    aboutType = AboutType.Name;
+    additionalType = AdditionalType.Name;
   } else {
     throw new TypeError(`Unknown class name: "${className}"`);
   }
 
-  return aboutType;
+  return additionalType;
 }
 
 function getPropertyValue(resource: Resource, propertyName: string) {

@@ -6,7 +6,7 @@ export const ontologyUrl =
 // We currently have just one version of our ontology
 export const ontologyVersionIdentifier = 'Version1';
 
-export enum AboutType {
+export enum AdditionalType {
   Description = 'description',
   Name = 'name',
 }
@@ -16,7 +16,7 @@ export type BasicEnrichment = {
 };
 
 export const enrichmentBeingCreatedSchema = z.object({
-  additionalType: z.nativeEnum(AboutType),
+  additionalType: z.nativeEnum(AdditionalType),
   description: z.string(),
   citation: z.string(),
   inLanguage: z.string().optional(), // E.g. 'en', 'nl-nl'
