@@ -1,3 +1,4 @@
+import {nanopubId, NanopubClient} from './client';
 import {
   enrichmentBeingCreatedSchema,
   ontologyUrl,
@@ -5,7 +6,6 @@ import {
 } from './definitions';
 import {fromAboutTypeToClass} from './helpers';
 import type {BasicEnrichment} from './definitions';
-import {nanopubId, NanopubWriter} from './writer';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
 import {z} from 'zod';
@@ -13,7 +13,7 @@ import {z} from 'zod';
 const DF = new DataFactory();
 
 const constructorOptionsSchema = z.object({
-  nanopubWriter: z.instanceof(NanopubWriter),
+  nanopubClient: z.instanceof(NanopubClient),
 });
 
 export type EnricherConstructorOptions = z.infer<
@@ -21,12 +21,12 @@ export type EnricherConstructorOptions = z.infer<
 >;
 
 export class EnrichmentStorer {
-  private nanopubWriter: NanopubWriter;
+  private nanopubClient: NanopubClient;
 
   constructor(options: EnricherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
-    this.nanopubWriter = opts.nanopubWriter;
+    this.nanopubClient = opts.nanopubClient;
   }
 
   async addText(enrichmentBeingCreated: EnrichmentBeingCreated) {
@@ -156,7 +156,7 @@ export class EnrichmentStorer {
       )
     );
 
-    const nanopub = await this.nanopubWriter.add({
+    const nanopub = await this.nanopubClient.add({
       assertionStore,
       publicationStore,
       creator: opts.creator.id,

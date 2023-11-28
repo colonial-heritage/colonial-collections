@@ -1,4 +1,4 @@
-import {nanopubId, NanopubWriter} from './writer';
+import {nanopubId, NanopubClient} from './client';
 import {describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 import {DataFactory} from 'rdf-data-factory';
@@ -6,7 +6,7 @@ import {RdfStore} from 'rdf-stores';
 
 const DF = new DataFactory();
 
-const nanopubWriter = new NanopubWriter({
+const nanopubClient = new NanopubClient({
   endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
   proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
 });
@@ -31,7 +31,7 @@ describe('add', () => {
       )
     );
 
-    const nanopub = await nanopubWriter.add({
+    const nanopub = await nanopubClient.add({
       assertionStore,
       publicationStore,
       creator: 'http://example.com/person',

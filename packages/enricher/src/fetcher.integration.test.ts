@@ -1,7 +1,7 @@
+import {NanopubClient} from './client';
 import {AdditionalType} from './definitions';
 import {EnrichmentFetcher} from './fetcher';
 import {EnrichmentStorer} from './storer';
-import {NanopubWriter} from './writer';
 import {beforeAll, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 import {setTimeout} from 'node:timers/promises';
@@ -15,12 +15,12 @@ const parentResourceId = `http://example.org/${Date.now()}`;
 
 // Create some enrichments
 beforeAll(async () => {
-  const nanopubWriter = new NanopubWriter({
+  const nanopubClient = new NanopubClient({
     endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
     proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
   });
 
-  const storer = new EnrichmentStorer({nanopubWriter});
+  const storer = new EnrichmentStorer({nanopubClient});
 
   await storer.addText({
     additionalType: AdditionalType.Name,
