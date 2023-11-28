@@ -1,98 +1,174 @@
+import {nanopubId, NanopubClient} from './client';
+import {
+  fullEnrichmentBeingCreatedSchema,
+  ontologyUrl,
+  FullEnrichmentBeingCreated,
+} from './definitions';
+import {fromAboutTypeToClass} from './helpers';
 import type {BasicEnrichment} from './definitions';
-import {NanopubWriter} from './writer';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
 import {z} from 'zod';
 
 const DF = new DataFactory();
 
-const constructorOptionsSchema = z.object({
-  nanopubWriter: z.instanceof(NanopubWriter),
+export const constructorOptionsSchema = z.object({
+  nanopubClient: z.instanceof(NanopubClient),
 });
 
-export type EnricherConstructorOptions = z.infer<
+export type EnrichmentStorerConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
-const addTextOptionsSchema = z.object({
-  description: z.string(),
-  citation: z.string(), // Required or optional property?
-  about: z.string().url(),
-  creator: z.string().url(),
-  license: z.string().url(),
-});
-
-export type AddTextOptions = z.infer<typeof addTextOptionsSchema>;
-
+// Low-level class for creating enrichments. You should use EnrichmentCreator in most cases
 export class EnrichmentStorer {
-  private nanopubWriter: NanopubWriter;
+  private nanopubClient: NanopubClient;
 
-  constructor(options: EnricherConstructorOptions) {
+  constructor(options: EnrichmentStorerConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
-    this.nanopubWriter = opts.nanopubWriter;
+    this.nanopubClient = opts.nanopubClient;
   }
 
-  async addText(options: AddTextOptions) {
-    const opts = addTextOptionsSchema.parse(options);
+  async addText(fullEnrichmentBeingCreated: FullEnrichmentBeingCreated) {
+    const opts = fullEnrichmentBeingCreatedSchema.parse(
+      fullEnrichmentBeingCreated
+    );
 
-    const enrichmentStore = RdfStore.createDefault();
+    const publicationStore = RdfStore.createDefault();
+    const assertionStore = RdfStore.createDefault();
     const annotationId = DF.blankNode();
     const bodyId = DF.blankNode();
+    const languageCode = opts.inLanguage;
 
-    enrichmentStore.addQuad(
+    publicationStore.addQuad(
+      DF.quad(
+        nanopubId,
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode(`${ontologyUrl}Nanopub`) // Generic type
+      )
+    );
+    publicationStore.addQuad(
+      DF.quad(
+        nanopubId,
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode(fromAboutTypeToClass(opts.additionalType)) // Specific type
+      )
+    );
+    publicationStore.addQuad(
+      DF.quad(
+        nanopubId,
+        DF.namedNode('http://purl.org/dc/terms/license'),
+        DF.namedNode(opts.license)
+      )
+    );
+
+    // Connect the publication info to the annotation
+    publicationStore.addQuad(
+      DF.quad(
+        nanopubId,
+        DF.namedNode('http://purl.org/nanopub/x/introduces'),
+        annotationId
+      )
+    );
+
+    // The remote writer automatically adds 'dcterms:creator'.
+    // A creator can change his or her name later on, but the name at the time of
+    // creation is preserved.
+    publicationStore.addQuad(
+      DF.quad(
+        DF.namedNode(opts.creator.id),
+        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+        DF.literal(opts.creator.name)
+      )
+    );
+
+    assertionStore.addQuad(
       DF.quad(
         annotationId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('http://www.w3.org/ns/oa#Annotation')
       )
     );
-    enrichmentStore.addQuad(
+    assertionStore.addQuad(
       DF.quad(
         annotationId,
         DF.namedNode('http://www.w3.org/ns/oa#hasBody'),
         bodyId
       )
     );
-    enrichmentStore.addQuad(
+    assertionStore.addQuad(
       DF.quad(
         bodyId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('http://www.w3.org/ns/oa#TextualBody')
       )
     );
-    enrichmentStore.addQuad(
+    assertionStore.addQuad(
       DF.quad(
         bodyId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#value'),
-        DF.literal(opts.description)
+        DF.literal(opts.description, languageCode)
       )
     );
-    enrichmentStore.addQuad(
+    assertionStore.addQuad(
       DF.quad(
         bodyId,
-        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#seeAlso'),
-        DF.literal(opts.citation)
+        DF.namedNode('http://purl.org/dc/elements/1.1/format'),
+        DF.literal('text/plain') // Currently no other format allowed
       )
     );
-    enrichmentStore.addQuad(
+
+    if (languageCode !== undefined) {
+      assertionStore.addQuad(
+        DF.quad(
+          bodyId,
+          DF.namedNode('http://purl.org/dc/elements/1.1/language'),
+          DF.literal(languageCode)
+        )
+      );
+    }
+
+    assertionStore.addQuad(
+      DF.quad(
+        annotationId,
+        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#comment'),
+        DF.literal(opts.citation, languageCode)
+      )
+    );
+    assertionStore.addQuad(
       DF.quad(
         annotationId,
         DF.namedNode('http://www.w3.org/ns/oa#hasTarget'),
-        DF.namedNode(opts.about)
+        DF.namedNode(opts.about.id)
       )
     );
 
-    const nanopub = await this.nanopubWriter.add({
-      enrichmentStore,
-      creator: opts.creator,
-      license: opts.license,
+    assertionStore.addQuad(
+      DF.quad(
+        DF.namedNode(opts.about.id),
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode('http://www.w3.org/ns/oa#SpecificResource')
+      )
+    );
+    assertionStore.addQuad(
+      DF.quad(
+        DF.namedNode(opts.about.id),
+        DF.namedNode('http://www.w3.org/ns/oa#hasSource'),
+        DF.namedNode(opts.about.isPartOf.id)
+      )
+    );
+
+    const nanopub = await this.nanopubClient.add({
+      assertionStore,
+      publicationStore,
+      creator: opts.creator.id,
     });
 
-    const enrichment: BasicEnrichment = {
+    const basicEnrichment: BasicEnrichment = {
       id: nanopub.id,
     };
 
-    return enrichment;
+    return basicEnrichment;
   }
 }

@@ -1,6 +1,7 @@
+import {NanopubClient} from './client';
+import {EnrichmentCreator} from './creator';
+import {AdditionalType} from './definitions';
 import {EnrichmentFetcher} from './fetcher';
-import {EnrichmentStorer} from './storer';
-import {NanopubWriter} from './writer';
 import {beforeAll, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 import {setTimeout} from 'node:timers/promises';
@@ -13,27 +14,39 @@ const resourceId = `http://example.org/${Date.now()}`;
 
 // Create some enrichments
 beforeAll(async () => {
-  const nanopubWriter = new NanopubWriter({
+  const nanopubClient = new NanopubClient({
     endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
     proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
   });
 
-  const storer = new EnrichmentStorer({nanopubWriter});
-
-  await storer.addText({
-    description: 'Comment 1 about the resource',
-    citation: 'A citation or reference to a work that supports the comment',
-    about: resourceId,
-    creator: 'http://example.com/person1',
-    license: 'http://example.org/license',
+  const creator = new EnrichmentCreator({
+    endpointUrl: env.SPARQL_ENDPOINT_URL as string,
+    nanopubClient,
   });
 
-  await storer.addText({
-    description: 'Comment 2 about the resource',
+  await creator.addText({
+    additionalType: AdditionalType.Name,
+    description: 'Comment about the name of the resource',
     citation: 'A citation or reference to a work that supports the comment',
+    inLanguage: 'en-gb',
+    creator: {
+      id: 'http://example.com/person1',
+      name: 'Person 1',
+    },
+    license: 'https://creativecommons.org/licenses/by/4.0/',
     about: resourceId,
-    creator: 'http://example.com/person2',
-    license: 'http://example.org/license',
+  });
+
+  await creator.addText({
+    additionalType: AdditionalType.Description,
+    description: 'Comment about the description of the resource',
+    citation: 'A citation or reference to a work that supports the comment',
+    creator: {
+      id: 'http://example.com/person2',
+      name: 'Person 2',
+    },
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    about: resourceId,
   });
 
   // Wait a bit: storing the nanopubs takes some time
@@ -59,21 +72,30 @@ describe('getById', () => {
     expect(enrichments).toStrictEqual([
       {
         id: expect.stringContaining('https://'),
-        about: resourceId,
-        description: 'Comment 1 about the resource',
-        source: 'A citation or reference to a work that supports the comment',
-        creator: 'http://example.com/person1',
-        license: 'http://example.org/license',
+        additionalType: AdditionalType.Name,
+        description: 'Comment about the name of the resource',
+        citation: 'A citation or reference to a work that supports the comment',
+        inLanguage: 'en-gb',
+        creator: {
+          id: 'http://example.com/person1',
+          name: 'Person 1',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
+        about: resourceId,
       },
       {
         id: expect.stringContaining('https://'),
-        about: resourceId,
-        description: 'Comment 2 about the resource',
-        source: 'A citation or reference to a work that supports the comment',
-        creator: 'http://example.com/person2',
-        license: 'http://example.org/license',
+        additionalType: AdditionalType.Description,
+        description: 'Comment about the description of the resource',
+        citation: 'A citation or reference to a work that supports the comment',
+        creator: {
+          id: 'http://example.com/person2',
+          name: 'Person 2',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
+        about: resourceId,
       },
     ]);
   });

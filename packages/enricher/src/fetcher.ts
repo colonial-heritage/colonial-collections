@@ -1,5 +1,5 @@
 import {ontologyUrl} from './definitions';
-import {createEnrichment} from './rdf-helpers';
+import {createEnrichment} from './helpers';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import type {Readable} from 'node:stream';
@@ -29,28 +29,36 @@ export class EnrichmentFetcher {
     // TBD: is there a limit to the number of enrichments that can be retrieved?
     const query = `
       PREFIX cc: <${ontologyUrl}>
+      PREFIX dc: <http://purl.org/dc/elements/1.1/>
       PREFIX dcterms: <http://purl.org/dc/terms/>
       PREFIX oa: <http://www.w3.org/ns/oa#>
       PREFIX np: <http://www.nanopub.org/nschema#>
       PREFIX npa: <http://purl.org/nanopub/admin/>
+      PREFIX npx: <http://purl.org/nanopub/x/>
       PREFIX prov: <http://www.w3.org/ns/prov#>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
       CONSTRUCT {
         # Need this to easily retrieve the enrichments in the RdfObjectLoader
-        ?target cc:hasEnrichment ?annotation .
+        ?source cc:hasEnrichment ?annotation .
 
         ?annotation a cc:Enrichment ;
+          cc:additionalType ?additionalType ;
           cc:about ?target ;
+          cc:isPartOf ?source ;
           cc:description ?value ;
-          cc:source ?seeAlso ;
+          cc:citation ?comment ;
+          cc:inLanguage ?language ;
           cc:license ?license ;
           cc:creator ?creator ;
           cc:dateCreated ?dateCreated .
+
+        ?creator a cc:Agent ;
+          cc:name ?creatorName .
       }
       WHERE {
-        BIND(<${iri}> AS ?target)
+        BIND(<${iri}> AS ?source)
 
         graph npa:graph {
           ?np npa:hasHeadGraph ?head .
@@ -59,25 +67,34 @@ export class EnrichmentFetcher {
 
         graph ?head {
           ?np np:hasProvenance ?provenance .
-          ?np np:hasAssertion ?assertion .
           ?np np:hasPublicationInfo ?pubInfo .
-        }
-
-        graph ?provenance {
-          ?assertion prov:wasAttributedTo ?creator .
         }
 
         graph ?pubInfo {
           ?np a cc:Nanopub ;
+            npx:introduces ?annotation ;
+            dcterms:creator ?creator ;
             dcterms:license ?license .
+
+          ?creator rdfs:label ?creatorName .
+
+          ?np a ?additionalType
+          FILTER(?additionalType != cc:Nanopub)
         }
 
         graph ?assertion {
           ?annotation a oa:Annotation ;
+            rdfs:comment ?comment ;
             oa:hasBody ?body ;
             oa:hasTarget ?target .
+
           ?body rdf:value ?value .
-          ?body rdfs:seeAlso ?seeAlso .
+          OPTIONAL {
+            ?body dc:language ?language .
+          }
+
+          ?target a oa:SpecificResource ;
+            oa:hasSource ?source .
         }
       }
     `;
