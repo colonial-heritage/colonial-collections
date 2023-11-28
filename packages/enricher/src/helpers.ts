@@ -43,7 +43,7 @@ function getPropertyValue(resource: Resource, propertyName: string) {
 }
 
 export function createEnrichment(rawEnrichment: Resource) {
-  const type = getPropertyValue(rawEnrichment, 'cc:type');
+  const additionalType = getPropertyValue(rawEnrichment, 'cc:additionalType');
   const about = getPropertyValue(rawEnrichment, 'cc:about');
   const isPartOf = getPropertyValue(rawEnrichment, 'cc:isPartOf');
   const description = getPropertyValue(rawEnrichment, 'cc:description');
@@ -52,6 +52,9 @@ export function createEnrichment(rawEnrichment: Resource) {
   const creator = getPropertyValue(rawEnrichment, 'cc:creator');
   const license = getPropertyValue(rawEnrichment, 'cc:license');
 
+  const creatorResource = rawEnrichment.property['cc:creator'];
+  const creatorName = getPropertyValue(creatorResource, 'cc:name');
+
   const rawDateCreated = getPropertyValue(rawEnrichment, 'cc:dateCreated');
   // @ts-expect-error:TS2322
   const dateCreated = new Date(rawDateCreated);
@@ -59,7 +62,7 @@ export function createEnrichment(rawEnrichment: Resource) {
   // Silence TS errors about 'string | undefined': the values always are strings
   const enrichment: Enrichment = {
     id: rawEnrichment.value,
-    type: fromClassToAboutType(type),
+    additionalType: fromClassToAboutType(additionalType),
     about: {
       // @ts-expect-error:TS2322
       id: about,
@@ -73,8 +76,12 @@ export function createEnrichment(rawEnrichment: Resource) {
     // @ts-expect-error:TS2322
     citation,
     inLanguage,
-    // @ts-expect-error:TS2322
-    creator,
+    creator: {
+      // @ts-expect-error:TS2322
+      id: creator,
+      // @ts-expect-error:TS2322
+      name: creatorName,
+    },
     // @ts-expect-error:TS2322
     license,
     dateCreated,

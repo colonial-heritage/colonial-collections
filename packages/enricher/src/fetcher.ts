@@ -34,6 +34,7 @@ export class EnrichmentFetcher {
       PREFIX oa: <http://www.w3.org/ns/oa#>
       PREFIX np: <http://www.nanopub.org/nschema#>
       PREFIX npa: <http://purl.org/nanopub/admin/>
+      PREFIX npx: <http://purl.org/nanopub/x/>
       PREFIX prov: <http://www.w3.org/ns/prov#>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -43,7 +44,7 @@ export class EnrichmentFetcher {
         ?source cc:hasEnrichment ?annotation .
 
         ?annotation a cc:Enrichment ;
-          cc:type ?aboutType ;
+          cc:additionalType ?additionalType ;
           cc:about ?target ;
           cc:isPartOf ?source ;
           cc:description ?value ;
@@ -52,6 +53,9 @@ export class EnrichmentFetcher {
           cc:license ?license ;
           cc:creator ?creator ;
           cc:dateCreated ?dateCreated .
+
+        ?creator a cc:Agent ;
+          cc:name ?creatorName .
       }
       WHERE {
         BIND(<${iri}> AS ?source)
@@ -63,20 +67,19 @@ export class EnrichmentFetcher {
 
         graph ?head {
           ?np np:hasProvenance ?provenance .
-          ?np np:hasAssertion ?assertion .
           ?np np:hasPublicationInfo ?pubInfo .
-        }
-
-        graph ?provenance {
-          ?assertion prov:wasAttributedTo ?creator .
         }
 
         graph ?pubInfo {
           ?np a cc:Nanopub ;
+            npx:introduces ?annotation ;
+            dcterms:creator ?creator ;
             dcterms:license ?license .
 
-          ?np a ?aboutType
-          FILTER(?aboutType != cc:Nanopub)
+          ?creator rdfs:label ?creatorName .
+
+          ?np a ?additionalType
+          FILTER(?additionalType != cc:Nanopub)
         }
 
         graph ?assertion {

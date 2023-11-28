@@ -49,7 +49,7 @@ export class EnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode(fromAboutTypeToClass(opts.type)) // Specific type
+        DF.namedNode(fromAboutTypeToClass(opts.additionalType)) // Specific type
       )
     );
     publicationStore.addQuad(
@@ -57,6 +57,26 @@ export class EnrichmentStorer {
         nanopubId,
         DF.namedNode('http://purl.org/dc/terms/license'),
         DF.namedNode(opts.license)
+      )
+    );
+
+    // Connect the publication info to the annotation
+    publicationStore.addQuad(
+      DF.quad(
+        nanopubId,
+        DF.namedNode('http://purl.org/nanopub/x/introduces'),
+        annotationId
+      )
+    );
+
+    // The remote writer automatically adds 'dcterms:creator'.
+    // A creator can change his or her name later on, but the name at the time of
+    // creation is preserved.
+    publicationStore.addQuad(
+      DF.quad(
+        DF.namedNode(opts.creator.id),
+        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+        DF.literal(opts.creator.name)
       )
     );
 
@@ -139,7 +159,7 @@ export class EnrichmentStorer {
     const nanopub = await this.nanopubWriter.add({
       assertionStore,
       publicationStore,
-      creator: opts.creator,
+      creator: opts.creator.id,
     });
 
     const enrichment: BasicEnrichment = {

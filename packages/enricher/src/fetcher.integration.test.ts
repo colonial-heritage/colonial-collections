@@ -23,11 +23,14 @@ beforeAll(async () => {
   const storer = new EnrichmentStorer({nanopubWriter});
 
   await storer.addText({
-    type: AboutType.Name,
+    additionalType: AboutType.Name,
     description: 'Comment about the name of the resource',
     citation: 'A citation or reference to a work that supports the comment',
     inLanguage: 'en-gb',
-    creator: 'http://example.com/person1',
+    creator: {
+      id: 'http://example.com/person1',
+      name: 'Person 1',
+    },
     license: 'https://creativecommons.org/licenses/by/4.0/',
     about: {
       id: resourceId,
@@ -38,10 +41,13 @@ beforeAll(async () => {
   });
 
   await storer.addText({
-    type: AboutType.Description,
+    additionalType: AboutType.Description,
     description: 'Comment about the description of the resource',
     citation: 'A citation or reference to a work that supports the comment',
-    creator: 'http://example.com/person2',
+    creator: {
+      id: 'http://example.com/person2',
+      name: 'Person 2',
+    },
     license: 'https://creativecommons.org/licenses/by/4.0/',
     about: {
       id: resourceId,
@@ -74,11 +80,14 @@ describe('getById', () => {
     expect(enrichments).toStrictEqual([
       {
         id: expect.stringContaining('https://'),
-        type: 'name',
+        additionalType: AboutType.Name,
         description: 'Comment about the name of the resource',
         citation: 'A citation or reference to a work that supports the comment',
         inLanguage: 'en-gb',
-        creator: 'http://example.com/person1',
+        creator: {
+          id: 'http://example.com/person1',
+          name: 'Person 1',
+        },
         license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
         about: {
@@ -90,10 +99,13 @@ describe('getById', () => {
       },
       {
         id: expect.stringContaining('https://'),
-        type: 'description',
+        additionalType: AboutType.Description,
         description: 'Comment about the description of the resource',
         citation: 'A citation or reference to a work that supports the comment',
-        creator: 'http://example.com/person2',
+        creator: {
+          id: 'http://example.com/person2',
+          name: 'Person 2',
+        },
         license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
         about: {

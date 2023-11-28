@@ -16,11 +16,14 @@ export type BasicEnrichment = {
 };
 
 export const enrichmentBeingCreatedSchema = z.object({
-  type: z.nativeEnum(AboutType),
+  additionalType: z.nativeEnum(AboutType),
   description: z.string(),
   citation: z.string(),
   inLanguage: z.string().optional(), // E.g. 'en', 'nl-nl'
-  creator: z.string().url(),
+  creator: z.object({
+    id: z.string().url(),
+    name: z.string(),
+  }),
   license: z.string().url(),
   about: z.object({
     id: z.string().url(),
