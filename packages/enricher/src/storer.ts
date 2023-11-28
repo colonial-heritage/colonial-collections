@@ -4,7 +4,7 @@ import {
   ontologyUrl,
   FullEnrichmentBeingCreated,
 } from './definitions';
-import {fromAboutTypeToClass} from './helpers';
+import {fromAdditionalTypeToClass} from './helpers';
 import type {BasicEnrichment} from './definitions';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
@@ -52,7 +52,7 @@ export class EnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode(fromAboutTypeToClass(opts.additionalType)) // Specific type
+        DF.namedNode(fromAdditionalTypeToClass(opts.additionalType)) // Specific type
       )
     );
     publicationStore.addQuad(
