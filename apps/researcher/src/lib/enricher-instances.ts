@@ -1,6 +1,6 @@
 import {
+  EnrichmentCreator,
   EnrichmentFetcher,
-  EnrichmentStorer,
   NanopubClient,
 } from '@colonial-collections/enricher';
 import {env} from 'node:process';
@@ -14,4 +14,7 @@ const nanopubClient = new NanopubClient({
   proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
 });
 
-export const storer = new EnrichmentStorer({nanopubClient});
+export const creator = new EnrichmentCreator({
+  endpointUrl: env.SPARQL_ENDPOINT_URL as string,
+  nanopubClient,
+});

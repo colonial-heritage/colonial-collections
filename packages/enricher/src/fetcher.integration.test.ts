@@ -1,7 +1,7 @@
 import {NanopubClient} from './client';
+import {EnrichmentCreator} from './creator';
 import {AdditionalType} from './definitions';
 import {EnrichmentFetcher} from './fetcher';
-import {EnrichmentStorer} from './storer';
 import {beforeAll, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 import {setTimeout} from 'node:timers/promises';
@@ -11,7 +11,6 @@ const fetcher = new EnrichmentFetcher({
 });
 
 const resourceId = `http://example.org/${Date.now()}`;
-const parentResourceId = `http://example.org/${Date.now()}`;
 
 // Create some enrichments
 beforeAll(async () => {
@@ -20,9 +19,12 @@ beforeAll(async () => {
     proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
   });
 
-  const storer = new EnrichmentStorer({nanopubClient});
+  const creator = new EnrichmentCreator({
+    endpointUrl: env.SPARQL_ENDPOINT_URL as string,
+    nanopubClient,
+  });
 
-  await storer.addText({
+  await creator.addText({
     additionalType: AdditionalType.Name,
     description: 'Comment about the name of the resource',
     citation: 'A citation or reference to a work that supports the comment',
@@ -32,15 +34,10 @@ beforeAll(async () => {
       name: 'Person 1',
     },
     license: 'https://creativecommons.org/licenses/by/4.0/',
-    about: {
-      id: resourceId,
-      isPartOf: {
-        id: parentResourceId,
-      },
-    },
+    about: resourceId,
   });
 
-  await storer.addText({
+  await creator.addText({
     additionalType: AdditionalType.Description,
     description: 'Comment about the description of the resource',
     citation: 'A citation or reference to a work that supports the comment',
@@ -49,12 +46,7 @@ beforeAll(async () => {
       name: 'Person 2',
     },
     license: 'https://creativecommons.org/licenses/by/4.0/',
-    about: {
-      id: resourceId,
-      isPartOf: {
-        id: parentResourceId,
-      },
-    },
+    about: resourceId,
   });
 
   // Wait a bit: storing the nanopubs takes some time
@@ -75,7 +67,7 @@ describe('getById', () => {
   });
 
   it('gets the enrichments of a resource', async () => {
-    const enrichments = await fetcher.getById(parentResourceId);
+    const enrichments = await fetcher.getById(resourceId);
 
     expect(enrichments).toStrictEqual([
       {
@@ -90,12 +82,7 @@ describe('getById', () => {
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
-        about: {
-          id: resourceId,
-          isPartOf: {
-            id: parentResourceId,
-          },
-        },
+        about: resourceId,
       },
       {
         id: expect.stringContaining('https://'),
@@ -108,12 +95,7 @@ describe('getById', () => {
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
-        about: {
-          id: resourceId,
-          isPartOf: {
-            id: parentResourceId,
-          },
-        },
+        about: resourceId,
       },
     ]);
   });

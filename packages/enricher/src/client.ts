@@ -45,7 +45,7 @@ export type Nanopub = {
   id: string;
 };
 
-// A low-level client for interacting with the Nanopub writer server
+// Low-level client for storing enrichments. You should use EnrichmentCreator in most cases
 export class NanopubClient {
   private endpointUrl: string;
   private proxyEndpointUrl: string;

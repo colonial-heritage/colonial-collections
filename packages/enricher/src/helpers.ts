@@ -44,7 +44,6 @@ function getPropertyValue(resource: Resource, propertyName: string) {
 
 export function createEnrichment(rawEnrichment: Resource) {
   const additionalType = getPropertyValue(rawEnrichment, 'cc:additionalType');
-  const about = getPropertyValue(rawEnrichment, 'cc:about');
   const isPartOf = getPropertyValue(rawEnrichment, 'cc:isPartOf');
   const description = getPropertyValue(rawEnrichment, 'cc:description');
   const citation = getPropertyValue(rawEnrichment, 'cc:citation');
@@ -63,14 +62,8 @@ export function createEnrichment(rawEnrichment: Resource) {
   const enrichment: Enrichment = {
     id: rawEnrichment.value,
     additionalType: fromClassToAboutType(additionalType),
-    about: {
-      // @ts-expect-error:TS2322
-      id: about,
-      isPartOf: {
-        // @ts-expect-error:TS2322
-        id: isPartOf,
-      },
-    },
+    // @ts-expect-error:TS2322
+    about: isPartOf,
     // @ts-expect-error:TS2322
     description,
     // @ts-expect-error:TS2322

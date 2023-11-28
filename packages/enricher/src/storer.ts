@@ -1,8 +1,8 @@
 import {nanopubId, NanopubClient} from './client';
 import {
-  enrichmentBeingCreatedSchema,
+  fullEnrichmentBeingCreatedSchema,
   ontologyUrl,
-  EnrichmentBeingCreated,
+  FullEnrichmentBeingCreated,
 } from './definitions';
 import {fromAboutTypeToClass} from './helpers';
 import type {BasicEnrichment} from './definitions';
@@ -12,25 +12,28 @@ import {z} from 'zod';
 
 const DF = new DataFactory();
 
-const constructorOptionsSchema = z.object({
+export const constructorOptionsSchema = z.object({
   nanopubClient: z.instanceof(NanopubClient),
 });
 
-export type EnricherConstructorOptions = z.infer<
+export type EnrichmentStorerConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
+// Low-level class for creating enrichments. You should use EnrichmentCreator in most cases
 export class EnrichmentStorer {
   private nanopubClient: NanopubClient;
 
-  constructor(options: EnricherConstructorOptions) {
+  constructor(options: EnrichmentStorerConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.nanopubClient = opts.nanopubClient;
   }
 
-  async addText(enrichmentBeingCreated: EnrichmentBeingCreated) {
-    const opts = enrichmentBeingCreatedSchema.parse(enrichmentBeingCreated);
+  async addText(fullEnrichmentBeingCreated: FullEnrichmentBeingCreated) {
+    const opts = fullEnrichmentBeingCreatedSchema.parse(
+      fullEnrichmentBeingCreated
+    );
 
     const publicationStore = RdfStore.createDefault();
     const assertionStore = RdfStore.createDefault();
@@ -162,10 +165,10 @@ export class EnrichmentStorer {
       creator: opts.creator.id,
     });
 
-    const enrichment: BasicEnrichment = {
+    const basicEnrichment: BasicEnrichment = {
       id: nanopub.id,
     };
 
-    return enrichment;
+    return basicEnrichment;
   }
 }
