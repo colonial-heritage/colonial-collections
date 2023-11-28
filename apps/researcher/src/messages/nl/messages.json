@@ -230,6 +230,8 @@
     "communitySubTitle": "Selecteer de community waarvoor u spreekt.",
     "citation": "Bron",
     "citationSubTitle": "Geef informatie op die uw verhaal ondersteunt.",
+    "language": "Taal",
+    "languageSubTitle": "Selecteer een taal voor het verhaal. Begin met typen om een taal te selecteren.",
     "successfullyAdded": "Uw verhaal is toegevoegd aan het object",
     "serverError": "Er is iets misgegaan tijdens het maken van het verhaal. Probeer het later opnieuw.",
     "buttonSubmit": "Voeg uw verhaal toe",

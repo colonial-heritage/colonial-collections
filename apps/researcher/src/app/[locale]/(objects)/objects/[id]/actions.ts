@@ -40,6 +40,7 @@ export async function removeObjectFromList(id: number, communityId: string) {
 interface AddUserEnrichmentProps {
   description: string;
   citation: string;
+  language: string;
   about: string;
   attributionId: string;
   objectId: string;
@@ -48,6 +49,7 @@ interface AddUserEnrichmentProps {
 export async function addUserEnrichment({
   description,
   citation,
+  // Language,
   about,
   attributionId,
   objectId,
@@ -55,6 +57,7 @@ export async function addUserEnrichment({
   const enrichment = await storer.addText({
     description,
     citation,
+    // Language, //TODO save language
     about,
     creator: attributionId,
     license: enrichmentLicence,

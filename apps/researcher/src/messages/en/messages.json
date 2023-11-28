@@ -230,6 +230,8 @@
     "communitySubTitle": "Select the community you speak on behalf of.",
     "citation": "Resource",
     "citationSubTitle": "Please provide information that supports your narrative.",
+    "language": "Language",
+    "languageSubTitle": "Select a language of the narrative. Start typing to select a language.",
     "successfullyAdded": "Your narrative has been added to the object",
     "serverError": "Something went wrong while creating the narrative. Please try again later.",
     "buttonSubmit": "Add your narrative",

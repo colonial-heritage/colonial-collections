@@ -14,6 +14,7 @@ import {useUserCommunities} from '@/lib/community/hooks';
 import {camelCase} from 'tiny-case';
 import {Community} from '@/lib/community/definitions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
+import LanguageSelector from '@/components/language-selector';
 
 interface FormValues {
   description: string;
@@ -47,6 +48,8 @@ function Form({
     handleSubmit,
     setError,
     formState: {errors, isSubmitting},
+    setValue,
+    watch,
   } = useForm({
     resolver: zodResolver(userEnricherSchema),
     defaultValues: {
@@ -89,7 +92,7 @@ function Form({
           className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
           id={slideOutId}
         >
-          <XMarkIcon className='class="w-4 h-4 stroke-neutral-900' />
+          <XMarkIcon className='className="w-4 h-4 stroke-neutral-900' />
         </SlideOutButton>
       </div>
       <div className="flex flex-col lg:flex-row gap-4">
@@ -105,7 +108,7 @@ function Form({
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4">
-        <div className='class="flex flex-col w-full lg:w-2/3'>
+        <div className='className="flex flex-col w-full lg:w-2/3'>
           <label htmlFor="description" className="flex flex-col gap-1 mb-1">
             <strong>
               {t('description')}
@@ -168,7 +171,18 @@ function Form({
               t(camelCase(`citation_${errors.citation.type}`))}
           </p>
         </div>
-        <div className="flex flex-col w-full lg:w-1/3"></div>
+        <div className="flex flex-col w-full lg:w-1/3">
+          <div className="flex flex-col gap-1 mb-1">
+            <label>
+              <strong>{t('language')}</strong>
+              <div>{t('languageSubTitle')}</div>
+            </label>
+            <LanguageSelector
+              value={watch('language')}
+              setValue={language => setValue('language', language)}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4">
