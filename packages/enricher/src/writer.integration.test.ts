@@ -1,4 +1,4 @@
-import {NanopubWriter} from './writer';
+import {nanopubId, NanopubWriter} from './writer';
 import {describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 import {DataFactory} from 'rdf-data-factory';
@@ -13,8 +13,8 @@ const nanopubWriter = new NanopubWriter({
 
 describe('add', () => {
   it('adds a nanopub', async () => {
-    const enrichmentStore = RdfStore.createDefault();
-    enrichmentStore.addQuad(
+    const assertionStore = RdfStore.createDefault();
+    assertionStore.addQuad(
       DF.quad(
         DF.blankNode(),
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
@@ -22,10 +22,19 @@ describe('add', () => {
       )
     );
 
+    const publicationStore = RdfStore.createDefault();
+    publicationStore.addQuad(
+      DF.quad(
+        nanopubId,
+        DF.namedNode('http://purl.org/dc/terms/license'),
+        DF.namedNode('https://creativecommons.org/licenses/by/4.0/')
+      )
+    );
+
     const nanopub = await nanopubWriter.add({
-      enrichmentStore,
+      assertionStore,
+      publicationStore,
       creator: 'http://example.com/person',
-      license: 'https://creativecommons.org/licenses/by/4.0/',
     });
 
     expect(nanopub).toEqual({

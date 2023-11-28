@@ -5,13 +5,15 @@ import {RdfStore} from 'rdf-stores';
 import streamToString from 'stream-to-string';
 import {z} from 'zod';
 
-const resourceIri = 'http://purl.org/nanopub/temp/temp-nanopub-id/';
 const DF = new DataFactory();
-const resourceId = DF.namedNode(resourceIri);
-const headGraph = DF.namedNode(`${resourceIri}Head`);
-const pubInfoGraph = DF.namedNode(`${resourceIri}pubinfo`);
-const assertionGraph = DF.namedNode(`${resourceIri}assertion`);
-const provenanceGraph = DF.namedNode(`${resourceIri}provenance`);
+
+export const nanopubIri = 'http://purl.org/nanopub/temp/temp-nanopub-id/';
+export const nanopubId = DF.namedNode(nanopubIri);
+
+const headGraph = DF.namedNode(`${nanopubIri}Head`);
+const publicationGraph = DF.namedNode(`${nanopubIri}pubinfo`);
+const assertionGraph = DF.namedNode(`${nanopubIri}assertion`);
+const provenanceGraph = DF.namedNode(`${nanopubIri}provenance`);
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
@@ -23,9 +25,9 @@ export type NanopubWriterConstructorOptions = z.infer<
 >;
 
 const addOptionsSchema = z.object({
-  enrichmentStore: z.instanceof(RdfStore<number>),
+  assertionStore: z.instanceof(RdfStore<number>),
+  publicationStore: z.instanceof(RdfStore<number>),
   creator: z.string().url(),
-  license: z.string().url(),
 });
 
 export type AddOptions = z.infer<typeof addOptionsSchema>;
@@ -91,13 +93,14 @@ export class NanopubWriter {
   async add(options: AddOptions) {
     const opts = addOptionsSchema.parse(options);
 
-    const enrichmentStore = opts.enrichmentStore;
+    const assertionStore = opts.assertionStore;
+    const publicationStore = opts.publicationStore;
     const primaryStore = RdfStore.createDefault();
 
     // Head graph
     primaryStore.addQuad(
       DF.quad(
-        resourceId,
+        nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('http://www.nanopub.org/nschema#Nanopublication'),
         headGraph
@@ -105,7 +108,7 @@ export class NanopubWriter {
     );
     primaryStore.addQuad(
       DF.quad(
-        resourceId,
+        nanopubId,
         DF.namedNode('http://www.nanopub.org/nschema#hasAssertion'),
         assertionGraph,
         headGraph
@@ -113,7 +116,7 @@ export class NanopubWriter {
     );
     primaryStore.addQuad(
       DF.quad(
-        resourceId,
+        nanopubId,
         DF.namedNode('http://www.nanopub.org/nschema#hasProvenance'),
         provenanceGraph,
         headGraph
@@ -121,9 +124,9 @@ export class NanopubWriter {
     );
     primaryStore.addQuad(
       DF.quad(
-        resourceId,
+        nanopubId,
         DF.namedNode('http://www.nanopub.org/nschema#hasPublicationInfo'),
-        pubInfoGraph,
+        publicationGraph,
         headGraph
       )
     );
@@ -133,42 +136,24 @@ export class NanopubWriter {
       DF.quad(
         assertionGraph,
         DF.namedNode('http://www.w3.org/ns/prov#wasAttributedTo'),
-        DF.namedNode(opts.creator), // TBD: also register the name of the creator?
+        DF.namedNode(opts.creator),
         provenanceGraph
       )
     );
 
-    // Publication info graph
-    primaryStore.addQuad(
-      DF.quad(
-        resourceId,
-        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode('https://colonialcollections.nl/schema#Nanopub'),
-        pubInfoGraph
-      )
-    );
-    primaryStore.addQuad(
-      DF.quad(
-        resourceId,
-        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-        DF.literal('Published via the Data Hub of Colonial Collections', 'en'), // TBD
-        pubInfoGraph
-      )
-    );
-    primaryStore.addQuad(
-      DF.quad(
-        resourceId,
-        DF.namedNode('http://purl.org/dc/terms/license'),
-        DF.namedNode(opts.license),
-        pubInfoGraph
-      )
-    );
-
     // Assertion graph
-    const enrichmentQuads = enrichmentStore.getQuads();
-    enrichmentQuads.forEach(enrichmentQuad => {
-      const quad = DF.fromQuad(enrichmentQuad as RDF.Quad);
-      quad.graph = assertionGraph; // Assign triples to the assertion graph
+    const assertionQuads = assertionStore.getQuads();
+    assertionQuads.forEach(assertionQuad => {
+      const quad = DF.fromQuad(assertionQuad as RDF.Quad);
+      quad.graph = assertionGraph; // Assign triples to the graph
+      primaryStore.addQuad(quad);
+    });
+
+    // Publication info graph
+    const publicationQuads = publicationStore.getQuads();
+    publicationQuads.forEach(publicationQuad => {
+      const quad = DF.fromQuad(publicationQuad as RDF.Quad);
+      quad.graph = publicationGraph; // Assign triples to the graph
       primaryStore.addQuad(quad);
     });
 

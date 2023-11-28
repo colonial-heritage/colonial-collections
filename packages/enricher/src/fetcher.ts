@@ -1,5 +1,5 @@
 import {ontologyUrl} from './definitions';
-import {createEnrichment} from './rdf-helpers';
+import {createEnrichment} from './helpers';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import type {Readable} from 'node:stream';
@@ -40,20 +40,21 @@ export class EnrichmentFetcher {
 
       CONSTRUCT {
         # Need this to easily retrieve the enrichments in the RdfObjectLoader
-        ?target cc:hasEnrichment ?annotation .
+        ?source cc:hasEnrichment ?annotation .
 
         ?annotation a cc:Enrichment ;
+          cc:type ?aboutType ;
           cc:about ?target ;
-          cc:isPartOf ?isPartOf ;
+          cc:isPartOf ?source ;
           cc:description ?value ;
-          cc:citation ?seeAlso ;
+          cc:citation ?comment ;
           cc:inLanguage ?language ;
           cc:license ?license ;
           cc:creator ?creator ;
           cc:dateCreated ?dateCreated .
       }
       WHERE {
-        BIND(<${iri}> AS ?target)
+        BIND(<${iri}> AS ?source)
 
         graph npa:graph {
           ?np npa:hasHeadGraph ?head .
@@ -73,11 +74,14 @@ export class EnrichmentFetcher {
         graph ?pubInfo {
           ?np a cc:Nanopub ;
             dcterms:license ?license .
+
+          ?np a ?aboutType
+          FILTER(?aboutType != cc:Nanopub)
         }
 
         graph ?assertion {
           ?annotation a oa:Annotation ;
-            rdfs:seeAlso ?seeAlso ;
+            rdfs:comment ?comment ;
             oa:hasBody ?body ;
             oa:hasTarget ?target .
 
@@ -87,7 +91,7 @@ export class EnrichmentFetcher {
           }
 
           ?target a oa:SpecificResource ;
-            oa:hasSource ?isPartOf .
+            oa:hasSource ?source .
         }
       }
     `;

@@ -1,5 +1,37 @@
-import type {Enrichment} from './definitions';
+import {
+  ontologyVersionIdentifier,
+  ontologyUrl,
+  AboutType,
+  Enrichment,
+} from './definitions';
+import {defu} from 'defu';
 import type {Resource} from 'rdf-object';
+
+export function fromAboutTypeToClass(aboutType: AboutType) {
+  let className;
+  if (aboutType === AboutType.Description) {
+    className = 'Description';
+  } else if (aboutType === AboutType.Name) {
+    className = 'Name';
+  } else {
+    throw new TypeError(`Unknown type: "${aboutType}"`);
+  }
+
+  return `${ontologyUrl}${className}${ontologyVersionIdentifier}`;
+}
+
+function fromClassToAboutType(className: string | undefined) {
+  let aboutType: AboutType;
+  if (className === `${ontologyUrl}Description${ontologyVersionIdentifier}`) {
+    aboutType = AboutType.Description;
+  } else if (className === `${ontologyUrl}Name${ontologyVersionIdentifier}`) {
+    aboutType = AboutType.Name;
+  } else {
+    throw new TypeError(`Unknown class name: "${className}"`);
+  }
+
+  return aboutType;
+}
 
 function getPropertyValue(resource: Resource, propertyName: string) {
   const property = resource.property[propertyName];
@@ -11,6 +43,7 @@ function getPropertyValue(resource: Resource, propertyName: string) {
 }
 
 export function createEnrichment(rawEnrichment: Resource) {
+  const type = getPropertyValue(rawEnrichment, 'cc:type');
   const about = getPropertyValue(rawEnrichment, 'cc:about');
   const isPartOf = getPropertyValue(rawEnrichment, 'cc:isPartOf');
   const description = getPropertyValue(rawEnrichment, 'cc:description');
@@ -26,6 +59,7 @@ export function createEnrichment(rawEnrichment: Resource) {
   // Silence TS errors about 'string | undefined': the values always are strings
   const enrichment: Enrichment = {
     id: rawEnrichment.value,
+    type: fromClassToAboutType(type),
     about: {
       // @ts-expect-error:TS2322
       id: about,
@@ -46,7 +80,7 @@ export function createEnrichment(rawEnrichment: Resource) {
     dateCreated,
   };
 
-  // TODO: remove undefined values, e.g. inLanguage
+  const enrichmentWithoutNullishValues = defu(enrichment, {});
 
-  return enrichment;
+  return enrichmentWithoutNullishValues;
 }

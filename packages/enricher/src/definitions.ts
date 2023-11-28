@@ -1,20 +1,40 @@
-export const ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
+import {z} from 'zod';
 
-export interface BasicEnrichment {
+export const ontologyUrl =
+  'https://data.colonialcollections.nl/schemas/nanopub#'; // Internal ontology
+
+// We currently have just one version of our ontology
+export const ontologyVersionIdentifier = 'Version1';
+
+export enum AboutType {
+  Description = 'description',
+  Name = 'name',
+}
+
+export type BasicEnrichment = {
   id: string;
-}
+};
 
-export interface Enrichment extends BasicEnrichment {
-  description: string;
-  citation: string;
-  language?: string;
-  creator: string;
-  license: string;
-  dateCreated: Date;
-  about: {
-    id: string;
-    isPartOf: {
-      id: string;
-    };
+export const enrichmentBeingCreatedSchema = z.object({
+  type: z.nativeEnum(AboutType),
+  description: z.string(),
+  citation: z.string(),
+  inLanguage: z.string().optional(), // E.g. 'en', 'nl-nl'
+  creator: z.string().url(),
+  license: z.string().url(),
+  about: z.object({
+    id: z.string().url(),
+    isPartOf: z.object({
+      id: z.string().url(),
+    }),
+  }),
+});
+
+export type EnrichmentBeingCreated = z.infer<
+  typeof enrichmentBeingCreatedSchema
+>;
+
+export type Enrichment = BasicEnrichment &
+  EnrichmentBeingCreated & {
+    dateCreated: Date;
   };
-}

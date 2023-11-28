@@ -1,3 +1,4 @@
+import {AboutType} from './definitions';
 import {EnrichmentFetcher} from './fetcher';
 import {EnrichmentStorer} from './storer';
 import {NanopubWriter} from './writer';
@@ -22,7 +23,8 @@ beforeAll(async () => {
   const storer = new EnrichmentStorer({nanopubWriter});
 
   await storer.addText({
-    description: 'Comment 1 about the resource',
+    type: AboutType.Name,
+    description: 'Comment about the name of the resource',
     citation: 'A citation or reference to a work that supports the comment',
     inLanguage: 'en-gb',
     creator: 'http://example.com/person1',
@@ -36,7 +38,8 @@ beforeAll(async () => {
   });
 
   await storer.addText({
-    description: 'Comment 2 about the resource',
+    type: AboutType.Description,
+    description: 'Comment about the description of the resource',
     citation: 'A citation or reference to a work that supports the comment',
     creator: 'http://example.com/person2',
     license: 'https://creativecommons.org/licenses/by/4.0/',
@@ -66,12 +69,13 @@ describe('getById', () => {
   });
 
   it('gets the enrichments of a resource', async () => {
-    const enrichments = await fetcher.getById(resourceId);
+    const enrichments = await fetcher.getById(parentResourceId);
 
     expect(enrichments).toStrictEqual([
       {
         id: expect.stringContaining('https://'),
-        description: 'Comment 1 about the resource',
+        type: 'name',
+        description: 'Comment about the name of the resource',
         citation: 'A citation or reference to a work that supports the comment',
         inLanguage: 'en-gb',
         creator: 'http://example.com/person1',
@@ -86,9 +90,9 @@ describe('getById', () => {
       },
       {
         id: expect.stringContaining('https://'),
-        description: 'Comment 2 about the resource',
+        type: 'description',
+        description: 'Comment about the description of the resource',
         citation: 'A citation or reference to a work that supports the comment',
-        inLanguage: undefined, // FIXME - remove
         creator: 'http://example.com/person2',
         license: 'https://creativecommons.org/licenses/by/4.0/',
         dateCreated: expect.any(Date),
