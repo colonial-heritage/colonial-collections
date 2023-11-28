@@ -15,17 +15,18 @@ import {camelCase} from 'tiny-case';
 import {Community} from '@/lib/community/definitions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import LanguageSelector from '@/components/language-selector';
+import {AdditionalType} from '@colonial-collections/enricher/src/definitions';
 
 interface FormValues {
   description: string;
   attributionId: string;
   citation: string;
-  language: string;
+  inLanguage: string;
 }
 
 interface Props {
   slideOutId: string;
-  identifier: string;
+  additionalType: AdditionalType;
   objectId: string;
 }
 
@@ -33,12 +34,12 @@ const userEnricherSchema = z.object({
   description: z.string().trim().min(1),
   attributionId: z.string().trim().min(1),
   citation: z.string().trim().min(1),
-  language: z.string(),
+  inLanguage: z.string(),
 });
 
 function Form({
   slideOutId,
-  identifier,
+  additionalType,
   objectId,
   communities,
 }: Props & {communities: Community[]}) {
@@ -56,7 +57,7 @@ function Form({
       description: '',
       attributionId: communities[0].attributionId || '',
       citation: '',
-      language: locale,
+      inLanguage: locale,
     },
   });
 
@@ -66,7 +67,18 @@ function Form({
 
   const onSubmit: SubmitHandler<FormValues> = async userEnrichment => {
     try {
-      await addUserEnrichment({...userEnrichment, about: identifier, objectId});
+      const community = communities.find(
+        community => community.attributionId === userEnrichment.attributionId
+      );
+      await addUserEnrichment({
+        ...userEnrichment,
+        additionalType,
+        objectId,
+        community: {
+          name: community!.name,
+          id: community!.attributionId!,
+        },
+      });
       addNotification({
         id: 'add-user-enrichment-success',
         message: t.rich('successfullyAdded'),
@@ -174,12 +186,12 @@ function Form({
         <div className="flex flex-col w-full lg:w-1/3">
           <div className="flex flex-col gap-1 mb-1">
             <label>
-              <strong>{t('language')}</strong>
+              <strong>{t('inLanguage')}</strong>
               <div>{t('languageSubTitle')}</div>
             </label>
             <LanguageSelector
-              value={watch('language')}
-              setValue={language => setValue('language', language)}
+              value={watch('inLanguage')}
+              setValue={inLanguage => setValue('inLanguage', inLanguage)}
             />
           </div>
         </div>
@@ -206,7 +218,11 @@ function Form({
   );
 }
 
-export function UserEnricherForm({slideOutId, identifier, objectId}: Props) {
+export function UserEnricherForm({
+  slideOutId,
+  additionalType,
+  objectId,
+}: Props) {
   const t = useTranslations('UserEnricherForm');
   const {communities, isLoaded} = useUserCommunities({canAddEnrichments: true});
 
@@ -221,7 +237,7 @@ export function UserEnricherForm({slideOutId, identifier, objectId}: Props) {
   return (
     <Form
       slideOutId={slideOutId}
-      identifier={identifier}
+      additionalType={additionalType}
       objectId={objectId}
       communities={communities}
     />

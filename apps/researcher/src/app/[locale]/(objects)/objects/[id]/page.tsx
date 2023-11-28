@@ -21,6 +21,8 @@ import {env} from 'node:process';
 import {formatDateCreated} from './format-date-created';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
+import {fetcher} from '@/lib/enricher-instances';
+import {AdditionalType} from '@colonial-collections/enricher/src/definitions';
 
 export const dynamic = 'force-dynamic';
 
@@ -85,7 +87,8 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  useObject.setState({objectId: object.id, locale});
+  const enrichments = await fetcher.getById(id);
+  useObject.setState({objectId: object.id, locale, enrichments});
 
   let organization;
   if (object.isPartOf?.publisher?.id) {
@@ -174,7 +177,7 @@ export default async function Details({params}: Props) {
           <div className="flex flex-col gap-8 self-stretch">
             <MetadataContainer
               translationKey="description"
-              enrichmentIdentifier={`${object.id}#description`}
+              additionalType={AdditionalType.Description}
             >
               <MetadataEntries>{object.description}</MetadataEntries>
             </MetadataContainer>
