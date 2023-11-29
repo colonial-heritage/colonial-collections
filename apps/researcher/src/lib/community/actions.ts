@@ -106,14 +106,11 @@ export async function getMyCommunities({
   return sort(communities, sortBy);
 }
 
-export async function isAdmin(
-  memberships: ReadonlyArray<Membership>
-): Promise<boolean> {
+export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
   noStore();
-  const debugAuth = await auth();
-  const userId = debugAuth.userId;
+  const {userId} = auth();
 
-  console.log('DEBUG: isAdmin', {debugAuth, memberships});
+  console.log('DEBUG: isAdmin', {userId, memberships});
 
   return (
     !!userId &&
@@ -123,11 +120,9 @@ export async function isAdmin(
   );
 }
 
-export async function isMember(
-  memberships: ReadonlyArray<Membership>
-): Promise<boolean> {
+export function isMember(memberships: ReadonlyArray<Membership>): boolean {
   noStore();
-  const {userId} = await auth();
+  const {userId} = auth();
 
   return (
     !!userId &&
