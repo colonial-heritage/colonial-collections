@@ -13,15 +13,15 @@ interface Props {
 export default function LanguageSelector({value, setValue}: Props) {
   const [query, setQuery] = useState('');
 
-  const filteredLocales: LanguageCode[] = query
+  const filteredLanguageCodes = query
     ? ISO6391.getLanguages()
-        .filter(language => {
+        .filter(languageCode => {
           // Search in both the name and the native name
-          return `${language.name.toLowerCase()} ${language.nativeName.toLowerCase()}`.includes(
+          return `${languageCode.name.toLowerCase()} ${languageCode.nativeName.toLowerCase()}`.includes(
             query.toLowerCase()
           );
         })
-        .map(language => language.code as LanguageCode)
+        .map(languageCode => languageCode.code as LanguageCode)
     : ISO6391.getAllCodes();
 
   return (
@@ -43,12 +43,12 @@ export default function LanguageSelector({value, setValue}: Props) {
           />
         </Combobox.Button>
 
-        {filteredLocales.length > 0 && (
+        {filteredLanguageCodes.length > 0 && (
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredLocales.map(language => (
+            {filteredLanguageCodes.map(languageCode => (
               <Combobox.Option
-                key={language}
-                value={language}
+                key={languageCode}
+                value={languageCode}
                 className={({active}) =>
                   classNames(
                     'relative cursor-default select-none py-2 pl-3 pr-9',
@@ -65,7 +65,7 @@ export default function LanguageSelector({value, setValue}: Props) {
                           selected && 'font-semibold'
                         )}
                       >
-                        {ISO6391.getName(language)}
+                        {ISO6391.getName(languageCode)}
                       </span>
                       <span
                         className={classNames(
@@ -73,7 +73,7 @@ export default function LanguageSelector({value, setValue}: Props) {
                           active ? 'text-indigo-200' : 'text-gray-500'
                         )}
                       >
-                        {ISO6391.getNativeName(language)}
+                        {ISO6391.getNativeName(languageCode)}
                       </span>
                     </div>
 
