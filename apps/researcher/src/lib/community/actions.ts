@@ -110,6 +110,8 @@ export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
   noStore();
   const {userId} = auth();
 
+  console.log('DEBUG: isAdmin', {userId, memberships});
+
   return (
     !!userId &&
     memberships.some(membership => {
