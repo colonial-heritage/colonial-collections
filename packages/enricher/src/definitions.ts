@@ -16,7 +16,7 @@ export enum AdditionalType {
   Name = 'name',
   Subject = 'subject',
   Technique = 'technique',
-  Types = 'types',
+  Type = 'type',
 }
 
 export type BasicEnrichment = {

@@ -7,30 +7,29 @@ import {
 import {defu} from 'defu';
 import type {Resource} from 'rdf-object';
 
-export function fromAboutTypeToClass(additionalType: AdditionalType) {
-  let className;
-  if (additionalType === AdditionalType.Description) {
-    className = 'Description';
-  } else if (additionalType === AdditionalType.Name) {
-    className = 'Name';
-  } else {
-    throw new TypeError(`Unknown type: "${additionalType}"`);
+export function fromAdditionalTypeToClass(additionalType: AdditionalType) {
+  const entries = Object.entries(AdditionalType);
+  for (const [key, value] of entries) {
+    if (additionalType === value) {
+      return `${ontologyUrl}${key}${ontologyVersionIdentifier}`;
+    }
   }
 
-  return `${ontologyUrl}${className}${ontologyVersionIdentifier}`;
+  throw new TypeError(`Unknown type: "${additionalType}"`);
 }
 
-function fromClassToAboutType(className: string | undefined) {
-  let additionalType: AdditionalType;
-  if (className === `${ontologyUrl}Description${ontologyVersionIdentifier}`) {
-    additionalType = AdditionalType.Description;
-  } else if (className === `${ontologyUrl}Name${ontologyVersionIdentifier}`) {
-    additionalType = AdditionalType.Name;
-  } else {
-    throw new TypeError(`Unknown class name: "${className}"`);
+function fromClassToAdditionalType(className: string | undefined) {
+  const entries = Object.entries(AdditionalType);
+  for (const [key, value] of entries) {
+    if (className === `${ontologyUrl}${key}${ontologyVersionIdentifier}`) {
+      return value;
+    }
   }
 
-  return additionalType;
+  // TBD: an error is too severe if a nanopub is published by
+  // another application and consumed by the Data Hub, but that
+  // application doesn't use the same model as the hub.
+  throw new TypeError(`Unknown class name: "${className}"`);
 }
 
 function getPropertyValue(resource: Resource, propertyName: string) {
@@ -61,7 +60,7 @@ export function createEnrichment(rawEnrichment: Resource) {
   // Silence TS errors about 'string | undefined': the values always are strings
   const enrichment: Enrichment = {
     id: rawEnrichment.value,
-    additionalType: fromClassToAboutType(additionalType),
+    additionalType: fromClassToAdditionalType(additionalType),
     // @ts-expect-error:TS2322
     about: isPartOf,
     // @ts-expect-error:TS2322

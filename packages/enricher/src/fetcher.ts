@@ -27,6 +27,7 @@ export class EnrichmentFetcher {
 
   private async fetchTriples(iri: string) {
     // TBD: is there a limit to the number of enrichments that can be retrieved?
+    // Should we start paginating at some point?
     const query = `
       PREFIX cc: <${ontologyUrl}>
       PREFIX dc: <http://purl.org/dc/elements/1.1/>
@@ -124,7 +125,7 @@ export class EnrichmentFetcher {
       createEnrichment(rawEnrichment)
     );
 
-    // Sort the enrichments by date, from old to new
+    // Sort the enrichments by date of creation, from old to new
     enrichments.sort((enrichmentA, enrichmentB) => {
       const dateCreatedA = enrichmentA.dateCreated.getTime();
       const dateCreatedB = enrichmentB.dateCreated.getTime();
@@ -132,7 +133,7 @@ export class EnrichmentFetcher {
       return dateCreatedA - dateCreatedB;
     });
 
-    // TBD: group the enrichments by predicate (e.g. by 'title' or 'description')?
+    // TBD: group the enrichments by type (e.g. by 'name' or 'description')?
 
     return enrichments;
   }
