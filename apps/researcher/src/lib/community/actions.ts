@@ -91,7 +91,6 @@ export async function getMyCommunities({
 }: GetCommunitiesProps = {}) {
   noStore();
   const {userId} = await auth();
-  console.log({userId});
   const memberships = userId
     ? await clerkClient.users.getOrganizationMembershipList({
         userId,
@@ -109,9 +108,7 @@ export async function getMyCommunities({
 
 export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
   noStore();
-  const {userId, user, orgRole, sessionId} = auth();
-
-  console.log({userId, user, orgRole, sessionId, memberships});
+  const {userId} = auth();
 
   return (
     !!userId &&
@@ -140,7 +137,6 @@ interface JoinCommunityProps {
 
 export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
   noStore();
-  console.log({communityId, userId});
 
   await clerkClient.organizations.createOrganizationMembership({
     organizationId: communityId,
