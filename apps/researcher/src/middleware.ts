@@ -35,4 +35,5 @@ export default authMiddleware({
     return response;
   },
   publicRoutes: ['/', '/(.*)'],
+  debug: true,
 });
