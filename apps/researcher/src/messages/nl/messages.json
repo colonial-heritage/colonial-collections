@@ -222,7 +222,7 @@
     "objectCount": "{count, plural, =0 {0 objecten} =1 {1 object} other {# objecten}}",
     "listCreatedBy": "Lijst gemaakt door"
   },
-  "UserEnricherForm": {
+  "UserEnrichmentForm": {
     "title": "Voeg een verhaal toe",
     "description": "Verhaal",
     "descriptionSubTitle": "Hier kunt u uw eigen verhaal toevoegen aan de beschrijving van dit object.",

@@ -61,7 +61,7 @@ function Form({
     },
   });
 
-  const t = useTranslations('UserEnricherForm');
+  const t = useTranslations('UserEnrichmentForm');
   const {setIsVisible} = useSlideOut();
   const {addNotification} = useNotifications();
 
@@ -223,12 +223,12 @@ function Form({
   );
 }
 
-export function UserEnricherForm({
+export function UserEnrichmentForm({
   slideOutId,
   enrichmentType,
   objectId,
 }: Props) {
-  const t = useTranslations('UserEnricherForm');
+  const t = useTranslations('UserEnrichmentForm');
   const {communities, isLoaded} = useUserCommunities({canAddEnrichments: true});
 
   if (!isLoaded) {

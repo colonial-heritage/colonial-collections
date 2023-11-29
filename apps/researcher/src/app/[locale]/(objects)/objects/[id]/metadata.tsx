@@ -4,7 +4,7 @@ import {create} from 'zustand';
 import useObject from './use-object';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/solid';
 import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
-import {UserEnricherForm} from './user-enrichment-form';
+import {UserEnrichmentForm} from './user-enrichment-form';
 import {SignedIn} from '@clerk/nextjs';
 import {getFormatter} from 'next-intl/server';
 import classNames from 'classnames';
@@ -177,7 +177,7 @@ export function AddMetadataEnrichment() {
         </SlideOutButton>
       </div>
       <SlideOut id={`${enrichmentType}-form`}>
-        <UserEnricherForm
+        <UserEnrichmentForm
           objectId={objectId}
           slideOutId={`${enrichmentType}-form`}
           enrichmentType={enrichmentType}
