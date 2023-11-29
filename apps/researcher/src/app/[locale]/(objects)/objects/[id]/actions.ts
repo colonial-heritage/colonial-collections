@@ -4,9 +4,10 @@ import {getCommunityBySlug} from '@/lib/community/actions';
 import {objectList} from '@colonial-collections/database';
 import {ObjectItemBeingCreated} from '@colonial-collections/database';
 import {revalidatePath} from 'next/cache';
-import {storer} from '@/lib/enricher-instances';
+import {creator} from '@/lib/enricher-instances';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import {enrichmentLicence} from '@/lib/enrichment-licence';
+import type {AdditionalType} from '@colonial-collections/enricher';
 
 export async function getCommunityLists(communityId: string, objectId: string) {
   return objectList.getByCommunityId(communityId, {objectIri: objectId});
@@ -40,27 +41,31 @@ export async function removeObjectFromList(id: number, communityId: string) {
 interface AddUserEnrichmentProps {
   description: string;
   citation: string;
-  about: string;
-  attributionId: string;
+  inLanguage?: string;
+  community: {name: string; id: string};
   objectId: string;
+  additionalType: AdditionalType;
 }
 
 export async function addUserEnrichment({
+  additionalType,
   description,
   citation,
-  about,
-  attributionId,
+  inLanguage,
+  community,
   objectId,
 }: AddUserEnrichmentProps) {
-  const enrichment = await storer.addText({
+  const enrichment = await creator.addText({
+    additionalType,
     description,
     citation,
-    about,
-    creator: attributionId,
+    inLanguage,
+    about: objectId,
+    creator: community,
     license: enrichmentLicence,
   });
 
-  revalidatePath(`/[locale]objects/${encodeRouteSegment(objectId)}`, 'page');
+  revalidatePath(`/[locale]/objects/${encodeRouteSegment(objectId)}`, 'page');
 
   return enrichment;
 }

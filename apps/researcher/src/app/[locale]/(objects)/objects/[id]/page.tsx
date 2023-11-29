@@ -21,6 +21,8 @@ import {env} from 'node:process';
 import {formatDateCreated} from './format-date-created';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
+import {fetcher} from '@/lib/enricher-instances';
+import {AdditionalType} from '@colonial-collections/enricher';
 
 export const dynamic = 'force-dynamic';
 
@@ -85,7 +87,8 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  useObject.setState({objectId: object.id, locale});
+  const enrichments = await fetcher.getById(id);
+  useObject.setState({objectId: object.id, locale, enrichments});
 
   let organization;
   if (object.isPartOf?.publisher?.id) {
@@ -174,12 +177,15 @@ export default async function Details({params}: Props) {
           <div className="flex flex-col gap-8 self-stretch">
             <MetadataContainer
               translationKey="description"
-              enrichmentIdentifier={`${object.id}#description`}
+              enrichmentType={AdditionalType.Description}
             >
               <MetadataEntries>{object.description}</MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer translationKey="materials">
+            <MetadataContainer
+              translationKey="materials"
+              enrichmentType={AdditionalType.Material}
+            >
               <MetadataEntries>
                 {object.materials?.map(material => (
                   <div key={material.id}>{material.name}</div>
@@ -187,7 +193,10 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer translationKey="dateCreated">
+            <MetadataContainer
+              translationKey="dateCreated"
+              enrichmentType={AdditionalType.DateCreated}
+            >
               <MetadataEntries>
                 {object.dateCreated && (
                   <div>{formatDateCreated(object.dateCreated, locale)}</div>
@@ -195,7 +204,10 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer translationKey="types">
+            <MetadataContainer
+              translationKey="types"
+              enrichmentType={AdditionalType.Type}
+            >
               <MetadataEntries>
                 {object.types?.map(type => (
                   <div key={type.id}>{type.name}</div>
@@ -203,7 +215,10 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer translationKey="techniques">
+            <MetadataContainer
+              translationKey="techniques"
+              enrichmentType={AdditionalType.Technique}
+            >
               <MetadataEntries>
                 {object.techniques?.map(technique => (
                   <div key={technique.id}>{technique.name}</div>
@@ -211,7 +226,10 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer translationKey="creators">
+            <MetadataContainer
+              translationKey="creators"
+              enrichmentType={AdditionalType.Creator}
+            >
               <MetadataEntries>
                 {object.creators?.map(creator => (
                   <div key={creator.id}>{creator.name}</div>
@@ -219,7 +237,10 @@ export default async function Details({params}: Props) {
               </MetadataEntries>
             </MetadataContainer>
 
-            <MetadataContainer translationKey="inscriptions">
+            <MetadataContainer
+              translationKey="inscriptions"
+              enrichmentType={AdditionalType.Inscription}
+            >
               <MetadataEntries>
                 {object.inscriptions?.map(inscription => (
                   <div key={inscription}>{inscription}</div>

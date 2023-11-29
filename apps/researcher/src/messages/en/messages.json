@@ -222,20 +222,24 @@
     "objectCount": "{count, plural, =0 {0 objects} =1 {1 object} other {# objects}}",
     "listCreatedBy": "List created by"
   },
-  "UserEnricherForm": {
+  "UserEnrichmentForm": {
+    "title": "Add a narrative",
     "description": "Narrative",
     "descriptionSubTitle": "Here you can add your own narrative to the Description of this object.",
     "community": "Community",
     "communitySubTitle": "Select the community you speak on behalf of.",
     "citation": "Resource",
     "citationSubTitle": "Please provide information that supports your narrative.",
-    "successfullyAdded": "Your narrative has been added to the object",
+    "language": "Language",
+    "languageSubTitle": "Select a language of the narrative. Start typing to select a language.",
+    "successfullyAdded": "Your narrative has been added to the object. It could take a moment before it is visible.",
     "serverError": "Something went wrong while creating the narrative. Please try again later.",
     "buttonSubmit": "Add your narrative",
     "buttonCancel": "Cancel",
     "descriptionTooSmall": "Narrative is required",
     "communityIdTooSmall": "Community is required",
     "citationTooSmall": "Resource is required",
-    "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community."
+    "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community.",
+    "saving": "Saving..."
   }
 }

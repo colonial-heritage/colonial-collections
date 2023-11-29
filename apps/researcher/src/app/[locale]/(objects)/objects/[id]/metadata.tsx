@@ -4,31 +4,33 @@ import {create} from 'zustand';
 import useObject from './use-object';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/solid';
 import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
-import {UserEnricherForm} from './user-enrichment-form';
+import {UserEnrichmentForm} from './user-enrichment-form';
 import {SignedIn} from '@clerk/nextjs';
-import {fetcher} from '@/lib/enricher-instances';
-import {getCommunityByAttributionId} from '@/lib/community/actions';
 import {getFormatter} from 'next-intl/server';
 import classNames from 'classnames';
 import {InformationCircleIcon} from '@heroicons/react/24/outline';
+import type {AdditionalType} from '@colonial-collections/enricher';
 
-const useMetadata = create(() => ({
+const useMetadata = create<{
+  translationKey: string;
+  enrichmentType?: AdditionalType;
+}>(() => ({
   translationKey: '',
-  enrichmentIdentifier: '',
+  enrichmentType: undefined,
 }));
 
 interface Props {
   translationKey: string;
-  enrichmentIdentifier?: string;
+  enrichmentType?: AdditionalType;
   children: ReactNode;
 }
 
 export function MetadataContainer({
   translationKey,
-  enrichmentIdentifier,
+  enrichmentType,
   children,
 }: Props) {
-  useMetadata.setState({translationKey, enrichmentIdentifier});
+  useMetadata.setState({translationKey, enrichmentType});
   const t = useTranslations('ObjectDetails');
 
   return (
@@ -46,7 +48,7 @@ export function MetadataContainer({
         </div>
         <div className="w-full xl:w-4/5 flex flex-col gap-2">{children}</div>
       </div>
-      {enrichmentIdentifier && <AddMetadataEnrichment />}
+      {enrichmentType && <AddMetadataEnrichment />}
     </div>
   );
 }
@@ -55,7 +57,7 @@ interface MetadataEntryProps {
   isCurrentPublisher?: boolean;
   dateCreated?: Date;
   citation?: string;
-  attributionId?: string;
+  creator?: {name: string};
   children?: ReactNode;
 }
 
@@ -63,7 +65,7 @@ export async function MetadataEntry({
   isCurrentPublisher = false,
   dateCreated,
   citation,
-  attributionId,
+  creator,
   children,
 }: MetadataEntryProps) {
   const {translationKey} = useMetadata.getState();
@@ -81,9 +83,7 @@ export async function MetadataEntry({
     );
   }
 
-  const creator = attributionId
-    ? await getCommunityByAttributionId(attributionId)
-    : organization;
+  const author = creator ? creator : organization;
 
   return (
     <div className="border-t border-blueGrey-100 flex flex-col lg:flex-row justify-between gap-2">
@@ -99,7 +99,7 @@ export async function MetadataEntry({
       >
         <div>
           {t.rich('addedBy', {
-            name: () => <strong>{creator?.name}</strong>,
+            name: () => <strong>{author?.name}</strong>,
           })}
         </div>
         {(dateCreated || citation) && (
@@ -131,20 +131,23 @@ export async function MetadataEntry({
 }
 
 export async function MetadataEntries({children}: {children: ReactNode}) {
-  const {enrichmentIdentifier} = useMetadata.getState();
+  const {enrichmentType} = useMetadata.getState();
+  const {enrichments} = useObject.getState();
 
-  const enrichments = enrichmentIdentifier
-    ? await fetcher.getById(enrichmentIdentifier)
-    : undefined;
+  const metadataEnrichments = enrichmentType
+    ? enrichments.filter(
+        enrichment => enrichment.additionalType === enrichmentType
+      )
+    : [];
   return (
     <>
       <MetadataEntry isCurrentPublisher>{children}</MetadataEntry>
-      {enrichments?.map(enrichment => (
+      {metadataEnrichments?.map(enrichment => (
         <MetadataEntry
           key={enrichment.id}
           dateCreated={enrichment.dateCreated}
-          citation={enrichment.source}
-          attributionId={enrichment.creator}
+          citation={enrichment.citation}
+          creator={enrichment.creator}
         >
           {enrichment.description}
         </MetadataEntry>
@@ -155,29 +158,29 @@ export async function MetadataEntries({children}: {children: ReactNode}) {
 
 export function AddMetadataEnrichment() {
   const t = useTranslations('ObjectDetails');
-  const {translationKey, enrichmentIdentifier} = useMetadata.getState();
+  const {enrichmentType} = useMetadata.getState();
   const objectId = useObject.getState().objectId;
 
-  if (!enrichmentIdentifier) {
+  if (!enrichmentType) {
     return null;
   }
 
   return (
     <SignedIn>
-      <div className="flex justify-end">
+      <div className="flex justify-end text-consortiumBlue-800">
         <SlideOutButton
-          id={translationKey}
-          className="py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 flex items-center transition gap-1"
+          id={`${enrichmentType}-form`}
+          className="py-2 px-3  transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800"
         >
           {t('addUserEnrichmentButton')}
-          <ChatBubbleBottomCenterTextIcon className="w-4 h-4 fill-neutral-500" />
+          <ChatBubbleBottomCenterTextIcon className="w-4 h-4 fill-consortiumBlue-800" />
         </SlideOutButton>
       </div>
-      <SlideOut id={translationKey}>
-        <UserEnricherForm
+      <SlideOut id={`${enrichmentType}-form`}>
+        <UserEnrichmentForm
           objectId={objectId}
-          slideOutId={translationKey}
-          identifier={enrichmentIdentifier}
+          slideOutId={`${enrichmentType}-form`}
+          enrichmentType={enrichmentType}
         />
       </SlideOut>
     </SignedIn>
