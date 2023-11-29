@@ -177,3 +177,10 @@ export async function updateCommunity({
 
   return organizationToCommunity(organization);
 }
+
+export function userId() {
+  noStore();
+  const {userId} = auth();
+
+  return userId;
+}
