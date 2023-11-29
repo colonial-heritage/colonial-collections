@@ -26,7 +26,7 @@ interface FormValues {
 
 interface Props {
   slideOutId: string;
-  additionalType: AdditionalType;
+  enrichmentType: AdditionalType;
   objectId: string;
 }
 
@@ -39,7 +39,7 @@ const userEnricherSchema = z.object({
 
 function Form({
   slideOutId,
-  additionalType,
+  enrichmentType,
   objectId,
   communities,
 }: Props & {communities: Community[]}) {
@@ -72,7 +72,7 @@ function Form({
       );
       await addUserEnrichment({
         ...userEnrichment,
-        additionalType,
+        additionalType: enrichmentType,
         objectId,
         community: {
           name: community!.name,
@@ -220,7 +220,7 @@ function Form({
 
 export function UserEnricherForm({
   slideOutId,
-  additionalType,
+  enrichmentType,
   objectId,
 }: Props) {
   const t = useTranslations('UserEnricherForm');
@@ -237,7 +237,7 @@ export function UserEnricherForm({
   return (
     <Form
       slideOutId={slideOutId}
-      additionalType={additionalType}
+      enrichmentType={enrichmentType}
       objectId={objectId}
       communities={communities}
     />

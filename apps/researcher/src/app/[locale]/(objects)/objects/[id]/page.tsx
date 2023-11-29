@@ -177,7 +177,7 @@ export default async function Details({params}: Props) {
           <div className="flex flex-col gap-8 self-stretch">
             <MetadataContainer
               translationKey="description"
-              additionalType={AdditionalType.Description}
+              enrichmentType={AdditionalType.Description}
             >
               <MetadataEntries>{object.description}</MetadataEntries>
             </MetadataContainer>

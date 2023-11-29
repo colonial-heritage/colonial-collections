@@ -9,28 +9,28 @@ import {SignedIn} from '@clerk/nextjs';
 import {getFormatter} from 'next-intl/server';
 import classNames from 'classnames';
 import {InformationCircleIcon} from '@heroicons/react/24/outline';
-import type {AdditionalType} from '@colonial-collections/enricher'
+import type {AdditionalType} from '@colonial-collections/enricher';
 
 const useMetadata = create<{
   translationKey: string;
-  additionalType?: AdditionalType;
+  enrichmentType?: AdditionalType;
 }>(() => ({
   translationKey: '',
-  additionalType: undefined,
+  enrichmentType: undefined,
 }));
 
 interface Props {
   translationKey: string;
-  additionalType?: AdditionalType;
+  enrichmentType?: AdditionalType;
   children: ReactNode;
 }
 
 export function MetadataContainer({
   translationKey,
-  additionalType,
+  enrichmentType,
   children,
 }: Props) {
-  useMetadata.setState({translationKey, additionalType});
+  useMetadata.setState({translationKey, enrichmentType});
   const t = useTranslations('ObjectDetails');
 
   return (
@@ -48,7 +48,7 @@ export function MetadataContainer({
         </div>
         <div className="w-full xl:w-4/5 flex flex-col gap-2">{children}</div>
       </div>
-      {additionalType && <AddMetadataEnrichment />}
+      {enrichmentType && <AddMetadataEnrichment />}
     </div>
   );
 }
@@ -131,12 +131,12 @@ export async function MetadataEntry({
 }
 
 export async function MetadataEntries({children}: {children: ReactNode}) {
-  const {additionalType} = useMetadata.getState();
+  const {enrichmentType} = useMetadata.getState();
   const {enrichments} = useObject.getState();
 
-  const metadataEnrichments = additionalType
+  const metadataEnrichments = enrichmentType
     ? enrichments.filter(
-        enrichment => enrichment.additionalType === additionalType
+        enrichment => enrichment.additionalType === enrichmentType
       )
     : [];
   return (
@@ -158,10 +158,10 @@ export async function MetadataEntries({children}: {children: ReactNode}) {
 
 export function AddMetadataEnrichment() {
   const t = useTranslations('ObjectDetails');
-  const {additionalType} = useMetadata.getState();
+  const {enrichmentType} = useMetadata.getState();
   const objectId = useObject.getState().objectId;
 
-  if (!additionalType) {
+  if (!enrichmentType) {
     return null;
   }
 
@@ -169,18 +169,18 @@ export function AddMetadataEnrichment() {
     <SignedIn>
       <div className="flex justify-end text-consortiumBlue-800">
         <SlideOutButton
-          id={`${additionalType}-form`}
+          id={`${enrichmentType}-form`}
           className="py-2 px-3  transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800"
         >
           {t('addUserEnrichmentButton')}
           <ChatBubbleBottomCenterTextIcon className="w-4 h-4 fill-consortiumBlue-800" />
         </SlideOutButton>
       </div>
-      <SlideOut id={`${additionalType}-form`}>
+      <SlideOut id={`${enrichmentType}-form`}>
         <UserEnricherForm
           objectId={objectId}
-          slideOutId={`${additionalType}-form`}
-          additionalType={additionalType}
+          slideOutId={`${enrichmentType}-form`}
+          enrichmentType={enrichmentType}
         />
       </SlideOut>
     </SignedIn>
