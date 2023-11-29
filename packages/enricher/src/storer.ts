@@ -4,8 +4,8 @@ import {
   ontologyUrl,
   FullEnrichmentBeingCreated,
 } from './definitions';
-import {fromAdditionalTypeToClass} from './helpers';
 import type {BasicEnrichment} from './definitions';
+import {fromAdditionalTypeToClass} from './helpers';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
 import {z} from 'zod';
@@ -72,7 +72,7 @@ export class EnrichmentStorer {
       )
     );
 
-    // The remote writer automatically adds 'dcterms:creator'.
+    // The server automatically adds 'dcterms:creator'.
     // A creator can change his or her name later on, but the name at the time of
     // creation is preserved.
     publicationStore.addQuad(
