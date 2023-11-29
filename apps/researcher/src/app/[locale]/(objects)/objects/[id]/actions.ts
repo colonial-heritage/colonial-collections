@@ -7,7 +7,7 @@ import {revalidatePath} from 'next/cache';
 import {creator} from '@/lib/enricher-instances';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import {enrichmentLicence} from '@/lib/enrichment-licence';
-import {AdditionalType} from '@colonial-collections/enricher/src/definitions';
+import type {AdditionalType} from '@colonial-collections/enricher';
 
 export async function getCommunityLists(communityId: string, objectId: string) {
   return objectList.getByCommunityId(communityId, {objectIri: objectId});
@@ -41,7 +41,7 @@ export async function removeObjectFromList(id: number, communityId: string) {
 interface AddUserEnrichmentProps {
   description: string;
   citation: string;
-  inLanguage: string;
+  inLanguage?: string;
   community: {name: string; id: string};
   objectId: string;
   additionalType: AdditionalType;

@@ -22,7 +22,7 @@ import {formatDateCreated} from './format-date-created';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
-import {AdditionalType} from '@colonial-collections/enricher/src/definitions';
+import {AdditionalType} from '@colonial-collections/enricher';
 
 export const dynamic = 'force-dynamic';
 

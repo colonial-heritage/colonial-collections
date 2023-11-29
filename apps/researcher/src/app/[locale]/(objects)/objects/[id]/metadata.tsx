@@ -9,7 +9,7 @@ import {SignedIn} from '@clerk/nextjs';
 import {getFormatter} from 'next-intl/server';
 import classNames from 'classnames';
 import {InformationCircleIcon} from '@heroicons/react/24/outline';
-import {AdditionalType} from '@colonial-collections/enricher/src/definitions';
+import type {AdditionalType} from '@colonial-collections/enricher'
 
 const useMetadata = create<{
   translationKey: string;

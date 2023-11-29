@@ -15,13 +15,13 @@ import {camelCase} from 'tiny-case';
 import {Community} from '@/lib/community/definitions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import LanguageSelector from '@/components/language-selector';
-import {AdditionalType} from '@colonial-collections/enricher/src/definitions';
+import type {AdditionalType} from '@colonial-collections/enricher';
 
 interface FormValues {
   description: string;
   attributionId: string;
   citation: string;
-  inLanguage: string;
+  inLanguage?: string;
 }
 
 interface Props {
@@ -34,7 +34,7 @@ const userEnricherSchema = z.object({
   description: z.string().trim().min(1),
   attributionId: z.string().trim().min(1),
   citation: z.string().trim().min(1),
-  inLanguage: z.string(),
+  inLanguage: z.string().optional(),
 });
 
 function Form({
