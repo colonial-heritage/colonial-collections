@@ -199,13 +199,18 @@ function Form({
 
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="w-full lg:w-2/3 flex gap-2">
-          <button
-            disabled={isSubmitting}
-            type="submit"
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-          >
-            {t('buttonSubmit')}
-          </button>
+          {isSubmitting ? (
+            <p className="text-xs p-1 sm:py-2 sm:px-3 text-neutral-800">
+              {t('submitting')}
+            </p>
+          ) : (
+            <button
+              type="submit"
+              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+            >
+              {t('buttonSubmit')}
+            </button>
+          )}
           <button
             onClick={() => setIsVisible(slideOutId, false)}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-none hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1 border border-neutral-300"

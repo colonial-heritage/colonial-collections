@@ -232,13 +232,14 @@
     "citationSubTitle": "Please provide information that supports your narrative.",
     "language": "Language",
     "languageSubTitle": "Select a language of the narrative. Start typing to select a language.",
-    "successfullyAdded": "Your narrative has been added to the object",
+    "successfullyAdded": "Your narrative has been added to the object. It could take a moment before it is visible.",
     "serverError": "Something went wrong while creating the narrative. Please try again later.",
     "buttonSubmit": "Add your narrative",
     "buttonCancel": "Cancel",
     "descriptionTooSmall": "Narrative is required",
     "communityIdTooSmall": "Community is required",
     "citationTooSmall": "Resource is required",
-    "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community."
+    "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community.",
+    "saving": "Saving..."
   }
 }

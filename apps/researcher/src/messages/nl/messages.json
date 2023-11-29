@@ -232,13 +232,14 @@
     "citationSubTitle": "Geef informatie op die uw verhaal ondersteunt.",
     "language": "Taal",
     "languageSubTitle": "Selecteer een taal voor het verhaal. Begin met typen om een taal te selecteren.",
-    "successfullyAdded": "Uw verhaal is toegevoegd aan het object",
+    "successfullyAdded": "Uw verhaal is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
     "serverError": "Er is iets misgegaan tijdens het maken van het verhaal. Probeer het later opnieuw.",
     "buttonSubmit": "Voeg uw verhaal toe",
     "buttonCancel": "Annuleren",
     "descriptionTooSmall": "Verhaal is vereist",
     "communityIdTooSmall": "Community is vereist",
     "citationTooSmall": "Bron is vereist",
-    "noCommunities": "U bent nog geen lid van een community die gemachtigd is een verhaal toe te voegen. U kunt een community maken of lid worden van een bestaande community."
+    "noCommunities": "U bent nog geen lid van een community die gemachtigd is een verhaal toe te voegen. U kunt een community maken of lid worden van een bestaande community.",
+    "saving": "Opslaan..."
   }
 }

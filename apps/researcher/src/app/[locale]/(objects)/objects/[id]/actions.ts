@@ -65,7 +65,10 @@ export async function addUserEnrichment({
     license: enrichmentLicence,
   });
 
-  revalidatePath(`/[locale]objects/${encodeRouteSegment(objectId)}`, 'page');
+  // A small timeout is needed so the new enrichment is available when the page is revalidated.
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  revalidatePath(`/[locale]/objects/${encodeRouteSegment(objectId)}`, 'page');
 
   return enrichment;
 }
