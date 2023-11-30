@@ -101,7 +101,7 @@ export default function Navigation({locales}: Props) {
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
           <SignedOut>
-            <button className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 transition flex items-center gap-1 text-consortiumBlue-900 bg-white">
+            <button className="whitespace-nowrap p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 transition flex items-center gap-1 text-consortiumBlue-900 bg-white">
               <SignInButton />
             </button>
           </SignedOut>
