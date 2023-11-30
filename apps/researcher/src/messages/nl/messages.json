@@ -17,10 +17,12 @@
   "Navigation": {
     "name": "app",
     "home": "Home",
-    "about": "Over",
+    "about": "Over de app",
     "faq": "FAQ",
     "contact": "Contact",
-    "communities": "Communities"
+    "communities": "Communities",
+    "subMenuButton": "Over",
+    "consortium": "Consortium"
   },
   "Tabs": {
     "objects": "Objecten zoeken",

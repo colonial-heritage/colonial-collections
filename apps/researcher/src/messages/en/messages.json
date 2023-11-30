@@ -20,7 +20,9 @@
     "about": "About",
     "faq": "FAQ",
     "contact": "Contact",
-    "communities": "Communities"
+    "communities": "Communities",
+    "subMenuButton": "About",
+    "consortium": "Consortium"
   },
   "Tabs": {
     "objects": "Search for objects",
