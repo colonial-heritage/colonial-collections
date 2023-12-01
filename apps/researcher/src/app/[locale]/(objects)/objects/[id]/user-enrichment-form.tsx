@@ -201,7 +201,7 @@ function Form({
         <div className="w-full lg:w-2/3 flex gap-2">
           {isSubmitting ? (
             <p className="text-xs p-1 sm:py-2 sm:px-3 text-neutral-800">
-              {t('submitting')}
+              {t('saving')}
             </p>
           ) : (
             <button
