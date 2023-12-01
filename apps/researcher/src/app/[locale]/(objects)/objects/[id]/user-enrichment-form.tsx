@@ -81,7 +81,7 @@ function Form({
       });
       addNotification({
         id: 'add-user-enrichment-success',
-        message: t.rich('successfullyAdded'),
+        message: t('successfullyAdded'),
         type: 'success',
       });
       setIsVisible(slideOutId, false);
