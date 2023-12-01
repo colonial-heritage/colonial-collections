@@ -105,7 +105,7 @@ export default async function Details({params}: Props) {
 
   return (
     <>
-      <div className="px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between">
+      <div className="px-4 sm:px-10 flex gap-2 flex-row sm:justify-between">
         <div>
           <ToFilteredListButton className="flex items-center gap-1">
             <ChevronLeftIcon className="w-4 h-4 fill-neutral-500" />
