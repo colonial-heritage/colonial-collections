@@ -6,5 +6,4 @@ export * from './wip-message';
 export * from './slide-over';
 export * from './slide-out';
 export * from './notifications';
-export * from './consortium-logo';
 export * from './navigation-menu';

@@ -1,4 +1,4 @@
-export default function ConsortiumLogo() {
+export function ConsortiumLogo() {
   return (
     <svg
       fill="currentColor"

@@ -18,11 +18,7 @@ interface Props {
   }[];
 }
 
-export default function NavigationMenu({
-  buttonText,
-  menuItems,
-  className,
-}: Props) {
+export function NavigationMenu({buttonText, menuItems, className}: Props) {
   return (
     <Menu as="div" className="relative">
       <Menu.Button

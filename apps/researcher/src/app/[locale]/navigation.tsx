@@ -5,8 +5,9 @@ import Link from 'next-intl/link';
 import Image from 'next/image';
 import {useLocale, useTranslations} from 'next-intl';
 import {UserButton, SignInButton, SignedIn, SignedOut} from '@clerk/nextjs';
-import ConsortiumLogo from '@colonial-collections/ui/consortium-logo';
-import NavigationMenu from '@colonial-collections/ui/navigation-menu';
+import {ConsortiumLogo} from '@colonial-collections/ui/branding';
+import {NavigationMenu} from '@colonial-collections/ui';
+import logoImage from '@colonial-collections/ui/branding/colonial-collections-consortium.png';
 import {useMemo} from 'react';
 
 interface Props {
@@ -63,7 +64,7 @@ export default function Navigation({locales}: Props) {
                 <Image
                   height={20}
                   width={254}
-                  src="/images/colonial-collections-consortium.png"
+                  src={logoImage}
                   className="h-4 lg:h-5"
                   alt="Colonial Collections Consortium"
                 />
@@ -101,9 +102,11 @@ export default function Navigation({locales}: Props) {
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
           <SignedOut>
-            <button className="whitespace-nowrap p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 transition flex items-center gap-1 text-consortiumBlue-900 bg-white">
-              <SignInButton />
-            </button>
+            <SignInButton>
+              <button className="whitespace-nowrap p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 transition flex items-center gap-1 text-consortiumBlue-900 bg-white">
+                {tNavigation('signIn')}
+              </button>
+            </SignInButton>
           </SignedOut>
         </div>
       </div>

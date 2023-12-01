@@ -22,7 +22,8 @@
     "contact": "Contact",
     "communities": "Communities",
     "subMenuButton": "About",
-    "consortium": "Consortium"
+    "consortium": "Consortium",
+    "signIn": "Sign in"
   },
   "Tabs": {
     "objects": "Search for objects",
