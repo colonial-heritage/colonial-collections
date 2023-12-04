@@ -84,6 +84,7 @@ describe('Object list filters', () => {
     const searchText = 'My query';
 
     cy.getBySel('searchQuery').type(searchText);
+    cy.getBySel('searchQuery').next('button').click();
 
     cy.getBySel('selectedFilter').should('have.length', 1);
     cy.getBySel('selectedFilter').should('have.text', searchText);
@@ -96,6 +97,7 @@ describe('Object list filters', () => {
     const searchText = 'object';
 
     cy.getBySel('searchQuery').type(searchText);
+    cy.getBySel('searchQuery').next('button').click();
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
