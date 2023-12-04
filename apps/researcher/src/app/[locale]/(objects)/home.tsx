@@ -25,7 +25,7 @@ export default async function Home() {
   return (
     <div className=" flex flex-col md:flex-row grow gap-4 md:gap-16 w-full mx-auto">
       <main className="w-full flex flex-col  text-white">
-        <div className="w-full bg-consortiumBlue-800 flex flex-col justify-center text-consortiumGreen-400 items-center min-h-[60vh] relative">
+        <div className="-mt-8 w-full bg-consortiumBlue-800 flex flex-col justify-center text-consortiumGreen-400 items-center min-h-[60vh] relative">
           <div className="flex justify-center w-full max-w-6xl absolute bottom-0 opacity-20">
             <Background />
           </div>
