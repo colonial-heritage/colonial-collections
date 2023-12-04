@@ -6,7 +6,7 @@ import {SortBy} from '@/lib/community/definitions';
 import {useLocale} from 'next-intl';
 import {getTranslator} from 'next-intl/server';
 import {CommunitiesLink, Description} from './labels';
-import {SearchField} from './search-field';
+import {SearchFieldHome} from './search-field';
 
 export default async function Home() {
   const locale = useLocale();
@@ -38,7 +38,7 @@ export default async function Home() {
               <label htmlFor="s1">
                 <strong>{t('searchLabel')}</strong>
               </label>
-              <SearchField placeholder={t('searchPlaceholder')} />
+              <SearchFieldHome />
             </div>
           </div>
         </div>
