@@ -9,11 +9,13 @@ import classNames from 'classnames';
 interface SearchFieldProps {
   placeholder?: string;
   variant?: 'default' | 'home';
+  onSearch?: (query: string) => void;
 }
 
 export function SearchField({
   placeholder = '',
   variant = 'default',
+  onSearch,
 }: SearchFieldProps) {
   const query = useListStore(s => s.query);
   const queryChange = useListStore(s => s.queryChange);
@@ -47,6 +49,9 @@ export function SearchField({
 
   const search = () => {
     queryChange(inputText);
+    if (onSearch) {
+      onSearch(inputText);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
