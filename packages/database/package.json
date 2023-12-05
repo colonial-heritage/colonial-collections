@@ -24,7 +24,7 @@
     "drizzle-kit": "0.20.4",
     "drizzle-orm": "0.28.6",
     "drizzle-zod": "0.5.1",
-    "mysql2": "3.6.2"
+    "mysql2": "3.6.5"
   },
   "jest": {
     "preset": "ts-jest",
