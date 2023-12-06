@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@clerk/localizations": "1.26.10",
-    "@clerk/nextjs": "4.26.1",
+    "@clerk/nextjs": "4.27.4",
     "@clerk/types": "3.58.0",
     "@colonial-collections/content": "*",
     "@colonial-collections/database": "*",
@@ -50,7 +50,7 @@
     "zustand": "4.3.9"
   },
   "devDependencies": {
-    "@clerk/shared": "1.0.0",
+    "@clerk/shared": "1.1.1",
     "@jest/globals": "29.7.0",
     "@next/env": "14.0.2",
     "@rdfjs/types": "1.1.0",
