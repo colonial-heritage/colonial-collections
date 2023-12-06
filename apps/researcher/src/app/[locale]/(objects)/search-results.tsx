@@ -55,7 +55,7 @@ const filterSettings: ReadonlyArray<FilterSetting> = [
 
 interface Facet {
   name: string;
-  //`Component` needs to be uppercase to be valid JSX
+  // `Component` needs to be uppercase to be valid JSX
   Component: ElementType;
 }
 

@@ -4,12 +4,12 @@
   },
   "Home": {
     "title": "Colonial Collections Datahub",
-    "description": "The Colonial Collections Datahub is a place to explore for objects that have their origins in former Dutch colonial countries like Suriname, Indonesia, Sri Lanka, South Afrika, The Dutch Antiles and many more countries. You can <em>add your own narrative</em> to these objects and tell your own story.",
+    "description": "The Colonial Collections Datahub a place to explore objects that have their origins in former Dutch colonial countries like Suriname, Indonesia, Sri Lanka, South Afrika, the Netherlands Antilles and many more countries. You can <em>add your own narrative</em> to these objects and tell your own story.",
     "searchLabel": "Search for heritage objects",
     "searchPlaceholder": "Tip: start searching for a location, e.g. Suriname",
     "communitiesTitle": "Heritage communities",
     "communitiesDescription": "Every culture can start its own community on this platform. A community can create lists of objects that tells stories about their history. Communities can also add narratives to the objects in this collection.",
-    "communitiesLink": "Here's are some communities to inspire you. Or <link>take a look at all the communities</link>."
+    "communitiesLink": "Here are some communities to inspire you. Or <link>take a look at all the communities</link>."
   },
   "ObjectSearchResults": {
     "title": "{totalDatasets, plural, =0 {0 Heritage Objects} =1 {1 Heritage Object} other {# Heritage Objects}}",
