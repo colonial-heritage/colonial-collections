@@ -5,7 +5,6 @@ export * from './paginator';
 export * from './selected-filters';
 export * from './search-field';
 export * from './order-selector';
-export * from './to-filtered-list-button';
 export * from './multi-select-facet';
 export * from './searchable-multi-select-facet';
 export * from './date-range-facet';

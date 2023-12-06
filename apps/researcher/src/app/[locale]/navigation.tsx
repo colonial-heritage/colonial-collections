@@ -9,17 +9,13 @@ import {
   CheckIcon,
 } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
-import {usePathname} from 'next-intl/client';
-import Link from 'next-intl/link';
+import {Link, usePathname} from '@/navigation';
 import {useLocale, useTranslations} from 'next-intl';
 import {Fragment} from 'react';
 import {UserButton, SignInButton, SignedIn, SignedOut} from '@clerk/nextjs';
+import {locales} from '@/navigation';
 
-interface Props {
-  locales: string[];
-}
-
-export default function Navigation({locales}: Props) {
+export default function Navigation() {
   const pathname = usePathname();
   const locale = useLocale();
 

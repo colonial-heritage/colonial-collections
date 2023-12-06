@@ -1,4 +1,4 @@
-import Link from 'next-intl/link';
+import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
 import {HeritageObject} from '@/lib/api/objects';
 import Image from 'next/image';

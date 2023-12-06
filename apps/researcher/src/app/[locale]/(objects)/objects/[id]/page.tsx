@@ -1,8 +1,8 @@
 import {useLocale, useTranslations} from 'next-intl';
-import {getTranslator} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
-import {ToFilteredListButton} from '@colonial-collections/ui/list';
+import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
 import {MetadataContainer, MetadataEntries} from './metadata';
@@ -81,7 +81,7 @@ export default async function Details({params}: Props) {
   const id = decodeRouteSegment(params.id);
   const object = await heritageObjects.getById(id);
   const locale = useLocale();
-  const t = await getTranslator(locale, 'ObjectDetails');
+  const t = await getTranslations('ObjectDetails');
 
   if (!object) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;

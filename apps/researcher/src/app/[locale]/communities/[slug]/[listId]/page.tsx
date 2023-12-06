@@ -1,4 +1,4 @@
-import {getTranslator} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 import {objectList as objectListDb} from '@colonial-collections/database';
 import ErrorMessage from '@/components/error-message';
 import Link from 'next/link';
@@ -9,13 +9,12 @@ import {getCommunityBySlug} from '@/lib/community/actions';
 interface Props {
   params: {
     slug: string;
-    locale: string;
     listId: string;
   };
 }
 
 export default async function Page({params}: Props) {
-  const t = await getTranslator(params.locale, 'ObjectList');
+  const t = await getTranslations('ObjectList');
 
   let objectList;
   try {

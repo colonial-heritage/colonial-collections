@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import Image from 'next/image';
-import {getTranslator} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 import {JoinCommunityButton, ManageMembersButton} from './buttons';
 import {
   getMemberships,
@@ -26,12 +26,11 @@ import {
   Notifications,
 } from '@colonial-collections/ui';
 import EditCommunityForm from './edit-community-form';
-import {ToFilteredListButton} from '@colonial-collections/ui/list';
+import ToFilteredListButton from '@/components/to-filtered-list-button';
 
 interface Props {
   params: {
     slug: string;
-    locale: string;
   };
 }
 
@@ -43,7 +42,7 @@ const slideOutEditFormId = 'edit-community-description';
 export const dynamic = 'force-dynamic';
 
 export default async function CommunityPage({params}: Props) {
-  const t = await getTranslator(params.locale, 'Community');
+  const t = await getTranslations('Community');
 
   let community;
   try {

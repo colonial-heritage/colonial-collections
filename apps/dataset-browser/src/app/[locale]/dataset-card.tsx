@@ -1,4 +1,4 @@
-import Link from 'next-intl/link';
+import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
 import {Dataset} from '@/lib/datasets';
 import {Badge} from '@colonial-collections/ui';
