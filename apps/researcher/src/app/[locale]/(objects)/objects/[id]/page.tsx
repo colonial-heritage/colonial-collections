@@ -91,7 +91,7 @@ export default async function Details({params}: Props) {
 
   const enrichments = await fetcher.getById(id);
   useObject.setState({objectId: object.id, locale, enrichments});
-  const enrichmentNames = enrichments?.filter(
+  const enrichmentsAboutName = enrichments?.filter(
     enrichment => enrichment.additionalType === AdditionalType.Name
   );
 
@@ -133,7 +133,7 @@ export default async function Details({params}: Props) {
         </h1>
 
         <div className="flex flex-row items-start flex-wrap">
-          {enrichmentNames?.slice(0, 3).map(enrichment => (
+          {enrichmentsAboutName?.slice(0, 3).map(enrichment => (
             <div
               key={enrichment.id}
               className="border-r border-neutral-200 mr-4 pr-4"
