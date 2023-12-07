@@ -4,9 +4,11 @@
 
 describe('Object details page', () => {
   it('opens the object page if clicked on in the search list', () => {
-    cy.visit('/en', {
+    cy.visit('/', {
       failOnStatusCode: false,
+      qs: {query: 'object'},
     });
+
     // Get the name of the first object in the list.
     cy.getBySel('object-card-name')
       .first()
@@ -33,8 +35,9 @@ describe('Object details page', () => {
   });
 
   it('navigates back to the list with the previously selected filters', () => {
-    cy.visit('/en', {
+    cy.visit('/', {
       failOnStatusCode: false,
+      qs: {query: 'object'},
     });
 
     cy.getBySel('typesFilter').within(() => {
@@ -43,7 +46,7 @@ describe('Object details page', () => {
 
     cy.url()
       // Wait for the URL to contain the search param
-      .should('contain', '?')
+      .should('contain', 'types=')
       .then(url => {
         // Open the details page
         cy.getBySel('object-card').first().click();
@@ -53,7 +56,7 @@ describe('Object details page', () => {
         cy.getBySel('to-filtered-list-button').first().click();
 
         cy.url().should('eq', url);
-        cy.getBySel('selectedFilter').should('have.length', 1);
+        cy.getBySel('selectedFilter').should('have.length', 2);
       });
   });
 });
