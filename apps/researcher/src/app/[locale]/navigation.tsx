@@ -84,6 +84,7 @@ export default function Navigation() {
             buttonText={tNavigation('subMenuButton')}
             menuItems={subMenuItems}
             className="font-semibold"
+            Link={Link}
           />
         </nav>
       </div>
@@ -91,6 +92,7 @@ export default function Navigation() {
         <NavigationMenu
           buttonText={tLanguageSelector(locale)}
           menuItems={languageMenuItems}
+          Link={Link}
         />
         <div>
           <SignedIn>
