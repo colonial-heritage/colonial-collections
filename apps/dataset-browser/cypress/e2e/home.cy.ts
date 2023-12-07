@@ -66,6 +66,7 @@ describe('Dataset list filters', () => {
     const searchText = 'My query';
 
     cy.getBySel('searchQuery').type(searchText);
+    cy.getBySel('searchQuery').next('button').click();
 
     cy.getBySel('selectedFilter').should('have.length', 1);
     cy.getBySel('selectedFilter').should('have.text', searchText);
@@ -76,6 +77,7 @@ describe('Dataset list filters', () => {
     const searchText = 'My query';
 
     cy.getBySel('searchQuery').type(searchText);
+    cy.getBySel('searchQuery').next('button').click();
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });

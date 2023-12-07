@@ -3,6 +3,15 @@
     "title": "Research app"
   },
   "Home": {
+    "title": "Koloniale Collecties Datahub",
+    "description": "De Koloniale Collecties Datahub is een plek om objecten te verkennen die hun oorsprong hebben in voormalige Nederlandse koloniale landen zoals Suriname, Indonesië, Sri Lanka, Zuid-Afrika, de Nederlandse Antillen en vele andere landen. Je kunt <em>je eigen verhaal toevoegen</em> aan deze objecten en je eigen verhaal vertellen.",
+    "searchLabel": "Zoek naar erfgoedobjecten",
+    "searchPlaceholder": "Tip: begin met zoeken naar een locatie, bijvoorbeeld Suriname",
+    "communitiesTitle": "Erfgoed communities",
+    "communitiesDescription": "Elke gemeenschap kan haar eigen community starten op dit platform. Een community kan lijsten met objecten maken die verhalen vertellen over hun geschiedenis. Communities kunnen ook verhalen toevoegen aan de objecten in deze collectie.",
+    "communitiesLink": "Hier zijn enkele communities om je te inspireren. Of <link>bekijk alle communities</link>."
+  },
+  "ObjectSearchResults": {
     "title": "{totalDatasets, plural, =0 {0 Objecten} =1 {1 Object} other {# Objecten}}",
     "noResults": "Er zijn geen resultaten",
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de resultaten. Laad de pagina opnieuw om het opnieuw te proberen.",
@@ -17,10 +26,13 @@
   "Navigation": {
     "name": "app",
     "home": "Home",
-    "about": "Over",
+    "about": "Over de app",
     "faq": "FAQ",
     "contact": "Contact",
-    "communities": "Communities"
+    "communities": "Communities",
+    "subMenuButton": "Over",
+    "consortium": "Consortium",
+    "signIn": "Inloggen"
   },
   "Tabs": {
     "objects": "Objecten zoeken",

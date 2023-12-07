@@ -11,7 +11,7 @@ export default function HeritageObjectList({
   heritageObjects,
   totalCount,
 }: Props) {
-  const t = useTranslations('Home');
+  const t = useTranslations('ObjectSearchResults');
 
   if (totalCount > 0) {
     return (

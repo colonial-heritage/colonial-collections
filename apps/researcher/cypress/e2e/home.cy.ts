@@ -3,43 +3,67 @@
 // Passing `failOnStatusCode: false` into `cy.visit` accomplishes just that.
 
 describe('Researcher homepage', () => {
-  it('shows an object list', () => {
+  it('shows the object list after searching', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
+    cy.getBySel('searchQuery').type('object');
+    cy.getBySel('searchQuery').next('button').click();
+    cy.location('search', {timeout: 60000}).should('include', '?query=');
+
     cy.getBySel('error').should('not.exist');
     cy.getBySel('object-card').its('length').should('be.gt', 0);
   });
 });
 
 describe('Object list filters', () => {
-  it('filters by one publisher', () => {
+  it('filters based on the search query', () => {
     cy.visit('/en', {
       failOnStatusCode: false,
     });
-    cy.getBySel('publishersFilter').within(() => {
-      cy.get('[type="checkbox"]').first().check();
-    });
+    const searchText = 'My query';
+
+    cy.getBySel('searchQuery').type(searchText);
+    cy.getBySel('searchQuery').next('button').click();
+    cy.location('search', {timeout: 60000}).should('include', '?query=');
 
     cy.getBySel('selectedFilter').should('have.length', 1);
+    cy.getBySel('selectedFilter').should('have.text', searchText);
   });
 
-  it('filters by two materials', () => {
-    cy.visit('/en', {
+  it('filters by one publisher', () => {
+    cy.visit('/', {
       failOnStatusCode: false,
+      qs: {query: 'object'},
     });
-    cy.getBySel('materialsFilter').within(() => {
-      cy.get('[type="checkbox"]').eq(0).check();
-      cy.get('[type="checkbox"]').eq(1).check();
+
+    cy.getBySel('publishersFilter').within(() => {
+      cy.get('[type="checkbox"]').first().check();
     });
 
     cy.getBySel('selectedFilter').should('have.length', 2);
   });
 
-  it('removes a publisher filter by deselecting the filter in the sidebar', () => {
-    cy.visit('/en', {
+  it('filters by two materials', () => {
+    cy.visit('/', {
       failOnStatusCode: false,
+      qs: {query: 'object'},
     });
+
+    cy.getBySel('materialsFilter').within(() => {
+      cy.get('[type="checkbox"]').eq(0).check();
+      cy.get('[type="checkbox"]').eq(1).check();
+    });
+
+    cy.getBySel('selectedFilter').should('have.length', 3);
+  });
+
+  it('removes a publisher filter by deselecting the filter in the sidebar', () => {
+    cy.visit('/', {
+      failOnStatusCode: false,
+      qs: {query: 'object'},
+    });
+
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
@@ -48,45 +72,38 @@ describe('Object list filters', () => {
       cy.get('[type="checkbox"]').first().uncheck();
     });
 
-    cy.getBySel('selectedFilter').should('have.length', 0);
+    cy.getBySel('selectedFilter').should('have.length', 1);
   });
 
   it('removes a publisher filter by deselecting it in the selected filter bar', () => {
-    cy.visit('/en', {
+    cy.visit('/', {
       failOnStatusCode: false,
+      qs: {query: 'object'},
     });
+
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
 
-    cy.getBySel('selectedFilter').within(() => {
-      cy.get('button').click();
-    });
+    cy.getBySel('selectedFilter')
+      .first()
+      .within(() => {
+        cy.get('button').click();
+      });
 
-    cy.getBySel('selectedFilter').should('have.length', 0);
+    cy.getBySel('selectedFilter').should('have.length', 1);
   });
 
   it('filters by one type', () => {
-    cy.visit('/en', {
+    cy.visit('/', {
       failOnStatusCode: false,
+      qs: {query: 'object'},
     });
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
 
-    cy.getBySel('selectedFilter').should('have.length', 1);
-  });
-
-  it('filters based on the search query', () => {
-    cy.visit('/en', {
-      failOnStatusCode: false,
-    });
-    const searchText = 'My query';
-
-    cy.getBySel('searchQuery').type(searchText);
-
-    cy.getBySel('selectedFilter').should('have.length', 1);
-    cy.getBySel('selectedFilter').should('have.text', searchText);
+    cy.getBySel('selectedFilter').should('have.length', 2);
   });
 
   it('filters multiple categories together (query, publishers and types)', () => {
@@ -96,9 +113,13 @@ describe('Object list filters', () => {
     const searchText = 'object';
 
     cy.getBySel('searchQuery').type(searchText);
+    cy.getBySel('searchQuery').next('button').click();
+    cy.location('search', {timeout: 60000}).should('include', '?query=');
+
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
