@@ -3,14 +3,12 @@ import CommunityCard from '../communities/community-card';
 import {getCommunities} from '@/lib/community/actions';
 import ErrorMessage from '@/components/error-message';
 import {SortBy} from '@/lib/community/definitions';
-import {useLocale} from 'next-intl';
-import {getTranslator} from 'next-intl/server';
-import {CommunitiesLink, Description} from './labels';
+import {getTranslations} from 'next-intl/server';
 import {SearchFieldHome} from './search-field';
+import {Link} from '@/navigation';
 
 export default async function Home() {
-  const locale = useLocale();
-  const t = await getTranslator(locale, 'Home');
+  const t = await getTranslations('Home');
 
   let communities;
   try {
@@ -32,7 +30,9 @@ export default async function Home() {
           <div className="w-full max-w-4xl px-4 sm:px-10 flex flex-col gap-10 relative pb-16">
             <h1 className="text-3xl lg:text-5xl mt-4">{t('title')}</h1>
             <p className="max-w-2xl text-lg">
-              <Description />
+              {t.rich('description', {
+                em: text => <em>{text}</em>,
+              })}
             </p>
             <div className="flex flex-col gap-2 max-w-3xl">
               <label htmlFor="s1">
@@ -47,16 +47,14 @@ export default async function Home() {
             <h2 className="text-5xl">{t('communitiesTitle')}</h2>
             <p className="max-w-xl">{t('communitiesDescription')}</p>
             <p className="max-w-xl">
-              <CommunitiesLink />
+              {t.rich('communitiesLink', {
+                link: text => <Link href="/communities">{text}</Link>,
+              })}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 h-full grow content-stretch gap-6 w-full max-w-[1800px] mx-auto px-4 sm:px-10 pt-10">
             {communities.map(community => (
-              <CommunityCard
-                key={community.id}
-                community={community}
-                locale={locale}
-              />
+              <CommunityCard key={community.id} community={community} />
             ))}
           </div>
         </div>

@@ -1,7 +1,6 @@
 'use client';
 
-import {usePathname} from 'next-intl/client';
-import Link from 'next-intl/link';
+import {Link, usePathname, locales} from '@/navigation';
 import Image from 'next/image';
 import {useLocale, useTranslations} from 'next-intl';
 import {UserButton, SignInButton, SignedIn, SignedOut} from '@clerk/nextjs';
@@ -10,11 +9,7 @@ import {NavigationMenu} from '@colonial-collections/ui';
 import logoImage from '@colonial-collections/ui/branding/colonial-collections-consortium.png';
 import {useMemo} from 'react';
 
-interface Props {
-  locales: string[];
-}
-
-export default function Navigation({locales}: Props) {
+export default function Navigation() {
   const pathname = usePathname();
   const locale = useLocale();
 
@@ -48,7 +43,7 @@ export default function Navigation({locales}: Props) {
           language: tLanguageSelector(locale),
         }),
       })),
-    [locale, locales, pathname, tLanguageSelector]
+    [locale, pathname, tLanguageSelector]
   );
 
   return (
@@ -89,6 +84,7 @@ export default function Navigation({locales}: Props) {
             buttonText={tNavigation('subMenuButton')}
             menuItems={subMenuItems}
             className="font-semibold"
+            Link={Link}
           />
         </nav>
       </div>
@@ -96,6 +92,7 @@ export default function Navigation({locales}: Props) {
         <NavigationMenu
           buttonText={tLanguageSelector(locale)}
           menuItems={languageMenuItems}
+          Link={Link}
         />
         <div>
           <SignedIn>

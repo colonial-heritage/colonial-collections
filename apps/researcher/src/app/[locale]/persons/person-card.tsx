@@ -1,5 +1,5 @@
 import {useFormatter, useTranslations} from 'next-intl';
-import Link from 'next-intl/link';
+import {Link} from '@/navigation';
 import {Person} from '@/lib/api/persons';
 import {PersonIcon} from '@/components/icons';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';

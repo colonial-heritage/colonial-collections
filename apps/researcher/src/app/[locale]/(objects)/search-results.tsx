@@ -1,13 +1,11 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
-import {useLocale, useTranslations} from 'next-intl';
-import {getTranslator} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 import HeritageObjectList from './heritage-object-list';
 import {sortMapping} from './sort-mapping';
 import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   Type as SearchParamType,
-  ListStoreUpdater,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -33,6 +31,7 @@ import {
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import Tabs from '../tabs';
 import {ElementType} from 'react';
+import {ListStoreUpdater} from '@/components/list-store-updater';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -83,8 +82,8 @@ interface FacetMenuProps {
   filters: SearchResult['filters'];
 }
 
-function FacetMenu({filters}: FacetMenuProps) {
-  const t = useTranslations('Filters');
+async function FacetMenu({filters}: FacetMenuProps) {
+  const t = await getTranslations('Filters');
 
   return (
     <div className="w-full flex flex-col gap-6">
@@ -147,8 +146,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
     console.error(err);
   }
 
-  const locale = useLocale();
-  const t = await getTranslator(locale, 'ObjectSearchResults');
+  const t = await getTranslations('ObjectSearchResults');
 
   return (
     <>
