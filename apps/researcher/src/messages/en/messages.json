@@ -3,6 +3,15 @@
     "title": "Research app"
   },
   "Home": {
+    "title": "Colonial Collections Datahub",
+    "description": "The Colonial Collections Datahub is a place to explore objects that have their origins in former Dutch colonial countries like Suriname, Indonesia, Sri Lanka, South Afrika, the Netherlands Antilles and many more countries. You can <em>add your own narrative</em> to these objects and tell your own story.",
+    "searchLabel": "Search for heritage objects",
+    "searchPlaceholder": "Tip: start searching for a location, e.g. Suriname",
+    "communitiesTitle": "Heritage communities",
+    "communitiesDescription": "Every culture can start its own community on this platform. A community can create lists of objects that tells stories about their history. Communities can also add narratives to the objects in this collection.",
+    "communitiesLink": "Here are some communities to inspire you. Or <link>take a look at all the communities</link>."
+  },
+  "ObjectSearchResults": {
     "title": "{totalDatasets, plural, =0 {0 Heritage Objects} =1 {1 Heritage Object} other {# Heritage Objects}}",
     "noResults": "There are no results",
     "fetchError": "There was a problem fetching the objects. Please reload the page to try again.",
@@ -20,7 +29,10 @@
     "about": "About",
     "faq": "FAQ",
     "contact": "Contact",
-    "communities": "Communities"
+    "communities": "Communities",
+    "subMenuButton": "About",
+    "consortium": "Consortium",
+    "signIn": "Sign in"
   },
   "Tabs": {
     "objects": "Search for objects",
@@ -62,6 +74,7 @@
     "noData": "No <subject></subject> available",
     "identifier": "ID: {identifier}",
     "metadata": "Metadata",
+    "name": "Title",
     "description": "Description",
     "license": "License",
     "materials": "Materials",
@@ -74,7 +87,8 @@
     "createNewListButton": "Create new list",
     "discussion": "Discussion",
     "types": "Types",
-    "descriptionSubTitle": "A short description about the object",
+    "titleSubTitle": "The name of the object.",
+    "descriptionSubTitle": "A short description about the object.",
     "materialsSubTitle": "What kind of material is used. Click on the i of the material to learn more.",
     "typesSubTitle": "",
     "techniquesSubTitle": "",
@@ -85,7 +99,7 @@
     "noOrganizationFound": "No organization found.",
     "dateCreated": "Date Made",
     "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range.",
-    "addUserEnrichmentButton": "Add",
+    "addUserEnrichmentButton": "Add your narrative to <name></name>",
     "noListsInCommunity": "No lists",
     "objectAddedToList": "Object added to list <name></name>.",
     "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
