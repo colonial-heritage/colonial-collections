@@ -3,8 +3,8 @@ import {ReactNode} from 'react';
 import {notFound} from 'next/navigation';
 import Navigation from './navigation';
 import {NextIntlClientProvider} from 'next-intl';
-import {getTranslator} from 'next-intl/server';
-import {locales} from '@/middleware';
+import {getTranslations} from 'next-intl/server';
+import {Link} from '@/navigation';
 import {WipMessage} from '@colonial-collections/ui';
 import {ClerkProvider} from '@clerk/nextjs';
 
@@ -21,7 +21,7 @@ export default async function RootLayout({children, params: {locale}}: Props) {
     notFound();
   }
 
-  const t = await getTranslator(locale, 'ScreenReaderMenu');
+  const t = await getTranslations('ScreenReaderMenu');
   const clerkLocale = (await import(`@/messages/${locale}/clerk`)).default;
 
   return (
@@ -29,7 +29,7 @@ export default async function RootLayout({children, params: {locale}}: Props) {
       <html lang={locale}>
         <body>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <WipMessage />
+            <WipMessage Link={Link} />
             <div className="sr-only">
               <ul>
                 <li>
@@ -45,7 +45,7 @@ export default async function RootLayout({children, params: {locale}}: Props) {
             </div>
             <div className="mx-auto h-full min-h-screen flex flex-col justify-stretch items-stretch pb-40 gap-8">
               <header className="w-full bg-consortiumBlue-900 text-white py-2">
-                <Navigation locales={locales} />
+                <Navigation />
               </header>
               {children}
             </div>

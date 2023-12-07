@@ -1,7 +1,7 @@
 'use client';
 
 import {SearchField} from '@colonial-collections/ui/list';
-import {useRouter} from 'next-intl/client';
+import {useRouter} from '@/navigation';
 import {useTranslations} from 'next-intl';
 
 export function SearchFieldHome() {

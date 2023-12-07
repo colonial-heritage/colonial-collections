@@ -1,18 +1,17 @@
 import {Community} from '@/lib/community/definitions';
-import {getTranslator} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 import {useTranslations} from 'next-intl';
-import Link from 'next-intl/link';
+import {Link} from '@/navigation';
 import Image from 'next/image';
 import {Suspense} from 'react';
 import {objectList} from '@colonial-collections/database';
 
 interface MembershipCountProps {
   communityId: string;
-  locale: string;
 }
 
-async function ObjectListCount({communityId, locale}: MembershipCountProps) {
-  const t = await getTranslator(locale, 'Communities');
+async function ObjectListCount({communityId}: MembershipCountProps) {
+  const t = await getTranslations('Communities');
 
   try {
     const objectListCount = await objectList.countByCommunityId(communityId);
@@ -27,10 +26,9 @@ async function ObjectListCount({communityId, locale}: MembershipCountProps) {
 
 interface CommunityCardProps {
   community: Community;
-  locale: string;
 }
 
-export default function CommunityCard({community, locale}: CommunityCardProps) {
+export default function CommunityCard({community}: CommunityCardProps) {
   const t = useTranslations('Communities');
 
   return (
@@ -72,7 +70,7 @@ export default function CommunityCard({community, locale}: CommunityCardProps) {
         </div>
         <div className="w-1/2 p-4">
           <Suspense>
-            <ObjectListCount communityId={community.id} locale={locale} />
+            <ObjectListCount communityId={community.id} />
           </Suspense>
         </div>
       </div>

@@ -1,33 +1,26 @@
 import '../globals.css';
 import {ReactNode} from 'react';
-import {notFound} from 'next/navigation';
 import Navigation from './navigation';
-import {NextIntlClientProvider} from 'next-intl';
-import {getTranslator} from 'next-intl/server';
-import {locales} from '@/middleware';
+import {NextIntlClientProvider, useMessages, useTranslations} from 'next-intl';
 import {WipMessage} from '@colonial-collections/ui';
 import {ListProvider, defaultSortBy} from '@colonial-collections/list-store';
+import {Link} from '@/navigation';
 
 interface Props {
   children: ReactNode;
   params: {locale: string};
 }
 
-export default async function RootLayout({children, params: {locale}}: Props) {
-  let messages;
-  try {
-    messages = (await import(`../../messages/${locale}/messages.json`)).default;
-  } catch (err) {
-    notFound();
-  }
+export default function RootLayout({children, params: {locale}}: Props) {
+  const messages = useMessages();
 
-  const t = await getTranslator(locale, 'ScreenReaderMenu');
+  const t = useTranslations('ScreenReaderMenu');
 
   return (
     <html className="h-full" lang={locale}>
       <body className="flex flex-col min-h-screen">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <WipMessage />
+        <NextIntlClientProvider messages={messages}>
+          <WipMessage Link={Link} />
           <div className="sr-only">
             <ul>
               <li>
@@ -42,7 +35,7 @@ export default async function RootLayout({children, params: {locale}}: Props) {
             </ul>
           </div>
           <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">
-            <Navigation locales={locales} />
+            <Navigation />
           </header>
           <main className="bg-sand-50 pb-32">
             <div className="max-w-7xl container mx-auto p-8">

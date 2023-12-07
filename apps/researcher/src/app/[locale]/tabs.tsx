@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import {ObjectIcon, PersonIcon} from '@/components/icons';
 import {useTranslations} from 'next-intl';
-import Link from 'next-intl/link';
+import {Link} from '@/navigation';
 import {headers} from 'next/headers';
-import {locales} from '@/middleware';
+import {locales} from '@/navigation';
 
 export default function Tabs() {
   const t = useTranslations('Tabs');

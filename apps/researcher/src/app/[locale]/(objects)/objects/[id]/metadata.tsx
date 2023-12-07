@@ -73,9 +73,9 @@ export async function MetadataEntry({
   children,
 }: MetadataEntryProps) {
   const {translationKey} = useMetadata.getState();
-  const {organization, locale} = useObject.getState();
+  const {organization} = useObject.getState();
   const t = useTranslations('ObjectDetails');
-  const format = await getFormatter(locale);
+  const format = await getFormatter();
 
   if (isCurrentPublisher && !children) {
     return (

@@ -3,8 +3,7 @@
 import {Transition, Menu} from '@headlessui/react';
 import {ChevronDownIcon, CheckIcon} from '@heroicons/react/20/solid';
 import classNames from 'classnames';
-import Link from 'next-intl/link';
-import {Fragment} from 'react';
+import {ElementType, Fragment} from 'react';
 
 interface Props {
   buttonText: string;
@@ -16,9 +15,15 @@ interface Props {
     ariaLabel?: string;
     active?: boolean;
   }[];
+  Link: ElementType;
 }
 
-export function NavigationMenu({buttonText, menuItems, className}: Props) {
+export function NavigationMenu({
+  buttonText,
+  menuItems,
+  className,
+  Link,
+}: Props) {
   return (
     <Menu as="div" className="relative">
       <Menu.Button

@@ -1,9 +1,9 @@
 import {getCommunities, getMyCommunities} from '@/lib/community/actions';
 import {SortBy} from '@/lib/community/definitions';
-import {getTranslator} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 import ErrorMessage from '@/components/error-message';
 import CommunityCard from './community-card';
-import {ListStoreUpdater} from '@colonial-collections/list-store';
+import {ListStoreUpdater} from '@/components/list-store-updater';
 import {
   Paginator,
   SearchField,
@@ -16,9 +16,6 @@ import {MyCommunityToggle} from './my-community-toggle';
 export const revalidate = 86400;
 
 interface Props {
-  params: {
-    locale: string;
-  };
   searchParams?: {
     query?: string;
     sortBy?: SortBy;
@@ -27,11 +24,8 @@ interface Props {
   };
 }
 
-export default async function CommunitiesPage({
-  params,
-  searchParams = {},
-}: Props) {
-  const t = await getTranslator(params.locale, 'Communities');
+export default async function CommunitiesPage({searchParams = {}}: Props) {
+  const t = await getTranslations('Communities');
 
   const {query, sortBy, offset, onlyMyCommunities} = searchParams;
 
@@ -102,11 +96,7 @@ export default async function CommunitiesPage({
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 h-full grow content-stretch gap-6 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-10">
         {communities.map(community => (
-          <CommunityCard
-            key={community.id}
-            community={community}
-            locale={params.locale}
-          />
+          <CommunityCard key={community.id} community={community} />
         ))}
       </div>
       <div className="sm:px-10">

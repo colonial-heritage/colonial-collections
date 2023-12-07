@@ -1,13 +1,12 @@
 import datasetFetcher from '@/lib/dataset-fetcher-instance';
-import {useLocale, useTranslations} from 'next-intl';
-import {getTranslator} from 'next-intl/server';
+import {useTranslations} from 'next-intl';
+import {getTranslations} from 'next-intl/server';
 import DatasetList from './dataset-list';
 import {sortMapping} from './sort-mapping';
 import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   Type as SearchParamType,
-  ListStoreUpdater,
 } from '@colonial-collections/list-store';
 import {
   SearchResult,
@@ -32,6 +31,7 @@ import {
 } from '@colonial-collections/ui';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
+import {ListStoreUpdater} from './list-store-updater';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -127,8 +127,7 @@ export default async function Home({searchParams = {}}: Props) {
     console.error(err);
   }
 
-  const locale = useLocale();
-  const t = await getTranslator(locale, 'Home');
+  const t = await getTranslations('Home');
 
   return (
     <div className="flex flex-col md:flex-row gap-6">
