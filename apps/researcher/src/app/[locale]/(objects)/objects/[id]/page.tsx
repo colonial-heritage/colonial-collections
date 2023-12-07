@@ -23,6 +23,8 @@ import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
 import {AdditionalType} from '@colonial-collections/enricher';
+import ISO6391 from 'iso-639-1-dir';
+import {LanguageCode} from 'iso-639-1-dir/dist/data';
 
 export const dynamic = 'force-dynamic';
 
@@ -89,6 +91,9 @@ export default async function Details({params}: Props) {
 
   const enrichments = await fetcher.getById(id);
   useObject.setState({objectId: object.id, locale, enrichments});
+  const enrichmentsAboutName = enrichments?.filter(
+    enrichment => enrichment.additionalType === AdditionalType.Name
+  );
 
   let organization;
   if (object.isPartOf?.publisher?.id) {
@@ -119,15 +124,27 @@ export default async function Details({params}: Props) {
         </div>
       </div>
 
-      <div className="px-4 sm:px-10 my-4 flex flex-col gap-4">
+      <div className="px-4 sm:px-10 my-4 flex flex-col gap-4 w-full bg max-w-[1800px] mx-auto">
         <h1
-          className="flex flex-row gap-4 gap-y-2 items-start flex-wrap text-2xl md:text-3xl"
+          className="text-2xl md:text-4xl md:items-center"
           data-testid="page-title"
         >
           {object.name}
         </h1>
 
-        <Notifications />
+        <div className="flex flex-row items-start flex-wrap">
+          {enrichmentsAboutName?.slice(0, 3).map(enrichment => (
+            <div
+              key={enrichment.id}
+              className="border-r border-neutral-200 mr-4 pr-4"
+            >
+              <div className="">{enrichment.description}</div>
+              <div className="text-xs font-normal  hidden sm:block text-neutral-500">
+                {ISO6391.getName(enrichment.inLanguage as LanguageCode)}
+              </div>
+            </div>
+          ))}
+        </div>
 
         <div className="text-neutral-500 text-sm flex flex-col sm:flex-row justify-between items-start sm:items-center">
           <div className="flex flex-row justify-start  gap-1 ">
@@ -171,10 +188,17 @@ export default async function Details({params}: Props) {
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-4 sm:px-10">
         <main className="w-full md:w-2/3 order-2 md:order-1">
+          <Notifications />
           <div className=" mb-4 mt-10 flex justify-between">
             <h2 className="text-2xl">{t('metadata')}</h2>
           </div>
           <div className="flex flex-col gap-8 self-stretch">
+            <MetadataContainer
+              translationKey="name"
+              enrichmentType={AdditionalType.Name}
+            >
+              <MetadataEntries>{object.name}</MetadataEntries>
+            </MetadataContainer>
             <MetadataContainer
               translationKey="description"
               enrichmentType={AdditionalType.Description}
