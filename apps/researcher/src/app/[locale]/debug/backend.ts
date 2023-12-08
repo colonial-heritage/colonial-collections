@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
 import {auth} from '@clerk/nextjs';
@@ -8,13 +9,14 @@ const dateTimeFormat = new Intl.DateTimeFormat('nl', {
   timeStyle: 'long',
 });
 
-export async function backendLogAction() {
+export async function backendLogAction(frontendLog: any) {
   const {getToken, sessionId, session, userId} = await auth();
   const token = await getToken();
   const tokenDecoded = token ? jwtDecode(token) : null;
   const date = tokenDecoded?.exp
     ? dateTimeFormat.format(tokenDecoded?.exp * 1000)
     : null;
+  console.log('DEBUG BUTTON CLICKED: FRONTEND', frontendLog);
   console.log('DEBUG BUTTON CLICKED: BACKEND', {
     date,
     token,
