@@ -27,6 +27,7 @@ import {
 } from '@colonial-collections/ui';
 import EditCommunityForm from './edit-community-form';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
+import {DebugButton} from '@/app/[locale]/debug/frontend';
 
 interface Props {
   params: {
@@ -119,6 +120,11 @@ export default async function CommunityPage({params}: Props) {
                 <PencilSquareIcon className="w-5 h-5 fill-neutral-700" />
                 {t('editButton')}
               </SlideOutButton>
+            </div>
+          )}
+          {!isAdmin(memberships) && (
+            <div className="w-full flex justify-end -mb-8">
+              <DebugButton />
             </div>
           )}
           <div className="-mb-16 md:-mb-24 w-full flex justify-center">
