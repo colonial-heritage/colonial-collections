@@ -20,14 +20,14 @@ export function DebugButton() {
     const date = tokenDecoded?.exp
       ? dateTimeFormat.format(tokenDecoded?.exp * 1000)
       : null;
-    console.log('DEBUG BUTTON CLICKED: FRONTEND', {
+    // Send the frontend data to the backend, so we can log it in Vercel
+    backendLogAction({
       date,
       isSignedIn,
       token,
       tokenDecoded,
       sessionId,
     });
-    backendLogAction();
     addNotification({
       id: 'debugButtonClicked',
       message: 'Your data has been logged, please let Barbara know.',
