@@ -24,7 +24,7 @@ export function SearchField({
 
   const inputClassName = classNames('w-full rounded-l', {
     'py-1 px-3 border border-neutral-700': variant === 'default',
-    'p-3 placeholder:text-blueGrey-500 placeholder:italic text-consortiumBlueOld-800 not-italic':
+    'p-3 placeholder:text-blueGrey-500 placeholder:italic text-consortiumBlue-800 not-italic':
       variant === 'home',
   });
 
