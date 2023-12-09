@@ -1,6 +1,6 @@
 import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
-import {Dataset} from '@/lib/datasets';
+import {Dataset} from '@/lib/api/datasets';
 import {Badge} from '@colonial-collections/ui';
 import {
   GlobeEuropeAfricaIcon,
@@ -63,24 +63,12 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
         <div className="mt-2 flex flex-wrap gap-3">
           <Badge variant="gray">
             <Badge.Icon Icon={BuildingLibraryIcon} variant="solid" />
-            {dataset.publisher.name}
+            {dataset.publisher?.name}
           </Badge>
           <Badge variant="gray">
             <Badge.Icon Icon={DocumentCheckIcon} />
-            {dataset.license.name}
+            {dataset.license?.name}
           </Badge>
-          {dataset.spatialCoverages?.map(spatialCoverage => (
-            <Badge variant="gray" key={spatialCoverage.id}>
-              <Badge.Icon Icon={GlobeEuropeAfricaIcon} variant="solid" />
-              {spatialCoverage.name}
-            </Badge>
-          ))}
-          {dataset.genres?.map(genre => (
-            <Badge variant="gray" key={genre.id}>
-              <Badge.Icon Icon={TagIcon} />
-              {genre.name}
-            </Badge>
-          ))}
         </div>
         {dataset.keywords?.length && (
           <div className="mt-2 flex text-sm flex-wrap">

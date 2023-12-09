@@ -13,7 +13,7 @@ import {
   InformationCircleIcon,
   ChevronLeftIcon,
 } from '@heroicons/react/24/solid';
-import datasetFetcher from '@/lib/dataset-fetcher-instance';
+import datasets from '@/lib/datasets-instance';
 import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import metricIds from '@/lib/transparency-metrics';
@@ -28,7 +28,7 @@ export const revalidate = 0;
 
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
-  const dataset = await datasetFetcher.getById({id});
+  const dataset = await datasets.getById(id);
   const t = await getTranslations('Details');
   const tMetrics = await getTranslations('TransparencyMetrics');
   const format = await getFormatter();
@@ -59,18 +59,14 @@ export default async function Details({params}: Props) {
     {
       name: t('metadata.license'),
       value: (
-        <a href={dataset.license.id} target="_blank" rel="noreferrer">
-          {dataset.license.name}
+        <a href={dataset.license?.id} target="_blank" rel="noreferrer">
+          {dataset.license?.name}
         </a>
       ),
     },
     {
       name: t('metadata.publisher'),
-      value: (
-        <a href={dataset.publisher.id} target="_blank" rel="noreferrer">
-          {dataset.publisher.name}
-        </a>
-      ),
+      value: dataset.publisher?.name,
     },
     {
       name: t('metadata.datePublished'),

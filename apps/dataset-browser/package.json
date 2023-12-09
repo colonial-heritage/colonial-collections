@@ -22,10 +22,8 @@
   "dependencies": {
     "@colonial-collections/content": "*",
     "@colonial-collections/iris": "*",
-    "@colonial-collections/label-fetcher": "*",
     "@colonial-collections/list-store": "*",
     "@colonial-collections/ui": "*",
-    "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.17",
     "@heroicons/react": "2.0.18",
     "@next/mdx": "14.0.1",
@@ -37,7 +35,6 @@
     "rdf-object": "1.14.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tiny-lru": "11.2.0",
     "zod": "3.22.4",
     "zustand": "4.3.9"
   },

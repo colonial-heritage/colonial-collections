@@ -4,6 +4,14 @@ import {z} from 'zod';
 
 // Re-export definitions for ease of use in consuming apps
 export * from './definitions';
+export {
+  type SearchOptions,
+  type SearchResult,
+  SortBy,
+  SortByEnum,
+  SortOrder,
+  SortOrderEnum,
+} from './searcher';
 
 const constructorOptionsSchema = z.object({
   sparqlEndpointUrl: z.string(),

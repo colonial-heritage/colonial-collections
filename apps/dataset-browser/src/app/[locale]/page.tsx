@@ -1,4 +1,11 @@
-import datasetFetcher from '@/lib/dataset-fetcher-instance';
+import datasets from '@/lib/datasets-instance';
+import {
+  SearchResult,
+  SortBy,
+  SortByEnum,
+  SortOrder,
+  SortOrderEnum,
+} from '@/lib/api/datasets';
 import {useTranslations} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import DatasetList from './dataset-list';
@@ -8,13 +15,6 @@ import {
   getClientSortBy,
   Type as SearchParamType,
 } from '@colonial-collections/list-store';
-import {
-  SearchResult,
-  SortBy,
-  SortByEnum,
-  SortOrder,
-  SortOrderEnum,
-} from '@/lib/datasets';
 import {
   Paginator,
   SelectedFilters,
@@ -45,16 +45,6 @@ interface FacetProps {
 const facets: ReadonlyArray<FacetProps> = [
   {
     name: 'publishers',
-    searchParamType: 'array',
-    Component: MultiSelectFacet,
-  },
-  {
-    name: 'spatialCoverages',
-    searchParamType: 'array',
-    Component: MultiSelectFacet,
-  },
-  {
-    name: 'genres',
     searchParamType: 'array',
     Component: MultiSelectFacet,
   },
@@ -121,7 +111,7 @@ export default async function Home({searchParams = {}}: Props) {
   let hasError;
   let searchResult: SearchResult | undefined;
   try {
-    searchResult = await datasetFetcher.search(searchOptions);
+    searchResult = await datasets.search(searchOptions);
   } catch (err) {
     hasError = true;
     console.error(err);
