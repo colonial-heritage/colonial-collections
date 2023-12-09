@@ -330,7 +330,7 @@ export class HeritageObjectSearcher {
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
       if (filters !== undefined && filters.length) {
         searchRequest.query.bool.filter.push({
-          // @ts-expect-error:TS2345
+          // @ts-expect-error:TS2741
           terms: {
             [`${rawHeritageObjectKey}.keyword`]: filters,
           },

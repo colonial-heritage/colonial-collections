@@ -1,11 +1,10 @@
-// Import {DatasetEnricher} from '.';
-import type {Dataset, License, Publisher, Thing} from './definitions';
-import {defu} from 'defu';
-import {reach} from '@hapi/hoek';
+import type {Dataset, Thing} from './definitions';
+import {DatasetFetcher} from './fetcher';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
+  datasetFetcher: z.instanceof(DatasetFetcher),
 });
 
 export type FetcherConstructorOptions = z.infer<
@@ -16,7 +15,6 @@ enum RawKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
   Name = 'https://colonialcollections nl/schema#name',
-  Description = 'https://colonialcollections nl/schema#description',
   Publisher = 'https://colonialcollections nl/schema#publisher',
   License = 'https://colonialcollections nl/schema#license',
 }
@@ -57,15 +55,7 @@ export const searchOptionsSchema = z.object({
 
 export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
-const rawDatasetSchema = z
-  .object({})
-  .setKey(RawKeys.Id, z.string())
-  .setKey(RawKeys.Name, z.array(z.string()).optional())
-  .setKey(RawKeys.Description, z.array(z.string()).optional())
-  .setKey(RawKeys.Publisher, z.array(z.string()).optional())
-  .setKey(RawKeys.License, z.array(z.string()).optional());
-
-type RawDataset = z.infer<typeof rawDatasetSchema>;
+const rawDatasetSchema = z.object({}).setKey(RawKeys.Id, z.string());
 
 const rawBucketSchema = z.object({
   key: z.string(),
@@ -127,11 +117,13 @@ export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
 
 export class DatasetSearcher {
   private endpointUrl: string;
+  private datasetFetcher: DatasetFetcher;
 
   constructor(options: FetcherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
+    this.datasetFetcher = opts.datasetFetcher;
   }
 
   async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
@@ -163,45 +155,6 @@ export class DatasetSearcher {
     };
 
     return aggregation;
-  }
-
-  // Map the response to our internal model
-  private fromRawDatasetToDataset(rawDataset: RawDataset) {
-    const id = rawDataset[RawKeys.Id];
-    const name = reach(rawDataset, `${RawKeys.Name}.0`);
-    const description = reach(rawDataset, `${RawKeys.Description}.0`);
-
-    const publisherName = reach(rawDataset, `${RawKeys.Publisher}.0`);
-    const publisher: Publisher = {
-      id: publisherName, // TBD: fetch IRI via SPARQL?
-      name: publisherName,
-    };
-
-    const licenseName = reach(rawDataset, `${RawKeys.License}.0`);
-    const license: License = {
-      id: licenseName, // TBD: fetch IRI via SPARQL?
-      name: licenseName,
-    };
-
-    const datasetWithNullishValues: Dataset = {
-      id,
-      name,
-      publisher,
-      license,
-      description,
-    };
-
-    const dataset = defu(datasetWithNullishValues, {});
-
-    // Enrich the dataset with data
-    // const partialDataset = this.datasetEnricher.getByIri({
-    //   iri: id,
-    // });
-    // if (partialDataset !== undefined) {
-    //   Object.assign(dataset, partialDataset);
-    // }
-
-    return dataset;
   }
 
   private buildRequest(options: SearchOptions) {
@@ -256,6 +209,7 @@ export class DatasetSearcher {
     for (const [rawDatasetKey, filters] of queryFilters) {
       if (filters !== undefined && filters.length) {
         searchRequest.query.bool.filter.push({
+          // @ts-expect-error:TS2741
           terms: {
             [`${rawDatasetKey}.keyword`]: filters,
           },
@@ -291,14 +245,8 @@ export class DatasetSearcher {
     const {hits, aggregations} = rawSearchResponse;
 
     const rawDatasets = hits.hits.map(hit => hit._source);
-
-    // Load the dataset enrichments
-    // const ids = rawDatasets.map(rawDataset => rawDataset['@id']);
-    // await this.datasetEnricher.loadByIris({iris: ids});
-
-    const datasets: Dataset[] = rawDatasets.map(rawDataset =>
-      this.fromRawDatasetToDataset(rawDataset)
-    );
+    const ids = rawDatasets.map(rawDataset => rawDataset['@id']);
+    const datasets = await this.datasetFetcher.getByIds(ids);
 
     const publisherFilters = this.buildFilters(aggregations.publishers.buckets);
     const licenseFilters = this.buildFilters(aggregations.licenses.buckets);

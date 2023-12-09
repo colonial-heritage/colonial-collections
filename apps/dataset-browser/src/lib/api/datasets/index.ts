@@ -24,6 +24,7 @@ export class Datasets {
     });
     this.datasetSearcher = new DatasetSearcher({
       endpointUrl: opts.elasticSearchEndpointUrl,
+      datasetFetcher: this.datasetFetcher,
     });
   }
 

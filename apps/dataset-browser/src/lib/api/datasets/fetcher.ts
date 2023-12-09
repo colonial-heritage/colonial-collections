@@ -10,6 +10,7 @@ import {
 } from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
+import {EOL} from 'node:os';
 import type {Readable} from 'node:stream';
 import {RdfObjectLoader} from 'rdf-object';
 import type {Stream} from '@rdfjs/types';
@@ -31,7 +32,9 @@ export class DatasetFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private async fetchTriples(iri: string) {
+  private async fetchTriples(iris: string[]) {
+    const irisForValues = iris.map(iri => `<${iri}>`).join(EOL);
+
     const query = `
       PREFIX dqv: <http://www.w3.org/ns/dqv#>
       PREFIX ex: <https://example.org/>
@@ -61,7 +64,9 @@ export class DatasetFetcher {
           ex:order ?metricOrder .
       }
       WHERE {
-        BIND(<${iri}> as ?dataset)
+        VALUES ?iri {
+          ${irisForValues}
+        }
 
         ?dataset a schema:Dataset .
 
@@ -148,8 +153,8 @@ export class DatasetFetcher {
     return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
-  private async fromTriplesToDataset(
-    iri: string,
+  private async fromTriplesToDatasets(
+    iris: string[],
     triplesStream: Readable & Stream
   ) {
     const loader = new RdfObjectLoader({
@@ -161,44 +166,59 @@ export class DatasetFetcher {
 
     await loader.import(triplesStream);
 
-    const rawDataset = loader.resources[iri];
-    if (rawDataset === undefined) {
-      return undefined; // No such object
-    }
+    const datasets = iris.reduce((datasets: Dataset[], iri) => {
+      const rawDataset = loader.resources[iri];
+      if (rawDataset !== undefined) {
+        const name = getPropertyValue(rawDataset, 'ex:name');
+        const description = getPropertyValue(rawDataset, 'ex:description');
+        const publisher = onlyOne(
+          createThings<Publisher>(rawDataset, 'ex:publisher')
+        );
+        const license = onlyOne(
+          createThings<License>(rawDataset, 'ex:license')
+        );
+        const dateCreated = onlyOne(createDates(rawDataset, 'ex:dateCreated'));
+        const dateModified = onlyOne(
+          createDates(rawDataset, 'ex:dateModified')
+        );
+        const datePublished = onlyOne(
+          createDates(rawDataset, 'ex:datePublished')
+        );
+        const keywords = getPropertyValues(rawDataset, 'ex:keyword');
+        const mainEntityOfPages = getPropertyValues(
+          rawDataset,
+          'ex:mainEntityOfPage'
+        );
+        const measurements = createMeasurements(rawDataset, 'ex:measurement');
 
-    const name = getPropertyValue(rawDataset, 'ex:name');
-    const description = getPropertyValue(rawDataset, 'ex:description');
-    const publisher = onlyOne(
-      createThings<Publisher>(rawDataset, 'ex:publisher')
-    );
-    const license = onlyOne(createThings<License>(rawDataset, 'ex:license'));
-    const dateCreated = onlyOne(createDates(rawDataset, 'ex:dateCreated'));
-    const dateModified = onlyOne(createDates(rawDataset, 'ex:dateModified'));
-    const datePublished = onlyOne(createDates(rawDataset, 'ex:datePublished'));
-    const keywords = getPropertyValues(rawDataset, 'ex:keyword');
-    const mainEntityOfPages = getPropertyValues(
-      rawDataset,
-      'ex:mainEntityOfPage'
-    );
-    const measurements = createMeasurements(rawDataset, 'ex:measurement');
+        const datasetWithNullishValues: Dataset = {
+          id: iri,
+          name,
+          description,
+          publisher,
+          license,
+          dateCreated,
+          dateModified,
+          datePublished,
+          keywords,
+          mainEntityOfPages,
+          measurements,
+        };
 
-    const datasetWithNullishValues: Dataset = {
-      id: iri,
-      name,
-      description,
-      publisher,
-      license,
-      dateCreated,
-      dateModified,
-      datePublished,
-      keywords,
-      mainEntityOfPages,
-      measurements,
-    };
+        const dataset = removeNullish<Dataset>(datasetWithNullishValues);
+        datasets.push(dataset);
+      }
+      return datasets;
+    }, []);
 
-    const dataset = removeNullish<Dataset>(datasetWithNullishValues);
+    return datasets;
+  }
 
-    return dataset;
+  async getByIds(ids: string[]) {
+    const triplesStream = await this.fetchTriples(ids);
+    const datasets = await this.fromTriplesToDatasets(ids, triplesStream);
+
+    return datasets;
   }
 
   async getById(id: string) {
@@ -206,9 +226,12 @@ export class DatasetFetcher {
       return undefined;
     }
 
-    const triplesStream = await this.fetchTriples(id);
-    const dataset = await this.fromTriplesToDataset(id, triplesStream);
+    const datasets = await this.getByIds([id]);
 
-    return dataset;
+    if (datasets.length !== 1) {
+      return undefined;
+    }
+
+    return datasets[0];
   }
 }
