@@ -18,16 +18,16 @@ export function DebugButton() {
     const token = await getToken();
     const tokenDecoded = token ? jwtDecode(token) : null;
     const date = tokenDecoded?.exp
-      ? dateTimeFormat.format(tokenDecoded.exp * 1000)
-      : undefined;
-    console.log('DEBUG BUTTON CLICKED: FRONTEND', {
+      ? dateTimeFormat.format(tokenDecoded?.exp * 1000)
+      : null;
+    // Send the frontend data to the backend, so we can log it in Vercel
+    backendLogAction({
       date,
       isSignedIn,
       token,
       tokenDecoded,
       sessionId,
     });
-    backendLogAction();
     addNotification({
       id: 'debugButtonClicked',
       message: 'Your data has been logged, please let Barbara know.',
