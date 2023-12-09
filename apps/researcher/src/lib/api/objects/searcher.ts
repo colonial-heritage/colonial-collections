@@ -4,6 +4,7 @@ import {
   Image,
   Organization,
   Person,
+  SearchResultFilter,
   SortBy,
   SortByEnum,
   SortOrder,
@@ -12,8 +13,6 @@ import {
 } from '../definitions';
 import {SearchResult} from './definitions';
 import {removeUndefinedValues} from '../rdf-helpers';
-import {buildAggregation} from './searcher-request';
-import {buildFilters} from './searcher-result';
 import {reach} from '@hapi/hoek';
 import {z} from 'zod';
 
@@ -168,7 +167,7 @@ export class HeritageObjectSearcher {
   // Map the response to our internal model
   private fromRawHeritageObjectToHeritageObject(
     rawHeritageObject: RawHeritageObject
-  ): HeritageObject {
+  ) {
     const name = reach(rawHeritageObject, `${RawKeys.Name}.0`);
     const identifier = reach(rawHeritageObject, `${RawKeys.Identifier}.0`);
     const description = reach(rawHeritageObject, `${RawKeys.Description}.0`);
@@ -256,17 +255,28 @@ export class HeritageObjectSearcher {
     return heritageObject;
   }
 
+  private buildAggregation(id: string) {
+    const aggregation = {
+      terms: {
+        size: 10000, // TBD: revisit this - return fewer terms instead
+        field: id,
+      },
+    };
+
+    return aggregation;
+  }
+
   private buildRequest(options: SearchOptions) {
     const aggregations = {
-      owners: buildAggregation(`${RawKeys.Owner}.keyword`),
-      types: buildAggregation(`${RawKeys.AdditionalType}.keyword`),
-      subjects: buildAggregation(`${RawKeys.About}.keyword`),
-      locations: buildAggregation(`${RawKeys.CountryCreated}.keyword`),
-      materials: buildAggregation(`${RawKeys.Material}.keyword`),
-      creators: buildAggregation(`${RawKeys.Creator}.keyword`),
-      publishers: buildAggregation(`${RawKeys.Publisher}.keyword`),
-      dateCreatedStart: buildAggregation(RawKeys.YearCreatedStart),
-      dateCreatedEnd: buildAggregation(RawKeys.YearCreatedEnd),
+      owners: this.buildAggregation(`${RawKeys.Owner}.keyword`),
+      types: this.buildAggregation(`${RawKeys.AdditionalType}.keyword`),
+      subjects: this.buildAggregation(`${RawKeys.About}.keyword`),
+      locations: this.buildAggregation(`${RawKeys.CountryCreated}.keyword`),
+      materials: this.buildAggregation(`${RawKeys.Material}.keyword`),
+      creators: this.buildAggregation(`${RawKeys.Creator}.keyword`),
+      publishers: this.buildAggregation(`${RawKeys.Publisher}.keyword`),
+      dateCreatedStart: this.buildAggregation(RawKeys.YearCreatedStart),
+      dateCreatedEnd: this.buildAggregation(RawKeys.YearCreatedEnd),
     };
 
     const sortByRawKey = sortByToRawKeys.get(options.sortBy!)!;
@@ -320,6 +330,7 @@ export class HeritageObjectSearcher {
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
       if (filters !== undefined && filters.length) {
         searchRequest.query.bool.filter.push({
+          // @ts-expect-error:TS2345
           terms: {
             [`${rawHeritageObjectKey}.keyword`]: filters,
           },
@@ -354,6 +365,24 @@ export class HeritageObjectSearcher {
     return searchRequest;
   }
 
+  private toMatchedFilter(bucket: RawBucket): SearchResultFilter {
+    const totalCount = bucket.doc_count;
+    const id = bucket.key;
+    const name = bucket.key; // Replace with labelFetcher as soon as we have IRIs
+
+    return {totalCount, id, name};
+  }
+
+  private buildFilters(rawMatchedFilters: RawBucket[]) {
+    const matchedFilters = rawMatchedFilters.map(rawMatchedFilter =>
+      this.toMatchedFilter(rawMatchedFilter)
+    );
+
+    // TBD: sort filters by totalCount, descending + subsort by totalCount, ascending?
+
+    return matchedFilters;
+  }
+
   private async buildResult(
     options: SearchOptions,
     rawSearchResponse: RawSearchResponseWithAggregations
@@ -365,17 +394,17 @@ export class HeritageObjectSearcher {
       return this.fromRawHeritageObjectToHeritageObject(rawHeritageObject);
     });
 
-    const ownerFilters = buildFilters(aggregations.owners.buckets);
-    const typeFilters = buildFilters(aggregations.types.buckets);
-    const subjectFilters = buildFilters(aggregations.subjects.buckets);
-    const locationFilters = buildFilters(aggregations.locations.buckets);
-    const materialFilters = buildFilters(aggregations.materials.buckets);
-    const creatorFilters = buildFilters(aggregations.creators.buckets);
-    const publisherFilters = buildFilters(aggregations.publishers.buckets);
-    const dateCreatedStartFilters = buildFilters(
+    const ownerFilters = this.buildFilters(aggregations.owners.buckets);
+    const typeFilters = this.buildFilters(aggregations.types.buckets);
+    const subjectFilters = this.buildFilters(aggregations.subjects.buckets);
+    const locationFilters = this.buildFilters(aggregations.locations.buckets);
+    const materialFilters = this.buildFilters(aggregations.materials.buckets);
+    const creatorFilters = this.buildFilters(aggregations.creators.buckets);
+    const publisherFilters = this.buildFilters(aggregations.publishers.buckets);
+    const dateCreatedStartFilters = this.buildFilters(
       aggregations.dateCreatedStart.buckets
     );
-    const dateCreatedEndFilters = buildFilters(
+    const dateCreatedEndFilters = this.buildFilters(
       aggregations.dateCreatedEnd.buckets
     );
 
