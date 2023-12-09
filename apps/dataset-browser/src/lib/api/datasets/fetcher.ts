@@ -33,7 +33,7 @@ export class DatasetFetcher {
   }
 
   private async fetchTriples(iris: string[]) {
-    const irisForValues = iris.map(iri => `<${iri}>`).join(EOL);
+    const datasetIris = iris.map(iri => `<${iri}>`).join(EOL);
 
     const query = `
       PREFIX dqv: <http://www.w3.org/ns/dqv#>
@@ -64,8 +64,8 @@ export class DatasetFetcher {
           ex:order ?metricOrder .
       }
       WHERE {
-        VALUES ?iri {
-          ${irisForValues}
+        VALUES ?dataset {
+          ${datasetIris}
         }
 
         ?dataset a schema:Dataset .
