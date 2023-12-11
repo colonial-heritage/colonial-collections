@@ -39,7 +39,7 @@
     "fetch-sparql-endpoint": "4.1.0",
     "iso-639-1-dir": "3.0.5",
     "jwt-decode": "^4.0.0",
-    "next": "14.0.3",
+    "next": "14.0.4",
     "next-intl": "3.2.5",
     "openseadragon": "4.1.0",
     "rdf-object": "1.14.0",
