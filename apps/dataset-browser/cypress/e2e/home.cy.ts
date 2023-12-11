@@ -63,7 +63,7 @@ describe('Dataset list filters', () => {
 
   it('filters based on the search query', () => {
     cy.visit('/en');
-    const searchText = 'My query';
+    const searchText = 'dataset';
 
     cy.getBySel('searchQuery').type(searchText);
     cy.getBySel('searchQuery').next('button').click();
@@ -74,7 +74,7 @@ describe('Dataset list filters', () => {
 
   it('filters all categories together (query, license and publisher)', () => {
     cy.visit('/en');
-    const searchText = 'My query';
+    const searchText = 'dataset';
 
     cy.getBySel('searchQuery').type(searchText);
     cy.getBySel('searchQuery').next('button').click();
