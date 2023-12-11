@@ -2,11 +2,8 @@ import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
 import {Dataset} from '@/lib/api/datasets';
 import {Badge} from '@colonial-collections/ui';
-import {
-  GlobeEuropeAfricaIcon,
-  BuildingLibraryIcon,
-} from '@heroicons/react/24/solid';
-import {DocumentCheckIcon, TagIcon} from '@heroicons/react/24/outline';
+import {BuildingLibraryIcon} from '@heroicons/react/24/solid';
+import {DocumentCheckIcon} from '@heroicons/react/24/outline';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import metricIds from '@/lib/transparency-metrics';
 
