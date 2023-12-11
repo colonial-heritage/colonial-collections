@@ -106,8 +106,6 @@
   "Filters": {
     "licensesFilter": "Licenties",
     "publishersFilter": "Eigenaren",
-    "spatialCoveragesFilter": "Locaties",
-    "genresFilter": "Genres",
     "search": "Zoeken",
     "filters": "Filters",
     "expandFilter": "Uitklappen",

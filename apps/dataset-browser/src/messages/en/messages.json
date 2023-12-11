@@ -107,8 +107,6 @@
   "Filters": {
     "licensesFilter": "Licenses",
     "publishersFilter": "Publishers",
-    "spatialCoveragesFilter": "Locations",
-    "genresFilter": "Genres",
     "search": "Search",
     "filters": "Filters",
     "expandFilter": "Expand",
