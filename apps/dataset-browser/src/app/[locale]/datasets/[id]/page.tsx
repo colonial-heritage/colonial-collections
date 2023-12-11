@@ -58,9 +58,9 @@ export default async function Details({params}: Props) {
     },
     {
       name: t('metadata.license'),
-      value: (
-        <a href={dataset.license?.id} target="_blank" rel="noreferrer">
-          {dataset.license?.name}
+      value: dataset.license && (
+        <a href={dataset.license.id} target="_blank" rel="noreferrer">
+          {dataset.license.name}
         </a>
       ),
     },
