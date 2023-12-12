@@ -8,7 +8,7 @@ export type Thing = {
 };
 
 export type Term = Thing;
-export type Place = Thing;
+export type Place = Thing & {isPartOf?: Place};
 export type Person = Thing & {type: 'Person'};
 export type Unknown = Thing & {type: 'Unknown'};
 export type Agent = Person | Organization | Unknown;
@@ -53,6 +53,7 @@ export type HeritageObject = {
   materials?: Term[];
   techniques?: Term[];
   creators?: Agent[];
+  locationCreated?: Place;
   dateCreated?: TimeSpan;
   images?: Image[];
   owner?: Agent;

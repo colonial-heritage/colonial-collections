@@ -59,11 +59,15 @@ describe('getByHeritageObjectId', () => {
           startsAfter: 'https://example.org/objects/1/provenance/event/1',
           endsBefore: 'https://example.org/objects/1/provenance/event/3',
           location: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Amsterdam',
           },
           transferredFrom: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
             name: 'Jan de Vries',
           },
@@ -85,16 +89,22 @@ describe('getByHeritageObjectId', () => {
           endDate: new Date('1855-01-01T00:00:00.000Z'),
           endsBefore: 'https://example.org/objects/1/provenance/event/2',
           location: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Jakarta',
           },
           transferredFrom: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
             name: 'Peter Hoekstra',
           },
           transferredTo: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
             name: 'Jan de Vries',
           },
@@ -109,7 +119,9 @@ describe('getByHeritageObjectId', () => {
           endDate: new Date('1939-01-01T00:00:00.000Z'),
           startsAfter: 'https://example.org/objects/1/provenance/event/3',
           location: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Paris',
           },
           transferredTo: {
@@ -131,7 +143,9 @@ describe('getByHeritageObjectId', () => {
           startsAfter: 'https://example.org/objects/1/provenance/event/2',
           endsBefore: 'https://example.org/objects/1/provenance/event/4',
           location: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Amsterdam',
           },
           transferredFrom: {
