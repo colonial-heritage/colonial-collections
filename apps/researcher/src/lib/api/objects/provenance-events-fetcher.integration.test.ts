@@ -131,6 +131,13 @@ describe('getByHeritageObjectId', () => {
             type: 'Person',
             name: 'Jan de Vries',
           },
+          transferredTo: {
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
+            type: 'Person',
+            name: 'Jonathan Hansen',
+          },
         },
         {
           id: 'https://example.org/objects/1/provenance/event/5/activity/1',
@@ -157,6 +164,11 @@ describe('getByHeritageObjectId', () => {
             ),
             type: 'Person',
             name: 'Jonathan Hansen',
+          },
+          transferredTo: {
+            id: 'https://museum.example.org/',
+            type: 'Organization',
+            name: 'Museum',
           },
         },
         {
