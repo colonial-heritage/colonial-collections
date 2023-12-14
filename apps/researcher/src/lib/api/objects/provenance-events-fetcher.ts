@@ -1,6 +1,6 @@
-import {ontologyUrl, Place, ProvenanceEvent, Term} from '../definitions';
-import {getPropertyValue, onlyOne, removeUndefinedValues} from '../rdf-helpers';
-import {createThings, createAgents} from './rdf-helpers';
+import {ProvenanceEvent, Term} from '../definitions';
+import {getPropertyValue, onlyOne, removeNullish} from '../rdf-helpers';
+import {createAgents, createThings, createPlaces} from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
 import type {Readable} from 'node:stream';
@@ -26,62 +26,62 @@ export class ProvenanceEventsFetcher {
 
   private async fetchTriples(iri: string) {
     const query = `
-      PREFIX cc: <${ontologyUrl}>
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+      PREFIX ex: <https://example.org/>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX schema: <https://schema.org/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       CONSTRUCT {
-        ?object a cc:HeritageObject ;
-          cc:subjectOf ?acquisition, ?transferOfCustody .
+        ?object a ex:HeritageObject ;
+          ex:subjectOf ?acquisition, ?transferOfCustody .
 
-        ?acquisition a cc:Event ;
-          cc:additionalType ?acquisitionType ;
-          cc:startDate ?acquisitionBeginOfTheBegin ;
-          cc:endDate ?acquisitionEndOfTheEnd ;
-          cc:transferredFrom ?acquisitionOwnerFrom ;
-          cc:transferredTo ?acquisitionOwnerTo ;
-          cc:description ?acquisitionDescription ;
-          cc:location ?acquisitionLocation ;
-          cc:startsAfter ?acquisitionStartsAfterTheEndOf ;
-          cc:endsBefore ?acquisitionEndsBeforeTheStartOf .
+        ?acquisition a ex:Event ;
+          ex:additionalType ?acquisitionType ;
+          ex:startDate ?acquisitionBeginOfTheBegin ;
+          ex:endDate ?acquisitionEndOfTheEnd ;
+          ex:transferredFrom ?acquisitionOwnerFrom ;
+          ex:transferredTo ?acquisitionOwnerTo ;
+          ex:description ?acquisitionDescription ;
+          ex:location ?acquisitionLocation ;
+          ex:startsAfter ?acquisitionStartsAfterTheEndOf ;
+          ex:endsBefore ?acquisitionEndsBeforeTheStartOf .
 
-        ?acquisitionType a cc:DefinedTerm ;
-          cc:name ?acquisitionTypeName .
+        ?acquisitionType a ex:DefinedTerm ;
+          ex:name ?acquisitionTypeName .
 
         ?acquisitionOwnerFrom a ?acquisitionOwnerFromType ;
-          cc:name ?acquisitionOwnerFromName .
+          ex:name ?acquisitionOwnerFromName .
 
         ?acquisitionOwnerTo a ?acquisitionOwnerToType ;
-          cc:name ?acquisitionOwnerToName .
+          ex:name ?acquisitionOwnerToName .
 
-        ?acquisitionLocation a cc:Place ;
-          cc:name ?acquisitionLocationName .
+        ?acquisitionLocation a ex:Place ;
+          ex:name ?acquisitionLocationName .
 
-        ?transferOfCustody a cc:Event ;
-          cc:additionalType ?transferOfCustodyType ;
-          cc:startDate ?transferOfCustodyBeginOfTheBegin ;
-          cc:endDate ?transferOfCustodyEndOfTheEnd ;
-          cc:transferredFrom ?transferOfCustodyCustodianFrom ;
-          cc:transferredTo ?transferOfCustodyCustodianTo ;
-          cc:description ?transferOfCustodyDescription ;
-          cc:location ?transferOfCustodyLocation ;
-          cc:startsAfter ?transferOfCustodyStartsAfterTheEndOf ;
-          cc:endsBefore ?transferOfCustodyEndsBeforeTheStartOf .
+        ?transferOfCustody a ex:Event ;
+          ex:additionalType ?transferOfCustodyType ;
+          ex:startDate ?transferOfCustodyBeginOfTheBegin ;
+          ex:endDate ?transferOfCustodyEndOfTheEnd ;
+          ex:transferredFrom ?transferOfCustodyCustodianFrom ;
+          ex:transferredTo ?transferOfCustodyCustodianTo ;
+          ex:description ?transferOfCustodyDescription ;
+          ex:location ?transferOfCustodyLocation ;
+          ex:startsAfter ?transferOfCustodyStartsAfterTheEndOf ;
+          ex:endsBefore ?transferOfCustodyEndsBeforeTheStartOf .
 
-        ?transferOfCustodyType a cc:DefinedTerm ;
-          cc:name ?transferOfCustodyTypeName .
+        ?transferOfCustodyType a ex:DefinedTerm ;
+          ex:name ?transferOfCustodyTypeName .
 
         ?transferOfCustodyCustodianFrom a ?transferOfCustodyCustodianFromType ;
-          cc:name ?transferOfCustodyCustodianFromName .
+          ex:name ?transferOfCustodyCustodianFromName .
 
         ?transferOfCustodyCustodianTo a ?transferOfCustodyCustodianToType ;
-          cc:name ?transferOfCustodyCustodianToName .
+          ex:name ?transferOfCustodyCustodianToName .
 
-        ?transferOfCustodyLocation a cc:Place ;
-          cc:name ?transferOfCustodyLocationName .
+        ?transferOfCustodyLocation a ex:Place ;
+          ex:name ?transferOfCustodyLocationName .
       }
       WHERE {
         BIND(<${iri}> AS ?object)
@@ -120,8 +120,8 @@ export class ProvenanceEventsFetcher {
               rdf:type ?acquisitionOwnerFromTypeTmp .
 
             VALUES (?acquisitionOwnerFromTypeTmp ?acquisitionOwnerFromType) {
-              (schema:Organization cc:Organization)
-              (crm:E21_Person cc:Person)
+              (schema:Organization ex:Organization)
+              (crm:E21_Person ex:Person)
               (UNDEF UNDEF)
             }
           }
@@ -136,8 +136,8 @@ export class ProvenanceEventsFetcher {
               rdf:type ?acquisitionOwnerToTypeTmp .
 
             VALUES (?acquisitionOwnerToTypeTmp ?acquisitionOwnerToType) {
-              (schema:Organization cc:Organization)
-              (crm:E21_Person cc:Person)
+              (schema:Organization ex:Organization)
+              (crm:E21_Person ex:Person)
               (UNDEF UNDEF)
             }
           }
@@ -227,8 +227,8 @@ export class ProvenanceEventsFetcher {
               rdf:type ?transferOfCustodyCustodianFromTypeTemp .
 
             VALUES (?transferOfCustodyCustodianFromTypeTemp ?transferOfCustodyCustodianFromType) {
-              (schema:Organization cc:Organization)
-              (crm:E21_Person cc:Person)
+              (schema:Organization ex:Organization)
+              (crm:E21_Person ex:Person)
               (UNDEF UNDEF)
             }
           }
@@ -243,8 +243,8 @@ export class ProvenanceEventsFetcher {
               rdf:type ?transferOfCustodyCustodianToTypeTemp .
 
             VALUES (?transferOfCustodyCustodianToTypeTemp ?transferOfCustodyCustodianToType) {
-              (schema:Organization cc:Organization)
-              (crm:E21_Person cc:Person)
+              (schema:Organization ex:Organization)
+              (crm:E21_Person ex:Person)
               (UNDEF UNDEF)
             }
           }
@@ -309,36 +309,34 @@ export class ProvenanceEventsFetcher {
 
   private toProvenanceEvent(rawProvenanceEvent: Resource) {
     const id = rawProvenanceEvent.value;
-    const startDate = getPropertyValue(rawProvenanceEvent, 'cc:startDate');
-    const endDate = getPropertyValue(rawProvenanceEvent, 'cc:endDate');
-    const description = getPropertyValue(rawProvenanceEvent, 'cc:description');
-    const startsAfter = getPropertyValue(rawProvenanceEvent, 'cc:startsAfter');
-    const endsBefore = getPropertyValue(rawProvenanceEvent, 'cc:endsBefore');
-    const types = createThings<Term>(rawProvenanceEvent, 'cc:additionalType');
-    const location = onlyOne(
-      createThings<Place>(rawProvenanceEvent, 'cc:location')
-    );
+    const startDate = getPropertyValue(rawProvenanceEvent, 'ex:startDate');
+    const endDate = getPropertyValue(rawProvenanceEvent, 'ex:endDate');
+    const description = getPropertyValue(rawProvenanceEvent, 'ex:description');
+    const startsAfter = getPropertyValue(rawProvenanceEvent, 'ex:startsAfter');
+    const endsBefore = getPropertyValue(rawProvenanceEvent, 'ex:endsBefore');
+    const types = createThings<Term>(rawProvenanceEvent, 'ex:additionalType');
+    const location = onlyOne(createPlaces(rawProvenanceEvent, 'ex:location'));
     const transferredFromAgent = onlyOne(
-      createAgents(rawProvenanceEvent, 'cc:transferredFrom')
+      createAgents(rawProvenanceEvent, 'ex:transferredFrom')
     );
     const transferredToAgent = onlyOne(
-      createAgents(rawProvenanceEvent, 'cc:transferredTo')
+      createAgents(rawProvenanceEvent, 'ex:transferredTo')
     );
 
     const provenanceEventWithUndefinedValues: ProvenanceEvent = {
       id,
       types,
-      description: description !== undefined ? description : undefined,
+      description,
       startDate: startDate !== undefined ? new Date(startDate) : undefined,
       endDate: endDate !== undefined ? new Date(endDate) : undefined,
-      startsAfter: startsAfter !== undefined ? startsAfter : undefined,
-      endsBefore: endsBefore !== undefined ? endsBefore : undefined,
-      location: location !== undefined ? location : undefined,
+      startsAfter,
+      endsBefore,
+      location,
       transferredFrom: transferredFromAgent,
       transferredTo: transferredToAgent,
     };
 
-    const provenanceEvent = removeUndefinedValues<ProvenanceEvent>(
+    const provenanceEvent = removeNullish<ProvenanceEvent>(
       provenanceEventWithUndefinedValues
     );
 
@@ -351,7 +349,7 @@ export class ProvenanceEventsFetcher {
   ) {
     const loader = new RdfObjectLoader({
       context: {
-        cc: ontologyUrl,
+        ex: 'https://example.org/',
         rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
       },
     });
@@ -363,7 +361,7 @@ export class ProvenanceEventsFetcher {
       return undefined; // No such object
     }
 
-    const rawProvenanceEvents = rawHeritageObject.properties['cc:subjectOf'];
+    const rawProvenanceEvents = rawHeritageObject.properties['ex:subjectOf'];
     const provenanceEvents = rawProvenanceEvents.map(rawProvenanceEvent =>
       this.toProvenanceEvent(rawProvenanceEvent)
     );

@@ -12,7 +12,7 @@ import {
   Term,
 } from '../definitions';
 import {SearchResult} from './definitions';
-import {removeUndefinedValues} from '../rdf-helpers';
+import {removeNullish} from '../rdf-helpers';
 import {reach} from '@hapi/hoek';
 import {z} from 'zod';
 
@@ -248,7 +248,7 @@ export class HeritageObjectSearcher {
       isPartOf: dataset,
     };
 
-    const heritageObject = removeUndefinedValues<HeritageObject>(
+    const heritageObject = removeNullish<HeritageObject>(
       heritageObjectWithUndefinedValues
     );
 

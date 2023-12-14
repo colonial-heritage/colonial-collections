@@ -1,14 +1,15 @@
-import {ontologyUrl, HeritageObject, Term} from '../definitions';
+import {HeritageObject, Term} from '../definitions';
 import {
   getPropertyValue,
   getPropertyValues,
   onlyOne,
-  removeUndefinedValues,
+  removeNullish,
 } from '../rdf-helpers';
 import {
   createAgents,
   createDatasets,
   createImages,
+  createPlaces,
   createThings,
   createTimeSpans,
 } from './rdf-helpers';
@@ -37,62 +38,71 @@ export class HeritageObjectFetcher {
 
   private async fetchTriples(iri: string) {
     const query = `
-      PREFIX cc: <${ontologyUrl}>
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+      PREFIX ex: <https://example.org/>
       PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX dig: <http://www.ics.forth.gr/isl/CRMdig/>
+      PREFIX gn: <http://www.geonames.org/ontology#>
       PREFIX la: <https://linked.art/ns/terms/>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX schema: <https://schema.org/>
 
       CONSTRUCT {
-        ?object a cc:HeritageObject ;
-          cc:identifier ?identificationNumber ;
-          cc:name ?name ;
-          cc:description ?description ;
-          cc:inscription ?inscription ;
-          cc:additionalType ?type ;
-          cc:about ?subject ;
-          cc:material ?material ;
-          cc:technique ?technique ;
-          cc:creator ?creator ;
-          cc:dateCreated ?dateCreatedTimeSpan ;
-          cc:image ?digitalObject ;
-          cc:owner ?owner ;
-          cc:isPartOf ?dataset .
+        ?object a ex:HeritageObject ;
+          ex:identifier ?identificationNumber ;
+          ex:name ?name ;
+          ex:description ?description ;
+          ex:inscription ?inscription ;
+          ex:additionalType ?type ;
+          ex:about ?subject ;
+          ex:material ?material ;
+          ex:technique ?technique ;
+          ex:creator ?creator ;
+          ex:dateCreated ?dateCreatedTimeSpan ;
+          ex:locationCreated ?locationCreated ;
+          ex:image ?digitalObject ;
+          ex:owner ?owner ;
+          ex:isPartOf ?dataset .
 
-        ?type a cc:DefinedTerm ;
-          cc:name ?typeName .
+        ?type a ex:DefinedTerm ;
+          ex:name ?typeName .
 
-        ?subject a cc:DefinedTerm ;
-          cc:name ?subjectName .
+        ?subject a ex:DefinedTerm ;
+          ex:name ?subjectName .
 
-        ?material a cc:DefinedTerm ;
-          cc:name ?materialName .
+        ?material a ex:DefinedTerm ;
+          ex:name ?materialName .
 
-        ?technique a cc:DefinedTerm ;
-          cc:name ?techniqueName .
+        ?technique a ex:DefinedTerm ;
+          ex:name ?techniqueName .
 
         ?creator a ?creatorType ;
-          cc:name ?creatorName .
+          ex:name ?creatorName .
 
-        ?dateCreatedTimeSpan a cc:TimeSpan ;
-          cc:startDate ?dateCreatedBegin ;
-          cc:endDate ?dateCreatedEnd .
+        ?dateCreatedTimeSpan a ex:TimeSpan ;
+          ex:startDate ?dateCreatedBegin ;
+          ex:endDate ?dateCreatedEnd .
 
-        ?digitalObject a cc:ImageObject ;
-          cc:contentUrl ?contentUrl .
+        ?locationCreated a ex:Place ;
+          ex:name ?locationCreatedName ;
+          ex:isPartOf ?countryCreated .
+
+        ?countryCreated a ex:Place ;
+          ex:name ?countryCreatedName .
+
+        ?digitalObject a ex:ImageObject ;
+          ex:contentUrl ?contentUrl .
 
         ?owner a ?ownerType ;
-          cc:name ?ownerName .
+          ex:name ?ownerName .
 
-        ?dataset a cc:Dataset ;
-          cc:publisher ?publisher ;
-          cc:name ?datasetName .
+        ?dataset a ex:Dataset ;
+          ex:publisher ?publisher ;
+          ex:name ?datasetName .
 
         ?publisher a ?publisherType ;
-          cc:name ?publisherName .
+          ex:name ?publisherName .
       }
       WHERE {
         BIND(<${iri}> as ?object)
@@ -189,8 +199,8 @@ export class HeritageObjectFetcher {
             rdf:type ?creatorTypeTemp .
 
           VALUES (?creatorTypeTemp ?creatorType) {
-            (schema:Organization cc:Organization)
-            (crm:E21_Person cc:Person)
+            (schema:Organization ex:Organization)
+            (crm:E21_Person ex:Person)
             (UNDEF UNDEF)
           }
         }
@@ -208,6 +218,24 @@ export class HeritageObjectFetcher {
 
           OPTIONAL {
             ?dateCreatedTimeSpan crm:P82b_end_of_the_end ?dateCreatedEnd
+          }
+        }
+
+        ####################
+        # Location of creation
+        ####################
+
+        OPTIONAL {
+          ?object crm:P108i_was_produced_by/crm:P7_took_place_at ?locationCreated .
+          ?locationCreated gn:name ?locationCreatedName ;
+            gn:featureCode ?featureCode .
+          FILTER(LANG(?locationCreatedName) = "" || LANGMATCHES(LANG(?locationCreatedName), "en"))
+
+          # Country of which the location is a part
+          OPTIONAL {
+            ?locationCreated gn:parentCountry ?countryCreated .
+            ?countryCreated gn:name ?countryCreatedName .
+            FILTER(LANG(?countryCreatedName) = "" || LANGMATCHES(LANG(?countryCreatedName), "en"))
           }
         }
 
@@ -234,8 +262,8 @@ export class HeritageObjectFetcher {
           FILTER(LANG(?ownerName) = "" || LANGMATCHES(LANG(?ownerName), "en"))
 
           VALUES (?ownerTypeTemp ?ownerType) {
-            (schema:Organization cc:Organization)
-            (schema:Person cc:Person)
+            (schema:Organization ex:Organization)
+            (schema:Person ex:Person)
             (UNDEF UNDEF)
           }
         }
@@ -266,8 +294,8 @@ export class HeritageObjectFetcher {
               rdf:type ?publisherTypeTemp .
 
             VALUES (?publisherTypeTemp ?publisherType) {
-              (schema:Organization cc:Organization)
-              (schema:Person cc:Person)
+              (schema:Organization ex:Organization)
+              (schema:Person ex:Person)
               (UNDEF UNDEF)
             }
           }
@@ -284,7 +312,7 @@ export class HeritageObjectFetcher {
   ) {
     const loader = new RdfObjectLoader({
       context: {
-        cc: ontologyUrl,
+        ex: 'https://example.org/',
         rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
       },
     });
@@ -296,21 +324,24 @@ export class HeritageObjectFetcher {
       return undefined; // No such object
     }
 
-    const identifier = getPropertyValue(rawHeritageObject, 'cc:identifier');
-    const name = getPropertyValue(rawHeritageObject, 'cc:name');
-    const description = getPropertyValue(rawHeritageObject, 'cc:description');
-    const types = createThings<Term>(rawHeritageObject, 'cc:additionalType');
-    const subjects = createThings<Term>(rawHeritageObject, 'cc:about');
-    const inscriptions = getPropertyValues(rawHeritageObject, 'cc:inscription');
-    const materials = createThings<Term>(rawHeritageObject, 'cc:material');
-    const techniques = createThings<Term>(rawHeritageObject, 'cc:technique');
-    const creators = createAgents(rawHeritageObject, 'cc:creator');
+    const identifier = getPropertyValue(rawHeritageObject, 'ex:identifier');
+    const name = getPropertyValue(rawHeritageObject, 'ex:name');
+    const description = getPropertyValue(rawHeritageObject, 'ex:description');
+    const types = createThings<Term>(rawHeritageObject, 'ex:additionalType');
+    const subjects = createThings<Term>(rawHeritageObject, 'ex:about');
+    const inscriptions = getPropertyValues(rawHeritageObject, 'ex:inscription');
+    const materials = createThings<Term>(rawHeritageObject, 'ex:material');
+    const techniques = createThings<Term>(rawHeritageObject, 'ex:technique');
+    const creators = createAgents(rawHeritageObject, 'ex:creator');
     const dateCreated = onlyOne(
-      createTimeSpans(rawHeritageObject, 'cc:dateCreated')
+      createTimeSpans(rawHeritageObject, 'ex:dateCreated')
     );
-    const images = createImages(rawHeritageObject, 'cc:image');
-    const owner = onlyOne(createAgents(rawHeritageObject, 'cc:owner'));
-    const dataset = onlyOne(createDatasets(rawHeritageObject, 'cc:isPartOf'));
+    const locationCreated = onlyOne(
+      createPlaces(rawHeritageObject, 'ex:locationCreated')
+    );
+    const images = createImages(rawHeritageObject, 'ex:image');
+    const owner = onlyOne(createAgents(rawHeritageObject, 'ex:owner'));
+    const dataset = onlyOne(createDatasets(rawHeritageObject, 'ex:isPartOf'));
 
     const heritageObjectWithUndefinedValues: HeritageObject = {
       id: iri,
@@ -324,12 +355,13 @@ export class HeritageObjectFetcher {
       techniques,
       creators,
       dateCreated,
+      locationCreated,
       images,
       owner,
       isPartOf: dataset,
     };
 
-    const heritageObject = removeUndefinedValues<HeritageObject>(
+    const heritageObject = removeNullish<HeritageObject>(
       heritageObjectWithUndefinedValues
     );
 

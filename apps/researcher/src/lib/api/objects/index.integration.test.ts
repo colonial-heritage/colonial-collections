@@ -32,7 +32,7 @@ describe('getProvenanceEventsByHeritageObjectId', () => {
         'https://example.org/objects/1'
       );
 
-    expect(provenanceEvents).toHaveLength(4);
+    expect(provenanceEvents).toHaveLength(5);
   });
 });
 
