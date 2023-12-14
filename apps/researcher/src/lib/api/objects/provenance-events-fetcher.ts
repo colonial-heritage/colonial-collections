@@ -150,7 +150,6 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisitionProvEvent crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?acquisitionBeginOfTheBegin .
-            # TBD: add a FILTER() to remove invalid dates?
           }
 
           ####################
@@ -159,7 +158,6 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisitionProvEvent crm:P4_has_time-span/crm:P82b_end_of_the_end ?acquisitionEndOfTheEnd .
-            # TBD: add a FILTER() to remove invalid dates?
           }
 
           ####################
@@ -187,11 +185,13 @@ export class ProvenanceEventsFetcher {
           ####################
 
           OPTIONAL {
-            ?acquisitionProvEvent crm:P183i_starts_after_the_end_of ?acquisitionStartsAfterTheEndOf ;
+            ?acquisitionProvEvent crm:P183i_starts_after_the_end_of ?acquisitionProvEventStartsAfterTheEndOf .
+            ?acquisitionProvEventStartsAfterTheEndOf crm:P9_consists_of ?acquisitionStartsAfterTheEndOf .
           }
 
           OPTIONAL {
-            ?acquisitionProvEvent crm:P183_ends_before_the_start_of ?acquisitionEndsBeforeTheStartOf ;
+            ?acquisitionProvEvent crm:P183_ends_before_the_start_of ?acquisitionProvEventEndsBeforeTheStartOf .
+            ?acquisitionProvEventEndsBeforeTheStartOf crm:P9_consists_of ?acquisitionEndsBeforeTheStartOf .
           }
         }
 
@@ -257,7 +257,6 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustodyProvEvent crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?transferOfCustodyBeginOfTheBegin .
-            # TBD: add a FILTER() to remove invalid dates?
           }
 
           ####################
@@ -266,7 +265,6 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustodyProvEvent crm:P4_has_time-span/crm:P82b_end_of_the_end ?transferOfCustodyEndOfTheEnd .
-            # TBD: add a FILTER() to remove invalid dates?
           }
 
           ####################
@@ -294,11 +292,13 @@ export class ProvenanceEventsFetcher {
           ####################
 
           OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P183i_starts_after_the_end_of ?transferOfCustodyStartsAfterTheEndOf ;
+            ?transferOfCustodyProvEvent crm:P183i_starts_after_the_end_of ?transferOfCustodyProvEventStartsAfterTheEndOf .
+            ?transferOfCustodyProvEventStartsAfterTheEndOf crm:P9_consists_of ?transferOfCustodyStartsAfterTheEndOf .
           }
 
           OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P183_ends_before_the_start_of ?transferOfCustodyEndsBeforeTheStartOf ;
+            ?transferOfCustodyProvEvent crm:P183_ends_before_the_start_of ?transferOfCustodyProvEventEndsBeforeTheStartOf .
+            ?transferOfCustodyProvEventEndsBeforeTheStartOf crm:P9_consists_of ?transferOfCustodyEndsBeforeTheStartOf .
           }
         }
       }
