@@ -1,10 +1,9 @@
-import {ontologyUrl} from './definitions';
 import {
   getProperty,
   getPropertyValue,
   getPropertyValues,
   onlyOne,
-  removeUndefinedValues,
+  removeNullish,
 } from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
@@ -13,7 +12,7 @@ import {StreamParser} from 'n3';
 
 const loader = new RdfObjectLoader({
   context: {
-    cc: ontologyUrl,
+    ex: 'https://example.org/',
     rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
   },
 });
@@ -21,12 +20,11 @@ let resource: Resource;
 
 beforeAll(async () => {
   const triples = `
-    @prefix cc: <${ontologyUrl}> .
     @prefix ex: <https://example.org/> .
 
-    ex:object1 a cc:Object ;
-      cc:name "Name" ;
-      cc:description "Description 1", "Description 2" .
+    ex:object1 a ex:Object ;
+      ex:name "Name" ;
+      ex:description "Description 1", "Description 2" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -38,13 +36,13 @@ beforeAll(async () => {
 
 describe('getProperty', () => {
   it('returns undefined if property does not exist', () => {
-    const property = getProperty(resource, 'cc:unknown');
+    const property = getProperty(resource, 'ex:unknown');
 
     expect(property).toBeUndefined();
   });
 
   it('returns property if it exists', () => {
-    const property = getProperty(resource, 'cc:name');
+    const property = getProperty(resource, 'ex:name');
 
     expect(property).toBeInstanceOf(Resource);
   });
@@ -52,13 +50,13 @@ describe('getProperty', () => {
 
 describe('getPropertyValue', () => {
   it('returns undefined if property does not exist', () => {
-    const value = getPropertyValue(resource, 'cc:unknown');
+    const value = getPropertyValue(resource, 'ex:unknown');
 
     expect(value).toBeUndefined();
   });
 
   it('returns value if property exists', () => {
-    const value = getPropertyValue(resource, 'cc:name');
+    const value = getPropertyValue(resource, 'ex:name');
 
     expect(value).toStrictEqual('Name');
   });
@@ -66,13 +64,13 @@ describe('getPropertyValue', () => {
 
 describe('getPropertyValues', () => {
   it('returns undefined if properties do not exist', () => {
-    const values = getPropertyValues(resource, 'cc:unknown');
+    const values = getPropertyValues(resource, 'ex:unknown');
 
     expect(values).toBeUndefined();
   });
 
   it('returns values if properties exist', () => {
-    const values = getPropertyValues(resource, 'cc:description');
+    const values = getPropertyValues(resource, 'ex:description');
 
     expect(values).toStrictEqual(['Description 1', 'Description 2']);
   });
@@ -98,16 +96,16 @@ describe('onlyOne', () => {
   });
 });
 
-describe('removeUndefinedValues', () => {
-  it('returns null if input is not an object', () => {
+describe('removeNullish', () => {
+  it('returns empty object if input is not an object', () => {
     // @ts-expect-error:TS2345
-    const object = removeUndefinedValues(undefined);
+    const object = removeNullish(undefined);
 
-    expect(object).toStrictEqual(null);
+    expect(object).toStrictEqual({});
   });
 
-  it('returns object without undefined values', () => {
-    const object = removeUndefinedValues({
+  it('returns object without nullish values', () => {
+    const object = removeNullish({
       1: 2,
       3: undefined,
     });
@@ -116,8 +114,8 @@ describe('removeUndefinedValues', () => {
   });
 
   // TBD: will this pose a problem?
-  it('returns object with undefined values in nested objects', () => {
-    const object = removeUndefinedValues({
+  it('returns object with nullish values in nested objects', () => {
+    const object = removeNullish({
       4: {
         5: 6,
         7: undefined,

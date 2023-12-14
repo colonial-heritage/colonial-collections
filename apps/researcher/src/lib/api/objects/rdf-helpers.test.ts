@@ -1,8 +1,8 @@
-import {ontologyUrl} from '../definitions';
 import {
   createAgents,
   createDatasets,
   createImages,
+  createPlaces,
   createThings,
   createTimeSpans,
 } from './rdf-helpers';
@@ -13,7 +13,7 @@ import {StreamParser} from 'n3';
 
 const loader = new RdfObjectLoader({
   context: {
-    cc: ontologyUrl,
+    ex: 'https://example.org/',
     rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
   },
 });
@@ -21,70 +21,80 @@ let resource: Resource;
 
 beforeAll(async () => {
   const triples = `
-    @prefix cc: <${ontologyUrl}> .
     @prefix ex: <https://example.org/> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-    ex:object1 a cc:Object ;
-      cc:name "Name" ;
-      cc:subject ex:subject1, ex:subject2 ;
-      cc:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
-      cc:image ex:image1, ex:image2, ex:image3 ;
-      cc:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3 ;
-      cc:isPartOf ex:dataset1, ex:dataset2, ex:dataset3 .
+    ex:object1 a ex:Object ;
+      ex:name "Name" ;
+      ex:subject ex:subject1, ex:subject2 ;
+      ex:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
+      ex:image ex:image1, ex:image2, ex:image3 ;
+      ex:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3 ;
+      ex:locationCreated ex:location1, ex:location2 ;
+      ex:isPartOf ex:dataset1, ex:dataset2, ex:dataset3 .
 
-    ex:subject1 a cc:Term ;
-      cc:name "Term" .
+    ex:subject1 a ex:Term ;
+      ex:name "Term" .
 
-    ex:subject2 a cc:Term .
+    ex:subject2 a ex:Term .
 
-    ex:creator1 a cc:Person ;
-      cc:name "Person" .
+    ex:creator1 a ex:Person ;
+      ex:name "Person" .
 
-    ex:creator2 a cc:Organization ;
-      cc:name "Organization" .
+    ex:creator2 a ex:Organization ;
+      ex:name "Organization" .
 
-    ex:creator3 a cc:Organization .
+    ex:creator3 a ex:Organization .
 
-    ex:creator4 cc:name "Organization" .
+    ex:creator4 ex:name "Organization" .
 
-    ex:image1 a cc:Image ;
-      cc:contentUrl <https://example.org/image1.jpg> .
+    ex:image1 a ex:Image ;
+      ex:contentUrl <https://example.org/image1.jpg> .
 
-    ex:image2 a cc:Image ;
-      cc:contentUrl <https://example.org/image2.jpg> .
+    ex:image2 a ex:Image ;
+      ex:contentUrl <https://example.org/image2.jpg> .
 
-    ex:image3 a cc:Image .
+    ex:image3 a ex:Image .
 
-    ex:dateCreated1 a cc:TimeSpan ;
-      cc:startDate "1889"^^xsd:gYear ;
-      cc:endDate "1900"^^xsd:gYear .
+    ex:dateCreated1 a ex:TimeSpan ;
+      ex:startDate "1889"^^xsd:gYear ;
+      ex:endDate "1900"^^xsd:gYear .
 
     # No end date
-    ex:dateCreated2 a cc:TimeSpan ;
-      cc:startDate "1889"^^xsd:gYear .
+    ex:dateCreated2 a ex:TimeSpan ;
+      ex:startDate "1889"^^xsd:gYear .
 
     # No start date
-    ex:dateCreated3 a cc:TimeSpan ;
-      cc:endDate "1900"^^xsd:gYear .
+    ex:dateCreated3 a ex:TimeSpan ;
+      ex:endDate "1900"^^xsd:gYear .
 
-    ex:dataset1 a cc:Dataset ;
-      cc:name "Dataset 1" ;
-      cc:publisher ex:publisher1 .
+    ex:location1 a ex:Place ;
+      ex:name "City 1" .
 
-    ex:publisher1 a cc:Organization ;
-      cc:name "Publishing organization" .
+    ex:location2 a ex:Place ;
+      ex:name "City 2" ;
+      ex:isPartOf ex:location3 .
 
-    ex:dataset2 a cc:Dataset ;
-      cc:name "Dataset 2" ;
-      cc:publisher ex:publisher2 .
+    ex:location3 a ex:Place ;
+      ex:name "Country" .
 
-    ex:publisher2 a cc:Person ;
-      cc:name "Publishing person" .
+    ex:dataset1 a ex:Dataset ;
+      ex:name "Dataset 1" ;
+      ex:publisher ex:publisher1 .
+
+    ex:publisher1 a ex:Organization ;
+      ex:name "Publishing organization" .
+
+    ex:dataset2 a ex:Dataset ;
+      ex:name "Dataset 2" ;
+      ex:publisher ex:publisher2 .
+
+    ex:publisher2 a ex:Person ;
+      ex:name "Publishing person" .
 
     # No publisher
-    ex:dataset3 a cc:Dataset ;
-      cc:name "Dataset 3" .
+    ex:dataset3 a ex:Dataset ;
+      ex:name "Dataset 3" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -96,13 +106,13 @@ beforeAll(async () => {
 
 describe('createThings', () => {
   it('returns undefined if properties do not exist', () => {
-    const things = createThings(resource, 'cc:unknown');
+    const things = createThings(resource, 'ex:unknown');
 
     expect(things).toBeUndefined();
   });
 
   it('returns things if properties exist', () => {
-    const things = createThings(resource, 'cc:subject');
+    const things = createThings(resource, 'ex:subject');
 
     expect(things).toStrictEqual([
       {id: 'https://example.org/subject1', name: 'Term'},
@@ -113,13 +123,13 @@ describe('createThings', () => {
 
 describe('createAgents', () => {
   it('returns undefined if properties do not exist', () => {
-    const agents = createAgents(resource, 'cc:unknown');
+    const agents = createAgents(resource, 'ex:unknown');
 
     expect(agents).toBeUndefined();
   });
 
   it('returns agents if properties exist', () => {
-    const agents = createAgents(resource, 'cc:creator');
+    const agents = createAgents(resource, 'ex:creator');
 
     expect(agents).toStrictEqual([
       {type: 'Person', id: 'https://example.org/creator1', name: 'Person'},
@@ -142,15 +152,42 @@ describe('createAgents', () => {
   });
 });
 
+describe('createPlaces', () => {
+  it('returns undefined if properties do not exist', () => {
+    const places = createPlaces(resource, 'ex:unknown');
+
+    expect(places).toBeUndefined();
+  });
+
+  it('returns places if properties exist', () => {
+    const places = createPlaces(resource, 'ex:locationCreated');
+
+    expect(places).toStrictEqual([
+      {
+        id: 'https://example.org/location1',
+        name: 'City 1',
+      },
+      {
+        id: 'https://example.org/location2',
+        name: 'City 2',
+        isPartOf: {
+          id: 'https://example.org/location3',
+          name: 'Country',
+        },
+      },
+    ]);
+  });
+});
+
 describe('createImages', () => {
   it('returns undefined if properties do not exist', () => {
-    const images = createImages(resource, 'cc:unknown');
+    const images = createImages(resource, 'ex:unknown');
 
     expect(images).toBeUndefined();
   });
 
   it('returns images if properties exist', () => {
-    const images = createImages(resource, 'cc:image');
+    const images = createImages(resource, 'ex:image');
 
     expect(images).toStrictEqual([
       {
@@ -168,13 +205,13 @@ describe('createImages', () => {
 
 describe('createTimeSpan', () => {
   it('returns undefined if properties do not exist', () => {
-    const timeSpans = createTimeSpans(resource, 'cc:unknown');
+    const timeSpans = createTimeSpans(resource, 'ex:unknown');
 
     expect(timeSpans).toBeUndefined();
   });
 
   it('returns time spans if properties exist', () => {
-    const timeSpans = createTimeSpans(resource, 'cc:dateCreated');
+    const timeSpans = createTimeSpans(resource, 'ex:dateCreated');
 
     expect(timeSpans).toStrictEqual([
       {
@@ -198,13 +235,13 @@ describe('createTimeSpan', () => {
 
 describe('createDataset', () => {
   it('returns undefined if properties do not exist', () => {
-    const datasets = createDatasets(resource, 'cc:unknown');
+    const datasets = createDatasets(resource, 'ex:unknown');
 
     expect(datasets).toBeUndefined();
   });
 
   it('returns datasets if properties exist', () => {
-    const datasets = createDatasets(resource, 'cc:isPartOf');
+    const datasets = createDatasets(resource, 'ex:isPartOf');
 
     expect(datasets).toStrictEqual([
       {
