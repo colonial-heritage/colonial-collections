@@ -20,9 +20,9 @@
     "test:e2e:open": "cypress open"
   },
   "dependencies": {
-    "@clerk/localizations": "1.26.10",
-    "@clerk/nextjs": "4.27.4",
-    "@clerk/types": "3.58.0",
+    "@clerk/localizations": "1.26.12",
+    "@clerk/nextjs": "4.27.7",
+    "@clerk/types": "3.59.0",
     "@colonial-collections/content": "*",
     "@colonial-collections/database": "*",
     "@colonial-collections/enricher": "*",
@@ -36,10 +36,11 @@
     "@hookform/resolvers": "3.3.2",
     "@next/mdx": "14.0.1",
     "classnames": "2.3.2",
+    "defu": "6.1.3",
     "fetch-sparql-endpoint": "4.1.0",
     "iso-639-1-dir": "3.0.5",
     "jwt-decode": "^4.0.0",
-    "next": "14.0.3",
+    "next": "14.0.4",
     "next-intl": "3.2.5",
     "openseadragon": "4.1.0",
     "rdf-object": "1.14.0",
@@ -72,7 +73,7 @@
     "postcss": "8.4.31",
     "streamify-string": "1.0.1",
     "tailwind-config": "*",
-    "tailwindcss": "3.3.5",
+    "tailwindcss": "3.3.6",
     "tsconfig": "*",
     "typescript": "5.1.6"
   }

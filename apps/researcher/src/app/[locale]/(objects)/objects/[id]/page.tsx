@@ -5,7 +5,7 @@ import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
-import {MetadataContainer, MetadataEntries} from './metadata';
+import {Metadata} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import organizations from '@/lib/organizations-instance';
 import {
@@ -18,13 +18,14 @@ import {
 } from '@colonial-collections/ui';
 import useObject from './use-object';
 import {env} from 'node:process';
-import {formatDateCreated} from './format-date-created';
+import {formatDateRange} from './format-date-range';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
 import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
+import Provenance from './(provenance)/overview';
 
 export const dynamic = 'force-dynamic';
 
@@ -193,84 +194,76 @@ export default async function Details({params}: Props) {
             <h2 className="text-2xl">{t('metadata')}</h2>
           </div>
           <div className="flex flex-col gap-8 self-stretch">
-            <MetadataContainer
+            <Metadata
               translationKey="name"
               enrichmentType={AdditionalType.Name}
             >
-              <MetadataEntries>{object.name}</MetadataEntries>
-            </MetadataContainer>
-            <MetadataContainer
+              {object.name}
+            </Metadata>
+            <Metadata
               translationKey="description"
               enrichmentType={AdditionalType.Description}
             >
-              <MetadataEntries>{object.description}</MetadataEntries>
-            </MetadataContainer>
+              {object.description}
+            </Metadata>
 
-            <MetadataContainer
+            <Metadata
               translationKey="materials"
               enrichmentType={AdditionalType.Material}
             >
-              <MetadataEntries>
-                {object.materials?.map(material => (
-                  <div key={material.id}>{material.name}</div>
-                ))}
-              </MetadataEntries>
-            </MetadataContainer>
+              {object.materials?.map(material => (
+                <div key={material.id}>{material.name}</div>
+              ))}
+            </Metadata>
 
-            <MetadataContainer
+            <Metadata
               translationKey="dateCreated"
               enrichmentType={AdditionalType.DateCreated}
             >
-              <MetadataEntries>
-                {object.dateCreated && (
-                  <div>{formatDateCreated(object.dateCreated, locale)}</div>
-                )}
-              </MetadataEntries>
-            </MetadataContainer>
+              {object.dateCreated && (
+                <div>
+                  {formatDateRange({
+                    startDate: object.dateCreated.startDate,
+                    endDate: object.dateCreated.endDate,
+                    locale,
+                  })}
+                </div>
+              )}
+            </Metadata>
 
-            <MetadataContainer
+            <Metadata
               translationKey="types"
               enrichmentType={AdditionalType.Type}
             >
-              <MetadataEntries>
-                {object.types?.map(type => (
-                  <div key={type.id}>{type.name}</div>
-                ))}
-              </MetadataEntries>
-            </MetadataContainer>
+              {object.types?.map(type => <div key={type.id}>{type.name}</div>)}
+            </Metadata>
 
-            <MetadataContainer
+            <Metadata
               translationKey="techniques"
               enrichmentType={AdditionalType.Technique}
             >
-              <MetadataEntries>
-                {object.techniques?.map(technique => (
-                  <div key={technique.id}>{technique.name}</div>
-                ))}
-              </MetadataEntries>
-            </MetadataContainer>
+              {object.techniques?.map(technique => (
+                <div key={technique.id}>{technique.name}</div>
+              ))}
+            </Metadata>
 
-            <MetadataContainer
+            <Metadata
               translationKey="creators"
               enrichmentType={AdditionalType.Creator}
             >
-              <MetadataEntries>
-                {object.creators?.map(creator => (
-                  <div key={creator.id}>{creator.name}</div>
-                ))}
-              </MetadataEntries>
-            </MetadataContainer>
+              {object.creators?.map(creator => (
+                <div key={creator.id}>{creator.name}</div>
+              ))}
+            </Metadata>
 
-            <MetadataContainer
+            <Metadata
               translationKey="inscriptions"
               enrichmentType={AdditionalType.Inscription}
             >
-              <MetadataEntries>
-                {object.inscriptions?.map(inscription => (
-                  <div key={inscription}>{inscription}</div>
-                ))}
-              </MetadataEntries>
-            </MetadataContainer>
+              {object.inscriptions?.map(inscription => (
+                <div key={inscription}>{inscription}</div>
+              ))}
+            </Metadata>
           </div>
         </main>
         <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-neutral-100 p-1">
@@ -281,6 +274,7 @@ export default async function Details({params}: Props) {
           )}
         </aside>
       </div>
+      <Provenance objectId={id} />
     </>
   );
 }

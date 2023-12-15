@@ -1,6 +1,5 @@
 import {useTranslations} from 'next-intl';
-import {ReactNode} from 'react';
-import {create} from 'zustand';
+import {PropsWithChildren, ReactNode} from 'react';
 import useObject from './use-object';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/solid';
 import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
@@ -13,27 +12,34 @@ import type {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
 
-const useMetadata = create<{
-  translationKey: string;
-  enrichmentType?: AdditionalType;
-}>(() => ({
-  translationKey: '',
-  enrichmentType: undefined,
-}));
-
 interface Props {
   translationKey: string;
   enrichmentType?: AdditionalType;
-  children: ReactNode;
 }
 
-export function MetadataContainer({
+export function Metadata({
   translationKey,
   enrichmentType,
   children,
-}: Props) {
-  useMetadata.setState({translationKey, enrichmentType});
+}: PropsWithChildren<Props>) {
   const t = useTranslations('ObjectDetails');
+  const {enrichments} = useObject.getState();
+
+  const metadataEnrichments = enrichmentType
+    ? enrichments.filter(
+        enrichment => enrichment.additionalType === enrichmentType
+      )
+    : [];
+
+  if (!children && metadataEnrichments.length === 0) {
+    return (
+      <div className="text-neutral-600 italic w-full border-t py-6 text-sm">
+        {t.rich('noData', {
+          subject: () => <span className="lowercase">{t(translationKey)}</span>,
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -48,9 +54,30 @@ export function MetadataContainer({
             </div>
           </div>
         </div>
-        <div className="w-full xl:w-4/5 flex flex-col gap-2">{children}</div>
+        <div className="w-full xl:w-4/5 flex flex-col gap-2">
+          <MetadataEntry translationKey={translationKey} isCurrentPublisher>
+            {children}
+          </MetadataEntry>
+          {metadataEnrichments?.map(enrichment => (
+            <MetadataEntry
+              key={enrichment.id}
+              translationKey={translationKey}
+              dateCreated={enrichment.dateCreated}
+              citation={enrichment.citation}
+              creator={enrichment.creator}
+              languageCode={enrichment.inLanguage as LanguageCode}
+            >
+              {enrichment.description}
+            </MetadataEntry>
+          ))}
+        </div>
       </div>
-      {enrichmentType && <AddMetadataEnrichment />}
+      {enrichmentType && (
+        <AddMetadataEnrichment
+          translationKey={translationKey}
+          enrichmentType={enrichmentType}
+        />
+      )}
     </div>
   );
 }
@@ -60,8 +87,9 @@ interface MetadataEntryProps {
   dateCreated?: Date;
   citation?: string;
   creator?: {name: string};
-  children?: ReactNode;
   languageCode?: LanguageCode;
+  translationKey: string;
+  children?: ReactNode;
 }
 
 export async function MetadataEntry({
@@ -70,22 +98,12 @@ export async function MetadataEntry({
   citation,
   creator,
   languageCode,
+  translationKey,
   children,
 }: MetadataEntryProps) {
-  const {translationKey} = useMetadata.getState();
   const {organization} = useObject.getState();
   const t = useTranslations('ObjectDetails');
   const format = await getFormatter();
-
-  if (isCurrentPublisher && !children) {
-    return (
-      <div className="text-neutral-600 italic w-full border-t py-6 text-sm">
-        {t.rich('noData', {
-          subject: () => <span className="lowercase">{t(translationKey)}</span>,
-        })}
-      </div>
-    );
-  }
 
   const author = creator ? creator : organization;
 
@@ -141,36 +159,8 @@ export async function MetadataEntry({
   );
 }
 
-export async function MetadataEntries({children}: {children: ReactNode}) {
-  const {enrichmentType} = useMetadata.getState();
-  const {enrichments} = useObject.getState();
-
-  const metadataEnrichments = enrichmentType
-    ? enrichments.filter(
-        enrichment => enrichment.additionalType === enrichmentType
-      )
-    : [];
-  return (
-    <>
-      <MetadataEntry isCurrentPublisher>{children}</MetadataEntry>
-      {metadataEnrichments?.map(enrichment => (
-        <MetadataEntry
-          key={enrichment.id}
-          dateCreated={enrichment.dateCreated}
-          citation={enrichment.citation}
-          creator={enrichment.creator}
-          languageCode={enrichment.inLanguage as LanguageCode}
-        >
-          {enrichment.description}
-        </MetadataEntry>
-      ))}
-    </>
-  );
-}
-
-export function AddMetadataEnrichment() {
+export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
   const t = useTranslations('ObjectDetails');
-  const {enrichmentType, translationKey} = useMetadata.getState();
   const objectId = useObject.getState().objectId;
 
   if (!enrichmentType) {

@@ -106,6 +106,18 @@
     "objectRemovedFromList": "Object removed from list <name></name>.",
     "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later."
   },
+  "Provenance": {
+    "title": "Provenance",
+    "description": "Provenance information shows the trail an object has made before it came at the current location. It can contain information about previous owners to technical processing information. This provenance data is often incomplete.",
+    "initial": "P",
+    "id": "Id",
+    "type": "Type",
+    "transferredFrom": "Transferred from",
+    "transferredTo": "Transferred to",
+    "location": "Location",
+    "descriptionTitle": "Description",
+    "noData": "No provenance events found"
+  },
   "PersonDetails": {
     "backButton": "Back to results",
     "noEntity": "Person could not be found",
