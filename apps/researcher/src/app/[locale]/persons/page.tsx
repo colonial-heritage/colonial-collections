@@ -133,82 +133,86 @@ export default async function Home({searchParams = {}}: Props) {
 
   return (
     <>
-      <Tabs />
-      <div className="flex flex-col md:flex-row gap-6">
-        {hasError && (
-          <div
-            className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
-            role="alert"
-            data-testid="fetch-error"
-          >
-            <p>{t('fetchError')}</p>
-          </div>
-        )}
+      <div className="bg-consortiumBlue-800 text-white flex flex-col gap-8 pt-9 pb-40">
+        <div className="max-w-[1800px] mx-auto w-full">
+          <Tabs />
+          <div className="mb-4 mx-4 sd:mx-10 flex flex-col md:flex-row gap-6">
+            {hasError && (
+              <div
+                className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 lg:col-span-3 xl:col-span-4"
+                role="alert"
+                data-testid="fetch-error"
+              >
+                <p>{t('fetchError')}</p>
+              </div>
+            )}
 
-        {searchResult && (
-          <>
-            <ListStoreUpdater
-              {...{
-                totalCount: searchResult.totalCount,
-                offset: searchResult.offset,
-                limit: searchResult.limit,
-                query: searchOptions.query ?? '',
-                sortBy,
-                selectedFilters: searchOptions.filters,
-              }}
-            />
-            <aside
-              id="facets"
-              className="hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap border-white border-r-2"
-            >
-              <FacetMenu filters={searchResult.filters} />
-            </aside>
-
-            <section className="w-full md:w-2/3 gap-6 flex flex-col">
-              <SmallScreenSubMenu>
-                <SubMenuButton className="inline-flex items-center md:hidden">
-                  <span className="text-base font-medium text-gray-900">
-                    {t('filters')}
-                  </span>
-                  <AdjustmentsHorizontalIcon
-                    className="ml-1 h-5 w-5 flex-shrink-0 text-gray-900"
-                    aria-hidden="true"
-                  />
-                </SubMenuButton>
-                <SubMenuDialog title={t('filters')}>
-                  <FacetMenu filters={searchResult.filters} />
-                </SubMenuDialog>
-              </SmallScreenSubMenu>
-              <PageHeader>
-                <div
-                  className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap"
-                  id="search-results"
-                >
-                  <div className="ml-4 mt-2">
-                    <PageTitle>
-                      {t('title', {
-                        constituentsTotalCount: searchResult.totalCount,
-                      })}
-                    </PageTitle>
-                  </div>
-                  <div>
-                    <OrderSelector />
-                  </div>
-                </div>
-                <SelectedFilters
-                  filters={searchResult.filters}
-                  filterSettings={facets}
+            {searchResult && (
+              <>
+                <ListStoreUpdater
+                  {...{
+                    totalCount: searchResult.totalCount,
+                    offset: searchResult.offset,
+                    limit: searchResult.limit,
+                    query: searchOptions.query ?? '',
+                    sortBy,
+                    selectedFilters: searchOptions.filters,
+                  }}
                 />
-              </PageHeader>
+                <aside
+                  id="facets"
+                  className="mb-4 md:mx-10 hidden md:flex w-full md:w-1/3 flex-row md:flex-col gap-10 overscroll-x-auto flex-nowrap"
+                >
+                  <FacetMenu filters={searchResult.filters} />
+                </aside>
 
-              <PersonList
-                persons={searchResult.persons}
-                totalCount={searchResult.totalCount}
-              />
-              <Paginator />
-            </section>
-          </>
-        )}
+                <section className="mb-4 md:mx-10 w-full md:w-2/3 gap-6 flex flex-col">
+                  <SmallScreenSubMenu>
+                    <SubMenuButton className="inline-flex items-center md:hidden">
+                      <span className="text-base font-medium ">
+                        {t('filters')}
+                      </span>
+                      <AdjustmentsHorizontalIcon
+                        className="ml-1 h-5 w-5 flex-shrink-0"
+                        aria-hidden="true"
+                      />
+                    </SubMenuButton>
+                    <SubMenuDialog title={t('filters')}>
+                      <FacetMenu filters={searchResult.filters} />
+                    </SubMenuDialog>
+                  </SmallScreenSubMenu>
+                  <PageHeader>
+                    <div
+                      className="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap"
+                      id="search-results"
+                    >
+                      <div className="ml-4 mt-2">
+                        <PageTitle>
+                          {t('title', {
+                            constituentsTotalCount: searchResult.totalCount,
+                          })}
+                        </PageTitle>
+                      </div>
+                      <div>
+                        <OrderSelector />
+                      </div>
+                    </div>
+                    <SelectedFilters
+                      filters={searchResult.filters}
+                      filterSettings={facets}
+                    />
+                  </PageHeader>
+
+                  <PersonList
+                    persons={searchResult.persons}
+                    totalCount={searchResult.totalCount}
+                  />
+                  <Paginator />
+                </section>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );
