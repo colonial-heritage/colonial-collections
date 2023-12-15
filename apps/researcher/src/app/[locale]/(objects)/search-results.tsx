@@ -186,11 +186,11 @@ export default async function SearchResults({searchParams = {}}: Props) {
                 <main className="w-full md:w-2/3 lg:w-4/5 order-2 md:order-1">
                   <SmallScreenSubMenu>
                     <SubMenuButton className="inline-flex items-center md:hidden">
-                      <span className="text-base font-medium text-gray-900">
+                      <span className="text-base font-medium text-white">
                         {t('filters')}
                       </span>
                       <AdjustmentsHorizontalIcon
-                        className="ml-1 h-5 w-5 flex-shrink-0 text-gray-900"
+                        className="ml-1 h-5 w-5 flex-shrink-0 text-white"
                         aria-hidden="true"
                       />
                     </SubMenuButton>
