@@ -206,6 +206,12 @@ export default async function Details({params}: Props) {
             >
               {object.description}
             </Metadata>
+            <Metadata
+              translationKey="locationCreated"
+              enrichmentType={AdditionalType.LocationCreated}
+            >
+              {object.locationCreated?.name}
+            </Metadata>
 
             <Metadata
               translationKey="materials"
