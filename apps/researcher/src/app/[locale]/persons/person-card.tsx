@@ -12,29 +12,29 @@ export default function PersonCard({person}: Props) {
   const t = useTranslations('PersonCard');
   const format = useFormatter();
 
-  const unknownClassName = 'text-gray-500 text-xs py-1';
+  const unknownClassName = 'text-consortiumBlue-100 text-xs py-1';
 
   return (
     <div
       key={person.id}
-      className="group relative flex flex-col overflow-hidden drop-shadow-md hover:drop-shadow-lg hover:-translate-y-0.5 transition ease-in-out duration-300 bg-white"
+      className="border border-consortiumGreen-300 bg-consortiumBlue-800 hover:bg-consortiumBlue-900 text-white group relative flex flex-col overflow-hidden"
       aria-label={t('person')}
     >
-      <div className="grid grid-cols-7 bg-sand-50 gap-0.5">
-        <div className="col-span-3 bg-white p-4 inline-flex items-center">
-          <h2 className="font-semibold text-lg text-gray-900 mt-0 inline-flex items-center">
+      <div className="grid grid-cols-7 gap-0.5">
+        <div className="col-span-3  p-4 inline-flex items-center">
+          <h2 className="font-semibold text-lg text-consortiumGreen-300 mt-0 inline-flex items-center">
             <PersonIcon className="w-6 h-6 mr-2" />
             <Link
               href={`/persons/${encodeRouteSegment(person.id)}`}
               data-testid="person-card-name"
-              className="text-gray-900"
+              className=""
             >
               <span aria-hidden="true" className="absolute inset-0" />
               {person.name}
             </Link>
           </h2>
         </div>
-        <div className="col-span-2 bg-white p-4">
+        <div className="col-span-2 p-4">
           {person.birthDate ? (
             <p>{format.dateTime(person.birthDate, {year: 'numeric'})} </p>
           ) : (
@@ -46,7 +46,7 @@ export default function PersonCard({person}: Props) {
             <p className={unknownClassName}>{t('birthPlaceUnknown')}</p>
           )}
         </div>
-        <div className="col-span-2 bg-white p-4">
+        <div className="col-span-2 p-4">
           {person.deathDate ? (
             <p>{format.dateTime(person.deathDate, {year: 'numeric'})} </p>
           ) : (
@@ -58,7 +58,7 @@ export default function PersonCard({person}: Props) {
             <p className={unknownClassName}>{t('deathPlaceUnknown')}</p>
           )}
         </div>
-        <div className="col-span-7 bg-white p-4">{t('relatedObjects')}</div>
+        <div className="col-span-7 p-4">{t('relatedObjects')}</div>
       </div>
     </div>
   );
