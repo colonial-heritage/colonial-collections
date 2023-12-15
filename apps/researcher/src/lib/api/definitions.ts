@@ -12,6 +12,7 @@ export type Place = Thing & {isPartOf?: Place};
 export type Person = Thing & {type: 'Person'};
 export type Unknown = Thing & {type: 'Unknown'};
 export type Agent = Person | Organization | Unknown;
+export type License = Thing;
 
 export type Dataset = Thing & {
   publisher?: Agent;
@@ -34,6 +35,7 @@ export type Organization = Thing & {
 export type Image = {
   id: string;
   contentUrl: string;
+  license?: License;
 };
 
 export type TimeSpan = {
