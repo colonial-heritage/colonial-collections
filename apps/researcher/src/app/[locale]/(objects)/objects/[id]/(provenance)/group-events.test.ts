@@ -1,7 +1,9 @@
 import {describe, expect} from '@jest/globals';
 import {groupByDateRange} from './group-events';
 import {LabeledProvenanceEvent} from './definitions';
+
 const locale = 'en';
+
 describe('groupByDateRange', () => {
   it('groups events by date range', () => {
     const events = [
