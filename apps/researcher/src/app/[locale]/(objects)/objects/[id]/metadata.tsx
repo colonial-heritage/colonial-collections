@@ -38,12 +38,12 @@ export function MetadataContainer({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
-        <div className="w-full xl:w-1/5 border-t border-blueGrey-100 pt-4">
-          <div className="sticky top-0 bg-white py-1">
+        <div className="w-full xl:w-1/5 border-t border-consortiumBlue-400 pt-4">
+          <div className="sticky top-0 bg-consortiumBlue-800 py-1">
             <h3 className="text-lg w-full my-1 flex items-center">
               {t(translationKey)}
             </h3>
-            <div className="text-blueGrey-700 text-sm">
+            <div className="text-consortiumBlue-100 text-sm">
               {t(`${translationKey}SubTitle`)}
             </div>
           </div>
@@ -79,7 +79,7 @@ export async function MetadataEntry({
 
   if (isCurrentPublisher && !children) {
     return (
-      <div className="text-neutral-600 italic w-full border-t py-6 text-sm">
+      <div className="text-consortiumBlue-100 italic w-full border-t py-6 text-sm">
         {t.rich('noData', {
           subject: () => <span className="lowercase">{t(translationKey)}</span>,
         })}
@@ -90,11 +90,11 @@ export async function MetadataEntry({
   const author = creator ? creator : organization;
 
   return (
-    <div className="border-t border-blueGrey-100 flex flex-col lg:flex-row justify-between gap-2">
+    <div className="border-t border-consortiumBlue-400 flex flex-col lg:flex-row justify-between gap-2">
       <div className="w-full lg:w-2/3 py-3 px-2">
         {children}
         {languageCode && (
-          <div className="text-xs font-normal text-neutral-500 ">
+          <div className="text-xs font-normal text-consortiumBlue-100 ">
             {ISO6391.getName(languageCode)}
           </div>
         )}
@@ -103,8 +103,9 @@ export async function MetadataEntry({
         className={classNames(
           'px-2 py-3 text-xs my-1 self-start w-full lg:w-1/3',
           {
-            'text-blueGrey-700': isCurrentPublisher,
-            'bg-[#f3eee2] text-sand-800': !isCurrentPublisher,
+            'text-white': isCurrentPublisher,
+            'bg-consortiumGreen-300 text-consortiumBlue-800 rounded':
+              !isCurrentPublisher,
           }
         )}
       >
@@ -123,9 +124,9 @@ export async function MetadataEntry({
               <div>
                 <SlideOutButton
                   id={`${translationKey}-${dateCreated}-citation`}
-                  className="p-1 rounded hover:bg-sand-200 -mt-1"
+                  className="p-1 rounded hover:bg-consortiumBlue-800 -mt-1"
                 >
-                  <InformationCircleIcon className="w-5 h-5 stroke-sand-700" />
+                  <InformationCircleIcon className="w-5 h-5 stroke-consortiumBlue-800 hover:stroke-consortiumGreen-300" />
                 </SlideOutButton>
               </div>
             )}
@@ -182,7 +183,7 @@ export function AddMetadataEnrichment() {
       <div className="flex justify-end text-consortiumBlue-800">
         <SlideOutButton
           id={`${enrichmentType}-form`}
-          className="py-2 px-3  transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800"
+          className="py-2 px-3 transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 hover:bg-white text-consortiumBlue-800"
         >
           <>
             {t.rich('addUserEnrichmentButton', {
