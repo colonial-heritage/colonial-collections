@@ -42,7 +42,7 @@ export class EnrichmentStorer {
     const languageCode = opts.inLanguage;
 
     // Make clear what application has published this nanopub
-    const softwareTool = DF.namedNode('https://app.collonialcollections.nl/');
+    const softwareTool = DF.namedNode('https://app.colonialcollections.nl/');
     publicationStore.addQuad(
       DF.quad(
         softwareTool,
