@@ -1,4 +1,4 @@
-import {Agent, Dataset, Image, Place, TimeSpan} from '../definitions';
+import {Agent, Dataset, Image, License, Place, TimeSpan} from '../definitions';
 import {getProperty, getPropertyValue} from '../rdf-helpers';
 import type {Resource} from 'rdf-object';
 
@@ -58,6 +58,17 @@ function createImage(imageResource: Resource) {
     id: imageResource.value,
     contentUrl: contentUrl!, // Ignore 'string | undefined' warning - it's always set
   };
+
+  // An image may not have a license
+  const licenseResource = getProperty(imageResource, 'ex:license');
+  if (licenseResource !== undefined) {
+    const name = getPropertyValue(licenseResource, 'ex:name');
+    const license: License = {
+      id: licenseResource.value,
+      name,
+    };
+    image.license = license;
+  }
 
   return image;
 }

@@ -49,7 +49,11 @@ beforeAll(async () => {
     ex:creator4 ex:name "Organization" .
 
     ex:image1 a ex:Image ;
-      ex:contentUrl <https://example.org/image1.jpg> .
+      ex:contentUrl <https://example.org/image1.jpg> ;
+      ex:license ex:license1 .
+
+    ex:license1 a ex:DigitalDocument ;
+      ex:name "License" .
 
     ex:image2 a ex:Image ;
       ex:contentUrl <https://example.org/image2.jpg> .
@@ -193,6 +197,10 @@ describe('createImages', () => {
       {
         id: 'https://example.org/image1',
         contentUrl: 'https://example.org/image1.jpg',
+        license: {
+          id: 'https://example.org/license1',
+          name: 'License',
+        },
       },
       {
         id: 'https://example.org/image2',
