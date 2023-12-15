@@ -22,14 +22,17 @@ export function SearchField({
   const [inputText, setInputText] = useState(query);
   const t = useTranslations('Filters');
 
-  const inputClassName = classNames('w-full rounded-l', {
-    'py-1 px-3 border border-neutral-700': variant === 'default',
-    'p-3 placeholder:text-blueGrey-500 placeholder:italic text-consortiumBlueOld-800 not-italic':
-      variant === 'home',
-  });
+  const inputClassName = classNames(
+    'w-full rounded-l text-consortiumBlue-800',
+    {
+      'py-1 px-3 border border-consortiumBlue-800': variant === 'default',
+      'p-3  placeholder:text-blueGrey-500 placeholder:italic text-consortiumBlue-800 not-italic':
+        variant === 'home',
+    }
+  );
 
   const buttonClassName = classNames('rounded-r', {
-    'bg-neutral-700 py-1 px-3 border-t border-b border-r border-neutral-700':
+    'bg-consortiumBlue-800 py-1 px-3 border-t border-b border-r border-consortiumBlue-800':
       variant === 'default',
     'flex items-center p-3 bg-consortiumGreen-300': variant === 'home',
   });
