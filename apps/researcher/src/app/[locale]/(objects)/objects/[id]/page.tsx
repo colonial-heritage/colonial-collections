@@ -107,6 +107,7 @@ export default async function Details({params}: Props) {
       id: image.id,
       src: image.contentUrl,
       alt: `${object.name} #${i + 1}`,
+      license: image.license,
     })) ?? [];
 
   return (
@@ -266,11 +267,12 @@ export default async function Details({params}: Props) {
             </Metadata>
           </div>
         </main>
-        <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-neutral-100 p-1">
+        <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2 md:mx-0  p-1 flex flex-col justify-start md:bg-blueGrey-50">
           {galleryImages.length > 0 && (
-            <div className="flex flex-row md:flex-col gap-1 sticky top-4">
-              <Gallery images={galleryImages} />
-            </div>
+            <Gallery
+              organizationName={organization?.name}
+              images={galleryImages}
+            />
           )}
         </aside>
       </div>
