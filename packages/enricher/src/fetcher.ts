@@ -32,6 +32,7 @@ export class EnrichmentFetcher {
       PREFIX cc: <${ontologyUrl}>
       PREFIX dc: <http://purl.org/dc/elements/1.1/>
       PREFIX dcterms: <http://purl.org/dc/terms/>
+      PREFIX ex: <https://example.org/>
       PREFIX oa: <http://www.w3.org/ns/oa#>
       PREFIX np: <http://www.nanopub.org/nschema#>
       PREFIX npa: <http://purl.org/nanopub/admin/>
@@ -42,21 +43,21 @@ export class EnrichmentFetcher {
 
       CONSTRUCT {
         # Need this to easily retrieve the enrichments in the RdfObjectLoader
-        ?source cc:hasEnrichment ?annotation .
+        ?source ex:hasEnrichment ?annotation .
 
-        ?annotation a cc:Enrichment ;
-          cc:additionalType ?additionalType ;
-          cc:about ?target ;
-          cc:isPartOf ?source ;
-          cc:description ?value ;
-          cc:citation ?comment ;
-          cc:inLanguage ?language ;
-          cc:license ?license ;
-          cc:creator ?creator ;
-          cc:dateCreated ?dateCreated .
+        ?annotation a ex:Enrichment ;
+          ex:additionalType ?additionalType ;
+          ex:about ?target ;
+          ex:isPartOf ?source ;
+          ex:description ?value ;
+          ex:citation ?comment ;
+          ex:inLanguage ?language ;
+          ex:license ?license ;
+          ex:creator ?creator ;
+          ex:dateCreated ?dateCreated .
 
-        ?creator a cc:Agent ;
-          cc:name ?creatorName .
+        ?creator a ex:Agent ;
+          ex:name ?creatorName .
       }
       WHERE {
         BIND(<${iri}> AS ?source)
@@ -110,6 +111,7 @@ export class EnrichmentFetcher {
     const loader = new RdfObjectLoader({
       context: {
         cc: ontologyUrl,
+        ex: 'https://example.org/',
       },
     });
 
@@ -120,7 +122,7 @@ export class EnrichmentFetcher {
       return []; // No enrichments found about the requested resource
     }
 
-    const rawEnrichments = resource.properties['cc:hasEnrichment'];
+    const rawEnrichments = resource.properties['ex:hasEnrichment'];
     const enrichments = rawEnrichments.map(rawEnrichment =>
       createEnrichment(rawEnrichment)
     );

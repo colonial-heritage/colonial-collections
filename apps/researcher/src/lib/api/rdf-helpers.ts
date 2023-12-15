@@ -1,4 +1,4 @@
-import {applyToDefaults} from '@hapi/hoek';
+import {defu} from 'defu';
 import type {Resource} from 'rdf-object';
 
 export function getProperty(resource: Resource, propertyName: string) {
@@ -33,10 +33,8 @@ export function onlyOne<T>(items: T[] | undefined) {
   return undefined;
 }
 
-export function removeUndefinedValues<T>(objectWithUndefinedValues: object) {
-  const object = applyToDefaults({}, objectWithUndefinedValues, {
-    nullOverride: false, // Ignore null values
-  });
+export function removeNullish<T>(objectWithNullishValues: object) {
+  const object = defu(objectWithNullishValues, {});
 
   return object as T;
 }

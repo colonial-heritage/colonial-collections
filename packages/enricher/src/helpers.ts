@@ -42,18 +42,18 @@ function getPropertyValue(resource: Resource, propertyName: string) {
 }
 
 export function createEnrichment(rawEnrichment: Resource) {
-  const additionalType = getPropertyValue(rawEnrichment, 'cc:additionalType');
-  const isPartOf = getPropertyValue(rawEnrichment, 'cc:isPartOf');
-  const description = getPropertyValue(rawEnrichment, 'cc:description');
-  const citation = getPropertyValue(rawEnrichment, 'cc:citation');
-  const inLanguage = getPropertyValue(rawEnrichment, 'cc:inLanguage');
-  const creator = getPropertyValue(rawEnrichment, 'cc:creator');
-  const license = getPropertyValue(rawEnrichment, 'cc:license');
+  const additionalType = getPropertyValue(rawEnrichment, 'ex:additionalType');
+  const isPartOf = getPropertyValue(rawEnrichment, 'ex:isPartOf');
+  const description = getPropertyValue(rawEnrichment, 'ex:description');
+  const citation = getPropertyValue(rawEnrichment, 'ex:citation');
+  const inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
+  const creator = getPropertyValue(rawEnrichment, 'ex:creator');
+  const license = getPropertyValue(rawEnrichment, 'ex:license');
 
-  const creatorResource = rawEnrichment.property['cc:creator'];
-  const creatorName = getPropertyValue(creatorResource, 'cc:name');
+  const creatorResource = rawEnrichment.property['ex:creator'];
+  const creatorName = getPropertyValue(creatorResource, 'ex:name');
 
-  const rawDateCreated = getPropertyValue(rawEnrichment, 'cc:dateCreated');
+  const rawDateCreated = getPropertyValue(rawEnrichment, 'ex:dateCreated');
   // @ts-expect-error:TS2322
   const dateCreated = new Date(rawDateCreated);
 

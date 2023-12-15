@@ -42,74 +42,59 @@ describe('getByHeritageObjectId', () => {
       );
 
     // For now ignore order of elements in the array (until the events are sorted)
-    expect(provenanceEvents).toHaveLength(4);
     expect(provenanceEvents).toEqual(
       expect.arrayContaining([
         {
-          id: 'https://example.org/objects/1/provenance/event/2/activity/1',
+          id: 'https://example.org/objects/1/provenance/event/5/activity/1',
           types: [
             {
               id: 'http://vocab.getty.edu/aat/300417642',
               name: 'purchase (method of acquisition)',
             },
           ],
-          description: 'Bought at an auction',
+          description: 'Bought at an auction in Amsterdam',
           startDate: new Date('1879-01-01T00:00:00.000Z'),
           endDate: new Date('1879-01-01T00:00:00.000Z'),
-          startsAfter: 'https://example.org/objects/1/provenance/event/1',
-          endsBefore: 'https://example.org/objects/1/provenance/event/3',
+          startsAfter:
+            'https://example.org/objects/1/provenance/event/2/activity/1',
+          endsBefore:
+            'https://example.org/objects/1/provenance/event/3/activity/1',
           location: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Amsterdam',
           },
           transferredFrom: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
-            name: 'Jan de Vries',
-          },
-        },
-        {
-          id: 'https://example.org/objects/1/provenance/event/1/activity/1',
-          types: [
-            {
-              id: 'http://vocab.getty.edu/aat/300417644',
-              name: 'transfer (method of acquisition)',
-            },
-            {
-              id: 'http://vocab.getty.edu/aat/300417642',
-              name: 'purchase (method of acquisition)',
-            },
-          ],
-          description: 'Bought for 1500 US dollars',
-          startDate: new Date('1855-01-01T00:00:00.000Z'),
-          endDate: new Date('1855-01-01T00:00:00.000Z'),
-          endsBefore: 'https://example.org/objects/1/provenance/event/2',
-          location: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
-            name: 'Jakarta',
-          },
-          transferredFrom: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
-            type: 'Person',
-            name: 'Peter Hoekstra',
+            name: 'Jonathan Hansen',
           },
           transferredTo: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
-            type: 'Person',
-            name: 'Jan de Vries',
+            id: 'https://museum.example.org/',
+            type: 'Organization',
+            name: 'Museum',
           },
         },
         {
           id: 'https://example.org/objects/1/provenance/event/4/activity/1',
           types: [
-            {id: 'http://vocab.getty.edu/aat/300445014', name: 'returning'},
+            {
+              id: 'http://vocab.getty.edu/aat/300445014',
+              name: 'returning',
+            },
           ],
           description: 'Found in a basement',
           startDate: new Date('1939-01-01T00:00:00.000Z'),
-          endDate: new Date('1939-01-01T00:00:00.000Z'),
-          startsAfter: 'https://example.org/objects/1/provenance/event/3',
+          endDate: new Date('1940-01-01T00:00:00.000Z'),
+          startsAfter:
+            'https://example.org/objects/1/provenance/event/3/activity/1',
           location: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Paris',
           },
           transferredTo: {
@@ -128,16 +113,94 @@ describe('getByHeritageObjectId', () => {
           ],
           startDate: new Date('1901-01-01T00:00:00.000Z'),
           endDate: new Date('1901-01-01T00:00:00.000Z'),
-          startsAfter: 'https://example.org/objects/1/provenance/event/2',
-          endsBefore: 'https://example.org/objects/1/provenance/event/4',
+          startsAfter:
+            'https://example.org/objects/1/provenance/event/5/activity/1',
+          endsBefore:
+            'https://example.org/objects/1/provenance/event/4/activity/1',
           location: {
-            id: expect.stringContaining('https://colonial-heritage.triply.cc/'),
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Amsterdam',
           },
           transferredFrom: {
             id: 'https://museum.example.org/',
             type: 'Organization',
             name: 'Museum',
+          },
+        },
+        {
+          id: 'https://example.org/objects/1/provenance/event/2/activity/1',
+          types: [
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'purchase (method of acquisition)',
+            },
+          ],
+          description: 'Bought at an auction in The Hague',
+          startDate: new Date('1879-01-01T00:00:00.000Z'),
+          endDate: new Date('1879-01-01T00:00:00.000Z'),
+          startsAfter:
+            'https://example.org/objects/1/provenance/event/1/activity/1',
+          endsBefore:
+            'https://example.org/objects/1/provenance/event/5/activity/1',
+          location: {
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
+            name: 'The Hague',
+          },
+          transferredFrom: {
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
+            type: 'Person',
+            name: 'Jan de Vries',
+          },
+          transferredTo: {
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
+            type: 'Person',
+            name: 'Jonathan Hansen',
+          },
+        },
+        {
+          id: 'https://example.org/objects/1/provenance/event/1/activity/1',
+          types: [
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'purchase (method of acquisition)',
+            },
+            {
+              id: 'http://vocab.getty.edu/aat/300417644',
+              name: 'transfer (method of acquisition)',
+            },
+          ],
+          description: 'Bought for 1500 US dollars',
+          startDate: new Date('1855-01-01T00:00:00.000Z'),
+          endDate: new Date('1857-01-01T00:00:00.000Z'),
+          endsBefore:
+            'https://example.org/objects/1/provenance/event/2/activity/1',
+          location: {
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
+            name: 'Jakarta',
+          },
+          transferredFrom: {
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
+            type: 'Person',
+            name: 'Peter Hoekstra',
+          },
+          transferredTo: {
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
+            type: 'Person',
+            name: 'Jan de Vries',
           },
         },
       ])
