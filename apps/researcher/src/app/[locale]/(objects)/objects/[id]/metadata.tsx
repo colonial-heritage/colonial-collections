@@ -94,7 +94,7 @@ export async function MetadataEntry({
       <div className="w-full lg:w-2/3 py-3 px-2">
         {children}
         {languageCode && (
-          <div className="text-xs font-normal text-consortiumBlue-100 ">
+          <div className="text-xs font-normal text-consortiumBlue-100">
             {ISO6391.getName(languageCode)}
           </div>
         )}
