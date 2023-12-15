@@ -41,6 +41,23 @@ export class EnrichmentStorer {
     const bodyId = DF.blankNode();
     const languageCode = opts.inLanguage;
 
+    // Make clear what application has published this nanopub
+    const softwareTool = DF.namedNode('https://app.collonialcollections.nl/');
+    publicationStore.addQuad(
+      DF.quad(
+        softwareTool,
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode('http://purl.org/nanopub/x/SoftwareTool')
+      )
+    );
+    publicationStore.addQuad(
+      DF.quad(
+        softwareTool,
+        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+        DF.literal('Colonial Collections')
+      )
+    );
+
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -60,6 +77,13 @@ export class EnrichmentStorer {
         nanopubId,
         DF.namedNode('http://purl.org/dc/terms/license'),
         DF.namedNode(opts.license)
+      )
+    );
+    publicationStore.addQuad(
+      DF.quad(
+        nanopubId,
+        DF.namedNode('http://purl.org/nanopub/x/wasCreatedWith'),
+        softwareTool
       )
     );
 
