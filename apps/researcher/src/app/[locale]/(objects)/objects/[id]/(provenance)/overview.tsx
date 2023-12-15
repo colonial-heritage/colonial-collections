@@ -1,11 +1,12 @@
-import provenanceEvents from '@/lib/povenance-events-instance';
+import heritageObjects from '@/lib/heritage-objects-instance';
 import ProvenanceEventsDataTable from './data-table';
 import {getTranslations} from 'next-intl/server';
 import {sortEvents} from './sort-events';
 import {SelectedEventProvider} from './selected-event';
 
 export default async function Provenance({objectId}: {objectId: string}) {
-  const events = await provenanceEvents.getByHeritageObjectId(objectId);
+  const events =
+    await heritageObjects.getProvenanceEventsByHeritageObjectId(objectId);
   const t = await getTranslations('Provenance');
 
   if (!events) {
