@@ -1,9 +1,9 @@
 import {describe, expect} from '@jest/globals';
 import {groupByDateRange} from './group-events';
 import {LabeledProvenanceEvent} from './definitions';
-
+const locale = 'en';
 describe('groupByDateRange', () => {
-  it('should group events by date range', () => {
+  it('groups events by date range', () => {
     const events = [
       {
         startDate: new Date('2022-01-01'),
@@ -23,8 +23,6 @@ describe('groupByDateRange', () => {
       },
     ];
 
-    const locale = 'en';
-
     // @ts-expect-error:TS2322
     const result = groupByDateRange({events, locale});
 
@@ -33,9 +31,8 @@ describe('groupByDateRange', () => {
     expect(result['Jan 6 – 10, 2022']).toHaveLength(1);
   });
 
-  it('should handle empty events array', () => {
+  it('handles empty events array', () => {
     const events: LabeledProvenanceEvent[] = [];
-    const locale = 'en';
 
     const result = groupByDateRange({events, locale});
 

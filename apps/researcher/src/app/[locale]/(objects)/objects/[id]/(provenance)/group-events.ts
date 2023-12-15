@@ -10,22 +10,20 @@ interface GroupByDateRangeProps {
 // The function returns an object where each key is a string representation of a date range,
 // and each value is an array of all events that fall within that date range.
 export function groupByDateRange({events, locale}: GroupByDateRangeProps) {
-  const eventGroups = events.reduce(
-    (groups: {[dateRange: string]: LabeledProvenanceEvent[]}, event) => {
+  return events.reduce(
+    (eventGroups: {[dateRange: string]: LabeledProvenanceEvent[]}, event) => {
       const dateRange =
         formatDateRange({
           startDate: event.startDate,
           endDate: event.endDate,
           locale,
         }) || '';
-      if (!groups[dateRange]) {
-        groups[dateRange] = [];
+      if (!eventGroups[dateRange]) {
+        eventGroups[dateRange] = [];
       }
-      groups[dateRange].push(event);
-      return groups;
+      eventGroups[dateRange].push(event);
+      return eventGroups;
     },
     {}
   );
-
-  return eventGroups;
 }

@@ -28,7 +28,7 @@ export default function ProvenanceEventsDataTable({
         <ProvenanceEventRow
           key={dateRange}
           dateRange={dateRange}
-          eventGroup={eventGroup}
+          provenanceEvents={eventGroup}
         />
       ))}
     </div>
@@ -36,10 +36,10 @@ export default function ProvenanceEventsDataTable({
 }
 
 function ProvenanceEventRow({
-  eventGroup,
+  provenanceEvents,
   dateRange,
 }: {
-  eventGroup: LabeledProvenanceEvent[];
+  provenanceEvents: LabeledProvenanceEvent[];
   dateRange: string;
 }) {
   const t = useTranslations('Provenance');
@@ -50,7 +50,7 @@ function ProvenanceEventRow({
         <strong>{dateRange}</strong>
       </div>
       <ul className="flex flex-col border-t border-consortiumBlue-970">
-        {eventGroup.map(event => (
+        {provenanceEvents.map(event => (
           <li
             key={event.id}
             className="list-none pl-4 w-full text-sm md:text-base border-b border-blueGrey-100"
