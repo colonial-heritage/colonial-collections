@@ -92,7 +92,11 @@ export class HeritageObjectFetcher {
           ex:name ?countryCreatedName .
 
         ?digitalObject a ex:ImageObject ;
-          ex:contentUrl ?contentUrl .
+          ex:contentUrl ?digitalObjectContentUrl ;
+          ex:license ?digitalObjectLicense .
+
+        ?digitalObjectLicense a ex:DigitalDocument ;
+          ex:name ?digitalObjectLicenseName .
 
         ?owner a ?ownerType ;
           ex:name ?ownerName .
@@ -247,7 +251,18 @@ export class HeritageObjectFetcher {
           ?object crm:P65_shows_visual_item/la:digitally_shown_by ?digitalObject .
           ?digitalObject a dig:D1_Digital_Object ;
             crm:P2_has_type <http://vocab.getty.edu/aat/300215302> ; # Digital image
-            la:access_point ?contentUrl .
+            la:access_point ?digitalObjectContentUrl .
+
+          OPTIONAL {
+            ?digitalObject crm:P104_is_subject_to ?right .
+            ?right a crm:E30_Right ;
+              crm:P2_has_type ?digitalObjectLicense .
+
+            OPTIONAL {
+              ?digitalObjectLicense schema:name ?digitalObjectLicenseName .
+              FILTER(LANG(?digitalObjectLicenseName) = "" || LANGMATCHES(LANG(?digitalObjectLicenseName), "en"))
+            }
+          }
         }
 
         ####################
