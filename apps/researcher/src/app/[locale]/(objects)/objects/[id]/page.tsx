@@ -18,13 +18,14 @@ import {
 } from '@colonial-collections/ui';
 import useObject from './use-object';
 import {env} from 'node:process';
-import {formatDateCreated} from './format-date-created';
+import {formatDateRange} from './format-date-range';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
 import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
+import Provenance from './(provenance)/overview';
 
 export const dynamic = 'force-dynamic';
 
@@ -220,7 +221,13 @@ export default async function Details({params}: Props) {
               enrichmentType={AdditionalType.DateCreated}
             >
               {object.dateCreated && (
-                <div>{formatDateCreated(object.dateCreated, locale)}</div>
+                <div>
+                  {formatDateRange({
+                    startDate: object.dateCreated.startDate,
+                    endDate: object.dateCreated.endDate,
+                    locale,
+                  })}
+                </div>
               )}
             </Metadata>
 
@@ -267,6 +274,7 @@ export default async function Details({params}: Props) {
           )}
         </aside>
       </div>
+      <Provenance objectId={id} />
     </>
   );
 }
