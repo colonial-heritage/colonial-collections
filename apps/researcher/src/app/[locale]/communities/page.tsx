@@ -74,7 +74,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
               </div>
             </SignedIn>
           </div>
-          <div className=" flex flex-col xl:flex-row items-center md:items-end gap-4 justify-end">
+          <div className="flex flex-col xl:flex-row items-center md:items-end gap-4 justify-end">
             {onlyMyCommunities === undefined && (
               <div>
                 <SearchField placeholder={t('searchPlaceholder')} />
