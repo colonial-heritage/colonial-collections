@@ -190,7 +190,7 @@ export default async function Details({params}: Props) {
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-4 sm:px-10">
         <main className="w-full md:w-2/3 order-2 md:order-1">
           <Notifications />
-          <div className=" mb-4 mt-10 flex justify-between">
+          <div className="mb-4 mt-10 flex justify-between">
             <h2 className="text-2xl">{t('metadata')}</h2>
           </div>
           <div className="flex flex-col gap-8 self-stretch">
