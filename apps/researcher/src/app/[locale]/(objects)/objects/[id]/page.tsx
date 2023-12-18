@@ -5,7 +5,7 @@ import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
-import {MetadataContainer, MetadataEntries} from './metadata';
+import {Metadata} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import organizations from '@/lib/organizations-instance';
 import {
@@ -18,13 +18,14 @@ import {
 } from '@colonial-collections/ui';
 import useObject from './use-object';
 import {env} from 'node:process';
-import {formatDateCreated} from './format-date-created';
+import {formatDateRange} from './format-date-range';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
 import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
+import Provenance from './(provenance)/overview';
 
 export const dynamic = 'force-dynamic';
 
@@ -106,6 +107,7 @@ export default async function Details({params}: Props) {
       id: image.id,
       src: image.contentUrl,
       alt: `${object.name} #${i + 1}`,
+      license: image.license,
     })) ?? [];
 
   return (
@@ -287,6 +289,7 @@ export default async function Details({params}: Props) {
           </aside>
         </div>
       </div>
+      <Provenance objectId={id} />
     </>
   );
 }

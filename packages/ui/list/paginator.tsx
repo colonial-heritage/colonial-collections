@@ -36,7 +36,7 @@ export function Paginator() {
             onClick={() => pageChange(-1)}
             disabled={offset <= 0}
             type="button"
-            className="relative inline-flex items-center rounded-md border  px-4 py-2 text-sm font-medium border-consortiumBlue-100 bg-consortiumBlue-800 text-consortiumBlue-100 hover:bg-consortiumBlue-600 hover:text-white"
+            className="relative inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium border-consortiumBlue-100 bg-consortiumBlue-800 text-consortiumBlue-100 hover:bg-consortiumBlue-600 hover:text-white"
           >
             {t('previous')}
           </button>

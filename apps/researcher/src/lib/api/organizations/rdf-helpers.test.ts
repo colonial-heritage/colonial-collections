@@ -1,4 +1,3 @@
-import {ontologyUrl} from '../definitions';
 import {createAddresses} from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
@@ -7,7 +6,7 @@ import {StreamParser} from 'n3';
 
 const loader = new RdfObjectLoader({
   context: {
-    cc: ontologyUrl,
+    ex: 'https://example.org/',
     rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
   },
 });
@@ -15,24 +14,23 @@ let resource: Resource;
 
 beforeAll(async () => {
   const triples = `
-    @prefix cc: <${ontologyUrl}> .
     @prefix ex: <https://example.org/> .
 
-    ex:organization1 a cc:Organization ;
-      cc:name "Name" ;
-      cc:url <https://example.org/> ;
-      cc:address [
-        a cc:PostalAddress ;
-        cc:streetAddress "Street 1" ;
-        cc:postalCode "Postal code 1" ;
-        cc:addressLocality "Locality 1" ;
-        cc:addressCountry "Country 1"
+    ex:organization1 a ex:Organization ;
+      ex:name "Name" ;
+      ex:url <https://example.org/> ;
+      ex:address [
+        a ex:PostalAddress ;
+        ex:streetAddress "Street 1" ;
+        ex:postalCode "Postal code 1" ;
+        ex:addressLocality "Locality 1" ;
+        ex:addressCountry "Country 1"
       ], [
-        a cc:PostalAddress ;
-        cc:streetAddress "Street 2" ;
-        cc:postalCode "Postal code 2" ;
-        cc:addressLocality "Locality 2" ;
-        cc:addressCountry "Country 2"
+        a ex:PostalAddress ;
+        ex:streetAddress "Street 2" ;
+        ex:postalCode "Postal code 2" ;
+        ex:addressLocality "Locality 2" ;
+        ex:addressCountry "Country 2"
       ] .
   `;
 
@@ -45,13 +43,13 @@ beforeAll(async () => {
 
 describe('createAddresses', () => {
   it('returns undefined if property does not exist', () => {
-    const addresses = createAddresses(resource, 'cc:unknown');
+    const addresses = createAddresses(resource, 'ex:unknown');
 
     expect(addresses).toBeUndefined();
   });
 
   it('returns addresses if property exists', () => {
-    const addresses = createAddresses(resource, 'cc:address');
+    const addresses = createAddresses(resource, 'ex:address');
 
     expect(addresses).toStrictEqual([
       {

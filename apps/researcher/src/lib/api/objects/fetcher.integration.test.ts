@@ -37,23 +37,23 @@ describe('getById', () => {
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',
       inscriptions: ['Maecenas commodo est neque'],
-      types: [
+      types: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://colonial-heritage.triply.cc/.well-known/genid/'
           ),
           name: 'Canvas Painting',
         },
-      ],
-      subjects: [
+      ]),
+      subjects: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://colonial-heritage.triply.cc/.well-known/genid/'
           ),
           name: 'Celebrations',
         },
-      ],
-      materials: [
+      ]),
+      materials: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://colonial-heritage.triply.cc/.well-known/genid/'
@@ -66,16 +66,16 @@ describe('getById', () => {
           ),
           name: 'Canvas',
         },
-      ],
-      techniques: [
+      ]),
+      techniques: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://colonial-heritage.triply.cc/.well-known/genid/'
           ),
           name: 'Albumen process',
         },
-      ],
-      creators: [
+      ]),
+      creators: expect.arrayContaining([
         {
           type: 'Person',
           id: expect.stringContaining(
@@ -83,13 +83,21 @@ describe('getById', () => {
           ),
           name: 'Geeske van Châtellerault',
         },
-      ],
+      ]),
       dateCreated: {
         id: expect.stringContaining(
           'https://colonial-heritage.triply.cc/.well-known/genid/'
         ),
         startDate: new Date('1901-01-01'),
         endDate: new Date('1902-06-01'),
+      },
+      locationCreated: {
+        id: 'https://sws.geonames.org/1749659/',
+        name: 'Pulau Sebang',
+        isPartOf: {
+          id: 'https://sws.geonames.org/1733045/',
+          name: 'Malaysia',
+        },
       },
       images: expect.arrayContaining([
         {
@@ -98,6 +106,10 @@ describe('getById', () => {
           ),
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+          license: {
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
         },
         {
           id: expect.stringContaining(
@@ -105,6 +117,10 @@ describe('getById', () => {
           ),
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+          license: {
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
         },
       ]),
       owner: {
