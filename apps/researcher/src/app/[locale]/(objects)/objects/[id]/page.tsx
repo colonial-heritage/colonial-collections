@@ -218,7 +218,9 @@ export default async function Details({params}: Props) {
                 translationKey="locationCreated"
                 enrichmentType={AdditionalType.LocationCreated}
               >
-                {object.locationCreated?.isPartOf?.name}
+                {object.locationCreated?.name}
+                {object.locationCreated?.isPartOf?.name &&
+                  ` (${object.locationCreated?.isPartOf?.name})`}
               </Metadata>
 
               <Metadata
