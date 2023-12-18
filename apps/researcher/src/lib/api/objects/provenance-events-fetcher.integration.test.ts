@@ -60,11 +60,15 @@ describe('getByHeritageObjectId', () => {
           endsBefore:
             'https://example.org/objects/1/provenance/event/3/activity/1',
           location: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/9cb5c59b958f4878937957c423d308b5',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Amsterdam',
           },
           transferredFrom: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/c08aa36cf775e23c92dd2430c1bbb99b',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
             name: 'Jonathan Hansen',
           },
@@ -88,7 +92,9 @@ describe('getByHeritageObjectId', () => {
           startsAfter:
             'https://example.org/objects/1/provenance/event/3/activity/1',
           location: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/fa56164b9dd96e37a4e93e018c51018e',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Paris',
           },
           transferredTo: {
@@ -112,7 +118,9 @@ describe('getByHeritageObjectId', () => {
           endsBefore:
             'https://example.org/objects/1/provenance/event/4/activity/1',
           location: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/cd7ccc86fb7b17d1fb0bf425de63c796',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Amsterdam',
           },
           transferredFrom: {
@@ -137,16 +145,22 @@ describe('getByHeritageObjectId', () => {
           endsBefore:
             'https://example.org/objects/1/provenance/event/5/activity/1',
           location: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/522af0fad56ad754c58f48768e06bb58',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'The Hague',
           },
           transferredFrom: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/552102cb8b424cc0d8b49e59b6a990df',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
             name: 'Jan de Vries',
           },
           transferredTo: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/c581b92d73922421a4b688595e0000be',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
             name: 'Jonathan Hansen',
           },
@@ -169,16 +183,22 @@ describe('getByHeritageObjectId', () => {
           endsBefore:
             'https://example.org/objects/1/provenance/event/2/activity/1',
           location: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/2b434a4d7ed20396b17ba591079edc09',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             name: 'Jakarta',
           },
           transferredFrom: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/32d1c530bc7643fcf73a5f4e9fc18594',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
             name: 'Peter Hoekstra',
           },
           transferredTo: {
-            id: 'https://colonial-heritage.triply.cc/.well-known/genid/f639c45571fe3eef8752501d0ca96720',
+            id: expect.stringContaining(
+              'https://colonial-heritage.triply.cc/.well-known/genid/'
+            ),
             type: 'Person',
             name: 'Jan de Vries',
           },

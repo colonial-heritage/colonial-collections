@@ -106,6 +106,10 @@ describe('getById', () => {
           ),
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+          license: {
+            id: 'https://creativecommons.org/licenses/by/4.0/',
+            name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
         },
         {
           id: expect.stringContaining(
@@ -113,6 +117,10 @@ describe('getById', () => {
           ),
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+          license: {
+            id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+          },
         },
       ]),
       owner: {

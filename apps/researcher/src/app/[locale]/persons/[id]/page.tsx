@@ -59,41 +59,53 @@ export default async function Details({params}: Props) {
 
   return (
     <>
-      <ToFilteredListButton>{t('backButton')}</ToFilteredListButton>
-      <div className="mt-10 mb-4">
-        <PageHeader>
-          <PageTitle id="about">
-            <PersonIcon className="w-7 h-7 mr-2" />
-            {person.name}
-          </PageTitle>
-        </PageHeader>
-      </div>
-      <div className="flex divide-x w-full mb-20">
-        <div className={columnClassName}>
-          <InfoBlock
-            title={t('birthDate')}
-            value={
-              person.birthDate && format.dateTime(person.birthDate, dateFormat)
-            }
-          />
-          <InfoBlock title={t('birthPlace')} value={person.birthPlace?.name} />
-        </div>
-        <div className={columnClassName}>
-          <InfoBlock
-            title={t('deathDate')}
-            value={
-              person.deathDate && format.dateTime(person.deathDate, dateFormat)
-            }
-          />
-          <InfoBlock title={t('deathPlace')} value={person.deathPlace?.name} />
-        </div>
-        <div className={columnClassName}>
-          <InfoBlock title={t('dataset')} value={person.isPartOf.name} />
-        </div>
-      </div>
+      <div className="bg-consortiumBlue-800 text-white flex flex-col gap-8 pt-9 pb-40">
+        <div className="px-4 sm:px-10 max-w-[1800px] mx-auto w-full">
+          <ToFilteredListButton>{t('backButton')}</ToFilteredListButton>
+          <div className="mt-10 mb-4">
+            <PageHeader>
+              <PageTitle id="about">
+                <PersonIcon className="w-7 h-7 mr-2" />
+                {person.name}
+              </PageTitle>
+            </PageHeader>
+          </div>
+          <div className="flex divide-x divide-consortiumBlue-400 w-full mb-20">
+            <div className={columnClassName}>
+              <InfoBlock
+                title={t('birthDate')}
+                value={
+                  person.birthDate &&
+                  format.dateTime(person.birthDate, dateFormat)
+                }
+              />
+              <InfoBlock
+                title={t('birthPlace')}
+                value={person.birthPlace?.name}
+              />
+            </div>
+            <div className={columnClassName}>
+              <InfoBlock
+                title={t('deathDate')}
+                value={
+                  person.deathDate &&
+                  format.dateTime(person.deathDate, dateFormat)
+                }
+              />
+              <InfoBlock
+                title={t('deathPlace')}
+                value={person.deathPlace?.name}
+              />
+            </div>
+            <div className={columnClassName}>
+              <InfoBlock title={t('dataset')} value={person.isPartOf.name} />
+            </div>
+          </div>
 
-      <H2>{t('relatedObjects')}</H2>
-      <NotImplemented />
+          <H2>{t('relatedObjects')}</H2>
+          <NotImplemented />
+        </div>
+      </div>
     </>
   );
 }

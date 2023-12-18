@@ -179,7 +179,9 @@
     "roadmapLink": "Lees over de huidige status en roadmap van dit project."
   },
   "Gallery": {
-    "resetZoomButton": "Reset"
+    "resetZoomButton": "Reset",
+    "license": "Licentie",
+    "noLicense": "Deze afbeelding is door {organizationName} gepubliceerd zonder vermelding van een licentie - neem contact met {organizationName} op voor meer informatie."
   },
   "ErrorPage": {
     "message": "Er is iets fout gegaan!"

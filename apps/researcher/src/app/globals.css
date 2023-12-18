@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 h1 {
-  font-weight: 600;
+  @apply font-semibold
 }
 
 h2 {
-  font-weight: 600;
+  @apply font-semibold
 }
 
 h3 {
-  font-weight: 600;
+  @apply font-semibold
 }
 
 a {
-  color: rgb(3 105 161 );
+  @apply underline underline-offset-2 decoration-neutral-900/30 hover:decoration-neutral-900/60;
 }
