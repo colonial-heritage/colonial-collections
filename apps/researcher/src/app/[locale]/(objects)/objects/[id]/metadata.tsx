@@ -33,7 +33,7 @@ export function Metadata({
 
   if (!children && metadataEnrichments.length === 0) {
     return (
-      <div className="text-neutral-600 italic w-full border-t py-6 text-sm">
+      <div className="text-consortiumBlue-100 italic w-full border-t py-6 text-sm">
         {t.rich('noData', {
           subject: () => <span className="lowercase">{t(translationKey)}</span>,
         })}
@@ -104,16 +104,6 @@ export async function MetadataEntry({
   const {organization} = useObject.getState();
   const t = useTranslations('ObjectDetails');
   const format = await getFormatter();
-
-  if (isCurrentPublisher && !children) {
-    return (
-      <div className="text-consortiumBlue-100 italic w-full border-t py-6 text-sm">
-        {t.rich('noData', {
-          subject: () => <span className="lowercase">{t(translationKey)}</span>,
-        })}
-      </div>
-    );
-  }
 
   const author = creator ? creator : organization;
 
