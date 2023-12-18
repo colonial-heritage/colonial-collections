@@ -106,6 +106,18 @@
     "objectRemovedFromList": "Object verwijderd van lijst <name></name>.",
     "errorObjectRemovedFromList": "Er is een probleem opgetreden bij het verwijderen van het object van de lijst. Probeer het later opnieuw."
   },
+  "Provenance": {
+    "title": "Herkomst",
+    "description": "Informatie over de herkomst toont het pad dat een object heeft afgelegd voordat het op de huidige locatie kwam. Het kan informatie bevatten over vorige eigenaren tot technische verwerkingsinformatie. Deze herkomstgegevens zijn vaak onvolledig.",
+    "initial": "H",
+    "id": "Id",
+    "type": "Type",
+    "transferredFrom": "Overgedragen van",
+    "transferredTo": "Overgedragen aan",
+    "location": "Locatie",
+    "descriptionTitle": "Beschrijving",
+    "noData": "Geen herkomstgegevens gevonden."
+  },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
     "noEntity": "Persoon kon niet gevonden worden",
@@ -165,7 +177,9 @@
     "roadmapLink": "Lees over de huidige status en roadmap van dit project."
   },
   "Gallery": {
-    "resetZoomButton": "Reset"
+    "resetZoomButton": "Reset",
+    "license": "Licentie",
+    "noLicense": "Deze afbeelding is door {organizationName} gepubliceerd zonder vermelding van een licentie - neem contact met {organizationName} op voor meer informatie."
   },
   "ErrorPage": {
     "message": "Er is iets fout gegaan!"

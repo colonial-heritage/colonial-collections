@@ -5,7 +5,7 @@ import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
-import {MetadataContainer, MetadataEntries} from './metadata';
+import {Metadata} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import organizations from '@/lib/organizations-instance';
 import {
@@ -18,13 +18,14 @@ import {
 } from '@colonial-collections/ui';
 import useObject from './use-object';
 import {env} from 'node:process';
-import {formatDateCreated} from './format-date-created';
+import {formatDateRange} from './format-date-range';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
 import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
+import Provenance from './(provenance)/overview';
 
 export const dynamic = 'force-dynamic';
 
@@ -106,6 +107,7 @@ export default async function Details({params}: Props) {
       id: image.id,
       src: image.contentUrl,
       alt: `${object.name} #${i + 1}`,
+      license: image.license,
     })) ?? [];
 
   return (
@@ -191,6 +193,7 @@ export default async function Details({params}: Props) {
             </div>
           </div>
         </div>
+
         <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-4 sm:px-10 max-w-[1800px]">
           <main className="w-full md:w-2/3 order-2 md:order-1">
             <Notifications />
@@ -287,6 +290,7 @@ export default async function Details({params}: Props) {
           </aside>
         </div>
       </div>
+      <Provenance objectId={id} />
     </>
   );
 }

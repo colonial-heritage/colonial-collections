@@ -1,6 +1,6 @@
 import DatasetCard from './dataset-card';
 import {useTranslations} from 'next-intl';
-import {SearchResult} from '@/lib/datasets';
+import type {SearchResult} from '@/lib/api/datasets';
 
 interface Props {
   datasets: SearchResult['datasets'];

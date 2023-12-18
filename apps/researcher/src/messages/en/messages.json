@@ -87,7 +87,7 @@
     "createNewListButton": "Create new list",
     "discussion": "Discussion",
     "types": "Types",
-    "titleSubTitle": "The name of the object.",
+    "nameSubTitle": "The name of the object.",
     "descriptionSubTitle": "A short description about the object.",
     "materialsSubTitle": "What kind of material is used. Click on the i of the material to learn more.",
     "typesSubTitle": "",
@@ -105,6 +105,18 @@
     "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
     "objectRemovedFromList": "Object removed from list <name></name>.",
     "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later."
+  },
+  "Provenance": {
+    "title": "Provenance",
+    "description": "Provenance information shows the trail an object has made before it came at the current location. It can contain information about previous owners to technical processing information. This provenance data is often incomplete.",
+    "initial": "P",
+    "id": "Id",
+    "type": "Type",
+    "transferredFrom": "Transferred from",
+    "transferredTo": "Transferred to",
+    "location": "Location",
+    "descriptionTitle": "Description",
+    "noData": "No provenance events found"
   },
   "PersonDetails": {
     "backButton": "Back to results",
@@ -165,7 +177,9 @@
     "roadmapLink": "Read about the current status and roadmap of this project."
   },
   "Gallery": {
-    "resetZoomButton": "Reset"
+    "resetZoomButton": "Reset",
+    "license": "License",
+    "noLicense": "This image has been published by {organizationName} without a license - for more information please contact {organizationName}."
   },
   "ErrorPage": {
     "message": "Something went wrong!"

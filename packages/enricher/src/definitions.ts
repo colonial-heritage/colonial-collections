@@ -10,6 +10,7 @@ export const ontologyVersionIdentifier = 'Version1';
 export enum AdditionalType {
   Creator = 'creator',
   DateCreated = 'dateCreated',
+  LocationCreated = 'locationCreated',
   Description = 'description',
   Inscription = 'inscription',
   Material = 'material',

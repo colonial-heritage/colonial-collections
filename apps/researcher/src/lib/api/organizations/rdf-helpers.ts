@@ -6,10 +6,10 @@ function createAddress(addressResource: Resource) {
   // Ignore TS 'undefined' warnings - the properties always exist
   const postalAddress: PostalAddress = {
     id: addressResource.value,
-    streetAddress: getPropertyValue(addressResource, 'cc:streetAddress')!,
-    postalCode: getPropertyValue(addressResource, 'cc:postalCode')!,
-    addressLocality: getPropertyValue(addressResource, 'cc:addressLocality')!,
-    addressCountry: getPropertyValue(addressResource, 'cc:addressCountry')!,
+    streetAddress: getPropertyValue(addressResource, 'ex:streetAddress')!,
+    postalCode: getPropertyValue(addressResource, 'ex:postalCode')!,
+    addressLocality: getPropertyValue(addressResource, 'ex:addressLocality')!,
+    addressCountry: getPropertyValue(addressResource, 'ex:addressCountry')!,
   };
 
   return postalAddress;
