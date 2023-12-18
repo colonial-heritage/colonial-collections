@@ -107,6 +107,7 @@ export default async function Details({params}: Props) {
       id: image.id,
       src: image.contentUrl,
       alt: `${object.name} #${i + 1}`,
+      license: image.license,
     })) ?? [];
 
   return (
@@ -281,7 +282,6 @@ export default async function Details({params}: Props) {
             )}
           </aside>
         </div>
-
         <Provenance objectId={id} />
       </div>
     </>
