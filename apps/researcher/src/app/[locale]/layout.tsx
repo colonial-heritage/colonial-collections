@@ -43,7 +43,7 @@ export default async function RootLayout({children, params: {locale}}: Props) {
                 </li>
               </ul>
             </div>
-            <div className="mx-auto h-full min-h-screen flex flex-col justify-stretch items-stretch pb-40 gap-8">
+            <div className="mx-auto h-full min-h-screen flex flex-col justify-stretch items-stretch">
               <header className="w-full bg-consortiumBlue-900 text-white py-2">
                 <Navigation />
               </header>
