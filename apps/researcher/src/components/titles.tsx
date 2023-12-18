@@ -9,5 +9,9 @@ export function H2({children}: HeaderProps) {
 }
 
 export function H3({children}: HeaderProps) {
-  return <h3 className="font-semibold uppercase text-gray-800">{children}</h3>;
+  return (
+    <h3 className="font-semibold uppercase text-consortiumBlue-100">
+      {children}
+    </h3>
+  );
 }
