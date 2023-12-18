@@ -39,7 +39,7 @@ export function DateRangeFacet({
               type="number"
               id={startDateKey}
               name={startDateKey}
-              className="w-24 border rounded-md grow border-gray-300 px-4 py-1 sm:text-sm"
+              className="text-consortiumBlue-800 w-24 border rounded-md grow border-gray-300 px-4 py-1 sm:text-sm"
               onChange={e => {
                 filterChange(
                   startDateKey,
@@ -59,7 +59,7 @@ export function DateRangeFacet({
               type="number"
               id={endDateKey}
               name={endDateKey}
-              className="w-24 border rounded-md grow border-gray-300 px-4 py-1 sm:text-sm"
+              className="text-consortiumBlue-800 w-24 border rounded-md grow border-gray-300 px-4 py-1 sm:text-sm"
               onChange={e => {
                 filterChange(
                   endDateKey,

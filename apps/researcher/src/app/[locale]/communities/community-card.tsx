@@ -34,7 +34,7 @@ export default function CommunityCard({community}: CommunityCardProps) {
   return (
     <Link
       href={`/communities/${community.slug}`}
-      className="rounded-lg mb-20 bg-[#f3eee2] hover:bg-[#f1e9d7] text-stone-800 transition flex flex-col"
+      className="mb-20 pb-5 group bg-consortiumGreen-300 text-consortiumBlue-800 rounded hover:bg-consortiumGreen-200 transition no-underline border border-consortiumBlue-800 flex flex-col items"
     >
       <div className="-mt-20 w-full flex justify-center">
         <Image
@@ -42,11 +42,11 @@ export default function CommunityCard({community}: CommunityCardProps) {
           height={144}
           src={community.imageUrl}
           alt=""
-          className="rounded-full"
+          className="w-36 h-auto rounded-full border border-consortiumBlue-800 transition"
         />
       </div>
 
-      <h1 className="text-xl font-normal w-full flex justify-center mt-4 px-4">
+      <h2 className="text-xl font-normal w-full flex justify-center mt-4 px-4">
         {t.rich('communityName', {
           name: () => (
             <strong
@@ -57,13 +57,13 @@ export default function CommunityCard({community}: CommunityCardProps) {
             </strong>
           ),
         })}
-      </h1>
+      </h2>
       <div className="text-center m-4 line-clamp-3 grow">
         {community.description}
       </div>
 
-      <div className="flex border-stone-300 border-t text-sm text-stone-600">
-        <div className="w-1/2 p-4 border-stone-300 border-r">
+      <div className="flex border-consortiumBlue-700 border-y text-sm">
+        <div className="w-1/2 p-4 border-consortiumBlue-700 border-r">
           {t.rich('membershipCount', {
             count: community.membershipCount,
           })}

@@ -10,8 +10,10 @@ interface FacetWrapperProps {
 
 export function FacetWrapper({children, testId}: FacetWrapperProps) {
   return (
-    <div className="w-full max-w-[450px]" data-testid={testId}>
-      {children}
+    <div className="bg-consortiumBlue-900 rounded p-2">
+      <div className="w-full max-w-[450px]" data-testid={testId}>
+        {children}
+      </div>
     </div>
   );
 }
@@ -64,7 +66,7 @@ export function FacetCheckBox({
     <div className="flex flex-row justify-between gap-2 w-full mb-2 items-center">
       <div className="flex flex-row">
         <input
-          className=" w-5 h-5 mr-2 rounded border-gray-300 text-rpBrand1-700 focus:ring-rpBrand1-700"
+          className=" w-5 h-5 mr-2 rounded border-consortiumBlue-300 focus:ring-consortiumGreen-400"
           type="checkbox"
           id={`facet-${id}`}
           name={`facet-${id}`}
@@ -77,7 +79,7 @@ export function FacetCheckBox({
           {name}
         </label>
       </div>
-      <div className="text-sm text-neutral-500">{count}</div>
+      <div className="text-sm text-consortiumBlue-100">{count}</div>
     </div>
   );
 }

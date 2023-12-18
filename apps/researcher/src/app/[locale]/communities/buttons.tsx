@@ -15,7 +15,7 @@ export function AddCommunityButton() {
             `/revalidate/?path=/[locale]/communities&redirect=/communities/${organization.slug}`,
         })
       }
-      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumBlue-800 text-consortiumGreen-300 transition flex items-center gap-1"
     >
       {t('addCommunity')}
     </button>
