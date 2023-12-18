@@ -19,7 +19,7 @@ export function Paginator() {
   }
 
   return (
-    <div className="flex items-center justify-between py-3">
+    <div className="flex items-center justify-between pt-10">
       <div className="sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p>
@@ -36,7 +36,7 @@ export function Paginator() {
             onClick={() => pageChange(-1)}
             disabled={offset <= 0}
             type="button"
-            className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="relative inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium border-consortiumBlue-100 bg-consortiumBlue-800 text-consortiumBlue-100 hover:bg-consortiumBlue-600 hover:text-white"
           >
             {t('previous')}
           </button>
@@ -44,7 +44,7 @@ export function Paginator() {
             onClick={() => pageChange(1)}
             disabled={offset + limit >= totalCount}
             type="button"
-            className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="relative ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium border-consortiumBlue-100 bg-consortiumBlue-800 text-consortiumBlue-100 hover:bg-consortiumBlue-600 hover:text-white"
           >
             {t('next')}
           </button>

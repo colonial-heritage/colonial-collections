@@ -37,15 +37,17 @@ export default function Tabs() {
             href={tab.href}
             className={classNames(
               isCurrentPathname
-                ? 'bg-neutral-100 text-neutral-800 font-semibold'
-                : 'border border-neutral-200 text-neutral-500 hover:border-neutral-500 hover:text-neutral-800',
+                ? 'bg-consortiumBlue-600 text-white font-semibold'
+                : 'border border-consortiumBlue-600 text-consortiumBlue-100 hover:border-white hover:text-white',
               'flex rounded-t p-2 items-center gap-1'
             )}
             aria-current={isCurrentPathname ? 'page' : undefined}
           >
             <tab.icon
               className={classNames(
-                isCurrentPathname ? 'stroke-neutral-800' : 'stroke-neutral-500',
+                isCurrentPathname
+                  ? 'stroke-white'
+                  : 'stroke-consortiumBlue-100',
                 'w-6 h-6'
               )}
               aria-hidden="true"
