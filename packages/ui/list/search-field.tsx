@@ -22,7 +22,9 @@ export function SearchField({
   const [inputText, setInputText] = useState(query);
   const t = useTranslations('Filters');
 
-  const inputClassName = classNames('w-full rounded-l text-consortiumBlue-800', {
+  const inputClassName = classNames(
+    'w-full rounded-l text-consortiumBlue-800',
+    {
       'py-1 px-3 border border-consortiumBlue-800': variant === 'default',
       'p-3 placeholder:text-blueGrey-500 placeholder:italic text-consortiumBlue-800 not-italic':
         variant === 'home',
