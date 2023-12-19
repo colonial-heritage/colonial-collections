@@ -4,7 +4,7 @@ import {
   organizationMembershipToCommunityMembership,
   organizationToCommunity,
 } from './clerk-converters';
-import {Community, Membership, SortBy} from './definitions';
+import {Community, SortBy} from './definitions';
 
 export async function getCommunityBySlug(slug: string) {
   const organization = await clerkClient.organizations.getOrganization({
@@ -104,30 +104,6 @@ export async function getMyCommunities({
   const communities = organizations.map(organizationToCommunity);
 
   return sort(communities, sortBy);
-}
-
-export function isAdmin(memberships: ReadonlyArray<Membership>): boolean {
-  noStore();
-  const {userId} = auth();
-
-  return (
-    !!userId &&
-    memberships.some(membership => {
-      return membership.userId === userId && membership.role === 'admin';
-    })
-  );
-}
-
-export function isMember(memberships: ReadonlyArray<Membership>): boolean {
-  noStore();
-  const {userId} = auth();
-
-  return (
-    !!userId &&
-    memberships.some(membership => {
-      return membership.userId === userId;
-    })
-  );
 }
 
 interface JoinCommunityProps {

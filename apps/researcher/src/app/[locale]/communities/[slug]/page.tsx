@@ -7,14 +7,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslations} from 'next-intl/server';
 import {JoinCommunityButton, ManageMembersButton} from './buttons';
-import {
-  getMemberships,
-  getCommunityBySlug,
-  isAdmin,
-  isMember,
-} from '@/lib/community/actions';
+import {getMemberships, getCommunityBySlug} from '@/lib/community/actions';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
+import {Protect} from '@clerk/nextjs';
 import {revalidatePath} from 'next/cache';
 import {objectList} from '@colonial-collections/database';
 import ObjectCard from './object';
@@ -27,7 +23,7 @@ import {
 } from '@colonial-collections/ui';
 import EditCommunityForm from './edit-community-form';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
-import {DebugButton} from '@/app/[locale]/debug/frontend';
+import SetActive from '@/lib/community/set-active';
 
 interface Props {
   params: {
@@ -78,6 +74,7 @@ export default async function CommunityPage({params}: Props) {
 
   return (
     <>
+      <SetActive communityId={community.id} />
       <div className="px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
         <div>
           <ToFilteredListButton className="flex items-center gap-1">
@@ -88,30 +85,32 @@ export default async function CommunityPage({params}: Props) {
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
         <main className="w-full">
-          {isMember(memberships) && !community.canAddEnrichments && (
-            <div className="w-full block">
-              <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-neutral-200 w-full mx-auto ">
-                <div className="bg-orange-400 p-3 rounded-l">
-                  <ExclamationTriangleIcon className="w-6 h-6 fill-neutral-700" />
-                </div>
-                <div className="p-2">
-                  <p>{t('noAttributionIdWarning')}</p>
-                </div>
-                <div className="p-2">
-                  {isAdmin(memberships) && (
-                    <SlideOutButton
-                      id={slideOutEditFormId}
-                      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700 hover:bg-neutral-800
-                  text-neutral-100 transition flex items-center gap-1"
-                    >
-                      {t('addAttributionIdButton')}
-                    </SlideOutButton>
-                  )}
+          <Protect role="basic_member">
+            {!community.canAddEnrichments && (
+              <div className="w-full block">
+                <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-neutral-200 w-full mx-auto ">
+                  <div className="bg-orange-400 p-3 rounded-l">
+                    <ExclamationTriangleIcon className="w-6 h-6 fill-neutral-700" />
+                  </div>
+                  <div className="p-2">
+                    <p>{t('noAttributionIdWarning')}</p>
+                  </div>
+                  <div className="p-2">
+                    <Protect role="admin">
+                      <SlideOutButton
+                        id={slideOutEditFormId}
+                        className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700 hover:bg-neutral-800
+                      text-neutral-100 transition flex items-center gap-1"
+                      >
+                        {t('addAttributionIdButton')}
+                      </SlideOutButton>
+                    </Protect>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-          {isAdmin(memberships) && (
+            )}
+          </Protect>
+          <Protect role="admin">
             <div className="w-full flex justify-end -mb-8">
               <SlideOutButton
                 id={slideOutEditFormId}
@@ -121,12 +120,7 @@ export default async function CommunityPage({params}: Props) {
                 {t('editButton')}
               </SlideOutButton>
             </div>
-          )}
-          {!isAdmin(memberships) && (
-            <div className="w-full flex justify-end -mb-8">
-              <DebugButton />
-            </div>
-          )}
+          </Protect>
           <div className="-mb-16 md:-mb-24 w-full flex justify-center">
             <div className="w-32 h-32 lg:w-48 lg:h-48 rounded-full overflow-hidden relative">
               <Image
@@ -182,14 +176,14 @@ export default async function CommunityPage({params}: Props) {
                 <p>{t('objectListsSubTitle', {count: objectLists.length})}</p>
               </div>
               <div>
-                {isAdmin(memberships) && (
+                <Protect role="admin">
                   <SlideOutButton
                     id={slideOutFormId}
                     className="flex items-center py-2 px-3 rounded-full bg-sand-100 text-sand-900 hover:bg-white transition text-xs"
                   >
                     {t('addObjectListButton')}
                   </SlideOutButton>
-                )}
+                </Protect>
               </div>
             </div>
 
@@ -238,12 +232,12 @@ export default async function CommunityPage({params}: Props) {
           <div className="flex justify-between">
             <h2 className="mb-4">{t('membersTitle')}</h2>
             <div>
-              {isAdmin(memberships) && (
+              <Protect role="admin">
                 <ManageMembersButton
                   communityId={community.id}
                   communitySlug={params.slug}
                 />
-              )}
+              </Protect>
             </div>
           </div>
           <ul>
