@@ -20,9 +20,9 @@
     "test:e2e:open": "cypress open"
   },
   "dependencies": {
-    "@clerk/localizations": "1.26.12",
-    "@clerk/nextjs": "4.27.7",
-    "@clerk/types": "3.59.0",
+    "@clerk/localizations": "1.26.13",
+    "@clerk/nextjs": "4.28.1",
+    "@clerk/types": "3.60.0",
     "@colonial-collections/content": "*",
     "@colonial-collections/database": "*",
     "@colonial-collections/enricher": "*",
