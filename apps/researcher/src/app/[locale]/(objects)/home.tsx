@@ -35,7 +35,7 @@ export default async function Home() {
               })}
             </p>
             <div className="flex flex-col gap-2 max-w-3xl">
-              <label htmlFor="s1">
+              <label htmlFor="search">
                 <strong>{t('searchLabel')}</strong>
               </label>
               <SearchFieldHome />

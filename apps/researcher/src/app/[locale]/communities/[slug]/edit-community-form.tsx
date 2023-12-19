@@ -106,7 +106,7 @@ export default function EditCommunityForm({
       )}
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
-        <label className="flex flex-col gap-1 mb-1">
+        <label htmlFor="name" className="flex flex-col gap-1 mb-1">
           <strong>
             {t('labelName')}
             <span className="font-normal text-neutral-600"> *</span>
@@ -121,7 +121,7 @@ export default function EditCommunityForm({
       </div>
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
-        <label className="flex flex-col gap-1 mb-1">
+        <label htmlFor="description" className="flex flex-col gap-1 mb-1">
           <strong>
             {t('labelDescription')}
             <span className="font-normal text-neutral-600"> *</span>
@@ -140,7 +140,7 @@ export default function EditCommunityForm({
       </div>
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
-        <label className="flex flex-col gap-1 mb-1">
+        <label htmlFor="attributionId" className="flex flex-col gap-1 mb-1">
           <strong>
             {t('labelAttributionId')}
             <span className="font-normal text-neutral-600"> *</span>
