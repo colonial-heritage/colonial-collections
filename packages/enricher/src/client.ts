@@ -39,7 +39,10 @@ const saveOptionsSchema = z.object({
 
 type SaveOptions = z.infer<typeof saveOptionsSchema>;
 
-const saveResponseSchema = z.string().url();
+const saveResponseSchema = z.object({
+  id: z.string().url(),
+  url: z.string().url(),
+});
 
 export type Nanopub = {
   id: string;
@@ -84,8 +87,10 @@ export class NanopubClient {
       );
     }
 
-    const rawResponseData = await response.text();
-    const nanopubIri = saveResponseSchema.parse(rawResponseData);
+    // TBD: fetch the published nanopub info from location 'responseData.url'?
+    const rawResponseData = await response.json();
+    const responseData = saveResponseSchema.parse(rawResponseData);
+    const nanopubIri = responseData.id;
 
     return nanopubIri;
   }
