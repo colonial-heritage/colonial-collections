@@ -6,7 +6,7 @@ import {
   useListStore,
   Type as SearchParamType,
 } from '@colonial-collections/list-store';
-import {SearchResultFilter} from './SearchResultFilter';
+import {SearchResultFilter} from './definitions';
 import {useMemo} from 'react';
 import {MagnifyingGlassIcon, TagIcon} from '@heroicons/react/24/solid';
 

@@ -2,7 +2,7 @@
 
 import {Modal, ModalButton, ModalHeader} from '../modal';
 import {FacetCheckBox, FacetTitle, FacetWrapper} from './base-facet';
-import {SearchResultFilter} from './SearchResultFilter';
+import {SearchResultFilter} from './definitions';
 import {useEffect} from 'react';
 import {
   InformationCircleIcon,
