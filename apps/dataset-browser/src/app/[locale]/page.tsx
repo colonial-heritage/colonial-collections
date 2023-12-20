@@ -32,6 +32,7 @@ import {
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from './list-store-updater';
+import {FacetVariant} from '@colonial-collections/ui/list/definitions';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -74,6 +75,7 @@ function FacetMenu({filters}: FacetMenuProps) {
               filters={filters[name]}
               filterKey={name}
               testId={`${name}Filter`}
+              variant={FacetVariant.Old}
             />
           )
       )}

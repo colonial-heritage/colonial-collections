@@ -3,3 +3,8 @@ export interface SearchResultFilter {
   id: string | number;
   totalCount: number;
 }
+
+export enum FacetVariant {
+  Default = 'default',
+  Old = 'old',
+}

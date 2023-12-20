@@ -2,15 +2,26 @@
 
 import {useCallback, useMemo, ReactNode} from 'react';
 import {useListStore} from '@colonial-collections/list-store';
+import classNames from 'classnames';
+import {FacetVariant} from './definitions';
 
 interface FacetWrapperProps {
   children: ReactNode;
   testId?: string;
+  variant?: FacetVariant;
 }
 
-export function FacetWrapper({children, testId}: FacetWrapperProps) {
+export function FacetWrapper({
+  children,
+  testId,
+  variant = FacetVariant.Default,
+}: FacetWrapperProps) {
   return (
-    <div className="bg-consortiumBlue-900 rounded p-2">
+    <div
+      className={classNames('rounded p-2', {
+        'bg-consortiumBlue-900': variant === FacetVariant.Default,
+      })}
+    >
       <div className="w-full max-w-[450px]" data-testid={testId}>
         {children}
       </div>
