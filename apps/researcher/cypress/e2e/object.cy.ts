@@ -4,7 +4,7 @@
 
 describe('Object details page', () => {
   it('opens the object page if clicked on in the search list', () => {
-    cy.visit('/', {
+    cy.visit('/objects', {
       failOnStatusCode: false,
       qs: {query: 'object'},
     });
@@ -35,7 +35,7 @@ describe('Object details page', () => {
   });
 
   it('navigates back to the list with the previously selected filters', () => {
-    cy.visit('/', {
+    cy.visit('/objects', {
       failOnStatusCode: false,
       qs: {query: 'object'},
     });
