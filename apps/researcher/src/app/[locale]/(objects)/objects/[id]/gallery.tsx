@@ -48,12 +48,12 @@ export default function Gallery({images, organizationName}: Props) {
                     className="max-h-[450px] w-auto"
                     sizes="40vw"
                   />
-                  <span className="absolute p-1 md:p-3 bg-black rounded top-2 left-2">
+                  <span className="absolute p-1 md:p-3 bg-consortiumBlue-100 hover:bg-consortiumBlue-100/80 rounded-full top-2 left-2 transition">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="w-4 h-4 fill-white"
+                      className="w-4 h-4 fill-consortiumBlue-800"
                     >
                       <path
                         fillRule="evenodd"
@@ -67,7 +67,7 @@ export default function Gallery({images, organizationName}: Props) {
               </SlideOver>
             </div>
             <div className="text-xs w-full p-2 flex flex-wrap justify-center gap-1 my-2">
-              <div className=" text-neutral-700">{t('license')}:</div>
+              <div className=" text-consortiumBlue-100">{t('license')}:</div>
               {image.license ? (
                 <a target="_blank" href={image.license.id}>
                   {image.license.name}
@@ -85,7 +85,7 @@ export default function Gallery({images, organizationName}: Props) {
       </Tab.Panels>
 
       {images.length > 1 && (
-        <Tab.List className="w-1/2 md:w-full grid grid-cols-2 md:flex md:flex-row md:flex-wrap md:items-end gap-1 md:py-2 md:border-y-4 border-white">
+        <Tab.List className="w-1/2 md:w-full grid grid-cols-2 md:flex md:flex-row md:flex-wrap md:items-end gap-2 md:py-2 md:border-y-4 border-consortiumBlue-800">
           {images.map(image => (
             <Tab
               as="div"
@@ -101,8 +101,10 @@ export default function Gallery({images, organizationName}: Props) {
                     src={image.src}
                     alt={image.alt}
                     className={classNames(
-                      selected ? 'border-black' : 'border-transparent',
-                      'w-full border-4'
+                      selected
+                        ? 'border-white'
+                        : 'border-consortiumBlue-400 hover:border-consortiumBlue-100',
+                      'w-full border-4 transition'
                     )}
                     sizes="10vw"
                   />
