@@ -188,7 +188,7 @@ export class DatasetSearcher {
             {
               // Only return documents of a specific type
               terms: {
-                [`${RawKeys.Type}.keyword`]: [
+                [`${RawKeys.Type}.keyword` as string]: [
                   'https://colonialcollections.nl/schema#Dataset',
                 ],
               },
@@ -207,12 +207,16 @@ export class DatasetSearcher {
     ]);
 
     for (const [rawDatasetKey, filters] of queryFilters) {
-      if (filters !== undefined && filters.length) {
-        searchRequest.query.bool.filter.push({
-          terms: {
-            [`${rawDatasetKey}.keyword`]: filters,
-          },
+      if (filters !== undefined) {
+        const andFilters = filters.map(filter => {
+          return {
+            terms: {
+              [`${rawDatasetKey}.keyword`]: [filter],
+            },
+          };
         });
+
+        searchRequest.query.bool.filter.push(...andFilters);
       }
     }
 
