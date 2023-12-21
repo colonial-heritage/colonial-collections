@@ -13,7 +13,6 @@ export type SearchResult = {
   sortOrder: SortOrder;
   heritageObjects: HeritageObject[];
   filters: {
-    owners: SearchResultFilter[];
     types: SearchResultFilter[];
     subjects: SearchResultFilter[];
     locations: SearchResultFilter[];

@@ -62,7 +62,6 @@ export class HeritageObjectFetcher {
           ex:dateCreated ?dateCreatedTimeSpan ;
           ex:locationCreated ?locationCreated ;
           ex:image ?digitalObject ;
-          ex:owner ?owner ;
           ex:isPartOf ?dataset .
 
         ?type a ex:DefinedTerm ;
@@ -97,9 +96,6 @@ export class HeritageObjectFetcher {
 
         ?digitalObjectLicense a ex:DigitalDocument ;
           ex:name ?digitalObjectLicenseName .
-
-        ?owner a ?ownerType ;
-          ex:name ?ownerName .
 
         ?dataset a ex:Dataset ;
           ex:publisher ?publisher ;
@@ -266,24 +262,6 @@ export class HeritageObjectFetcher {
         }
 
         ####################
-        # Owner
-        ####################
-
-        OPTIONAL {
-          ?object crm:P52_has_current_owner ?owner .
-          ?owner schema:name ?ownerName ;
-            rdf:type ?ownerTypeTemp .
-
-          FILTER(LANG(?ownerName) = "" || LANGMATCHES(LANG(?ownerName), "en"))
-
-          VALUES (?ownerTypeTemp ?ownerType) {
-            (schema:Organization ex:Organization)
-            (schema:Person ex:Person)
-            (UNDEF UNDEF)
-          }
-        }
-
-        ####################
         # Part of dataset
         ####################
 
@@ -355,7 +333,6 @@ export class HeritageObjectFetcher {
       createPlaces(rawHeritageObject, 'ex:locationCreated')
     );
     const images = createImages(rawHeritageObject, 'ex:image');
-    const owner = onlyOne(createAgents(rawHeritageObject, 'ex:owner'));
     const dataset = onlyOne(createDatasets(rawHeritageObject, 'ex:isPartOf'));
 
     const heritageObjectWithUndefinedValues: HeritageObject = {
@@ -372,7 +349,6 @@ export class HeritageObjectFetcher {
       dateCreated,
       locationCreated,
       images,
-      owner,
       isPartOf: dataset,
     };
 

@@ -67,11 +67,6 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ],
-          owner: {
-            type: 'Organization',
-            id: 'Museum',
-            name: 'Museum',
-          },
           isPartOf: {
             id: 'Dataset 1',
             name: 'Dataset 1',
@@ -125,11 +120,6 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg',
             },
           ],
-          owner: {
-            type: 'Organization',
-            id: 'Research Organisation',
-            name: 'Research Organisation',
-          },
           isPartOf: {
             id: 'Dataset 13',
             name: 'Dataset 13',
@@ -173,11 +163,6 @@ describe('search', () => {
               name: 'Paper',
             },
           ],
-          owner: {
-            type: 'Organization',
-            id: 'Library',
-            name: 'Library',
-          },
           isPartOf: {
             id: 'Dataset 10',
             name: 'Dataset 10',
@@ -253,11 +238,6 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ],
-          owner: {
-            type: 'Organization',
-            id: 'Museum',
-            name: 'Museum',
-          },
           isPartOf: {
             id: 'Dataset 1',
             name: 'Dataset 1',
@@ -270,23 +250,6 @@ describe('search', () => {
         },
       ],
       filters: {
-        owners: [
-          {
-            totalCount: 2,
-            id: 'Museum',
-            name: 'Museum',
-          },
-          {
-            totalCount: 1,
-            id: 'Library',
-            name: 'Library',
-          },
-          {
-            totalCount: 1,
-            id: 'Research Organisation',
-            name: 'Research Organisation',
-          },
-        ],
         types: [
           {
             totalCount: 1,
@@ -453,21 +416,6 @@ describe('search', () => {
             name: 1902,
           },
         ],
-      },
-    });
-  });
-
-  it('finds heritage objects if "owners" filter matches', async () => {
-    const result = await heritageObjectSearcher.search({
-      filters: {
-        owners: ['Library'],
-      },
-    });
-
-    expect(result).toMatchObject({
-      totalCount: 1,
-      filters: {
-        owners: [{totalCount: 1, id: 'Library', name: 'Library'}],
       },
     });
   });
