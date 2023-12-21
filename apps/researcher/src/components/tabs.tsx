@@ -13,8 +13,8 @@ export default function Tabs() {
   const tabs = [
     {
       name: t('objects'),
-      isCurrentRegex: `^/(${locales.join('|')})?$`,
-      href: '/',
+      isCurrentRegex: `^(/(${locales.join('|')}))?/objects$`,
+      href: '/objects',
       icon: ObjectIcon,
     },
     {

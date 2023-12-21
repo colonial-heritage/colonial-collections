@@ -1,4 +1,4 @@
-import Tabs from './tabs';
+import Tabs from '@/components/tabs';
 
 export default async function Loading() {
   return (
