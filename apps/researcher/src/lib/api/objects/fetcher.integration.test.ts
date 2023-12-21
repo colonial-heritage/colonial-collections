@@ -40,7 +40,7 @@ describe('getById', () => {
       types: expect.arrayContaining([
         {
           id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
+            'https://data.colonialcollections.nl/.well-known/genid/'
           ),
           name: 'Canvas Painting',
         },
@@ -48,7 +48,7 @@ describe('getById', () => {
       subjects: expect.arrayContaining([
         {
           id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
+            'https://data.colonialcollections.nl/.well-known/genid/'
           ),
           name: 'Celebrations',
         },
@@ -56,13 +56,13 @@ describe('getById', () => {
       materials: expect.arrayContaining([
         {
           id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
+            'https://data.colonialcollections.nl/.well-known/genid/'
           ),
           name: 'Oilpaint',
         },
         {
           id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
+            'https://data.colonialcollections.nl/.well-known/genid/'
           ),
           name: 'Canvas',
         },
@@ -70,7 +70,7 @@ describe('getById', () => {
       techniques: expect.arrayContaining([
         {
           id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
+            'https://data.colonialcollections.nl/.well-known/genid/'
           ),
           name: 'Albumen process',
         },
@@ -79,14 +79,14 @@ describe('getById', () => {
         {
           type: 'Person',
           id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
+            'https://data.colonialcollections.nl/.well-known/genid/'
           ),
           name: 'Geeske van Châtellerault',
         },
       ]),
       dateCreated: {
         id: expect.stringContaining(
-          'https://colonial-heritage.triply.cc/.well-known/genid/'
+          'https://data.colonialcollections.nl/.well-known/genid/'
         ),
         startDate: new Date('1901-01-01'),
         endDate: new Date('1902-06-01'),
@@ -102,7 +102,7 @@ describe('getById', () => {
       images: expect.arrayContaining([
         {
           id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
+            'https://data.colonialcollections.nl/.well-known/genid/'
           ),
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
@@ -113,7 +113,7 @@ describe('getById', () => {
         },
         {
           id: expect.stringContaining(
-            'https://colonial-heritage.triply.cc/.well-known/genid/'
+            'https://data.colonialcollections.nl/.well-known/genid/'
           ),
           contentUrl:
             'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
@@ -123,11 +123,6 @@ describe('getById', () => {
           },
         },
       ]),
-      owner: {
-        type: 'Organization',
-        id: 'https://museum.example.org/',
-        name: 'Museum',
-      },
       isPartOf: {
         id: 'https://example.org/datasets/1',
         name: 'Dataset 1',

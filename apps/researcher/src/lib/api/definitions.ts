@@ -58,7 +58,6 @@ export type HeritageObject = {
   locationCreated?: Place;
   dateCreated?: TimeSpan;
   images?: Image[];
-  owner?: Agent;
   isPartOf?: Dataset;
 };
 
