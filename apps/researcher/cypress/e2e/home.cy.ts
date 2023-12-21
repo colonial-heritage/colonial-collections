@@ -32,7 +32,7 @@ describe('Object list filters', () => {
   });
 
   it('filters by one publisher', () => {
-    cy.visit('/', {
+    cy.visit('/objects', {
       failOnStatusCode: false,
       qs: {query: 'object'},
     });
@@ -45,7 +45,7 @@ describe('Object list filters', () => {
   });
 
   it('filters by two materials', () => {
-    cy.visit('/', {
+    cy.visit('/objects', {
       failOnStatusCode: false,
       qs: {query: 'object'},
     });
@@ -59,7 +59,7 @@ describe('Object list filters', () => {
   });
 
   it('removes a publisher filter by deselecting the filter in the sidebar', () => {
-    cy.visit('/', {
+    cy.visit('/objects', {
       failOnStatusCode: false,
       qs: {query: 'object'},
     });
@@ -76,7 +76,7 @@ describe('Object list filters', () => {
   });
 
   it('removes a publisher filter by deselecting it in the selected filter bar', () => {
-    cy.visit('/', {
+    cy.visit('/objects', {
       failOnStatusCode: false,
       qs: {query: 'object'},
     });
@@ -95,7 +95,7 @@ describe('Object list filters', () => {
   });
 
   it('filters by one type', () => {
-    cy.visit('/', {
+    cy.visit('/objects', {
       failOnStatusCode: false,
       qs: {query: 'object'},
     });

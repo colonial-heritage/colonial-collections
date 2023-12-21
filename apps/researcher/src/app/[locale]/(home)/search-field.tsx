@@ -11,7 +11,7 @@ export function SearchFieldHome() {
   const navigateOnSearch = (query: string) => {
     if (query) {
       const urlSearchParams = new URLSearchParams({query});
-      router.replace(`/?${urlSearchParams}`);
+      router.replace(`/objects?${urlSearchParams}`);
     }
   };
 
