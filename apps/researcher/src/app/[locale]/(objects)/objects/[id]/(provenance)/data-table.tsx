@@ -16,8 +16,8 @@ export default function ProvenanceEventsDataTable({
   const eventGroups = groupByDateRange({events, locale});
 
   return (
-    <div className="py-2 rounded bg-blueGrey-50">
-      <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b mb-4 text-blueGrey-600">
+    <div className="py-2 rounded bg-consortiumBlue-900">
+      <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-consortiumBlue-300 mb-4 text-consortiumBlue-100">
         <div className="w-full md:w-1/12">{t('id')}</div>
         <div className="w-full md:w-2/12">{t('type')}</div>
         <div className="w-full md:w-3/12">{t('transferredFrom')}</div>
@@ -45,15 +45,15 @@ function ProvenanceEventRow({
   const t = useTranslations('Provenance');
 
   return (
-    <div className="border-l-4 mb-16 border-consortiumBlue-970">
+    <div className="border-l-4 mb-16 border-consortiumBlue-950">
       <div className="mb-4 pl-4">
         <strong>{dateRange}</strong>
       </div>
-      <ul className="flex flex-col border-t border-consortiumBlue-970">
+      <ul className="flex flex-col border-t border-consortiumBlue-500">
         {provenanceEvents.map(event => (
           <li
             key={event.id}
-            className="list-none pl-4 w-full text-sm md:text-base border-b border-blueGrey-100"
+            className="list-none pl-4 w-full text-sm md:text-base border-b border-consortiumBlue-500"
           >
             <div className="w-full flex flex-col gap-2 lg:gap-4 sm:flex-row justify-between items-center py-2">
               <div className="w-full md:w-1/12 flex flex-col lg:flex-row items-center gap-2">
@@ -61,16 +61,16 @@ function ProvenanceEventRow({
                   <div>
                     <SelectEventButton
                       event={event}
-                      className="bg-white hover:bg-neutral-700 border-neutral-700 hover:border-neutral-700 hover:text-white rounded-full h-8 w-8 flex justify-center items-center border-2 transition text-xs font-medium hover:z-40"
+                      className="bg-consortiumBlue-600 hover:bg-onsortiumBlue-800 border-white hover:border-consortiumGreen-300 hover:text-consortiumGreen-300 rounded-full h-8 w-8 flex justify-center items-center border-2 transition text-xs font-medium hover:z-40 mb-2"
                     >
                       {event.label}
                     </SelectEventButton>
                     {event.description && (
                       <SlideOutButton
                         id={`eventDescription-${event.id}`}
-                        className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+                        className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumBlue-100 hover:bg-white text-consortiumBlue-800 transition flex items-center gap-1"
                       >
-                        <InformationCircleIcon className="w-5 h-5 stroke-blueGrey-700" />
+                        <InformationCircleIcon className="w-5 h-5 stroke-consortiumBlue-800" />
                       </SlideOutButton>
                     )}
                   </div>
