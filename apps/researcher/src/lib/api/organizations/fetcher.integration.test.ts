@@ -37,7 +37,7 @@ describe('getById', () => {
       url: 'http://www.example.org',
       address: {
         id: expect.stringContaining(
-          'https://colonial-heritage.triply.cc/.well-known/genid/'
+          'https://data.colonialcollections.nl/.well-known/genid/'
         ),
         streetAddress: 'Museum Street 1',
         postalCode: '1234 AB',

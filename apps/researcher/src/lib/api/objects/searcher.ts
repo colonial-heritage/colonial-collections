@@ -2,7 +2,6 @@ import {
   Dataset,
   HeritageObject,
   Image,
-  Organization,
   Person,
   SearchResultFilter,
   SortBy,
@@ -35,7 +34,6 @@ enum RawKeys {
   Material = 'https://colonialcollections nl/schema#material',
   Technique = 'https://colonialcollections nl/schema#technique',
   Image = 'https://colonialcollections nl/schema#image',
-  Owner = 'https://colonialcollections nl/schema#owner',
   Publisher = 'https://colonialcollections nl/schema#publisher',
   YearCreatedStart = 'https://colonialcollections nl/schema#yearCreatedStart',
   YearCreatedEnd = 'https://colonialcollections nl/schema#yearCreatedEnd',
@@ -57,7 +55,6 @@ const searchOptionsSchema = z.object({
   sortOrder: SortOrderEnum.optional().default(SortOrder.Descending),
   filters: z
     .object({
-      owners: z.array(z.string()).optional().default([]),
       types: z.array(z.string()).optional().default([]),
       subjects: z.array(z.string()).optional().default([]),
       locations: z.array(z.string()).optional().default([]),
@@ -85,7 +82,6 @@ const rawHeritageObjectSchema = z
   .setKey(RawKeys.Material, z.array(z.string()).optional())
   .setKey(RawKeys.Technique, z.array(z.string()).optional())
   .setKey(RawKeys.Image, z.array(z.string()).optional())
-  .setKey(RawKeys.Owner, z.array(z.string()).optional())
   .setKey(RawKeys.Publisher, z.array(z.string()).optional())
   .setKey(RawKeys.IsPartOf, z.array(z.string()).min(1));
 
@@ -118,7 +114,6 @@ const rawSearchResponseSchema = z.object({
 const rawSearchResponseWithAggregationsSchema = rawSearchResponseSchema.merge(
   z.object({
     aggregations: z.object({
-      owners: rawAggregationSchema,
       types: rawAggregationSchema,
       subjects: rawAggregationSchema,
       locations: rawAggregationSchema,
@@ -172,17 +167,6 @@ export class HeritageObjectSearcher {
     const identifier = reach(rawHeritageObject, `${RawKeys.Identifier}.0`);
     const description = reach(rawHeritageObject, `${RawKeys.Description}.0`);
     const inscriptions = reach(rawHeritageObject, `${RawKeys.Inscription}`);
-
-    let owner: Organization | undefined;
-    const ownerName = reach(rawHeritageObject, `${RawKeys.Owner}.0`);
-    if (ownerName !== undefined) {
-      owner = {
-        type: 'Organization', // TODO: determine dynamically - could also be a 'Person'
-        id: ownerName,
-        name: ownerName,
-      };
-    }
-
     const publisherName = reach(rawHeritageObject, `${RawKeys.Publisher}.0`);
     const datasetName = reach(rawHeritageObject, `${RawKeys.IsPartOf}.0`);
     const dataset: Dataset = {
@@ -244,7 +228,6 @@ export class HeritageObjectSearcher {
       techniques,
       creators,
       images,
-      owner,
       isPartOf: dataset,
     };
 
@@ -268,7 +251,6 @@ export class HeritageObjectSearcher {
 
   private buildRequest(options: SearchOptions) {
     const aggregations = {
-      owners: this.buildAggregation(`${RawKeys.Owner}.keyword`),
       types: this.buildAggregation(`${RawKeys.AdditionalType}.keyword`),
       subjects: this.buildAggregation(`${RawKeys.About}.keyword`),
       locations: this.buildAggregation(`${RawKeys.CountryCreated}.keyword`),
@@ -318,7 +300,6 @@ export class HeritageObjectSearcher {
     };
 
     const queryFilters: Map<string, string[] | undefined> = new Map([
-      [RawKeys.Owner, options.filters?.owners],
       [RawKeys.AdditionalType, options.filters?.types],
       [RawKeys.About, options.filters?.subjects],
       [RawKeys.CountryCreated, options.filters?.locations],
@@ -393,7 +374,6 @@ export class HeritageObjectSearcher {
       return this.fromRawHeritageObjectToHeritageObject(rawHeritageObject);
     });
 
-    const ownerFilters = this.buildFilters(aggregations.owners.buckets);
     const typeFilters = this.buildFilters(aggregations.types.buckets);
     const subjectFilters = this.buildFilters(aggregations.subjects.buckets);
     const locationFilters = this.buildFilters(aggregations.locations.buckets);
@@ -415,7 +395,6 @@ export class HeritageObjectSearcher {
       sortOrder: options.sortOrder!,
       heritageObjects,
       filters: {
-        owners: ownerFilters,
         types: typeFilters,
         subjects: subjectFilters,
         locations: locationFilters,

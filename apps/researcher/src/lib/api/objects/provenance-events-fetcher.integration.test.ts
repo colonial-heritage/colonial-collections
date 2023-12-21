@@ -61,13 +61,13 @@ describe('getByHeritageObjectId', () => {
             'https://example.org/objects/1/provenance/event/3/activity/1',
           location: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             name: 'Amsterdam',
           },
           transferredFrom: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             type: 'Person',
             name: 'Jonathan Hansen',
@@ -93,7 +93,7 @@ describe('getByHeritageObjectId', () => {
             'https://example.org/objects/1/provenance/event/3/activity/1',
           location: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             name: 'Paris',
           },
@@ -119,7 +119,7 @@ describe('getByHeritageObjectId', () => {
             'https://example.org/objects/1/provenance/event/4/activity/1',
           location: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             name: 'Amsterdam',
           },
@@ -146,20 +146,20 @@ describe('getByHeritageObjectId', () => {
             'https://example.org/objects/1/provenance/event/5/activity/1',
           location: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             name: 'The Hague',
           },
           transferredFrom: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             type: 'Person',
             name: 'Jan de Vries',
           },
           transferredTo: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             type: 'Person',
             name: 'Jonathan Hansen',
@@ -184,20 +184,20 @@ describe('getByHeritageObjectId', () => {
             'https://example.org/objects/1/provenance/event/2/activity/1',
           location: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             name: 'Jakarta',
           },
           transferredFrom: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             type: 'Person',
             name: 'Peter Hoekstra',
           },
           transferredTo: {
             id: expect.stringContaining(
-              'https://colonial-heritage.triply.cc/.well-known/genid/'
+              'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             type: 'Person',
             name: 'Jan de Vries',
