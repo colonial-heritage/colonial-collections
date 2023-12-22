@@ -117,14 +117,16 @@ describe('getById', () => {
         startDate: new Date('1901-01-01'),
         endDate: new Date('1902-06-01'),
       },
-      locationCreated: {
-        id: 'https://sws.geonames.org/1749659/',
-        name: 'Pulau Sebang',
-        isPartOf: {
-          id: 'https://sws.geonames.org/1733045/',
-          name: 'Malaysia',
+      locationsCreated: expect.arrayContaining([
+        {
+          id: 'https://sws.geonames.org/1749659/',
+          name: 'Pulau Sebang',
+          isPartOf: {
+            id: 'https://sws.geonames.org/1733045/',
+            name: 'Malaysia',
+          },
         },
-      },
+      ]),
       images: expect.arrayContaining([
         {
           id: expect.stringContaining(
