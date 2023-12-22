@@ -55,7 +55,7 @@ export type HeritageObject = {
   materials?: Term[];
   techniques?: Term[];
   creators?: Agent[];
-  locationCreated?: Place;
+  locationsCreated?: Place[];
   dateCreated?: TimeSpan;
   images?: Image[];
   isPartOf?: Dataset;

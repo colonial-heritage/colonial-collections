@@ -351,8 +351,9 @@ export class HeritageObjectFetcher {
           const dateCreated = onlyOne(
             createTimeSpans(rawHeritageObject, 'ex:dateCreated')
           );
-          const locationCreated = onlyOne(
-            createPlaces(rawHeritageObject, 'ex:locationCreated')
+          const locationsCreated = createPlaces(
+            rawHeritageObject,
+            'ex:locationCreated'
           );
           const images = createImages(rawHeritageObject, 'ex:image');
           const dataset = onlyOne(
@@ -371,7 +372,7 @@ export class HeritageObjectFetcher {
             techniques,
             creators,
             dateCreated,
-            locationCreated,
+            locationsCreated,
             images,
             isPartOf: dataset,
           };

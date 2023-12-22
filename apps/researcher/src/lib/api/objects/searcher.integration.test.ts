@@ -79,10 +79,12 @@ describe('search', () => {
             startDate: new Date('1889-05-01T00:00:00.000Z'),
             endDate: new Date('1890-12-01T00:00:00.000Z'),
           },
-          locationCreated: {
-            id: 'https://sws.geonames.org/3382998/',
-            name: 'Suriname',
-          },
+          locationsCreated: expect.arrayContaining([
+            {
+              id: 'https://sws.geonames.org/3382998/',
+              name: 'Suriname',
+            },
+          ]),
           images: expect.arrayContaining([
             {
               id: expect.stringContaining(
@@ -167,14 +169,16 @@ describe('search', () => {
             startDate: new Date('1895-02-01T00:00:00.000Z'),
             endDate: new Date('1895-02-15T00:00:00.000Z'),
           },
-          locationCreated: {
-            id: 'https://sws.geonames.org/1642911/',
-            name: 'Jakarta',
-            isPartOf: {
-              id: 'https://sws.geonames.org/1643084/',
-              name: 'Indonesia',
+          locationsCreated: expect.arrayContaining([
+            {
+              id: 'https://sws.geonames.org/1642911/',
+              name: 'Jakarta',
+              isPartOf: {
+                id: 'https://sws.geonames.org/1643084/',
+                name: 'Indonesia',
+              },
             },
-          },
+          ]),
           images: expect.arrayContaining([
             {
               id: expect.stringContaining(
@@ -244,14 +248,16 @@ describe('search', () => {
             startDate: new Date('1725-01-01T00:00:00.000Z'),
             endDate: new Date('1736-01-01T00:00:00.000Z'),
           },
-          locationCreated: {
-            id: 'https://sws.geonames.org/1642673/',
-            name: 'Java',
-            isPartOf: {
-              id: 'https://sws.geonames.org/1643084/',
-              name: 'Indonesia',
+          locationsCreated: expect.arrayContaining([
+            {
+              id: 'https://sws.geonames.org/1642673/',
+              name: 'Java',
+              isPartOf: {
+                id: 'https://sws.geonames.org/1643084/',
+                name: 'Indonesia',
+              },
             },
-          },
+          ]),
           isPartOf: {
             id: 'https://example.org/datasets/10',
             name: 'Dataset 10',
@@ -335,14 +341,16 @@ describe('search', () => {
             startDate: new Date('1901-01-01T00:00:00.000Z'),
             endDate: new Date('1902-06-01T00:00:00.000Z'),
           },
-          locationCreated: {
-            id: 'https://sws.geonames.org/1749659/',
-            name: 'Pulau Sebang',
-            isPartOf: {
-              id: 'https://sws.geonames.org/1733045/',
-              name: 'Malaysia',
+          locationsCreated: expect.arrayContaining([
+            {
+              id: 'https://sws.geonames.org/1749659/',
+              name: 'Pulau Sebang',
+              isPartOf: {
+                id: 'https://sws.geonames.org/1733045/',
+                name: 'Malaysia',
+              },
             },
-          },
+          ]),
           images: expect.arrayContaining([
             {
               id: expect.stringContaining(
