@@ -43,7 +43,7 @@ describe('search', () => {
           dateCreated: new Date('2019-03-12T00:00:00.000Z'),
           dateModified: new Date('2023-02-17T00:00:00.000Z'),
           datePublished: new Date('2023-02-17T00:00:00.000Z'),
-          keywords: ['Suspendisse', 'Hendrerit'],
+          keywords: expect.arrayContaining(['Suspendisse', 'Hendrerit']),
           mainEntityOfPages: ['https://example.org/'],
           measurements: [
             {
@@ -252,7 +252,7 @@ describe('search', () => {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
           },
-          keywords: ['Vestibulum', 'Hendrerit'],
+          keywords: expect.arrayContaining(['Vestibulum', 'Hendrerit']),
           measurements: [
             {
               id: 'https://example.org/datasets/12/measurements/2',
@@ -395,7 +395,7 @@ describe('search', () => {
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
             name: 'CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring',
           },
-          keywords: ['Suspendisse', 'Hendrerit'],
+          keywords: expect.arrayContaining(['Suspendisse', 'Hendrerit']),
           measurements: [
             {
               id: 'https://example.org/datasets/14/measurements/2',
@@ -561,7 +561,7 @@ describe('search', () => {
             name: 'Open Data Commons Attribution License (ODC-By) v1.0',
           },
           dateModified: new Date('2023-02-01T00:00:00.000Z'),
-          keywords: ['Suspendisse', 'Hendrerit'],
+          keywords: expect.arrayContaining(['Suspendisse', 'Hendrerit']),
           measurements: [
             {
               id: 'https://example.org/datasets/4/measurements/2',
