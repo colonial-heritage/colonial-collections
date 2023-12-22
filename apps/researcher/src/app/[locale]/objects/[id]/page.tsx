@@ -215,12 +215,16 @@ export default async function Details({params}: Props) {
               </Metadata>
 
               <Metadata
-                translationKey="locationCreated"
+                translationKey="locationsCreated"
                 enrichmentType={AdditionalType.LocationCreated}
               >
-                {object.locationCreated?.name}
-                {object.locationCreated?.isPartOf?.name &&
-                  ` (${object.locationCreated?.isPartOf?.name})`}
+                {object.locationsCreated?.map(locationCreated => (
+                  <div key={locationCreated.id}>
+                    {locationCreated.name}
+                    {locationCreated?.isPartOf?.name &&
+                      ` (${locationCreated?.isPartOf?.name})`}
+                  </div>
+                ))}
               </Metadata>
 
               <Metadata
