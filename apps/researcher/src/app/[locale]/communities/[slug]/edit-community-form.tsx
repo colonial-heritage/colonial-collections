@@ -10,6 +10,7 @@ import {camelCase} from 'tiny-case';
 import {useCommunityProfile} from '@/lib/community/hooks';
 import {LocalizedMarkdown} from '@colonial-collections/ui';
 import {enrichmentLicence} from '@/lib/enrichment-licence';
+import {Suspense} from 'react';
 
 interface Props {
   communityId: string;
@@ -122,10 +123,7 @@ export default function EditCommunityForm({
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
         <label htmlFor="description" className="flex flex-col gap-1 mb-1">
-          <strong>
-            {t('labelDescription')}
-            <span className="font-normal text-neutral-600"> *</span>
-          </strong>
+          <strong>{t('labelDescription')}</strong>
         </label>
         <textarea
           id="description"
@@ -141,10 +139,7 @@ export default function EditCommunityForm({
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
         <label htmlFor="attributionId" className="flex flex-col gap-1 mb-1">
-          <strong>
-            {t('labelAttributionId')}
-            <span className="font-normal text-neutral-600"> *</span>
-          </strong>
+          <strong>{t('labelAttributionId')}</strong>
           <div className="text-sm mb-1 whitespace-pre-line">
             {t.rich('descriptionAttributionId', {
               link: text => (
@@ -183,11 +178,13 @@ export default function EditCommunityForm({
             </label>
           </div>
           <div className="text-sm mb-1">
-            <LocalizedMarkdown
-              name="license"
-              contentPath="@/messages"
-              textSize="small"
-            />
+            <Suspense>
+              <LocalizedMarkdown
+                name="license"
+                contentPath="@/messages"
+                textSize="small"
+              />
+            </Suspense>
           </div>
         </div>
         <p>{errors.agreedToLicense?.message}</p>
