@@ -11,7 +11,7 @@ interface Props {
   textSize?: 'small' | 'normal';
 }
 
-const LocalizedMarkdown = (async ({name, contentPath, textSize}: Props) => {
+export async function LocalizedMarkdown({name, contentPath, textSize}: Props) {
   const locale = useLocale();
   const markdownClassName = classNames(
     'max-w-3xl prose',
@@ -42,12 +42,4 @@ const LocalizedMarkdown = (async ({name, contentPath, textSize}: Props) => {
   } catch {
     notFound();
   }
-}) as unknown as (props: Props) => JSX.Element;
-
-// TypeScript doesn't understand async components yet.
-// So this is a temporary workaround.
-// More info:
-//  - Next.js issue: https://github.com/vercel/next.js/issues/42292
-//  - Typescript pull request: https://github.com/microsoft/TypeScript/pull/51328
-// export LocalizedMarkdown as unknown as (props: Props) => JSX.Element;
-export {LocalizedMarkdown};
+}
