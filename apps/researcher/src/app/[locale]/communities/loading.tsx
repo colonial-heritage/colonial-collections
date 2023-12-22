@@ -1,7 +1,7 @@
 export default async function Loading() {
   return (
     <>
-      <div className="w-full min-h-[80vh] flex justify-center items-center text-consortiumBlue-300">
+      <div className="w-full min-h-[80vh] flex justify-center items-center text-consortiumGreen-500">
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
