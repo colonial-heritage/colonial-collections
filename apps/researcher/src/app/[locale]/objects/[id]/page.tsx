@@ -215,7 +215,7 @@ export default async function Details({params}: Props) {
               </Metadata>
 
               <Metadata
-                translationKey="locationCreated"
+                translationKey="locationsCreated"
                 enrichmentType={AdditionalType.LocationCreated}
               >
                 {object.locationsCreated?.map(locationCreated => (
