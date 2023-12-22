@@ -83,7 +83,7 @@ export function Modal({children, id}: ModalProps) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative md:h-[80vh] md:max-h-[80vh] h-full max-h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all my-8 w-full">
+              <Dialog.Panel className="relative md:h-[80vh] md:max-h-[80vh] h-full max-h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all my-8 w-full mx-6 text-neutral-800">
                 {children}
               </Dialog.Panel>
             </Transition.Child>
@@ -108,11 +108,11 @@ export function ModalHeader({title}: ModalHeaderProps = {}) {
       <div>
         <button
           id="buttonCollapse"
-          className="ml-3 items-center flex text-sky-700"
+          className="ml-3 items-center flex"
           onClick={() => hide()}
         >
           <span>{t('close')}</span>
-          <XMarkIcon className="w-4 h-4 fill-bg-sky-700 mt-1" />
+          <XMarkIcon className="w-4 h-4 mt-1" />
         </button>
       </div>
     </div>
