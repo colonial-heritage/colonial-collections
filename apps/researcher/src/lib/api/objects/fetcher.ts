@@ -15,6 +15,7 @@ import {
 } from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
+import {EOL} from 'node:os';
 import type {Readable} from 'node:stream';
 import {RdfObjectLoader} from 'rdf-object';
 import type {Stream} from '@rdfjs/types';
@@ -36,7 +37,9 @@ export class HeritageObjectFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private async fetchTriples(iri: string) {
+  private async fetchTriples(iris: string[]) {
+    const heritageObjectIris = iris.map(iri => `<${iri}>`).join(EOL);
+
     const query = `
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
       PREFIX ex: <https://example.org/>
@@ -105,7 +108,9 @@ export class HeritageObjectFetcher {
           ex:name ?publisherName .
       }
       WHERE {
-        BIND(<${iri}> as ?object)
+        VALUES ?object {
+          ${heritageObjectIris}
+        }
 
         ?object a crm:E22_Human-Made_Object .
 
@@ -299,8 +304,8 @@ export class HeritageObjectFetcher {
     return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
-  private async fromTriplesToHeritageObject(
-    iri: string,
+  private async fromTriplesToHeritageObjects(
+    iris: string[],
     triplesStream: Readable & Stream
   ) {
     const loader = new RdfObjectLoader({
@@ -312,51 +317,86 @@ export class HeritageObjectFetcher {
 
     await loader.import(triplesStream);
 
-    const rawHeritageObject = loader.resources[iri];
-    if (rawHeritageObject === undefined) {
-      return undefined; // No such object
-    }
+    const heritageObjects = iris.reduce(
+      (heritageObjects: HeritageObject[], iri) => {
+        const rawHeritageObject = loader.resources[iri];
+        if (rawHeritageObject !== undefined) {
+          const identifier = getPropertyValue(
+            rawHeritageObject,
+            'ex:identifier'
+          );
+          const name = getPropertyValue(rawHeritageObject, 'ex:name');
+          const description = getPropertyValue(
+            rawHeritageObject,
+            'ex:description'
+          );
+          const types = createThings<Term>(
+            rawHeritageObject,
+            'ex:additionalType'
+          );
+          const subjects = createThings<Term>(rawHeritageObject, 'ex:about');
+          const inscriptions = getPropertyValues(
+            rawHeritageObject,
+            'ex:inscription'
+          );
+          const materials = createThings<Term>(
+            rawHeritageObject,
+            'ex:material'
+          );
+          const techniques = createThings<Term>(
+            rawHeritageObject,
+            'ex:technique'
+          );
+          const creators = createAgents(rawHeritageObject, 'ex:creator');
+          const dateCreated = onlyOne(
+            createTimeSpans(rawHeritageObject, 'ex:dateCreated')
+          );
+          const locationCreated = onlyOne(
+            createPlaces(rawHeritageObject, 'ex:locationCreated')
+          );
+          const images = createImages(rawHeritageObject, 'ex:image');
+          const dataset = onlyOne(
+            createDatasets(rawHeritageObject, 'ex:isPartOf')
+          );
 
-    const identifier = getPropertyValue(rawHeritageObject, 'ex:identifier');
-    const name = getPropertyValue(rawHeritageObject, 'ex:name');
-    const description = getPropertyValue(rawHeritageObject, 'ex:description');
-    const types = createThings<Term>(rawHeritageObject, 'ex:additionalType');
-    const subjects = createThings<Term>(rawHeritageObject, 'ex:about');
-    const inscriptions = getPropertyValues(rawHeritageObject, 'ex:inscription');
-    const materials = createThings<Term>(rawHeritageObject, 'ex:material');
-    const techniques = createThings<Term>(rawHeritageObject, 'ex:technique');
-    const creators = createAgents(rawHeritageObject, 'ex:creator');
-    const dateCreated = onlyOne(
-      createTimeSpans(rawHeritageObject, 'ex:dateCreated')
+          const heritageObjectWithUndefinedValues: HeritageObject = {
+            id: iri,
+            identifier,
+            name,
+            description,
+            types,
+            subjects,
+            inscriptions,
+            materials,
+            techniques,
+            creators,
+            dateCreated,
+            locationCreated,
+            images,
+            isPartOf: dataset,
+          };
+
+          const heritageObject = removeNullish<HeritageObject>(
+            heritageObjectWithUndefinedValues
+          );
+          heritageObjects.push(heritageObject);
+        }
+        return heritageObjects;
+      },
+      []
     );
-    const locationCreated = onlyOne(
-      createPlaces(rawHeritageObject, 'ex:locationCreated')
-    );
-    const images = createImages(rawHeritageObject, 'ex:image');
-    const dataset = onlyOne(createDatasets(rawHeritageObject, 'ex:isPartOf'));
 
-    const heritageObjectWithUndefinedValues: HeritageObject = {
-      id: iri,
-      identifier,
-      name,
-      description,
-      types,
-      subjects,
-      inscriptions,
-      materials,
-      techniques,
-      creators,
-      dateCreated,
-      locationCreated,
-      images,
-      isPartOf: dataset,
-    };
+    return heritageObjects;
+  }
 
-    const heritageObject = removeNullish<HeritageObject>(
-      heritageObjectWithUndefinedValues
+  async getByIds(ids: string[]) {
+    const triplesStream = await this.fetchTriples(ids);
+    const heritageObjects = await this.fromTriplesToHeritageObjects(
+      ids,
+      triplesStream
     );
 
-    return heritageObject;
+    return heritageObjects;
   }
 
   async getById(id: string) {
@@ -364,12 +404,12 @@ export class HeritageObjectFetcher {
       return undefined;
     }
 
-    const triplesStream = await this.fetchTriples(id);
-    const heritageObject = await this.fromTriplesToHeritageObject(
-      id,
-      triplesStream
-    );
+    const heritageObjects = await this.getByIds([id]);
 
-    return heritageObject;
+    if (heritageObjects.length !== 1) {
+      return undefined;
+    }
+
+    return heritageObjects[0];
   }
 }
