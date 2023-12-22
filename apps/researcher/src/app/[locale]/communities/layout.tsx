@@ -5,7 +5,7 @@ import {ReactNode} from 'react';
 
 export default function Layout({children}: {children: ReactNode}) {
   return (
-    <body>
+    <body className="bg-consortiumGreen-300 text-consortiumBlue-800">
       <BaseLayout>
         <ListProvider baseUrl="/communities" defaultSortBy={defaultSortBy}>
           {children}
