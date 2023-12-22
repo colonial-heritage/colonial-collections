@@ -420,6 +420,24 @@ describe('search', () => {
     });
   });
 
+  it('finds heritage objects if multiple filters match by "and"', async () => {
+    const result = await heritageObjectSearcher.search({
+      filters: {
+        materials: ['Oilpaint', 'Canvas'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 2,
+      filters: {
+        materials: [
+          {totalCount: 2, id: 'Canvas', name: 'Canvas'},
+          {totalCount: 2, id: 'Oilpaint', name: 'Oilpaint'},
+        ],
+      },
+    });
+  });
+
   it('finds heritage objects if "types" filter matches', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {

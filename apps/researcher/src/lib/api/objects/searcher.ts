@@ -286,7 +286,7 @@ export class HeritageObjectSearcher {
             {
               // Only return documents of a specific type
               terms: {
-                [`${RawKeys.Type}.keyword`]: [
+                [`${RawKeys.Type}.keyword` as string]: [
                   'https://colonialcollections.nl/schema#HeritageObject',
                 ],
               },
@@ -309,12 +309,16 @@ export class HeritageObjectSearcher {
     ]);
 
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
-      if (filters !== undefined && filters.length) {
-        searchRequest.query.bool.filter.push({
-          terms: {
-            [`${rawHeritageObjectKey}.keyword`]: filters,
-          },
+      if (filters !== undefined) {
+        const andFilters = filters.map(filter => {
+          return {
+            terms: {
+              [`${rawHeritageObjectKey}.keyword`]: [filter],
+            },
+          };
         });
+
+        searchRequest.query.bool.filter.push(...andFilters);
       }
     }
 
