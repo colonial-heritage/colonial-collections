@@ -10,6 +10,7 @@ import {camelCase} from 'tiny-case';
 import {useCommunityProfile} from '@/lib/community/hooks';
 import {LocalizedMarkdown} from '@colonial-collections/ui';
 import {enrichmentLicence} from '@/lib/enrichment-licence';
+import {Suspense} from 'react';
 
 interface Props {
   communityId: string;
@@ -183,11 +184,13 @@ export default function EditCommunityForm({
             </label>
           </div>
           <div className="text-sm mb-1">
-            <LocalizedMarkdown
-              name="license"
-              contentPath="@/messages"
-              textSize="small"
-            />
+            <Suspense>
+              <LocalizedMarkdown
+                name="license"
+                contentPath="@/messages"
+                textSize="small"
+              />
+            </Suspense>
           </div>
         </div>
         <p>{errors.agreedToLicense?.message}</p>
