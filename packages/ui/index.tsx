@@ -7,3 +7,4 @@ export * from './slide-over';
 export * from './slide-out';
 export * from './notifications';
 export * from './navigation-menu';
+export * from './loading';
