@@ -123,10 +123,7 @@ export default function EditCommunityForm({
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
         <label htmlFor="description" className="flex flex-col gap-1 mb-1">
-          <strong>
-            {t('labelDescription')}
-            <span className="font-normal text-neutral-600"> *</span>
-          </strong>
+          <strong>{t('labelDescription')}</strong>
         </label>
         <textarea
           id="description"
@@ -142,10 +139,7 @@ export default function EditCommunityForm({
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
         <label htmlFor="attributionId" className="flex flex-col gap-1 mb-1">
-          <strong>
-            {t('labelAttributionId')}
-            <span className="font-normal text-neutral-600"> *</span>
-          </strong>
+          <strong>{t('labelAttributionId')}</strong>
           <div className="text-sm mb-1 whitespace-pre-line">
             {t.rich('descriptionAttributionId', {
               link: text => (
