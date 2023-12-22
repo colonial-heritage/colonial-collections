@@ -10,7 +10,7 @@ import {JoinCommunityButton, ManageMembersButton} from './buttons';
 import {getMemberships, getCommunityBySlug} from '@/lib/community/actions';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
-import {Protect} from '@clerk/nextjs';
+import {Protect, SignedIn} from '@clerk/nextjs';
 import {revalidatePath} from 'next/cache';
 import {objectList} from '@colonial-collections/database';
 import ObjectCard from './object';
@@ -74,7 +74,9 @@ export default async function CommunityPage({params}: Props) {
 
   return (
     <>
-      <SetActive communityId={community.id} />
+      <SignedIn>
+        <SetActive communityId={community.id} />
+      </SignedIn>
       <div className="px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
         <div>
           <ToFilteredListButton className="flex items-center gap-1">
