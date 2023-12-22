@@ -1,5 +1,5 @@
 import {Loading} from '@colonial-collections/ui';
 
 export default function LoadingScreen() {
-  return <Loading variant="blue" />;
+  return <Loading variant="green" />;
 }
