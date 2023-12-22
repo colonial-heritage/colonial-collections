@@ -1,8 +1,5 @@
-import {
-  ChevronLeftIcon,
-  ExclamationTriangleIcon,
-  PencilSquareIcon,
-} from '@heroicons/react/24/solid';
+import {ChevronLeftIcon, PencilSquareIcon} from '@heroicons/react/24/solid';
+import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslations} from 'next-intl/server';
@@ -79,7 +76,7 @@ export default async function CommunityPage({params}: Props) {
       </SignedIn>
       <div className="px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
         <div>
-          <ToFilteredListButton className="flex items-center gap-1">
+          <ToFilteredListButton className="flex items-center gap-1 no-underline">
             <ChevronLeftIcon className="w-4 h-4 fill-neutral-500" />
             {t('backButton')}
           </ToFilteredListButton>
@@ -89,25 +86,22 @@ export default async function CommunityPage({params}: Props) {
         <main className="w-full">
           <Protect role="basic_member">
             {!community.canAddEnrichments && (
-              <div className="w-full block">
-                <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-neutral-200 w-full mx-auto ">
-                  <div className="bg-orange-400 p-3 rounded-l">
-                    <ExclamationTriangleIcon className="w-6 h-6 fill-neutral-700" />
-                  </div>
-                  <div className="p-2">
-                    <p>{t('noAttributionIdWarning')}</p>
-                  </div>
-                  <div className="p-2">
-                    <Protect role="admin">
-                      <SlideOutButton
-                        id={slideOutEditFormId}
-                        className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700 hover:bg-neutral-800
-                      text-neutral-100 transition flex items-center gap-1"
-                      >
-                        {t('addAttributionIdButton')}
-                      </SlideOutButton>
-                    </Protect>
-                  </div>
+              <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-white/50 w-full mx-auto border border-neutral-600/60">
+                <div className="bg-neutral-600/60 p-3 rounded-l">
+                  <ExclamationTriangleIcon className="w-6 h-6 stroke-orange-300" />
+                </div>
+                <div className="p-2">
+                  <p>{t('noAttributionIdWarning')}</p>
+                </div>
+                <div className="p-2 flex gap-2">
+                  <Protect role="admin">
+                    <SlideOutButton
+                      id={slideOutEditFormId}
+                      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700/50 hover:bg-neutral-800/50 text-neutral-100 transition flex items-center gap-1"
+                    >
+                      {t('addAttributionIdButton')}
+                    </SlideOutButton>
+                  </Protect>
                 </div>
               </div>
             )}
@@ -116,7 +110,7 @@ export default async function CommunityPage({params}: Props) {
             <div className="w-full flex justify-end -mb-8">
               <SlideOutButton
                 id={slideOutEditFormId}
-                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1"
+                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
               >
                 <PencilSquareIcon className="w-5 h-5 fill-neutral-700" />
                 {t('editButton')}
@@ -126,7 +120,9 @@ export default async function CommunityPage({params}: Props) {
           <div className="-mb-16 md:-mb-24 w-full flex justify-center">
             <div className="w-32 h-32 lg:w-48 lg:h-48 rounded-full overflow-hidden relative">
               <Image
-                fill
+                width="0"
+                height="0"
+                className="w-32 lg:w-48 h-auto rounded-full border border-consortiumBlue-700"
                 sizes="(min-width: 1024px) 192px, 128px"
                 src={community.imageUrl}
                 alt=""
@@ -134,26 +130,28 @@ export default async function CommunityPage({params}: Props) {
             </div>
           </div>
           <SlideOutClosed id={slideOutEditFormId}>
-            <div className="w-full rounded-lg bg-[#f3eee2] text-stone-800 pt-16 md:pt-24 pb-6 transition">
-              <h1 className="text-2xl font-normal w-full text-center mt-4 px-4 my-6">
-                {t('title')}
-                <span
-                  className="font-semibold ml-2"
-                  data-testid="community-name"
-                >
-                  {community.name}
-                </span>
-              </h1>
-              <div className="w-full flex flex-col md:flex-row justify-center px-4">
-                <div className="mb-4 max-w-3xl text-left whitespace-pre-line">
-                  {community.description}
+            <div className="w-full rounded-lg bg-consortiumGreen-300 border border-consortiumBlue-700 text-consortiumBlue-800 pt-16 md:pt-24 pb-6 transition">
+              <div className="w-full flex flex-col">
+                <h1 className="text-2xl font-normal w-full text-center mt-4 px-4 my-6">
+                  {t('title')}
+                  <span
+                    className="font-semibold ml-2"
+                    data-testid="community-name"
+                  >
+                    {community.name}
+                  </span>
+                </h1>
+                <div className="w-full flex flex-col md:flex-row justify-center px-4">
+                  <div className="mb-4 max-w-3xl text-left whitespace-pre-line">
+                    {community.description}
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
-                <JoinCommunityButton
-                  communityId={community.id}
-                  communitySlug={params.slug}
-                />
+                <div className="flex flex-col items-start md:justify-center md:items-center w-full mb-4">
+                  <JoinCommunityButton
+                    communityId={community.id}
+                    communitySlug={params.slug}
+                  />
+                </div>
               </div>
             </div>
           </SlideOutClosed>
@@ -181,7 +179,7 @@ export default async function CommunityPage({params}: Props) {
                 <Protect role="admin">
                   <SlideOutButton
                     id={slideOutFormId}
-                    className="flex items-center py-2 px-3 rounded-full bg-sand-100 text-sand-900 hover:bg-white transition text-xs"
+                    className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
                   >
                     {t('addObjectListButton')}
                   </SlideOutButton>
@@ -202,7 +200,7 @@ export default async function CommunityPage({params}: Props) {
                 <Link
                   href={`/communities/${params.slug}/${objectList.id}`}
                   key={objectList.id}
-                  className="text-neutral-800"
+                  className="no-underline"
                 >
                   <h3 className="font-semibold text-xl mt-4 mb-2">
                     {objectList.name}
@@ -219,8 +217,8 @@ export default async function CommunityPage({params}: Props) {
                       ))}
                     </ul>
 
-                    <div className="absolute bg-gradient-to-l from-white w-full top-0 bottom-0 flex justify-end">
-                      <button className="p-2 self-center flex items-center py-2 px-3 rounded-full bg-sand-100 text-sand-900 hover:bg-white transition text-xs">
+                    <div className="absolute bg-gradient-to-l from-consortiumGreen-300 w-full top-0 bottom-0 flex justify-end">
+                      <button className="p-2 self-center flex items-center py-2 px-3 rounded-full bg-consortiumBlue-800 text-white hover:bg-consortiumBlue-700 transition text-xs">
                         {t('goToListButton')}
                       </button>
                     </div>

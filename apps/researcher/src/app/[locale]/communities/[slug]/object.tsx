@@ -12,7 +12,7 @@ export default async function ObjectCard({objectIri}: Props) {
   }
 
   return (
-    <div className="border border-blueGrey-200 text-blueGrey-800 bg-greenGrey-50 rounded-sm p-2 text-xs">
+    <div className="bg-consortiumBlue-800 text-consortiumGreen-400 rounded p-2 text-xs">
       {object.name}
     </div>
   );
