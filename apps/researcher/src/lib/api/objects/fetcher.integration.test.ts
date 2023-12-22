@@ -10,6 +10,32 @@ beforeEach(() => {
   });
 });
 
+describe('getByIds', () => {
+  it('returns empty list if no heritage objects match the IDs', async () => {
+    const heritageObjects = await heritageObjectFetcher.getByIds([
+      'https://unknown.org/',
+    ]);
+
+    expect(heritageObjects).toStrictEqual([]);
+  });
+
+  it('returns the heritage objects that match the IDs', async () => {
+    const heritageObjects = await heritageObjectFetcher.getByIds([
+      'https://example.org/objects/1',
+      'https://example.org/objects/5',
+    ]);
+
+    expect(heritageObjects).toMatchObject([
+      {
+        id: 'https://example.org/objects/1',
+      },
+      {
+        id: 'https://example.org/objects/5',
+      },
+    ]);
+  });
+});
+
 describe('getById', () => {
   it('returns undefined if a malformed ID is used', async () => {
     const heritageObject = await heritageObjectFetcher.getById('malformedID');

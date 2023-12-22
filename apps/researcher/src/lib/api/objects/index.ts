@@ -30,6 +30,7 @@ export class HeritageObjects {
     });
     this.heritageObjectSearcher = new HeritageObjectSearcher({
       endpointUrl: opts.elasticSearchEndpointUrl,
+      heritageObjectFetcher: this.heritageObjectFetcher,
     });
   }
 
