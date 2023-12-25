@@ -25,7 +25,7 @@
     "@colonial-collections/list-store": "*",
     "@colonial-collections/ui": "*",
     "@headlessui/react": "1.7.17",
-    "@heroicons/react": "2.0.18",
+    "@heroicons/react": "2.1.1",
     "@next/mdx": "14.0.4",
     "classnames": "2.3.2",
     "defu": "6.1.3",
