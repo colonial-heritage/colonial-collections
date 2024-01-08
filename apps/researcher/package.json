@@ -32,7 +32,7 @@
     "@colonial-collections/ui": "*",
     "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.17",
-    "@heroicons/react": "2.0.18",
+    "@heroicons/react": "2.1.1",
     "@hookform/resolvers": "3.3.2",
     "@next/mdx": "14.0.4",
     "classnames": "2.3.2",
