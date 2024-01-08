@@ -21,7 +21,7 @@
     "next-intl": "3.2.5",
     "react": "18.2.0",
     "zod": "3.22.4",
-    "zustand": "4.3.9"
+    "zustand": "4.4.7"
   },
   "engines": {
     "node": "18.x"
