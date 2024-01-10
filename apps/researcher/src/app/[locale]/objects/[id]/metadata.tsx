@@ -31,47 +31,47 @@ export function Metadata({
       )
     : [];
 
-  if (!children && metadataEnrichments.length === 0) {
-    return (
-      <div className="text-consortiumBlue-100 italic w-full border-t py-6 text-sm">
-        {t.rich('noData', {
-          subject: () => <span className="lowercase">{t(translationKey)}</span>,
-        })}
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
-        <div className="w-full xl:w-1/5 border-t border-consortiumBlue-400 pt-4">
-          <div className="sticky top-0 bg-consortiumBlue-800 py-1">
-            <h3 className="text-lg w-full my-1 flex items-center">
-              {t(translationKey)}
-            </h3>
-            <div className="text-consortiumBlue-100 text-sm">
-              {t(`${translationKey}SubTitle`)}
+      {!children && metadataEnrichments.length === 0 ? (
+        <div className="text-consortiumBlue-100 italic w-full border-t py-6 text-sm">
+          {t.rich('noData', {
+            subject: () => (
+              <span className="lowercase">{t(translationKey)}</span>
+            ),
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
+          <div className="w-full xl:w-1/5 border-t border-consortiumBlue-400 pt-4">
+            <div className="sticky top-0 bg-consortiumBlue-800 py-1">
+              <h3 className="text-lg w-full my-1 flex items-center">
+                {t(translationKey)}
+              </h3>
+              <div className="text-consortiumBlue-100 text-sm">
+                {t(`${translationKey}SubTitle`)}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="w-full xl:w-4/5 flex flex-col gap-2">
-          <MetadataEntry translationKey={translationKey} isCurrentPublisher>
-            {children}
-          </MetadataEntry>
-          {metadataEnrichments?.map(enrichment => (
-            <MetadataEntry
-              key={enrichment.id}
-              translationKey={translationKey}
-              dateCreated={enrichment.dateCreated}
-              citation={enrichment.citation}
-              creator={enrichment.creator}
-              languageCode={enrichment.inLanguage as LanguageCode}
-            >
-              {enrichment.description}
+          <div className="w-full xl:w-4/5 flex flex-col gap-2">
+            <MetadataEntry translationKey={translationKey} isCurrentPublisher>
+              {children}
             </MetadataEntry>
-          ))}
+            {metadataEnrichments?.map(enrichment => (
+              <MetadataEntry
+                key={enrichment.id}
+                translationKey={translationKey}
+                dateCreated={enrichment.dateCreated}
+                citation={enrichment.citation}
+                creator={enrichment.creator}
+                languageCode={enrichment.inLanguage as LanguageCode}
+              >
+                {enrichment.description}
+              </MetadataEntry>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       {enrichmentType && (
         <AddMetadataEnrichment
           translationKey={translationKey}
