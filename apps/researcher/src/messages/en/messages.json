@@ -175,7 +175,7 @@
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
   },
   "WorkInProgress": {
-    "message": "This website is a work in progress",
+    "message": "This site is a Work in Progress. The data you add, will be deleted.",
     "roadmapLink": "Read about the current status and roadmap of this project."
   },
   "Gallery": {
