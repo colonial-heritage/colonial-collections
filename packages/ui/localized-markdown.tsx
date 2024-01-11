@@ -20,7 +20,6 @@ export async function LocalizedMarkdown({name, contentPath, textSize}: Props) {
     'prose-h2:text-xl prose-h2:mb-1 prose-h2:mt-10',
     'prose-h3:text-lg prose-h3:mb-2',
     'prose-a:text-sky-700 prose-a:no-underline',
-    'mx-auto mt-16 px-4 sm:px-10 mb-16',
     {
       'text-sm': textSize === 'small',
     }
