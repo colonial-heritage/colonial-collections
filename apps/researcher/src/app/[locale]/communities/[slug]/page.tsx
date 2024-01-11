@@ -7,7 +7,6 @@ import {JoinCommunityButton, ManageMembersButton} from './buttons';
 import {getMemberships, getCommunityBySlug} from '@/lib/community/actions';
 import ErrorMessage from '@/components/error-message';
 import {ClerkAPIResponseError} from '@clerk/shared';
-import {Protect, SignedIn} from '@clerk/nextjs';
 import {revalidatePath} from 'next/cache';
 import {objectList} from '@colonial-collections/database';
 import ObjectCard from './object';
@@ -20,7 +19,7 @@ import {
 } from '@colonial-collections/ui';
 import EditCommunityForm from './edit-community-form';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
-import SetActive from '@/lib/community/set-active';
+import Protect from '@/lib/community/protect';
 
 interface Props {
   params: {
@@ -71,9 +70,6 @@ export default async function CommunityPage({params}: Props) {
 
   return (
     <>
-      <SignedIn>
-        <SetActive communityId={community.id} />
-      </SignedIn>
       <div className="px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
         <div>
           <ToFilteredListButton className="flex items-center gap-1 no-underline">
@@ -84,7 +80,7 @@ export default async function CommunityPage({params}: Props) {
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
         <main className="w-full">
-          <Protect role="basic_member">
+          <Protect communityId={community.id} permission="org:lists:manage">
             {!community.canAddEnrichments && (
               <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-white/50 w-full mx-auto border border-neutral-600/60">
                 <div className="bg-neutral-600/60 p-3 rounded-l">
@@ -94,7 +90,10 @@ export default async function CommunityPage({params}: Props) {
                   <p>{t('noAttributionIdWarning')}</p>
                 </div>
                 <div className="p-2 flex gap-2">
-                  <Protect role="admin">
+                  <Protect
+                    communityId={community.id}
+                    permission="org:sys_profile:manage"
+                  >
                     <SlideOutButton
                       id={slideOutEditFormId}
                       className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700/50 hover:bg-neutral-800/50 text-neutral-100 transition flex items-center gap-1"
@@ -106,7 +105,10 @@ export default async function CommunityPage({params}: Props) {
               </div>
             )}
           </Protect>
-          <Protect role="admin">
+          <Protect
+            communityId={community.id}
+            permission="org:sys_profile:manage"
+          >
             <div className="w-full flex justify-end -mb-8">
               <SlideOutButton
                 id={slideOutEditFormId}
@@ -176,7 +178,10 @@ export default async function CommunityPage({params}: Props) {
                 <p>{t('objectListsSubTitle', {count: objectLists.length})}</p>
               </div>
               <div>
-                <Protect role="admin">
+                <Protect
+                  communityId={community.id}
+                  permission="org:sys_profile:manage"
+                >
                   <SlideOutButton
                     id={slideOutFormId}
                     className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
@@ -232,7 +237,10 @@ export default async function CommunityPage({params}: Props) {
           <div className="flex justify-between">
             <h2 className="mb-4">{t('membersTitle')}</h2>
             <div>
-              <Protect role="admin">
+              <Protect
+                communityId={community.id}
+                permission="org:sys_profile:manage"
+              >
                 <ManageMembersButton
                   communityId={community.id}
                   communitySlug={params.slug}
