@@ -171,7 +171,7 @@ export default async function Home({searchParams = {}}: Props) {
                     <SmallScreenSubMenu>
                       <SubMenuButton className="md:hidden py-2 px-3 rounded-full bg-consortiumGreen-300 text-consortiumBlue-800 transition flex items-center gap-1 text-sm my-2">
                         <AdjustmentsHorizontalIcon
-                          className="ml-1 h-5 w-5 flex-shrink-0"
+                          className="ml-1 h-4 w-4 flex-shrink-0"
                           aria-hidden="true"
                         />
                         <span>{t('filters')}</span>
