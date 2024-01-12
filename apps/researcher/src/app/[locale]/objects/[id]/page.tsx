@@ -142,7 +142,7 @@ export default async function Details({params}: Props) {
                 className="border-r border-consortiumBlue-400 mr-4 pr-4"
               >
                 <div>{enrichment.description}</div>
-                <div className="text-xs font-normal  hidden sm:block text-consortiumBlue-100">
+                <div className="text-xs font-normal hidden sm:block text-consortiumBlue-100">
                   {ISO6391.getName(enrichment.inLanguage as LanguageCode)}
                 </div>
               </div>
