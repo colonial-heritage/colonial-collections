@@ -1,47 +1,63 @@
+'use client';
+
 import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
 import type {LabeledProvenanceEvent} from './definitions';
 import {useLocale, useTranslations} from 'next-intl';
 import {InformationCircleIcon} from '@heroicons/react/24/outline';
 import {groupByDateRange} from './group-events';
-import {SelectEventButton} from './selected-event';
+import {useProvenance} from './provenance-store';
+import {SelectEventButton} from './buttons';
 
-export default function ProvenanceEventsDataTable({
-  events,
-}: {
-  events: LabeledProvenanceEvent[];
-}) {
+export default function DataTable() {
   const t = useTranslations('Provenance');
   const locale = useLocale();
 
-  const eventGroups = groupByDateRange({events, locale});
+  const {selectedEvent, events, showDataTable} = useProvenance();
+
+  if (!showDataTable) {
+    return null;
+  }
+
+  const eventsToShow = selectedEvent
+    ? events.filter(event => event.id === selectedEvent)
+    : events;
+
+  const eventGroups = groupByDateRange({events: eventsToShow, locale});
 
   return (
-    <div className="py-2 rounded bg-consortiumBlue-900">
-      <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-consortiumBlue-300 mb-4 text-consortiumBlue-100">
-        <div className="w-full md:w-1/12">{t('id')}</div>
-        <div className="w-full md:w-2/12">{t('type')}</div>
-        <div className="w-full md:w-3/12">{t('transferredFrom')}</div>
-        <div className="w-full md:w-3/12">{t('transferredTo')}</div>
-        <div className="w-full md:w-1/12">{t('location')}</div>
-      </header>
-      {Object.entries(eventGroups).map(([dateRange, eventGroup]) => (
-        <ProvenanceEventRow
-          key={dateRange}
-          dateRange={dateRange}
-          provenanceEvents={eventGroup}
-        />
-      ))}
+    <div className="w-full block">
+      <div className="flex justify-between items-center">
+        <h3 className="my-4 w-full pt-4">{t('dataTableTitle')}</h3>
+      </div>
+      <div className="py-2 rounded bg-consortiumBlue-900">
+        <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-consortiumBlue-300 mb-4 text-consortiumBlue-100">
+          <div className="w-full md:w-1/12">{t('id')}</div>
+          <div className="w-full md:w-2/12">{t('type')}</div>
+          <div className="w-full md:w-3/12">{t('transferredFrom')}</div>
+          <div className="w-full md:w-3/12">{t('transferredTo')}</div>
+          <div className="w-full md:w-1/12">{t('location')}</div>
+        </header>
+        {Object.entries(eventGroups).map(([dateRange, eventGroup]) => (
+          <ProvenanceEventRow
+            key={dateRange}
+            dateRange={dateRange}
+            provenanceEvents={eventGroup}
+          />
+        ))}
+      </div>
     </div>
   );
+}
+
+interface ProvenanceEventRowProps {
+  provenanceEvents: LabeledProvenanceEvent[];
+  dateRange: string;
 }
 
 function ProvenanceEventRow({
   provenanceEvents,
   dateRange,
-}: {
-  provenanceEvents: LabeledProvenanceEvent[];
-  dateRange: string;
-}) {
+}: ProvenanceEventRowProps) {
   const t = useTranslations('Provenance');
 
   return (
@@ -59,10 +75,7 @@ function ProvenanceEventRow({
               <div className="w-full md:w-1/12 flex flex-col lg:flex-row items-center gap-2">
                 <div className="flex flex-col gap-2">
                   <div>
-                    <SelectEventButton
-                      event={event}
-                      className="bg-consortiumBlue-600 hover:bg-onsortiumBlue-800 border-white hover:border-consortiumGreen-300 hover:text-consortiumGreen-300 rounded-full h-8 w-8 flex justify-center items-center border-2 transition text-xs font-medium hover:z-40 mb-2"
-                    >
+                    <SelectEventButton id={event.id}>
                       {event.label}
                     </SelectEventButton>
                     {event.description && (

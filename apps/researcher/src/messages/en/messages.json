@@ -120,7 +120,11 @@
     "transferredTo": "Transferred to",
     "location": "Location",
     "descriptionTitle": "Description",
-    "noData": "No provenance events found"
+    "noData": "No provenance events found",
+    "dataTableTitle": "Provenance data table",
+    "timelineTitle": "Provenance timeline",
+    "timelineDescription": "In the timeline visualization provenance items are plotted out by time. Click on a item focus that item.",
+    "timelineEventsWithoutDates": "{eventCount, plural, =1 {Provenance item {events} is not plotted on the timeline because we have no dates available.} other {# Provenance items {events} are not plotted on the timeline because we have no dates available.}}"
   },
   "PersonDetails": {
     "backButton": "Back to results",
