@@ -1,5 +1,5 @@
 import {useLocale, useTranslations} from 'next-intl';
-import {getTranslations} from 'next-intl/server';
+import {getFormatter, getTranslations} from 'next-intl/server';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
@@ -18,7 +18,6 @@ import {
 } from '@colonial-collections/ui';
 import useObject from './use-object';
 import {env} from 'node:process';
-import {formatDateRange} from './format-date-range';
 import ObjectListsMenu from './object-lists-menu';
 import {SignedIn} from '@clerk/nextjs';
 import {fetcher} from '@/lib/enricher-instances';
@@ -85,6 +84,7 @@ export default async function Details({params}: Props) {
   const object = await heritageObjects.getById(id);
   const locale = useLocale();
   const t = await getTranslations('ObjectDetails');
+  const format = await getFormatter();
 
   if (!object) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
@@ -141,8 +141,8 @@ export default async function Details({params}: Props) {
                 key={enrichment.id}
                 className="border-r border-consortiumBlue-400 mr-4 pr-4"
               >
-                <div className="">{enrichment.description}</div>
-                <div className="text-xs font-normal  hidden sm:block text-consortiumBlue-100">
+                <div>{enrichment.description}</div>
+                <div className="text-xs font-normal hidden sm:block text-consortiumBlue-100">
                   {ISO6391.getName(enrichment.inLanguage as LanguageCode)}
                 </div>
               </div>
@@ -241,12 +241,25 @@ export default async function Details({params}: Props) {
                 enrichmentType={AdditionalType.DateCreated}
               >
                 {object.dateCreated && (
-                  <div>
-                    {formatDateRange({
-                      startDate: object.dateCreated.startDate,
-                      endDate: object.dateCreated.endDate,
-                      locale,
-                    })}
+                  <div className="flex flex-row gap-12">
+                    <div>
+                      <div className="italic text-sm text-consortiumBlue-100">
+                        {t('beginOfRange')}
+                      </div>
+                      <div>
+                        {object.dateCreated.startDate &&
+                          format.dateTime(object.dateCreated.startDate)}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="italic text-sm text-consortiumBlue-100">
+                        {t('endOfRange')}
+                      </div>
+                      <div>
+                        {object.dateCreated.startDate &&
+                          format.dateTime(object.dateCreated.startDate)}
+                      </div>
+                    </div>
                   </div>
                 )}
               </Metadata>
