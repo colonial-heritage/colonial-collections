@@ -30,6 +30,7 @@
     "@colonial-collections/label-fetcher": "*",
     "@colonial-collections/list-store": "*",
     "@colonial-collections/ui": "*",
+    "@colonial-collections/email-sender": "*",
     "@hapi/hoek": "11.0.2",
     "@headlessui/react": "1.7.17",
     "@heroicons/react": "2.1.1",

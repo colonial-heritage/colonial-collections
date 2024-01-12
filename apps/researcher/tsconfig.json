@@ -6,6 +6,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/lib", "src/types"],
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/lib", "src/types", "../../packages/email-sender/src/actions.tsx", "../../packages/email-sender/src/contact-form.tsx"],
   "exclude": ["cypress", "**/*.cy.tsx"]
 }
