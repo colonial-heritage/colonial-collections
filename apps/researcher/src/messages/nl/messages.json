@@ -101,6 +101,8 @@
     "noOrganizationFound": "Geen organisatie gevonden.",
     "dateCreated": "Datum van creatie",
     "dateCreatedSubTitle": "Wanneer is het voorwerp gemaakt? Dit kan een exacte datum of een datumbereik zijn.",
+    "beginOfRange": "Begin van bereik",
+    "endOfRange": "Eind van bereik",
     "addUserEnrichmentButton": "Voeg uw verhaal toe aan <name></name>",
     "noListsInCommunity": "Geen lijsten",
     "objectAddedToList": "Object toegevoegd aan lijst <name></name>.",
