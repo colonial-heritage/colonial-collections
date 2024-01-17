@@ -6,6 +6,14 @@ interface CategorizedEvents {
   eventsWithoutDates: LabeledProvenanceEvent[];
 }
 
+// Timeline events can be categorized into three groups,
+// The groups are rendered differently in the timeline.
+// The three groups are:
+// 1. Range events: Events that have a start and end date,
+// and the start and end date are different.
+// 2. Single events: Events that have a single start or end date,
+// or events that have the same start and end date.
+// 3. Events without dates: Events that have no start or end date.
 export function categorizeEvents(events: LabeledProvenanceEvent[]) {
   return events.reduce<CategorizedEvents>(
     (categorizedEvents, event) => {
