@@ -24,8 +24,8 @@ export function ContactForm() {
   const {
     register,
     handleSubmit,
-    setError,
     formState: {errors, isSubmitting},
+    reset,
   } = useForm({
     resolver: zodResolver(communitySchema),
     defaultValues: {
@@ -46,9 +46,12 @@ export function ContactForm() {
         message: t('emailIsSended'),
         type: 'success',
       });
+      reset();
     } catch (err) {
-      setError('root.serverError', {
+      addNotification({
+        id: 'email-send-error',
         message: t('communityEditServerError'),
+        type: 'error',
       });
     }
   };
@@ -58,19 +61,6 @@ export function ContactForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex-col px-4 gap-6 items-center flex"
     >
-      <h1 className="text-2xl font-normal w-full text-center mt-4 px-4 my-2">
-        {t('title')}
-      </h1>
-      {errors.root?.serverError.message && (
-        <div className="rounded-md bg-red-50 p-4 mt-3">
-          <div className="ml-3">
-            <h3 className="text-sm leading-5 font-medium text-red-800">
-              {errors.root.serverError.message}
-            </h3>
-          </div>
-        </div>
-      )}
-
       <div className="flex flex-col gap-1 max-w-2xl w-full">
         <label htmlFor="emailAddress" className="flex flex-col gap-1 mb-1">
           <strong>
@@ -109,7 +99,7 @@ export function ContactForm() {
       <div className="flex flex-col gap-1 max-w-2xl w-full">
         <label htmlFor="body" className="flex flex-col gap-1 mb-1">
           <strong>
-            {t('labelBody')}
+            {t('labelMessage')}
             <span className="font-normal text-neutral-600"> *</span>
           </strong>
         </label>

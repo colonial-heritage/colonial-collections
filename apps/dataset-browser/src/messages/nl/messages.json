@@ -127,5 +127,13 @@
   },
   "ErrorPage": {
     "message": "Er is iets fout gegaan!"
-  }
+  },
+   "ContactForm": {
+     "labelEmailAddress": "E-mail",
+     "labelSubject": "Onderwerp",
+     "labelMessage": "Bericht",
+     "sendEmailButton": "Bericht verzenden",
+     "emailIsSended": "Uw bericht is succesvol verzonden.",
+     "communityEditServerError": "Er is een probleem opgetreden bij het verzenden van uw bericht. Probeer het later opnieuw."
+   }
 }

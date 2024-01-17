@@ -273,5 +273,17 @@
     "citationTooSmall": "Bron is vereist",
     "noCommunities": "U bent nog geen lid van een community die gemachtigd is een verhaal toe te voegen. U kunt een community maken of lid worden van een bestaande community.",
     "saving": "Opslaan..."
-  }
+  },
+   "ContactForm": {
+     "labelEmailAddress": "E-mail",
+     "labelSubject": "Onderwerp",
+     "labelMessage": "Bericht",
+     "sendEmailButton": "Bericht verzenden",
+     "emailIsSended": "Uw bericht is succesvol verzonden.",
+     "communityEditServerError": "Er is een probleem opgetreden bij het verzenden van uw bericht. Probeer het later opnieuw.",
+     "emailAddressInvalidString": "E-mailadres moet een geldig e-mailadres zijn",
+     "subjectTooSmall": "Onderwerp is vereist",
+     "subjectTooBig": "Onderwerp mag maximaal 250 tekens bevatten",
+     "bodyTooSmall": "Bericht is vereist"
+   }
 }

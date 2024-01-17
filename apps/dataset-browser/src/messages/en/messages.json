@@ -128,5 +128,13 @@
   },
   "ErrorPage": {
     "message": "Something went wrong!"
+  },
+  "ContactForm": {
+    "labelEmailAddress": "Email",
+    "labelSubject": "Subject",
+    "labelMessage": "Message",
+    "sendEmailButton": "Send message",
+    "emailIsSended": "Your message has been sent successfully.",
+    "communityEditServerError": "There was a problem sending your message. Please try again later."
   }
 }
