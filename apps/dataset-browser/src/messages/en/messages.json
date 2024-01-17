@@ -135,6 +135,10 @@
     "labelMessage": "Message",
     "sendEmailButton": "Send message",
     "emailIsSended": "Your message has been sent successfully.",
-    "communityEditServerError": "There was a problem sending your message. Please try again later."
+    "communityEditServerError": "There was a problem sending your message. Please try again later.",
+    "emailAddressInvalidString": "Email address is not valid",
+    "subjectTooSmall": "Subject is required",
+    "subjectTooBig": "Subject has a maximum of 250 characters",
+    "bodyTooSmall": "Message is required"
   }
 }
