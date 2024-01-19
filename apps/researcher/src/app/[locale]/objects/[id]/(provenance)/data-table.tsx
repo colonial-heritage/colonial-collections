@@ -6,21 +6,22 @@ import {useLocale, useTranslations} from 'next-intl';
 import {InformationCircleIcon} from '@heroicons/react/24/outline';
 import {groupByDateRange} from './group-events';
 import {useProvenance} from './provenance-store';
-import {SelectEventButton} from './buttons';
+import {SelectEventsButton} from './buttons';
 
 export default function DataTable() {
   const t = useTranslations('Provenance');
   const locale = useLocale();
 
-  const {selectedEvent, events, showDataTable} = useProvenance();
+  const {selectedEvents, events, showDataTable} = useProvenance();
 
   if (!showDataTable) {
     return null;
   }
 
-  const eventsToShow = selectedEvent
-    ? events.filter(event => event.id === selectedEvent)
-    : events;
+  const eventsToShow =
+    selectedEvents.length > 0
+      ? selectedEvents.map(id => events.find(event => event.id === id)!)
+      : events;
 
   const eventGroups = groupByDateRange({events: eventsToShow, locale});
 
@@ -75,9 +76,9 @@ function ProvenanceEventRow({
               <div className="w-full md:w-1/12 flex flex-col lg:flex-row items-center gap-2">
                 <div className="flex flex-col gap-2">
                   <div>
-                    <SelectEventButton id={event.id}>
+                    <SelectEventsButton ids={[event.id]}>
                       {event.label}
-                    </SelectEventButton>
+                    </SelectEventsButton>
                     {event.description && (
                       <SlideOutButton
                         id={`eventDescription-${event.id}`}

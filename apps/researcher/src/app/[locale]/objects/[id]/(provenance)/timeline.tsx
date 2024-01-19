@@ -1,31 +1,45 @@
 'use client';
 
-import {useTranslations, useFormatter} from 'next-intl';
-import {LabeledProvenanceEvent} from './definitions';
+import {useTranslations, useFormatter, useLocale} from 'next-intl';
+import {TimeLineEvent} from './definitions';
 import Timeline from 'react-headless-timeline';
 import {useProvenance} from './provenance-store';
-import {SelectEventButton} from './buttons';
+import {SelectEventsButton} from './buttons';
 import {categorizeEvents, getEarliestDate} from './categorize-timeline-events';
+import {groupByDateRange} from './group-events';
 
-function toTimelineEvent(event: LabeledProvenanceEvent) {
-  return {
-    ...event,
-    startDate: (event.startDate || event.endDate) as Date,
-    endDate: (event.endDate || event.startDate) as Date,
-  };
+function TimelineButton({event}: {event: TimeLineEvent}) {
+  return (
+    <SelectEventsButton ids={event.selectIds}>
+      {event.labels.slice(0, 2).map((label, i) => {
+        return (
+          <span key={i}>
+            {label}
+            {i < event.labels.length - 1 && (
+              <span className="text-consortiumBlue-100 px-1">+</span>
+            )}
+          </span>
+        );
+      })}
+      {event.labels.length > 2 && <span> ... </span>}
+    </SelectEventsButton>
+  );
 }
 
 export default function TimeLine() {
   const t = useTranslations('Provenance');
   const format = useFormatter();
   const {events, showTimeline} = useProvenance();
+  const locale = useLocale();
 
   if (!showTimeline) {
     return null;
   }
 
+  const eventGroups = groupByDateRange({events, locale});
+
   const {rangeEvents, singleEvents, eventsWithoutDates} =
-    categorizeEvents(events);
+    categorizeEvents(eventGroups);
 
   const earliestDate = getEarliestDate(events);
 
@@ -55,7 +69,7 @@ export default function TimeLine() {
                 <Timeline.Events
                   render={({getEventStyles}) => (
                     <div className="w-full">
-                      {rangeEvents.map(toTimelineEvent).map((event, i) => (
+                      {rangeEvents.map((event, i) => (
                         <div
                           key={i}
                           className="w-full relative h-12 border-b border-consortiumBlue-600"
@@ -65,9 +79,7 @@ export default function TimeLine() {
                             className="h-10 mt-1 text-center flex justify-center items-center bg-consortiumBlue-500 rounded-full py-1 min-w-8"
                           >
                             <div className="absolute">
-                              <SelectEventButton id={event.id}>
-                                {event.label}
-                              </SelectEventButton>
+                              <TimelineButton event={event} />
                             </div>
                           </div>
                         </div>
@@ -79,12 +91,10 @@ export default function TimeLine() {
                   render={({getEventStyles}) => (
                     <div className="w-full">
                       <div className="w-full relative h-12 border-b border-consortiumBlue-600">
-                        {singleEvents.map(toTimelineEvent).map((event, i) => (
+                        {singleEvents.map((event, i) => (
                           <div key={i} style={getEventStyles(event)}>
                             <div className="absolute mt-2">
-                              <SelectEventButton id={event.id}>
-                                {event.label}
-                              </SelectEventButton>
+                              <TimelineButton event={event} />
                             </div>
                           </div>
                         ))}

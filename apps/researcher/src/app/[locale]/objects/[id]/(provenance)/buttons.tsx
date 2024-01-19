@@ -4,32 +4,33 @@ import classNames from 'classnames';
 import {useProvenance} from './provenance-store';
 import {ButtonHTMLAttributes, ReactNode} from 'react';
 
-interface SelectEventButtonProps
+interface SelectEventsButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  id: string;
+  ids: string[];
   children: ReactNode;
 }
 
-export function SelectEventButton({id, children}: SelectEventButtonProps) {
-  const {setSelectedEvent, selectedEvent} = useProvenance();
+export function SelectEventsButton({ids, children}: SelectEventsButtonProps) {
+  const {setSelectedEvents, selectedEvents} = useProvenance();
+  const selected = ids.some((id: string) => selectedEvents.includes(id));
 
   const handleClick = () => {
-    if (selectedEvent === id) {
-      setSelectedEvent(undefined);
+    if (selected) {
+      setSelectedEvents(selectedEvents.filter(id => !ids.includes(id)));
     } else {
-      setSelectedEvent(id);
+      setSelectedEvents(ids);
     }
   };
 
   return (
     <button
       className={classNames(
-        'bg-consortiumBlue-600 rounded-full h-8 w-8 min-w-8 flex justify-center items-center border-2 transition text-xs font-medium',
+        'bg-consortiumBlue-600 rounded-full h-8 min-w-[33px] px-1 flex justify-center items-center border-2 transition text-xs font-medium whitespace-nowrap',
         {
           'hover:bg-consortiumBlue-700 border-white hover:border-consortiumGreen-300 hover:text-consortiumGreen-300':
-            selectedEvent !== id,
+            !selected,
           'bg-consortiumBlue-700 border-consortiumGreen-300 text-consortiumGreen-300':
-            selectedEvent === id,
+            selected,
         }
       )}
       onClick={handleClick}

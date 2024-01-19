@@ -11,8 +11,8 @@ import {
 import {LabeledProvenanceEvent} from './definitions';
 
 interface SelectedEventContextType {
-  selectedEvent?: string;
-  setSelectedEvent: Dispatch<SetStateAction<string | undefined>>;
+  selectedEvents: string[];
+  setSelectedEvents: Dispatch<SetStateAction<string[]>>;
   events: LabeledProvenanceEvent[];
   showTimeline: boolean;
   showDataTable: boolean;
@@ -21,8 +21,8 @@ interface SelectedEventContextType {
 }
 
 const SelectedEventContext = createContext<SelectedEventContextType>({
-  selectedEvent: undefined,
-  setSelectedEvent: () => {},
+  selectedEvents: [],
+  setSelectedEvents: () => {},
   events: [],
   showTimeline: true,
   showDataTable: true,
@@ -37,15 +37,13 @@ export function ProvenanceProvider({
   children: ReactNode;
   events: LabeledProvenanceEvent[];
 }) {
-  const [selectedEvent, setSelectedEvent] = useState<string | undefined>(
-    undefined
-  );
+  const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
   const [showTimeline, setShowTimeline] = useState(true);
   const [showDataTable, setShowDataTable] = useState(true);
 
   const context = {
-    selectedEvent,
-    setSelectedEvent,
+    selectedEvents,
+    setSelectedEvents,
     events,
     showTimeline,
     setShowTimeline,
