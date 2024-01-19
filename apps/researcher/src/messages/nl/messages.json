@@ -124,7 +124,8 @@
     "dataTableTitle": "Herkomst data tabel",
     "timelineTitle": "Tijdlijn van herkomst",
     "timelineDescription": "In de tijdlijnvisualisatie worden de herkomstitems uitgezet op basis van de tijd. Klik op een item en focus op dat item.",
-    "timelineEventsWithoutDates": "{eventCount, plural, =1 {Provenance item {events} is niet geplot op de tijdlijn omdat we geen data beschikbaar hebben.} other {# Provenance items {events} worden niet geplot op de tijdlijn omdat we geen data beschikbaar hebben}}"
+    "timelineEventsWithoutDates": "{eventCount, plural, =1 {Provenance item {events} is niet geplot op de tijdlijn omdat we geen data beschikbaar hebben.} other {# Provenance items {events} worden niet geplot op de tijdlijn omdat we geen data beschikbaar hebben}}",
+    "showAll": "Toon alle items"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",

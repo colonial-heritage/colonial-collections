@@ -12,10 +12,15 @@ export default function DataTable() {
   const t = useTranslations('Provenance');
   const locale = useLocale();
 
-  const {selectedEvents, events, showDataTable} = useProvenance();
+  const {selectedEvents, setSelectedEvents, events, showDataTable} =
+    useProvenance();
 
   if (!showDataTable) {
     return null;
+  }
+
+  function showAllClick() {
+    setSelectedEvents([]);
   }
 
   const eventsToShow =
@@ -29,6 +34,16 @@ export default function DataTable() {
     <div className="w-full block">
       <div className="flex justify-between items-center">
         <h3 className="my-4 w-full pt-4">{t('dataTableTitle')}</h3>
+        <div className="flex items-center text-consortiumBlue-800 ">
+          {selectedEvents.length > 0 && (
+            <button
+              onClick={showAllClick}
+              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1 mr-2 whitespace-nowrap"
+            >
+              {t('showAll')}
+            </button>
+          )}
+        </div>
       </div>
       <div className="py-2 rounded bg-consortiumBlue-900">
         <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-consortiumBlue-300 mb-4 text-consortiumBlue-100">
