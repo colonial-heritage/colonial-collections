@@ -3,6 +3,7 @@
 import classNames from 'classnames';
 import {useProvenance} from './provenance-store';
 import {ButtonHTMLAttributes, ReactNode} from 'react';
+import {useTranslations} from 'next-intl';
 
 interface SelectEventsButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -41,6 +42,7 @@ export function SelectEventsButton({ids, children}: SelectEventsButtonProps) {
 }
 
 export function ToggleViewButtons() {
+  const t = useTranslations('Provenance');
   const {showTimeline, showDataTable, setShowTimeline, setShowDataTable} =
     useProvenance();
 
@@ -58,13 +60,13 @@ export function ToggleViewButtons() {
         className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
         onClick={toggleTimeline}
       >
-        {showTimeline ? 'Hide timeline' : 'Show timeline'}
+        {showTimeline ? t('hideTimelineButton') : t('showTimelineButton')}
       </button>
       <button
         className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
         onClick={toggleDataTable}
       >
-        {showDataTable ? 'Hide data table' : 'Show data table'}
+        {showDataTable ? t('hideDataTableButton') : t('showDataTableButton')}
       </button>
     </>
   );
