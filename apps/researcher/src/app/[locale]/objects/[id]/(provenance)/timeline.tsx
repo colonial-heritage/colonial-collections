@@ -1,14 +1,14 @@
 'use client';
 
 import {useTranslations, useFormatter, useLocale} from 'next-intl';
-import {TimeLineEvent} from './definitions';
+import {TimelineEvent} from './definitions';
 import Timeline from 'react-headless-timeline';
 import {useProvenance} from './provenance-store';
 import {SelectEventsButton} from './buttons';
 import {categorizeEvents, getEarliestDate} from './categorize-timeline-events';
 import {groupByDateRange} from './group-events';
 
-function TimelineButton({event}: {event: TimeLineEvent}) {
+function TimelineButton({event}: {event: TimelineEvent}) {
   return (
     <SelectEventsButton ids={event.selectIds}>
       {event.labels.slice(0, 2).map((label, i) => {
@@ -26,7 +26,7 @@ function TimelineButton({event}: {event: TimeLineEvent}) {
   );
 }
 
-export default function TimeLine() {
+export default function ProvenanceTimeline() {
   const t = useTranslations('Provenance');
   const format = useFormatter();
   const {events, showTimeline} = useProvenance();

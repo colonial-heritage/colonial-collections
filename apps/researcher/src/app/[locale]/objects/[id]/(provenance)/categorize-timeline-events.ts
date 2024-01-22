@@ -1,21 +1,21 @@
-import {LabeledProvenanceEvent, TimeLineEvent} from './definitions';
+import {LabeledProvenanceEvent, TimelineEvent} from './definitions';
 
 interface CategorizedEvents {
-  rangeEvents: TimeLineEvent[];
-  singleEvents: TimeLineEvent[];
+  rangeEvents: TimelineEvent[];
+  singleEvents: TimelineEvent[];
   eventsWithoutDates: LabeledProvenanceEvent[];
 }
 
-// Events within one event group are rendered as a single timeline event,
-// because they have the same start and end date.
-// Timeline events can be categorized into three groups,
-// The groups are rendered differently in the timeline.
-// The three groups are:
-// 1. Range events: Events that have a start and end date,
-// and the start and end date are different.
-// 2. Single events: Events that have a single start or end date,
-// or events that have the same start and end date.
-// 3. Events without dates: Events that have no start or end date.
+/* Events within one event group are rendered as a single timeline event,
+because they have the same start and end date.
+Timeline events can be categorized into three groups,
+The groups are rendered differently in the timeline.
+The three groups are:
+1. Range events: Events that have a start and end date,
+and the start and end date are different.
+2. Single events: Events that have a single start or end date,
+or events that have the same start and end date.
+3. Events without dates: Events that have no start or end date. */
 export function categorizeEvents(eventGroups: {
   [label: string]: LabeledProvenanceEvent[];
 }) {
@@ -33,8 +33,8 @@ export function categorizeEvents(eventGroups: {
         };
       } else {
         const timelineEvent = {
-          // The timeline plugin expects both a start and end date
           id,
+          // The timeline plugin expects both a start and end date
           startDate: (firstEvent.startDate || firstEvent.endDate) as Date,
           endDate: (firstEvent.endDate || firstEvent.startDate) as Date,
           selectIds: eventGroups.map(event => event.id),

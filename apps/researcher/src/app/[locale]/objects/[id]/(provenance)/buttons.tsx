@@ -46,13 +46,8 @@ export function ToggleViewButtons() {
   const {showTimeline, showDataTable, setShowTimeline, setShowDataTable} =
     useProvenance();
 
-  const toggleTimeline = () => {
-    setShowTimeline(!showTimeline);
-  };
-
-  const toggleDataTable = () => {
-    setShowDataTable(!showDataTable);
-  };
+  const toggleTimeline = () => setShowTimeline(!showTimeline);
+  const toggleDataTable = () => setShowDataTable(!showDataTable);
 
   return (
     <>

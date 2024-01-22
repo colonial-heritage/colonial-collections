@@ -2,7 +2,7 @@ import {ProvenanceEvent} from '@/lib/api/definitions';
 
 export type LabeledProvenanceEvent = ProvenanceEvent & {label: string};
 
-export type TimeLineEvent = {
+export type TimelineEvent = {
   id: string;
   startDate: Date;
   endDate: Date;
