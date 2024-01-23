@@ -3,7 +3,8 @@
 import {Link, usePathname, locales} from '@/navigation';
 import Image from 'next/image';
 import {useLocale, useTranslations} from 'next-intl';
-import {UserButton, SignInButton, SignedIn, SignedOut} from '@clerk/nextjs';
+import {UserButton, SignInButton, SignedOut} from '@clerk/nextjs';
+import SignedIn from '@/lib/community/signed-in';
 import {ConsortiumLogo} from '@colonial-collections/ui/branding';
 import {NavigationMenu} from '@colonial-collections/ui';
 import logoImage from '@colonial-collections/ui/branding/colonial-collections-consortium.png';
