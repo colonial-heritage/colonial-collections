@@ -213,8 +213,8 @@ export default async function SearchResults({searchParams = {}}: Props) {
                         values={[
                           SortByUserOption.DateCreatedDesc,
                           SortByUserOption.DateCreatedAsc,
-                          SortByUserOption.NameAsc,
                           SortByUserOption.NameDesc,
+                          SortByUserOption.NameAsc,
                         ]}
                       />
                     </div>
