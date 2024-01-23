@@ -43,14 +43,14 @@ export function ContactForm() {
       await sendEmail(formValues);
       addNotification({
         id: 'email-send-success',
-        message: t('emailIsSended'),
+        message: t('emailSent'),
         type: 'success',
       });
       reset();
     } catch (err) {
       addNotification({
         id: 'email-send-error',
-        message: t('communityEditServerError'),
+        message: t('sendEmailServerError'),
         type: 'error',
       });
     }

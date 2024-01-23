@@ -8,7 +8,6 @@ export default function Contact() {
         name="contact"
         contentPath="@colonial-collections/content"
       />
-
       <Notifications />
       <ContactForm />
     </>
