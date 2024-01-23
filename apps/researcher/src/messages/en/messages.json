@@ -54,7 +54,8 @@
   },
   "HeritageObjectCard": {
     "heritageObject": "Heritage object",
-    "noImage": "No image"
+    "noImage": "No image",
+    "noName": "No title"
   },
   "PersonCard": {
     "person": "Person",
@@ -75,6 +76,7 @@
     "identifier": "ID: {identifier}",
     "metadata": "Metadata",
     "name": "Title",
+    "noName":"No title",
     "description": "Description",
     "locationsCreated": "Location of creation",
     "license": "License",
