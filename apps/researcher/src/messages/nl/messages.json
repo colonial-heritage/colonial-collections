@@ -169,7 +169,8 @@
     "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren."
   },
   "Sort": {
-    "relevanceDesc": "Relevantie",
+    "dateCreatedDesc": "Datum gecreeërd - Oplopend",
+    "dateCreatedAsc": "Datum gecreeërd - Aflopend",
     "nameAsc": "Naam - Oplopend",
     "nameDesc": "Naam - Aflopend",
     "createdAtDesc": "Datum gecreeërd",

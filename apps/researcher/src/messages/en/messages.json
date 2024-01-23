@@ -169,7 +169,8 @@
     "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items."
   },
   "Sort": {
-    "relevanceDesc": "Relevance",
+    "dateCreatedDesc": "Date created - Descending",
+    "dateCreatedAsc": "Date created - Ascending",
     "nameAsc": "Name - Ascending",
     "nameDesc": "Name - Descending",
     "createdAtDesc": "Date created",

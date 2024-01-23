@@ -1,7 +1,7 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
 import {getTranslations} from 'next-intl/server';
 import HeritageObjectList from './heritage-object-list';
-import {sortMapping} from './sort-mapping';
+import {SortByUserOption, sortMapping} from './sort-mapping';
 import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
@@ -124,7 +124,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
       SortOrderEnum,
       defaultSortOrder: SortOrder.Descending,
       SortByEnum,
-      defaultSortBy: SortBy.Relevance,
+      defaultSortBy: SortBy.DateCreated,
       sortMapping: sortMapping,
     },
     filterKeys: filterSettings.map(({name, searchParamType}) => ({
@@ -209,7 +209,14 @@ export default async function SearchResults({searchParams = {}}: Props) {
                       {t('title', {totalDatasets: searchResult.totalCount})}
                     </h2>
                     <div className="flex flex-col sm:flex-row justify-end gap-2">
-                      <OrderSelector />
+                      <OrderSelector
+                        values={[
+                          SortByUserOption.DateCreatedDesc,
+                          SortByUserOption.DateCreatedAsc,
+                          SortByUserOption.NameAsc,
+                          SortByUserOption.NameDesc,
+                        ]}
+                      />
                     </div>
                   </div>
                   <SelectedFilters
