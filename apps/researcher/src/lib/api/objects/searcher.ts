@@ -32,8 +32,8 @@ enum RawKeys {
 }
 
 const sortByToRawKeys = new Map<string, string>([
-  [SortBy.Name, `${RawKeys.Name}.keyword`], // TBD: name may not exist
-  [SortBy.Relevance, '_score'],
+  [SortBy.Name, `${RawKeys.Name}.keyword`],
+  [SortBy.DateCreated, RawKeys.YearCreatedStart],
 ]);
 
 // TBD: add language option, for returning results in a specific locale (e.g. 'nl', 'en')
@@ -41,8 +41,8 @@ const searchOptionsSchema = z.object({
   query: z.string().optional().default('*'), // If no query provided, match all
   offset: z.number().int().nonnegative().optional().default(0),
   limit: z.number().int().positive().optional().default(10),
-  sortBy: SortByEnum.optional().default(SortBy.Relevance),
-  sortOrder: SortOrderEnum.optional().default(SortOrder.Descending),
+  sortBy: SortByEnum.optional().default(SortBy.DateCreated),
+  sortOrder: SortOrderEnum.optional().default(SortOrder.Ascending),
   filters: z
     .object({
       types: z.array(z.string()).optional().default([]),

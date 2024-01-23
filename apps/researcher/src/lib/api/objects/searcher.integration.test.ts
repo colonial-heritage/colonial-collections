@@ -24,9 +24,79 @@ describe('search', () => {
       totalCount: 5,
       offset: 0,
       limit: 10,
-      sortBy: 'relevance',
-      sortOrder: 'desc',
+      sortBy: 'dateCreated',
+      sortOrder: 'asc',
       heritageObjects: [
+        {
+          id: 'https://example.org/objects/3',
+          identifier: '9012',
+          name: 'Object 3',
+          description:
+            'Ut dictum elementum augue sit amet sodales. Vivamus viverra ligula sed arcu cursus sagittis. Donec ac placerat lacus.',
+          types: expect.arrayContaining([
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+              name: 'Drawing',
+            },
+          ]),
+          subjects: expect.arrayContaining([
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+              name: 'Castle',
+            },
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+              name: 'Cottage',
+            },
+          ]),
+          inscriptions: ['Maecenas commodo est neque'],
+          materials: expect.arrayContaining([
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+              name: 'Ink',
+            },
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+              name: 'Paper',
+            },
+          ]),
+          dateCreated: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            startDate: new Date('1725-01-01T00:00:00.000Z'),
+            endDate: new Date('1736-01-01T00:00:00.000Z'),
+          },
+          locationsCreated: expect.arrayContaining([
+            {
+              id: 'https://sws.geonames.org/1642673/',
+              name: 'Java',
+              isPartOf: {
+                id: 'https://sws.geonames.org/1643084/',
+                name: 'Indonesia',
+              },
+            },
+          ]),
+          isPartOf: {
+            id: 'https://example.org/datasets/10',
+            name: 'Dataset 10',
+            publisher: {
+              id: 'https://library.example.org/',
+              type: 'Organization',
+              name: 'Library',
+            },
+          },
+        },
         {
           id: 'https://example.org/objects/1',
           identifier: '1234',
@@ -54,13 +124,13 @@ describe('search', () => {
               id: expect.stringContaining(
                 'https://data.colonialcollections.nl/.well-known/genid/'
               ),
-              name: 'Canvas',
+              name: 'Oilpaint',
             },
             {
               id: expect.stringContaining(
                 'https://data.colonialcollections.nl/.well-known/genid/'
               ),
-              name: 'Oilpaint',
+              name: 'Canvas',
             },
           ]),
           creators: expect.arrayContaining([
@@ -199,88 +269,6 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/objects/3',
-          identifier: '9012',
-          name: 'Object 3',
-          description:
-            'Ut dictum elementum augue sit amet sodales. Vivamus viverra ligula sed arcu cursus sagittis. Donec ac placerat lacus.',
-          types: expect.arrayContaining([
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Drawing',
-            },
-          ]),
-          subjects: expect.arrayContaining([
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Cottage',
-            },
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Castle',
-            },
-          ]),
-          inscriptions: ['Maecenas commodo est neque'],
-          materials: expect.arrayContaining([
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Paper',
-            },
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Ink',
-            },
-          ]),
-          dateCreated: {
-            id: expect.stringContaining(
-              'https://data.colonialcollections.nl/.well-known/genid/'
-            ),
-            startDate: new Date('1725-01-01T00:00:00.000Z'),
-            endDate: new Date('1736-01-01T00:00:00.000Z'),
-          },
-          locationsCreated: expect.arrayContaining([
-            {
-              id: 'https://sws.geonames.org/1642673/',
-              name: 'Java',
-              isPartOf: {
-                id: 'https://sws.geonames.org/1643084/',
-                name: 'Indonesia',
-              },
-            },
-          ]),
-          isPartOf: {
-            id: 'https://example.org/datasets/10',
-            name: 'Dataset 10',
-            publisher: {
-              id: 'https://library.example.org/',
-              type: 'Organization',
-              name: 'Library',
-            },
-          },
-        },
-        {
-          id: 'https://example.org/objects/4',
-          isPartOf: {
-            id: 'https://example.org/datasets/1',
-            name: 'Dataset 1',
-            publisher: {
-              id: 'https://museum.example.org/',
-              type: 'Organization',
-              name: 'Museum',
-            },
-          },
-        },
-        {
           id: 'https://example.org/objects/5',
           identifier: '7890',
           name: 'Object 5',
@@ -357,10 +345,10 @@ describe('search', () => {
                 'https://data.colonialcollections.nl/.well-known/genid/'
               ),
               contentUrl:
-                'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
+                'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
               license: {
-                id: 'https://creativecommons.org/publicdomain/zero/1.0/',
-                name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+                id: 'https://creativecommons.org/licenses/by/4.0/',
+                name: 'Attribution 4.0 International (CC BY 4.0)',
               },
             },
             {
@@ -368,13 +356,25 @@ describe('search', () => {
                 'https://data.colonialcollections.nl/.well-known/genid/'
               ),
               contentUrl:
-                'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
+                'http://images.memorix.nl/rce/thumb/1600x1600/e0164095-6a2d-b448-cc59-3a8ab2fafed7.jpg',
               license: {
-                id: 'https://creativecommons.org/licenses/by/4.0/',
-                name: 'Attribution 4.0 International (CC BY 4.0)',
+                id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+                name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
               },
             },
           ]),
+          isPartOf: {
+            id: 'https://example.org/datasets/1',
+            name: 'Dataset 1',
+            publisher: {
+              id: 'https://museum.example.org/',
+              type: 'Organization',
+              name: 'Museum',
+            },
+          },
+        },
+        {
+          id: 'https://example.org/objects/4',
           isPartOf: {
             id: 'https://example.org/datasets/1',
             name: 'Dataset 1',
