@@ -62,8 +62,8 @@ export type HeritageObject = {
 };
 
 export enum SortBy {
+  DateCreated = 'dateCreated',
   Name = 'name',
-  Relevance = 'relevance',
 }
 
 export const SortByEnum = z.nativeEnum(SortBy);

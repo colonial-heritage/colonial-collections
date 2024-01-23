@@ -99,7 +99,7 @@
     "addedBy": "Added by <name></name>",
     "currentPublisher": "Current location of object",
     "noOrganizationFound": "No organization found.",
-    "dateCreated": "Date Made",
+    "dateCreated": "Date made",
     "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range.",
     "beginOfRange": "Begin of range",
     "endOfRange": "End of range",
@@ -178,10 +178,11 @@
     "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items."
   },
   "Sort": {
-    "relevanceDesc": "Relevance",
+    "dateCreatedDesc": "Date made - Descending",
+    "dateCreatedAsc": "Date made - Ascending",
     "nameAsc": "Name - Ascending",
     "nameDesc": "Name - Descending",
-    "createdAtDesc": "Date created",
+    "createdAtDesc": "Date made",
     "membershipCountDesc": "Number of members",
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
   },
