@@ -1,16 +1,26 @@
 import {SortBy as SortBySearchOption, SortOrder} from '@/lib/api/objects';
-import {SortBy} from '@colonial-collections/list-store';
+
+export enum SortByUserOption {
+  DateCreatedDesc = 'dateCreatedDesc',
+  DateCreatedAsc = 'dateCreatedAsc',
+  NameAsc = 'nameAsc',
+  NameDesc = 'nameDesc',
+}
 
 export const sortMapping = {
-  [SortBy.RelevanceDesc]: {
-    sortBy: SortBySearchOption.Relevance,
+  [SortByUserOption.DateCreatedDesc]: {
+    sortBy: SortBySearchOption.DateCreated,
     sortOrder: SortOrder.Descending,
   },
-  [SortBy.NameAsc]: {
+  [SortByUserOption.DateCreatedAsc]: {
+    sortBy: SortBySearchOption.DateCreated,
+    sortOrder: SortOrder.Ascending,
+  },
+  [SortByUserOption.NameAsc]: {
     sortBy: SortBySearchOption.Name,
     sortOrder: SortOrder.Ascending,
   },
-  [SortBy.NameDesc]: {
+  [SortByUserOption.NameDesc]: {
     sortBy: SortBySearchOption.Name,
     sortOrder: SortOrder.Descending,
   },
