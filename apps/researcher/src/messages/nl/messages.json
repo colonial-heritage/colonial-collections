@@ -192,7 +192,7 @@
   "Gallery": {
     "resetZoomButton": "Reset",
     "license": "Licentie",
-    "noLicense": "Deze afbeelding is door {organizationName} gepubliceerd zonder vermelding van een licentie - neem contact met {organizationName} op voor meer informatie."
+    "noLicense": "We konden geen licentie voor deze afbeelding vinden. Neem voor meer informatie contact op met {organizationName}."
   },
   "ErrorPage": {
     "message": "Er is iets fout gegaan!"

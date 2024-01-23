@@ -192,7 +192,7 @@
   "Gallery": {
     "resetZoomButton": "Reset",
     "license": "License",
-    "noLicense": "This image has been published by {organizationName} without a license - for more information please contact {organizationName}."
+    "noLicense": "We could not find a license for this image - for more information please contact {organizationName}."
   },
   "ErrorPage": {
     "message": "Something went wrong!"
