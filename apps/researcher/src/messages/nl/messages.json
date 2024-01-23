@@ -120,7 +120,16 @@
     "transferredTo": "Overgedragen aan",
     "location": "Locatie",
     "descriptionTitle": "Beschrijving",
-    "noData": "Geen herkomstgegevens gevonden."
+    "noData": "Geen herkomstgegevens gevonden.",
+    "dataTableTitle": "Herkomst data tabel",
+    "timelineTitle": "Tijdlijn van herkomst",
+    "timelineDescription": "In de tijdlijn worden de herkomstgebeurtenissen uitgezet op basis van de tijd. Klik op een gebeurtenis om de focus op de gebeurtenis te leggen.",
+    "timelineEventsWithoutDates": "{eventCount, plural, =1 {Herkomstgebeurtenis {events} is niet geplot op de tijdlijn omdat er geen data beschikbaar is.} other {# Herkomstgebeurtenissen {events} worden niet geplot op de tijdlijn omdat er geen data beschikbaar is}}",
+    "showAll": "Toon alle gebeurtenissen",
+    "showTimelineButton": "Tijdlijn weergeven",
+    "hideTimelineButton": "Tijdlijn verbergen",
+    "showDataTableButton": "Datatabel weergeven",
+    "hideDataTableButton": "Datatabel verbergen"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
@@ -262,7 +271,7 @@
     "communitySubTitle": "Selecteer de community waarvoor u spreekt.",
     "citation": "Bron",
     "citationSubTitle": "Geef informatie op die uw verhaal ondersteunt.",
-    "language": "Taal",
+    "inLanguage": "Taal",
     "languageSubTitle": "Selecteer een taal voor het verhaal. Begin met typen om een taal te selecteren.",
     "successfullyAdded": "Uw verhaal is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
     "serverError": "Er is iets misgegaan tijdens het maken van het verhaal. Probeer het later opnieuw.",
