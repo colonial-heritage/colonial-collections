@@ -120,7 +120,16 @@
     "transferredTo": "Transferred to",
     "location": "Location",
     "descriptionTitle": "Description",
-    "noData": "No provenance events found"
+    "noData": "No provenance events found",
+    "dataTableTitle": "Provenance data table",
+    "timelineTitle": "Provenance timeline",
+    "timelineDescription": "In the timeline provenance events are plotted out by time. Click on an event to focus on that event.",
+    "timelineEventsWithoutDates": "{eventCount, plural, =1 {Provenance event {events} is not plotted on the timeline because there are no dates available.} other {# Provenance events {events} are not plotted on the timeline because there are no dates available.}}",
+    "showAll": "Show all events",
+    "showTimelineButton": "Show timeline",
+    "hideTimelineButton": "Hide timeline",
+    "showDataTableButton": "Show data table",
+    "hideDataTableButton": "Hide data table"
   },
   "PersonDetails": {
     "backButton": "Back to results",
@@ -262,7 +271,7 @@
     "communitySubTitle": "Select the community you speak on behalf of.",
     "citation": "Resource",
     "citationSubTitle": "Please provide information that supports your narrative.",
-    "language": "Language",
+    "inLanguage": "Language",
     "languageSubTitle": "Select a language of the narrative. Start typing to select a language.",
     "successfullyAdded": "Your narrative has been added to the object. It could take a moment before it is visible.",
     "serverError": "Something went wrong while creating the narrative. Please try again later.",

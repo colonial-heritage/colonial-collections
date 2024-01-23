@@ -1,47 +1,79 @@
+'use client';
+
 import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
 import type {LabeledProvenanceEvent} from './definitions';
 import {useLocale, useTranslations} from 'next-intl';
 import {InformationCircleIcon} from '@heroicons/react/24/outline';
 import {groupByDateRange} from './group-events';
-import {SelectEventButton} from './selected-event';
+import {useProvenance} from './provenance-store';
+import {SelectEventsButton} from './buttons';
 
-export default function ProvenanceEventsDataTable({
-  events,
-}: {
-  events: LabeledProvenanceEvent[];
-}) {
+export default function DataTable() {
   const t = useTranslations('Provenance');
   const locale = useLocale();
 
-  const eventGroups = groupByDateRange({events, locale});
+  const {selectedEvents, setSelectedEvents, events, showDataTable} =
+    useProvenance();
+
+  if (!showDataTable) {
+    return null;
+  }
+
+  function showAllClick() {
+    setSelectedEvents([]);
+  }
+
+  const eventsToShow =
+    selectedEvents.length > 0
+      ? selectedEvents.map(id => events.find(event => event.id === id)!)
+      : events;
+
+  const eventGroups = groupByDateRange({events: eventsToShow, locale});
 
   return (
-    <div className="py-2 rounded bg-consortiumBlue-900">
-      <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-consortiumBlue-300 mb-4 text-consortiumBlue-100">
-        <div className="w-full md:w-1/12">{t('id')}</div>
-        <div className="w-full md:w-2/12">{t('type')}</div>
-        <div className="w-full md:w-3/12">{t('transferredFrom')}</div>
-        <div className="w-full md:w-3/12">{t('transferredTo')}</div>
-        <div className="w-full md:w-1/12">{t('location')}</div>
-      </header>
-      {Object.entries(eventGroups).map(([dateRange, eventGroup]) => (
-        <ProvenanceEventRow
-          key={dateRange}
-          dateRange={dateRange}
-          provenanceEvents={eventGroup}
-        />
-      ))}
+    <div className="w-full block">
+      <div className="flex justify-between items-center">
+        <h3 className="my-4 w-full pt-4">{t('dataTableTitle')}</h3>
+        <div className="flex items-center text-consortiumBlue-800 ">
+          {selectedEvents.length > 0 && (
+            <button
+              onClick={showAllClick}
+              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1 mr-2 whitespace-nowrap"
+            >
+              {t('showAll')}
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="py-2 rounded bg-consortiumBlue-900">
+        <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-consortiumBlue-300 mb-4 text-consortiumBlue-100">
+          <div className="w-full md:w-1/12">{t('id')}</div>
+          <div className="w-full md:w-2/12">{t('type')}</div>
+          <div className="w-full md:w-3/12">{t('transferredFrom')}</div>
+          <div className="w-full md:w-3/12">{t('transferredTo')}</div>
+          <div className="w-full md:w-1/12">{t('location')}</div>
+        </header>
+        {Object.entries(eventGroups).map(([dateRange, eventGroup]) => (
+          <ProvenanceEventRow
+            key={dateRange}
+            dateRange={dateRange}
+            provenanceEvents={eventGroup}
+          />
+        ))}
+      </div>
     </div>
   );
+}
+
+interface ProvenanceEventRowProps {
+  provenanceEvents: LabeledProvenanceEvent[];
+  dateRange: string;
 }
 
 function ProvenanceEventRow({
   provenanceEvents,
   dateRange,
-}: {
-  provenanceEvents: LabeledProvenanceEvent[];
-  dateRange: string;
-}) {
+}: ProvenanceEventRowProps) {
   const t = useTranslations('Provenance');
 
   return (
@@ -59,12 +91,9 @@ function ProvenanceEventRow({
               <div className="w-full md:w-1/12 flex flex-col lg:flex-row items-center gap-2">
                 <div className="flex flex-col gap-2">
                   <div>
-                    <SelectEventButton
-                      event={event}
-                      className="bg-consortiumBlue-600 hover:bg-onsortiumBlue-800 border-white hover:border-consortiumGreen-300 hover:text-consortiumGreen-300 rounded-full h-8 w-8 flex justify-center items-center border-2 transition text-xs font-medium hover:z-40 mb-2"
-                    >
+                    <SelectEventsButton ids={[event.id]}>
                       {event.label}
-                    </SelectEventButton>
+                    </SelectEventsButton>
                     {event.description && (
                       <SlideOutButton
                         id={`eventDescription-${event.id}`}
