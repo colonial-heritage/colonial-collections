@@ -133,7 +133,7 @@ export default async function Details({params}: Props) {
             data-testid="page-title"
           >
             {object.name || (
-              <span className="italic font-normal">{t('noName')}</span>
+              <span className="text-consortiumBlue-100">{t('noName')}</span>
             )}
           </h1>
 

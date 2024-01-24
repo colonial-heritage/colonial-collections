@@ -36,7 +36,9 @@ export default function HeritageObjectCard({heritageObject}: Props) {
           data-testid="object-card-name"
         >
           {heritageObject.name || (
-            <span className="italic font-normal">{t('noName')}</span>
+            <span className="text-sm text-consortiumBlue-100">
+              {t('noName')}
+            </span>
           )}
         </div>
         <div className="text-sm opacity-70">
