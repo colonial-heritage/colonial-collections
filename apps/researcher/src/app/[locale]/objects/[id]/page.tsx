@@ -19,7 +19,7 @@ import {
 import useObject from './use-object';
 import {env} from 'node:process';
 import ObjectListsMenu from './object-lists-menu';
-import {SignedIn} from '@clerk/nextjs';
+import SignedIn from '@/lib/community/signed-in';
 import {fetcher} from '@/lib/enricher-instances';
 import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';

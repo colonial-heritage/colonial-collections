@@ -11,7 +11,7 @@ import {
 } from '@colonial-collections/ui/list';
 import {AddCommunityButton} from './buttons';
 import {MyCommunityToggle} from './my-community-toggle';
-import {SignedIn} from '@clerk/nextjs';
+import SignedIn from '@/lib/community/signed-in';
 
 // 1 day = 60*60*24 = 86400
 export const revalidate = 86400;
