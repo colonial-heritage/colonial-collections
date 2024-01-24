@@ -29,7 +29,6 @@ import {
   SubMenuDialog,
 } from '@colonial-collections/ui';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import Tabs from '@/components/tabs';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from '@/components/list-store-updater';
 import {redirect} from '@/navigation';
