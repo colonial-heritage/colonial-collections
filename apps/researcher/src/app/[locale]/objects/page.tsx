@@ -29,7 +29,6 @@ import {
   SubMenuDialog,
 } from '@colonial-collections/ui';
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
-import Tabs from '@/components/tabs';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from '@/components/list-store-updater';
 import {redirect} from '@/navigation';
@@ -155,9 +154,8 @@ export default async function SearchResults({searchParams = {}}: Props) {
 
   return (
     <>
-      <div className="bg-consortiumBlue-800 text-white flex flex-col gap-8 pb-40">
+      <div className="bg-consortiumBlue-800 text-white flex flex-col gap-8 pb-40 mt-8">
         <div className="w-full max-w-[1800px] mx-auto">
-          <Tabs />
           <div className="flex flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-10 ">
             {hasError && (
               <div
