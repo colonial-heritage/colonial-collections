@@ -10,7 +10,11 @@ import {NavigationMenu} from '@colonial-collections/ui';
 import logoImage from '@colonial-collections/ui/branding/colonial-collections-consortium.png';
 import {useMemo} from 'react';
 
-export default function Navigation() {
+interface Props {
+  datasetBrowserUrl: string;
+}
+
+export default function Navigation({datasetBrowserUrl}: Props) {
   const pathname = usePathname();
   const locale = useLocale();
 
@@ -26,11 +30,15 @@ export default function Navigation() {
           name: tNavigation('consortium'),
           href: 'https://colonialcollections.nl/',
         },
+        {
+          name: tNavigation('datasetBrowser'),
+          href: datasetBrowserUrl,
+        },
       ].map(item => ({
         ...item,
         active: item.href === pathname,
       })),
-    [pathname, tNavigation]
+    [datasetBrowserUrl, pathname, tNavigation]
   );
 
   const languageMenuItems = useMemo(
