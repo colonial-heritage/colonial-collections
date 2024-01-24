@@ -6,7 +6,6 @@ import {useNotifications} from '@colonial-collections/ui';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {sendEmail} from './actions';
-import {camelCase} from 'tiny-case';
 
 interface FormValues {
   emailAddress: string;
@@ -14,13 +13,19 @@ interface FormValues {
   body: string;
 }
 
-const communitySchema = z.object({
-  emailAddress: z.string().email(),
-  subject: z.string().trim().min(1).max(250),
-  body: z.string().min(1),
-});
-
 export function ContactForm() {
+  const t = useTranslations('ContactForm');
+
+  const communitySchema = z.object({
+    emailAddress: z.string().email({message: t('emailAddressInvalid')}),
+    subject: z
+      .string()
+      .trim()
+      .min(1, {message: t('subjectRequired')})
+      .max(250, {message: t('subjectTooLarge')}),
+    body: z.string().min(1, {message: t('bodyRequired')}),
+  });
+
   const {
     register,
     handleSubmit,
@@ -35,7 +40,6 @@ export function ContactForm() {
     },
   });
 
-  const t = useTranslations('ContactForm');
   const {addNotification} = useNotifications();
 
   const onSubmit: SubmitHandler<FormValues> = async formValues => {
@@ -73,10 +77,7 @@ export function ContactForm() {
           {...register('emailAddress')}
           className="border border-neutral-500 rounded p-2 text-sm"
         />
-        <p>
-          {errors.emailAddress &&
-            t(camelCase(`emailAddress_${errors.emailAddress.type}`))}
-        </p>
+        <p>{errors.emailAddress?.message}</p>
       </div>
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
@@ -91,9 +92,7 @@ export function ContactForm() {
           {...register('subject')}
           className="border border-neutral-500 rounded p-2 text-sm"
         />
-        <p>
-          {errors.subject && t(camelCase(`subject_${errors.subject.type}`))}
-        </p>
+        <p>{errors.subject?.message}</p>
       </div>
 
       <div className="flex flex-col gap-1 max-w-2xl w-full">
@@ -109,7 +108,7 @@ export function ContactForm() {
           rows={4}
           className="border border-neutral-500 rounded p-2 text-sm h-56"
         />
-        <p>{errors.body && t(camelCase(`body_${errors.body.type}`))}</p>
+        <p>{errors.body?.message}</p>
       </div>
 
       <div className="flex flex-row max-w-2xl w-full">

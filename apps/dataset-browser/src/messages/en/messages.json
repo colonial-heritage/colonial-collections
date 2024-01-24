@@ -136,9 +136,9 @@
     "sendEmailButton": "Send message",
     "emailSent": "Your message has been sent successfully.",
     "sendEmailServerError": "There was a problem sending your message. Please try again later.",
-    "emailAddressInvalidString": "Email address is not valid",
-    "subjectTooSmall": "Subject is required",
-    "subjectTooBig": "Subject has a maximum of 250 characters",
-    "bodyTooSmall": "Message is required"
+    "emailAddressInvalid": "Email address is not valid",
+    "subjectRequired": "Subject is required",
+    "subjectTooLarge": "Subject has a maximum of 250 characters",
+    "bodyRequired": "Message is required"
   }
 }

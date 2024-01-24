@@ -281,9 +281,9 @@
      "sendEmailButton": "Bericht verzenden",
      "emailSent": "Uw bericht is succesvol verzonden.",
      "sendEmailServerError": "Er is een probleem opgetreden bij het verzenden van uw bericht. Probeer het later opnieuw.",
-     "emailAddressInvalidString": "E-mailadres moet een geldig e-mailadres zijn",
-     "subjectTooSmall": "Onderwerp is vereist",
-     "subjectTooBig": "Onderwerp mag maximaal 250 tekens bevatten",
-     "bodyTooSmall": "Bericht is vereist"
+     "emailAddressInvalid": "E-mailadres moet een geldig e-mailadres zijn",
+     "subjectRequired": "Onderwerp is vereist",
+     "subjectTooLarge": "Onderwerp mag maximaal 250 tekens bevatten",
+     "bodyRequired": "Bericht is vereist"
    }
 }
