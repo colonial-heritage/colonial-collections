@@ -304,7 +304,10 @@ export default async function Details({params}: Props) {
           <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-consortiumBlue-900 p-1">
             {galleryImages.length > 0 && (
               <div className="flex flex-row md:flex-col gap-1 sticky top-4">
-                <Gallery images={galleryImages} />
+                <Gallery
+                  images={galleryImages}
+                  organizationName={organization?.name}
+                />
               </div>
             )}
           </aside>
