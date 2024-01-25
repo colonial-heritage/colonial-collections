@@ -132,7 +132,9 @@ export default async function Details({params}: Props) {
             className="text-2xl md:text-4xl md:items-center"
             data-testid="page-title"
           >
-            {object.name}
+            {object.name || (
+              <span className="text-consortiumBlue-100">{t('noName')}</span>
+            )}
           </h1>
 
           <div className="flex flex-row items-start flex-wrap">
