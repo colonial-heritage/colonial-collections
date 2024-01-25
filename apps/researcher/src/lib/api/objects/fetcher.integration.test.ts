@@ -22,7 +22,7 @@ describe('getByIds', () => {
       'https://unknown.org/',
     ]);
 
-    expect(heritageObjects).toStrictEqual([]);
+    expect(heritageObjects).toEqual([]);
   });
 
   it('returns the heritage objects that match the IDs', async () => {
