@@ -128,5 +128,17 @@
   },
   "ErrorPage": {
     "message": "Something went wrong!"
+  },
+  "ContactForm": {
+    "labelEmailAddress": "Email",
+    "labelSubject": "Subject",
+    "labelMessage": "Message",
+    "sendEmailButton": "Send message",
+    "emailSent": "Your message has been sent successfully.",
+    "sendEmailServerError": "There was a problem sending your message. Please try again later.",
+    "emailAddressInvalid": "Email address is not valid",
+    "subjectRequired": "Subject is required",
+    "subjectTooLarge": "Subject has a maximum of 250 characters",
+    "bodyRequired": "Message is required"
   }
 }
