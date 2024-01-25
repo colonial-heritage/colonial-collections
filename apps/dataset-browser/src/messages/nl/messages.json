@@ -127,5 +127,17 @@
   },
   "ErrorPage": {
     "message": "Er is iets fout gegaan!"
+  },
+  "ContactForm": {
+    "labelEmailAddress": "E-mail",
+    "labelSubject": "Onderwerp",
+    "labelMessage": "Bericht",
+    "sendEmailButton": "Bericht verzenden",
+    "emailSent": "Uw bericht is succesvol verzonden.",
+    "sendEmailServerError": "Er is een probleem opgetreden bij het verzenden van uw bericht. Probeer het later opnieuw.",
+    "emailAddressInvalid": "E-mailadres moet een geldig e-mailadres zijn",
+    "subjectRequired": "Onderwerp is vereist",
+    "subjectTooLarge": "Onderwerp mag maximaal 250 tekens bevatten",
+    "bodyRequired": "Bericht is vereist"
   }
 }
