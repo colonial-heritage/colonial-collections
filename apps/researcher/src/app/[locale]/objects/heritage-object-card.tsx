@@ -35,7 +35,11 @@ export default function HeritageObjectCard({heritageObject}: Props) {
           className="font-semibold mt-4 text-consortiumGreen-300"
           data-testid="object-card-name"
         >
-          {heritageObject.name}
+          {heritageObject.name || (
+            <span className="text-sm text-consortiumBlue-100">
+              {t('noName')}
+            </span>
+          )}
         </div>
         <div className="text-sm opacity-70">
           {heritageObject.isPartOf?.publisher?.name}

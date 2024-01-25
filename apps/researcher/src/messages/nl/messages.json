@@ -55,7 +55,8 @@
   },
   "HeritageObjectCard": {
     "heritageObject": "Erfgoedobject",
-    "noImage": "Geen afbeelding"
+    "noImage": "Geen afbeelding",
+    "noName": "Geen titel"
   },
   "PersonCard": {
     "person": "Persoon",
@@ -76,6 +77,7 @@
     "identifier": "ID: {identifier}",
     "metadata": "Metadata",
     "name": "titel",
+    "noName": "Geen titel",
     "description": "Beschrijving",
     "locationsCreated": "Locatie van creatie",
     "license": "Licentie",
