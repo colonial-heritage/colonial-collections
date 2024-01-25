@@ -18,8 +18,8 @@ export function FacetWrapper({
 }: FacetWrapperProps) {
   return (
     <div
-      className={classNames('rounded p-2', {
-        'bg-consortiumBlue-900': variant === FacetVariant.Default,
+      className={classNames('', {
+        '': variant === FacetVariant.Default,
       })}
     >
       <div className="w-full max-w-[450px]" data-testid={testId}>
@@ -90,7 +90,7 @@ export function FacetCheckBox({
           {name}
         </label>
       </div>
-      <div className="text-sm text-consortiumBlue-100">{count}</div>
+      <div className="text-sm text-neutral-600">{count}</div>
     </div>
   );
 }

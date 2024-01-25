@@ -4,7 +4,7 @@ import {ReactNode} from 'react';
 
 export default function ObjectLayout({children}: {children: ReactNode}) {
   return (
-    <body className="bg-consortiumBlue-800 text-white">
+    <body>
       <BaseLayout>
         <ListProvider baseUrl="/objects" defaultSortBy={defaultSortBy}>
           {children}

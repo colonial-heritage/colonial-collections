@@ -20,47 +20,38 @@ export default function HeritageObjectCard({heritageObject}: Props) {
     <Link
       href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
       data-testid="object-card"
-      className="min-h-[200px] bg-consortiumBlue-800 text-white border border-consortiumGreen-300 rounded-sm flex flex-col sm:flex-row gap-2 cursor-pointer hover:bg-consortiumBlue-900"
+      className="min-h-[200px] bg-neutral-100 border border-neutral-200 rounded-sm flex flex-col sm:flex-row gap-2 cursor-pointer hover:border-consortiumBlue-800 no-underline"
       aria-label={t('heritageObject')}
     >
       <div
-        className={classNames(
-          'w-full p-2 flex flex-col justify-between gap-2',
-          {
-            'sm:w-1/2': imageUrl,
-          }
-        )}
+        className={classNames('w-full flex flex-col justify-between gap-2', {
+          '': imageUrl,
+        })}
       >
-        <div
-          className="font-semibold mt-4 text-consortiumGreen-300"
-          data-testid="object-card-name"
-        >
+        <div className="font-semibold p-2" data-testid="object-card-name">
           {heritageObject.name || (
-            <span className="text-sm text-consortiumBlue-100">
-              {t('noName')}
-            </span>
+            <span className="text-sm text-neutral-600">{t('noName')}</span>
           )}
         </div>
-        <div className="text-sm opacity-70">
+        <div className="text-sm text-neutral-600 p-2">
           {heritageObject.isPartOf?.publisher?.name}
         </div>
       </div>
       {imageUrl ? (
-        <div className="w-full sm:w-1/2 flex justify-center items-center bg-consortiumBlue-900">
-          <div className="h-full w-full flex justify-center items-center relative">
-            <Image
-              src={imageUrl}
-              alt={heritageObject.name || ''}
-              fill
-              // The size varies between 200 and 330px depending on the page width.
-              sizes="330px"
-              quality={40}
-              className="object-contain object-center"
-            />
-          </div>
+        <div className="flex justify-start items-start border-l border-neutral-200">
+          <Image
+            src={imageUrl}
+            alt={heritageObject.name || ''}
+            width="0"
+            height="0"
+            // The size varies between 200 and 330px depending on the page width.
+            sizes="270px"
+            quality={40}
+            className="object-contain object-center w-full"
+          />
         </div>
       ) : (
-        <div className="bg-consortiumBlue-900 text-consortiumBlue-100 h-full sm:w-10 flex flex-col justify-center items-center">
+        <div className="text-neutral-600 h-full sm:w-10 flex flex-col justify-center items-center">
           <div className="text-xs sm:rotate-90 py-2 sm:py-0 whitespace-nowrap">
             {t('noImage')}
           </div>
