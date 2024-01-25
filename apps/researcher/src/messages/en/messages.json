@@ -32,7 +32,8 @@
     "communities": "Communities",
     "subMenuButton": "About",
     "consortium": "Consortium",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "datasetBrowser": "Dataset Browser"
   },
   "Tabs": {
     "objects": "Search for objects",

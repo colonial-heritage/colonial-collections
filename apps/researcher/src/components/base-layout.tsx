@@ -3,6 +3,7 @@ import Navigation from './navigation';
 import {getTranslations} from 'next-intl/server';
 import {WipMessage} from '@colonial-collections/ui';
 import {Link} from '@/navigation';
+import {env} from 'node:process';
 
 interface Props {
   children: ReactNode;
@@ -31,7 +32,7 @@ export default async function BaseLayout({children, wrapperClassName}: Props) {
       </div>
       <div className={wrapperClassName}>
         <header className="w-full bg-consortiumBlue-900 text-white py-2">
-          <Navigation />
+          <Navigation datasetBrowserUrl={env['DATASET_BROWSER_URL']!} />
         </header>
         {children}
       </div>
