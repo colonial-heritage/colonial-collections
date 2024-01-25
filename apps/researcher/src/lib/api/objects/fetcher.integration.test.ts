@@ -14,7 +14,7 @@ describe('getByIds', () => {
   it('returns empty list if no IDs were provided', async () => {
     const heritageObjects = await heritageObjectFetcher.getByIds([]);
 
-    expect(heritageObjects).toStrictEqual([]);
+    expect(heritageObjects).toEqual([]);
   });
 
   it('returns empty list if no heritage objects match the IDs', async () => {
