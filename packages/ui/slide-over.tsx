@@ -52,7 +52,7 @@ export function SlideOverDialog({children}: SlideOverDialogProps) {
   const {isOpen, setIsOpen, variant} = useContext(SlideOverContext);
 
   const panelClassName = classNames('pointer-events-auto w-screen', {
-    'max-w-md bg-white': variant === 'text',
+    'max-w-md bg-white text-gray-900': variant === 'text',
     'max-w-full bg-neutral-600': variant === 'gallery',
   });
 
