@@ -23,5 +23,5 @@ export async function sendEmail({emailAddress, subject, body}: Props) {
     text: body,
   };
 
-  return sgMail.send(message);
+  await sgMail.send(message);
 }
