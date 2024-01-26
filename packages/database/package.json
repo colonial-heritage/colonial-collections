@@ -21,10 +21,10 @@
     "tsconfig": "*"
   },
   "dependencies": {
-    "drizzle-kit": "0.20.6",
-    "drizzle-orm": "0.28.6",
+    "drizzle-kit": "0.20.13",
+    "drizzle-orm": "0.29.3",
     "drizzle-zod": "0.5.1",
-    "mysql2": "3.7.0"
+    "mysql2": "3.9.0"
   },
   "jest": {
     "preset": "ts-jest",
