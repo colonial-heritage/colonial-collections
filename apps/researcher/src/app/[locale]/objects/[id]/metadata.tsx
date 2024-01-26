@@ -34,18 +34,18 @@ export function Metadata({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
-        <div className="w-full xl:w-1/5 border-t border-consortiumBlue-400 pt-4">
-          <div className="sticky top-0 bg-consortiumBlue-800 py-1">
+        <div className="w-full xl:w-1/5 border-t border-neutral-400 pt-4">
+          <div className="sticky top-0 py-1">
             <h3 className="text-lg w-full my-1 flex items-center">
               {t(translationKey)}
             </h3>
-            <div className="text-consortiumBlue-100 text-sm">
+            <div className="text-neutral-600 text-sm">
               {t(`${translationKey}SubTitle`)}
             </div>
           </div>
         </div>
         {!children && metadataEnrichments.length === 0 ? (
-          <div className="text-consortiumBlue-100 italic w-full border-t py-6 text-sm">
+          <div className="text-neutral-600 italic w-full  py-6 text-sm">
             {t.rich('noData', {
               subject: () => (
                 <span className="lowercase">{t(translationKey)}</span>
@@ -53,7 +53,7 @@ export function Metadata({
             })}
           </div>
         ) : (
-          <div className="w-full xl:w-4/5 flex flex-col gap-2">
+          <div className="w-full xl:w-4/5 flex flex-col gap-2 border-t border-neutral-400">
             <MetadataEntry translationKey={translationKey} isCurrentPublisher>
               {children}
             </MetadataEntry>
@@ -108,11 +108,11 @@ export async function MetadataEntry({
   const author = creator ? creator : organization;
 
   return (
-    <div className="border-t border-consortiumBlue-400 flex flex-col lg:flex-row justify-between gap-2">
+    <div className="border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-2 first:border-0 ">
       <div className="w-full lg:w-2/3 py-3 px-2">
         {children}
         {languageCode && (
-          <div className="text-xs font-normal text-consortiumBlue-100">
+          <div className="text-xs font-normal text-neutral-600">
             {ISO6391.getName(languageCode)}
           </div>
         )}
@@ -122,7 +122,7 @@ export async function MetadataEntry({
           'px-2 py-3 text-xs my-1 self-start w-full lg:w-1/3',
           {
             'text-white': isCurrentPublisher,
-            'bg-consortiumGreen-300 text-consortiumBlue-800 rounded':
+            'bg-consortiumGreen-100 text-consortiumBlue-800 rounded':
               !isCurrentPublisher,
           }
         )}

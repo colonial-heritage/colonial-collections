@@ -112,90 +112,63 @@ export default async function Details({params}: Props) {
 
   return (
     <>
-      <div className="bg-consortiumBlue-800 text-white flex flex-col gap-8 pb-40">
-        <div className="px-4 sm:px-10 flex gap-2 flex-row sm:justify-between">
-          <div>
-            <ToFilteredListButton className="flex items-center gap-1">
-              <ChevronLeftIcon className="w-4 h-4 fill-white" />
-              {t('backButton')}
-            </ToFilteredListButton>
-          </div>
-          <div className="sm:flex justify-end gap-4 hidden">
-            <SignedIn>
-              <ObjectListsMenu objectId={id} />
-            </SignedIn>
-          </div>
-        </div>
-
-        <div className="px-4 sm:px-10 my-4 flex flex-col gap-4 w-full bg max-w-[1800px] mx-auto">
-          <h1
-            className="text-2xl md:text-4xl md:items-center"
-            data-testid="page-title"
-          >
-            {object.name || (
-              <span className="text-consortiumBlue-100">{t('noName')}</span>
-            )}
-          </h1>
-
-          <div className="flex flex-row items-start flex-wrap">
-            {enrichmentsAboutName?.slice(0, 3).map(enrichment => (
-              <div
-                key={enrichment.id}
-                className="border-r border-consortiumBlue-400 mr-4 pr-4"
-              >
-                <div>{enrichment.description}</div>
-                <div className="text-xs font-normal hidden sm:block text-consortiumBlue-100">
-                  {ISO6391.getName(enrichment.inLanguage as LanguageCode)}
-                </div>
-              </div>
-            ))}
+      <div className="flex flex-col gap-8 pb-40">
+        <div className="bg-consortiumBlue-800 text-white w-full">
+          <div className="px-4 sm:px-10 flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto pt-10">
+            <div>
+              <ToFilteredListButton className="no-underline rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumBlue-100 text-consortiumBlue-800 flex gap-1 items-center">
+                <ChevronLeftIcon className="w-4 h-4 fill-consortiumBlue-800" />
+                {t('backButton')}
+              </ToFilteredListButton>
+            </div>
+            <div className="sm:flex justify-end gap-4 hidden">
+              <SignedIn>
+                <ObjectListsMenu objectId={id} />
+              </SignedIn>
+            </div>
           </div>
 
-          <div className="text-consortiumBlue-100 text-sm flex flex-col sm:flex-row justify-between items-start sm:items-center">
-            <div className="flex flex-row justify-start  gap-1 ">
-              <span className="-ml-4 sm:ml-0">
+          <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto py-10 md:pt-10 md:pb-20 xt:py-35 xl:pb-40 flex flex-col lg:flex-row gap-10">
+            <div className="w-full lg:w-2/3 xl:w-3/4">
+              <div className="text-sm text-consortiumBlue-100 mb-4 lg:mb-10 flex gap-1">
                 <ObjectIcon className='w-5 h-5 stroke-consortiumBlue-100"' />
-              </span>
-              <span className="inline items-center flex-row flex-wrap gap-1">
                 {t('object')}
-                {organization && (
-                  <>
-                    <SlideOver>
-                      <SlideOverOpenButton>
-                        {', '}
-                        <span className="inline items-start sm:items-center flex-wrap gap-1 hover:underline">
-                          <strong className="text-left text-sky-700 cursor-pointer">
-                            {organization.name}
-                          </strong>
-                          {organization.address && (
-                            <>
-                              <span className="hidden sm:inline px-1">-</span>
-                              <span>
-                                {organization.address?.addressLocality}
-                              </span>
-                            </>
-                          )}
-                          <span className="text-left text-sky-700 cursor-pointer pl-2">
-                            ({t('contactInfo')})
-                          </span>
-                        </span>
-                      </SlideOverOpenButton>
-                      <ContactDetailsSlideOver
-                        datasetId={object.isPartOf?.id}
-                      />
-                    </SlideOver>
-                  </>
+              </div>
+              <h1
+                className="text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl max-w-5xl"
+                data-testid="page-title"
+              >
+                {object.name || (
+                  <span className="text-consortiumBlue-100">{t('noName')}</span>
                 )}
-              </span>
+              </h1>
+
+              <div className="text-consortiumBlue-100 mt-4 lg:mt-10 flex flex-col sm:flex-row gap-5 lg:gap-10">
+                {enrichmentsAboutName?.slice(0, 3).map(enrichment => (
+                  <div key={enrichment.id} className="font-semibold text-white">
+                    <div>{enrichment.description}</div>
+                    <div className="text-sm font-normal text-consortiumBlue-100">
+                      {ISO6391.getName(enrichment.inLanguage as LanguageCode)}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grow sm:text-right break-keep">
-              {t('identifier', {
-                identifier: object.identifier,
-              })}
+
+            <div className="w-full lg:w-1/3 xl:w-1/4 text-sm text-consortiumBlue-100 lg:pt-16">
+              <div className="italic">{t('providerCurrentHolder')}</div>
+              <div className="text-white">{organization.name}</div>
+              <div className="mb-4">
+                {organization.address?.addressLocality}
+              </div>
+              <a href="#provider" className="p-4 -ml-4 italic">
+                {t('providerInfo')}
+              </a>
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full mx-auto px-4 sm:px-10">
+
+        <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full px-4 sm:px-10">
           <main className="w-full md:w-2/3 order-2 md:order-1">
             <Notifications />
             <div className="mb-4 mt-10 flex justify-between">
@@ -245,7 +218,7 @@ export default async function Details({params}: Props) {
                 {object.dateCreated && (
                   <div className="flex flex-row gap-12">
                     <div>
-                      <div className="italic text-sm text-consortiumBlue-100">
+                      <div className="italic text-sm text-neutral-600">
                         {t('beginOfRange')}
                       </div>
                       <div>
@@ -254,7 +227,7 @@ export default async function Details({params}: Props) {
                       </div>
                     </div>
                     <div>
-                      <div className="italic text-sm text-consortiumBlue-100">
+                      <div className="italic text-sm text-neutral-600">
                         {t('endOfRange')}
                       </div>
                       <div>
@@ -303,7 +276,7 @@ export default async function Details({params}: Props) {
               </Metadata>
             </div>
           </main>
-          <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-consortiumBlue-900 p-1">
+          <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-neutral-100 p-1">
             {galleryImages.length > 0 && (
               <div className="flex flex-row md:flex-col gap-1 sticky top-4">
                 <Gallery
