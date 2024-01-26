@@ -132,7 +132,8 @@
     "showTimelineButton": "Tijdlijn weergeven",
     "hideTimelineButton": "Tijdlijn verbergen",
     "showDataTableButton": "Datatabel weergeven",
-    "hideDataTableButton": "Datatabel verbergen"
+    "hideDataTableButton": "Datatabel verbergen",
+    "noDate": "Geen datum"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",

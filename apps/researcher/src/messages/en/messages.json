@@ -132,7 +132,8 @@
     "showTimelineButton": "Show timeline",
     "hideTimelineButton": "Hide timeline",
     "showDataTableButton": "Show data table",
-    "hideDataTableButton": "Hide data table"
+    "hideDataTableButton": "Hide data table",
+    "noDate": "No date"
   },
   "PersonDetails": {
     "backButton": "Back to results",

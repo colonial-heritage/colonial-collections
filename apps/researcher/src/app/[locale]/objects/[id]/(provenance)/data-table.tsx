@@ -79,7 +79,7 @@ function ProvenanceEventRow({
   return (
     <div className="border-l-4 mb-16 border-consortiumBlue-950">
       <div className="mb-4 pl-4">
-        <strong>{dateRange}</strong>
+        <strong>{dateRange || t('noDate')}</strong>
       </div>
       <ul className="flex flex-col border-t border-consortiumBlue-500">
         {provenanceEvents.map(event => (
