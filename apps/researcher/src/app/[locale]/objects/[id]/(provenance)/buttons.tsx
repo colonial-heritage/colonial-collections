@@ -2,7 +2,7 @@
 
 import classNames from 'classnames';
 import {useProvenance} from './provenance-store';
-import {ButtonHTMLAttributes, ReactNode} from 'react';
+import {ButtonHTMLAttributes, MouseEvent, ReactNode} from 'react';
 import {useTranslations} from 'next-intl';
 
 interface SelectEventsButtonProps
@@ -15,12 +15,13 @@ export function SelectEventsButton({ids, children}: SelectEventsButtonProps) {
   const {setSelectedEvents, selectedEvents} = useProvenance();
   const selected = ids.some((id: string) => selectedEvents.includes(id));
 
-  const handleClick = () => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (selected) {
       setSelectedEvents(selectedEvents.filter(id => !ids.includes(id)));
     } else {
       setSelectedEvents(ids);
     }
+    event.stopPropagation();
   };
 
   return (

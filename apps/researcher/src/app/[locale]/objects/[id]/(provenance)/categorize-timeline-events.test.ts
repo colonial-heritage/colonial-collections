@@ -179,11 +179,14 @@ describe('getEarliestDate', () => {
     expect(result).toEqual(new Date('2022-01-01'));
   });
 
-  it('returns the earliest date when there are no events', () => {
+  it('returns today when there are no events', () => {
+    const now = new Date('2020-01-01');
+    jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
+
     const events: LabeledProvenanceEvent[] = [];
 
     const result = getEarliestDate(events);
 
-    expect(result).toEqual(new Date());
+    expect(result).toEqual(now);
   });
 });
