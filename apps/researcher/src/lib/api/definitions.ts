@@ -40,8 +40,8 @@ export type Image = {
 
 export type TimeSpan = {
   id: string;
-  startDate?: Date; // TBD: change to string to allow for uncertain dates (e.g. EDTF)?
-  endDate?: Date; // TBD: change to string to allow for uncertain dates (e.g. EDTF)?
+  startDate?: Date;
+  endDate?: Date;
 };
 
 export type HeritageObject = {
@@ -84,8 +84,9 @@ export type SearchResultFilter = {
 export type ProvenanceEvent = {
   id: string;
   types?: Term[];
-  startDate?: Date;
-  endDate?: Date;
+  date?: TimeSpan;
+  startDate?: Date; // For BC; remove when prop date is in use
+  endDate?: Date; // For BC; remove when prop date is in use
   transferredFrom?: Agent;
   transferredTo?: Agent;
   description?: string;

@@ -1,6 +1,11 @@
 import {ProvenanceEvent, Term} from '../definitions';
 import {getPropertyValue, onlyOne, removeNullish} from '../rdf-helpers';
-import {createAgents, createThings, createPlaces} from './rdf-helpers';
+import {
+  createAgents,
+  createPlaces,
+  createThings,
+  createTimeSpans,
+} from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
 import type {Readable} from 'node:stream';
@@ -39,14 +44,19 @@ export class ProvenanceEventsFetcher {
 
         ?acquisition a ex:Event ;
           ex:additionalType ?acquisitionType ;
-          ex:startDate ?acquisitionBeginOfTheBegin ;
-          ex:endDate ?acquisitionEndOfTheEnd ;
+          ex:date ?acquisitionTimeSpan ;
+          ex:startDate ?acquisitionBeginOfTheBegin ; # For BC; remove when prop date is in use
+          ex:endDate ?acquisitionEndOfTheEnd ; # For BC; remove when prop date is in use
           ex:transferredFrom ?acquisitionOwnerFrom ;
           ex:transferredTo ?acquisitionOwnerTo ;
           ex:description ?acquisitionDescription ;
           ex:location ?acquisitionLocation ;
           ex:startsAfter ?acquisitionStartsAfterTheEndOf ;
           ex:endsBefore ?acquisitionEndsBeforeTheStartOf .
+
+        ?acquisitionTimeSpan a ex:TimeSpan ;
+          ex:startDate ?acquisitionBeginOfTheBegin ;
+          ex:endDate ?acquisitionEndOfTheEnd .
 
         ?acquisitionType a ex:DefinedTerm ;
           ex:name ?acquisitionTypeName .
@@ -62,14 +72,19 @@ export class ProvenanceEventsFetcher {
 
         ?transferOfCustody a ex:Event ;
           ex:additionalType ?transferOfCustodyType ;
-          ex:startDate ?transferOfCustodyBeginOfTheBegin ;
-          ex:endDate ?transferOfCustodyEndOfTheEnd ;
+          ex:date ?transferOfCustodyTimeSpan ;
+          ex:startDate ?transferOfCustodyBeginOfTheBegin ; # For BC; remove when prop date is in use
+          ex:endDate ?transferOfCustodyEndOfTheEnd ; # For BC; remove when prop date is in use
           ex:transferredFrom ?transferOfCustodyCustodianFrom ;
           ex:transferredTo ?transferOfCustodyCustodianTo ;
           ex:description ?transferOfCustodyDescription ;
           ex:location ?transferOfCustodyLocation ;
           ex:startsAfter ?transferOfCustodyStartsAfterTheEndOf ;
           ex:endsBefore ?transferOfCustodyEndsBeforeTheStartOf .
+
+        ?transferOfCustodyTimeSpan a ex:TimeSpan ;
+          ex:startDate ?transferOfCustodyBeginOfTheBegin ;
+          ex:endDate ?transferOfCustodyEndOfTheEnd .
 
         ?transferOfCustodyType a ex:DefinedTerm ;
           ex:name ?transferOfCustodyTypeName .
@@ -145,19 +160,19 @@ export class ProvenanceEventsFetcher {
           ?acquisitionProvEvent a crm:E7_Activity .
 
           ####################
-          # Earliest start date of the acquisition
+          # Earliest start date and latest end date of the acquisition
           ####################
 
           OPTIONAL {
-            ?acquisitionProvEvent crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?acquisitionBeginOfTheBegin .
-          }
+            ?acquisitionProvEvent crm:P4_has_time-span ?acquisitionTimeSpan .
 
-          ####################
-          # Latest end date of the acquisition
-          ####################
+            OPTIONAL {
+              ?acquisitionTimeSpan crm:P82a_begin_of_the_begin ?acquisitionBeginOfTheBegin .
+            }
 
-          OPTIONAL {
-            ?acquisitionProvEvent crm:P4_has_time-span/crm:P82b_end_of_the_end ?acquisitionEndOfTheEnd .
+            OPTIONAL {
+              ?acquisitionTimeSpan crm:P82b_end_of_the_end ?acquisitionEndOfTheEnd .
+            }
           }
 
           ####################
@@ -252,19 +267,19 @@ export class ProvenanceEventsFetcher {
           ?transferOfCustodyProvEvent a crm:E7_Activity .
 
           ####################
-          # Earliest start date of the transfer of custody
+          # Earliest start date and latest end date of the transfer of custody
           ####################
 
           OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?transferOfCustodyBeginOfTheBegin .
-          }
+            ?transferOfCustodyProvEvent crm:P4_has_time-span ?transferOfCustodyTimeSpan .
 
-          ####################
-          # Latest end date of the transfer of custody
-          ####################
+            OPTIONAL {
+              ?transferOfCustodyTimeSpan crm:P82a_begin_of_the_begin ?transferOfCustodyBeginOfTheBegin .
+            }
 
-          OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P4_has_time-span/crm:P82b_end_of_the_end ?transferOfCustodyEndOfTheEnd .
+            OPTIONAL {
+              ?transferOfCustodyTimeSpan crm:P82b_end_of_the_end ?transferOfCustodyEndOfTheEnd .
+            }
           }
 
           ####################
@@ -309,8 +324,9 @@ export class ProvenanceEventsFetcher {
 
   private toProvenanceEvent(rawProvenanceEvent: Resource) {
     const id = rawProvenanceEvent.value;
-    const startDate = getPropertyValue(rawProvenanceEvent, 'ex:startDate');
-    const endDate = getPropertyValue(rawProvenanceEvent, 'ex:endDate');
+    const date = onlyOne(createTimeSpans(rawProvenanceEvent, 'ex:date'));
+    const startDate = getPropertyValue(rawProvenanceEvent, 'ex:startDate'); // For BC; remove when prop date is in use
+    const endDate = getPropertyValue(rawProvenanceEvent, 'ex:endDate'); // For BC; remove when prop date is in use
     const description = getPropertyValue(rawProvenanceEvent, 'ex:description');
     const startsAfter = getPropertyValue(rawProvenanceEvent, 'ex:startsAfter');
     const endsBefore = getPropertyValue(rawProvenanceEvent, 'ex:endsBefore');
@@ -327,8 +343,9 @@ export class ProvenanceEventsFetcher {
       id,
       types,
       description,
-      startDate: startDate !== undefined ? new Date(startDate) : undefined,
-      endDate: endDate !== undefined ? new Date(endDate) : undefined,
+      date,
+      startDate: startDate !== undefined ? new Date(startDate) : undefined, // For BC; remove when prop date is in use
+      endDate: endDate !== undefined ? new Date(endDate) : undefined, // For BC; remove when prop date is in use
       startsAfter,
       endsBefore,
       location,
@@ -366,7 +383,7 @@ export class ProvenanceEventsFetcher {
       this.toProvenanceEvent(rawProvenanceEvent)
     );
 
-    // TODO: sort provenance events
+    // TBD: sort provenance events?
 
     return provenanceEvents;
   }
