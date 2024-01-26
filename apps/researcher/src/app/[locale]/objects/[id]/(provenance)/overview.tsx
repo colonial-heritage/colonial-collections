@@ -11,7 +11,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
     await heritageObjects.getProvenanceEventsByHeritageObjectId(objectId);
   const t = await getTranslations('Provenance');
 
-  if (!events) {
+  if (!events || events.length === 0) {
     return (
       <div className="w-full">
         <div className="mx-auto px-4 sm:px-10 max-w-[1800px]">
@@ -50,12 +50,8 @@ export default async function Provenance({objectId}: {objectId: string}) {
               <ToggleViewButtons />
             </div>
           </div>
-          {labeledEvents.length > 0 ? (
-            <>
-              <Timeline />
-              <DataTable />
-            </>
-          ) : null}
+          <Timeline />
+          <DataTable />
         </div>
       </div>
     </ProvenanceProvider>

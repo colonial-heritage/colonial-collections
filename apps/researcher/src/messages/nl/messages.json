@@ -123,7 +123,7 @@
     "transferredTo": "Overgedragen aan",
     "location": "Locatie",
     "descriptionTitle": "Beschrijving",
-    "noData": "Geen herkomstgegevens gevonden.",
+    "noData": "Geen herkomstgegevens aangeleverd.",
     "dataTableTitle": "Herkomst data tabel",
     "timelineTitle": "Tijdlijn van herkomst",
     "timelineDescription": "In de tijdlijn worden de herkomstgebeurtenissen uitgezet op basis van de tijd. Klik op een gebeurtenis om de focus op de gebeurtenis te leggen.",
@@ -132,7 +132,9 @@
     "showTimelineButton": "Tijdlijn weergeven",
     "hideTimelineButton": "Tijdlijn verbergen",
     "showDataTableButton": "Datatabel weergeven",
-    "hideDataTableButton": "Datatabel verbergen"
+    "hideDataTableButton": "Datatabel verbergen",
+    "noDate": "Geen datum",
+    "noDescription": "Geen beschrijving"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
