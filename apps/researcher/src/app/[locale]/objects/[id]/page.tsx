@@ -8,16 +8,8 @@ import {ObjectIcon} from '@/components/icons';
 import {Metadata} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import organizations from '@/lib/organizations-instance';
-import {
-  SlideOverDialog,
-  SlideOverOpenButton,
-  SlideOverHeader,
-  SlideOverContent,
-  SlideOver,
-  Notifications,
-} from '@colonial-collections/ui';
+import {Notifications} from '@colonial-collections/ui';
 import useObject from './use-object';
-import {env} from 'node:process';
 import ObjectListsMenu from './object-lists-menu';
 import SignedIn from '@/lib/community/signed-in';
 import {fetcher} from '@/lib/enricher-instances';
@@ -30,53 +22,6 @@ export const dynamic = 'force-dynamic';
 
 interface Props {
   params: {id: string};
-}
-
-function ContactDetailsSlideOver({datasetId}: {datasetId?: string}) {
-  const {organization} = useObject.getState();
-  const t = useTranslations('ObjectDetails');
-
-  if (!organization) {
-    return (
-      <SlideOverDialog>
-        <SlideOverHeader />
-        <SlideOverContent>
-          <div className="flex-col gap-4 mt-4 flex">
-            <h2>{t('noOrganizationFound')}</h2>
-          </div>
-        </SlideOverContent>
-      </SlideOverDialog>
-    );
-  }
-
-  return (
-    <SlideOverDialog>
-      <SlideOverHeader />
-      <SlideOverContent>
-        <div className="flex-col gap-4 mt-4 flex">
-          <h2>{organization.name}</h2>
-          <span>
-            {organization.address?.streetAddress}
-            <br /> {organization.address?.postalCode}{' '}
-            {organization.address?.addressLocality},
-            <br /> {organization.address?.addressCountry}
-          </span>
-          {organization.url && (
-            <a href={organization.url}>{t('linkToWebsite')}</a>
-          )}{' '}
-          {datasetId && (
-            <a
-              href={`${
-                env['DATASET_BROWSER_URL']
-              }/datasets/${encodeURIComponent(datasetId)}`}
-            >
-              {t('linkToDataset')}
-            </a>
-          )}
-        </div>
-      </SlideOverContent>
-    </SlideOverDialog>
-  );
 }
 
 export default async function Details({params}: Props) {
@@ -156,14 +101,18 @@ export default async function Details({params}: Props) {
             </div>
 
             <div className="w-full lg:w-1/3 xl:w-1/4 text-sm text-consortiumBlue-100 lg:pt-16">
-              <div className="italic">{t('providerCurrentHolder')}</div>
-              <div className="text-white">{organization.name}</div>
-              <div className="mb-4">
-                {organization.address?.addressLocality}
-              </div>
-              <a href="#provider" className="p-4 -ml-4 italic">
-                {t('providerInfo')}
-              </a>
+              {organization && (
+                <>
+                  <div className="italic">{t('providerCurrentHolder')}</div>
+                  <div className="text-white">{organization.name}</div>
+                  <div className="mb-4">
+                    {organization.address?.addressLocality}
+                  </div>
+                  <a href="#provider" className="p-4 -ml-4 italic">
+                    {t('providerInfo')}
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
