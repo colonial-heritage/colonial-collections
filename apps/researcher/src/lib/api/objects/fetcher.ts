@@ -154,6 +154,9 @@ export class HeritageObjectFetcher {
         OPTIONAL {
           ?object crm:P2_has_type ?type .
           ?type rdfs:label ?typeName .
+
+          # For BC; remove as soon as locale-aware names are in use
+          FILTER(LANG(?typeName) = "" || LANG(?typeName) = "en")
         }
 
         ####################
@@ -163,6 +166,9 @@ export class HeritageObjectFetcher {
         OPTIONAL {
           ?object crm:P62_depicts ?subject .
           ?subject rdfs:label ?subjectName .
+
+          # For BC; remove as soon as locale-aware names are in use
+          FILTER(LANG(?subjectName) = "" || LANG(?subjectName) = "en")
         }
 
         ####################
@@ -183,6 +189,9 @@ export class HeritageObjectFetcher {
         OPTIONAL {
           ?object crm:P45_consists_of ?material .
           ?material rdfs:label ?materialName .
+
+          # For BC; remove as soon as locale-aware names are in use
+          FILTER(LANG(?materialName) = "" || LANG(?materialName) = "en")
         }
 
         ####################
@@ -192,6 +201,9 @@ export class HeritageObjectFetcher {
         OPTIONAL {
           ?object crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique .
           ?technique rdfs:label ?techniqueName .
+
+          # For BC; remove as soon as locale-aware names are in use
+          FILTER(LANG(?techniqueName) = "" || LANG(?techniqueName) = "en")
         }
 
         ####################
@@ -232,15 +244,12 @@ export class HeritageObjectFetcher {
 
         OPTIONAL {
           ?object crm:P108i_was_produced_by/crm:P7_took_place_at ?locationCreated .
-          ?locationCreated gn:name ?locationCreatedName ;
-            gn:featureCode ?featureCode .
-          FILTER(LANG(?locationCreatedName) = "" || LANGMATCHES(LANG(?locationCreatedName), "en"))
+          ?locationCreated gn:name ?locationCreatedName .
 
           # Country of which the location is a part
           OPTIONAL {
             ?locationCreated gn:parentCountry ?countryCreated .
             ?countryCreated gn:name ?countryCreatedName .
-            FILTER(LANG(?countryCreatedName) = "" || LANGMATCHES(LANG(?countryCreatedName), "en"))
           }
         }
 
@@ -261,7 +270,7 @@ export class HeritageObjectFetcher {
 
             OPTIONAL {
               ?digitalObjectLicense schema:name ?digitalObjectLicenseName .
-              FILTER(LANG(?digitalObjectLicenseName) = "" || LANGMATCHES(LANG(?digitalObjectLicenseName), "en"))
+              FILTER(LANG(?digitalObjectLicenseName) = "" || LANG(?digitalObjectLicenseName) = "en")
             }
           }
         }
@@ -279,7 +288,9 @@ export class HeritageObjectFetcher {
 
           OPTIONAL {
             ?dataset schema:name ?datasetName
-            FILTER(LANG(?datasetName) = "" || LANGMATCHES(LANG(?datasetName), "en"))
+
+            # For BC; remove as soon as locale-aware names are in use
+            FILTER(LANG(?datasetName) = "" || LANG(?datasetName) = "en")
           }
 
           ####################
@@ -290,6 +301,9 @@ export class HeritageObjectFetcher {
             ?dataset schema:publisher ?publisher .
             ?publisher schema:name ?publisherName ;
               rdf:type ?publisherTypeTemp .
+
+            # For BC; remove as soon as locale-aware names are in use
+            FILTER(LANG(?publisherName) = "" || LANG(?publisherName) = "en")
 
             VALUES (?publisherTypeTemp ?publisherType) {
               (schema:Organization ex:Organization)
@@ -391,6 +405,10 @@ export class HeritageObjectFetcher {
   }
 
   async getByIds(ids: string[]) {
+    if (ids.length === 0) {
+      return [];
+    }
+
     const triplesStream = await this.fetchTriples(ids);
     const heritageObjects = await this.fromTriplesToHeritageObjects(
       ids,
