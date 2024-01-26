@@ -29,7 +29,7 @@ beforeAll(async () => {
       ex:subject ex:subject1, ex:subject2 ;
       ex:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
       ex:image ex:image1, ex:image2, ex:image3 ;
-      ex:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3 ;
+      ex:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3, ex:dateCreated4 ;
       ex:locationCreated ex:location1, ex:location2 ;
       ex:isPartOf ex:dataset1, ex:dataset2, ex:dataset3 .
 
@@ -61,8 +61,8 @@ beforeAll(async () => {
     ex:image3 a ex:Image .
 
     ex:dateCreated1 a ex:TimeSpan ;
-      ex:startDate "1889"^^xsd:gYear ;
-      ex:endDate "1900"^^xsd:gYear .
+      ex:startDate "-1900"^^xsd:gYear ;
+      ex:endDate "-1889"^^xsd:gYear .
 
     # No end date
     ex:dateCreated2 a ex:TimeSpan ;
@@ -71,6 +71,10 @@ beforeAll(async () => {
     # No start date
     ex:dateCreated3 a ex:TimeSpan ;
       ex:endDate "1900"^^xsd:gYear .
+
+    # Invalid date
+    ex:dateCreated4 a ex:TimeSpan ;
+      ex:startDate "badValue" .
 
     ex:location1 a ex:Place ;
       ex:name "City 1" .
@@ -224,18 +228,23 @@ describe('createTimeSpan', () => {
     expect(timeSpans).toStrictEqual([
       {
         id: 'https://example.org/dateCreated1',
-        startDate: new Date('1889-01-01'),
-        endDate: new Date('1900-01-01'),
+        startDate: new Date('-001900-01-01T00:00:00.000Z'),
+        endDate: new Date('-001889-12-31T23:59:59.999Z'),
       },
       {
         id: 'https://example.org/dateCreated2',
-        startDate: new Date('1889-01-01'),
+        startDate: new Date('1889-01-01T00:00:00.000Z'),
         endDate: undefined,
       },
       {
         id: 'https://example.org/dateCreated3',
         startDate: undefined,
-        endDate: new Date('1900-01-01'),
+        endDate: new Date('1900-12-31T23:59:59.999Z'),
+      },
+      {
+        id: 'https://example.org/dateCreated4',
+        startDate: undefined,
+        endDate: undefined,
       },
     ]);
   });

@@ -11,12 +11,18 @@ beforeEach(() => {
 });
 
 describe('getByIds', () => {
+  it('returns empty list if no IDs were provided', async () => {
+    const heritageObjects = await heritageObjectFetcher.getByIds([]);
+
+    expect(heritageObjects).toEqual([]);
+  });
+
   it('returns empty list if no heritage objects match the IDs', async () => {
     const heritageObjects = await heritageObjectFetcher.getByIds([
       'https://unknown.org/',
     ]);
 
-    expect(heritageObjects).toStrictEqual([]);
+    expect(heritageObjects).toEqual([]);
   });
 
   it('returns the heritage objects that match the IDs', async () => {
@@ -114,8 +120,8 @@ describe('getById', () => {
         id: expect.stringContaining(
           'https://data.colonialcollections.nl/.well-known/genid/'
         ),
-        startDate: new Date('1901-01-01'),
-        endDate: new Date('1902-06-01'),
+        startDate: new Date('1901-01-01T00:00:00.000Z'),
+        endDate: new Date('1902-06-30T23:59:59.999Z'),
       },
       locationsCreated: expect.arrayContaining([
         {

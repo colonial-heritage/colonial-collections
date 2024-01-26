@@ -1,5 +1,6 @@
 import {Agent, Dataset, Image, License, Place, TimeSpan} from '../definitions';
 import {getProperty, getPropertyValue} from '../rdf-helpers';
+import edtf from 'edtf';
 import type {Resource} from 'rdf-object';
 
 function createThingFromProperty<T>(thingResource: Resource) {
@@ -104,27 +105,29 @@ export function createPlaces(resource: Resource, propertyName: string) {
   return places.length > 0 ? places : undefined;
 }
 
-function fromStringToDate(dateValue: string | undefined) {
-  // TBD: change 'Date' to string to allow for uncertain dates (e.g. EDTF)?
-  let date: Date | undefined;
+function fromStringToEdtf(dateValue: string | undefined) {
   if (dateValue !== undefined) {
-    date = new Date(dateValue);
+    try {
+      return edtf(dateValue);
+    } catch (err) {
+      // Ignore invalid dates
+    }
   }
 
-  return date;
+  return undefined;
 }
 
 export function createTimeSpan(timeSpanResource: Resource) {
   const rawStartDate = getPropertyValue(timeSpanResource, 'ex:startDate');
-  const startDate = fromStringToDate(rawStartDate);
+  const startDate = fromStringToEdtf(rawStartDate);
 
   const rawEndDate = getPropertyValue(timeSpanResource, 'ex:endDate');
-  const endDate = fromStringToDate(rawEndDate);
+  const endDate = fromStringToEdtf(rawEndDate);
 
   const timeSpan: TimeSpan = {
     id: timeSpanResource.value,
-    startDate,
-    endDate,
+    startDate: startDate !== undefined ? new Date(startDate.min) : undefined, // E.g. 1881 = 1881-01-01
+    endDate: endDate !== undefined ? new Date(endDate.max) : undefined, // E.g. 1805 = 1805-12-31
   };
 
   return timeSpan;

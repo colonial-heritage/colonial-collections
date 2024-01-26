@@ -61,21 +61,21 @@ describe('search', () => {
               id: expect.stringContaining(
                 'https://data.colonialcollections.nl/.well-known/genid/'
               ),
-              name: 'Ink',
+              name: 'Paper',
             },
             {
               id: expect.stringContaining(
                 'https://data.colonialcollections.nl/.well-known/genid/'
               ),
-              name: 'Paper',
+              name: 'Ink',
             },
           ]),
           dateCreated: {
             id: expect.stringContaining(
               'https://data.colonialcollections.nl/.well-known/genid/'
             ),
-            startDate: new Date('1725-01-01T00:00:00.000Z'),
-            endDate: new Date('1736-01-01T00:00:00.000Z'),
+            startDate: new Date('-001736-01-01T00:00:00.000Z'),
+            endDate: new Date('-001725-12-31T23:59:59.999Z'),
           },
           locationsCreated: expect.arrayContaining([
             {
@@ -103,36 +103,6 @@ describe('search', () => {
           name: 'Object 1',
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices velit vitae vulputate tincidunt. Donec dictum tortor nec tempus mollis.',
-          types: expect.arrayContaining([
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Painting',
-            },
-          ]),
-          subjects: expect.arrayContaining([
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Celebrations',
-            },
-          ]),
-          materials: expect.arrayContaining([
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Oilpaint',
-            },
-            {
-              id: expect.stringContaining(
-                'https://data.colonialcollections.nl/.well-known/genid/'
-              ),
-              name: 'Canvas',
-            },
-          ]),
           creators: expect.arrayContaining([
             {
               id: expect.stringContaining(
@@ -147,7 +117,7 @@ describe('search', () => {
               'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             startDate: new Date('1889-05-01T00:00:00.000Z'),
-            endDate: new Date('1890-12-01T00:00:00.000Z'),
+            endDate: new Date('1890-12-31T23:59:59.999Z'),
           },
           locationsCreated: expect.arrayContaining([
             {
@@ -237,7 +207,7 @@ describe('search', () => {
               'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             startDate: new Date('1895-02-01T00:00:00.000Z'),
-            endDate: new Date('1895-02-15T00:00:00.000Z'),
+            endDate: new Date('1895-02-15T23:59:59.999Z'),
           },
           locationsCreated: expect.arrayContaining([
             {
@@ -327,7 +297,7 @@ describe('search', () => {
               'https://data.colonialcollections.nl/.well-known/genid/'
             ),
             startDate: new Date('1901-01-01T00:00:00.000Z'),
-            endDate: new Date('1902-06-01T00:00:00.000Z'),
+            endDate: new Date('1902-06-30T23:59:59.999Z'),
           },
           locationsCreated: expect.arrayContaining([
             {
@@ -400,25 +370,20 @@ describe('search', () => {
           },
           {
             totalCount: 1,
-            id: 'Painting',
-            name: 'Painting',
-          },
-          {
-            totalCount: 1,
             id: 'Photo',
             name: 'Photo',
           },
         ],
         subjects: [
           {
-            totalCount: 2,
-            id: 'Celebrations',
-            name: 'Celebrations',
-          },
-          {
             totalCount: 1,
             id: 'Castle',
             name: 'Castle',
+          },
+          {
+            totalCount: 1,
+            id: 'Celebrations',
+            name: 'Celebrations',
           },
           {
             totalCount: 1,
@@ -451,23 +416,23 @@ describe('search', () => {
         materials: [
           {
             totalCount: 2,
-            id: 'Canvas',
-            name: 'Canvas',
-          },
-          {
-            totalCount: 2,
-            id: 'Oilpaint',
-            name: 'Oilpaint',
-          },
-          {
-            totalCount: 2,
             id: 'Paper',
             name: 'Paper',
           },
           {
             totalCount: 1,
+            id: 'Canvas',
+            name: 'Canvas',
+          },
+          {
+            totalCount: 1,
             id: 'Ink',
             name: 'Ink',
+          },
+          {
+            totalCount: 1,
+            id: 'Oilpaint',
+            name: 'Oilpaint',
           },
         ],
         creators: [
@@ -495,16 +460,6 @@ describe('search', () => {
           },
           {
             totalCount: 1,
-            id: 'Library',
-            name: 'Library',
-          },
-          {
-            totalCount: 1,
-            id: 'Onderzoeksinstelling',
-            name: 'Onderzoeksinstelling',
-          },
-          {
-            totalCount: 1,
             id: 'Research Organisation',
             name: 'Research Organisation',
           },
@@ -512,8 +467,8 @@ describe('search', () => {
         dateCreatedStart: [
           {
             totalCount: 1,
-            id: 1725,
-            name: 1725,
+            id: -1736,
+            name: -1736,
           },
           {
             totalCount: 1,
@@ -534,8 +489,8 @@ describe('search', () => {
         dateCreatedEnd: [
           {
             totalCount: 1,
-            id: 1736,
-            name: 1736,
+            id: -1725,
+            name: -1725,
           },
           {
             totalCount: 1,
@@ -565,11 +520,11 @@ describe('search', () => {
     });
 
     expect(result).toMatchObject({
-      totalCount: 2,
+      totalCount: 1,
       filters: {
         materials: [
-          {totalCount: 2, id: 'Canvas', name: 'Canvas'},
-          {totalCount: 2, id: 'Oilpaint', name: 'Oilpaint'},
+          {totalCount: 1, id: 'Canvas', name: 'Canvas'},
+          {totalCount: 1, id: 'Oilpaint', name: 'Oilpaint'},
         ],
       },
     });
@@ -578,14 +533,16 @@ describe('search', () => {
   it('finds heritage objects if "types" filter matches', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        types: ['Painting'],
+        types: ['Canvas Painting'],
       },
     });
 
     expect(result).toMatchObject({
       totalCount: 1,
       filters: {
-        types: [{totalCount: 1, id: 'Painting', name: 'Painting'}],
+        types: [
+          {totalCount: 1, id: 'Canvas Painting', name: 'Canvas Painting'},
+        ],
       },
     });
   });
@@ -631,16 +588,16 @@ describe('search', () => {
     });
 
     expect(result).toMatchObject({
-      totalCount: 2,
+      totalCount: 1,
       filters: {
         materials: [
           {
-            totalCount: 2,
+            totalCount: 1,
             id: 'Canvas',
             name: 'Canvas',
           },
           {
-            totalCount: 2,
+            totalCount: 1,
             id: 'Oilpaint',
             name: 'Oilpaint',
           },
@@ -673,18 +630,18 @@ describe('search', () => {
   it('finds heritage objects if "publishers" filter matches', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        publishers: ['Library'],
+        publishers: ['Museum'],
       },
     });
 
     expect(result).toMatchObject({
-      totalCount: 1,
+      totalCount: 3,
       filters: {
         publishers: [
           {
-            totalCount: 1,
-            id: 'Library',
-            name: 'Library',
+            totalCount: 3,
+            id: 'Museum',
+            name: 'Museum',
           },
         ],
       },
@@ -715,7 +672,7 @@ describe('search', () => {
   it('finds heritage objects if "dateCreatedEnd" filter matches', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        dateCreatedEnd: 1736,
+        dateCreatedEnd: -1725,
       },
     });
 
@@ -725,8 +682,8 @@ describe('search', () => {
         dateCreatedEnd: [
           {
             totalCount: 1,
-            id: 1736,
-            name: 1736,
+            id: -1725,
+            name: -1725,
           },
         ],
       },
@@ -736,7 +693,7 @@ describe('search', () => {
   it('finds heritage objects between "dateCreatedStart" and "dateCreatedEnd", inclusive', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        dateCreatedStart: 1725,
+        dateCreatedStart: -1736,
         dateCreatedEnd: 1895,
       },
     });
@@ -747,8 +704,8 @@ describe('search', () => {
         dateCreatedStart: [
           {
             totalCount: 1,
-            id: 1725,
-            name: 1725,
+            id: -1736,
+            name: -1736,
           },
           {
             totalCount: 1,
@@ -764,8 +721,8 @@ describe('search', () => {
         dateCreatedEnd: [
           {
             totalCount: 1,
-            id: 1736,
-            name: 1736,
+            id: -1725,
+            name: -1725,
           },
           {
             totalCount: 1,

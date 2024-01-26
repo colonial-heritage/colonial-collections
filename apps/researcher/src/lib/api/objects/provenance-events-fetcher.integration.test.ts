@@ -53,8 +53,15 @@ describe('getByHeritageObjectId', () => {
             },
           ],
           description: 'Bought at an auction in Amsterdam',
-          startDate: new Date('1879-01-01T00:00:00.000Z'),
-          endDate: new Date('1879-01-01T00:00:00.000Z'),
+          date: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            startDate: new Date('1879-01-01T00:00:00.000Z'),
+            endDate: new Date('1879-12-31T23:59:59.999Z'),
+          },
+          startDate: new Date('1879-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
+          endDate: new Date('1879-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
           startsAfter:
             'https://example.org/objects/1/provenance/event/2/activity/1',
           endsBefore:
@@ -87,8 +94,15 @@ describe('getByHeritageObjectId', () => {
             },
           ],
           description: 'Found in a basement',
-          startDate: new Date('1939-01-01T00:00:00.000Z'),
-          endDate: new Date('1940-01-01T00:00:00.000Z'),
+          date: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            startDate: new Date('1939-01-01T00:00:00.000Z'),
+            endDate: new Date('1940-12-31T23:59:59.999Z'),
+          },
+          startDate: new Date('1939-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
+          endDate: new Date('1940-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
           startsAfter:
             'https://example.org/objects/1/provenance/event/3/activity/1',
           location: {
@@ -111,8 +125,15 @@ describe('getByHeritageObjectId', () => {
               name: 'theft (social issue)',
             },
           ],
-          startDate: new Date('1901-01-01T00:00:00.000Z'),
-          endDate: new Date('1901-01-01T00:00:00.000Z'),
+          date: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            startDate: new Date('1901-01-01T00:00:00.000Z'),
+            endDate: new Date('1901-12-31T23:59:59.999Z'),
+          },
+          startDate: new Date('1901-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
+          endDate: new Date('1901-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
           startsAfter:
             'https://example.org/objects/1/provenance/event/5/activity/1',
           endsBefore:
@@ -138,8 +159,15 @@ describe('getByHeritageObjectId', () => {
             },
           ],
           description: 'Bought at an auction in The Hague',
-          startDate: new Date('1879-01-01T00:00:00.000Z'),
-          endDate: new Date('1879-01-01T00:00:00.000Z'),
+          date: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            startDate: new Date('1879-01-01T00:00:00.000Z'),
+            endDate: new Date('1879-12-31T23:59:59.999Z'),
+          },
+          startDate: new Date('1879-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
+          endDate: new Date('1879-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
           startsAfter:
             'https://example.org/objects/1/provenance/event/1/activity/1',
           endsBefore:
@@ -178,8 +206,15 @@ describe('getByHeritageObjectId', () => {
             },
           ],
           description: 'Bought for 1500 US dollars',
-          startDate: new Date('1855-01-01T00:00:00.000Z'),
-          endDate: new Date('1857-01-01T00:00:00.000Z'),
+          date: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            startDate: new Date('1855-01-01T00:00:00.000Z'),
+            endDate: new Date('1857-12-31T23:59:59.999Z'),
+          },
+          startDate: new Date('1855-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
+          endDate: new Date('1857-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
           endsBefore:
             'https://example.org/objects/1/provenance/event/2/activity/1',
           location: {
