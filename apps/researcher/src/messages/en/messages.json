@@ -123,7 +123,7 @@
     "transferredTo": "Transferred to",
     "location": "Location",
     "descriptionTitle": "Description",
-    "noData": "No provenance events found",
+    "noData": "No provenance events provided for this object.",
     "dataTableTitle": "Provenance data table",
     "timelineTitle": "Provenance timeline",
     "timelineDescription": "In the timeline provenance events are plotted out by time. Click on an event to focus on that event.",
