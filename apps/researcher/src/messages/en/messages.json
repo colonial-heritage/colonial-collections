@@ -94,7 +94,7 @@
     "discussion": "Discussion",
     "types": "Types",
     "nameSubTitle": "The name of the object.",
-    "descriptionSubTitle": "A short description about the object.",
+    "descriptionSubTitle": "A description about the object.",
     "locationsCreatedSubTitle": "The location where the object was created.",
     "materialsSubTitle": "What kind of material is used. Click on the i of the material to learn more.",
     "typesSubTitle": "",
