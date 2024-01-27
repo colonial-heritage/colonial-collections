@@ -565,8 +565,9 @@ describe('search', () => {
     });
   });
 
-  it('finds heritage objects if "locations" filter matches', async () => {
+  it('finds heritage objects if "locations" filter matches in English', async () => {
     const result = await heritageObjectSearcher.search({
+      locale: 'en',
       filters: {
         locations: ['Malaysia'],
       },
@@ -576,6 +577,22 @@ describe('search', () => {
       totalCount: 1,
       filters: {
         locations: [{totalCount: 1, id: 'Malaysia', name: 'Malaysia'}],
+      },
+    });
+  });
+
+  it('finds heritage objects if "locations" filter matches in Dutch', async () => {
+    const result = await heritageObjectSearcher.search({
+      locale: 'nl',
+      filters: {
+        locations: ['Maleisië'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        locations: [{totalCount: 1, id: 'Maleisië', name: 'Maleisië'}],
       },
     });
   });
