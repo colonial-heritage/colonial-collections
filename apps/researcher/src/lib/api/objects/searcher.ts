@@ -1,4 +1,5 @@
 import {
+  localeSchema,
   SearchResultFilter,
   SortBy,
   SortByEnum,
@@ -37,7 +38,7 @@ const sortByToRawKeys = new Map<string, string>([
 ]);
 
 const searchOptionsSchema = z.object({
-  locale: z.string().default('en'),
+  locale: localeSchema,
   query: z.string().optional().default('*'), // If no query provided, match all
   offset: z.number().int().nonnegative().optional().default(0),
   limit: z.number().int().positive().optional().default(10),
@@ -276,7 +277,10 @@ export class HeritageObjectSearcher {
     const ids = rawHeritageObjects.map(
       rawHeritageObject => rawHeritageObject['@id']
     );
-    const heritageObjects = await this.heritageObjectFetcher.getByIds(ids);
+    const heritageObjects = await this.heritageObjectFetcher.getByIds({
+      locale: options.locale,
+      ids,
+    });
 
     const typeFilters = this.buildFilters(aggregations.types.buckets);
     const subjectFilters = this.buildFilters(aggregations.subjects.buckets);
