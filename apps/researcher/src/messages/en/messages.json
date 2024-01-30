@@ -187,8 +187,8 @@
   "Sort": {
     "dateCreatedDesc": "Date made - Descending",
     "dateCreatedAsc": "Date made - Ascending",
-    "nameAsc": "Name - Ascending",
     "nameDesc": "Name - Descending",
+    "nameAsc": "Name - Ascending",
     "createdAtDesc": "Date made",
     "membershipCountDesc": "Number of members",
     "accessibilitySelectToChangeOrder": "Select to change the ordering of the result"
