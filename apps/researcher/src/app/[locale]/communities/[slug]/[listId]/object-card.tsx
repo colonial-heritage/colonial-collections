@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default async function ObjectCard({objectIri}: Props) {
-  const object = await heritageObjects.getById(objectIri);
+  const object = await heritageObjects.getById({id: objectIri});
 
   if (!object) {
     return null;

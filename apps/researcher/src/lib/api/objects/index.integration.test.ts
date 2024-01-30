@@ -17,9 +17,9 @@ beforeEach(() => {
 
 describe('getById', () => {
   it('returns a heritage object', async () => {
-    const heritageObject = await heritageObjects.getById(
-      'https://example.org/objects/5'
-    );
+    const heritageObject = await heritageObjects.getById({
+      id: 'https://example.org/objects/5',
+    });
 
     expect(heritageObject).not.toBeUndefined();
   });

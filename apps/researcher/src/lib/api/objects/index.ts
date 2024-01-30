@@ -1,4 +1,4 @@
-import {HeritageObjectFetcher} from './fetcher';
+import {GetByIdOptions, HeritageObjectFetcher} from './fetcher';
 import {ProvenanceEventsFetcher} from './provenance-events-fetcher';
 import {HeritageObjectSearcher, SearchOptions} from './searcher';
 import {z} from 'zod';
@@ -34,8 +34,8 @@ export class HeritageObjects {
     });
   }
 
-  async getById(id: string) {
-    return this.heritageObjectFetcher.getById(id);
+  async getById(options: GetByIdOptions) {
+    return this.heritageObjectFetcher.getById(options);
   }
 
   async getProvenanceEventsByHeritageObjectId(id: string) {

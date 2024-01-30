@@ -739,3 +739,39 @@ describe('search', () => {
     });
   });
 });
+
+describe('search with localized names', () => {
+  it('finds heritage objects with English names', async () => {
+    // Currently the only localized parts
+    const result = await heritageObjectSearcher.search({
+      locale: 'en',
+      filters: {
+        locations: ['Malaysia'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        locations: [{totalCount: 1, id: 'Malaysia', name: 'Malaysia'}],
+      },
+    });
+  });
+
+  it('finds heritage objects with Dutch names', async () => {
+    // Currently the only localized parts
+    const result = await heritageObjectSearcher.search({
+      locale: 'nl',
+      filters: {
+        locations: ['Maleisië'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 1,
+      filters: {
+        locations: [{totalCount: 1, id: 'Maleisië', name: 'Maleisië'}],
+      },
+    });
+  });
+});
