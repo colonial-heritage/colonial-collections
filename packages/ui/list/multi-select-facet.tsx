@@ -1,29 +1,22 @@
 'use client';
 
 import {FacetCheckBox, FacetTitle, FacetWrapper} from './base-facet';
-import {FacetVariant, SearchResultFilter} from './definitions';
+import {SearchResultFilter} from './definitions';
 
 interface Props {
   title: string;
   filters: SearchResultFilter[];
   filterKey: string;
   testId?: string;
-  variant?: FacetVariant;
 }
 
-export function MultiSelectFacet({
-  title,
-  filters,
-  filterKey,
-  testId,
-  variant,
-}: Props) {
+export function MultiSelectFacet({title, filters, filterKey, testId}: Props) {
   if (!filters.length) {
     return null;
   }
 
   return (
-    <FacetWrapper testId={testId} variant={variant}>
+    <FacetWrapper testId={testId}>
       <FacetTitle title={title} />
       {filters.map(searchResultFilter => (
         <FacetCheckBox
