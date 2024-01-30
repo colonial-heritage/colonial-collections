@@ -31,12 +31,12 @@ export function Paginator() {
             })}
           </p>
         </div>
-        <div className="flex flex-1 justify-between sm:justify-end">
+        <div className="flex flex-1 justify-between sm:justify-end gap-1">
           <button
             onClick={() => pageChange(-1)}
             disabled={offset <= 0}
             type="button"
-            className="relative inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium border-consortiumBlue-100 bg-consortiumBlue-800 text-consortiumBlue-100 hover:bg-consortiumBlue-600 hover:text-white"
+            className="rounded-l-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm text-center bg-consortiumBlue-100 text-consortiumBlue-800 hover:bg-consortiumBlue-800 hover:text-consortiumBlue-100 transition w-24"
           >
             {t('previous')}
           </button>
@@ -44,7 +44,7 @@ export function Paginator() {
             onClick={() => pageChange(1)}
             disabled={offset + limit >= totalCount}
             type="button"
-            className="relative ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium border-consortiumBlue-100 bg-consortiumBlue-800 text-consortiumBlue-100 hover:bg-consortiumBlue-600 hover:text-white"
+            className="rounded-r-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm text-center bg-neutral-100 text-neutral-600 w-24"
           >
             {t('next')}
           </button>

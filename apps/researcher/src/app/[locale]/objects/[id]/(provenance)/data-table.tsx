@@ -37,15 +37,15 @@ export default function DataTable() {
           {selectedEvents.length > 0 && (
             <button
               onClick={showAllClick}
-              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1 mr-2 whitespace-nowrap"
+              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumBlue-100 hover:bg-consortiumBlue-50 text-neutral-800 transition flex items-center gap-1 mr-2 whitespace-nowrap"
             >
               {t('showAll')}
             </button>
           )}
         </div>
       </div>
-      <div className="py-2 rounded bg-consortiumBlue-900">
-        <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-consortiumBlue-300 mb-4 text-consortiumBlue-100">
+      <div className="py-2 rounded bg-neutral-50">
+        <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-neutral-200 mb-4 text-neutral-600">
           <div className="w-full md:w-1/12">{t('id')}</div>
           <div className="w-full md:w-2/12">{t('type')}</div>
           <div className="w-full md:w-3/12">{t('transferredFrom')}</div>
@@ -77,15 +77,15 @@ function ProvenanceEventRow({
   const {setIsVisible, isVisible} = useSlideOut();
 
   return (
-    <div className="border-l-4 mb-16 border-consortiumBlue-950">
+    <div className="border-l-4 mb-16 border-neutral-400">
       <div className="mb-4 pl-4">
         <strong>{dateRange || t('noDate')}</strong>
       </div>
-      <ul className="flex flex-col border-t border-consortiumBlue-500">
+      <ul className="flex flex-col border-t border-neutral-200">
         {provenanceEvents.map(event => (
           <li
             key={event.id}
-            className="list-none pl-4 w-full text-sm md:text-base border-b border-consortiumBlue-700 hover:bg-consortiumBlue-600 hover:cursor-pointer"
+            className="list-none pl-4 w-full text-sm md:text-base border-b border-neutral-200 hover:bg-neutral-200 hover:cursor-pointer"
             onClick={() =>
               setIsVisible(
                 `eventDescription-${event.id}`,

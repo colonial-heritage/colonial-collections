@@ -18,10 +18,10 @@ export default async function Provenance({objectId}: {objectId: string}) {
           <h2 id="provenance" className="text-2xl mb-2 mt-20">
             {t('title')}
           </h2>
-          <p className="text-consortiumBlue-50 text-sm max-w-2xl mb-6">
+          <p className="text-neutral-600 text-sm max-w-2xl mb-6">
             {t('description')}
           </p>
-          <p className="text-consortiumBlue-50 text-sm max-w-2xl mb-6">
+          <p className="text-neutral-600 text-sm max-w-2xl mb-6">
             {t('noData')}
           </p>
         </div>
@@ -41,7 +41,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
           <h2 id="provenance" className="text-2xl mb-2 mt-20">
             {t('title')}
           </h2>
-          <p className="text-consortiumBlue-50 text-sm max-w-2xl mb-6">
+          <p className="text-neutral-600 text-sm max-w-2xl mb-6">
             {t('description')}
           </p>
           <div className="flex justify-between items-center my-6">

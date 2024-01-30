@@ -67,7 +67,7 @@ export default function Gallery({images, organizationName}: Props) {
               </SlideOver>
             </div>
             <div className="text-xs w-full p-2 flex flex-wrap justify-center gap-1 my-2">
-              <div className=" text-consortiumBlue-100">{t('license')}:</div>
+              <div className=" text-neutral-600">{t('license')}:</div>
               {image.license ? (
                 <a target="_blank" href={image.license.id}>
                   {image.license.name}
@@ -85,7 +85,7 @@ export default function Gallery({images, organizationName}: Props) {
       </Tab.Panels>
 
       {images.length > 1 && (
-        <Tab.List className="w-1/2 md:w-full grid grid-cols-2 md:flex md:flex-row md:flex-wrap md:items-end gap-2 md:py-2 md:border-y-4 border-consortiumBlue-800">
+        <Tab.List className="w-1/2 md:w-full grid grid-cols-2 md:flex md:flex-row md:flex-wrap md:items-end gap-2 md:py-2 md:border-y-4 border-white">
           {images.map(image => (
             <Tab
               as="div"
