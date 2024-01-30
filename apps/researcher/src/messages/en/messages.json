@@ -70,6 +70,8 @@
     "backButton": "Search",
     "noEntity": "Object could not be found",
     "object": "Object",
+    "providerCurrentHolder": "Data provider or current object holder",
+    "providerInfo": "More info",
     "contactInfo": "Contact info",
     "linkToWebsite": "Website",
     "linkToDataset": "More about the dataset",

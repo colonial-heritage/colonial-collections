@@ -70,6 +70,8 @@
     "backButton": "Zoeken",
     "noEntity": "Object kon niet gevonden worden",
     "object": "Object",
+    "providerCurrentHolder": "Data provider of huidig object bewaarder",
+    "providerInfo": "Meer info",
     "contactInfo": "Contact gegevens",
     "linkToWebsite": "Website",
     "linkToDataset": "Meer over de dataset",

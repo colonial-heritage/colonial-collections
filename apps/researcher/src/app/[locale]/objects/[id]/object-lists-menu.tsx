@@ -89,7 +89,7 @@ function CommunityMenuItems({
 
   if (!objectLists.length) {
     return (
-      <div className="px-4 py-2 text-sm text-gray-400 italic">
+      <div className="px-4 py-2 text-sm consortiumBlue-600 italic">
         {t('noListsInCommunity')}
       </div>
     );
@@ -101,7 +101,7 @@ function CommunityMenuItems({
         <Menu.Item key={objectList.id}>
           <button
             onClick={() => listClick(objectList)}
-            className="group flex items-center px-4 py-2 text-sm text-gray-700"
+            className="group flex items-center px-4 py-2 text-sm consortiumBlue-800"
           >
             <span className="mr-3 h-5 w-5 blueGrey-500 group-hover:blueGrey-700">
               {objectList.objects!.length ? (
@@ -133,10 +133,10 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="p-1 sm:py-2 sm:px-3 rounded-xl text-xs bg-greenGrey-100 text-greenGrey-800 flex items-center gap-1">
+        <Menu.Button className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 flex items-center gap-1">
           {t('addToListButton')}
           <ChevronDownIcon
-            className="-mr-1 h-5 w-5 text-gray-400"
+            className="-mr-1 h-5 w-5 text-consortiumBlue-800"
             aria-hidden="true"
           />
         </Menu.Button>
@@ -151,7 +151,7 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white text-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-consortiumGreen-300 text-consortiumBlue-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {communities.map(community => (
             <div key={community.id}>
               <div className="font-semibold px-2 pt-2">{community.name}</div>
