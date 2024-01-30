@@ -1,5 +1,5 @@
 import {useLocale} from 'next-intl';
-import {getFormatter, getTranslations} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
@@ -17,6 +17,7 @@ import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
 import Provenance from './(provenance)/overview';
+import {formatDate} from '@/lib/format-date';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,7 +30,6 @@ export default async function Details({params}: Props) {
   const object = await heritageObjects.getById({id});
   const locale = useLocale();
   const t = await getTranslations('ObjectDetails');
-  const format = await getFormatter();
 
   if (!object) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
@@ -172,7 +172,10 @@ export default async function Details({params}: Props) {
                       </div>
                       <div>
                         {object.dateCreated.startDate &&
-                          format.dateTime(object.dateCreated.startDate)}
+                          formatDate({
+                            date: object.dateCreated.startDate,
+                            locale,
+                          })}
                       </div>
                     </div>
                     <div>
@@ -181,7 +184,10 @@ export default async function Details({params}: Props) {
                       </div>
                       <div>
                         {object.dateCreated.startDate &&
-                          format.dateTime(object.dateCreated.startDate)}
+                          formatDate({
+                            date: object.dateCreated.startDate,
+                            locale,
+                          })}
                       </div>
                     </div>
                   </div>
