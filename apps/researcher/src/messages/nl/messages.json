@@ -185,10 +185,10 @@
     "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren."
   },
   "Sort": {
-    "dateCreatedDesc": "Datum gemaakt - Oplopend",
-    "dateCreatedAsc": "Datum gemaakt - Aflopend",
-    "nameAsc": "Naam - Oplopend",
+    "dateCreatedDesc": "Datum gemaakt - Aflopend",
+    "dateCreatedAsc": "Datum gemaakt - Oplopend",
     "nameDesc": "Naam - Aflopend",
+    "nameAsc": "Naam - Oplopend",
     "createdAtDesc": "Datum gemaakt",
     "membershipCountDesc": "Aantal leden",
     "accessibilitySelectToChangeOrder": "Selecteer om de volgorde van het resultaat te wijzigen"
