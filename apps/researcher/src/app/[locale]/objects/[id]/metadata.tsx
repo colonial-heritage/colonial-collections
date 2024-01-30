@@ -45,7 +45,7 @@ export function Metadata({
           </div>
         </div>
         {!children && metadataEnrichments.length === 0 ? (
-          <div className="text-neutral-600 italic w-full  py-6 text-sm">
+          <div className="text-neutral-600 italic w-full py-6 text-sm lg:w-2/3 border-t border-neutral-400">
             {t.rich('noData', {
               subject: () => (
                 <span className="lowercase">{t(translationKey)}</span>
