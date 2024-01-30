@@ -11,6 +11,10 @@
     "communitiesDescription": "Every culture can start its own community on this platform. A community can create lists of objects that tells stories about their history. Communities can also add narratives to the objects in this collection.",
     "communitiesLink": "Here are some communities to inspire you. Or <link>take a look at all the communities</link>."
   },
+  "ObjectSearch": {
+    "title": "Search for heritage objects",
+    "description": "Start by typing a keyword to search.\n\nAfter this initial text search, search facets will appear to refine yor search results."
+  },
   "ObjectSearchResults": {
     "title": "{totalDatasets, plural, =0 {0 Heritage Objects} =1 {1 Heritage Object} other {# Heritage Objects}}",
     "noResults": "There are no results",
@@ -26,6 +30,7 @@
   "Navigation": {
     "name": "app",
     "home": "Home",
+    "searchObjects": "Search objects",
     "about": "About",
     "faq": "FAQ",
     "contact": "Contact",

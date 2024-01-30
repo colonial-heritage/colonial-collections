@@ -84,6 +84,12 @@ export default function Navigation({datasetBrowserUrl}: Props) {
             {tNavigation('home')}
           </Link>
           <Link
+            href="/objects"
+            className="text-white font-semibold no-underline py-2 md:py-4 px-3 whitespace-nowrap"
+          >
+            {tNavigation('searchObjects')}
+          </Link>
+          <Link
             href="/communities"
             className="text-white font-semibold no-underline py-2 md:py-4 px-3 whitespace-nowrap"
           >
