@@ -7,6 +7,8 @@ export enum SortByUserOption {
   NameDesc = 'nameDesc',
 }
 
+export const defaultSortByUserOption = SortByUserOption.DateCreatedDesc;
+
 export const sortMapping = {
   [SortByUserOption.DateCreatedDesc]: {
     sortBy: SortBySearchOption.DateCreated,
