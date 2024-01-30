@@ -1,4 +1,5 @@
 import {
+  localeSchema,
   SearchResultFilter,
   SortBy,
   SortByEnum,
@@ -36,8 +37,8 @@ const sortByToRawKeys = new Map<string, string>([
   [SortBy.DateCreated, RawKeys.YearCreatedStart],
 ]);
 
-// TBD: add language option, for returning results in a specific locale (e.g. 'nl', 'en')
 const searchOptionsSchema = z.object({
+  locale: localeSchema,
   query: z.string().optional().default('*'), // If no query provided, match all
   offset: z.number().int().nonnegative().optional().default(0),
   limit: z.number().int().positive().optional().default(10),
@@ -147,10 +148,12 @@ export class HeritageObjectSearcher {
   }
 
   private buildRequest(options: SearchOptions) {
+    const locationKey = `${RawKeys.CountryCreated}_${options.locale}.keyword`;
+
     const aggregations = {
       types: this.buildAggregation(`${RawKeys.AdditionalType}.keyword`),
       subjects: this.buildAggregation(`${RawKeys.About}.keyword`),
-      locations: this.buildAggregation(`${RawKeys.CountryCreated}.keyword`),
+      locations: this.buildAggregation(locationKey),
       materials: this.buildAggregation(`${RawKeys.Material}.keyword`),
       creators: this.buildAggregation(`${RawKeys.Creator}.keyword`),
       publishers: this.buildAggregation(`${RawKeys.Publisher}.keyword`),
@@ -197,12 +200,12 @@ export class HeritageObjectSearcher {
     };
 
     const queryFilters: Map<string, string[] | undefined> = new Map([
-      [RawKeys.AdditionalType, options.filters?.types],
-      [RawKeys.About, options.filters?.subjects],
-      [RawKeys.CountryCreated, options.filters?.locations],
-      [RawKeys.Material, options.filters?.materials],
-      [RawKeys.Creator, options.filters?.creators],
-      [RawKeys.Publisher, options.filters?.publishers],
+      [`${RawKeys.AdditionalType}.keyword`, options.filters?.types],
+      [`${RawKeys.About}.keyword`, options.filters?.subjects],
+      [locationKey, options.filters?.locations],
+      [`${RawKeys.Material}.keyword`, options.filters?.materials],
+      [`${RawKeys.Creator}.keyword`, options.filters?.creators],
+      [`${RawKeys.Publisher}.keyword`, options.filters?.publishers],
     ]);
 
     for (const [rawHeritageObjectKey, filters] of queryFilters) {
@@ -210,7 +213,7 @@ export class HeritageObjectSearcher {
         const andFilters = filters.map(filter => {
           return {
             terms: {
-              [`${rawHeritageObjectKey}.keyword`]: [filter],
+              [rawHeritageObjectKey]: [filter],
             },
           };
         });
@@ -274,7 +277,10 @@ export class HeritageObjectSearcher {
     const ids = rawHeritageObjects.map(
       rawHeritageObject => rawHeritageObject['@id']
     );
-    const heritageObjects = await this.heritageObjectFetcher.getByIds(ids);
+    const heritageObjects = await this.heritageObjectFetcher.getByIds({
+      locale: options.locale,
+      ids,
+    });
 
     const typeFilters = this.buildFilters(aggregations.types.buckets);
     const subjectFilters = this.buildFilters(aggregations.subjects.buckets);

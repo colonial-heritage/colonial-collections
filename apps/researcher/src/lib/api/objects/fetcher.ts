@@ -1,4 +1,4 @@
-import {HeritageObject, Term} from '../definitions';
+import {localeSchema, HeritageObject, Term} from '../definitions';
 import {
   getPropertyValue,
   getPropertyValues,
@@ -27,6 +27,20 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
+const getByIdsOptionsSchema = z.object({
+  locale: localeSchema,
+  ids: z.array(z.string()),
+});
+
+export type GetByIdsOptions = z.input<typeof getByIdsOptionsSchema>;
+
+const getByIdOptionsSchema = z.object({
+  locale: localeSchema,
+  id: z.string(),
+});
+
+export type GetByIdOptions = z.input<typeof getByIdOptionsSchema>;
+
 export class HeritageObjectFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
@@ -37,8 +51,8 @@ export class HeritageObjectFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private async fetchTriples(iris: string[]) {
-    const heritageObjectIris = iris.map(iri => `<${iri}>`).join(EOL);
+  private async fetchTriples(options: GetByIdsOptions) {
+    const heritageObjectIris = options.ids.map(iri => `<${iri}>`).join(EOL);
 
     const query = `
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
@@ -244,12 +258,22 @@ export class HeritageObjectFetcher {
 
         OPTIONAL {
           ?object crm:P108i_was_produced_by/crm:P7_took_place_at ?locationCreated .
-          ?locationCreated gn:name ?locationCreatedName .
+
+          # Official name may not exist, see e.g. https://sws.geonames.org/3827414/
+          OPTIONAL {
+            ?locationCreated gn:officialName ?officialLocationCreatedName
+            FILTER(LANG(?officialLocationCreatedName) = "${options.locale}")
+          }
+
+          # Fallback to unofficial name if official name does not exist
+          ?locationCreated gn:name ?unofficialLocationCreatedName .
+          BIND(IF(BOUND(?officialLocationCreatedName), ?officialLocationCreatedName, ?unofficialLocationCreatedName) AS ?locationCreatedName)
 
           # Country of which the location is a part
           OPTIONAL {
             ?locationCreated gn:parentCountry ?countryCreated .
-            ?countryCreated gn:name ?countryCreatedName .
+            ?countryCreated gn:officialName ?countryCreatedName
+            FILTER(LANG(?countryCreatedName) = "${options.locale}")
           }
         }
 
@@ -404,26 +428,33 @@ export class HeritageObjectFetcher {
     return heritageObjects;
   }
 
-  async getByIds(ids: string[]) {
-    if (ids.length === 0) {
+  async getByIds(options: GetByIdsOptions) {
+    const opts = getByIdsOptionsSchema.parse(options);
+
+    if (opts.ids.length === 0) {
       return [];
     }
 
-    const triplesStream = await this.fetchTriples(ids);
+    const triplesStream = await this.fetchTriples(opts);
     const heritageObjects = await this.fromTriplesToHeritageObjects(
-      ids,
+      opts.ids,
       triplesStream
     );
 
     return heritageObjects;
   }
 
-  async getById(id: string) {
-    if (!isIri(id)) {
+  async getById(options: GetByIdOptions) {
+    const opts = getByIdOptionsSchema.parse(options);
+
+    if (!isIri(opts.id)) {
       return undefined;
     }
 
-    const heritageObjects = await this.getByIds([id]);
+    const heritageObjects = await this.getByIds({
+      locale: opts.locale,
+      ids: [opts.id],
+    });
 
     if (heritageObjects.length !== 1) {
       return undefined;

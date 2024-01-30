@@ -12,24 +12,23 @@ beforeEach(() => {
 
 describe('getByIds', () => {
   it('returns empty list if no IDs were provided', async () => {
-    const heritageObjects = await heritageObjectFetcher.getByIds([]);
+    const heritageObjects = await heritageObjectFetcher.getByIds({ids: []});
 
     expect(heritageObjects).toEqual([]);
   });
 
   it('returns empty list if no heritage objects match the IDs', async () => {
-    const heritageObjects = await heritageObjectFetcher.getByIds([
-      'https://unknown.org/',
-    ]);
+    const heritageObjects = await heritageObjectFetcher.getByIds({
+      ids: ['https://unknown.org/'],
+    });
 
     expect(heritageObjects).toEqual([]);
   });
 
   it('returns the heritage objects that match the IDs', async () => {
-    const heritageObjects = await heritageObjectFetcher.getByIds([
-      'https://example.org/objects/1',
-      'https://example.org/objects/5',
-    ]);
+    const heritageObjects = await heritageObjectFetcher.getByIds({
+      ids: ['https://example.org/objects/1', 'https://example.org/objects/5'],
+    });
 
     expect(heritageObjects).toMatchObject([
       {
@@ -44,23 +43,25 @@ describe('getByIds', () => {
 
 describe('getById', () => {
   it('returns undefined if a malformed ID is used', async () => {
-    const heritageObject = await heritageObjectFetcher.getById('malformedID');
+    const heritageObject = await heritageObjectFetcher.getById({
+      id: 'malformedID',
+    });
 
     expect(heritageObject).toBeUndefined();
   });
 
   it('returns undefined if no heritage object matches the ID', async () => {
-    const heritageObject = await heritageObjectFetcher.getById(
-      'https://unknown.org/'
-    );
+    const heritageObject = await heritageObjectFetcher.getById({
+      id: 'https://unknown.org/',
+    });
 
     expect(heritageObject).toBeUndefined();
   });
 
   it('returns the heritage object that matches the ID', async () => {
-    const heritageObject = await heritageObjectFetcher.getById(
-      'https://example.org/objects/5'
-    );
+    const heritageObject = await heritageObjectFetcher.getById({
+      id: 'https://example.org/objects/5',
+    });
 
     expect(heritageObject).toStrictEqual({
       id: 'https://example.org/objects/5',
@@ -166,6 +167,71 @@ describe('getById', () => {
           name: 'Museum',
         },
       },
+    });
+  });
+
+  it('returns a heritage object with default names', async () => {
+    const heritageObject = await heritageObjectFetcher.getById({
+      id: 'https://example.org/objects/2',
+    });
+
+    // Currently the only localized parts
+    expect(heritageObject).toMatchObject({
+      id: 'https://example.org/objects/2',
+      locationsCreated: expect.arrayContaining([
+        {
+          id: 'https://sws.geonames.org/1642911/',
+          name: 'Jakarta',
+          isPartOf: {
+            id: 'https://sws.geonames.org/1643084/',
+            name: 'Indonesia',
+          },
+        },
+      ]),
+    });
+  });
+
+  it('returns a heritage object with English names', async () => {
+    const heritageObject = await heritageObjectFetcher.getById({
+      locale: 'en',
+      id: 'https://example.org/objects/2',
+    });
+
+    // Currently the only localized parts
+    expect(heritageObject).toMatchObject({
+      id: 'https://example.org/objects/2',
+      locationsCreated: expect.arrayContaining([
+        {
+          id: 'https://sws.geonames.org/1642911/',
+          name: 'Jakarta',
+          isPartOf: {
+            id: 'https://sws.geonames.org/1643084/',
+            name: 'Indonesia',
+          },
+        },
+      ]),
+    });
+  });
+
+  it('returns a heritage object with Dutch names', async () => {
+    const heritageObject = await heritageObjectFetcher.getById({
+      locale: 'nl',
+      id: 'https://example.org/objects/2',
+    });
+
+    // Currently the only localized parts
+    expect(heritageObject).toMatchObject({
+      id: 'https://example.org/objects/2',
+      locationsCreated: expect.arrayContaining([
+        {
+          id: 'https://sws.geonames.org/1642911/',
+          name: 'Jakarta',
+          isPartOf: {
+            id: 'https://sws.geonames.org/1643084/',
+            name: 'Republiek Indonesië',
+          },
+        },
+      ]),
     });
   });
 });
