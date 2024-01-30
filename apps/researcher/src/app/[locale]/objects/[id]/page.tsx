@@ -1,4 +1,4 @@
-import {useLocale, useTranslations} from 'next-intl';
+import {useLocale} from 'next-intl';
 import {getFormatter, getTranslations} from 'next-intl/server';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
