@@ -1,7 +1,11 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
 import {getTranslations} from 'next-intl/server';
 import HeritageObjectList from './heritage-object-list';
-import {SortByUserOption, sortMapping} from './sort-mapping';
+import {
+  SortByUserOption,
+  defaultSortByUserOption,
+  sortMapping,
+} from './sort-mapping';
 import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
@@ -173,6 +177,8 @@ export default async function SearchResults({searchParams = {}}: Props) {
               query: searchOptions.query ?? '',
               sortBy,
               selectedFilters: searchOptions.filters,
+              baseUrl: '/objects',
+              defaultSortBy: defaultSortByUserOption,
             }}
           />
           <aside

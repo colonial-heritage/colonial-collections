@@ -60,6 +60,8 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
           query: query ?? '',
           sortBy,
           selectedFilters: {onlyMyCommunities},
+          baseUrl: '/communities',
+          defaultSortBy: SortBy.NameAsc,
         }}
       />
       <div className="flex flex-col sm:flex-row justify-between items-center h-full gap-6 w-full max-w-[1800px] mx-auto px-4 sm:px-10 pt-6">

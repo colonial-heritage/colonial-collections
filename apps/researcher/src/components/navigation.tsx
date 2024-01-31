@@ -9,6 +9,7 @@ import {ConsortiumLogo} from '@colonial-collections/ui/branding';
 import {NavigationMenu} from '@colonial-collections/ui';
 import logoImage from '@colonial-collections/ui/branding/colonial-collections-consortium.png';
 import {useMemo} from 'react';
+import ToFilteredListButton from './to-filtered-list-button';
 
 interface Props {
   datasetBrowserUrl: string;
@@ -83,18 +84,18 @@ export default function Navigation({datasetBrowserUrl}: Props) {
           >
             {tNavigation('home')}
           </Link>
-          <Link
-            href="/objects"
+          <ToFilteredListButton
+            baseUrl="/objects"
             className="text-white font-semibold no-underline py-2 md:py-4 px-3 whitespace-nowrap"
           >
             {tNavigation('searchObjects')}
-          </Link>
-          <Link
-            href="/communities"
+          </ToFilteredListButton>
+          <ToFilteredListButton
+            baseUrl="/communities"
             className="text-white font-semibold no-underline py-2 md:py-4 px-3 whitespace-nowrap"
           >
             {tNavigation('communities')}
-          </Link>
+          </ToFilteredListButton>
           <NavigationMenu
             buttonText={tNavigation('subMenuButton')}
             menuItems={subMenuItems}

@@ -62,7 +62,10 @@ export default async function Details({params}: Props) {
         <div className="bg-consortiumBlue-800 text-white w-full">
           <div className="px-4 sm:px-10 flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto pt-10">
             <div>
-              <ToFilteredListButton className="no-underline rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumBlue-100 text-consortiumBlue-800 flex gap-1 items-center">
+              <ToFilteredListButton
+                baseUrl="/objects"
+                className="no-underline rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumBlue-100 text-consortiumBlue-800 flex gap-1 items-center"
+              >
                 <ChevronLeftIcon className="w-4 h-4 fill-consortiumBlue-800" />
                 {t('backButton')}
               </ToFilteredListButton>
