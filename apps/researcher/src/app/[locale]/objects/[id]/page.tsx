@@ -17,7 +17,7 @@ import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
 import Provenance from './(provenance)/overview';
-import {formatDate} from '@/lib/format-date';
+import {getDateFormatter} from '@/lib/get-format-date';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,6 +30,7 @@ export default async function Details({params}: Props) {
   const object = await heritageObjects.getById({id});
   const locale = useLocale();
   const t = await getTranslations('ObjectDetails');
+  const formatDate = await getDateFormatter();
 
   if (!object) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
@@ -172,10 +173,7 @@ export default async function Details({params}: Props) {
                       </div>
                       <div>
                         {object.dateCreated.startDate &&
-                          formatDate({
-                            date: object.dateCreated.startDate,
-                            locale,
-                          })}
+                          formatDate(object.dateCreated.startDate)}
                       </div>
                     </div>
                     <div>
@@ -183,11 +181,8 @@ export default async function Details({params}: Props) {
                         {t('endOfRange')}
                       </div>
                       <div>
-                        {object.dateCreated.startDate &&
-                          formatDate({
-                            date: object.dateCreated.startDate,
-                            locale,
-                          })}
+                        {object.dateCreated.endDate &&
+                          formatDate(object.dateCreated.endDate)}
                       </div>
                     </div>
                   </div>

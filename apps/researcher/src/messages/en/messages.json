@@ -1,4 +1,7 @@
 {
+  "FormatDate": {
+    "beforeCommonEraFormat": "{date, date, ::yyyy} BCE"
+  },
   "Meta": {
     "title": "Research app"
   },

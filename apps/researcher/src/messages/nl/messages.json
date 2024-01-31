@@ -2,6 +2,9 @@
   "Meta": {
     "title": "Research app"
   },
+  "FormatDate": {
+    "beforeCommonEraFormat": "{date, date, ::yyyy} v.Chr."
+  },
   "Home": {
     "title": "Koloniale Collecties Datahub",
     "description": "De Koloniale Collecties Datahub is een plek om objecten te verkennen die hun oorsprong hebben in voormalige Nederlandse koloniale landen zoals Suriname, Indonesië, Sri Lanka, Zuid-Afrika, Aruba, Curaçao, Sint Maarten en vele andere landen en gebieden.",
