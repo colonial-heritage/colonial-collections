@@ -121,7 +121,7 @@ export async function MetadataEntry({
         className={classNames(
           'px-2 py-3 text-xs my-1 self-start w-full lg:w-1/3',
           {
-            'text-white': isCurrentPublisher,
+            'text-neutral-900 border-l': isCurrentPublisher,
             'bg-consortiumGreen-100 text-consortiumBlue-800 rounded':
               !isCurrentPublisher,
           }
@@ -173,7 +173,7 @@ export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
       <div className="flex justify-end text-consortiumBlue-800">
         <SlideOutButton
           id={`${enrichmentType}-form`}
-          className="py-2 px-3 transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 hover:bg-white text-consortiumBlue-800"
+          className="py-2 px-3 transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 hover:bg-consortiumGreen-200 text-consortiumBlue-800"
         >
           <>
             {t.rich('addUserEnrichmentButton', {
