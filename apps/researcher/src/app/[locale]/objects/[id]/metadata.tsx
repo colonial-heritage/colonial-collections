@@ -45,7 +45,7 @@ export function Metadata({
           </div>
         </div>
         {!children && metadataEnrichments.length === 0 ? (
-          <div className="text-neutral-600 italic w-full py-6 text-sm lg:w-2/3 border-t border-neutral-400">
+          <div className="text-neutral-600 italic w-full py-6 text-sm xl:w-4/5 border-t border-neutral-400">
             {t.rich('noData', {
               subject: () => (
                 <span className="lowercase">{t(translationKey)}</span>
@@ -109,7 +109,7 @@ export async function MetadataEntry({
 
   return (
     <div className="border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-2 first:border-0 ">
-      <div className="w-full lg:w-2/3 py-3 px-2">
+      <div className="w-full lg:w-2/3 py-3">
         {children}
         {languageCode && (
           <div className="text-xs font-normal text-neutral-600">
