@@ -17,7 +17,7 @@ import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
 import Provenance from './(provenance)/overview';
-import {LocaleEnum} from '@/navigation';
+import {LocaleEnum} from '@/definitions';
 
 export const dynamic = 'force-dynamic';
 

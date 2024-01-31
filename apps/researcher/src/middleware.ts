@@ -1,6 +1,7 @@
 import createIntlMiddleware from 'next-intl/middleware';
 import {authMiddleware} from '@clerk/nextjs';
-import {locales, LocaleEnum} from './navigation';
+import {locales} from './navigation';
+import {LocaleEnum} from '@/definitions';
 
 export const config = {
   // Skip all internal paths

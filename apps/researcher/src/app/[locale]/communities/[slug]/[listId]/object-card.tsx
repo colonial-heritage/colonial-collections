@@ -1,7 +1,7 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
 import HeritageObjectCard from '@/app/[locale]/objects/heritage-object-card';
 import {useLocale} from 'next-intl';
-import {LocaleEnum} from '@/navigation';
+import {LocaleEnum} from '@/definitions';
 
 interface Props {
   objectIri: string;

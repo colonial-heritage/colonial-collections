@@ -1,5 +1,5 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
-import {LocaleEnum} from '@/navigation';
+import {LocaleEnum} from '@/definitions';
 import {useLocale} from 'next-intl';
 
 interface Props {

@@ -31,7 +31,8 @@ import {
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from '@/components/list-store-updater';
-import {LocaleEnum, redirect} from '@/navigation';
+import {redirect} from '@/navigation';
+import {LocaleEnum} from '@/definitions';
 import {useLocale} from 'next-intl';
 
 // Revalidate the page every n seconds
