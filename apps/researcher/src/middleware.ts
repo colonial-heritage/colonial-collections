@@ -1,6 +1,7 @@
 import createIntlMiddleware from 'next-intl/middleware';
 import {authMiddleware} from '@clerk/nextjs';
 import {locales} from './navigation';
+import {LocaleEnum} from '@/definitions';
 
 export const config = {
   // Skip all internal paths
@@ -15,7 +16,7 @@ export const config = {
 // to components.
 const handleI18nRouting = createIntlMiddleware({
   locales,
-  defaultLocale: 'en',
+  defaultLocale: LocaleEnum.En,
 });
 
 export default authMiddleware({

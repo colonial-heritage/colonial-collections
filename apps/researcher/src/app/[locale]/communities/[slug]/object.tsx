@@ -1,11 +1,14 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
+import {LocaleEnum} from '@/definitions';
+import {useLocale} from 'next-intl';
 
 interface Props {
   objectIri: string;
 }
 
 export default async function ObjectCard({objectIri}: Props) {
-  const object = await heritageObjects.getById({id: objectIri});
+  const locale = useLocale() as LocaleEnum;
+  const object = await heritageObjects.getById({id: objectIri, locale});
 
   if (!object) {
     return null;

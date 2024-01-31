@@ -32,6 +32,8 @@ import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from '@/components/list-store-updater';
 import {redirect} from '@/navigation';
+import {LocaleEnum} from '@/definitions';
+import {useLocale} from 'next-intl';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -133,6 +135,8 @@ export default async function SearchResults({searchParams = {}}: Props) {
     searchParams,
   });
 
+  const locale = useLocale() as LocaleEnum;
+
   const sortBy = getClientSortBy({
     sortMapping,
     sortPair: {
@@ -144,7 +148,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
   let hasError;
   let searchResult: SearchResult | undefined;
   try {
-    searchResult = await heritageObjects.search(searchOptions);
+    searchResult = await heritageObjects.search({...searchOptions, locale});
   } catch (err) {
     hasError = true;
     console.error(err);
