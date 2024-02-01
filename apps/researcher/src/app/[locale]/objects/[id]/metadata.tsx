@@ -45,7 +45,7 @@ export function Metadata({
           </div>
         </div>
         {!children && metadataEnrichments.length === 0 ? (
-          <div className="text-neutral-600 italic w-full  py-6 text-sm">
+          <div className="text-neutral-600 italic w-full py-6 text-sm xl:w-4/5 border-t border-neutral-400">
             {t.rich('noData', {
               subject: () => (
                 <span className="lowercase">{t(translationKey)}</span>
@@ -109,7 +109,7 @@ export async function MetadataEntry({
 
   return (
     <div className="border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-2 first:border-0 ">
-      <div className="w-full lg:w-2/3 py-3 px-2">
+      <div className="w-full lg:w-2/3 py-3">
         {children}
         {languageCode && (
           <div className="text-xs font-normal text-neutral-600">
@@ -121,7 +121,7 @@ export async function MetadataEntry({
         className={classNames(
           'px-2 py-3 text-xs my-1 self-start w-full lg:w-1/3',
           {
-            'text-white': isCurrentPublisher,
+            'text-neutral-900 border-l': isCurrentPublisher,
             'bg-consortiumGreen-100 text-consortiumBlue-800 rounded':
               !isCurrentPublisher,
           }
@@ -173,7 +173,7 @@ export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
       <div className="flex justify-end text-consortiumBlue-800">
         <SlideOutButton
           id={`${enrichmentType}-form`}
-          className="py-2 px-3 transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 hover:bg-white text-consortiumBlue-800"
+          className="py-2 px-3 transition flex items-center gap-1 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 hover:bg-consortiumGreen-200 text-consortiumBlue-800"
         >
           <>
             {t.rich('addUserEnrichmentButton', {

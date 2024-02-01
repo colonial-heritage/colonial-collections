@@ -18,6 +18,7 @@ import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
 import Provenance from './(provenance)/overview';
 import {formatDate} from '@/lib/date-formatter';
+import {LocaleEnum} from '@/definitions';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,8 +28,8 @@ interface Props {
 
 export default async function Details({params}: Props) {
   const id = decodeRouteSegment(params.id);
-  const object = await heritageObjects.getById({id});
-  const locale = useLocale();
+  const locale = useLocale() as LocaleEnum;
+  const object = await heritageObjects.getById({id, locale});
   const t = await getTranslations('ObjectDetails');
 
   if (!object) {
