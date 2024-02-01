@@ -18,8 +18,15 @@ export async function formatDate(date?: Date) {
   const isBCE = date.getFullYear() < 0;
 
   if (isBCE) {
-    // For dates before 0, we don't want to show the default 'BC' era label.
-    // Instead, we want to show the date with the 'BCE' label.
+    /*
+    For dates before 0, the default era label in English is the Christian label 'BC'.
+    If languages contain a more inclusive label, we want to use that instead.
+    Define custom formats for BCE dates in the translation file.
+    For English: Follow the BBC. The BBC uses 'BCE' (Before Common Era)
+    and 'CE' (Common Era) instead.
+    For Dutch: Follow the NOS. The NOS uses the labels 'v.Chr.' (voor Christus)
+    and 'n.Chr.' (na Christus).
+    */
     return t('beforeCommonEraFormat', {date});
   }
 
