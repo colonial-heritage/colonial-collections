@@ -70,7 +70,7 @@ export default function Gallery({images, organizationName}: Props) {
               <div className=" text-neutral-600">{t('license')}:</div>
               {image.license ? (
                 <a target="_blank" href={image.license.id}>
-                  {image.license.name}
+                  {image.license.name || image.license.id}
                 </a>
               ) : (
                 <p>
