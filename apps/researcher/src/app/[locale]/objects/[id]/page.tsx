@@ -17,7 +17,7 @@ import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
 import Provenance from './(provenance)/overview';
-import {getDateFormatter} from '@/lib/get-format-date';
+import {formatDate} from '@/lib/date-formatter';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,7 +30,6 @@ export default async function Details({params}: Props) {
   const object = await heritageObjects.getById({id});
   const locale = useLocale();
   const t = await getTranslations('ObjectDetails');
-  const formatDate = await getDateFormatter();
 
   if (!object) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
