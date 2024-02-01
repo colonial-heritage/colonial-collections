@@ -109,7 +109,7 @@ export async function MetadataEntry({
 
   return (
     <div className="border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-2 first:border-0 ">
-      <div className="w-full lg:w-2/3 py-3">
+      <div className="w-full lg:w-2/3 py-3 whitespace-pre-wrap">
         {children}
         {languageCode && (
           <div className="text-xs font-normal text-neutral-600">
