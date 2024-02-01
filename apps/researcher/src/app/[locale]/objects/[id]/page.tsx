@@ -173,7 +173,7 @@ export default async function Details({params}: Props) {
                       </div>
                       <div>
                         {object.dateCreated.startDate &&
-                          formatDate(object.dateCreated.startDate)}
+                          (await formatDate(object.dateCreated.startDate))}
                       </div>
                     </div>
                     <div>
@@ -182,7 +182,7 @@ export default async function Details({params}: Props) {
                       </div>
                       <div>
                         {object.dateCreated.endDate &&
-                          formatDate(object.dateCreated.endDate)}
+                          (await formatDate(object.dateCreated.endDate))}
                       </div>
                     </div>
                   </div>

@@ -18,20 +18,20 @@ jest.mock('next-intl/server', () => ({
 describe('getDateFormatter', () => {
   it('formats date correctly', async () => {
     const date = new Date('2022-01-01');
-    const formattedDate = formatDate(date);
+    const formattedDate = await formatDate(date);
 
     expect(formattedDate).toBe('Jan 1, 2022');
   });
 
   it('returns undefined for empty date', async () => {
-    const formattedDate = formatDate(undefined);
+    const formattedDate = await formatDate(undefined);
 
     expect(formattedDate).toBeUndefined();
   });
 
   it('formats BCE date correctly', async () => {
     const date = new Date('-001000-01-01');
-    const formattedDate = formatDate(date);
+    const formattedDate = await formatDate(date);
 
     expect(formattedDate).toBe('1001 BCE');
   });
