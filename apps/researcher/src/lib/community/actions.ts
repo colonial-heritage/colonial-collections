@@ -64,6 +64,7 @@ interface GetCommunitiesProps {
   sortBy?: SortBy;
   limit?: number;
   offset?: number;
+  includeMembersCount?: boolean;
 }
 
 export async function getCommunities({
@@ -71,12 +72,13 @@ export async function getCommunities({
   sortBy = defaultSortBy,
   limit,
   offset = 0,
+  includeMembersCount = false,
 }: GetCommunitiesProps = {}) {
   const organizations = await clerkClient.organizations.getOrganizationList({
     limit,
     offset,
     query,
-    includeMembersCount: true,
+    includeMembersCount,
   });
 
   const communities = organizations.map(organizationToCommunity);
@@ -88,6 +90,7 @@ export async function getMyCommunities({
   sortBy = defaultSortBy,
   limit,
   offset = 0,
+  includeMembersCount = false,
 }: GetCommunitiesProps = {}) {
   noStore();
   const {userId} = await auth();
@@ -101,7 +104,21 @@ export async function getMyCommunities({
 
   const organizations = memberships.map(membership => membership.organization);
 
-  const communities = organizations.map(organizationToCommunity);
+  const communities = await Promise.all(
+    organizations.map(async organization => {
+      if (includeMembersCount) {
+        const members =
+          await clerkClient.organizations.getOrganizationMembershipList({
+            organizationId: organization.id,
+          });
+        return organizationToCommunity({
+          ...organization,
+          members_count: members.length,
+        });
+      }
+      return organizationToCommunity(organization);
+    })
+  );
 
   return sort(communities, sortBy);
 }
