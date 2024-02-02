@@ -1,4 +1,4 @@
-import {formatDate} from './date-formatter';
+import {getFormatDate} from './date-formatter';
 import {describe, expect, it} from '@jest/globals';
 import {createTranslator} from 'next-intl';
 
@@ -15,23 +15,26 @@ jest.mock('next-intl/server', () => ({
   getLocale: async () => new Promise(resolve => resolve('en')),
 }));
 
-describe('getDateFormatter', () => {
+describe('getFormatDate', () => {
   it('formats date correctly', async () => {
+    const formatDate = await getFormatDate();
     const date = new Date('2022-01-01');
-    const formattedDate = await formatDate(date);
+    const formattedDate = formatDate(date);
 
     expect(formattedDate).toBe('Jan 1, 2022');
   });
 
   it('returns undefined for empty date', async () => {
-    const formattedDate = await formatDate(undefined);
+    const formatDate = await getFormatDate();
+    const formattedDate = formatDate(undefined);
 
     expect(formattedDate).toBeUndefined();
   });
 
   it('formats BCE date correctly', async () => {
+    const formatDate = await getFormatDate();
     const date = new Date('-001000-01-01');
-    const formattedDate = await formatDate(date);
+    const formattedDate = formatDate(date);
 
     expect(formattedDate).toBe('1001 BCE');
   });
