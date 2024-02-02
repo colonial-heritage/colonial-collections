@@ -11,17 +11,15 @@
     "communitiesDescription": "Elke gemeenschap kan haar eigen community starten op dit platform. Een community kan lijsten met objecten maken die verhalen vertellen over hun geschiedenis. Communities kunnen ook verhalen toevoegen aan de objecten in deze collectie.",
     "communitiesLink": "Hier zijn enkele communities om je te inspireren. Of <link>bekijk alle communities</link>."
   },
-  "Signup": {
-    "title": "Maak een account aan",
-    "WhyH2": "Waarom een account aanmaken?",
-    "WhyP1": "Een account geeft je toegang tot meer functionaliteiten in de website. Zo kun je bijvoorbeeld je eigen verhaal aan een object koppellen, gebruik maken van communities en lijsten maken om je objecten te beheren. De belangrijkste reden om een account aan te maken is dat we willen weten wie er data toevoegd. Hierdoor proberen anoniem spammen te voorkomen.",
-    "WhatH2": "Wat kan ik doen met een account?",
-    "AddH3": "Voeg je eigen verhaal aan een objects",
-    "AddP1": "Een van de belangrijkste functionaliteiten van deze site is het toegoegen van je eigen verhaal aan objecten. Zo kunnen gebruikers bijvoorbeeld vertellen hoe objecten in het verleden werden gebruikt of het object vertalen in hun eigen taal.",
-    "NoteBold": "Let op:",
-    "NoteText": "Om een verhaal toe te voegen moet je gebruik maken van een Google, Facebook of LinkedIn account.",
-    "UseH3": "Gebruik van communities",
-    "UseP": "Communities zijn groepen mensen die een specifieke cultuur of een geografisch gebied representeren. Iedereen kan lid worden van een communitie. Je kunt ook je eigen communitie aanmaken."
+  "SignUp": {
+    "pageTitle": "Maak een account aan",
+    "whyTitle": "Waarom een account aanmaken?",
+    "whyText": "Een account geeft je toegang tot meer functionaliteiten op de website. Zo kun je bijvoorbeeld je eigen verhalen koppelen aan objecten, deelnemen aan communities en lijsten maken om je objecten te beheren. De belangrijkste reden om een account aan te maken is dat we willen weten wie er data toevoegt. Dit helpt ons anoniem spammen te voorkomen.",
+    "whatTitle": "Wat kan ik doen met een account?",
+    "addTitle": "Voeg je eigen verhaal toe aan objecten",
+    "addText": "Een van de belangrijkste functionaliteiten van deze site is het toevoegen van je eigen verhalen aan objecten. Gebruikers kunnen bijvoorbeeld vertellen hoe objecten gebruikt werden of het object benoemen in hun eigen taal.\n\n<important>Let op:</important> Om een verhaal toe te voegen, moet je een account aanmaken via Google, Facebook of LinkedIn.",
+    "useTitle": "Deelnemen aan communities",
+    "useText": "Communities zijn groepen mensen die een specifieke cultuur of geografisch gebied vertegenwoordigen. Iedereen met een account kan lid worden van een community. Je kunt ook je eigen community aanmaken."
   },
   "ObjectSearch": {
     "title": "Zoek naar erfgoedobjecten",
