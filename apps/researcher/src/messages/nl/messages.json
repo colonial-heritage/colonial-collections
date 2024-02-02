@@ -11,6 +11,10 @@
     "communitiesDescription": "Elke gemeenschap kan haar eigen community starten op dit platform. Een community kan lijsten met objecten maken die verhalen vertellen over hun geschiedenis. Communities kunnen ook verhalen toevoegen aan de objecten in deze collectie.",
     "communitiesLink": "Hier zijn enkele communities om je te inspireren. Of <link>bekijk alle communities</link>."
   },
+  "ObjectSearch": {
+    "title": "Zoek naar erfgoedobjecten",
+    "description": "Begin met zoeken door een trefwoord te typen.\n\nNa deze eerste tekstzoekopdracht verschijnen zoekfacetten om uw zoekresultaten te verfijnen."
+  },
   "ObjectSearchResults": {
     "title": "{totalDatasets, plural, =0 {0 Objecten} =1 {1 Object} other {# Objecten}}",
     "noResults": "Er zijn geen resultaten",
@@ -26,6 +30,7 @@
   "Navigation": {
     "name": "app",
     "home": "Home",
+    "searchObjects": "Objecten zoeken",
     "about": "Over de app",
     "faq": "FAQ",
     "contact": "Contact",

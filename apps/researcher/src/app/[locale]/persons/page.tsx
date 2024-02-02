@@ -4,6 +4,7 @@ import {getTranslations} from 'next-intl/server';
 import PersonList from './person-list';
 import {sortMapping} from './sort-mapping';
 import {
+  defaultSortBy,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   Type as SearchParamType,
@@ -157,6 +158,8 @@ export default async function Home({searchParams = {}}: Props) {
                     query: searchOptions.query ?? '',
                     sortBy,
                     selectedFilters: searchOptions.filters,
+                    baseUrl: '/persons',
+                    defaultSortBy: defaultSortBy,
                   }}
                 />
                 <aside

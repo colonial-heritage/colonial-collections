@@ -72,7 +72,10 @@ export default async function CommunityPage({params}: Props) {
     <>
       <div className="px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
         <div>
-          <ToFilteredListButton className="flex items-center gap-1 no-underline">
+          <ToFilteredListButton
+            baseUrl="/communities"
+            className="flex items-center gap-1 no-underline"
+          >
             <ChevronLeftIcon className="w-4 h-4 fill-neutral-500" />
             {t('backButton')}
           </ToFilteredListButton>
