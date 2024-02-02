@@ -9,6 +9,5 @@ export function saveLastSearch(baseUrl: string, urlWithSearchParams: string) {
 }
 
 export function getLastSearch(baseUrl: string) {
-  console.log(useLastSearch.getState().lists.keys());
   return useLastSearch.getState().lists.get(baseUrl) || baseUrl;
 }
