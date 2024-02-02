@@ -107,14 +107,19 @@ export async function getMyCommunities({
   const communities = await Promise.all(
     organizations.map(async organization => {
       if (includeMembersCount) {
-        const members =
-          await clerkClient.organizations.getOrganizationMembershipList({
-            organizationId: organization.id,
+        try {
+          const members =
+            await clerkClient.organizations.getOrganizationMembershipList({
+              organizationId: organization.id,
+            });
+          return organizationToCommunity({
+            ...organization,
+            members_count: members.length,
           });
-        return organizationToCommunity({
-          ...organization,
-          members_count: members.length,
-        });
+        } catch (error) {
+          console.error('Error fetching members count', error);
+          return organizationToCommunity(organization);
+        }
       }
       return organizationToCommunity(organization);
     })
