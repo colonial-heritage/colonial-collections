@@ -44,7 +44,10 @@ export default async function Details({params}: Props) {
 
   let organization;
   if (object.isPartOf?.publisher?.id) {
-    organization = await organizations.getById(object.isPartOf.publisher.id);
+    organization = await organizations.getById({
+      id: object.isPartOf.publisher.id,
+      locale,
+    });
     organization && useObject.setState({organization});
   }
 

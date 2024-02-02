@@ -90,11 +90,7 @@ describe('search', () => {
           isPartOf: {
             id: 'https://example.org/datasets/10',
             name: 'Dataset 10',
-            publisher: {
-              id: 'https://library.example.org/',
-              type: 'Organization',
-              name: 'Library',
-            },
+            publisher: undefined,
           },
         },
         {
@@ -151,7 +147,7 @@ describe('search', () => {
             publisher: {
               id: 'https://museum.example.org/',
               type: 'Organization',
-              name: 'Museum',
+              name: 'The Museum',
             },
           },
         },
@@ -339,7 +335,7 @@ describe('search', () => {
             publisher: {
               id: 'https://museum.example.org/',
               type: 'Organization',
-              name: 'Museum',
+              name: 'The Museum',
             },
           },
         },
@@ -351,7 +347,7 @@ describe('search', () => {
             publisher: {
               id: 'https://museum.example.org/',
               type: 'Organization',
-              name: 'Museum',
+              name: 'The Museum',
             },
           },
         },
@@ -455,8 +451,8 @@ describe('search', () => {
         publishers: [
           {
             totalCount: 3,
-            id: 'Museum',
-            name: 'Museum',
+            id: 'The Museum',
+            name: 'The Museum',
           },
           {
             totalCount: 1,
@@ -630,7 +626,7 @@ describe('search', () => {
   it('finds heritage objects if "publishers" filter matches', async () => {
     const result = await heritageObjectSearcher.search({
       filters: {
-        publishers: ['Museum'],
+        publishers: ['The Museum'],
       },
     });
 
@@ -640,8 +636,8 @@ describe('search', () => {
         publishers: [
           {
             totalCount: 3,
-            id: 'Museum',
-            name: 'Museum',
+            id: 'The Museum',
+            name: 'The Museum',
           },
         ],
       },
@@ -754,6 +750,13 @@ describe('search with localized names', () => {
       totalCount: 1,
       filters: {
         locations: [{totalCount: 1, id: 'Malaysia', name: 'Malaysia'}],
+        publishers: [
+          {
+            totalCount: 1,
+            id: 'The Museum',
+            name: 'The Museum',
+          },
+        ],
       },
     });
   });
@@ -771,6 +774,13 @@ describe('search with localized names', () => {
       totalCount: 1,
       filters: {
         locations: [{totalCount: 1, id: 'Maleisië', name: 'Maleisië'}],
+        publishers: [
+          {
+            totalCount: 1,
+            id: 'Het Museum',
+            name: 'Het Museum',
+          },
+        ],
       },
     });
   });

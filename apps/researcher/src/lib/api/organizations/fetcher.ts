@@ -1,4 +1,4 @@
-import {Organization} from '../definitions';
+import {localeSchema, Organization} from '../definitions';
 import {onlyOne, removeNullish} from '../rdf-helpers';
 import {createAddresses} from './rdf-helpers';
 import {getPropertyValue} from '../rdf-helpers';
@@ -15,6 +15,13 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
+const getByIdOptionsSchema = z.object({
+  locale: localeSchema,
+  id: z.string(),
+});
+
+export type GetByIdOptions = z.input<typeof getByIdOptionsSchema>;
+
 export class OrganizationFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
@@ -25,7 +32,7 @@ export class OrganizationFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private async fetchTriples(iri: string) {
+  private async fetchTriples(options: GetByIdOptions) {
     const query = `
       PREFIX ex: <https://example.org/>
       PREFIX schema: <https://schema.org/>
@@ -43,12 +50,13 @@ export class OrganizationFetcher {
           ex:addressCountry ?addressCountry .
       }
       WHERE {
-        BIND(<${iri}> as ?organization)
+        BIND(<${options.id}> as ?organization)
 
         ?organization a schema:Organization .
 
         OPTIONAL {
           ?organization schema:name ?name
+          FILTER(LANG(?name) = "${options.locale}")
         }
 
         OPTIONAL {
@@ -62,7 +70,8 @@ export class OrganizationFetcher {
             schema:addressLocality ?addressLocality ;
             schema:addressCountry ?addressCountry .
 
-          FILTER(LANG(?addressCountry) = "" || LANGMATCHES(LANG(?addressCountry), "en"))
+          FILTER(LANG(?addressLocality) = "${options.locale}")
+          FILTER(LANG(?addressCountry) = "${options.locale}")
         }
       }
     `;
@@ -107,14 +116,16 @@ export class OrganizationFetcher {
     return organization;
   }
 
-  async getById(id: string) {
-    if (!isIri(id)) {
+  async getById(options: GetByIdOptions) {
+    const opts = getByIdOptionsSchema.parse(options);
+
+    if (!isIri(opts.id)) {
       return undefined;
     }
 
-    const triplesStream = await this.fetchTriples(id);
+    const triplesStream = await this.fetchTriples(opts);
     const organization = await this.fromTriplesToOrganization(
-      id,
+      opts.id,
       triplesStream
     );
 

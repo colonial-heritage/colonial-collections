@@ -16,9 +16,9 @@ beforeEach(() => {
 
 describe('getById', () => {
   it('returns an organization', async () => {
-    const organization = await organizations.getById(
-      'https://museum.example.org/'
-    );
+    const organization = await organizations.getById({
+      id: 'https://museum.example.org/',
+    });
 
     expect(organization).not.toBeUndefined();
   });
