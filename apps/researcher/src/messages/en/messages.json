@@ -15,6 +15,18 @@
     "title": "Search for heritage objects",
     "description": "Start by typing a keyword to search.\n\nAfter this initial text search, search facets will appear to refine yor search results."
   },
+  "Signup": {
+    "title": "Create an account",
+    "WhyH2": "Why create an account?",
+    "WhyP1": "With an account you have access to more functionality of this website. You can add your narratives to the objects, be part of a community or create lists to organise objects.\n\nThe reason one needs to create an account is that we want to know who adds the data. This is one of the ways we prevent anonyous spamming.",
+    "WhatH2": "What can I do with an account?",
+    "AddH3": "Add your narratives to objects",
+    "AddP1": "One of the most important functionalities is that users can add there narratives to the objects on this site. Users can tell how the objects are being used or give it the name in own language.\n\n",
+    "NoteBold": "Please note:",
+    "NoteText": "To add a narrative you need to create an account using Google, Facebook or LinkedIn.",
+    "UseH3": "Use communities",
+    "UseP": "Communities are groups of people that represent a specific culture or geographical area. Anyone with an account can become a member of a community. You can also create your own community."
+  },
   "ObjectSearchResults": {
     "title": "{totalDatasets, plural, =0 {0 Heritage Objects} =1 {1 Heritage Object} other {# Heritage Objects}}",
     "noResults": "There are no results",

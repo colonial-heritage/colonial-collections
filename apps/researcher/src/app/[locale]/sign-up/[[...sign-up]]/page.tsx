@@ -1,7 +1,10 @@
 import {SignUp} from '@clerk/nextjs';
 import {headers} from 'next/headers';
+import {getTranslations} from 'next-intl/server';
 
-export default function Page() {
+export default async function Page() {
+  const t = await getTranslations('Signup');
+
   // Get the path with the locale preset.
   const activePath = headers().get('x-pathname') || '/sign-up';
 
@@ -9,9 +12,7 @@ export default function Page() {
     <div>
       <div className="bg-consortiumBlue-800 text-white">
         <div className="max-w-6xl w-full m-auto px-4 sm:px-10">
-          <h1 className="text-xl md:text-4xl py-10 md:py-20">
-            Create an account
-          </h1>
+          <h1 className="text-xl md:text-4xl py-10 md:py-20">{t('title')}</h1>
         </div>
       </div>
 
@@ -19,44 +20,23 @@ export default function Page() {
         <div className="flex flex-col md:flex-row w-full gap-20">
           <div className="w-full md:w-2/3 flex flex-col gap-6 order-2 md:order-1">
             <div className="flex-col flex gap-2">
-              <h2 className="text-xl">Why create an account?</h2>
-              <p>
-                With an account you you have access to more functionality of
-                this website. You can add your narratives to the objects, be
-                part of a community or create lists to organise objects.
-              </p>
-              <p>
-                The reason one needs to create an account is that we want to
-                know who adds the data. This is one of the ways we prevent
-                anonyous spamming.
-              </p>
-
+              <h2 className="text-xl">{t('WhyH2')}</h2>
+              <p>{t('WhyP1')}</p>
               <div className="flex-col flex gap-4 mt-12">
-                <h2 className="text-xl">What can I do with an account</h2>
+                <h2 className="text-xl">{t('WhatH2')}</h2>
               </div>
 
-              <div className="flex-col flex gap-4">
-                <h3 className="text-lg">Add your narratives to objects</h3>
+              <div className="flex-col flex gap-2">
+                <h3 className="text-lg">{t('AddH3')}</h3>
+                <p>{t('AddP1')}</p>
                 <p>
-                  One of the most important functionalities is that users can
-                  add there narratives to the objects on this site. Users can
-                  tell how the objects are being used or give it the name in own
-                  language.{' '}
-                </p>
-                <p>
-                  <em>Please note:</em> To add a narrative you need create an
-                  account using Google or LinkedIn.
+                  <em>{t('NoteBold')}</em> {t('NoteText')}
                 </p>
               </div>
 
-              <div className="flex-col flex gap-4">
-                <h3 className="text-lg">Use communities</h3>
-                <p>
-                  Communities are groups of people that represent a specific
-                  culture or geographical area. Anyone with an account can
-                  become a member of a community/ You can also create your own
-                  community.
-                </p>
+              <div className="flex-col flex gap-2 mt-4">
+                <h3 className="text-lg">{t('UseH3')}</h3>
+                <p>{t('UseP')}</p>
               </div>
             </div>
           </div>
