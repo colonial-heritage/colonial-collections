@@ -7,6 +7,9 @@
     "description": "The Colonial Collections Datahub is a place to explore objects that have their origins in former Dutch colonial countries such as Suriname, Indonesia, Sri Lanka, South Africa, Aruba, Curaçao, Sint Maarten and many other countries and areas.",
     "searchLabel": "Search for heritage objects",
     "searchPlaceholder": "Tip: start searching for a location, e.g. Suriname",
+    "narrativeExplainTitle": "Add your narratives to the objects",
+    "narrativeExplainText": "Your knowledge about the objects is vital to us. With your stories we can put these objects in their original context.\n\nWhen you create an account you can tell your story about these objects, use communities and create lists.",
+    "signupLink": "Create an account",
     "communitiesTitle": "Heritage communities",
     "communitiesDescription": "Every culture can start its own community on this platform. A community can create lists of objects that tells stories about their history. Communities can also add narratives to the objects in this collection.",
     "communitiesLink": "Here are some communities to inspire you. Or <link>take a look at all the communities</link>."

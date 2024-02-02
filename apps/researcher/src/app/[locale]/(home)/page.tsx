@@ -38,10 +38,35 @@ export default async function Home() {
               <label htmlFor="search">
                 <strong>{t('searchLabel')}</strong>
               </label>
-              <SearchFieldHome />
+              <div className="w-full lg:w-3/5 flex justify-between">
+                <SearchFieldHome />
+              </div>
             </div>
           </div>
         </div>
+        <div className="w-full bg-white">
+          <div className="w-full max-w-4xl m-auto relative z-50">
+            <div
+              className="bg-white p-6 lg:rounded-xl text-consortiumBlue-800 flex flex-col gap-3 lg:shadow-xl lg:rotate-2
+            lg:absolute lg:-translate-y-36 lg:-right-16 xl:-right-48 2xl:-right-60
+            w-full lg:max-w-[370px]"
+            >
+              <div className="whitespace-pre-wrap">
+                <h2 className="text-xl mb-2">{t('narrativeExplainTitle')}</h2>
+                <p>{t.rich('narrativeExplainText')}</p>
+              </div>
+              <div className="flex gap-2 lg:justify-between my-2">
+                <Link
+                  href="/sign-up"
+                  className="rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumGreen-300 text-consortiumBlue-800 no-underline"
+                >
+                  {t('signupLink')}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="w-full flex flex-col items-center py-20 gap-6 bg-consortiumGreen-300 text-consortiumBlue-800">
           <div className="w-full max-w-4xl px-4 sm:px-10 flex flex-col gap-10 relative pb-10">
             <h2 className="text-5xl">{t('communitiesTitle')}</h2>
