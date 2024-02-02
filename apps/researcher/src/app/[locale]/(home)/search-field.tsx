@@ -9,7 +9,7 @@ export function SearchFieldHome() {
   const router = useRouter();
 
   const navigateOnSearch = (query: string) => {
-    if (query) {
+    if (query.length > 0) {
       const urlSearchParams = new URLSearchParams({query});
       router.replace(`/objects?${urlSearchParams}`);
     }

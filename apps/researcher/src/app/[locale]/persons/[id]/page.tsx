@@ -61,7 +61,9 @@ export default async function Details({params}: Props) {
     <>
       <div className="bg-consortiumBlue-800 text-white flex flex-col gap-8 pt-9 pb-40">
         <div className="px-4 sm:px-10 max-w-[1800px] mx-auto w-full">
-          <ToFilteredListButton>{t('backButton')}</ToFilteredListButton>
+          <ToFilteredListButton baseUrl="/persons">
+            {t('backButton')}
+          </ToFilteredListButton>
           <div className="mt-10 mb-4">
             <PageHeader>
               <PageTitle id="about">

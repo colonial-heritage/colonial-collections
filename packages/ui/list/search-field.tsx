@@ -100,11 +100,17 @@ function Label() {
   );
 }
 
-export function SearchFieldWithLabel() {
+interface SearchFieldWithLabelProps {
+  onSearch?: (query: string) => void;
+}
+
+export function SearchFieldWithLabel({
+  onSearch,
+}: SearchFieldWithLabelProps = {}) {
   return (
     <div className="w-full max-w-[450px] relative" id="facets">
       <Label />
-      <SearchField />
+      <SearchField onSearch={onSearch} />
     </div>
   );
 }
