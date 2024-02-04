@@ -5,5 +5,5 @@ export default function Page() {
   // Get the path with the locale preset.
   const activePath = headers().get('x-pathname') || '/sign-in';
 
-  return <SignIn path={activePath} />;
+  return <SignIn afterSignInUrl="/" path={activePath} />;
 }
