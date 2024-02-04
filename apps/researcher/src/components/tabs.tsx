@@ -8,6 +8,8 @@ import {locales} from '@/navigation';
 export default function Tabs() {
   const t = useTranslations('Tabs');
 
+  // This header is removed, if we reintegrate this component,
+  // we need to find a way to pass the activePath
   const activePath = headers().get('x-pathname') || '/';
 
   const tabs = [
