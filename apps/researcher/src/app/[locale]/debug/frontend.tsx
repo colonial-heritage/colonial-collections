@@ -43,3 +43,15 @@ export function DebugButton() {
     </button>
   );
 }
+
+export function AuthenticationObjectFrontend() {
+  const authenticationObject = useAuth();
+  return (
+    <div>
+      <h2>Authentication object frontend</h2>
+      <div>
+        <pre>{JSON.stringify(authenticationObject, null, 2)}</pre>
+      </div>
+    </div>
+  );
+}

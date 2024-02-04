@@ -46,7 +46,7 @@ export default async function Page() {
           <div className="w-full md:w-1/3 order-1 md:order-2">
             <div className="w-full p-4 md:sticky top-0 {{> styles/style_form }} rounded-lg min-h-[300px]">
               <div className="-translate-x-5 md:-translate-x-10">
-                <SignUp path={activePath} />
+                <SignUp afterSignUpUrl="/" path={activePath} />
               </div>
             </div>
           </div>
