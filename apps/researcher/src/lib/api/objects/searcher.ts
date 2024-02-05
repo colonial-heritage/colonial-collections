@@ -149,6 +149,7 @@ export class HeritageObjectSearcher {
 
   private buildRequest(options: SearchOptions) {
     const locationKey = `${RawKeys.CountryCreated}_${options.locale}.keyword`;
+    const publisherKey = `${RawKeys.Publisher}_${options.locale}.keyword`;
 
     const aggregations = {
       types: this.buildAggregation(`${RawKeys.AdditionalType}.keyword`),
@@ -156,7 +157,7 @@ export class HeritageObjectSearcher {
       locations: this.buildAggregation(locationKey),
       materials: this.buildAggregation(`${RawKeys.Material}.keyword`),
       creators: this.buildAggregation(`${RawKeys.Creator}.keyword`),
-      publishers: this.buildAggregation(`${RawKeys.Publisher}.keyword`),
+      publishers: this.buildAggregation(publisherKey),
       dateCreatedStart: this.buildAggregation(RawKeys.YearCreatedStart),
       dateCreatedEnd: this.buildAggregation(RawKeys.YearCreatedEnd),
     };
@@ -205,7 +206,7 @@ export class HeritageObjectSearcher {
       [locationKey, options.filters?.locations],
       [`${RawKeys.Material}.keyword`, options.filters?.materials],
       [`${RawKeys.Creator}.keyword`, options.filters?.creators],
-      [`${RawKeys.Publisher}.keyword`, options.filters?.publishers],
+      [publisherKey, options.filters?.publishers],
     ]);
 
     for (const [rawHeritageObjectKey, filters] of queryFilters) {

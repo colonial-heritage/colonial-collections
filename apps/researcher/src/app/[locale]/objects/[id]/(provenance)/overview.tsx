@@ -1,3 +1,4 @@
+import {useLocale} from 'next-intl';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import DataTable from './data-table';
 import Timeline from './timeline';
@@ -5,10 +6,14 @@ import {getTranslations} from 'next-intl/server';
 import {sortEvents} from './sort-events';
 import {ProvenanceProvider} from './provenance-store';
 import {ToggleViewButtons} from './buttons';
+import {LocaleEnum} from '@/definitions';
 
 export default async function Provenance({objectId}: {objectId: string}) {
-  const events =
-    await heritageObjects.getProvenanceEventsByHeritageObjectId(objectId);
+  const locale = useLocale() as LocaleEnum;
+  const events = await heritageObjects.getProvenanceEventsByHeritageObjectId({
+    id: objectId,
+    locale,
+  });
   const t = await getTranslations('Provenance');
 
   if (!events || events.length === 0) {

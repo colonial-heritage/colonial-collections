@@ -12,46 +12,81 @@ beforeEach(() => {
 
 describe('getByHeritageObjectId', () => {
   it('returns undefined if a malformed ID is used', async () => {
-    const heritageObject =
-      await provenanceEventsFetcher.getByHeritageObjectId('malformedID');
+    const heritageObject = await provenanceEventsFetcher.getByHeritageObjectId({
+      id: 'malformedID',
+    });
 
     expect(heritageObject).toBeUndefined();
   });
 
   it('returns undefined if no heritage object matches the ID', async () => {
-    const heritageObject = await provenanceEventsFetcher.getByHeritageObjectId(
-      'https://unknown.org/'
-    );
+    const heritageObject = await provenanceEventsFetcher.getByHeritageObjectId({
+      id: 'https://unknown.org/',
+    });
 
     expect(heritageObject).toBeUndefined();
   });
 
   it('returns empty array if heritage object does not have provenance events', async () => {
     const provenanceEvents =
-      await provenanceEventsFetcher.getByHeritageObjectId(
-        'https://example.org/objects/5'
-      );
+      await provenanceEventsFetcher.getByHeritageObjectId({
+        id: 'https://example.org/objects/5',
+      });
 
     expect(provenanceEvents).toEqual([]);
   });
 
-  it('returns the provenance events of the heritage object', async () => {
+  it('returns the provenance events', async () => {
     const provenanceEvents =
-      await provenanceEventsFetcher.getByHeritageObjectId(
-        'https://example.org/objects/1'
-      );
+      await provenanceEventsFetcher.getByHeritageObjectId({
+        id: 'https://example.org/objects/1',
+      });
 
-    // For now ignore order of elements in the array (until the events are sorted)
     expect(provenanceEvents).toEqual(
       expect.arrayContaining([
         {
+          id: 'https://example.org/objects/1/provenance/event/3/activity/1',
+          types: expect.arrayContaining([
+            {
+              id: 'http://vocab.getty.edu/aat/300055292',
+              name: 'theft (social issue)',
+            },
+          ]),
+          date: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            startDate: new Date('1901-01-01T00:00:00.000Z'),
+            endDate: new Date('1901-12-31T23:59:59.999Z'),
+          },
+          startDate: new Date('1901-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
+          endDate: new Date('1901-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
+          startsAfter:
+            'https://example.org/objects/1/provenance/event/5/activity/1',
+          endsBefore:
+            'https://example.org/objects/1/provenance/event/4/activity/1',
+          location: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            name: 'Amsterdam',
+          },
+          transferredFrom: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            type: 'Organization',
+            name: 'Organization A',
+          },
+        },
+        {
           id: 'https://example.org/objects/1/provenance/event/5/activity/1',
-          types: [
+          types: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417642',
               name: 'purchase (method of acquisition)',
             },
-          ],
+          ]),
           description: 'Bought at an auction in Amsterdam',
           date: {
             id: expect.stringContaining(
@@ -80,19 +115,21 @@ describe('getByHeritageObjectId', () => {
             name: 'Jonathan Hansen',
           },
           transferredTo: {
-            id: 'https://museum.example.org/',
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
             type: 'Organization',
-            name: 'Museum',
+            name: 'Organization A',
           },
         },
         {
           id: 'https://example.org/objects/1/provenance/event/4/activity/1',
-          types: [
+          types: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300445014',
               name: 'returning',
             },
-          ],
+          ]),
           description: 'Found in a basement',
           date: {
             id: expect.stringContaining(
@@ -112,52 +149,21 @@ describe('getByHeritageObjectId', () => {
             name: 'Paris',
           },
           transferredTo: {
-            id: 'https://museum.example.org/',
-            type: 'Organization',
-            name: 'Museum',
-          },
-        },
-        {
-          id: 'https://example.org/objects/1/provenance/event/3/activity/1',
-          types: [
-            {
-              id: 'http://vocab.getty.edu/aat/300055292',
-              name: 'theft (social issue)',
-            },
-          ],
-          date: {
             id: expect.stringContaining(
               'https://data.colonialcollections.nl/.well-known/genid/'
             ),
-            startDate: new Date('1901-01-01T00:00:00.000Z'),
-            endDate: new Date('1901-12-31T23:59:59.999Z'),
-          },
-          startDate: new Date('1901-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
-          endDate: new Date('1901-01-01T00:00:00.000Z'), // For BC; remove when prop date is in use
-          startsAfter:
-            'https://example.org/objects/1/provenance/event/5/activity/1',
-          endsBefore:
-            'https://example.org/objects/1/provenance/event/4/activity/1',
-          location: {
-            id: expect.stringContaining(
-              'https://data.colonialcollections.nl/.well-known/genid/'
-            ),
-            name: 'Amsterdam',
-          },
-          transferredFrom: {
-            id: 'https://museum.example.org/',
             type: 'Organization',
-            name: 'Museum',
+            name: 'Organization A',
           },
         },
         {
           id: 'https://example.org/objects/1/provenance/event/2/activity/1',
-          types: [
+          types: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417642',
               name: 'purchase (method of acquisition)',
             },
-          ],
+          ]),
           description: 'Bought at an auction in The Hague',
           date: {
             id: expect.stringContaining(
@@ -195,16 +201,16 @@ describe('getByHeritageObjectId', () => {
         },
         {
           id: 'https://example.org/objects/1/provenance/event/1/activity/1',
-          types: [
-            {
-              id: 'http://vocab.getty.edu/aat/300417642',
-              name: 'purchase (method of acquisition)',
-            },
+          types: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417644',
               name: 'transfer (method of acquisition)',
             },
-          ],
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'purchase (method of acquisition)',
+            },
+          ]),
           description: 'Bought for 1500 US dollars',
           date: {
             id: expect.stringContaining(
@@ -238,6 +244,106 @@ describe('getByHeritageObjectId', () => {
             name: 'Jan de Vries',
           },
         },
+      ])
+    );
+  });
+});
+
+describe('get with localized names', () => {
+  it('returns the provenance events with English names', async () => {
+    const provenanceEvents =
+      await provenanceEventsFetcher.getByHeritageObjectId({
+        locale: 'en',
+        id: 'https://example.org/objects/1',
+      });
+
+    // Currently the only localized parts
+    expect(provenanceEvents).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/3/activity/1',
+          types: expect.arrayContaining([
+            {
+              id: 'http://vocab.getty.edu/aat/300055292',
+              name: 'theft (social issue)',
+            },
+          ]),
+        }),
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/5/activity/1',
+          types: expect.arrayContaining([
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'purchase (method of acquisition)',
+            },
+          ]),
+        }),
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/4/activity/1',
+          types: expect.arrayContaining([
+            {
+              id: 'http://vocab.getty.edu/aat/300445014',
+              name: 'returning',
+            },
+          ]),
+        }),
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/2/activity/1',
+          types: expect.arrayContaining([
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'purchase (method of acquisition)',
+            },
+          ]),
+        }),
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/1/activity/1',
+          types: expect.arrayContaining([
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'purchase (method of acquisition)',
+            },
+            {
+              id: 'http://vocab.getty.edu/aat/300417644',
+              name: 'transfer (method of acquisition)',
+            },
+          ]),
+        }),
+      ])
+    );
+  });
+
+  it('returns the provenance events with Dutch names', async () => {
+    const provenanceEvents =
+      await provenanceEventsFetcher.getByHeritageObjectId({
+        locale: 'nl',
+        id: 'https://example.org/objects/1',
+      });
+
+    // Currently the only localized parts
+    expect(provenanceEvents).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/3/activity/1',
+          types: [
+            {
+              id: 'http://vocab.getty.edu/aat/300055292',
+              name: 'diefstal',
+            },
+          ],
+        }),
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/5/activity/1',
+        }),
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/4/activity/1',
+        }),
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/2/activity/1',
+        }),
+        expect.objectContaining({
+          id: 'https://example.org/objects/1/provenance/event/1/activity/1',
+        }),
       ])
     );
   });

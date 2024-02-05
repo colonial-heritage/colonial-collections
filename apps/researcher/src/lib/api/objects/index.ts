@@ -1,5 +1,8 @@
 import {GetByIdOptions, HeritageObjectFetcher} from './fetcher';
-import {ProvenanceEventsFetcher} from './provenance-events-fetcher';
+import {
+  GetByIdOptions as GetProvenanceEventsByHeritageObjectIdOptions,
+  ProvenanceEventsFetcher,
+} from './provenance-events-fetcher';
 import {HeritageObjectSearcher, SearchOptions} from './searcher';
 import {z} from 'zod';
 
@@ -38,8 +41,10 @@ export class HeritageObjects {
     return this.heritageObjectFetcher.getById(options);
   }
 
-  async getProvenanceEventsByHeritageObjectId(id: string) {
-    return this.provenanceEventsFetcher.getByHeritageObjectId(id);
+  async getProvenanceEventsByHeritageObjectId(
+    options: GetProvenanceEventsByHeritageObjectIdOptions
+  ) {
+    return this.provenanceEventsFetcher.getByHeritageObjectId(options);
   }
 
   async search(options?: SearchOptions) {
