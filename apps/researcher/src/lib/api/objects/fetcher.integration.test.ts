@@ -164,33 +164,14 @@ describe('getById', () => {
         publisher: {
           id: 'https://museum.example.org/',
           type: 'Organization',
-          name: 'Museum',
+          name: 'The Museum',
         },
       },
     });
   });
+});
 
-  it('returns a heritage object with default names', async () => {
-    const heritageObject = await heritageObjectFetcher.getById({
-      id: 'https://example.org/objects/2',
-    });
-
-    // Currently the only localized parts
-    expect(heritageObject).toMatchObject({
-      id: 'https://example.org/objects/2',
-      locationsCreated: expect.arrayContaining([
-        {
-          id: 'https://sws.geonames.org/1642911/',
-          name: 'Jakarta',
-          isPartOf: {
-            id: 'https://sws.geonames.org/1643084/',
-            name: 'Indonesia',
-          },
-        },
-      ]),
-    });
-  });
-
+describe('get with localized names', () => {
   it('returns a heritage object with English names', async () => {
     const heritageObject = await heritageObjectFetcher.getById({
       locale: 'en',
@@ -210,6 +191,13 @@ describe('getById', () => {
           },
         },
       ]),
+      isPartOf: {
+        id: 'https://example.org/datasets/13',
+        publisher: {
+          id: 'https://research.example.org/',
+          name: 'Research Organisation',
+        },
+      },
     });
   });
 
@@ -232,6 +220,13 @@ describe('getById', () => {
           },
         },
       ]),
+      isPartOf: {
+        id: 'https://example.org/datasets/13',
+        publisher: {
+          id: 'https://research.example.org/',
+          name: 'Onderzoeksinstelling',
+        },
+      },
     });
   });
 });

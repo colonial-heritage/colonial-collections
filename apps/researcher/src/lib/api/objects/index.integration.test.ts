@@ -28,9 +28,9 @@ describe('getById', () => {
 describe('getProvenanceEventsByHeritageObjectId', () => {
   it('returns the provenance events of a heritage object', async () => {
     const provenanceEvents =
-      await heritageObjects.getProvenanceEventsByHeritageObjectId(
-        'https://example.org/objects/1'
-      );
+      await heritageObjects.getProvenanceEventsByHeritageObjectId({
+        id: 'https://example.org/objects/1',
+      });
 
     expect(provenanceEvents).toHaveLength(5);
   });

@@ -1,4 +1,4 @@
-import {OrganizationFetcher} from './fetcher';
+import {GetByIdOptions, OrganizationFetcher} from './fetcher';
 import {z} from 'zod';
 
 // Re-export definitions for ease of use in consuming apps
@@ -23,7 +23,7 @@ export class Organizations {
     });
   }
 
-  async getById(id: string) {
-    return this.organizationFetcher.getById(id);
+  async getById(options: GetByIdOptions) {
+    return this.organizationFetcher.getById(options);
   }
 }

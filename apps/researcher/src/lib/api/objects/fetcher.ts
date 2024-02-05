@@ -326,8 +326,7 @@ export class HeritageObjectFetcher {
             ?publisher schema:name ?publisherName ;
               rdf:type ?publisherTypeTemp .
 
-            # For BC; remove as soon as locale-aware names are in use
-            FILTER(LANG(?publisherName) = "" || LANG(?publisherName) = "en")
+            FILTER(LANG(?publisherName) = "${options.locale}")
 
             VALUES (?publisherTypeTemp ?publisherType) {
               (schema:Organization ex:Organization)

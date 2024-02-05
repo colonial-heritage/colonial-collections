@@ -1,4 +1,4 @@
-import {ProvenanceEvent, Term} from '../definitions';
+import {localeSchema, ProvenanceEvent, Term} from '../definitions';
 import {getPropertyValue, onlyOne, removeNullish} from '../rdf-helpers';
 import {
   createAgents,
@@ -19,6 +19,13 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
+const getByIdOptionsSchema = z.object({
+  locale: localeSchema,
+  id: z.string(),
+});
+
+export type GetByIdOptions = z.input<typeof getByIdOptionsSchema>;
+
 export class ProvenanceEventsFetcher {
   private endpointUrl: string;
   private fetcher = new SparqlEndpointFetcher();
@@ -29,7 +36,7 @@ export class ProvenanceEventsFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private async fetchTriples(iri: string) {
+  private async fetchTriples(options: GetByIdOptions) {
     const query = `
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
       PREFIX ex: <https://example.org/>
@@ -99,7 +106,7 @@ export class ProvenanceEventsFetcher {
           ex:name ?transferOfCustodyLocationName .
       }
       WHERE {
-        BIND(<${iri}> AS ?object)
+        BIND(<${options.id}> AS ?object)
 
         ?object a crm:E22_Human-Made_Object .
 
@@ -118,11 +125,8 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisition crm:P2_has_type ?acquisitionType .
-            ?acquisitionType a skos:Concept ;
-              skos:prefLabel ?acquisitionTypeName ;
-              skos:inScheme <http://vocab.getty.edu/aat/> .
-
-            FILTER(LANG(?acquisitionTypeName) = "" || LANGMATCHES(LANG(?acquisitionTypeName), "en"))
+            ?acquisitionType skos:prefLabel ?acquisitionTypeName
+            FILTER(LANG(?acquisitionTypeName) = "${options.locale}")
           }
 
           ####################
@@ -131,11 +135,11 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisition crm:P23_transferred_title_from ?acquisitionOwnerFrom .
-            ?acquisitionOwnerFrom rdfs:label|schema:name ?acquisitionOwnerFromName ;
+            ?acquisitionOwnerFrom rdfs:label ?acquisitionOwnerFromName ;
               rdf:type ?acquisitionOwnerFromTypeTmp .
 
             VALUES (?acquisitionOwnerFromTypeTmp ?acquisitionOwnerFromType) {
-              (schema:Organization ex:Organization)
+              (crm:E74_Group ex:Organization)
               (crm:E21_Person ex:Person)
               (UNDEF UNDEF)
             }
@@ -147,11 +151,11 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisition crm:P22_transferred_title_to ?acquisitionOwnerTo .
-            ?acquisitionOwnerTo rdfs:label|schema:name ?acquisitionOwnerToName ;
+            ?acquisitionOwnerTo rdfs:label ?acquisitionOwnerToName ;
               rdf:type ?acquisitionOwnerToTypeTmp .
 
             VALUES (?acquisitionOwnerToTypeTmp ?acquisitionOwnerToType) {
-              (schema:Organization ex:Organization)
+              (crm:E74_Group ex:Organization)
               (crm:E21_Person ex:Person)
               (UNDEF UNDEF)
             }
@@ -225,11 +229,8 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustody crm:P2_has_type ?transferOfCustodyType .
-            ?transferOfCustodyType a skos:Concept ;
-              skos:prefLabel ?transferOfCustodyTypeName ;
-              skos:inScheme <http://vocab.getty.edu/aat/> .
-
-            FILTER(LANG(?transferOfCustodyTypeName) = "" || LANGMATCHES(LANG(?transferOfCustodyTypeName), "en"))
+            ?transferOfCustodyType skos:prefLabel ?transferOfCustodyTypeName
+            FILTER(LANG(?transferOfCustodyTypeName) = "${options.locale}")
           }
 
           ####################
@@ -238,11 +239,11 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustody crm:P28_custody_surrendered_by ?transferOfCustodyCustodianFrom .
-            ?transferOfCustodyCustodianFrom rdfs:label|schema:name ?transferOfCustodyCustodianFromName ;
+            ?transferOfCustodyCustodianFrom rdfs:label ?transferOfCustodyCustodianFromName ;
               rdf:type ?transferOfCustodyCustodianFromTypeTemp .
 
             VALUES (?transferOfCustodyCustodianFromTypeTemp ?transferOfCustodyCustodianFromType) {
-              (schema:Organization ex:Organization)
+              (crm:E74_Group ex:Organization)
               (crm:E21_Person ex:Person)
               (UNDEF UNDEF)
             }
@@ -254,11 +255,11 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustody crm:P29_custody_received_by ?transferOfCustodyCustodianTo .
-            ?transferOfCustodyCustodianTo rdfs:label|schema:name ?transferOfCustodyCustodianToName ;
+            ?transferOfCustodyCustodianTo rdfs:label ?transferOfCustodyCustodianToName ;
               rdf:type ?transferOfCustodyCustodianToTypeTemp .
 
             VALUES (?transferOfCustodyCustodianToTypeTemp ?transferOfCustodyCustodianToType) {
-              (schema:Organization ex:Organization)
+              (crm:E74_Group ex:Organization)
               (crm:E21_Person ex:Person)
               (UNDEF UNDEF)
             }
@@ -388,14 +389,16 @@ export class ProvenanceEventsFetcher {
     return provenanceEvents;
   }
 
-  async getByHeritageObjectId(id: string) {
-    if (!isIri(id)) {
+  async getByHeritageObjectId(options: GetByIdOptions) {
+    const opts = getByIdOptionsSchema.parse(options);
+
+    if (!isIri(opts.id)) {
       return undefined;
     }
 
-    const triplesStream = await this.fetchTriples(id);
+    const triplesStream = await this.fetchTriples(opts);
     const provenanceEvents = await this.fromTriplesToProvenanceEvents(
-      id,
+      opts.id,
       triplesStream
     );
 
