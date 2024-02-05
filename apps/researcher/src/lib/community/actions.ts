@@ -116,8 +116,8 @@ export async function getMyCommunities({
             ...organization,
             members_count: members.length,
           });
-        } catch (error) {
-          console.error('Error fetching members count', error);
+        } catch (err) {
+          console.error('Error fetching members count', err);
           return organizationToCommunity(organization);
         }
       }
