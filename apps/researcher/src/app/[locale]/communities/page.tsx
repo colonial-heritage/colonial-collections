@@ -37,6 +37,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
         sortBy,
         offset,
         limit: 24,
+        includeMembersCount: true,
       });
     } else {
       communities = await getCommunities({
@@ -44,6 +45,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
         sortBy,
         offset,
         limit: 24,
+        includeMembersCount: true,
       });
     }
   } catch (err) {

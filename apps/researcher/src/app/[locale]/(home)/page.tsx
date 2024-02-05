@@ -15,6 +15,7 @@ export default async function Home() {
     communities = await getCommunities({
       sortBy: SortBy.CreatedAtDesc,
       limit: 4,
+      includeMembersCount: true,
     });
   } catch (err) {
     return <ErrorMessage error={t('error')} />;
