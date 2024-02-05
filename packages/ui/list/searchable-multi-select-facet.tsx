@@ -98,7 +98,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
           {t('aboutFacetsHeader')}
         </h3>
 
-        <div className="pb-4">{t('aboutFacetsText')}</div>
+        <div className="pb-4 whitespace-pre-wrap">{t('aboutFacetsText')}</div>
         <h3>{t('selectedFilters')}</h3>
 
         <div className="flex gap-2 flex-wrap  overflow-y-auto">
