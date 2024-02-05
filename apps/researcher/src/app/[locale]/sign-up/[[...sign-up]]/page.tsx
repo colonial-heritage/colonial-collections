@@ -1,12 +1,10 @@
 import {SignUp} from '@clerk/nextjs';
-import {headers} from 'next/headers';
-import {getTranslations} from 'next-intl/server';
+import {getLocale, getTranslations} from 'next-intl/server';
+import {env} from 'node:process';
 
 export default async function Page() {
   const t = await getTranslations('SignUp');
-
-  // Get the path with the locale preset.
-  const activePath = headers().get('x-pathname') || '/sign-up';
+  const locale = await getLocale();
 
   return (
     <div>
@@ -46,7 +44,10 @@ export default async function Page() {
           <div className="w-full md:w-1/3 order-1 md:order-2">
             <div className="w-full p-4 md:sticky top-0 {{> styles/style_form }} rounded-lg min-h-[300px]">
               <div className="-translate-x-5 md:-translate-x-10">
-                <SignUp afterSignUpUrl="/" path={activePath} />
+                <SignUp
+                  redirectUrl="/"
+                  path={`/${locale}${env.NEXT_PUBLIC_CLERK_SIGN_UP_URL}`}
+                />
               </div>
             </div>
           </div>

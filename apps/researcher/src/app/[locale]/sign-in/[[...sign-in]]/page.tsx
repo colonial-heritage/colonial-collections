@@ -1,9 +1,14 @@
 import {SignIn} from '@clerk/nextjs';
-import {headers} from 'next/headers';
+import {getLocale} from 'next-intl/server';
+import {env} from 'node:process';
 
-export default function Page() {
-  // Get the path with the locale preset.
-  const activePath = headers().get('x-pathname') || '/sign-in';
+export default async function Page() {
+  const locale = await getLocale();
 
-  return <SignIn afterSignInUrl="/" path={activePath} />;
+  return (
+    <SignIn
+      redirectUrl="/"
+      path={`/${locale}${env.NEXT_PUBLIC_CLERK_SIGN_IN_URL}`}
+    />
+  );
 }
