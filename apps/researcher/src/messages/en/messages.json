@@ -200,7 +200,7 @@
     "orderByCount": "Order by count",
     "selectedFilters": "Selected filters",
     "aboutFacetsHeader": "About these facets",
-    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items.\n\nPlease note that currently, for some facets the values for search filters are provided in Dutch, regardless of the selected interface language.  We're working on adding translations soon."
+    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items.\n\nPlease note that currently, for some facets the items for search filters are provided in Dutch, regardless of the selected interface language. We're working on adding translations soon."
   },
   "Sort": {
     "dateCreatedDesc": "Date made - Descending",
