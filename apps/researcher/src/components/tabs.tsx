@@ -5,11 +5,13 @@ import {Link} from '@/navigation';
 import {headers} from 'next/headers';
 import {locales} from '@/navigation';
 
+// NOTE: The Tabs component is currently unused, because the '/persons' page is not visible yet.
+// If there is a final decision to remove the '/persons' page, this component can be removed.
+// If re-introduced, ensure to update the `activePath` variable as the `x-pathname` header
+// is no longer set by the middleware.
 export default function Tabs() {
   const t = useTranslations('Tabs');
 
-  // This header is removed, if we reintegrate this component,
-  // we need to find a way to pass the activePath
   const activePath = headers().get('x-pathname') || '/';
 
   const tabs = [
