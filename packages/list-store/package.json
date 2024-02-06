@@ -18,7 +18,7 @@
   "dependencies": {
     "@testing-library/react": "14.1.2",
     "jest-environment-jsdom": "29.7.0",
-    "next-intl": "3.2.5",
+    "next-intl": "3.5.4",
     "react": "18.2.0",
     "zod": "3.22.4",
     "zustand": "4.4.7"
