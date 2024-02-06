@@ -3,7 +3,10 @@
     "title": "Research app"
   },
   "FormatDate": {
-    "beforeCommonEraFormat": "{date, date, ::yyyy} v.Chr."
+    "beforeCommonEraFormat": "{date, date, ::yyyy} v.Chr.",
+    "noDateRange": "Geen datum",
+    "noStartDate": "Geen startdatum",
+    "noEndDate": "Geen einddatum"
   },
   "Home": {
     "title": "Koloniale Collecties Datahub",
@@ -153,7 +156,6 @@
     "hideTimelineButton": "Tijdlijn verbergen",
     "showDataTableButton": "Datatabel weergeven",
     "hideDataTableButton": "Datatabel verbergen",
-    "noDate": "Geen datum",
     "noDescription": "Geen beschrijving"
   },
   "PersonDetails": {
