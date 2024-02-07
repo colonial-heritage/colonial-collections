@@ -19,6 +19,7 @@ import {LanguageCode} from 'iso-639-1-dir/dist/data';
 import Provenance from './(provenance)/overview';
 import {getFormatDate} from '@/lib/date-formatter';
 import {LocaleEnum} from '@/definitions';
+import {env} from 'node:process';
 
 export const dynamic = 'force-dynamic';
 
@@ -232,6 +233,56 @@ export default async function Details({params}: Props) {
                 ))}
               </Metadata>
             </div>
+            {organization && (
+              <div className="mt-10" id="provider">
+                <h2 className="text-xl mt-4">{t('dataProviderTitle')}</h2>
+                <div className="flex flex-col md:flex-row mt-4">
+                  <div className="w-full md:w-1/2">
+                    <div className="mb-4">{t('dataProviderDescription')}</div>
+                    <p>
+                      <strong>{organization.name}</strong>
+                      {organization.address && (
+                        <>
+                          <br />
+                          {organization.address?.streetAddress}
+                          <br />
+                          {organization.address?.postalCode}{' '}
+                          {organization.address?.addressLocality}
+                          <br />
+                          {organization.address?.addressCountry}
+                        </>
+                      )}
+                    </p>
+                    {organization.url && (
+                      <>
+                        <div className="mt-4 font-semibold">
+                          {t('websiteLabel')}
+                        </div>
+                        <a href={organization.url}>{organization.url}</a>
+                      </>
+                    )}
+                    <br />
+                    <div className="mt-4 font-semibold">
+                      {t('objectIdLabel')}
+                    </div>
+                    <div>{object.identifier}</div>
+                    {object.isPartOf && (
+                      <div className="mt-4 font-semibold">
+                        <a
+                          href={`${
+                            env['DATASET_BROWSER_URL']
+                          }/datasets/${encodeURIComponent(object.isPartOf.id)}`}
+                        >
+                          {t('linkToDatasetBrowser')}
+                        </a>
+                        <br />
+                      </div>
+                    )}
+                  </div>
+                  <div className="w-full md:w-1/2">{/* Place map here */}</div>
+                </div>
+              </div>
+            )}
           </main>
           <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-neutral-100 p-1">
             {galleryImages.length > 0 && (
