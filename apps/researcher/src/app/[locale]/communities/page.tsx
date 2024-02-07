@@ -12,6 +12,7 @@ import {
 import {AddCommunityButton} from './buttons';
 import {MyCommunityToggle} from './my-community-toggle';
 import SignedIn from '@/lib/community/signed-in';
+import {SignedOut} from '@clerk/nextjs';
 
 // 1 day = 60*60*24 = 86400
 export const revalidate = 86400;
@@ -79,14 +80,15 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
           <div className="flex flex-col gap-1 w-full md:w-2/5 max-w-md mt-6">
             <h2>{t('yourCommunityTitle')}</h2>
 
-            <p>{t('yourCommunityText')}</p>
-            <p>
-              <SignedIn>
-                <div>
-                  <AddCommunityButton />
-                </div>
-              </SignedIn>
-            </p>
+            <SignedOut>
+              <p>{t('yourCommunityTextSignedOut')}</p>
+            </SignedOut>
+            <SignedIn>
+              <p>{t('yourCommunityText')}</p>
+              <p>
+                <AddCommunityButton />
+              </p>
+            </SignedIn>
           </div>
         </div>
       </div>
