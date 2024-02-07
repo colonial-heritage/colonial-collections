@@ -2,20 +2,20 @@ import {describe, expect} from '@jest/globals';
 import {groupByDateRange} from './group-events';
 import {LabeledProvenanceEvent} from './definitions';
 
-// Is simple `formatDateRange` mock that returns a string representation of a date range.
-const formatDateRange = ({
+// A simple `formatDateRange` mock that returns a string representation of a date range.
+function formatDateRange({
   startDate,
   endDate,
 }: {
   startDate?: Date;
   endDate?: Date;
-}) => {
+}) {
   if (!startDate || !endDate) {
     return '';
   }
 
   return `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
-};
+}
 
 describe('groupByDateRange', () => {
   it('groups events by date range', () => {

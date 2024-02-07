@@ -11,7 +11,7 @@ import {
 } from 'react';
 import {LabeledProvenanceEvent} from './definitions';
 import {groupByDateRange} from './group-events';
-import {useFormatDate} from '@/lib/date-formatter/hooks';
+import {useDateFormatter} from '@/lib/date-formatter/hooks';
 
 interface SelectedEventContextType {
   selectedEvents: string[];
@@ -47,7 +47,7 @@ export function ProvenanceProvider({
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
   const [showTimeline, setShowTimeline] = useState(true);
   const [showDataTable, setShowDataTable] = useState(true);
-  const {formatDateRange} = useFormatDate();
+  const {formatDateRange} = useDateFormatter();
   const eventGroups = useMemo(
     () => groupByDateRange({events, formatDateRange}),
     [events, formatDateRange]
