@@ -173,18 +173,15 @@ export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
       <div className="flex justify-end text-consortiumBlue-800">
         <SlideOutButton
           id={`${enrichmentType}-form`}
-          className="py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortiumGreen-200 whitespace-pre-wrap"
+          className="py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortiumGreen-200"
         >
           <ChatBubbleBottomCenterTextIcon className="w-4 h-4 stroke-consortiumBlue-800" />
-          <div className="flex flex-col items-start">
-            <div>{t('addUserEnrichmentButtonLine1')}</div>
-            <div>
-              {t.rich('addUserEnrichmentButtonLine2', {
-                name: () => (
-                  <span className="lowercase">{t(translationKey)}</span>
-                ),
-              })}
-            </div>
+          <div className="whitespace-pre-wrap text-left leading-[.5rem]">
+            {t.rich('addUserEnrichmentButton', {
+              name: () => (
+                <span className="lowercase">{t(translationKey)}</span>
+              ),
+            })}
           </div>
         </SlideOutButton>
       </div>
