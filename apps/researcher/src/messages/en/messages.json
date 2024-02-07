@@ -231,6 +231,9 @@
   },
   "Communities": {
     "title": "Communities",
+    "pageDescription": "Communities are groups of people that represent a specific culture or geographical area. They can collect lists of objects that are meaningfull to their community.",
+    "yourCommunityTitle": "Your community",
+    "yourCommunityText": "Use the filters below to find your community. Click on a community to join. Is your community not represented?",
     "error": "Something went wrong while fetching communities. Please try again later.",
     "communityName": "Community of <name></name>",
     "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",

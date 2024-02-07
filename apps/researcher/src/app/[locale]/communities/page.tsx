@@ -66,44 +66,64 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
           defaultSortBy: SortBy.NameAsc,
         }}
       />
-      <div className="flex flex-col sm:flex-row justify-between items-center h-full gap-6 w-full max-w-[1800px] mx-auto px-4 sm:px-10 pt-6">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
-          <div>
+
+      <div className="bg-consortiumGreen-300 text-consortiumBlue-800 py-10 md:py-20">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-20 w-full max-w-[1800px] mx-auto px-4 sm:px-10">
+          <div className="flex flex-col gap-4 w-full md:w-3/5 max-w-md">
             <h1 className="text-2xl md:text-4xl">{t('title')}</h1>
+
+            <div className="">
+              <p>{t('pageDescription')}</p>
+            </div>
           </div>
-          <SignedIn>
-            <div>
-              <AddCommunityButton />
-            </div>
-          </SignedIn>
+          <div className="flex flex-col gap-1 w-full md:w-2/5 max-w-md mt-6">
+            <h2>{t('yourCommunityTitle')}</h2>
+
+            <p>{t('yourCommunityText')}</p>
+            <p>
+              <SignedIn>
+                <div>
+                  <AddCommunityButton />
+                </div>
+              </SignedIn>
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col xl:flex-row items-center md:items-end gap-4 justify-end">
-          {onlyMyCommunities === undefined && (
-            <div>
-              <SearchField placeholder={t('searchPlaceholder')} />
-            </div>
-          )}
+      </div>
+
+      <div className="text-sm w-full px-4 sm:px-10 max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between mt-8 my-16">
+        <div className="flex gap-4 flex-col md:flex-row items-start md:items-center">
           <div>
-            <OrderSelector
-              values={[
-                SortBy.NameAsc,
-                SortBy.NameDesc,
-                SortBy.MembershipCountDesc,
-                SortBy.CreatedAtDesc,
-              ]}
-            />
+            <div className="w-full max-w-[450px] relative">
+              {onlyMyCommunities === undefined && (
+                <div>
+                  <SearchField placeholder={t('searchPlaceholder')} />
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="mb-3">
+            <SignedIn>
+              <MyCommunityToggle />
+              <label className="ml-2" htmlFor="onlyMy">
+                {t('showMyCommunities')}
+              </label>
+            </SignedIn>
           </div>
         </div>
+        <div>
+          <OrderSelector
+            values={[
+              SortBy.NameAsc,
+              SortBy.NameDesc,
+              SortBy.MembershipCountDesc,
+              SortBy.CreatedAtDesc,
+            ]}
+          />
+        </div>
       </div>
-      <div className="text-sm w-full px-4 sm:px-10 pb-4 mb-4 text-right max-w-[1800px] mx-auto">
-        <SignedIn>
-          <MyCommunityToggle />
-          <label className="ml-2" htmlFor="onlyMy">
-            {t('showMyCommunities')}
-          </label>
-        </SignedIn>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 h-full grow content-stretch gap-6 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-10">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 h-full grow content-stretch gap-6 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-28">
         {communities.map(community => (
           <CommunityCard key={community.id} community={community} />
         ))}
