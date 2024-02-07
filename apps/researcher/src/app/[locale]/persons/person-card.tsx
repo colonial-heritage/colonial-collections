@@ -10,7 +10,7 @@ interface Props {
 
 export default function PersonCard({person}: Props) {
   const t = useTranslations('PersonCard');
-  const format = useFormatter();
+  const formatter = useFormatter();
 
   const unknownClassName = 'text-consortiumBlue-100 text-xs py-1';
 
@@ -36,7 +36,7 @@ export default function PersonCard({person}: Props) {
         </div>
         <div className="col-span-2 p-4">
           {person.birthDate ? (
-            <p>{format.dateTime(person.birthDate, {year: 'numeric'})} </p>
+            <p>{formatter.dateTime(person.birthDate, {year: 'numeric'})} </p>
           ) : (
             <p className={unknownClassName}>{t('birthYearUnknown')}</p>
           )}
@@ -48,7 +48,7 @@ export default function PersonCard({person}: Props) {
         </div>
         <div className="col-span-2 p-4">
           {person.deathDate ? (
-            <p>{format.dateTime(person.deathDate, {year: 'numeric'})} </p>
+            <p>{formatter.dateTime(person.deathDate, {year: 'numeric'})} </p>
           ) : (
             <p className={unknownClassName}>{t('deathYearUnknown')}</p>
           )}

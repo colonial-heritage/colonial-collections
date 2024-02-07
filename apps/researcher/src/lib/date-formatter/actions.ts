@@ -5,7 +5,7 @@ export async function getFormatDate(): Promise<
   ReturnType<typeof createFormatter>
 > {
   const t = await getTranslations('FormatDate');
-  const format = await getFormatter();
+  const formatter = await getFormatter();
 
-  return createFormatter({t, formatDateTime: format.dateTime});
+  return createFormatter({t, formatDateTime: formatter.dateTime});
 }

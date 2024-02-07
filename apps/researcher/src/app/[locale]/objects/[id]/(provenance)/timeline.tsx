@@ -27,7 +27,7 @@ function TimelineButton({event}: {event: TimelineEvent}) {
 
 export default function ProvenanceTimeline() {
   const t = useTranslations('Provenance');
-  const format = useFormatter();
+  const formatter = useFormatter();
   const {events, showTimeline, eventGroups} = useProvenance();
 
   if (!showTimeline) {
@@ -47,7 +47,7 @@ export default function ProvenanceTimeline() {
         {eventsWithoutDates.length > 0 &&
           t('timelineEventsWithoutDates', {
             eventCount: eventsWithoutDates.length,
-            events: format.list(
+            events: formatter.list(
               eventsWithoutDates.map(event => event.label),
               {type: 'conjunction'}
             ),
