@@ -93,7 +93,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
 
       <div className="text-sm w-full px-4 sm:px-10 max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between mt-8 my-16">
         <div className="flex gap-4 flex-col md:flex-row items-start md:items-center">
-          <div>
+          <div className="flex items-center">
             <div className="w-full max-w-[450px] relative">
               {onlyMyCommunities === undefined && (
                 <div>
@@ -102,7 +102,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
               )}
             </div>
           </div>
-          <div className="mb-3">
+          <div className="mb-3 md:mb-0 flex items-center">
             <SignedIn>
               <MyCommunityToggle />
               <label className="ml-2" htmlFor="onlyMy">
@@ -128,7 +128,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
           <CommunityCard key={community.id} community={community} />
         ))}
       </div>
-      <div className="sm:px-10">
+      <div className="px-4 sm:px-10 w-full max-w-[1800px] mx-auto">
         <Paginator />
       </div>
     </>
