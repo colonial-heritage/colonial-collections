@@ -14,8 +14,9 @@ import {addUserEnrichment} from './actions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import LanguageSelector from '@/components/language-selector';
 import type {AdditionalType} from '@colonial-collections/enricher';
-import {Suspense} from 'react';
+import {Suspense, useMemo} from 'react';
 import {useUser} from '@clerk/nextjs';
+import {addAttributionId} from '@/lib/user/actions';
 
 interface FormValues {
   description: string;
@@ -38,6 +39,11 @@ export function UserEnrichmentForm({
 }: Props) {
   const locale = useLocale();
   const {user} = useUser();
+  const attributionIds = useMemo(
+    () => user?.publicMetadata?.attributionIds as string[] | undefined,
+    [user?.publicMetadata?.attributionIds]
+  );
+
   const t = useTranslations('UserEnrichmentForm');
 
   const userEnricherSchema = z.object({
@@ -67,7 +73,10 @@ export function UserEnrichmentForm({
     resolver: zodResolver(userEnricherSchema),
     defaultValues: {
       description: '',
-      attributionId: '',
+      attributionId:
+        attributionIds && attributionIds.length > 0
+          ? attributionIds[attributionIds.length - 1]
+          : '',
       citation: '',
       inLanguage: locale,
       agreedToLicense: false,
@@ -88,6 +97,12 @@ export function UserEnrichmentForm({
           id: userEnrichment.attributionId,
         },
       });
+
+      await addAttributionId({
+        userId: user!.id,
+        attributionId: userEnrichment.attributionId,
+      });
+
       addNotification({
         id: 'add-user-enrichment-success',
         message: t('successfullyAdded'),
