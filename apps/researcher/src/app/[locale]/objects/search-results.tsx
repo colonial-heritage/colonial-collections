@@ -202,7 +202,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
               </SubMenuDialog>
             </SmallScreenSubMenu>
             <div
-              className="flex flex-col sm:flex-row sm:justify-between"
+              className="flex flex-col gap-2 sm:flex-row sm:justify-between"
               id="search-results"
             >
               <h2 className="text-xl">

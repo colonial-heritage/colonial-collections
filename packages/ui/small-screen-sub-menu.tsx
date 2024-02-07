@@ -59,7 +59,7 @@ export function SubMenuDialog({children, title}: SubMenuDialogProps) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black bg-opacity-50" />
         </Transition.Child>
         <div className="fixed inset-0 z-40 flex">
           <Transition.Child
@@ -71,7 +71,7 @@ export function SubMenuDialog({children, title}: SubMenuDialogProps) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-consortiumBlue-800 text-white px-4 py-4 pb-6 shadow-xl">
+            <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white px-4 py-4 pb-6 shadow-xl">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold">{title}</h2>
                 <button
