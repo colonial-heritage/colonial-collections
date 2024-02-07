@@ -26,12 +26,14 @@ describe('formatDate', () => {
     const date = new Date('2022-01-01');
     formatDate({date, t, formatDateTime});
     expect(formatDateTime).toHaveBeenCalledWith(date, dateFormatSettings);
+    expect(t).not.toHaveBeenCalled();
   });
 
   it('formats the date using translations for dates before 0', () => {
     const date = new Date('-001000-01-01');
     formatDate({date, t, formatDateTime});
     expect(t).toHaveBeenCalledWith('beforeCommonEraFormat', {date});
+    expect(formatDateTime).not.toHaveBeenCalled();
   });
 });
 
