@@ -42,7 +42,7 @@ export default function CommunityCard({community}: CommunityCardProps) {
           height={144}
           src={community.imageUrl}
           alt=""
-          className="w-36 h-auto rounded-full border border-consortiumBlue-800 transition"
+          className="w-36 h-36 rounded-full border border-consortiumBlue-800 transition object-cover"
         />
       </div>
 
