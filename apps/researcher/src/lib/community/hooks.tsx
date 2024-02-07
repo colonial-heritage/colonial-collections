@@ -38,13 +38,7 @@ export function useCommunityProfile({
   return {openProfile};
 }
 
-interface UseUserCommunitiesProps {
-  canAddEnrichments?: boolean;
-}
-
-export function useUserCommunities({
-  canAddEnrichments = false,
-}: UseUserCommunitiesProps = {}) {
+export function useUserCommunities() {
   const {user, isLoaded} = useUser();
 
   const communities = useMemo(() => {
@@ -52,15 +46,10 @@ export function useUserCommunities({
       return [];
     }
 
-    const communities = user.organizationMemberships.map(membership =>
+    return user.organizationMemberships.map(membership =>
       organizationToCommunity(membership.organization)
     );
-
-    if (canAddEnrichments) {
-      return communities.filter(community => community.canAddEnrichments);
-    }
-    return communities;
-  }, [user, canAddEnrichments]);
+  }, [user]);
 
   return {communities, isLoaded};
 }

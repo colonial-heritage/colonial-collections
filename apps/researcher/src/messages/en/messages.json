@@ -257,20 +257,13 @@
     "editCommunityTitle": "Edit community",
     "labelName":"Name",
     "labelDescription":"Description",
-    "labelAttributionId":"ORCID",
-    "descriptionAttributionId": "A community needs at least one member with a valid ORCID to comment and add new information to objects in the application. ORCID is primarily intended for researchers and can be created through the <link>ORCID website</link>.\n\nWhen you link your ORCID to your community, you will be seen as its spokesperson and all comments made by the members are registered using your ORCID. This way the application supports a certain level of anonymity without losing the ability to accredit the source of the added knowledge. Moreover it allows you to grow the community among participants that do not have a formal (western) academical training.",
-    "labelLicense": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
-    "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.en",
     "editCommunitySaveButton": "Save",
     "editCommunityCancelButton": "Cancel",
     "communityUpdated": "Description has been updated",
     "communityEditServerError": "Something went wrong while updating the community. Please try again later.",
     "nameMaxLength": "Name has a maximum of 250 characters",
     "nameTooSmall": "Name is required",
-    "descriptionMaxLength": "Description has a maximum of 2000 characters",
-    "attributionIdInvalidString": "ORCID should be a valid url",
-    "noAttributionIdWarning": "To add narratives or provenance information to objects you need to add an ORCID to your community profile.",
-    "addAttributionIdButton": "Add ORCID"
+    "descriptionMaxLength": "Description has a maximum of 2000 characters"
   },
   "AddObjectListForm": {
     "title": "Add list",

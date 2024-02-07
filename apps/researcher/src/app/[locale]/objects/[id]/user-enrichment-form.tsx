@@ -229,7 +229,7 @@ export function UserEnrichmentForm({
   objectId,
 }: Props) {
   const t = useTranslations('UserEnrichmentForm');
-  const {communities, isLoaded} = useUserCommunities({canAddEnrichments: true});
+  const {communities, isLoaded} = useUserCommunities();
 
   if (!isLoaded) {
     return null;
