@@ -42,9 +42,12 @@ interface AddUserEnrichmentProps {
   description: string;
   citation: string;
   inLanguage?: string;
-  community: {name: string; id: string};
   objectId: string;
   additionalType: AdditionalType;
+  user: {
+    id: string;
+    name: string;
+  };
 }
 
 export async function addUserEnrichment({
@@ -52,8 +55,8 @@ export async function addUserEnrichment({
   description,
   citation,
   inLanguage,
-  community,
   objectId,
+  user,
 }: AddUserEnrichmentProps) {
   const enrichment = await creator.addText({
     additionalType,
@@ -61,7 +64,7 @@ export async function addUserEnrichment({
     citation,
     inLanguage,
     about: objectId,
-    creator: community,
+    creator: user,
     license: enrichmentLicence,
   });
 
