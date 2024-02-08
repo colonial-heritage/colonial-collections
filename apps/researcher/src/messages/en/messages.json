@@ -1,6 +1,9 @@
 {
   "FormatDate": {
-    "beforeCommonEraFormat": "{date, date, ::yyyy} BCE"
+    "beforeCommonEraFormat": "{date, date, ::yyyy} BCE",
+    "noDateRange": "No date",
+    "noStartDate": "No start date",
+    "noEndDate": "No end date"
   },
   "Meta": {
     "title": "Research app"
@@ -159,7 +162,6 @@
     "hideTimelineButton": "Hide timeline",
     "showDataTableButton": "Show data table",
     "hideDataTableButton": "Hide data table",
-    "noDate": "No date",
     "noDescription": "No description"
   },
   "PersonDetails": {

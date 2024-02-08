@@ -17,7 +17,7 @@ import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391 from 'iso-639-1-dir';
 import {LanguageCode} from 'iso-639-1-dir/dist/data';
 import Provenance from './(provenance)/overview';
-import {getFormatDate} from '@/lib/date-formatter';
+import {getDateFormatter} from '@/lib/date-formatter/actions';
 import {LocaleEnum} from '@/definitions';
 import {env} from 'node:process';
 
@@ -32,7 +32,7 @@ export default async function Details({params}: Props) {
   const locale = useLocale() as LocaleEnum;
   const object = await heritageObjects.getById({id, locale});
   const t = await getTranslations('ObjectDetails');
-  const formatDate = await getFormatDate();
+  const {formatDate} = await getDateFormatter();
 
   if (!object) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;

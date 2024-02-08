@@ -6,14 +6,19 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useMemo,
   useState,
 } from 'react';
 import {LabeledProvenanceEvent} from './definitions';
+import {groupByDateRange} from './group-events';
+import {useDateFormatter} from '@/lib/date-formatter/hooks';
 
 interface SelectedEventContextType {
   selectedEvents: string[];
   setSelectedEvents: Dispatch<SetStateAction<string[]>>;
   events: LabeledProvenanceEvent[];
+  eventGroups: {[dateRange: string]: LabeledProvenanceEvent[]};
+  eventGroupsFiltered: {[dateRange: string]: LabeledProvenanceEvent[]};
   showTimeline: boolean;
   showDataTable: boolean;
   setShowTimeline: Dispatch<SetStateAction<boolean>>;
@@ -24,6 +29,8 @@ const SelectedEventContext = createContext<SelectedEventContextType>({
   selectedEvents: [],
   setSelectedEvents: () => {},
   events: [],
+  eventGroups: {},
+  eventGroupsFiltered: {},
   showTimeline: true,
   showDataTable: true,
   setShowTimeline: () => {},
@@ -40,11 +47,27 @@ export function ProvenanceProvider({
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
   const [showTimeline, setShowTimeline] = useState(true);
   const [showDataTable, setShowDataTable] = useState(true);
+  const {formatDateRange} = useDateFormatter();
+  const eventGroups = useMemo(
+    () => groupByDateRange({events, formatDateRange}),
+    [events, formatDateRange]
+  );
+
+  const eventGroupsFiltered = useMemo(() => {
+    const eventsToShow =
+      selectedEvents.length > 0
+        ? selectedEvents.map(id => events.find(event => event.id === id)!)
+        : events;
+
+    return groupByDateRange({events: eventsToShow, formatDateRange});
+  }, [events, formatDateRange, selectedEvents]);
 
   const context = {
     selectedEvents,
     setSelectedEvents,
     events,
+    eventGroups,
+    eventGroupsFiltered,
     showTimeline,
     setShowTimeline,
     showDataTable,
