@@ -10,7 +10,7 @@
   },
   "Home": {
     "title": "Koloniale Collecties Datahub",
-    "description": "De Koloniale Collecties Datahub is een plek om objecten te verkennen die hun oorsprong hebben in voormalige Nederlandse koloniale landen zoals Suriname, Indonesië, Sri Lanka, Zuid-Afrika, Aruba, Curaçao, Sint Maarten en vele andere landen en gebieden.",
+    "description": "De Koloniale Collecties Datahub is een plek om objecten te verkennen die hun oorsprong hebben in voormalige Nederlandse koloniale landen zoals Suriname, Indonesië, Sri Lanka, Zuid-Afrika, Aruba, Curaçao, Sint Maarten en vele andere landen en gebieden. <link>Bekijk hoe dit werkt.</link>",
     "searchLabel": "Zoek naar erfgoedobjecten",
     "searchPlaceholder": "Tip: begin met zoeken naar een locatie, bijvoorbeeld Suriname",
     "narrativeExplainTitle": "Voeg je verhaal toe aan de objecten",
@@ -18,7 +18,10 @@
     "signupLink": "Account aanmaken",
     "communitiesTitle": "Erfgoed communities",
     "communitiesDescription": "Elke gemeenschap kan haar eigen community starten op dit platform. Een community kan lijsten met objecten maken die verhalen vertellen over hun geschiedenis. Communities kunnen ook verhalen toevoegen aan de objecten in deze collectie.",
-    "communitiesLink": "Hier zijn enkele communities om je te inspireren. Of <link>bekijk alle communities</link>."
+    "communitiesLink": "Hier zijn enkele communities om je te inspireren. Of <link>bekijk alle communities</link>.",
+    "howThisWorksTitle": "Hoe werkt deze site?",
+    "howThisWorksText": "Hier geven wij een korte uitleg over deze site. Hier ziet u hoe u naar objecten kunt zoeken en hoe u communities kunt gebruiken.",
+    "howThisWorksAlt": "Een animatie over hoe deze site werkt."
   },
   "SignUp": {
     "pageTitle": "Maak een account aan",
