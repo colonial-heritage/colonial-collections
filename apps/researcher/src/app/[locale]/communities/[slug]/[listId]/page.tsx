@@ -36,8 +36,8 @@ export default async function Page({params}: Props) {
 
   return (
     <>
-      <div className="px-10 w-full mb-2 sm:-mb-9 flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto">
-        <div>
+      <div className="px-10 w-full mb-2 flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto">
+        <div className="mt-8">
           <Link
             href={`/communities/${params.slug}`}
             className="flex items-center gap-1"
