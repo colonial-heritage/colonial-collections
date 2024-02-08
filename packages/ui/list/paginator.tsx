@@ -19,8 +19,8 @@ export function Paginator() {
   }
 
   return (
-    <div className="flex items-center justify-between pt-10">
-      <div className="sm:flex sm:flex-1 sm:items-center sm:justify-between">
+    <div>
+      <div className="flex flex-col sm:flex-row gap-4 pt-10">
         <div>
           <p>
             {t.rich('results', {
@@ -31,7 +31,7 @@ export function Paginator() {
             })}
           </p>
         </div>
-        <div className="flex flex-1 justify-between sm:justify-end gap-1">
+        <div className="flex flex-1 justify-start sm:justify-end gap-1">
           <button
             onClick={() => pageChange(-1)}
             disabled={offset <= 0}

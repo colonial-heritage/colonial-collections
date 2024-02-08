@@ -70,7 +70,7 @@ export default async function CommunityPage({params}: Props) {
 
   return (
     <>
-      <div className="px-4 sm:px-10 -mt-3 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
+      <div className="px-4 sm:px-10 mt-8 -mb-3 sm:-mb-9 flex gap-2 flex-row sm:justify-between w-full max-w-[1800px] mx-auto">
         <div>
           <ToFilteredListButton
             baseUrl="/communities"
