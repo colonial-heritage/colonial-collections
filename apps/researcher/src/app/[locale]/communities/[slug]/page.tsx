@@ -101,7 +101,7 @@ export default async function CommunityPage({params}: Props) {
               <Image
                 width="0"
                 height="0"
-                className="w-32 lg:w-48 h-auto rounded-full border border-consortiumBlue-700"
+                className="w-32 h-32 lg:w-48 lg:h-48 rounded-full border border-consortiumBlue-700 object-cover"
                 sizes="(min-width: 1024px) 192px, 128px"
                 src={community.imageUrl}
                 alt=""
@@ -109,7 +109,7 @@ export default async function CommunityPage({params}: Props) {
             </div>
           </div>
           <SlideOutClosed id={slideOutEditFormId}>
-            <div className="w-full rounded-lg bg-consortiumGreen-300 border border-consortiumBlue-700 text-consortiumBlue-800 pt-16 md:pt-24 pb-6 transition">
+            <div className="w-full rounded-lg bg-consortiumGreen-100 border border-consortiumBlue-700 text-consortiumBlue-800 pt-16 md:pt-24 pb-6 transition">
               <div className="w-full flex flex-col">
                 <h1 className="text-2xl font-normal w-full text-center mt-4 px-4 my-6">
                   {t('title')}
