@@ -1,5 +1,4 @@
 import {ChevronLeftIcon, PencilSquareIcon} from '@heroicons/react/24/solid';
-import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
 import {getTranslations} from 'next-intl/server';
@@ -83,31 +82,6 @@ export default async function CommunityPage({params}: Props) {
       </div>
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
         <main className="w-full">
-          <Protect communityId={community.id} permission="org:lists:manage">
-            {!community.canAddEnrichments && (
-              <div className="rounded mb-4 flex flex-col items-center md:flex-row justify-between gap-2 bg-white/50 w-full mx-auto border border-neutral-600/60">
-                <div className="bg-neutral-600/60 p-3 rounded-l">
-                  <ExclamationTriangleIcon className="w-6 h-6 stroke-orange-300" />
-                </div>
-                <div className="p-2">
-                  <p>{t('noAttributionIdWarning')}</p>
-                </div>
-                <div className="p-2 flex gap-2">
-                  <Protect
-                    communityId={community.id}
-                    permission="org:sys_profile:manage"
-                  >
-                    <SlideOutButton
-                      id={slideOutEditFormId}
-                      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-700/50 hover:bg-neutral-800/50 text-neutral-100 transition flex items-center gap-1"
-                    >
-                      {t('addAttributionIdButton')}
-                    </SlideOutButton>
-                  </Protect>
-                </div>
-              </div>
-            )}
-          </Protect>
           <Protect
             communityId={community.id}
             permission="org:sys_profile:manage"
@@ -168,8 +142,6 @@ export default async function CommunityPage({params}: Props) {
                 description={community.description}
                 name={community.name}
                 slug={community.slug!}
-                attributionId={community.attributionId}
-                license={community.license}
               />
             </div>
           </SlideOut>

@@ -22,14 +22,6 @@ export async function getCommunityById(id: string) {
   return organizationToCommunity(organization);
 }
 
-export async function getCommunityByAttributionId(attributionId: string) {
-  const communities = await getCommunities();
-
-  return communities.find(
-    community => community.attributionId === attributionId
-  );
-}
-
 export async function getMemberships(communityId: string) {
   const organizationMembership =
     await clerkClient.organizations.getOrganizationMembershipList({
@@ -147,16 +139,12 @@ interface UpdateCommunityProps {
   id: string;
   name: string;
   description: string;
-  attributionId: string;
-  license?: string;
 }
 
 export async function updateCommunity({
   id,
   name,
   description,
-  attributionId,
-  license,
 }: UpdateCommunityProps) {
   noStore();
 
@@ -164,8 +152,6 @@ export async function updateCommunity({
     name,
     publicMetadata: {
       description,
-      attributionId: encodeURIComponent(attributionId),
-      license: license ? encodeURIComponent(license) : '',
     },
   });
 

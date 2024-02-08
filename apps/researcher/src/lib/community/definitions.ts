@@ -3,12 +3,9 @@ export interface Community {
   name: string;
   slug: string;
   description?: string;
-  attributionId?: string;
   imageUrl: string;
   createdAt: number;
   membershipCount?: number;
-  license?: string;
-  canAddEnrichments: boolean;
 }
 
 export interface Membership {

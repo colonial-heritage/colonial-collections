@@ -12,7 +12,6 @@ const organization: Organization = {
   name: 'Organization 1',
   publicMetadata: {
     description: 'Description',
-    attributionId: 'attributionId',
     license: 'license',
   },
   slug: 'organization-1',
@@ -32,13 +31,10 @@ const expectedCommunity: Community = {
   id: 'org1',
   name: 'Organization 1',
   description: 'Description',
-  attributionId: 'attributionId',
-  license: 'license',
   slug: 'organization-1',
   imageUrl: 'https://example.com/image.png',
   createdAt: 1620000000000,
   membershipCount: 10,
-  canAddEnrichments: true,
 };
 
 describe('organizationToCommunity', () => {
@@ -53,7 +49,6 @@ describe('organizationToCommunity', () => {
       name: 'Organization 1',
       publicMetadata: {
         description: 'Description',
-        attributionId: 'attributionId',
         license: 'license',
       },
       slug: 'organization-1',
@@ -66,13 +61,10 @@ describe('organizationToCommunity', () => {
       id: 'org1',
       name: 'Organization 1',
       description: 'Description',
-      attributionId: 'attributionId',
-      license: 'license',
       slug: 'organization-1',
       imageUrl: 'https://example.com/image.png',
       createdAt: 1620000000000,
       membershipCount: 10,
-      canAddEnrichments: true,
     };
 
     expect(organizationToCommunity(organization)).toEqual(expectedCommunity);
