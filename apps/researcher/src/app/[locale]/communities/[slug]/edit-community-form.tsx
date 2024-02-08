@@ -8,9 +8,6 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {updateCommunityAndRevalidate} from './actions';
 import {camelCase} from 'tiny-case';
 import {useCommunityProfile} from '@/lib/community/hooks';
-import {LocalizedMarkdown} from '@colonial-collections/ui';
-import {enrichmentLicence} from '@/lib/enrichment-licence';
-import {Suspense} from 'react';
 
 interface Props {
   communityId: string;
@@ -18,22 +15,16 @@ interface Props {
   name: string;
   slug: string;
   description?: string;
-  attributionId?: string;
-  license?: string;
 }
 
 interface FormValues {
   name: string;
   description: string;
-  attributionId: string;
-  agreedToLicense: boolean;
 }
 
 const communitySchema = z.object({
   name: z.string().trim().min(1).max(250),
   description: z.string().max(2000),
-  attributionId: z.string().url().optional().or(z.literal('')),
-  agreedToLicense: z.boolean(),
 });
 
 export default function EditCommunityForm({
@@ -42,8 +33,6 @@ export default function EditCommunityForm({
   name,
   slug,
   description,
-  attributionId,
-  license,
 }: Props) {
   const {
     register,
@@ -55,8 +44,6 @@ export default function EditCommunityForm({
     defaultValues: {
       name,
       description: description ?? '',
-      attributionId: attributionId ?? '',
-      agreedToLicense: !!license,
     },
   });
 
@@ -72,7 +59,6 @@ export default function EditCommunityForm({
       await updateCommunityAndRevalidate({
         id: communityId,
         slug,
-        license: formValues.agreedToLicense ? enrichmentLicence : undefined,
         ...formValues,
       });
       addNotification({
@@ -135,59 +121,6 @@ export default function EditCommunityForm({
           {errors.description &&
             t(camelCase(`description_${errors.description.type}`))}
         </p>
-      </div>
-
-      <div className="flex flex-col gap-1 max-w-2xl w-full">
-        <label htmlFor="attributionId" className="flex flex-col gap-1 mb-1">
-          <strong>{t('labelAttributionId')}</strong>
-          <div className="text-sm mb-1 whitespace-pre-line">
-            {t.rich('descriptionAttributionId', {
-              link: text => (
-                <a href="https://orcid.org" target="_blank" rel="noreferrer">
-                  {text}
-                </a>
-              ),
-            })}
-          </div>
-        </label>
-        <input
-          id="attributionId"
-          {...register('attributionId')}
-          className="border border-neutral-500 rounded p-2 text-sm"
-        />
-        <p>
-          {errors.attributionId &&
-            t(camelCase(`attributionId_${errors.attributionId.type}`))}
-        </p>
-
-        <div className="mt-4">
-          <div className="flex justify-start gap-2 items-center">
-            <input
-              type="checkbox"
-              id="license"
-              {...register('agreedToLicense')}
-            />
-            <label className="flex flex-col gap-1 mb-1" htmlFor="license">
-              {t.rich('labelLicense', {
-                link: text => (
-                  <a href={t('licenseLink')} target="_blank" rel="noreferrer">
-                    {text}
-                  </a>
-                ),
-              })}
-            </label>
-          </div>
-          <div className="text-sm mb-1">
-            <Suspense>
-              <LocalizedMarkdown
-                name="license"
-                contentPath="@/messages"
-                textSize="small"
-              />
-            </Suspense>
-          </div>
-        </div>
-        <p>{errors.agreedToLicense?.message}</p>
       </div>
 
       <div className="flex flex-row max-w-2xl w-full">

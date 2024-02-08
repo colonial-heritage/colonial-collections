@@ -4,24 +4,26 @@ import {
   useSlideOut,
   useNotifications,
   SlideOutButton,
+  LocalizedMarkdown,
 } from '@colonial-collections/ui';
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useLocale, useTranslations} from 'next-intl';
 import {z} from 'zod';
 import {addUserEnrichment} from './actions';
-import {useUserCommunities} from '@/lib/community/hooks';
-import {camelCase} from 'tiny-case';
-import {Community} from '@/lib/community/definitions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import LanguageSelector from '@/components/language-selector';
 import type {AdditionalType} from '@colonial-collections/enricher';
+import {Suspense, useMemo} from 'react';
+import {useUser} from '@clerk/nextjs';
+import {addAttributionId} from '@/lib/user/actions';
 
 interface FormValues {
   description: string;
   attributionId: string;
   citation: string;
   inLanguage?: string;
+  agreedToLicense: boolean;
 }
 
 interface Props {
@@ -30,20 +32,36 @@ interface Props {
   objectId: string;
 }
 
-const userEnricherSchema = z.object({
-  description: z.string().trim().min(1),
-  attributionId: z.string().trim().min(1),
-  citation: z.string().trim().min(1),
-  inLanguage: z.string().optional(),
-});
-
-function Form({
+export function UserEnrichmentForm({
   slideOutId,
   enrichmentType,
   objectId,
-  communities,
-}: Props & {communities: Community[]}) {
+}: Props) {
   const locale = useLocale();
+  const {user} = useUser();
+  const attributionIds = useMemo(
+    () => user?.publicMetadata?.attributionIds as string[] | undefined,
+    [user?.publicMetadata?.attributionIds]
+  );
+
+  const t = useTranslations('UserEnrichmentForm');
+
+  const userEnricherSchema = z.object({
+    description: z
+      .string()
+      .trim()
+      .min(1, {message: t('descriptionRequired')}),
+    citation: z
+      .string()
+      .trim()
+      .min(1, {message: t('citationRequired')}),
+    inLanguage: z.string().optional(),
+    attributionId: z.string().url({message: t('invalidAttributionId')}),
+    agreedToLicense: z.literal<boolean>(true, {
+      errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
+    }),
+  });
+
   const {
     register,
     handleSubmit,
@@ -55,30 +73,36 @@ function Form({
     resolver: zodResolver(userEnricherSchema),
     defaultValues: {
       description: '',
-      attributionId: communities[0].attributionId || '',
+      attributionId:
+        attributionIds && attributionIds.length > 0
+          ? attributionIds[attributionIds.length - 1]
+          : '',
       citation: '',
       inLanguage: locale,
+      agreedToLicense: false,
     },
   });
 
-  const t = useTranslations('UserEnrichmentForm');
   const {setIsVisible} = useSlideOut();
   const {addNotification} = useNotifications();
 
   const onSubmit: SubmitHandler<FormValues> = async userEnrichment => {
     try {
-      const community = communities.find(
-        community => community.attributionId === userEnrichment.attributionId
-      );
       await addUserEnrichment({
         ...userEnrichment,
         additionalType: enrichmentType,
         objectId,
-        community: {
-          name: community!.name,
-          id: community!.attributionId!,
+        user: {
+          name: user!.fullName!,
+          id: userEnrichment.attributionId,
         },
       });
+
+      await addAttributionId({
+        userId: user!.id,
+        attributionId: userEnrichment.attributionId,
+      });
+
       addNotification({
         id: 'add-user-enrichment-success',
         message: t('successfullyAdded'),
@@ -133,33 +157,19 @@ function Form({
             rows={4}
             className="border border-neutral-400 rounded p-2 text-sm w-full"
           />
-          <p>
-            {errors.description &&
-              t(camelCase(`description_${errors.description.type}`))}
-          </p>
+          <p>{errors.description?.message}</p>
         </div>
-        <div className="flex flex-col w-full lg:w-1/3 gap-4">
-          <label htmlFor="attributionId" className="flex flex-col">
-            <strong>
-              {t('community')}
-              <span className="font-normal text-neutral-600">*</span>
-            </strong>
-            <div>{t('communitySubTitle')}</div>
-          </label>
-          <select
-            {...register('attributionId')}
-            className="p-2 rounded border border-greenGrey-200 bg-white"
-          >
-            {communities.map(community => (
-              <option key={community.id} value={community.attributionId!}>
-                {community.name}
-              </option>
-            ))}
-          </select>
-          <p>
-            {errors.attributionId &&
-              t(camelCase(`attributionId_${errors.attributionId.type}`))}
-          </p>
+        <div className="flex flex-col w-full lg:w-1/3">
+          <div className="flex flex-col gap-1 mb-1">
+            <label>
+              <strong>{t('inLanguage')}</strong>
+              <div>{t('languageSubTitle')}</div>
+            </label>
+            <LanguageSelector
+              value={watch('inLanguage')}
+              setValue={inLanguage => setValue('inLanguage', inLanguage)}
+            />
+          </div>
         </div>
       </div>
 
@@ -178,21 +188,58 @@ function Form({
             rows={2}
             className="border border-greenGrey-200 rounded p-2"
           />
-          <p>
-            {errors.citation &&
-              t(camelCase(`citation_${errors.citation.type}`))}
-          </p>
+          <p>{errors.citation?.message}</p>
         </div>
-        <div className="flex flex-col w-full lg:w-1/3">
-          <div className="flex flex-col gap-1 mb-1">
-            <label>
-              <strong>{t('inLanguage')}</strong>
-              <div>{t('languageSubTitle')}</div>
-            </label>
-            <LanguageSelector
-              value={watch('inLanguage')}
-              setValue={inLanguage => setValue('inLanguage', inLanguage)}
-            />
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col w-full lg:w-2/3">
+          <label htmlFor="attributionId" className="flex flex-col gap-1 mb-1">
+            <strong>{t('labelAttributionId')}</strong>
+            <div className="text-sm mb-1 whitespace-pre-line">
+              {t.rich('descriptionAttributionId', {
+                link: text => (
+                  <a href="https://orcid.org" target="_blank" rel="noreferrer">
+                    {text}
+                  </a>
+                ),
+              })}
+            </div>
+          </label>
+          <input
+            id="attributionId"
+            {...register('attributionId')}
+            className="border border-neutral-500 rounded p-2 text-sm"
+          />
+          <p>{errors.attributionId?.message}</p>
+
+          <div className="mt-4">
+            <div className="flex justify-start gap-2 items-center">
+              <input
+                type="checkbox"
+                id="license"
+                {...register('agreedToLicense')}
+              />
+              <label className="flex flex-col gap-1 mb-1" htmlFor="license">
+                {t.rich('labelLicense', {
+                  link: text => (
+                    <a href={t('licenseLink')} target="_blank" rel="noreferrer">
+                      {text}
+                    </a>
+                  ),
+                })}
+              </label>
+            </div>
+            <p>{errors.agreedToLicense?.message}</p>
+            <div className="text-sm mb-1">
+              <Suspense>
+                <LocalizedMarkdown
+                  name="license"
+                  contentPath="@/messages"
+                  textSize="small"
+                />
+              </Suspense>
+            </div>
           </div>
         </div>
       </div>
@@ -220,31 +267,5 @@ function Form({
         </div>
       </div>
     </form>
-  );
-}
-
-export function UserEnrichmentForm({
-  slideOutId,
-  enrichmentType,
-  objectId,
-}: Props) {
-  const t = useTranslations('UserEnrichmentForm');
-  const {communities, isLoaded} = useUserCommunities({canAddEnrichments: true});
-
-  if (!isLoaded) {
-    return null;
-  }
-
-  if (isLoaded && !communities.length) {
-    return <p>{t('noCommunities')}</p>;
-  }
-
-  return (
-    <Form
-      slideOutId={slideOutId}
-      enrichmentType={enrichmentType}
-      objectId={objectId}
-      communities={communities}
-    />
   );
 }

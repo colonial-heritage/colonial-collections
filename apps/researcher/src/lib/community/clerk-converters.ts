@@ -14,12 +14,6 @@ export function organizationToCommunity(
     name: organization.name,
     // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata.
     description: organization.publicMetadata?.description as string | undefined,
-    attributionId: organization.publicMetadata?.attributionId
-      ? decodeURIComponent(organization.publicMetadata?.attributionId as string)
-      : undefined,
-    license: organization.publicMetadata?.license
-      ? decodeURIComponent(organization.publicMetadata?.license as string)
-      : undefined,
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
     // In OrganizationResource `createdAt` is a `Date` object.
@@ -37,10 +31,6 @@ export function organizationToCommunity(
         : 'membersCount' in organization // OrganizationResource
         ? organization.membersCount
         : undefined,
-    canAddEnrichments: !!(
-      organization.publicMetadata?.attributionId &&
-      organization.publicMetadata?.license
-    ),
   };
 }
 

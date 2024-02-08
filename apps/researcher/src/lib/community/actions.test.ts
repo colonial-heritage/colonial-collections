@@ -11,7 +11,6 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1690000000000,
       membershipCount: 10,
-      canAddEnrichments: false,
     },
     {
       id: 'community1',
@@ -20,7 +19,6 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1600000000000,
       membershipCount: 5,
-      canAddEnrichments: false,
     },
     {
       id: 'community4',
@@ -29,7 +27,6 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1680000000000,
       membershipCount: 15,
-      canAddEnrichments: false,
     },
     {
       id: 'community3',
@@ -38,7 +35,6 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1650000000000,
       membershipCount: 20,
-      canAddEnrichments: false,
     },
     {
       id: 'community5',
@@ -47,7 +43,6 @@ describe('sort', () => {
       imageUrl: 'https://example.com/image.png',
       createdAt: 1670000000000,
       membershipCount: undefined,
-      canAddEnrichments: false,
     },
   ];
 
@@ -62,7 +57,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
         membershipCount: 5,
-        canAddEnrichments: false,
       },
       {
         id: 'community2',
@@ -71,7 +65,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
         membershipCount: 10,
-        canAddEnrichments: false,
       },
       {
         id: 'community3',
@@ -80,7 +73,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
         membershipCount: 20,
-        canAddEnrichments: false,
       },
       {
         id: 'community4',
@@ -89,7 +81,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
         membershipCount: 15,
-        canAddEnrichments: false,
       },
       {
         id: 'community5',
@@ -98,7 +89,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
         membershipCount: undefined,
-        canAddEnrichments: false,
       },
     ];
 
@@ -116,7 +106,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
         membershipCount: undefined,
-        canAddEnrichments: false,
       },
       {
         id: 'community4',
@@ -125,7 +114,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
         membershipCount: 15,
-        canAddEnrichments: false,
       },
       {
         id: 'community3',
@@ -134,7 +122,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
         membershipCount: 20,
-        canAddEnrichments: false,
       },
       {
         id: 'community2',
@@ -143,7 +130,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
         membershipCount: 10,
-        canAddEnrichments: false,
       },
       {
         id: 'community1',
@@ -152,7 +138,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
         membershipCount: 5,
-        canAddEnrichments: false,
       },
     ];
 
@@ -170,7 +155,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
         membershipCount: 10,
-        canAddEnrichments: false,
       },
       {
         id: 'community4',
@@ -179,7 +163,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
         membershipCount: 15,
-        canAddEnrichments: false,
       },
       {
         id: 'community5',
@@ -188,7 +171,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
         membershipCount: undefined,
-        canAddEnrichments: false,
       },
       {
         id: 'community3',
@@ -197,7 +179,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
         membershipCount: 20,
-        canAddEnrichments: false,
       },
       {
         id: 'community1',
@@ -206,7 +187,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
         membershipCount: 5,
-        canAddEnrichments: false,
       },
     ];
 
@@ -224,7 +204,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1650000000000,
         membershipCount: 20,
-        canAddEnrichments: false,
       },
       {
         id: 'community4',
@@ -233,7 +212,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1680000000000,
         membershipCount: 15,
-        canAddEnrichments: false,
       },
       {
         id: 'community2',
@@ -242,7 +220,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1690000000000,
         membershipCount: 10,
-        canAddEnrichments: false,
       },
       {
         id: 'community1',
@@ -251,7 +228,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1600000000000,
         membershipCount: 5,
-        canAddEnrichments: false,
       },
       {
         id: 'community5',
@@ -260,7 +236,6 @@ describe('sort', () => {
         imageUrl: 'https://example.com/image.png',
         createdAt: 1670000000000,
         membershipCount: undefined,
-        canAddEnrichments: false,
       },
     ];
 
