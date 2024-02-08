@@ -23,6 +23,8 @@ export async function addAttributionId({
   const existingAttributionIds =
     (user.publicMetadata?.attributionIds as string[]) || [];
 
+  // Save all used attributionIds in the user's metadata,
+  // so we can query for them later.
   const newAttributionIds = Array.from(
     new Set([...existingAttributionIds, attributionId])
   );
