@@ -50,7 +50,7 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  const format = await getFormatter();
+  const formatter = await getFormatter();
 
   const columnClassName = 'px-10 first:pl-0 last:pr-0 space-y-6 flex-1';
   const dateFormat: DateTimeFormatOptions = {
@@ -78,7 +78,7 @@ export default async function Details({params}: Props) {
                 title={t('birthDate')}
                 value={
                   person.birthDate &&
-                  format.dateTime(person.birthDate, dateFormat)
+                  formatter.dateTime(person.birthDate, dateFormat)
                 }
               />
               <InfoBlock
@@ -91,7 +91,7 @@ export default async function Details({params}: Props) {
                 title={t('deathDate')}
                 value={
                   person.deathDate &&
-                  format.dateTime(person.deathDate, dateFormat)
+                  formatter.dateTime(person.deathDate, dateFormat)
                 }
               />
               <InfoBlock

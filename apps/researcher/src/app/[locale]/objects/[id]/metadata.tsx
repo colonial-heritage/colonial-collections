@@ -103,7 +103,7 @@ export async function MetadataEntry({
 }: MetadataEntryProps) {
   const {organization} = useObject.getState();
   const t = useTranslations('ObjectDetails');
-  const format = await getFormatter();
+  const formatter = await getFormatter();
 
   const author = creator ? creator : organization;
 
@@ -135,7 +135,7 @@ export async function MetadataEntry({
         {(dateCreated || citation) && (
           <div className="flex justify-between">
             {dateCreated &&
-              format.dateTime(dateCreated, {
+              formatter.dateTime(dateCreated, {
                 dateStyle: 'medium',
               })}
             {citation && (

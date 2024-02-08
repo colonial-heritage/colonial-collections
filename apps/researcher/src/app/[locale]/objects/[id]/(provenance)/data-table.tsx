@@ -2,17 +2,19 @@
 
 import {SlideOut, useSlideOut} from '@colonial-collections/ui';
 import type {LabeledProvenanceEvent} from './definitions';
-import {useLocale, useTranslations} from 'next-intl';
-import {groupByDateRange} from './group-events';
+import {useTranslations} from 'next-intl';
 import {useProvenance} from './provenance-store';
 import {SelectEventsButton} from './buttons';
 
 export default function DataTable() {
   const t = useTranslations('Provenance');
-  const locale = useLocale();
 
-  const {selectedEvents, setSelectedEvents, events, showDataTable} =
-    useProvenance();
+  const {
+    selectedEvents,
+    setSelectedEvents,
+    eventGroupsFiltered,
+    showDataTable,
+  } = useProvenance();
 
   if (!showDataTable) {
     return null;
@@ -21,13 +23,6 @@ export default function DataTable() {
   function showAllClick() {
     setSelectedEvents([]);
   }
-
-  const eventsToShow =
-    selectedEvents.length > 0
-      ? selectedEvents.map(id => events.find(event => event.id === id)!)
-      : events;
-
-  const eventGroups = groupByDateRange({events: eventsToShow, locale});
 
   return (
     <div className="w-full block">
@@ -52,7 +47,7 @@ export default function DataTable() {
           <div className="w-full md:w-3/12">{t('transferredTo')}</div>
           <div className="w-full md:w-1/12">{t('location')}</div>
         </header>
-        {Object.entries(eventGroups).map(([dateRange, eventGroup]) => (
+        {Object.entries(eventGroupsFiltered).map(([dateRange, eventGroup]) => (
           <ProvenanceEventRow
             key={dateRange}
             dateRange={dateRange}
@@ -79,7 +74,7 @@ function ProvenanceEventRow({
   return (
     <div className="border-l-4 mb-16 border-neutral-400">
       <div className="mb-4 pl-4">
-        <strong>{dateRange || t('noDate')}</strong>
+        <strong>{dateRange}</strong>
       </div>
       <ul className="flex flex-col border-t border-neutral-200">
         {provenanceEvents.map(event => (

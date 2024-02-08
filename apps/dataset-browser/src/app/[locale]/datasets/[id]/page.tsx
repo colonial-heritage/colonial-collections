@@ -31,7 +31,7 @@ export default async function Details({params}: Props) {
   const dataset = await datasets.getById(id);
   const t = await getTranslations('Details');
   const tMetrics = await getTranslations('TransparencyMetrics');
-  const format = await getFormatter();
+  const formatter = await getFormatter();
 
   if (!dataset) {
     return <div data-testid="no-dataset">{t('noDataset')}</div>;
@@ -70,15 +70,15 @@ export default async function Details({params}: Props) {
     },
     {
       name: t('metadata.datePublished'),
-      value: dataset.datePublished && format.dateTime(dataset.datePublished),
+      value: dataset.datePublished && formatter.dateTime(dataset.datePublished),
     },
     {
       name: t('metadata.dateCreated'),
-      value: dataset.dateCreated && format.dateTime(dataset.dateCreated),
+      value: dataset.dateCreated && formatter.dateTime(dataset.dateCreated),
     },
     {
       name: t('metadata.dateModified'),
-      value: dataset.dateModified && format.dateTime(dataset.dateModified),
+      value: dataset.dateModified && formatter.dateTime(dataset.dateModified),
     },
     {
       name: t('metadata.keywords'),
