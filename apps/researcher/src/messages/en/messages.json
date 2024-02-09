@@ -10,7 +10,7 @@
   },
   "Home": {
     "title": "Colonial Collections Datahub",
-    "description": "The Colonial Collections Datahub is a place to explore objects that have their origins in former Dutch colonial countries such as Suriname, Indonesia, Sri Lanka, South Africa, Aruba, Curaçao, Sint Maarten and many other countries and areas.",
+    "description": "The Colonial Collections Datahub is a place to explore objects that have their origins in former Dutch colonial countries such as Suriname, Indonesia, Sri Lanka, South Africa, Aruba, Curaçao, Sint Maarten and many other countries and areas. <link>See how this works</link>",
     "searchLabel": "Search for heritage objects",
     "searchPlaceholder": "Tip: start searching for a location, e.g. Suriname",
     "narrativeExplainTitle": "Add your narratives to the objects",
@@ -18,7 +18,10 @@
     "signupLink": "Create an account",
     "communitiesTitle": "Heritage communities",
     "communitiesDescription": "Every culture can start its own community on this platform. A community can create lists of objects that tells stories about their history. Communities can also add narratives to the objects in this collection.",
-    "communitiesLink": "Here are some communities to inspire you. Or <link>take a look at all the communities</link>."
+    "communitiesLink": "Here are some communities to inspire you. Or <link>take a look at all the communities</link>.",
+    "howThisWorksTitle": "See how this works",
+    "howThisWorksText": "Here's a short explanation on how to use this site. Here you'll see how to search for objects and use communities.",
+    "howThisWorksAlt": "An animation about how this site works."
   },
   "ObjectSearch": {
     "title": "Search for heritage objects",
