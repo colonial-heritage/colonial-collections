@@ -102,7 +102,7 @@ export default async function CommunityPage({params}: Props) {
             <main className="w-full lg:w-2/3 xl:w-3/4">
               <h1 className="text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl max-w-5xl inline-flex gap-2">
                 <span className="font-normal">{t('title')}</span>
-                <span>{community.name}</span>
+                <span data-testid="community-name">{community.name}</span>
               </h1>
               <p className="mt-6 max-w-2xl">{community.description}</p>
               <p className="pt-4">
