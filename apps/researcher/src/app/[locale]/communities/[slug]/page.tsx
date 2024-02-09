@@ -139,6 +139,26 @@ export default async function CommunityPage({params}: Props) {
 
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
         <div className="w-full md:w-3/4">
+          <div className="flex justify-between my-4">
+            <div>
+              <h2 className="text-xl">{t('objectListsTitle')}</h2>
+              <p>{t('objectListsSubTitle', {count: objectLists.length})}</p>
+            </div>
+            <div>
+              <Protect
+                communityId={community.id}
+                permission="org:sys_profile:manage"
+              >
+                <SlideOutButton
+                  id={slideOutFormId}
+                  className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+                >
+                  {t('addObjectListButton')}
+                </SlideOutButton>
+              </Protect>
+            </div>
+          </div>
+
           <Notifications />
           <SlideOut id={slideOutFormId}>
             <AddObjectListForm
@@ -154,7 +174,7 @@ export default async function CommunityPage({params}: Props) {
                 key={objectList.id}
                 className="no-underline"
               >
-                <h3 className="font-semibold text-xl mt-4 mb-2">
+                <h3 className="font-semibold text-lg mt-4 mb-2">
                   {objectList.name}
                 </h3>
                 <p>{objectList.description}</p>
@@ -182,7 +202,7 @@ export default async function CommunityPage({params}: Props) {
 
         <aside className="w-full md:w-1/4 self-stretch">
           <div className="flex justify-between">
-            <h2 className="mb-4">{t('membersTitle')}</h2>
+            <h2 className="mb-4 text-xl">{t('membersTitle')}</h2>
             <div>
               <Protect
                 communityId={community.id}
