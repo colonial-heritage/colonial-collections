@@ -138,7 +138,7 @@ export default async function CommunityPage({params}: Props) {
       </div>
 
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
-        <div>
+        <div className="w-full md:w-3/4">
           <Notifications />
           <SlideOut id={slideOutFormId}>
             <AddObjectListForm
