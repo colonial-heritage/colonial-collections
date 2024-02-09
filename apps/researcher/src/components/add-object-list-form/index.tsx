@@ -137,7 +137,7 @@ export default function AddObjectListForm({
   // In most cases, this will be available immediately
   // so no loading state is needed
   return (
-    <div className="w-full bg-greenGrey-50 border border-greenGrey-100 p-4 rounded-xl text-greenGrey-800 self-end flex-col gap-6 flex">
+    <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-100 text-neutral-800 self-end flex-col gap-6 flex">
       <h2 className="font-semibold text-xl">{t('title')}</h2>
       {userId && (
         <Form
