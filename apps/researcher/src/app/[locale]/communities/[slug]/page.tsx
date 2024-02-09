@@ -137,92 +137,94 @@ export default async function CommunityPage({params}: Props) {
         </div>
       </div>
 
-      <div>
-        <Notifications />
-        <SlideOut id={slideOutFormId}>
-          <AddObjectListForm
-            slideOutId={slideOutFormId}
-            communityId={community.id}
-          />
-        </SlideOut>
-
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-16">
-          {objectLists.map(objectList => (
-            <Link
-              href={`/communities/${params.slug}/${objectList.id}`}
-              key={objectList.id}
-              className="no-underline"
-            >
-              <h3 className="font-semibold text-xl mt-4 mb-2">
-                {objectList.name}
-              </h3>
-              <p>{objectList.description}</p>
-
-              <div className="w-full relative">
-                <ul className=" mt-4 grid grid-cols-4 gap-2">
-                  {objectList.objects?.map(object => (
-                    <ObjectCard
-                      key={object.objectId}
-                      objectIri={object.objectIri}
-                    />
-                  ))}
-                </ul>
-
-                <div className="absolute bg-gradient-to-l from-consortiumGreen-300 w-full top-0 bottom-0 flex justify-end">
-                  <button className="p-2 self-center flex items-center py-2 px-3 rounded-full bg-consortiumBlue-800 text-white hover:bg-consortiumBlue-700 transition text-xs">
-                    {t('goToListButton')}
-                  </button>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <aside className="w-full md:w-1/4 self-stretch">
-        <div className="flex justify-between">
-          <h2 className="mb-4">{t('membersTitle')}</h2>
-          <div>
-            <Protect
+      <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 mt-12">
+        <div>
+          <Notifications />
+          <SlideOut id={slideOutFormId}>
+            <AddObjectListForm
+              slideOutId={slideOutFormId}
               communityId={community.id}
-              permission="org:sys_profile:manage"
-            >
-              <ManageMembersButton
-                communityId={community.id}
-                communitySlug={params.slug}
-              />
-            </Protect>
+            />
+          </SlideOut>
+
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-16">
+            {objectLists.map(objectList => (
+              <Link
+                href={`/communities/${params.slug}/${objectList.id}`}
+                key={objectList.id}
+                className="no-underline"
+              >
+                <h3 className="font-semibold text-xl mt-4 mb-2">
+                  {objectList.name}
+                </h3>
+                <p>{objectList.description}</p>
+
+                <div className="w-full relative">
+                  <ul className=" mt-4 grid grid-cols-4 gap-2">
+                    {objectList.objects?.map(object => (
+                      <ObjectCard
+                        key={object.objectId}
+                        objectIri={object.objectIri}
+                      />
+                    ))}
+                  </ul>
+
+                  <div className="absolute bg-gradient-to-l from-white w-full top-0 bottom-0 flex justify-end">
+                    <button className="p-2 self-center flex items-center py-2 px-3 rounded-full bg-consortiumBlue-800 text-white hover:bg-consortiumBlue-700 transition text-xs">
+                      {t('goToListButton')}
+                    </button>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
-        <ul>
-          {memberships!.map(membership => (
-            <li
-              className="font-normal flex items-center gap-2 mb-3"
-              key={membership.id}
-            >
-              <div className="w-10">
-                {membership.imageUrl && (
-                  <Image
-                    src={membership.imageUrl}
-                    alt=""
-                    className="w-full rounded-full"
-                    width={40}
-                    height={40}
-                  />
-                )}
-              </div>
-              <div className="flex flex-col">
-                <div className="">
-                  {membership.firstName} {membership.lastName}
+
+        <aside className="w-full md:w-1/4 self-stretch">
+          <div className="flex justify-between">
+            <h2 className="mb-4">{t('membersTitle')}</h2>
+            <div>
+              <Protect
+                communityId={community.id}
+                permission="org:sys_profile:manage"
+              >
+                <ManageMembersButton
+                  communityId={community.id}
+                  communitySlug={params.slug}
+                />
+              </Protect>
+            </div>
+          </div>
+          <ul>
+            {memberships!.map(membership => (
+              <li
+                className="font-normal flex items-center gap-2 mb-3"
+                key={membership.id}
+              >
+                <div className="w-10">
+                  {membership.imageUrl && (
+                    <Image
+                      src={membership.imageUrl}
+                      alt=""
+                      className="w-full rounded-full"
+                      width={40}
+                      height={40}
+                    />
+                  )}
                 </div>
-                <div className="text-neutral-600">
-                  {/* Place country name here */}
+                <div className="flex flex-col">
+                  <div className="">
+                    {membership.firstName} {membership.lastName}
+                  </div>
+                  <div className="text-neutral-600">
+                    {/* Place country name here */}
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </aside>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
     </>
   );
 }
