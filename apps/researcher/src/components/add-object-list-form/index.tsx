@@ -78,7 +78,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
           </label>
           <input
             {...register('name')}
-            className="border border-greenGrey-200 rounded p-2"
+            className="border border-neutral-400 rounded p-2 text-sm"
           />
           <p>{errors.name && t(camelCase(`name_${errors.name.type}`))}</p>
         </div>
@@ -95,7 +95,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
             id="description"
             {...register('description')}
             rows={4}
-            className="border border-greenGrey-200 rounded p-2"
+            className="border border-neutral-400 rounded p-2 text-sm"
           />
         </div>
       </div>
