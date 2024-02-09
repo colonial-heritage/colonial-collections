@@ -105,13 +105,13 @@ function Form({communityId, userId, slideOutId}: FormProps) {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-greenGrey-100 hover:bg-greenGrey-200 transition text-greenGrey-800 flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 hover:bg-consortiumGreen-200 transition flex items-center gap-1"
           >
             {t('buttonSubmit')}
           </button>
           <button
             onClick={() => setIsVisible(slideOutId, false)}
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs border border-greenGrey-300 hover:bg-greenGrey-200 transition text-greenGrey-800 flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-none hover:bg-neutral-300 text-neutral-800 border border-neutral-300 transition flex items-center gap-1"
           >
             {t('buttonCancel')}
           </button>
