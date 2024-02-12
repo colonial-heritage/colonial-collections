@@ -88,6 +88,7 @@ export async function getMyCommunities({
   const {userId} = await auth();
 
   if (!userId) {
+    console.error('`getMyCommunities()` called without a user');
     return [];
   }
 
