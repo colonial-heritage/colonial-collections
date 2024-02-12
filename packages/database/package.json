@@ -21,7 +21,7 @@
     "tsconfig": "*"
   },
   "dependencies": {
-    "drizzle-kit": "0.20.13",
+    "drizzle-kit": "0.20.14",
     "drizzle-orm": "0.29.3",
     "drizzle-zod": "0.5.1",
     "mysql2": "3.9.0"
