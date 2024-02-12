@@ -36,11 +36,11 @@ jobs:
         if: failure()
         with:
           name: cypress-screenshots
-          path: ./apps/researcher/cypress/screenshots
+          path: ./apps/dataset-browser/cypress/screenshots
       # Test run video was always captured, so this action uses "always()" condition
       - name: Upload videos
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: cypress-videos
-          path: ./apps/researcher/cypress/videos
+          path: ./apps/dataset-browser/cypress/videos
