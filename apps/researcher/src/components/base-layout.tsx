@@ -4,6 +4,7 @@ import {getTranslations} from 'next-intl/server';
 import {WipMessage} from '@colonial-collections/ui';
 import {Link} from '@/navigation';
 import {env} from 'node:process';
+import AuthHealthCheck from '@/lib/auth-health-check';
 
 interface Props {
   children: ReactNode;
@@ -15,6 +16,7 @@ export default async function BaseLayout({children, wrapperClassName}: Props) {
 
   return (
     <>
+      <AuthHealthCheck />
       <WipMessage Link={Link} />
 
       <div className="sr-only">
