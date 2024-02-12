@@ -86,6 +86,12 @@ export async function getMyCommunities({
 }: GetCommunitiesProps = {}) {
   noStore();
   const {userId} = await auth();
+
+  if (!userId) {
+    console.error('`getMyCommunities()` called without a user');
+    return [];
+  }
+
   const memberships = userId
     ? await clerkClient.users.getOrganizationMembershipList({
         userId,

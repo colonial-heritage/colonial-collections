@@ -46,7 +46,9 @@ export default function Navigation({datasetBrowserUrl}: Props) {
     () =>
       locales.map(localeItem => ({
         name: tLanguageSelector(localeItem),
-        href: `/${localeItem}${pathname ?? `/${localeItem}`}`,
+        href: `/revalidate/?path=/[locale]${pathname}&redirect=/${localeItem}${
+          pathname ?? `/${localeItem}`
+        }`,
         active: localeItem === locale,
         ariaLabel: tLanguageSelector('accessibilityLanguageSelector', {
           language: tLanguageSelector(locale),
