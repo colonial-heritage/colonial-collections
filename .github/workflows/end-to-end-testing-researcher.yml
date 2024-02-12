@@ -37,7 +37,7 @@ jobs:
         with:
           name: cypress-screenshots
           path: ./apps/researcher/cypress/screenshots
-      # Test run video was always captured, so this action uses "always()" condition
+      # Test run video is always captured, so this action uses "always()" condition
       - name: Upload videos
         uses: actions/upload-artifact@v2
         if: always()
