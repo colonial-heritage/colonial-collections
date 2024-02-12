@@ -29,3 +29,18 @@ jobs:
           wait-on: ${{ steps.waitForPreview.outputs.url }}
         env:
           CYPRESS_BASE_URL: ${{ steps.waitForPreview.outputs.url }}
+      # Screenshots will be generated only if the test failed
+      # thus we store screenshots only on failures
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: ./apps/researcher/cypress/screenshots
+      # Test run video was always captured, so this action uses "always()" condition
+      - name: Upload videos
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-videos
+          path: ./apps/researcher/cypress/videos
