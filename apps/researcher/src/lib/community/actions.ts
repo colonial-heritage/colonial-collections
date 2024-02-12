@@ -86,6 +86,11 @@ export async function getMyCommunities({
 }: GetCommunitiesProps = {}) {
   noStore();
   const {userId} = await auth();
+
+  if (!userId) {
+    return [];
+  }
+
   const memberships = userId
     ? await clerkClient.users.getOrganizationMembershipList({
         userId,
