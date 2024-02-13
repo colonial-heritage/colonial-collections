@@ -21,7 +21,7 @@ export function useCommunityProfile({
     // We must place all pages in `customPage` to define the page order.
     // Pages not in `customPages` will load before the custom pages. So, we need to add all pages to control the first loaded page.
     openOrganizationProfile({
-      afterLeaveOrganizationUrl: `/revalidate/?path=/[locale]/communities/${communitySlug}&redirect=/communities/${communitySlug}`,
+      afterLeaveOrganizationUrl: `/revalidate/communities/${communitySlug}?path=/[locale]/communities/${communitySlug}`,
       customPages: ['settings', 'members']
         .sort((customPageA, customPageB) =>
           customPageA === firstPage ? -1 : customPageB === firstPage ? 1 : 0
