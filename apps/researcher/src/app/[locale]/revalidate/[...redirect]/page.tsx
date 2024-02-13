@@ -11,6 +11,7 @@ interface Props {
 }
 
 export default function RevalidatePath({params, searchParams}: Props) {
+  console.log(params.redirect, searchParams.path);
   const redirectUrl = '/' + params.redirect.join('/');
   revalidatePath(searchParams.path || redirectUrl, 'page');
 
