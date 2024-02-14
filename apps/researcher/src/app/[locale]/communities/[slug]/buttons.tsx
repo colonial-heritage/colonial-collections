@@ -66,7 +66,7 @@ export function JoinCommunityButton({communityId, communitySlug}: Props) {
 
   return (
     <button
-      className="p-1 sm:py-2 sm:px-3 rounded-full bg-yellow-100 hover:bg-yellow-200 transition text-yellow-800 flex items-center gap-1"
+      className="p-1 sm:py-2 sm:px-3 rounded-full bg-consortiumBlue-800 text-consortiumGreen-300 transition flex items-center gap-1 hover:bg-consortiumBlue-700"
       onClick={() => joinCommunityClick()}
     >
       {t('joinButton')}
