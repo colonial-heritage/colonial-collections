@@ -10,6 +10,7 @@ import {NavigationMenu} from '@colonial-collections/ui';
 import logoImage from '@colonial-collections/ui/branding/colonial-collections-consortium.png';
 import {useMemo} from 'react';
 import ToFilteredListButton from './to-filtered-list-button';
+import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 
 interface Props {
   datasetBrowserUrl: string;
@@ -46,7 +47,9 @@ export default function Navigation({datasetBrowserUrl}: Props) {
     () =>
       locales.map(localeItem => ({
         name: tLanguageSelector(localeItem),
-        href: `/revalidate/${localeItem}${pathname}/?path=/[locale]${pathname}`,
+        href: `/revalidate/${encodeRouteSegment(
+          `${localeItem}${pathname}`
+        )}/?path=/[locale]${pathname}`,
         active: localeItem === locale,
         ariaLabel: tLanguageSelector('accessibilityLanguageSelector', {
           language: tLanguageSelector(locale),
