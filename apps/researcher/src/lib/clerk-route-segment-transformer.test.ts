@@ -7,14 +7,16 @@ import {
 describe('encodeRouteSegment', () => {
   it('encodes a string with dots', () => {
     const encodedUri = encodeRouteSegment('https://museum.example.org/');
-    expect(encodedUri).toBe('https%3A%2F%2Fmuseum%252Eexample%252Eorg%2F');
+    expect(encodedUri).toBe(
+      '68747470733a2f2f6d757365756d2e6578616d706c652e6f72672f'
+    );
   });
 });
 
 describe('decodeRouteSegment', () => {
   it('decodes a string with dots', () => {
     const decodedUri = decodeRouteSegment(
-      'https%3A%2F%2Fmuseum%252Eexample%252Eorg%2F'
+      '68747470733a2f2f6d757365756d2e6578616d706c652e6f72672f'
     );
     expect(decodedUri).toBe('https://museum.example.org/');
   });
