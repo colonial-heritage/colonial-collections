@@ -32,14 +32,14 @@ jobs:
       # Screenshots will be generated only if the test failed
       # thus we store screenshots only on failures
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: ./apps/dataset-browser/cypress/screenshots
       # Test run video is always captured, so this action uses "always()" condition
       - name: Upload videos
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-videos
