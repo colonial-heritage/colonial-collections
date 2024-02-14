@@ -77,9 +77,9 @@ export default function EditCommunityForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex-col px-4 gap-6 items-center flex"
+      className="flex-col px-4 gap-6 items-start flex"
     >
-      <h1 className="text-2xl font-normal w-full text-center mt-4 px-4 my-2">
+      <h1 className="text-2xl font-normal w-full mt-4 my-2">
         {t('editCommunityTitle')}
       </h1>
       {errors.root?.serverError.message && (
@@ -126,7 +126,7 @@ export default function EditCommunityForm({
       <div className="flex flex-row max-w-2xl w-full">
         <div className=" flex flex-col md:flex-row justify-between  gap-2">
           <button
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1"
             disabled={isSubmitting}
             type="submit"
           >

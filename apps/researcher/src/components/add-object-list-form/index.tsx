@@ -78,7 +78,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
           </label>
           <input
             {...register('name')}
-            className="border border-greenGrey-200 rounded p-2"
+            className="border border-neutral-400 rounded p-2 text-sm"
           />
           <p>{errors.name && t(camelCase(`name_${errors.name.type}`))}</p>
         </div>
@@ -95,7 +95,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
             id="description"
             {...register('description')}
             rows={4}
-            className="border border-greenGrey-200 rounded p-2"
+            className="border border-neutral-400 rounded p-2 text-sm"
           />
         </div>
       </div>
@@ -105,13 +105,13 @@ function Form({communityId, userId, slideOutId}: FormProps) {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-greenGrey-100 hover:bg-greenGrey-200 transition text-greenGrey-800 flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 hover:bg-consortiumGreen-200 transition flex items-center gap-1"
           >
             {t('buttonSubmit')}
           </button>
           <button
             onClick={() => setIsVisible(slideOutId, false)}
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs border border-greenGrey-300 hover:bg-greenGrey-200 transition text-greenGrey-800 flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-none hover:bg-neutral-300 text-neutral-800 border border-neutral-300 transition flex items-center gap-1"
           >
             {t('buttonCancel')}
           </button>
@@ -137,7 +137,7 @@ export default function AddObjectListForm({
   // In most cases, this will be available immediately
   // so no loading state is needed
   return (
-    <div className="w-full bg-greenGrey-50 border border-greenGrey-100 p-4 rounded-xl text-greenGrey-800 self-end flex-col gap-6 flex">
+    <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-100 text-neutral-800 self-end flex-col gap-6 flex">
       <h2 className="font-semibold text-xl">{t('title')}</h2>
       {userId && (
         <Form
