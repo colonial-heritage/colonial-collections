@@ -1,17 +1,16 @@
 'use server';
 
 import {auth, currentUser} from '@clerk/nextjs';
-import {UserResource} from '@clerk/types';
 
 interface props {
   message: string;
-  frontendUser?: UserResource | null;
+  frontendUserId?: string;
   isLoaded: boolean;
 }
 
 export async function logFailedAuthHealthCheck({
   message,
-  frontendUser,
+  frontendUserId,
   isLoaded,
 }: props) {
   const backendUser = await currentUser();
@@ -20,7 +19,7 @@ export async function logFailedAuthHealthCheck({
   console.error('AUTH HEATH CHECK FAILED');
   console.error(message);
   console.error('Frontend user loaded', isLoaded);
-  console.error('Frontend user', frontendUser);
+  console.error('Frontend user ID', frontendUserId);
   console.error('Backend `auth`', backendAuth);
   console.error('Backend `currentUser`', backendUser);
 }

@@ -29,7 +29,7 @@ export default function FrontendHealthCheck({
         if (!isLoadedRef.current) {
           logFailedAuthHealthCheck({
             message: '`useUser().isLoaded` stays `false`, refresh page',
-            frontendUser: userRef.current,
+            frontendUserId: userRef.current?.id,
             isLoaded: isLoadedRef.current,
           });
           location.reload();
@@ -47,7 +47,7 @@ export default function FrontendHealthCheck({
     if (isLoaded && !user && !!backendUserId) {
       logFailedAuthHealthCheck({
         message: 'There is a backend user but no frontend user',
-        frontendUser: userRef.current,
+        frontendUserId: userRef.current?.id,
         isLoaded: isLoadedRef.current,
       });
     }
@@ -57,7 +57,7 @@ export default function FrontendHealthCheck({
     if (isLoaded && !!user && !backendUserId) {
       logFailedAuthHealthCheck({
         message: 'There is a frontend user but no backend user',
-        frontendUser: userRef.current,
+        frontendUserId: userRef.current?.id,
         isLoaded: isLoadedRef.current,
       });
     }
