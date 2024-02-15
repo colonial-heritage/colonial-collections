@@ -1,6 +1,6 @@
 {
   "Meta": {
-    "title": "Research app"
+    "title": "Koloniale Collecties Datahub"
   },
   "FormatDate": {
     "beforeCommonEraFormat": "{date, date, ::yyyy} v.Chr.",

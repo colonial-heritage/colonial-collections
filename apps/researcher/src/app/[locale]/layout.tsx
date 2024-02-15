@@ -4,17 +4,23 @@ import {notFound} from 'next/navigation';
 import {NextIntlClientProvider} from 'next-intl';
 import {ClerkProvider} from '@clerk/nextjs';
 import {Metadata} from 'next';
+import {getTranslations} from 'next-intl/server';
 
 interface Props {
   children: ReactNode;
   params: {locale: string};
 }
 
-export const metadata: Metadata = {
-  title: 'Colonial Collections Datahub | Collonial Collecions Consortium',
-};
+export async function generateMetadata({params: {locale}}) {
+  const t = await getTranslations({locale, namespace: 'Meta'});
+  return {
+    title: t('title'),
+  };
+}
 
 export default async function RootLayout({children, params: {locale}}: Props) {
+  const t = await getTranslations('Meta');
+
   let messages;
   try {
     messages = (await import(`../../messages/${locale}/messages.json`)).default;
