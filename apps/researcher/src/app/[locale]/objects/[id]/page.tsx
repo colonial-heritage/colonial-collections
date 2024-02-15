@@ -32,7 +32,7 @@ export default async function Details({params}: Props) {
   const locale = useLocale() as LocaleEnum;
   const object = await heritageObjects.getById({id, locale});
   const t = await getTranslations('ObjectDetails');
-  const {formatDate} = await getDateFormatter();
+  const {formatDateRange} = await getDateFormatter();
 
   if (!object) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
@@ -173,28 +173,7 @@ export default async function Details({params}: Props) {
                 translationKey="dateCreated"
                 enrichmentType={AdditionalType.DateCreated}
               >
-                {object.dateCreated && (
-                  <div className="flex flex-row gap-12">
-                    <div>
-                      <div className="italic text-sm text-neutral-600">
-                        {t('beginOfRange')}
-                      </div>
-                      <div>
-                        {object.dateCreated.startDate &&
-                          formatDate(object.dateCreated.startDate)}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="italic text-sm text-neutral-600">
-                        {t('endOfRange')}
-                      </div>
-                      <div>
-                        {object.dateCreated.endDate &&
-                          formatDate(object.dateCreated.endDate)}
-                      </div>
-                    </div>
-                  </div>
-                )}
+                {object.dateCreated && formatDateRange(object.dateCreated)}
               </Metadata>
 
               <Metadata
