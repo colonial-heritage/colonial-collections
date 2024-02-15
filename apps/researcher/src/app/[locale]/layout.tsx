@@ -3,7 +3,6 @@ import {ReactNode} from 'react';
 import {notFound} from 'next/navigation';
 import {NextIntlClientProvider} from 'next-intl';
 import {ClerkProvider} from '@clerk/nextjs';
-import {Metadata} from 'next';
 import {getTranslations} from 'next-intl/server';
 
 interface Props {
@@ -11,7 +10,12 @@ interface Props {
   params: {locale: string};
 }
 
-export async function generateMetadata({params: {locale}}) {
+interface MetadataProps {
+  params: {
+    locale: string;
+  };
+}
+export async function generateMetadata({params: {locale}}: MetadataProps) {
   const t = await getTranslations({locale, namespace: 'Meta'});
   return {
     title: t('title'),
