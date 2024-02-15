@@ -69,7 +69,7 @@ export default async function CommunityPage({params}: Props) {
 
   return (
     <>
-      <div className="bg-consortiumGreen-300 text-consortiumBlue-800 relative z-20">
+      <div className="bg-consortiumGreen-300 text-consortiumBlue-800 relative">
         <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto pt-10 flex justify-between">
           <div>
             <ToFilteredListButton
