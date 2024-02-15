@@ -136,8 +136,6 @@
     "noOrganizationFound": "No organization found.",
     "dateCreated": "Date made",
     "dateCreatedSubTitle": "When was the object made? Could be an exact date or a range.",
-    "beginOfRange": "Begin of range",
-    "endOfRange": "End of range",
     "addUserEnrichmentButton": "Add your narrative \n\nto <name></name>",
     "noListsInCommunity": "No lists",
     "objectAddedToList": "Object added to list <name></name>.",
