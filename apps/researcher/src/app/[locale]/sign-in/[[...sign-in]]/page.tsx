@@ -6,9 +6,11 @@ export default async function Page() {
   const locale = await getLocale();
 
   return (
-    <SignIn
-      redirectUrl="/"
-      path={`/${locale}${env.NEXT_PUBLIC_CLERK_SIGN_IN_URL}`}
-    />
+    <div className="bg-consortiumBlue-100 h-[calc(100vh-110px)] flex justify-center items-center">
+      <SignIn
+        redirectUrl="/"
+        path={`/${locale}${env.NEXT_PUBLIC_CLERK_SIGN_IN_URL}`}
+      />
+    </div>
   );
 }
