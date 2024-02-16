@@ -23,8 +23,6 @@ export async function generateMetadata({params: {locale}}: MetadataProps) {
 }
 
 export default async function RootLayout({children, params: {locale}}: Props) {
-  const t = await getTranslations('Meta');
-
   let messages;
   try {
     messages = (await import(`../../messages/${locale}/messages.json`)).default;
