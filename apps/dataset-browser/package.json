@@ -45,7 +45,7 @@
     "@rdfjs/types": "1.1.0",
     "@types/mdx": "2.0.10",
     "@types/node": "20.10.6",
-    "@types/react": "18.2.37",
+    "@types/react": "18.2.56",
     "@types/react-dom": "18.2.18",
     "autoprefixer": "10.4.16",
     "cypress": "13.6.2",

@@ -5,7 +5,7 @@
   "types": "./index.tsx",
   "private": true,
   "devDependencies": {
-    "@types/react": "18.2.37",
+    "@types/react": "18.2.56",
     "autoprefixer": "10.4.16",
     "eslint-config-custom": "*",
     "postcss": "8.4.33",
