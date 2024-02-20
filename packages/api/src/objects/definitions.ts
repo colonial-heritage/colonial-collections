@@ -5,7 +5,7 @@ import {
   SortOrder,
 } from '../definitions';
 
-export type SearchResult = {
+export type HeritageObjectSearchResult = {
   totalCount: number;
   offset: number;
   limit: number;

@@ -6,7 +6,7 @@ import {
   SortOrder,
   SortOrderEnum,
 } from '../definitions';
-import {SearchResult} from './definitions';
+import {HeritageObjectSearchResult} from './definitions';
 import {HeritageObjectFetcher} from './fetcher';
 import {z} from 'zod';
 
@@ -106,8 +106,8 @@ type RawSearchResponseWithAggregations = z.infer<
 >;
 
 export class HeritageObjectSearcher {
-  private endpointUrl: string;
-  private heritageObjectFetcher: HeritageObjectFetcher;
+  private readonly endpointUrl: string;
+  private readonly heritageObjectFetcher: HeritageObjectFetcher;
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -253,7 +253,7 @@ export class HeritageObjectSearcher {
   private toMatchedFilter(bucket: RawBucket): SearchResultFilter {
     const totalCount = bucket.doc_count;
     const id = bucket.key;
-    const name = bucket.key; // Replace with labelFetcher as soon as we have IRIs
+    const name = bucket.key;
 
     return {totalCount, id, name};
   }
@@ -296,7 +296,7 @@ export class HeritageObjectSearcher {
       aggregations.dateCreatedEnd.buckets
     );
 
-    const searchResult: SearchResult = {
+    const searchResult: HeritageObjectSearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
       limit: options.limit!,

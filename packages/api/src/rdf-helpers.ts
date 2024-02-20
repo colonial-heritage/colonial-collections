@@ -1,7 +1,62 @@
-import {Agent, Dataset, Image, License, Place, TimeSpan} from '../definitions';
-import {getProperty, getPropertyValue} from '../rdf-helpers';
+import {Agent, Dataset, Place, TimeSpan} from './definitions';
+import {defu} from 'defu';
 import edtf from 'edtf';
 import type {Resource} from 'rdf-object';
+
+export function getProperty(resource: Resource, propertyName: string) {
+  const property = resource.property[propertyName];
+  if (property === undefined) {
+    return undefined;
+  }
+
+  return property;
+}
+
+export function getPropertyValue(resource: Resource, propertyName: string) {
+  const property = getProperty(resource, propertyName);
+  if (property === undefined) {
+    return undefined;
+  }
+
+  return property.value;
+}
+
+export function getPropertyValues(resource: Resource, propertyName: string) {
+  const properties = resource.properties[propertyName];
+  const values = properties.map(property => property.value);
+
+  return values.length > 0 ? values : undefined;
+}
+
+export function onlyOne<T>(items: T[] | undefined) {
+  if (Array.isArray(items)) {
+    return items.shift(); // Undefined if array is empty
+  }
+  return undefined;
+}
+
+export function removeNullish<T>(objectWithNullishValues: object) {
+  const object = defu(objectWithNullishValues, {});
+
+  return object as T;
+}
+
+function createPlace(placeResource: Resource) {
+  const name = getPropertyValue(placeResource, 'ex:name');
+
+  const place: Place = {
+    id: placeResource.value,
+    name,
+  };
+
+  // Recursively get the parent place(s), if any
+  const parentPlace = getProperty(placeResource, 'ex:isPartOf');
+  if (parentPlace !== undefined) {
+    place.isPartOf = createPlace(parentPlace);
+  }
+
+  return place;
+}
 
 function createThingFromProperty<T>(thingResource: Resource) {
   const name = getPropertyValue(thingResource, 'ex:name');
@@ -21,81 +76,6 @@ export function createThings<T>(resource: Resource, propertyName: string) {
   );
 
   return things.length > 0 ? things : undefined;
-}
-
-function createAgent(agentResource: Resource) {
-  const type = getPropertyValue(agentResource, 'rdf:type');
-  const name = getPropertyValue(agentResource, 'ex:name');
-
-  let shorthandType = undefined;
-  if (type === 'https://example.org/Person') {
-    shorthandType = 'Person' as const;
-  } else if (type === 'https://example.org/Organization') {
-    shorthandType = 'Organization' as const;
-  } else {
-    shorthandType = 'Unknown' as const;
-  }
-
-  const agent: Agent = {
-    id: agentResource.value,
-    type: shorthandType,
-    name,
-  };
-
-  return agent;
-}
-
-export function createAgents(resource: Resource, propertyName: string) {
-  const properties = resource.properties[propertyName];
-  const agents = properties.map(property => createAgent(property));
-
-  return agents.length > 0 ? agents : undefined;
-}
-
-function createImage(imageResource: Resource) {
-  const contentUrl = getPropertyValue(imageResource, 'ex:contentUrl');
-
-  const image: Image = {
-    id: imageResource.value,
-    contentUrl: contentUrl!, // Ignore 'string | undefined' warning - it's always set
-  };
-
-  // An image may not have a license
-  const licenseResource = getProperty(imageResource, 'ex:license');
-  if (licenseResource !== undefined) {
-    const name = getPropertyValue(licenseResource, 'ex:name');
-    const license: License = {
-      id: licenseResource.value,
-      name,
-    };
-    image.license = license;
-  }
-
-  return image;
-}
-
-export function createImages(resource: Resource, propertyName: string) {
-  const properties = resource.properties[propertyName];
-  const images = properties.map(property => createImage(property));
-
-  return images.length > 0 ? images : undefined;
-}
-
-function createPlace(placeResource: Resource) {
-  const name = getPropertyValue(placeResource, 'ex:name');
-
-  const place: Place = {
-    id: placeResource.value,
-    name,
-  };
-
-  // Recursively get the parent place(s), if any
-  const parentPlace = getProperty(placeResource, 'ex:isPartOf');
-  if (parentPlace !== undefined) {
-    place.isPartOf = createPlace(parentPlace);
-  }
-
-  return place;
 }
 
 export function createPlaces(resource: Resource, propertyName: string) {
@@ -138,6 +118,35 @@ export function createTimeSpans(resource: Resource, propertyName: string) {
   const timeSpans = properties.map(property => createTimeSpan(property));
 
   return timeSpans.length > 0 ? timeSpans : undefined;
+}
+
+function createAgent(agentResource: Resource) {
+  const type = getPropertyValue(agentResource, 'rdf:type');
+  const name = getPropertyValue(agentResource, 'ex:name');
+
+  let shorthandType = undefined;
+  if (type === 'https://example.org/Person') {
+    shorthandType = 'Person' as const;
+  } else if (type === 'https://example.org/Organization') {
+    shorthandType = 'Organization' as const;
+  } else {
+    shorthandType = 'Unknown' as const;
+  }
+
+  const agent: Agent = {
+    id: agentResource.value,
+    type: shorthandType,
+    name,
+  };
+
+  return agent;
+}
+
+export function createAgents(resource: Resource, propertyName: string) {
+  const properties = resource.properties[propertyName];
+  const agents = properties.map(property => createAgent(property));
+
+  return agents.length > 0 ? agents : undefined;
 }
 
 function createDataset(datasetResource: Resource) {

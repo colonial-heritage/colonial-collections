@@ -1,18 +1,16 @@
+import {createImages} from './rdf-helpers';
 import {localeSchema, HeritageObject, Term} from '../definitions';
 import {
+  createAgents,
+  createDatasets,
+  createPlaces,
+  createThings,
+  createTimeSpans,
   getPropertyValue,
   getPropertyValues,
   onlyOne,
   removeNullish,
 } from '../rdf-helpers';
-import {
-  createAgents,
-  createDatasets,
-  createImages,
-  createPlaces,
-  createThings,
-  createTimeSpans,
-} from './rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
 import {EOL} from 'node:os';
@@ -42,8 +40,8 @@ const getByIdOptionsSchema = z.object({
 export type GetByIdOptions = z.input<typeof getByIdOptionsSchema>;
 
 export class HeritageObjectFetcher {
-  private endpointUrl: string;
-  private fetcher = new SparqlEndpointFetcher();
+  private readonly endpointUrl: string;
+  private readonly fetcher = new SparqlEndpointFetcher();
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -52,7 +50,7 @@ export class HeritageObjectFetcher {
   }
 
   private async fetchTriples(options: GetByIdsOptions) {
-    const heritageObjectIris = options.ids.map(iri => `<${iri}>`).join(EOL);
+    const iris = options.ids.map(iri => `<${iri}>`).join(EOL);
 
     const query = `
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
@@ -66,7 +64,7 @@ export class HeritageObjectFetcher {
       PREFIX schema: <https://schema.org/>
 
       CONSTRUCT {
-        ?object a ex:HeritageObject ;
+        ?this a ex:HeritageObject ;
           ex:identifier ?identificationNumber ;
           ex:name ?name ;
           ex:description ?description ;
@@ -122,18 +120,18 @@ export class HeritageObjectFetcher {
           ex:name ?publisherName .
       }
       WHERE {
-        VALUES ?object {
-          ${heritageObjectIris}
+        VALUES ?this {
+          ${iris}
         }
 
-        ?object a crm:E22_Human-Made_Object .
+        ?this a crm:E22_Human-Made_Object .
 
         ####################
         # Identifier
         ####################
 
         OPTIONAL {
-          ?object crm:P1_is_identified_by ?identifier .
+          ?this crm:P1_is_identified_by ?identifier .
           ?identifier a crm:E42_Identifier ;
             crm:P2_has_type <http://vocab.getty.edu/aat/300404626> ; # Identification number
             crm:P190_has_symbolic_content ?identificationNumber .
@@ -144,7 +142,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P1_is_identified_by [
+          ?this crm:P1_is_identified_by [
             crm:P2_has_type <http://vocab.getty.edu/aat/300404670> ; # Name
             crm:P190_has_symbolic_content ?name ;
           ] ;
@@ -155,7 +153,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P67i_is_referred_to_by [
+          ?this crm:P67i_is_referred_to_by [
             crm:P2_has_type <http://vocab.getty.edu/aat/300435416> ; # Description
             crm:P190_has_symbolic_content ?description ;
           ] ;
@@ -166,7 +164,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P2_has_type ?type .
+          ?this crm:P2_has_type ?type .
           ?type rdfs:label ?typeName .
 
           # For BC; remove as soon as locale-aware names are in use
@@ -178,7 +176,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P62_depicts ?subject .
+          ?this crm:P62_depicts ?subject .
           ?subject rdfs:label ?subjectName .
 
           # For BC; remove as soon as locale-aware names are in use
@@ -190,7 +188,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P128_carries [
+          ?this crm:P128_carries [
             crm:P2_has_type <http://vocab.getty.edu/aat/300028702> ; # Inscription
             crm:P190_has_symbolic_content ?inscription ;
           ] ;
@@ -201,7 +199,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P45_consists_of ?material .
+          ?this crm:P45_consists_of ?material .
           ?material rdfs:label ?materialName .
 
           # For BC; remove as soon as locale-aware names are in use
@@ -213,7 +211,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique .
+          ?this crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique .
           ?technique rdfs:label ?techniqueName .
 
           # For BC; remove as soon as locale-aware names are in use
@@ -225,7 +223,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P108i_was_produced_by/crm:P14_carried_out_by ?creator .
+          ?this crm:P108i_was_produced_by/crm:P14_carried_out_by ?creator .
           ?creator rdfs:label ?creatorName ;
             rdf:type ?creatorTypeTemp .
 
@@ -241,7 +239,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P108i_was_produced_by/crm:P4_has_time-span ?dateCreatedTimeSpan .
+          ?this crm:P108i_was_produced_by/crm:P4_has_time-span ?dateCreatedTimeSpan .
 
           OPTIONAL {
             ?dateCreatedTimeSpan crm:P82a_begin_of_the_begin ?dateCreatedBegin
@@ -257,7 +255,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P108i_was_produced_by/crm:P7_took_place_at ?locationCreated .
+          ?this crm:P108i_was_produced_by/crm:P7_took_place_at ?locationCreated .
 
           # Official name may not exist, see e.g. https://sws.geonames.org/3827414/
           OPTIONAL {
@@ -282,7 +280,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P65_shows_visual_item/la:digitally_shown_by ?digitalObject .
+          ?this crm:P65_shows_visual_item/la:digitally_shown_by ?digitalObject .
           ?digitalObject a dig:D1_Digital_Object ;
             crm:P2_has_type <http://vocab.getty.edu/aat/300215302> ; # Digital image
             la:access_point ?digitalObjectContentUrl .
@@ -304,7 +302,7 @@ export class HeritageObjectFetcher {
         ####################
 
         OPTIONAL {
-          ?object la:member_of ?dataset .
+          ?this la:member_of ?dataset .
 
           ####################
           # Name of dataset

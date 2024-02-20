@@ -9,7 +9,7 @@ module.exports = {
     'node/no-unpublished-import': [
       'error',
       {
-        allowModules: ['@jest/globals'],
+        allowModules: ['@jest/globals', '@rdfjs/types'],
       },
     ],
   },

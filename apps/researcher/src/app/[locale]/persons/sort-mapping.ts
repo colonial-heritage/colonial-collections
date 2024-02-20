@@ -1,16 +1,31 @@
-import {SortBy as SortBySearchOption, SortOrder} from '@/lib/api/persons';
-import {SortBy} from '@colonial-collections/list-store';
+import {
+  SortBy as SortBySearchOption,
+  SortOrder,
+} from '@colonial-collections/api';
+
+export enum SortByUserOption {
+  BirthYearAsc = 'birthYearAsc',
+  BirthYearDesc = 'birthYearDesc',
+  NameAsc = 'nameAsc',
+  NameDesc = 'nameDesc',
+}
+
+export const defaultSortByUserOption = SortByUserOption.BirthYearDesc;
 
 export const sortMapping = {
-  [SortBy.RelevanceDesc]: {
-    sortBy: SortBySearchOption.Relevance,
+  [SortByUserOption.BirthYearDesc]: {
+    sortBy: SortBySearchOption.BirthYear,
     sortOrder: SortOrder.Descending,
   },
-  [SortBy.NameAsc]: {
+  [SortByUserOption.BirthYearAsc]: {
+    sortBy: SortBySearchOption.BirthYear,
+    sortOrder: SortOrder.Ascending,
+  },
+  [SortByUserOption.NameAsc]: {
     sortBy: SortBySearchOption.Name,
     sortOrder: SortOrder.Ascending,
   },
-  [SortBy.NameDesc]: {
+  [SortByUserOption.NameDesc]: {
     sortBy: SortBySearchOption.Name,
     sortOrder: SortOrder.Descending,
   },

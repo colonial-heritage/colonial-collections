@@ -1,7 +1,7 @@
 import {DateTimeFormatOptions, useTranslations} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import {PageHeader, PageTitle} from '@colonial-collections/ui';
-import personFetcher from '@/lib/person-fetcher-instance';
+import constituents from '@/lib/constituents-instance';
 import {getFormatter} from 'next-intl/server';
 import {PersonIcon} from '@/components/icons';
 import {H2, H3} from '@/components/titles';
@@ -43,7 +43,7 @@ interface Props {
 
 export default async function Details({params}: Props) {
   const id = decodeRouteSegment(params.id);
-  const person = await personFetcher.getById({id});
+  const person = await constituents.getById({id});
   const t = await getTranslations('PersonDetails');
 
   if (!person) {
@@ -100,7 +100,7 @@ export default async function Details({params}: Props) {
               />
             </div>
             <div className={columnClassName}>
-              <InfoBlock title={t('dataset')} value={person.isPartOf.name} />
+              <InfoBlock title={t('dataset')} value={person.isPartOf?.name} />
             </div>
           </div>
 

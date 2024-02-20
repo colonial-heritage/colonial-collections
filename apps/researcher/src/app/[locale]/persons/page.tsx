@@ -1,4 +1,4 @@
-import personFetcher from '@/lib/person-fetcher-instance';
+import constituents from '@/lib/constituents-instance';
 import {useTranslations} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import PersonList from './person-list';
@@ -10,12 +10,12 @@ import {
   Type as SearchParamType,
 } from '@colonial-collections/list-store';
 import {
-  SearchResult,
+  ConstituentSearchResult,
   SortBy,
   SortByEnum,
   SortOrder,
   SortOrderEnum,
-} from '@/lib/api/persons';
+} from '@colonial-collections/api';
 import {
   Paginator,
   SelectedFilters,
@@ -39,7 +39,7 @@ import {ListStoreUpdater} from '@/components/list-store-updater';
 export const revalidate = 60;
 
 interface FacetProps {
-  name: keyof SearchResult['filters'];
+  name: keyof ConstituentSearchResult['filters'];
   searchParamType: SearchParamType;
   Component: ElementType;
 }
@@ -68,7 +68,7 @@ const facets: ReadonlyArray<FacetProps> = [
 ];
 
 interface FacetMenuProps {
-  filters: SearchResult['filters'];
+  filters: ConstituentSearchResult['filters'];
 }
 
 function FacetMenu({filters}: FacetMenuProps) {
@@ -103,7 +103,7 @@ export default async function Home({searchParams = {}}: Props) {
       SortOrderEnum,
       defaultSortOrder: SortOrder.Descending,
       SortByEnum,
-      defaultSortBy: SortBy.Relevance,
+      defaultSortBy: SortBy.BirthYear,
       sortMapping: sortMapping,
     },
     filterKeys: facets.map(({name, searchParamType}) => ({
@@ -122,9 +122,9 @@ export default async function Home({searchParams = {}}: Props) {
   });
 
   let hasError;
-  let searchResult: SearchResult | undefined;
+  let searchResult: ConstituentSearchResult | undefined;
   try {
-    searchResult = await personFetcher.search(searchOptions);
+    searchResult = await constituents.search(searchOptions);
   } catch (err) {
     hasError = true;
     console.error(err);
@@ -207,7 +207,7 @@ export default async function Home({searchParams = {}}: Props) {
                   </PageHeader>
 
                   <PersonList
-                    persons={searchResult.persons}
+                    persons={searchResult.constituents}
                     totalCount={searchResult.totalCount}
                   />
                   <Paginator />

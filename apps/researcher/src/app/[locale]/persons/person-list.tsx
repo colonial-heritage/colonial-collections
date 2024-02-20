@@ -1,10 +1,10 @@
 import PersonCard from './person-card';
 import {useTranslations} from 'next-intl';
-import {SearchResult} from '@/lib/api/persons';
+import {ConstituentSearchResult} from '@colonial-collections/api';
 
 interface Props {
-  persons: SearchResult['persons'];
-  totalCount: SearchResult['totalCount'];
+  persons: ConstituentSearchResult['constituents'];
+  totalCount: ConstituentSearchResult['totalCount'];
 }
 
 export default function PersonList({persons, totalCount}: Props) {

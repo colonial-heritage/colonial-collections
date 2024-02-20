@@ -1,6 +1,6 @@
 import {useFormatter, useTranslations} from 'next-intl';
 import {Link} from '@/navigation';
-import {Person} from '@/lib/api/persons';
+import {Person} from '@colonial-collections/api';
 import {PersonIcon} from '@/components/icons';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 

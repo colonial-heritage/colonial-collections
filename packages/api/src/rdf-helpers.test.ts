@@ -1,10 +1,14 @@
 import {
   createAgents,
   createDatasets,
-  createImages,
   createPlaces,
   createThings,
   createTimeSpans,
+  getProperty,
+  getPropertyValue,
+  getPropertyValues,
+  onlyOne,
+  removeNullish,
 } from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {RdfObjectLoader, Resource} from 'rdf-object';
@@ -26,9 +30,9 @@ beforeAll(async () => {
 
     ex:object1 a ex:Object ;
       ex:name "Name" ;
+      ex:description "Description 1", "Description 2" ;
       ex:subject ex:subject1, ex:subject2 ;
       ex:creator ex:creator1, ex:creator2, ex:creator3, ex:creator4 ;
-      ex:image ex:image1, ex:image2, ex:image3 ;
       ex:dateCreated ex:dateCreated1, ex:dateCreated2, ex:dateCreated3, ex:dateCreated4 ;
       ex:locationCreated ex:location1, ex:location2 ;
       ex:isPartOf ex:dataset1, ex:dataset2, ex:dataset3 .
@@ -47,18 +51,6 @@ beforeAll(async () => {
     ex:creator3 a ex:Organization .
 
     ex:creator4 ex:name "Organization" .
-
-    ex:image1 a ex:Image ;
-      ex:contentUrl <https://example.org/image1.jpg> ;
-      ex:license ex:license1 .
-
-    ex:license1 a ex:DigitalDocument ;
-      ex:name "License" .
-
-    ex:image2 a ex:Image ;
-      ex:contentUrl <https://example.org/image2.jpg> .
-
-    ex:image3 a ex:Image .
 
     ex:dateCreated1 a ex:TimeSpan ;
       ex:startDate "-1900"^^xsd:gYear ;
@@ -112,6 +104,98 @@ beforeAll(async () => {
   resource = loader.resources['https://example.org/object1'];
 });
 
+describe('getProperty', () => {
+  it('returns undefined if property does not exist', () => {
+    const property = getProperty(resource, 'ex:unknown');
+
+    expect(property).toBeUndefined();
+  });
+
+  it('returns property if it exists', () => {
+    const property = getProperty(resource, 'ex:name');
+
+    expect(property).toBeInstanceOf(Resource);
+  });
+});
+
+describe('getPropertyValue', () => {
+  it('returns undefined if property does not exist', () => {
+    const value = getPropertyValue(resource, 'ex:unknown');
+
+    expect(value).toBeUndefined();
+  });
+
+  it('returns value if property exists', () => {
+    const value = getPropertyValue(resource, 'ex:name');
+
+    expect(value).toStrictEqual('Name');
+  });
+});
+
+describe('getPropertyValues', () => {
+  it('returns undefined if properties do not exist', () => {
+    const values = getPropertyValues(resource, 'ex:unknown');
+
+    expect(values).toBeUndefined();
+  });
+
+  it('returns values if properties exist', () => {
+    const values = getPropertyValues(resource, 'ex:description');
+
+    expect(values).toStrictEqual(['Description 1', 'Description 2']);
+  });
+});
+
+describe('onlyOne', () => {
+  it('returns undefined if input is not an array', () => {
+    const item = onlyOne(undefined);
+
+    expect(item).toBeUndefined();
+  });
+
+  it('returns undefined if input array is empty', () => {
+    const item = onlyOne([]);
+
+    expect(item).toBeUndefined();
+  });
+
+  it('returns the first item from the input array', () => {
+    const item = onlyOne([1, 2]);
+
+    expect(item).toStrictEqual(1);
+  });
+});
+
+describe('removeNullish', () => {
+  it('returns empty object if input is not an object', () => {
+    // @ts-expect-error:TS2345
+    const object = removeNullish(undefined);
+
+    expect(object).toStrictEqual({});
+  });
+
+  it('returns object without nullish values', () => {
+    const object = removeNullish({
+      1: 2,
+      3: undefined,
+    });
+
+    expect(object).toStrictEqual({1: 2});
+  });
+
+  // TBD: will this pose a problem?
+  it('returns object with nullish values in nested objects', () => {
+    const object = removeNullish({
+      4: {
+        5: 6,
+        7: undefined,
+      },
+    });
+
+    expect(object).toStrictEqual({4: {5: 6, 7: undefined}});
+  });
+});
+
 describe('createThings', () => {
   it('returns undefined if properties do not exist', () => {
     const things = createThings(resource, 'ex:unknown');
@@ -125,37 +209,6 @@ describe('createThings', () => {
     expect(things).toStrictEqual([
       {id: 'https://example.org/subject1', name: 'Term'},
       {id: 'https://example.org/subject2', name: undefined},
-    ]);
-  });
-});
-
-describe('createAgents', () => {
-  it('returns undefined if properties do not exist', () => {
-    const agents = createAgents(resource, 'ex:unknown');
-
-    expect(agents).toBeUndefined();
-  });
-
-  it('returns agents if properties exist', () => {
-    const agents = createAgents(resource, 'ex:creator');
-
-    expect(agents).toStrictEqual([
-      {type: 'Person', id: 'https://example.org/creator1', name: 'Person'},
-      {
-        type: 'Organization',
-        id: 'https://example.org/creator2',
-        name: 'Organization',
-      },
-      {
-        type: 'Organization',
-        id: 'https://example.org/creator3',
-        name: undefined,
-      },
-      {
-        type: 'Unknown',
-        id: 'https://example.org/creator4',
-        name: 'Organization',
-      },
     ]);
   });
 });
@@ -183,34 +236,6 @@ describe('createPlaces', () => {
           name: 'Country',
         },
       },
-    ]);
-  });
-});
-
-describe('createImages', () => {
-  it('returns undefined if properties do not exist', () => {
-    const images = createImages(resource, 'ex:unknown');
-
-    expect(images).toBeUndefined();
-  });
-
-  it('returns images if properties exist', () => {
-    const images = createImages(resource, 'ex:image');
-
-    expect(images).toStrictEqual([
-      {
-        id: 'https://example.org/image1',
-        contentUrl: 'https://example.org/image1.jpg',
-        license: {
-          id: 'https://example.org/license1',
-          name: 'License',
-        },
-      },
-      {
-        id: 'https://example.org/image2',
-        contentUrl: 'https://example.org/image2.jpg',
-      },
-      {id: 'https://example.org/image3', contentUrl: undefined},
     ]);
   });
 });
@@ -245,6 +270,37 @@ describe('createTimeSpan', () => {
         id: 'https://example.org/dateCreated4',
         startDate: undefined,
         endDate: undefined,
+      },
+    ]);
+  });
+});
+
+describe('createAgents', () => {
+  it('returns undefined if properties do not exist', () => {
+    const agents = createAgents(resource, 'ex:unknown');
+
+    expect(agents).toBeUndefined();
+  });
+
+  it('returns agents if properties exist', () => {
+    const agents = createAgents(resource, 'ex:creator');
+
+    expect(agents).toStrictEqual([
+      {type: 'Person', id: 'https://example.org/creator1', name: 'Person'},
+      {
+        type: 'Organization',
+        id: 'https://example.org/creator2',
+        name: 'Organization',
+      },
+      {
+        type: 'Organization',
+        id: 'https://example.org/creator3',
+        name: undefined,
+      },
+      {
+        type: 'Unknown',
+        id: 'https://example.org/creator4',
+        name: 'Organization',
       },
     ]);
   });

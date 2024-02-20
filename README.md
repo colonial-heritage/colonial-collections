@@ -13,7 +13,6 @@ This repo uses [Turborepo](https://turbo.build/) as build system and [npm](https
 
 - `eslint-config-custom`: `eslint` configurations
 - `iris`: helper functions for working with IRIs
-- `label-fetcher`: package for fetching the labels of IRIs
 - `tailwind-config`: Tailwind config used by both the apps and the `ui` package
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 - `ui`: a React component library shared by the apps

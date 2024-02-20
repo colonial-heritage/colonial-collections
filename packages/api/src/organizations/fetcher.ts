@@ -23,8 +23,8 @@ const getByIdOptionsSchema = z.object({
 export type GetByIdOptions = z.input<typeof getByIdOptionsSchema>;
 
 export class OrganizationFetcher {
-  private endpointUrl: string;
-  private fetcher = new SparqlEndpointFetcher();
+  private readonly endpointUrl: string;
+  private readonly fetcher = new SparqlEndpointFetcher();
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -38,7 +38,7 @@ export class OrganizationFetcher {
       PREFIX schema: <https://schema.org/>
 
       CONSTRUCT {
-        ?organization a ex:Organization ;
+        ?this a ex:Organization ;
           ex:name ?name ;
           ex:url ?url ;
           ex:address ?address .
@@ -50,21 +50,21 @@ export class OrganizationFetcher {
           ex:addressCountry ?addressCountry .
       }
       WHERE {
-        BIND(<${options.id}> as ?organization)
+        BIND(<${options.id}> as ?this)
 
-        ?organization a schema:Organization .
+        ?this a schema:Organization .
 
         OPTIONAL {
-          ?organization schema:name ?name
+          ?this schema:name ?name
           FILTER(LANG(?name) = "${options.locale}")
         }
 
         OPTIONAL {
-          ?organization schema:url ?url
+          ?this schema:url ?url
         }
 
         OPTIONAL {
-          ?organization schema:address ?address .
+          ?this schema:address ?address .
           ?address schema:streetAddress ?streetAddress ;
             schema:postalCode ?postalCode ;
             schema:addressLocality ?addressLocality ;

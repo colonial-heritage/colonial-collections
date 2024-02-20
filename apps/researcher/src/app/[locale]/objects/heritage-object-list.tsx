@@ -1,10 +1,10 @@
 import HeritageObjectCard from './heritage-object-card';
 import {useTranslations} from 'next-intl';
-import {SearchResult} from '@/lib/api/objects';
+import {HeritageObjectSearchResult} from '@colonial-collections/api';
 
 interface Props {
-  heritageObjects: SearchResult['heritageObjects'];
-  totalCount: SearchResult['totalCount'];
+  heritageObjects: HeritageObjectSearchResult['heritageObjects'];
+  totalCount: HeritageObjectSearchResult['totalCount'];
 }
 
 export default function HeritageObjectList({

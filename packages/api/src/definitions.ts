@@ -11,7 +11,6 @@ export type Thing = {
 
 export type Term = Thing;
 export type Place = Thing & {isPartOf?: Place};
-export type Person = Thing & {type: 'Person'};
 export type Unknown = Thing & {type: 'Unknown'};
 export type Agent = Person | Organization | Unknown;
 export type License = Thing;
@@ -63,7 +62,31 @@ export type HeritageObject = {
   isPartOf?: Dataset;
 };
 
+export type ProvenanceEvent = {
+  id: string;
+  types?: Term[];
+  date?: TimeSpan;
+  startDate?: Date; // For BC; remove when prop date is in use
+  endDate?: Date; // For BC; remove when prop date is in use
+  transferredFrom?: Agent;
+  transferredTo?: Agent;
+  description?: string;
+  location?: Place;
+  startsAfter?: string; // ID of another provenance event
+  endsBefore?: string; // ID of another provenance event
+};
+
+export type Person = Thing & {
+  type: 'Person';
+  birthDate?: TimeSpan;
+  birthPlace?: Place;
+  deathDate?: TimeSpan;
+  deathPlace?: Place;
+  isPartOf?: Dataset;
+};
+
 export enum SortBy {
+  BirthYear = 'birthYear',
   DateCreated = 'dateCreated',
   Name = 'name',
 }
@@ -81,18 +104,4 @@ export type SearchResultFilter = {
   id: string | number;
   name?: string | number; // Name may not exist (e.g. in a specific locale)
   totalCount: number;
-};
-
-export type ProvenanceEvent = {
-  id: string;
-  types?: Term[];
-  date?: TimeSpan;
-  startDate?: Date; // For BC; remove when prop date is in use
-  endDate?: Date; // For BC; remove when prop date is in use
-  transferredFrom?: Agent;
-  transferredTo?: Agent;
-  description?: string;
-  location?: Place;
-  startsAfter?: string; // ID of another provenance event
-  endsBefore?: string; // ID of another provenance event
 };

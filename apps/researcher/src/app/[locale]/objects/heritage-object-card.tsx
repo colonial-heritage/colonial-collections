@@ -1,6 +1,6 @@
 import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
-import {HeritageObject} from '@/lib/api/objects';
+import {HeritageObject} from '@colonial-collections/api';
 import Image from 'next/image';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import classNames from 'classnames';

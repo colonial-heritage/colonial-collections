@@ -1,11 +1,13 @@
 import {localeSchema, ProvenanceEvent, Term} from '../definitions';
-import {getPropertyValue, onlyOne, removeNullish} from '../rdf-helpers';
 import {
   createAgents,
   createPlaces,
   createThings,
   createTimeSpans,
-} from './rdf-helpers';
+  getPropertyValue,
+  onlyOne,
+  removeNullish,
+} from '../rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
 import type {Readable} from 'node:stream';
@@ -27,8 +29,8 @@ const getByIdOptionsSchema = z.object({
 export type GetByIdOptions = z.input<typeof getByIdOptionsSchema>;
 
 export class ProvenanceEventsFetcher {
-  private endpointUrl: string;
-  private fetcher = new SparqlEndpointFetcher();
+  private readonly endpointUrl: string;
+  private readonly fetcher = new SparqlEndpointFetcher();
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -46,7 +48,7 @@ export class ProvenanceEventsFetcher {
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       CONSTRUCT {
-        ?object a ex:HeritageObject ;
+        ?this a ex:HeritageObject ;
           ex:subjectOf ?acquisition, ?transferOfCustody .
 
         ?acquisition a ex:Event ;
@@ -106,16 +108,16 @@ export class ProvenanceEventsFetcher {
           ex:name ?transferOfCustodyLocationName .
       }
       WHERE {
-        BIND(<${options.id}> AS ?object)
+        BIND(<${options.id}> AS ?this)
 
-        ?object a crm:E22_Human-Made_Object .
+        ?this a crm:E22_Human-Made_Object .
 
         ####################
         # Provenance: acquisition
         ####################
 
         OPTIONAL {
-          ?object crm:P24i_changed_ownership_through ?acquisition .
+          ?this crm:P24i_changed_ownership_through ?acquisition .
           ?acquisition a crm:E8_Acquisition ;
             crm:P9i_forms_part_of ?acquisitionProvEvent .
 
@@ -219,7 +221,7 @@ export class ProvenanceEventsFetcher {
         ####################
 
         OPTIONAL {
-          ?object crm:P30i_custody_transferred_through ?transferOfCustody .
+          ?this crm:P30i_custody_transferred_through ?transferOfCustody .
           ?transferOfCustody a crm:E10_Transfer_of_Custody ;
             crm:P9i_forms_part_of ?transferOfCustodyProvEvent .
 
