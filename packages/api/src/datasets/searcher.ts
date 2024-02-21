@@ -1,4 +1,12 @@
-import type {Dataset, Thing} from './definitions';
+import {
+  localeSchema,
+  SearchResultFilter,
+  SortBy,
+  SortByEnum,
+  SortOrder,
+  SortOrderEnum,
+} from '../definitions';
+import type {DatasetSearchResult} from './definitions';
 import {DatasetFetcher} from './fetcher';
 import {z} from 'zod';
 
@@ -7,9 +15,7 @@ const constructorOptionsSchema = z.object({
   datasetFetcher: z.instanceof(DatasetFetcher),
 });
 
-export type FetcherConstructorOptions = z.infer<
-  typeof constructorOptionsSchema
->;
+export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
 enum RawKeys {
   Id = '@id',
@@ -19,32 +25,17 @@ enum RawKeys {
   License = 'https://colonialcollections nl/schema#license',
 }
 
-export enum SortBy {
-  Name = 'name',
-  Relevance = 'relevance',
-}
-
-export const SortByEnum = z.nativeEnum(SortBy);
-
 const sortByToRawKeys = new Map<string, string>([
   [SortBy.Name, `${RawKeys.Name}.keyword`],
-  [SortBy.Relevance, '_score'],
 ]);
 
-export enum SortOrder {
-  Ascending = 'asc',
-  Descending = 'desc',
-}
-
-export const SortOrderEnum = z.nativeEnum(SortOrder);
-
-// TBD: add language option, for returning results in a specific locale (e.g. 'nl', 'en')
 export const searchOptionsSchema = z.object({
+  locale: localeSchema,
   query: z.string().optional().default('*'), // If no query provided, match all
   offset: z.number().int().nonnegative().optional().default(0),
   limit: z.number().int().positive().optional().default(10),
-  sortBy: SortByEnum.optional().default(SortBy.Relevance),
-  sortOrder: SortOrderEnum.optional().default(SortOrder.Descending),
+  sortBy: SortByEnum.optional().default(SortBy.Name),
+  sortOrder: SortOrderEnum.optional().default(SortOrder.Ascending),
   filters: z
     .object({
       publishers: z.array(z.string()).optional().default([]),
@@ -94,32 +85,11 @@ type RawSearchResponseWithAggregations = z.infer<
   typeof rawSearchResponseWithAggregationsSchema
 >;
 
-export type SearchResultFilter = Thing & {totalCount: number};
-
-export type SearchResult = {
-  totalCount: number;
-  offset: number;
-  limit: number;
-  sortBy: SortBy;
-  sortOrder: SortOrder;
-  datasets: Dataset[];
-  filters: {
-    publishers: SearchResultFilter[];
-    licenses: SearchResultFilter[];
-  };
-};
-
-const getByIdOptionsSchema = z.object({
-  id: z.string(),
-});
-
-export type GetByIdOptions = z.infer<typeof getByIdOptionsSchema>;
-
 export class DatasetSearcher {
-  private endpointUrl: string;
-  private datasetFetcher: DatasetFetcher;
+  private readonly endpointUrl: string;
+  private readonly datasetFetcher: DatasetFetcher;
 
-  constructor(options: FetcherConstructorOptions) {
+  constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
@@ -226,7 +196,7 @@ export class DatasetSearcher {
   private toMatchedFilter(bucket: RawBucket): SearchResultFilter {
     const totalCount = bucket.doc_count;
     const id = bucket.key;
-    const name = bucket.key; // Replace with labelFetcher as soon as we have IRIs
+    const name = bucket.key;
 
     return {totalCount, id, name};
   }
@@ -249,12 +219,15 @@ export class DatasetSearcher {
 
     const rawDatasets = hits.hits.map(hit => hit._source);
     const ids = rawDatasets.map(rawDataset => rawDataset['@id']);
-    const datasets = await this.datasetFetcher.getByIds(ids);
+    const datasets = await this.datasetFetcher.getByIds({
+      locale: options.locale,
+      ids,
+    });
 
     const publisherFilters = this.buildFilters(aggregations.publishers.buckets);
     const licenseFilters = this.buildFilters(aggregations.licenses.buckets);
 
-    const searchResult: SearchResult = {
+    const searchResult: DatasetSearchResult = {
       totalCount: hits.total.value,
       offset: options.offset!,
       limit: options.limit!,

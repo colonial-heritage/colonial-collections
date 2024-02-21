@@ -1,4 +1,4 @@
-import {Agent, Dataset, Place, TimeSpan} from './definitions';
+import {Agent, Dataset, Measurement, Place, TimeSpan} from './definitions';
 import {defu} from 'defu';
 import edtf from 'edtf';
 import type {Resource} from 'rdf-object';
@@ -172,4 +172,44 @@ export function createDatasets(resource: Resource, propertyName: string) {
   const datasets = properties.map(property => createDataset(property));
 
   return datasets.length > 0 ? datasets : undefined;
+}
+
+function createDate(resource: Resource) {
+  const date = new Date(resource.term.value);
+
+  return date;
+}
+
+export function createDates(resource: Resource, propertyName: string) {
+  const properties = resource.properties[propertyName];
+  const dates = properties.map(property => createDate(property));
+
+  return dates.length > 0 ? dates : undefined;
+}
+
+export function createMeasurements(resource: Resource, propertyName: string) {
+  const properties = resource.properties[propertyName];
+  const measurements = properties.map(property => {
+    const measurementValue = property.property['ex:value'];
+    const metric = property.property['ex:measurementOf'];
+    const metricName = metric.property['ex:name'];
+    const metricOrder = metric.property['ex:order'];
+
+    const measurement: Measurement = {
+      id: property.value,
+      value: measurementValue.value === 'true', // May need to support other data types at some point
+      metric: {
+        id: metric.value,
+        name: metricName.value,
+        order: +metricOrder.value,
+      },
+    };
+
+    return measurement;
+  });
+
+  // Sort measurements by metric order
+  measurements.sort((a, b) => a.metric.order - b.metric.order);
+
+  return measurements.length > 0 ? measurements : undefined;
 }

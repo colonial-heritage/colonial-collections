@@ -17,7 +17,9 @@ beforeEach(() => {
 
 describe('getById', () => {
   it('returns a dataset', async () => {
-    const dataset = await datasets.getById('https://example.org/datasets/1');
+    const dataset = await datasets.getById({
+      id: 'https://example.org/datasets/1',
+    });
 
     expect(dataset).not.toBeUndefined();
   });

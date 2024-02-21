@@ -19,9 +19,9 @@ export type HeritageObjectsConstructorOptions = z.infer<
 >;
 
 export class HeritageObjects {
-  private heritageObjectFetcher: HeritageObjectFetcher;
-  private provenanceEventsFetcher: ProvenanceEventsFetcher;
-  private heritageObjectSearcher: HeritageObjectSearcher;
+  private readonly heritageObjectFetcher: HeritageObjectFetcher;
+  private readonly provenanceEventsFetcher: ProvenanceEventsFetcher;
+  private readonly heritageObjectSearcher: HeritageObjectSearcher;
 
   constructor(options: HeritageObjectsConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);

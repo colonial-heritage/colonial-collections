@@ -6,7 +6,7 @@ import {
   SortOrder,
   SortOrderEnum,
 } from '../definitions';
-import {HeritageObjectSearchResult} from './definitions';
+import type {HeritageObjectSearchResult} from './definitions';
 import {HeritageObjectFetcher} from './fetcher';
 import {z} from 'zod';
 
@@ -33,8 +33,8 @@ enum RawKeys {
 }
 
 const sortByToRawKeys = new Map<string, string>([
-  [SortBy.Name, `${RawKeys.Name}.keyword`],
   [SortBy.DateCreated, RawKeys.YearCreatedStart],
+  [SortBy.Name, `${RawKeys.Name}.keyword`],
 ]);
 
 const searchOptionsSchema = z.object({

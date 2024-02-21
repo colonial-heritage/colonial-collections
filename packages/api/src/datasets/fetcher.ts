@@ -1,4 +1,4 @@
-import {Dataset, License, Publisher} from './definitions';
+import {localeSchema, Dataset, License, Agent} from '../definitions';
 import {
   createDates,
   createMeasurements,
@@ -7,7 +7,7 @@ import {
   getPropertyValues,
   onlyOne,
   removeNullish,
-} from './rdf-helpers';
+} from '../rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {isIri} from '@colonial-collections/iris';
 import {EOL} from 'node:os';
@@ -22,9 +22,23 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
+const getByIdsOptionsSchema = z.object({
+  locale: localeSchema,
+  ids: z.array(z.string()),
+});
+
+export type GetByIdsOptions = z.input<typeof getByIdsOptionsSchema>;
+
+const getByIdOptionsSchema = z.object({
+  locale: localeSchema,
+  id: z.string(),
+});
+
+export type GetByIdOptions = z.input<typeof getByIdOptionsSchema>;
+
 export class DatasetFetcher {
-  private endpointUrl: string;
-  private fetcher = new SparqlEndpointFetcher();
+  private readonly endpointUrl: string;
+  private readonly fetcher = new SparqlEndpointFetcher();
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -32,8 +46,8 @@ export class DatasetFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  private async fetchTriples(iris: string[]) {
-    const datasetIris = iris.map(iri => `<${iri}>`).join(EOL);
+  private async fetchTriples(options: GetByIdsOptions) {
+    const iris = options.ids.map(iri => `<${iri}>`).join(EOL);
 
     const query = `
       PREFIX dqv: <http://www.w3.org/ns/dqv#>
@@ -43,7 +57,7 @@ export class DatasetFetcher {
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       CONSTRUCT {
-        ?dataset
+        ?this a ex:Dataset ;
           ex:name ?name ;
           ex:description ?description ;
           ex:license ?license ;
@@ -64,18 +78,18 @@ export class DatasetFetcher {
           ex:order ?metricOrder .
       }
       WHERE {
-        VALUES ?dataset {
-          ${datasetIris}
+        VALUES ?this {
+          ${iris}
         }
 
-        ?dataset a schema:Dataset .
+        ?this a schema:Dataset .
 
         ####################
         # Name
         ####################
 
         OPTIONAL {
-          ?dataset schema:name ?name
+          ?this schema:name ?name
           FILTER(LANG(?name) = "" || LANGMATCHES(LANG(?name), "en"))
         }
 
@@ -84,7 +98,7 @@ export class DatasetFetcher {
         ####################
 
         OPTIONAL {
-          ?dataset schema:description ?description
+          ?this schema:description ?description
           FILTER(LANG(?description) = "" || LANGMATCHES(LANG(?description), "en"))
         }
 
@@ -93,7 +107,7 @@ export class DatasetFetcher {
         ####################
 
         OPTIONAL {
-          ?dataset schema:license ?license .
+          ?this schema:license ?license .
           ?license schema:name ?licenseName .
           FILTER(LANG(?licenseName) = "" || LANGMATCHES(LANG(?licenseName), "en"))
         }
@@ -103,7 +117,7 @@ export class DatasetFetcher {
         ####################
 
         OPTIONAL {
-          ?dataset schema:publisher ?publisher .
+          ?this schema:publisher ?publisher .
           ?publisher schema:name ?publisherName
           FILTER(LANG(?publisherName) = "" || LANGMATCHES(LANG(?publisherName), "en"))
         }
@@ -112,16 +126,16 @@ export class DatasetFetcher {
         # Dates
         ####################
 
-        OPTIONAL { ?dataset schema:dateCreated ?dateCreated }
-        OPTIONAL { ?dataset schema:dateModified ?dateModified }
-        OPTIONAL { ?dataset schema:datePublished ?datePublished }
+        OPTIONAL { ?this schema:dateCreated ?dateCreated }
+        OPTIONAL { ?this schema:dateModified ?dateModified }
+        OPTIONAL { ?this schema:datePublished ?datePublished }
 
         ####################
         # Keywords
         ####################
 
         OPTIONAL {
-          ?dataset schema:keywords ?keywords
+          ?this schema:keywords ?keywords
           FILTER(LANG(?keywords) = "" || LANGMATCHES(LANG(?keywords), "en"))
         }
 
@@ -130,7 +144,7 @@ export class DatasetFetcher {
         ####################
 
         OPTIONAL {
-          ?dataset schema:mainEntityOfPage ?mainEntityOfPage .
+          ?this schema:mainEntityOfPage ?mainEntityOfPage .
         }
 
         ####################
@@ -138,9 +152,9 @@ export class DatasetFetcher {
         ####################
 
         OPTIONAL {
-          { ?dataset dqv:hasQualityMeasurement ?measurement }
+          { ?this dqv:hasQualityMeasurement ?measurement }
           UNION
-          { ?dataset schema:distribution/dqv:hasQualityMeasurement ?measurement }
+          { ?this schema:distribution/dqv:hasQualityMeasurement ?measurement }
 
           ?measurement dqv:value ?measurementValue ;
             dqv:isMeasurementOf ?metric .
@@ -172,7 +186,7 @@ export class DatasetFetcher {
         const name = getPropertyValue(rawDataset, 'ex:name');
         const description = getPropertyValue(rawDataset, 'ex:description');
         const publisher = onlyOne(
-          createThings<Publisher>(rawDataset, 'ex:publisher')
+          createThings<Agent>(rawDataset, 'ex:publisher')
         );
         const license = onlyOne(
           createThings<License>(rawDataset, 'ex:license')
@@ -214,19 +228,30 @@ export class DatasetFetcher {
     return datasets;
   }
 
-  async getByIds(ids: string[]) {
-    const triplesStream = await this.fetchTriples(ids);
-    const datasets = await this.fromTriplesToDatasets(ids, triplesStream);
+  async getByIds(options: GetByIdsOptions) {
+    const opts = getByIdsOptionsSchema.parse(options);
+
+    if (opts.ids.length === 0) {
+      return [];
+    }
+
+    const triplesStream = await this.fetchTriples(opts);
+    const datasets = await this.fromTriplesToDatasets(opts.ids, triplesStream);
 
     return datasets;
   }
 
-  async getById(id: string) {
-    if (!isIri(id)) {
+  async getById(options: GetByIdOptions) {
+    const opts = getByIdOptionsSchema.parse(options);
+
+    if (!isIri(opts.id)) {
       return undefined;
     }
 
-    const datasets = await this.getByIds([id]);
+    const datasets = await this.getByIds({
+      locale: opts.locale,
+      ids: [opts.id],
+    });
 
     if (datasets.length !== 1) {
       return undefined;

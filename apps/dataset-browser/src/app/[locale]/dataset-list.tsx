@@ -1,10 +1,10 @@
 import DatasetCard from './dataset-card';
 import {useTranslations} from 'next-intl';
-import type {SearchResult} from '@/lib/api/datasets';
+import type {DatasetSearchResult} from '@colonial-collections/api';
 
 interface Props {
-  datasets: SearchResult['datasets'];
-  totalCount: SearchResult['totalCount'];
+  datasets: DatasetSearchResult['datasets'];
+  totalCount: DatasetSearchResult['totalCount'];
 }
 
 export default function DatasetList({datasets, totalCount}: Props) {

@@ -12,7 +12,7 @@ export type OrganizationsConstructorOptions = z.infer<
 // A small wrapper around 'OrganizationFetcher', to be in sync with
 // 'objects/index.ts' and to allow for future expansion
 export class Organizations {
-  private organizationFetcher: OrganizationFetcher;
+  private readonly organizationFetcher: OrganizationFetcher;
 
   constructor(options: OrganizationsConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);

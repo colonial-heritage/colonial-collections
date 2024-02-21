@@ -1,6 +1,8 @@
 import {
   createAgents,
   createDatasets,
+  createDates,
+  createMeasurements,
   createPlaces,
   createThings,
   createTimeSpans,
@@ -21,7 +23,9 @@ const loader = new RdfObjectLoader({
     rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
   },
 });
-let resource: Resource;
+
+let datasetResource: Resource;
+let objectResource: Resource;
 
 beforeAll(async () => {
   const triples = `
@@ -80,10 +84,20 @@ beforeAll(async () => {
 
     ex:dataset1 a ex:Dataset ;
       ex:name "Dataset 1" ;
-      ex:publisher ex:publisher1 .
+      ex:publisher ex:publisher1 ;
+      ex:dateCreated "2023-01-01"^^xsd:date ;
+      ex:measurements ex:measurement1 .
 
     ex:publisher1 a ex:Organization ;
       ex:name "Publishing organization" .
+
+    ex:measurement1 a ex:Measurement ;
+      ex:value "true"^^xsd:boolean ;
+      ex:measurementOf ex:metric1 .
+
+    ex:metric1 a ex:Metric ;
+      ex:name "Metric 1" ;
+      ex:order 1 .
 
     ex:dataset2 a ex:Dataset ;
       ex:name "Dataset 2" ;
@@ -101,18 +115,20 @@ beforeAll(async () => {
   const streamParser = new StreamParser();
   stringStream.pipe(streamParser);
   await loader.import(streamParser);
-  resource = loader.resources['https://example.org/object1'];
+
+  datasetResource = loader.resources['https://example.org/dataset1'];
+  objectResource = loader.resources['https://example.org/object1'];
 });
 
 describe('getProperty', () => {
   it('returns undefined if property does not exist', () => {
-    const property = getProperty(resource, 'ex:unknown');
+    const property = getProperty(objectResource, 'ex:unknown');
 
     expect(property).toBeUndefined();
   });
 
   it('returns property if it exists', () => {
-    const property = getProperty(resource, 'ex:name');
+    const property = getProperty(objectResource, 'ex:name');
 
     expect(property).toBeInstanceOf(Resource);
   });
@@ -120,13 +136,13 @@ describe('getProperty', () => {
 
 describe('getPropertyValue', () => {
   it('returns undefined if property does not exist', () => {
-    const value = getPropertyValue(resource, 'ex:unknown');
+    const value = getPropertyValue(objectResource, 'ex:unknown');
 
     expect(value).toBeUndefined();
   });
 
   it('returns value if property exists', () => {
-    const value = getPropertyValue(resource, 'ex:name');
+    const value = getPropertyValue(objectResource, 'ex:name');
 
     expect(value).toStrictEqual('Name');
   });
@@ -134,13 +150,13 @@ describe('getPropertyValue', () => {
 
 describe('getPropertyValues', () => {
   it('returns undefined if properties do not exist', () => {
-    const values = getPropertyValues(resource, 'ex:unknown');
+    const values = getPropertyValues(objectResource, 'ex:unknown');
 
     expect(values).toBeUndefined();
   });
 
   it('returns values if properties exist', () => {
-    const values = getPropertyValues(resource, 'ex:description');
+    const values = getPropertyValues(objectResource, 'ex:description');
 
     expect(values).toStrictEqual(['Description 1', 'Description 2']);
   });
@@ -198,13 +214,13 @@ describe('removeNullish', () => {
 
 describe('createThings', () => {
   it('returns undefined if properties do not exist', () => {
-    const things = createThings(resource, 'ex:unknown');
+    const things = createThings(objectResource, 'ex:unknown');
 
     expect(things).toBeUndefined();
   });
 
   it('returns things if properties exist', () => {
-    const things = createThings(resource, 'ex:subject');
+    const things = createThings(objectResource, 'ex:subject');
 
     expect(things).toStrictEqual([
       {id: 'https://example.org/subject1', name: 'Term'},
@@ -215,13 +231,13 @@ describe('createThings', () => {
 
 describe('createPlaces', () => {
   it('returns undefined if properties do not exist', () => {
-    const places = createPlaces(resource, 'ex:unknown');
+    const places = createPlaces(objectResource, 'ex:unknown');
 
     expect(places).toBeUndefined();
   });
 
   it('returns places if properties exist', () => {
-    const places = createPlaces(resource, 'ex:locationCreated');
+    const places = createPlaces(objectResource, 'ex:locationCreated');
 
     expect(places).toStrictEqual([
       {
@@ -242,13 +258,13 @@ describe('createPlaces', () => {
 
 describe('createTimeSpan', () => {
   it('returns undefined if properties do not exist', () => {
-    const timeSpans = createTimeSpans(resource, 'ex:unknown');
+    const timeSpans = createTimeSpans(objectResource, 'ex:unknown');
 
     expect(timeSpans).toBeUndefined();
   });
 
   it('returns time spans if properties exist', () => {
-    const timeSpans = createTimeSpans(resource, 'ex:dateCreated');
+    const timeSpans = createTimeSpans(objectResource, 'ex:dateCreated');
 
     expect(timeSpans).toStrictEqual([
       {
@@ -277,13 +293,13 @@ describe('createTimeSpan', () => {
 
 describe('createAgents', () => {
   it('returns undefined if properties do not exist', () => {
-    const agents = createAgents(resource, 'ex:unknown');
+    const agents = createAgents(objectResource, 'ex:unknown');
 
     expect(agents).toBeUndefined();
   });
 
   it('returns agents if properties exist', () => {
-    const agents = createAgents(resource, 'ex:creator');
+    const agents = createAgents(objectResource, 'ex:creator');
 
     expect(agents).toStrictEqual([
       {type: 'Person', id: 'https://example.org/creator1', name: 'Person'},
@@ -308,13 +324,13 @@ describe('createAgents', () => {
 
 describe('createDataset', () => {
   it('returns undefined if properties do not exist', () => {
-    const datasets = createDatasets(resource, 'ex:unknown');
+    const datasets = createDatasets(objectResource, 'ex:unknown');
 
     expect(datasets).toBeUndefined();
   });
 
   it('returns datasets if properties exist', () => {
-    const datasets = createDatasets(resource, 'ex:isPartOf');
+    const datasets = createDatasets(objectResource, 'ex:isPartOf');
 
     expect(datasets).toStrictEqual([
       {
@@ -339,6 +355,40 @@ describe('createDataset', () => {
         id: 'https://example.org/dataset3',
         name: 'Dataset 3',
         publisher: undefined,
+      },
+    ]);
+  });
+});
+
+describe('createDates', () => {
+  it('returns undefined if properties do not exist', () => {
+    const things = createDates(datasetResource, 'ex:unknown');
+
+    expect(things).toBeUndefined();
+  });
+
+  it('returns dates if properties exist', () => {
+    const dates = createDates(datasetResource, 'ex:dateCreated');
+
+    expect(dates).toStrictEqual([new Date('2023-01-01')]);
+  });
+});
+
+describe('createMeasurements', () => {
+  it('returns undefined if properties do not exist', () => {
+    const measurements = createMeasurements(datasetResource, 'ex:unknown');
+
+    expect(measurements).toBeUndefined();
+  });
+
+  it('returns measurements if properties exist', () => {
+    const measurements = createMeasurements(datasetResource, 'ex:measurements');
+
+    expect(measurements).toStrictEqual([
+      {
+        id: 'https://example.org/measurement1',
+        value: true,
+        metric: {id: 'https://example.org/metric1', name: 'Metric 1', order: 1},
       },
     ]);
   });

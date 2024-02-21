@@ -6,7 +6,7 @@ import {
   SortOrder,
   SortOrderEnum,
 } from '../definitions';
-import {ConstituentSearchResult} from './definitions';
+import type {ConstituentSearchResult} from './definitions';
 import {ConstituentFetcher} from './fetcher';
 import {z} from 'zod';
 
@@ -29,8 +29,8 @@ enum RawKeys {
 }
 
 const sortByToRawKeys = new Map<string, string>([
-  [SortBy.Name, `${RawKeys.Name}.keyword`],
   [SortBy.BirthYear, `${RawKeys.BirthYear}.keyword`],
+  [SortBy.Name, `${RawKeys.Name}.keyword`],
 ]);
 
 export const searchOptionsSchema = z.object({

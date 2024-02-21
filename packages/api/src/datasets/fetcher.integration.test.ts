@@ -12,16 +12,17 @@ beforeEach(() => {
 
 describe('getByIds', () => {
   it('returns empty list if no datasets match the IDs', async () => {
-    const datasets = await datasetFetcher.getByIds(['https://unknown.org/']);
+    const datasets = await datasetFetcher.getByIds({
+      ids: ['https://unknown.org/'],
+    });
 
     expect(datasets).toStrictEqual([]);
   });
 
   it('returns the datasets that match the IDs', async () => {
-    const datasets = await datasetFetcher.getByIds([
-      'https://example.org/datasets/1',
-      'https://example.org/datasets/3',
-    ]);
+    const datasets = await datasetFetcher.getByIds({
+      ids: ['https://example.org/datasets/1', 'https://example.org/datasets/3'],
+    });
 
     expect(datasets).toStrictEqual([
       {
@@ -31,7 +32,7 @@ describe('getByIds', () => {
           'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
         publisher: {
           id: 'https://museum.example.org/',
-          name: 'Museum',
+          name: 'The Museum',
         },
         license: {
           id: 'https://creativecommons.org/licenses/by/4.0/',
@@ -137,21 +138,21 @@ describe('getByIds', () => {
 
 describe('getById', () => {
   it('returns undefined if a malformed ID is used', async () => {
-    const dataset = await datasetFetcher.getById('malformedID');
+    const dataset = await datasetFetcher.getById({id: 'malformedID'});
 
     expect(dataset).toBeUndefined();
   });
 
   it('returns undefined if no dataset matches the ID', async () => {
-    const dataset = await datasetFetcher.getById('https://unknown.org/');
+    const dataset = await datasetFetcher.getById({id: 'https://unknown.org/'});
 
     expect(dataset).toBeUndefined();
   });
 
   it('returns the dataset that matches the ID', async () => {
-    const dataset = await datasetFetcher.getById(
-      'https://example.org/datasets/1'
-    );
+    const dataset = await datasetFetcher.getById({
+      id: 'https://example.org/datasets/1',
+    });
 
     expect(dataset).toStrictEqual({
       id: 'https://example.org/datasets/1',
@@ -160,7 +161,7 @@ describe('getById', () => {
         'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
       publisher: {
         id: 'https://museum.example.org/',
-        name: 'Museum',
+        name: 'The Museum',
       },
       license: {
         id: 'https://creativecommons.org/licenses/by/4.0/',

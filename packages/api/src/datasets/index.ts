@@ -1,17 +1,9 @@
-import {DatasetFetcher} from './fetcher';
+import {DatasetFetcher, GetByIdOptions} from './fetcher';
 import {DatasetSearcher, SearchOptions} from './searcher';
 import {z} from 'zod';
 
 // Re-export definitions for ease of use in consuming apps
 export * from './definitions';
-export {
-  type SearchOptions,
-  type SearchResult,
-  SortBy,
-  SortByEnum,
-  SortOrder,
-  SortOrderEnum,
-} from './searcher';
 
 const constructorOptionsSchema = z.object({
   sparqlEndpointUrl: z.string(),
@@ -21,8 +13,8 @@ const constructorOptionsSchema = z.object({
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
 export class Datasets {
-  private datasetFetcher: DatasetFetcher;
-  private datasetSearcher: DatasetSearcher;
+  private readonly datasetFetcher: DatasetFetcher;
+  private readonly datasetSearcher: DatasetSearcher;
 
   constructor(options: ConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -36,8 +28,8 @@ export class Datasets {
     });
   }
 
-  async getById(id: string) {
-    return this.datasetFetcher.getById(id);
+  async getById(options: GetByIdOptions) {
+    return this.datasetFetcher.getById(options);
   }
 
   async search(options?: SearchOptions) {

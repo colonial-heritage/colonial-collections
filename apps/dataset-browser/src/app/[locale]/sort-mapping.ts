@@ -1,11 +1,10 @@
-import {SortBy as SortBySearchOption, SortOrder} from '@/lib/api/datasets';
+import {
+  SortBy as SortBySearchOption,
+  SortOrder,
+} from '@colonial-collections/api';
 import {SortBy} from '@colonial-collections/list-store';
 
 export const sortMapping = {
-  [SortBy.RelevanceDesc]: {
-    sortBy: SortBySearchOption.Relevance,
-    sortOrder: SortOrder.Descending,
-  },
   [SortBy.NameAsc]: {
     sortBy: SortBySearchOption.Name,
     sortOrder: SortOrder.Ascending,

@@ -216,7 +216,7 @@ describe('get with localized names', () => {
           name: 'Jakarta',
           isPartOf: {
             id: 'https://sws.geonames.org/1643084/',
-            name: 'Indonesië',
+            name: 'Republiek Indonesië',
           },
         },
       ]),

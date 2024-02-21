@@ -15,8 +15,8 @@ export type ConstituentsConstructorOptions = z.infer<
 >;
 
 export class Constituents {
-  private constituentFetcher: ConstituentFetcher;
-  private constituentSearcher: ConstituentSearcher;
+  private readonly constituentFetcher: ConstituentFetcher;
+  private readonly constituentSearcher: ConstituentSearcher;
 
   constructor(options: ConstituentsConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);

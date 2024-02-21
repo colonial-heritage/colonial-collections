@@ -102,8 +102,8 @@ export class OrganizationFetcher {
     const address = onlyOne(createAddresses(rawOrganization, 'ex:address'));
 
     const organizationWithUndefinedValues: Organization = {
-      type: 'Organization',
       id: iri,
+      type: 'Organization',
       name,
       url,
       address,

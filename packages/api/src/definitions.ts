@@ -15,8 +15,28 @@ export type Unknown = Thing & {type: 'Unknown'};
 export type Agent = Person | Organization | Unknown;
 export type License = Thing;
 
-export type Dataset = Thing & {
+export type Metric = Thing & {
+  order: number; // To aid clients in presenting information in UIs
+};
+
+export type Measurement = {
+  id: string;
+  value: boolean; // TBD: may need to support other types at some point
+  metric: Metric;
+};
+
+export type Dataset = {
+  id: string;
+  name?: string;
   publisher?: Agent;
+  license?: License;
+  description?: string;
+  keywords?: string[];
+  mainEntityOfPages?: string[];
+  dateCreated?: Date;
+  dateModified?: Date;
+  datePublished?: Date;
+  measurements?: Measurement[];
 };
 
 export type PostalAddress = {

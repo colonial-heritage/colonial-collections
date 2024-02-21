@@ -24,8 +24,8 @@ describe('search', () => {
       totalCount: 14,
       offset: 0,
       limit: 10,
-      sortBy: 'relevance',
-      sortOrder: 'desc',
+      sortBy: 'name',
+      sortOrder: 'asc',
       datasets: [
         {
           id: 'https://example.org/datasets/1',
@@ -34,7 +34,7 @@ describe('search', () => {
             'Maecenas quis sem ante. Vestibulum mattis lorem in mauris pulvinar tincidunt. Sed nisi ligula, mattis id vehicula at, faucibus vel quam.',
           publisher: {
             id: 'https://museum.example.org/',
-            name: 'Museum',
+            name: 'The Museum',
           },
           license: {
             id: 'https://creativecommons.org/licenses/by/4.0/',
@@ -458,7 +458,7 @@ describe('search', () => {
           name: 'Dataset 2',
           publisher: {
             id: 'https://museum.example.org/',
-            name: 'Museum',
+            name: 'The Museum',
           },
           license: {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
@@ -554,7 +554,7 @@ describe('search', () => {
             'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
           publisher: {
             id: 'https://museum.example.org/',
-            name: 'Museum',
+            name: 'The Museum',
           },
           license: {
             id: 'http://opendatacommons.org/licenses/by/1.0/',
@@ -705,8 +705,8 @@ describe('search', () => {
           },
           {
             totalCount: 3,
-            id: 'Museum',
-            name: 'Museum',
+            id: 'The Museum',
+            name: 'The Museum',
           },
           {
             totalCount: 1,
