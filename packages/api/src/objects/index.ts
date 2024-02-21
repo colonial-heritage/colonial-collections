@@ -1,8 +1,4 @@
 import {GetByIdOptions, HeritageObjectFetcher} from './fetcher';
-import {
-  GetByIdOptions as GetProvenanceEventsByHeritageObjectIdOptions,
-  ProvenanceEventsFetcher,
-} from './provenance-events-fetcher';
 import {HeritageObjectSearcher, SearchOptions} from './searcher';
 import {z} from 'zod';
 
@@ -20,16 +16,12 @@ export type HeritageObjectsConstructorOptions = z.infer<
 
 export class HeritageObjects {
   private readonly heritageObjectFetcher: HeritageObjectFetcher;
-  private readonly provenanceEventsFetcher: ProvenanceEventsFetcher;
   private readonly heritageObjectSearcher: HeritageObjectSearcher;
 
   constructor(options: HeritageObjectsConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.heritageObjectFetcher = new HeritageObjectFetcher({
-      endpointUrl: opts.sparqlEndpointUrl,
-    });
-    this.provenanceEventsFetcher = new ProvenanceEventsFetcher({
       endpointUrl: opts.sparqlEndpointUrl,
     });
     this.heritageObjectSearcher = new HeritageObjectSearcher({
@@ -40,12 +32,6 @@ export class HeritageObjects {
 
   async getById(options: GetByIdOptions) {
     return this.heritageObjectFetcher.getById(options);
-  }
-
-  async getProvenanceEventsByHeritageObjectId(
-    options: GetProvenanceEventsByHeritageObjectIdOptions
-  ) {
-    return this.provenanceEventsFetcher.getByHeritageObjectId(options);
   }
 
   async search(options?: SearchOptions) {

@@ -1,4 +1,4 @@
-import {ProvenanceEventsFetcher} from './provenance-events-fetcher';
+import {ProvenanceEventsFetcher} from './fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 

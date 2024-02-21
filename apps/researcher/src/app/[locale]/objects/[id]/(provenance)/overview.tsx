@@ -1,5 +1,5 @@
 import {useLocale} from 'next-intl';
-import heritageObjects from '@/lib/heritage-objects-instance';
+import provenanceEvents from '@/lib/provenance-events-instance';
 import DataTable from './data-table';
 import Timeline from './timeline';
 import {getTranslations} from 'next-intl/server';
@@ -10,7 +10,7 @@ import {LocaleEnum} from '@/definitions';
 
 export default async function Provenance({objectId}: {objectId: string}) {
   const locale = useLocale() as LocaleEnum;
-  const events = await heritageObjects.getProvenanceEventsByHeritageObjectId({
+  const events = await provenanceEvents.getByHeritageObjectId({
     id: objectId,
     locale,
   });

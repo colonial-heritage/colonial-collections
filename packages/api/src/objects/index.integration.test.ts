@@ -25,17 +25,6 @@ describe('getById', () => {
   });
 });
 
-describe('getProvenanceEventsByHeritageObjectId', () => {
-  it('returns the provenance events of a heritage object', async () => {
-    const provenanceEvents =
-      await heritageObjects.getProvenanceEventsByHeritageObjectId({
-        id: 'https://example.org/objects/1',
-      });
-
-    expect(provenanceEvents).toHaveLength(5);
-  });
-});
-
 describe('search', () => {
   it('finds heritage objects', async () => {
     const result = await heritageObjects.search();
