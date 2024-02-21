@@ -9,7 +9,12 @@ module.exports = {
     'node/no-unpublished-import': [
       'error',
       {
-        allowModules: ['@jest/globals', '@rdfjs/types'],
+        allowModules: [
+          '@jest/globals',
+          '@rdfjs/types',
+          'n3',
+          'streamify-string',
+        ],
       },
     ],
   },
