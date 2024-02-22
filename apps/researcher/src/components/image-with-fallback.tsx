@@ -15,13 +15,6 @@ export default function ImageWithFallback({src, alt, ...rest}: ImageProps) {
   }
 
   return (
-    <Image
-      {...rest}
-      alt={alt}
-      src={src}
-      onError={() => {
-        setHasError(true);
-      }}
-    />
+    <Image {...rest} alt={alt} src={src} onError={() => setHasError(true)} />
   );
 }
