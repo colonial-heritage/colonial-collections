@@ -20,6 +20,7 @@ import Provenance from './(provenance)/overview';
 import {getDateFormatter} from '@/lib/date-formatter/actions';
 import {LocaleEnum} from '@/definitions';
 import {env} from 'node:process';
+import Map from './map';
 
 export const dynamic = 'force-dynamic';
 
@@ -212,7 +213,22 @@ export default async function Details({params}: Props) {
                 ))}
               </Metadata>
             </div>
-            {organization && (
+          </main>
+          <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-neutral-100 p-1">
+            {galleryImages.length > 0 && (
+              <div className="flex flex-row md:flex-col gap-1 sticky top-4">
+                <Gallery
+                  images={galleryImages}
+                  organizationName={organization?.name}
+                />
+              </div>
+            )}
+          </aside>
+        </div>
+        <Provenance objectId={id} />
+        {organization && (
+          <div className="w-full">
+            <div className="mx-auto px-4 sm:px-10 max-w-[1800px]">
               <div className="mt-10" id="provider">
                 <h2 className="text-xl mt-4">{t('dataProviderTitle')}</h2>
                 <div className="flex flex-col md:flex-row mt-4">
@@ -258,23 +274,16 @@ export default async function Details({params}: Props) {
                       </div>
                     )}
                   </div>
-                  <div className="w-full md:w-1/2">{/* Place map here */}</div>
+                  {organization.address && (
+                    <div className="w-full md:w-1/2 mt-6 md:mt-0 h-[300px] md:h-[400px] lg:h-[500px]">
+                      <Map address={organization.address} />
+                    </div>
+                  )}
                 </div>
               </div>
-            )}
-          </main>
-          <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-neutral-100 p-1">
-            {galleryImages.length > 0 && (
-              <div className="flex flex-row md:flex-col gap-1 sticky top-4">
-                <Gallery
-                  images={galleryImages}
-                  organizationName={organization?.name}
-                />
-              </div>
-            )}
-          </aside>
-        </div>
-        <Provenance objectId={id} />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
