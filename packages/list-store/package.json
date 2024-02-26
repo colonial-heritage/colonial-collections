@@ -16,7 +16,7 @@
     "test:watch": "npm test -- --watchAll"
   },
   "dependencies": {
-    "@testing-library/react": "14.1.2",
+    "@testing-library/react": "14.2.1",
     "jest-environment-jsdom": "29.7.0",
     "next-intl": "3.8.0",
     "react": "18.2.0",
