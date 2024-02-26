@@ -16,16 +16,16 @@ export default async function MapByAddress({address}: Props) {
     return null;
   }
 
-  try {
-    const addressString = [
-      address.streetAddress,
-      address.postalCode,
-      address.addressLocality,
-      address.addressCountry,
-    ]
-      .filter(n => n)
-      .join(',');
+  const addressString = [
+    address.streetAddress,
+    address.postalCode,
+    address.addressLocality,
+    address.addressCountry,
+  ]
+    .filter(n => n)
+    .join(',');
 
+  try {
     // The map component needs longitude and latitude to display the location.
     // We can use the OpenStreetMap API to get these coordinates from the address.
     const response = await fetch(
