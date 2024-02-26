@@ -311,5 +311,8 @@
      "subjectRequired": "Onderwerp is vereist",
      "subjectTooLarge": "Onderwerp mag maximaal 250 tekens bevatten",
      "bodyRequired": "Bericht is vereist"
-   }
+   },
+    "Image": {
+      "errorText": "Afbeelding momenteel niet beschikbaar"
+    }
 }

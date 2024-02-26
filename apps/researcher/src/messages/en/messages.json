@@ -311,5 +311,8 @@
     "subjectRequired": "Subject is required",
     "subjectTooLarge": "Subject has a maximum of 250 characters",
     "bodyRequired": "Message is required"
+  },
+  "Image": {
+    "errorText": "Image currently not available"
   }
 }

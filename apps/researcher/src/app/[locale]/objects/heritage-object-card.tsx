@@ -4,6 +4,7 @@ import {HeritageObject} from '@colonial-collections/api';
 import Image from 'next/image';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import classNames from 'classnames';
+import ImageWithFallback from '@/components/image-with-fallback';
 
 interface Props {
   heritageObject: HeritageObject;
@@ -39,7 +40,7 @@ export default function HeritageObjectCard({heritageObject}: Props) {
       </div>
       {imageUrl ? (
         <div className="flex justify-start items-start border-l border-neutral-200">
-          <Image
+          <ImageWithFallback
             src={imageUrl}
             alt={heritageObject.name || ''}
             width="0"
