@@ -39,7 +39,7 @@
     "n3": "1.17.1",
     "streamify-string": "1.0.1",
     "tsconfig": "*",
-    "typescript": "5.1.6"
+    "typescript": "5.3.3"
   },
   "jest": {
     "preset": "ts-jest",

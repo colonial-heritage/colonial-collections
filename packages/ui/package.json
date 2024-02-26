@@ -11,7 +11,7 @@
     "postcss": "8.4.33",
     "tailwind-config": "*",
     "tsconfig": "*",
-    "typescript": "5.1.6"
+    "typescript": "5.3.3"
   },
   "dependencies": {
     "@colonial-collections/list-store": "*",
