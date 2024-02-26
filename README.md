@@ -22,7 +22,7 @@ This repo uses [Turborepo](https://turbo.build/) as build system and [npm](https
 1. Node.js version 18
 1. NPM version 8+
 
-## Without Docker
+## Develop without Docker
 
 The following commands will run for all the workspaces. If you want to run a command for one workspace add the -w command.
 
@@ -51,6 +51,9 @@ Create the file `apps/dataset-browser/.env.production.local` and set the endpoin
 
     SEARCH_ENDPOINT_URL=
     SPARQL_ENDPOINT_URL=
+    SENDGRID_API_KEY=
+    TO_EMAIL_ADDRESS=
+    FROM_EMAIL_ADDRESS=
 
 Create the file `apps/researcher/.env.production.local` and set the endpoint URLs:
 
@@ -59,6 +62,10 @@ Create the file `apps/researcher/.env.production.local` and set the endpoint URL
     NANOPUB_WRITE_ENDPOINT_URL=
     NANOPUB_WRITE_PROXY_ENDPOINT_URL=
     NANOPUB_SPARQL_ENDPOINT_URL=
+    DATASET_BROWSER_URL=
+    SENDGRID_API_KEY=
+    TO_EMAIL_ADDRESS=
+    FROM_EMAIL_ADDRESS=
 
 Then run:
 
@@ -68,9 +75,9 @@ Then run:
 
     npm run start
 
-## With Docker
+## Develop with Docker
 
-### Run container (optional)
+### Run container
 
     docker run --rm -it -v "$PWD":/app -w /app --env-file .env.local node:18 /bin/bash
 
@@ -104,6 +111,10 @@ Create the file `.env.production.local` in the root and set the endpoint URLs:
     NANOPUB_WRITE_ENDPOINT_URL=
     NANOPUB_WRITE_PROXY_ENDPOINT_URL=
     NANOPUB_SPARQL_ENDPOINT_URL=
+    DATASET_BROWSER_URL=
+    SENDGRID_API_KEY=
+    TO_EMAIL_ADDRESS=
+    FROM_EMAIL_ADDRESS=
 
 Then run:
 
@@ -113,7 +124,7 @@ Then run:
 
     docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 -p 3001:3001 node:18 npm run start
 
-## With Docker, using Development Containers within VS Code
+## Develop with Docker, using Development Containers within VS Code
 
 See https://code.visualstudio.com/docs/devcontainers/containers
 
