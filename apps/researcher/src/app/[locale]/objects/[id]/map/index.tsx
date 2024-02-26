@@ -1,4 +1,4 @@
-import {PostalAddress} from '@/lib/api/definitions';
+import {PostalAddress} from '@colonial-collections/api';
 import dynamic from 'next/dynamic';
 
 // Disable server-side rendering for the map component,
