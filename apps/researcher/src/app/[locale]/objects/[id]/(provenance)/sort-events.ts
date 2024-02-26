@@ -1,4 +1,4 @@
-import {ProvenanceEvent} from '@/lib/api/definitions';
+import {ProvenanceEvent} from '@colonial-collections/api';
 
 export function sortEvents(events: ProvenanceEvent[]): ProvenanceEvent[] {
   const graph = new Map();

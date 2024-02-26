@@ -1,4 +1,4 @@
-import {HeritageObjects} from '@/lib/api/objects';
+import {HeritageObjects} from '@colonial-collections/api';
 import {env} from 'node:process';
 
 const heritageObjects = new HeritageObjects({

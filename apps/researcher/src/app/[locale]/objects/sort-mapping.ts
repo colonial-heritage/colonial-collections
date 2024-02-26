@@ -1,4 +1,7 @@
-import {SortBy as SortBySearchOption, SortOrder} from '@/lib/api/objects';
+import {
+  SortBy as SortBySearchOption,
+  SortOrder,
+} from '@colonial-collections/api';
 
 export enum SortByUserOption {
   DateCreatedDesc = 'dateCreatedDesc',

@@ -28,7 +28,7 @@ export const revalidate = 0;
 
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
-  const dataset = await datasets.getById(id);
+  const dataset = await datasets.getById({id});
   const t = await getTranslations('Details');
   const tMetrics = await getTranslations('TransparencyMetrics');
   const formatter = await getFormatter();
