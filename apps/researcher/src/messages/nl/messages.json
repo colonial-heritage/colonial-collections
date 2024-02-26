@@ -43,12 +43,6 @@
     "fetchError": "Er is een probleem opgetreden bij het ophalen van de resultaten. Laad de pagina opnieuw om het opnieuw te proberen.",
     "filters": "Facet filters"
   },
-  "Constituents": {
-    "title": "{constituentsTotalCount, plural, =0 {0 Personen en instellingen} =1 {1 Persoon of instelling} other {# Personen en instellingen}}",
-    "noResults": "Er zijn geen resultaten",
-    "fetchError": "Er is een probleem opgetreden bij het ophalen van de resultaten. Laad de pagina opnieuw om het opnieuw te proberen.",
-    "filters": "Facet filters"
-  },
   "Navigation": {
     "name": "app",
     "home": "Home",
@@ -61,10 +55,6 @@
     "consortium": "Consortium",
     "signIn": "Inloggen",
     "datasetBrowser": "Dataset Browser"
-  },
-  "Tabs": {
-    "objects": "Objecten zoeken",
-    "persons": "Personen en instellingen zoeken"
   },
   "LanguageSelector": {
     "nl": "Nederlands",
@@ -84,14 +74,6 @@
     "heritageObject": "Erfgoedobject",
     "noImage": "Geen afbeelding",
     "noName": "Geen titel"
-  },
-  "PersonCard": {
-    "person": "Persoon",
-    "relatedObjects": "0 gerelateerde objecten (niet geïmplementeerd)",
-    "birthPlaceUnknown": "Geboorteplaats onbekend",
-    "birthYearUnknown": "Geboortejaar onbekend",
-    "deathPlaceUnknown": "Plaats van overlijden onbekend",
-    "deathYearUnknown": "Overlijdensjaar onbekend"
   },
   "ObjectDetails": {
     "backButton": "Zoeken",
@@ -329,5 +311,8 @@
      "subjectRequired": "Onderwerp is vereist",
      "subjectTooLarge": "Onderwerp mag maximaal 250 tekens bevatten",
      "bodyRequired": "Bericht is vereist"
-   }
+   },
+    "Image": {
+      "errorText": "Afbeelding momenteel niet beschikbaar"
+    }
 }

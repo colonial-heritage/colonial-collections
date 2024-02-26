@@ -1,6 +1,6 @@
 import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
-import {Dataset} from '@/lib/api/datasets';
+import {Dataset} from '@colonial-collections/api';
 import {Badge} from '@colonial-collections/ui';
 import {BuildingLibraryIcon} from '@heroicons/react/24/solid';
 import {DocumentCheckIcon} from '@heroicons/react/24/outline';

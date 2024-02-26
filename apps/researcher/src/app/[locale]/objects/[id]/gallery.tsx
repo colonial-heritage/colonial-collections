@@ -2,11 +2,10 @@
 
 import {Tab} from '@headlessui/react';
 import classNames from 'classnames';
-import Image from 'next/image';
 import {SlideOver, SlideOverOpenButton} from '@colonial-collections/ui';
 import dynamic from 'next/dynamic';
-import {Fragment} from 'react';
 import {useTranslations} from 'next-intl';
+import ImageWithFallback from '@/components/image-with-fallback';
 
 // SSR needs to be false for plugin 'openseadragon'
 const SlideOverGallery = dynamic(() => import('./slide-over-gallery'), {
@@ -40,7 +39,7 @@ export default function Gallery({images, organizationName}: Props) {
             <div>
               <SlideOver variant="gallery">
                 <SlideOverOpenButton className="w-full h-full justify-start items-start align-top">
-                  <Image
+                  <ImageWithFallback
                     width="0"
                     height="0"
                     src={image.src}
@@ -95,7 +94,7 @@ export default function Gallery({images, organizationName}: Props) {
               {({selected}) => (
                 <>
                   <span className="sr-only">{image.alt}</span>
-                  <Image
+                  <ImageWithFallback
                     width="0"
                     height="0"
                     src={image.src}
