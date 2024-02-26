@@ -1,11 +1,11 @@
 import datasets from '@/lib/datasets-instance';
 import {
-  SearchResult,
+  DatasetSearchResult,
   SortBy,
   SortByEnum,
   SortOrder,
   SortOrderEnum,
-} from '@/lib/api/datasets';
+} from '@colonial-collections/api';
 import {useTranslations} from 'next-intl';
 import {getTranslations} from 'next-intl/server';
 import DatasetList from './dataset-list';
@@ -37,7 +37,7 @@ import {ListStoreUpdater} from './list-store-updater';
 export const revalidate = 60;
 
 interface FacetProps {
-  name: keyof SearchResult['filters'];
+  name: keyof DatasetSearchResult['filters'];
   searchParamType: SearchParamType;
   Component: ElementType;
 }
@@ -56,7 +56,7 @@ const facets: ReadonlyArray<FacetProps> = [
 ];
 
 interface FacetMenuProps {
-  filters: SearchResult['filters'];
+  filters: DatasetSearchResult['filters'];
 }
 
 function FacetMenu({filters}: FacetMenuProps) {
@@ -89,9 +89,9 @@ export default async function Home({searchParams = {}}: Props) {
   const searchOptions = fromSearchParamsToSearchOptions({
     sortOptions: {
       SortOrderEnum,
-      defaultSortOrder: SortOrder.Descending,
+      defaultSortOrder: SortOrder.Ascending,
       SortByEnum,
-      defaultSortBy: SortBy.Relevance,
+      defaultSortBy: SortBy.Name,
       sortMapping: sortMapping,
     },
     filterKeys: facets.map(({name, searchParamType}) => ({
@@ -109,7 +109,7 @@ export default async function Home({searchParams = {}}: Props) {
   });
 
   let hasError;
-  let searchResult: SearchResult | undefined;
+  let searchResult: DatasetSearchResult | undefined;
   try {
     searchResult = await datasets.search(searchOptions);
   } catch (err) {

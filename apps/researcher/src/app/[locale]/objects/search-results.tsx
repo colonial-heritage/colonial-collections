@@ -12,12 +12,12 @@ import {
   Type as SearchParamType,
 } from '@colonial-collections/list-store';
 import {
-  SearchResult,
+  HeritageObjectSearchResult,
   SortBy,
   SortByEnum,
   SortOrder,
   SortOrderEnum,
-} from '@/lib/api/objects';
+} from '@colonial-collections/api';
 import {
   MultiSelectFacet,
   SearchableMultiSelectFacet,
@@ -42,7 +42,7 @@ import {useLocale} from 'next-intl';
 export const revalidate = 60;
 
 interface FilterSetting {
-  name: keyof SearchResult['filters'];
+  name: keyof HeritageObjectSearchResult['filters'];
   searchParamType: SearchParamType;
 }
 
@@ -84,7 +84,7 @@ const facets: ReadonlyArray<Facet | DateRangeFacet> = [
 ];
 
 interface FacetMenuProps {
-  filters: SearchResult['filters'];
+  filters: HeritageObjectSearchResult['filters'];
 }
 
 async function FacetMenu({filters}: FacetMenuProps) {
@@ -97,7 +97,8 @@ async function FacetMenu({filters}: FacetMenuProps) {
         const facetProps = Object.keys(customProps).length
           ? customProps
           : {
-              filters: filters[name as keyof SearchResult['filters']],
+              filters:
+                filters[name as keyof HeritageObjectSearchResult['filters']],
               filterKey: name,
             };
 
@@ -145,7 +146,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
   });
 
   let hasError;
-  let searchResult: SearchResult | undefined;
+  let searchResult: HeritageObjectSearchResult | undefined;
   try {
     searchResult = await heritageObjects.search({...searchOptions, locale});
   } catch (err) {
