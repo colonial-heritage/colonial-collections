@@ -52,7 +52,7 @@
     "jest": "29.7.0",
     "postcss": "8.4.33",
     "tailwind-config": "*",
-    "tailwindcss": "3.3.6",
+    "tailwindcss": "3.4.1",
     "tsconfig": "*",
     "typescript": "5.3.3"
   }
