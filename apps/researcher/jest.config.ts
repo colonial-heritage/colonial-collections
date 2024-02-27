@@ -1,13 +1,13 @@
-const nextJest = require('next/jest');
+import nextJest from 'next/jest';
+import type {Config} from 'jest';
 
 const createJestConfig = nextJest();
 
-/** @type {import('jest').Config} */
-const customJestConfig = {
+const customJestConfig: Config = {
   testTimeout: 60000,
   testMatch: ['**/*.test.ts(x)?'],
   collectCoverage: true,
-  setupFiles: ['<rootDir>/jest.setup.js'],
+  setupFiles: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
@@ -27,7 +27,7 @@ const customJestConfig = {
  * @link https://github.com/vercel/next.js/issues/36077#issuecomment-1096635363
  */
 
-module.exports = async () => ({
+module.exports = async (): Promise<Config> => ({
   ...(await createJestConfig(customJestConfig)()),
 
   transformIgnorePatterns: ['node_modules/(?!(next-intl)/)'],

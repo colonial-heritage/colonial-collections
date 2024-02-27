@@ -1,12 +1,13 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type {Config} from 'tailwindcss';
+
+const config = {
   content: [
     'src/**/*.{js,ts,jsx,tsx}',
     '../../packages/ui/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      typography: theme => ({
+      typography: (theme: (color: string) => string) => ({
         DEFAULT: {
           css: {
             color: theme('colors.gray.900'),
@@ -87,4 +88,6 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
   ],
-};
+} satisfies Config;
+
+export default config;
