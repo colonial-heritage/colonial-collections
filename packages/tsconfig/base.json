@@ -3,7 +3,6 @@
   "display": "Default",
   "extends": "../../node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "module": "nodenext",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
