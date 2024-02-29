@@ -291,7 +291,9 @@ export class HeritageObjectFetcher {
               crm:P2_has_type ?digitalObjectLicense .
 
             OPTIONAL {
-              ?digitalObjectLicense schema:name ?digitalObjectLicenseName .
+              ?digitalObjectLicense schema:name ?digitalObjectLicenseName
+
+              # For BC; remove as soon as locale-aware names are in use
               FILTER(LANG(?digitalObjectLicenseName) = "" || LANG(?digitalObjectLicenseName) = "en")
             }
           }
@@ -301,36 +303,34 @@ export class HeritageObjectFetcher {
         # Part of dataset
         ####################
 
+        ?this la:member_of ?dataset .
+
+        ####################
+        # Name of dataset
+        ####################
+
         OPTIONAL {
-          ?this la:member_of ?dataset .
+          ?dataset schema:name ?datasetName
 
-          ####################
-          # Name of dataset
-          ####################
+          # For BC; remove as soon as locale-aware names are in use
+          FILTER(LANG(?datasetName) = "" || LANG(?datasetName) = "en")
+        }
 
-          OPTIONAL {
-            ?dataset schema:name ?datasetName
+        ####################
+        # Publisher of dataset
+        ####################
 
-            # For BC; remove as soon as locale-aware names are in use
-            FILTER(LANG(?datasetName) = "" || LANG(?datasetName) = "en")
-          }
+        OPTIONAL {
+          ?dataset schema:publisher ?publisher .
+          ?publisher schema:name ?publisherName ;
+            rdf:type ?publisherTypeTemp .
 
-          ####################
-          # Publisher of dataset
-          ####################
+          FILTER(LANG(?publisherName) = "${options.locale}")
 
-          OPTIONAL {
-            ?dataset schema:publisher ?publisher .
-            ?publisher schema:name ?publisherName ;
-              rdf:type ?publisherTypeTemp .
-
-            FILTER(LANG(?publisherName) = "${options.locale}")
-
-            VALUES (?publisherTypeTemp ?publisherType) {
-              (schema:Organization ex:Organization)
-              (schema:Person ex:Person)
-              (UNDEF UNDEF)
-            }
+          VALUES (?publisherTypeTemp ?publisherType) {
+            (schema:Organization ex:Organization)
+            (schema:Person ex:Person)
+            (UNDEF UNDEF)
           }
         }
       }
