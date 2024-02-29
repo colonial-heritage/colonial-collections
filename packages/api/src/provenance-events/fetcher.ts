@@ -54,14 +54,10 @@ export class ProvenanceEventsFetcher {
         ?acquisition a ex:Event ;
           ex:additionalType ?acquisitionType ;
           ex:date ?acquisitionTimeSpan ;
-          ex:startDate ?acquisitionBeginOfTheBegin ; # For BC; remove when prop date is in use
-          ex:endDate ?acquisitionEndOfTheEnd ; # For BC; remove when prop date is in use
           ex:transferredFrom ?acquisitionOwnerFrom ;
           ex:transferredTo ?acquisitionOwnerTo ;
           ex:description ?acquisitionDescription ;
-          ex:location ?acquisitionLocation ;
-          ex:startsAfter ?acquisitionStartsAfterTheEndOf ;
-          ex:endsBefore ?acquisitionEndsBeforeTheStartOf .
+          ex:location ?acquisitionLocation .
 
         ?acquisitionTimeSpan a ex:TimeSpan ;
           ex:startDate ?acquisitionBeginOfTheBegin ;
@@ -82,14 +78,10 @@ export class ProvenanceEventsFetcher {
         ?transferOfCustody a ex:Event ;
           ex:additionalType ?transferOfCustodyType ;
           ex:date ?transferOfCustodyTimeSpan ;
-          ex:startDate ?transferOfCustodyBeginOfTheBegin ; # For BC; remove when prop date is in use
-          ex:endDate ?transferOfCustodyEndOfTheEnd ; # For BC; remove when prop date is in use
           ex:transferredFrom ?transferOfCustodyCustodianFrom ;
           ex:transferredTo ?transferOfCustodyCustodianTo ;
           ex:description ?transferOfCustodyDescription ;
-          ex:location ?transferOfCustodyLocation ;
-          ex:startsAfter ?transferOfCustodyStartsAfterTheEndOf ;
-          ex:endsBefore ?transferOfCustodyEndsBeforeTheStartOf .
+          ex:location ?transferOfCustodyLocation .
 
         ?transferOfCustodyTimeSpan a ex:TimeSpan ;
           ex:startDate ?transferOfCustodyBeginOfTheBegin ;
@@ -113,13 +105,12 @@ export class ProvenanceEventsFetcher {
         ?this a crm:E22_Human-Made_Object .
 
         ####################
-        # Provenance: acquisition
+        # Acquisition
         ####################
 
         OPTIONAL {
           ?this crm:P24i_changed_ownership_through ?acquisition .
-          ?acquisition a crm:E8_Acquisition ;
-            crm:P9i_forms_part_of ?acquisitionProvEvent .
+          ?acquisition a crm:E8_Acquisition .
 
           ####################
           # Acquisition type
@@ -137,13 +128,15 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisition crm:P23_transferred_title_from ?acquisitionOwnerFrom .
-            ?acquisitionOwnerFrom rdfs:label ?acquisitionOwnerFromName ;
-              rdf:type ?acquisitionOwnerFromTypeTmp .
+            ?acquisitionOwnerFrom rdfs:label ?acquisitionOwnerFromName .
 
-            VALUES (?acquisitionOwnerFromTypeTmp ?acquisitionOwnerFromType) {
-              (crm:E74_Group ex:Organization)
-              (crm:E21_Person ex:Person)
-              (UNDEF UNDEF)
+            OPTIONAL {
+              ?acquisitionOwnerFrom rdf:type ?acquisitionOwnerFromTypeTmp .
+              VALUES (?acquisitionOwnerFromTypeTmp ?acquisitionOwnerFromType) {
+                (crm:E74_Group ex:Organization)
+                (crm:E21_Person ex:Person)
+                (UNDEF UNDEF)
+              }
             }
           }
 
@@ -153,29 +146,27 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?acquisition crm:P22_transferred_title_to ?acquisitionOwnerTo .
-            ?acquisitionOwnerTo rdfs:label ?acquisitionOwnerToName ;
-              rdf:type ?acquisitionOwnerToTypeTmp .
+            ?acquisitionOwnerTo rdfs:label ?acquisitionOwnerToName .
 
-            VALUES (?acquisitionOwnerToTypeTmp ?acquisitionOwnerToType) {
-              (crm:E74_Group ex:Organization)
-              (crm:E21_Person ex:Person)
-              (UNDEF UNDEF)
+            OPTIONAL {
+              ?acquisitionOwnerTo rdf:type ?acquisitionOwnerToTypeTmp .
+              VALUES (?acquisitionOwnerToTypeTmp ?acquisitionOwnerToType) {
+                (crm:E74_Group ex:Organization)
+                (crm:E21_Person ex:Person)
+                (UNDEF UNDEF)
+              }
             }
           }
-
-          ?acquisitionProvEvent a crm:E7_Activity .
 
           ####################
           # Earliest start date and latest end date of the acquisition
           ####################
 
           OPTIONAL {
-            ?acquisitionProvEvent crm:P4_has_time-span ?acquisitionTimeSpan .
-
+            ?acquisition crm:P4_has_time-span ?acquisitionTimeSpan .
             OPTIONAL {
               ?acquisitionTimeSpan crm:P82a_begin_of_the_begin ?acquisitionBeginOfTheBegin .
             }
-
             OPTIONAL {
               ?acquisitionTimeSpan crm:P82b_end_of_the_end ?acquisitionEndOfTheEnd .
             }
@@ -186,7 +177,7 @@ export class ProvenanceEventsFetcher {
           ####################
 
           OPTIONAL {
-            ?acquisitionProvEvent crm:P67i_is_referred_to_by [
+            ?acquisition crm:P67i_is_referred_to_by [
               crm:P2_has_type <http://vocab.getty.edu/aat/300444174> ; # Provenance statement
               crm:P190_has_symbolic_content ?acquisitionDescription ;
             ] ;
@@ -197,33 +188,18 @@ export class ProvenanceEventsFetcher {
           ####################
 
           OPTIONAL {
-            ?acquisitionProvEvent crm:P7_took_place_at ?acquisitionLocation .
+            ?acquisition crm:P7_took_place_at ?acquisitionLocation .
             ?acquisitionLocation rdfs:label ?acquisitionLocationName .
-          }
-
-          ####################
-          # Relationships to the previous and next acquisition
-          ####################
-
-          OPTIONAL {
-            ?acquisitionProvEvent crm:P183i_starts_after_the_end_of ?acquisitionProvEventStartsAfterTheEndOf .
-            ?acquisitionProvEventStartsAfterTheEndOf crm:P9_consists_of ?acquisitionStartsAfterTheEndOf .
-          }
-
-          OPTIONAL {
-            ?acquisitionProvEvent crm:P183_ends_before_the_start_of ?acquisitionProvEventEndsBeforeTheStartOf .
-            ?acquisitionProvEventEndsBeforeTheStartOf crm:P9_consists_of ?acquisitionEndsBeforeTheStartOf .
           }
         }
 
         ####################
-        # Provenance: transfer of custody
+        # Transfer of custody
         ####################
 
         OPTIONAL {
           ?this crm:P30i_custody_transferred_through ?transferOfCustody .
-          ?transferOfCustody a crm:E10_Transfer_of_Custody ;
-            crm:P9i_forms_part_of ?transferOfCustodyProvEvent .
+          ?transferOfCustody a crm:E10_Transfer_of_Custody .
 
           ####################
           # Transfer of custody type
@@ -241,13 +217,15 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustody crm:P28_custody_surrendered_by ?transferOfCustodyCustodianFrom .
-            ?transferOfCustodyCustodianFrom rdfs:label ?transferOfCustodyCustodianFromName ;
-              rdf:type ?transferOfCustodyCustodianFromTypeTemp .
+            ?transferOfCustodyCustodianFrom rdfs:label ?transferOfCustodyCustodianFromName .
 
-            VALUES (?transferOfCustodyCustodianFromTypeTemp ?transferOfCustodyCustodianFromType) {
-              (crm:E74_Group ex:Organization)
-              (crm:E21_Person ex:Person)
-              (UNDEF UNDEF)
+            OPTIONAL {
+              ?transferOfCustodyCustodianFrom rdf:type ?transferOfCustodyCustodianFromTypeTemp .
+              VALUES (?transferOfCustodyCustodianFromTypeTemp ?transferOfCustodyCustodianFromType) {
+                (crm:E74_Group ex:Organization)
+                (crm:E21_Person ex:Person)
+                (UNDEF UNDEF)
+              }
             }
           }
 
@@ -257,29 +235,27 @@ export class ProvenanceEventsFetcher {
 
           OPTIONAL {
             ?transferOfCustody crm:P29_custody_received_by ?transferOfCustodyCustodianTo .
-            ?transferOfCustodyCustodianTo rdfs:label ?transferOfCustodyCustodianToName ;
-              rdf:type ?transferOfCustodyCustodianToTypeTemp .
+            ?transferOfCustodyCustodianTo rdfs:label ?transferOfCustodyCustodianToName .
 
-            VALUES (?transferOfCustodyCustodianToTypeTemp ?transferOfCustodyCustodianToType) {
-              (crm:E74_Group ex:Organization)
-              (crm:E21_Person ex:Person)
-              (UNDEF UNDEF)
+            OPTIONAL {
+              ?transferOfCustodyCustodianTo rdf:type ?transferOfCustodyCustodianToTypeTemp .
+              VALUES (?transferOfCustodyCustodianToTypeTemp ?transferOfCustodyCustodianToType) {
+                (crm:E74_Group ex:Organization)
+                (crm:E21_Person ex:Person)
+                (UNDEF UNDEF)
+              }
             }
           }
-
-          ?transferOfCustodyProvEvent a crm:E7_Activity .
 
           ####################
           # Earliest start date and latest end date of the transfer of custody
           ####################
 
           OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P4_has_time-span ?transferOfCustodyTimeSpan .
-
+            ?transferOfCustody crm:P4_has_time-span ?transferOfCustodyTimeSpan .
             OPTIONAL {
               ?transferOfCustodyTimeSpan crm:P82a_begin_of_the_begin ?transferOfCustodyBeginOfTheBegin .
             }
-
             OPTIONAL {
               ?transferOfCustodyTimeSpan crm:P82b_end_of_the_end ?transferOfCustodyEndOfTheEnd .
             }
@@ -290,7 +266,7 @@ export class ProvenanceEventsFetcher {
           ####################
 
           OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P67i_is_referred_to_by [
+            ?transferOfCustody crm:P67i_is_referred_to_by [
               crm:P2_has_type <http://vocab.getty.edu/aat/300444174> ; # Provenance statement
               crm:P190_has_symbolic_content ?transferOfCustodyDescription ;
             ] ;
@@ -301,22 +277,8 @@ export class ProvenanceEventsFetcher {
           ####################
 
           OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P7_took_place_at ?transferOfCustodyLocation .
+            ?transferOfCustody crm:P7_took_place_at ?transferOfCustodyLocation .
             ?transferOfCustodyLocation rdfs:label ?transferOfCustodyLocationName .
-          }
-
-          ####################
-          # Relationships to the previous and next transfer of custody
-          ####################
-
-          OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P183i_starts_after_the_end_of ?transferOfCustodyProvEventStartsAfterTheEndOf .
-            ?transferOfCustodyProvEventStartsAfterTheEndOf crm:P9_consists_of ?transferOfCustodyStartsAfterTheEndOf .
-          }
-
-          OPTIONAL {
-            ?transferOfCustodyProvEvent crm:P183_ends_before_the_start_of ?transferOfCustodyProvEventEndsBeforeTheStartOf .
-            ?transferOfCustodyProvEventEndsBeforeTheStartOf crm:P9_consists_of ?transferOfCustodyEndsBeforeTheStartOf .
           }
         }
       }
@@ -328,8 +290,6 @@ export class ProvenanceEventsFetcher {
   private toProvenanceEvent(rawProvenanceEvent: Resource) {
     const id = rawProvenanceEvent.value;
     const date = onlyOne(createTimeSpans(rawProvenanceEvent, 'ex:date'));
-    const startDate = getPropertyValue(rawProvenanceEvent, 'ex:startDate'); // For BC; remove when prop date is in use
-    const endDate = getPropertyValue(rawProvenanceEvent, 'ex:endDate'); // For BC; remove when prop date is in use
     const description = getPropertyValue(rawProvenanceEvent, 'ex:description');
     const startsAfter = getPropertyValue(rawProvenanceEvent, 'ex:startsAfter');
     const endsBefore = getPropertyValue(rawProvenanceEvent, 'ex:endsBefore');
@@ -347,8 +307,6 @@ export class ProvenanceEventsFetcher {
       types,
       description,
       date,
-      startDate: startDate !== undefined ? new Date(startDate) : undefined, // For BC; remove when prop date is in use
-      endDate: endDate !== undefined ? new Date(endDate) : undefined, // For BC; remove when prop date is in use
       startsAfter,
       endsBefore,
       location,
