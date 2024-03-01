@@ -9,7 +9,7 @@ import {useUser} from '@clerk/nextjs';
 import {
   getCommunityLists,
   addObjectToList,
-  removeObjectFromList,
+  deleteObjectFromList,
 } from './actions';
 import {ObjectList} from '@colonial-collections/database';
 import {useNotifications} from '@colonial-collections/ui';
@@ -60,7 +60,7 @@ function CommunityMenuItems({
       }
     } else {
       try {
-        await removeObjectFromList(objectList.objects![0].id, communityId);
+        await deleteObjectFromList(objectList.objects![0].id, communityId);
 
         addNotification({
           id: 'objectRemovedFromList',

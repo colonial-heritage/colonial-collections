@@ -128,7 +128,7 @@ export async function addObject({
   return db.insert(objectItems).values(objectItem);
 }
 
-export async function removeObject(id: number) {
+export async function deleteObject(id: number) {
   return db.delete(objectItems).where(eq(objectItems.id, id));
 }
 

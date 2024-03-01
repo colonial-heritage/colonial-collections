@@ -9,7 +9,7 @@ interface Props {
 }
 
 export async function deleteObjectFromList({id, revalidatePathName}: Props) {
-  await objectList.removeObject(id);
+  await objectList.deleteObject(id);
   revalidatePath(`/[locale]${revalidatePathName}`, 'page');
 }
 
