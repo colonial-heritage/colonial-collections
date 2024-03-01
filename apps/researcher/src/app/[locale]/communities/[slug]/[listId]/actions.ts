@@ -14,6 +14,6 @@ export async function deleteObjectFromList({id, revalidatePathName}: Props) {
 }
 
 export async function deleteList({id, revalidatePathName}: Props) {
-  await objectList.remove(id);
+  await objectList.deleteList(id);
   revalidatePath(`/[locale]${revalidatePathName}`, 'page');
 }

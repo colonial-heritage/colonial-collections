@@ -132,6 +132,6 @@ export async function removeObject(id: number) {
   return db.delete(objectItems).where(eq(objectItems.id, id));
 }
 
-export async function remove(id: number) {
+export async function deleteList(id: number) {
   return db.delete(objectLists).where(eq(objectLists.id, id));
 }
