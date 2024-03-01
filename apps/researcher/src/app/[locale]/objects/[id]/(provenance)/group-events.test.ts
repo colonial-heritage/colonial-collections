@@ -21,20 +21,28 @@ describe('groupByDateRange', () => {
   it('groups events by date range', () => {
     const events = [
       {
-        startDate: new Date('2022-01-01'),
-        endDate: new Date('2022-01-05'),
+        date: {
+          startDate: new Date('2022-01-01'),
+          endDate: new Date('2022-01-05'),
+        },
       },
       {
-        startDate: new Date('2022-01-03'),
-        endDate: new Date('2022-01-07'),
+        date: {
+          startDate: new Date('2022-01-03'),
+          endDate: new Date('2022-01-07'),
+        },
       },
       {
-        startDate: new Date('2022-01-03'),
-        endDate: new Date('2022-01-07'),
+        date: {
+          startDate: new Date('2022-01-03'),
+          endDate: new Date('2022-01-07'),
+        },
       },
       {
-        startDate: new Date('2022-01-06'),
-        endDate: new Date('2022-01-10'),
+        date: {
+          startDate: new Date('2022-01-06'),
+          endDate: new Date('2022-01-10'),
+        },
       },
     ];
 

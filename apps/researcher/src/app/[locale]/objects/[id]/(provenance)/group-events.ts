@@ -14,11 +14,7 @@ export function groupByDateRange({
 }: GroupByDateRangeProps) {
   return events.reduce(
     (eventGroups: {[dateRange: string]: LabeledProvenanceEvent[]}, event) => {
-      const dateRange =
-        formatDateRange({
-          startDate: event.startDate,
-          endDate: event.endDate,
-        }) || '';
+      const dateRange = formatDateRange(event.date || {}) || '';
       if (!eventGroups[dateRange]) {
         eventGroups[dateRange] = [];
       }
