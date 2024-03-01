@@ -82,6 +82,31 @@ export async function create({
   return db.insert(objectLists).values(objectList);
 }
 
+interface UpdateProps {
+  id: number;
+  communityId: string;
+  name: string;
+  createdBy: string;
+  description?: string;
+}
+
+export async function update({
+  id,
+  communityId,
+  name,
+  createdBy,
+  description,
+}: UpdateProps) {
+  const objectList = insertObjectListSchema.parse({
+    communityId,
+    name,
+    description,
+    createdBy,
+  });
+
+  return db.update(objectLists).set(objectList).where(eq(objectLists.id, id));
+}
+
 interface AddObjectProps {
   objectListId: number;
   objectIri: string;
@@ -103,6 +128,10 @@ export async function addObject({
   return db.insert(objectItems).values(objectItem);
 }
 
-export async function removeObject(id: number) {
+export async function deleteObject(id: number) {
   return db.delete(objectItems).where(eq(objectItems.id, id));
+}
+
+export async function deleteList(id: number) {
+  return db.delete(objectLists).where(eq(objectLists.id, id));
 }

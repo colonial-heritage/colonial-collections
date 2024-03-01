@@ -9,7 +9,7 @@ import {ClerkAPIResponseError} from '@clerk/shared';
 import {revalidatePath} from 'next/cache';
 import {objectList} from '@colonial-collections/database';
 import ObjectCard from './object';
-import AddObjectListForm from '@/components/add-object-list-form';
+import CreateObjectListForm from '@/components/object-list-form/create-form';
 import {
   SlideOutButton,
   SlideOut,
@@ -161,7 +161,7 @@ export default async function CommunityPage({params}: Props) {
 
           <Notifications />
           <SlideOut id={slideOutFormId}>
-            <AddObjectListForm
+            <CreateObjectListForm
               slideOutId={slideOutFormId}
               communityId={community.id}
             />
@@ -233,7 +233,7 @@ export default async function CommunityPage({params}: Props) {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <div className="">
+                  <div>
                     {membership.firstName} {membership.lastName}
                   </div>
                   <div className="text-neutral-600">
