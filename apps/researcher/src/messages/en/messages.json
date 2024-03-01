@@ -254,17 +254,20 @@
     "nameTooSmall": "Name is required",
     "descriptionMaxLength": "Description has a maximum of 2000 characters"
   },
-  "AddObjectListForm": {
-    "title": "Add list",
+  "ObjectListForm": {
+    "createTitle": "Add list",
+    "editTitle": "Edit list",
     "labelName": "List name",
     "labelDescription": "Description (optional)",
     "labelDescriptionSubTitle": "Give a description about this list. For example, what is the history of this list. Tell a little bit about the kind of objects.",
-    "buttonSubmit": "Create list",
+    "buttonCreateList": "Create list",
     "buttonCancel": "Cancel",
     "nameTooSmall": "List name is required",
     "nameTooBig": "List name has a maximum of 250 characters",
     "serverError": "Something went wrong while creating the list. Please try again later.",
-    "listSuccessfullyAdded": "List <name></name> has been added to you community"
+    "listSuccessfullyAdded": "List <name></name> has been added to you community",
+    "buttonEditList": "Edit community list",
+    "listSuccessfullyEdited": "List <name></name> has been updated"
   },
   "Modal": {
     "close": "Close"
@@ -275,7 +278,21 @@
     "noCommunity": "Community could not be found",
     "error": "Something went wrong while fetching the list. Please try again later.",
     "objectCount": "{count, plural, =0 {0 objects} =1 {1 object} other {# objects}}",
-    "listCreatedBy": "List created by"
+    "listCreatedBy": "List created by",
+    "editButton": "Edit list info",
+    "manageItemsButton": "Manage list items",
+    "closeManageItemsButton": "Close edit view",
+    "mangeListDescription": "You can delete items from the list by clicking on the delete button.",
+    "deleteObjectButton": "Delete <longText>from list</longText>",
+    "deleteObjectSuccess": "Object has been deleted from the list",
+    "deleteObjectError": "Something went wrong while deleting the object from the list. Please try again later.",
+    "deleteListTitle": "Delete list",
+    "deleteListDescription": "If you delete this list, it will be deleted for the members. This can not be undone.",
+    "deleteListButton": "Delete this list",
+    "deleteListError": "Something went wrong while deleting the list. Please try again later.",
+    "deleteQuestion": "Are you sure you want to delete the list?",
+    "confirmDeleteButton": "Yes, delete list",
+    "cancelButton": "Cancel"
   },
   "UserEnrichmentForm": {
     "title": "Add a narrative",

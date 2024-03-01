@@ -254,17 +254,20 @@
     "nameTooSmall": "Naam is vereist",
     "descriptionMaxLength": "Beschrijving mag maximaal 2000 tekens bevatten"
   },
-  "AddObjectListForm": {
-    "title": "Lijst toevoegen",
+  "ObjectListForm": {
+    "createTitle": "Lijst toevoegen",
+    "editTitle": "Lijst aanpassen",
     "labelName": "Lijstnaam",
     "labelDescription": "Beschrijving (optioneel)",
     "labelDescriptionSubTitle": "Geef een beschrijving over deze lijst. Bijvoorbeeld, wat is de geschiedenis van deze lijst. Vertel iets over het soort objecten.",
-    "buttonSubmit": "Lijst aanmaken",
+    "buttonCreateList": "Lijst aanmaken",
     "buttonCancel": "Annuleren",
     "nameTooSmall": "Lijstnaam is vereist",
     "nameTooBig": "Lijstnaam mag maximaal 250 tekens bevatten",
     "serverError": "Er is iets misgegaan bij het maken van de lijst. Probeer het later opnieuw.",
-    "listSuccessfullyAdded": "Lijst <name></name> is aan je community toegevoegd"
+    "listSuccessfullyAdded": "List <name></name> has been added to you community",
+    "buttonEditList": "Edit community list",
+    "listSuccessfullyEdited": "List <name></name> has been updated"
   },
   "Modal": {
     "close": "Sluiten"
@@ -275,7 +278,20 @@
     "noCommunity": "Community kon niet gevonden worden",
     "error": "Er is een fout opgetreden bij het ophalen van de de lijst. Probeer het later opnieuw.",
     "objectCount": "{count, plural, =0 {0 objecten} =1 {1 object} other {# objecten}}",
-    "listCreatedBy": "Lijst gemaakt door"
+    "listCreatedBy": "Lijst gemaakt door",
+    "editButton": "Lijstinfo bewerken",
+    "manageItemsButton": "Lijstitems beheren",
+    "closeManageItemsButton": "Bewerkingsweergave sluiten",
+    "mangeListDescription": "U kunt items uit de lijst verwijderen door op de verwijderknop te klikken.",
+    "deleteObjectButton": "Verwijder <longText>van lijst</longText>",
+    "deleteObjectSuccess": "Object is verwijderd van de lijst",
+    "deleteObjectError": "Er is iets misgegaan bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
+    "deleteListDescription": "Als u deze lijst verwijdert, wordt deze voor alle leden verwijderd. Dit kan niet ongedaan worden gemaakt.",
+    "deleteListButton": "Verwijder deze lijst",
+    "deleteQuestion": "Weet u zeker dat u de lijst wilt verwijderen?",
+    "confirmDeleteButton": "Ja, verwijder lijst",
+    "deleteListError": "Er is iets misgegaan bij het verwijderen van de lijst. Probeer het later opnieuw.",
+    "cancelButton": "Annuleren"
   },
   "UserEnrichmentForm": {
     "title": "Voeg een verhaal toe",

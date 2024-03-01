@@ -6,11 +6,13 @@ import {usePathname} from 'next/navigation';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {useTranslations} from 'next-intl';
+import classNames from 'classnames';
 
 interface ModalState {
   visibleId: string | null;
   show: (id: string) => void;
   hide: () => void;
+  toggle: (id: string) => void;
 }
 
 export const useModal = create<ModalState>(set => ({
@@ -22,6 +24,10 @@ export const useModal = create<ModalState>(set => ({
   hide: () =>
     set(() => ({
       visibleId: null,
+    })),
+  toggle: id =>
+    set(state => ({
+      visibleId: state.visibleId === id ? null : id,
     })),
 }));
 
@@ -35,9 +41,9 @@ export function ModalButton({
   children,
   ...buttonProps
 }: ModalButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) {
-  const {show} = useModal();
+  const {toggle} = useModal();
   return (
-    <button {...buttonProps} onClick={() => show(id)}>
+    <button {...buttonProps} onClick={() => toggle(id)}>
       {children}
     </button>
   );
@@ -46,9 +52,10 @@ export function ModalButton({
 interface ModalProps {
   id: string;
   children: ReactNode;
+  variant?: 'full' | 'small';
 }
 
-export function Modal({children, id}: ModalProps) {
+export function Modal({children, id, variant = 'full'}: ModalProps) {
   const {visibleId, hide} = useModal();
   const pathname = usePathname();
 
@@ -83,7 +90,16 @@ export function Modal({children, id}: ModalProps) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative md:h-[80vh] md:max-h-[80vh] h-full max-h-full transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all my-8 w-full mx-6 text-neutral-800">
+              <Dialog.Panel
+                className={classNames(
+                  'relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all my-8 w-full mx-6 text-neutral-800',
+                  {
+                    'md:h-[80vh] md:max-h-[80vh] h-full max-h-full':
+                      variant === 'full',
+                    'max-w-md': variant === 'small',
+                  }
+                )}
+              >
                 {children}
               </Dialog.Panel>
             </Transition.Child>

@@ -32,8 +32,8 @@ export async function addObjectToList({
   revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 }
 
-export async function removeObjectFromList(id: number, communityId: string) {
-  await objectList.removeObject(id);
+export async function deleteObjectFromList(id: number, communityId: string) {
+  await objectList.deleteObject(id);
   const community = await getCommunityBySlug(communityId);
   revalidatePath(`/[locale]/communities/${community.slug}`, 'page');
 }

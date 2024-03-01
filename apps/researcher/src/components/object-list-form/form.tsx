@@ -1,18 +1,25 @@
 'use client';
 
 import {useAuth} from '@clerk/nextjs';
-import {addList} from './actions';
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {insertObjectListSchema} from '@colonial-collections/database/client';
 import {useTranslations} from 'next-intl';
 import {useSlideOut, useNotifications} from '@colonial-collections/ui';
 import {camelCase} from 'tiny-case';
+import {usePathname} from '@/navigation';
+import {ActionProps} from './actions';
 
 interface FormProps {
   communityId: string;
   userId: string;
+  listId?: number;
+  name: string | null;
+  description: string | null;
   slideOutId: string;
+  saveButtonMessageKey: string;
+  successfulSaveMessageKey: string;
+  saveAction: (props: ActionProps) => Promise<void>;
 }
 
 interface FormValues {
@@ -22,7 +29,17 @@ interface FormValues {
   communityId: string;
 }
 
-function Form({communityId, userId, slideOutId}: FormProps) {
+function Form({
+  communityId,
+  userId,
+  slideOutId,
+  saveButtonMessageKey,
+  successfulSaveMessageKey,
+  listId,
+  name,
+  description,
+  saveAction,
+}: FormProps) {
   const {
     register,
     handleSubmit,
@@ -31,23 +48,24 @@ function Form({communityId, userId, slideOutId}: FormProps) {
   } = useForm({
     resolver: zodResolver(insertObjectListSchema),
     defaultValues: {
-      name: '',
-      description: '',
+      name: name || '',
+      description: description || '',
       createdBy: userId,
       communityId,
     },
   });
 
-  const t = useTranslations('AddObjectListForm');
+  const t = useTranslations('ObjectListForm');
   const {setIsVisible} = useSlideOut();
   const {addNotification} = useNotifications();
+  const pathName = usePathname();
 
   const onSubmit: SubmitHandler<FormValues> = async list => {
     try {
-      await addList(list);
+      await saveAction({list, pathName, id: listId});
       addNotification({
         id: 'add-object-list-success',
-        message: t.rich('listSuccessfullyAdded', {
+        message: t.rich(successfulSaveMessageKey, {
           name: () => <em>{list.name}</em>,
         }),
         type: 'success',
@@ -72,7 +90,7 @@ function Form({communityId, userId, slideOutId}: FormProps) {
         </div>
       )}
       <div className="flex flex-col lg:flex-row gap-4">
-        <div className="flex flex-col w-full lg:w-2/3">
+        <div className="flex flex-col w-full">
           <label className="block text-sm font-medium leading-6 text-gray-900">
             <strong>{t('labelName')}</strong>
           </label>
@@ -82,11 +100,10 @@ function Form({communityId, userId, slideOutId}: FormProps) {
           />
           <p>{errors.name && t(camelCase(`name_${errors.name.type}`))}</p>
         </div>
-        <div className="flex flex-col w-full lg:w-1/3"></div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4">
-        <div className="flex flex-col w-full lg:w-2/3">
+        <div className="flex flex-col w-full">
           <label className="flex flex-col text-sm">
             <strong>{t('labelDescription')}</strong>
           </label>
@@ -101,13 +118,13 @@ function Form({communityId, userId, slideOutId}: FormProps) {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4">
-        <div className="w-full lg:w-2/3 flex gap-2">
+        <div className="w-full flex gap-2">
           <button
             disabled={isSubmitting}
             type="submit"
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 hover:bg-consortiumGreen-200 transition flex items-center gap-1"
           >
-            {t('buttonSubmit')}
+            {t(saveButtonMessageKey)}
           </button>
           <button
             onClick={() => setIsVisible(slideOutId, false)}
@@ -121,31 +138,10 @@ function Form({communityId, userId, slideOutId}: FormProps) {
   );
 }
 
-interface AddObjectListFormProps {
-  communityId: string;
-  slideOutId: string;
-}
-
-export default function AddObjectListForm({
-  communityId,
-  slideOutId,
-}: AddObjectListFormProps) {
+export default function ObjectListForm(formProps: Omit<FormProps, 'userId'>) {
   const {userId} = useAuth();
-  const t = useTranslations('AddObjectListForm');
-
   // Wait for userId to be available.
   // In most cases, this will be available immediately
   // so no loading state is needed
-  return (
-    <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-100 text-neutral-800 self-end flex-col gap-6 flex">
-      <h2 className="font-semibold text-xl">{t('title')}</h2>
-      {userId && (
-        <Form
-          slideOutId={slideOutId}
-          communityId={communityId}
-          userId={userId}
-        />
-      )}
-    </div>
-  );
+  return <>{userId && <Form {...formProps} userId={userId} />}</>;
 }
