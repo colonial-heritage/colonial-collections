@@ -23,7 +23,7 @@ export function categorizeEvents(eventGroups: {
     (categorizedEvents, [id, eventGroups]) => {
       // All events in the group have the same dates, so we can just take the first one
       const firstEvent = eventGroups[0];
-      if (!firstEvent.startDate && !firstEvent.endDate) {
+      if (!firstEvent.date?.startDate && !firstEvent.date?.endDate) {
         return {
           ...categorizedEvents,
           eventsWithoutDates: [
@@ -32,11 +32,12 @@ export function categorizeEvents(eventGroups: {
           ],
         };
       } else {
+        const timeSpan = firstEvent.date;
         const timelineEvent = {
           id,
           // The timeline plugin expects both a start and end date
-          startDate: (firstEvent.startDate || firstEvent.endDate) as Date,
-          endDate: (firstEvent.endDate || firstEvent.startDate) as Date,
+          startDate: (timeSpan.startDate || timeSpan.endDate) as Date,
+          endDate: (timeSpan.endDate || timeSpan.startDate) as Date,
           selectIds: eventGroups.map(event => event.id),
           labels: eventGroups.map(event => event.label),
         };
@@ -65,8 +66,8 @@ export function categorizeEvents(eventGroups: {
 
 export function getEarliestDate(events: LabeledProvenanceEvent[]): Date {
   return events.reduce((earliestDate, event) => {
-    if (event.startDate && event.startDate < earliestDate) {
-      return event.startDate;
+    if (event.date?.startDate && event.date.startDate < earliestDate) {
+      return event.date.startDate;
     }
     return earliestDate;
   }, new Date());

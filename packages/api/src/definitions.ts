@@ -86,8 +86,6 @@ export type ProvenanceEvent = {
   id: string;
   types?: Term[];
   date?: TimeSpan;
-  startDate?: Date; // For BC; remove when prop date is in use
-  endDate?: Date; // For BC; remove when prop date is in use
   transferredFrom?: Agent;
   transferredTo?: Agent;
   description?: string;
