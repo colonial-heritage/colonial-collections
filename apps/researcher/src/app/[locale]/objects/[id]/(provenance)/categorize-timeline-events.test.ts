@@ -3,11 +3,11 @@ import {getEarliestDate, categorizeEvents} from './categorize-timeline-events';
 import {LabeledProvenanceEvent} from './definitions';
 
 describe('categorizeEvents', () => {
-  it('categorizes events without dates correctly', () => {
+  it('categorizes events without a date time span correctly', () => {
     const eventGroups = {
       group1: [
-        {id: 'event1', startDate: undefined, endDate: undefined},
-        {id: 'event2', startDate: undefined, endDate: undefined},
+        {id: 'event1', date: undefined},
+        {id: 'event2', date: undefined},
       ],
     };
 
@@ -15,8 +15,27 @@ describe('categorizeEvents', () => {
     const result = categorizeEvents(eventGroups);
 
     expect(result.eventsWithoutDates).toEqual([
-      {id: 'event1', startDate: undefined, endDate: undefined},
-      {id: 'event2', startDate: undefined, endDate: undefined},
+      {id: 'event1', date: undefined},
+      {id: 'event2', date: undefined},
+    ]);
+    expect(result.rangeEvents).toEqual([]);
+    expect(result.singleEvents).toEqual([]);
+  });
+
+  it('categorizes events with a date time span without dates correctly', () => {
+    const eventGroups = {
+      group1: [
+        {id: 'event1', date: {startDate: undefined, endDate: undefined}},
+        {id: 'event2', date: {startDate: undefined, endDate: undefined}},
+      ],
+    };
+
+    // @ts-expect-error:TS2345
+    const result = categorizeEvents(eventGroups);
+
+    expect(result.eventsWithoutDates).toEqual([
+      {id: 'event1', date: {startDate: undefined, endDate: undefined}},
+      {id: 'event2', date: {startDate: undefined, endDate: undefined}},
     ]);
     expect(result.rangeEvents).toEqual([]);
     expect(result.singleEvents).toEqual([]);
@@ -28,14 +47,20 @@ describe('categorizeEvents', () => {
         {
           id: 'event1',
           label: 'P1',
-          startDate: new Date('2022-01-01'),
-          endDate: new Date('2022-01-03'),
+          date: {
+            id: 'timespan1',
+            startDate: new Date('2022-01-01'),
+            endDate: new Date('2022-01-03'),
+          },
         },
         {
           id: 'event2',
           label: 'P2',
-          startDate: new Date('2022-01-01'),
-          endDate: new Date('2022-01-03'),
+          date: {
+            id: 'timespan2',
+            startDate: new Date('2022-01-01'),
+            endDate: new Date('2022-01-03'),
+          },
         },
       ],
     };
@@ -61,16 +86,22 @@ describe('categorizeEvents', () => {
         {
           id: 'event1',
           label: 'P1',
-          startDate: new Date('2022-01-01'),
-          endDate: new Date('2022-01-01'),
+          date: {
+            id: 'timespan1',
+            startDate: new Date('2022-01-01'),
+            endDate: new Date('2022-01-01'),
+          },
         },
       ],
       group2: [
         {
           id: 'event2',
           label: 'P2',
-          startDate: undefined,
-          endDate: new Date('2022-02-01'),
+          date: {
+            id: 'timespan2',
+            startDate: undefined,
+            endDate: new Date('2022-02-01'),
+          },
         },
       ],
     };
@@ -100,22 +131,32 @@ describe('categorizeEvents', () => {
   it('categorizes mixed events correctly', () => {
     const eventGroups = {
       group1: [
-        {id: 'event1', label: 'P1', startDate: undefined, endDate: undefined},
+        {
+          id: 'event1',
+          label: 'P1',
+          date: undefined,
+        },
       ],
       group2: [
         {
           id: 'event2',
           label: 'P2',
-          startDate: new Date('2022-01-01'),
-          endDate: new Date('2022-01-02'),
+          date: {
+            id: 'timespan2',
+            startDate: new Date('2022-01-01'),
+            endDate: new Date('2022-01-02'),
+          },
         },
       ],
       group3: [
         {
           id: 'event3',
           label: 'P3',
-          startDate: new Date('2022-03-01'),
-          endDate: undefined,
+          date: {
+            id: 'timespan3',
+            startDate: new Date('2022-03-01'),
+            endDate: undefined,
+          },
         },
         {
           id: 'event4',
@@ -155,9 +196,9 @@ describe('categorizeEvents', () => {
 describe('getEarliestDate', () => {
   it('returns the earliest date from the events', () => {
     const events = [
-      {startDate: new Date('2022-01-01')},
-      {startDate: new Date('2022-02-01')},
-      {startDate: new Date('2022-03-01')},
+      {date: {startDate: new Date('2022-01-01')}},
+      {date: {startDate: new Date('2022-02-01')}},
+      {date: {startDate: new Date('2022-03-01')}},
     ];
 
     // @ts-expect-error:TS2345
@@ -168,9 +209,9 @@ describe('getEarliestDate', () => {
 
   it('returns the earliest date when there are duplicate dates', () => {
     const events = [
-      {startDate: new Date('2022-01-01')},
-      {startDate: new Date('2022-01-01')},
-      {startDate: new Date('2022-02-01')},
+      {date: {startDate: new Date('2022-01-01')}},
+      {date: {startDate: new Date('2022-01-01')}},
+      {date: {startDate: new Date('2022-02-01')}},
     ];
 
     // @ts-expect-error:TS2345
