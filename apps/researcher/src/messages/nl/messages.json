@@ -284,10 +284,13 @@
     "closeManageItemsButton": "Bewerkingsweergave sluiten",
     "mangeListDescription": "U kunt items uit de lijst verwijderen door op de verwijderknop te klikken.",
     "deleteObjectButton": "Verwijder <longText>van lijst</longText>",
+    "deleteObjectSuccess": "Object is verwijderd van de lijst",
+    "deleteObjectError": "Er is iets misgegaan bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
     "deleteListDescription": "Als u deze lijst verwijdert, wordt deze voor alle leden verwijderd. Dit kan niet ongedaan worden gemaakt.",
     "deleteListButton": "Verwijder deze lijst",
     "deleteQuestion": "Weet u zeker dat u de lijst wilt verwijderen?",
     "confirmDeleteButton": "Ja, verwijder lijst",
+    "deleteListError": "Er is iets misgegaan bij het verwijderen van de lijst. Probeer het later opnieuw.",
     "cancelButton": "Annuleren"
   },
   "UserEnrichmentForm": {

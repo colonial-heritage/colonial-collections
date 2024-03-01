@@ -6,6 +6,7 @@ import {usePathname} from '@/navigation';
 import {useTranslations} from 'next-intl';
 import {Modal, ModalButton, ModalHeader} from '@colonial-collections/ui/modal';
 import {useRouter} from '@/navigation';
+import {useNotifications} from '@colonial-collections/ui';
 
 interface DeleteObjectButtonProps {
   id: number;
@@ -13,11 +14,23 @@ interface DeleteObjectButtonProps {
 
 export function DeleteObjectButton({id}: DeleteObjectButtonProps) {
   const t = useTranslations('ObjectList');
+  const {addNotification} = useNotifications();
+
   const pathName = usePathname();
   async function deleteObjectFromListClick() {
     try {
       await deleteObjectFromList({id, revalidatePathName: pathName});
+      addNotification({
+        id: 'deleteObjectSuccess',
+        message: t('deleteObjectSuccess'),
+        type: 'success',
+      });
     } catch (err) {
+      addNotification({
+        id: 'deleteObjectError',
+        message: t('deleteObjectError'),
+        type: 'error',
+      });
       console.error(err);
     }
   }
@@ -43,6 +56,7 @@ interface DeleteListButtonProps {
 export function DeleteListButton({id, communitySlug}: DeleteListButtonProps) {
   const t = useTranslations('ObjectList');
   const router = useRouter();
+  const {addNotification} = useNotifications();
 
   async function deleteListClick() {
     try {
@@ -52,6 +66,11 @@ export function DeleteListButton({id, communitySlug}: DeleteListButtonProps) {
       });
       router.push(`/communities/${communitySlug}`);
     } catch (err) {
+      addNotification({
+        id: 'deleteListError',
+        message: t('deleteListError'),
+        type: 'success',
+      });
       console.error(err);
     }
   }

@@ -284,9 +284,12 @@
     "closeManageItemsButton": "Close edit view",
     "mangeListDescription": "You can delete items from the list by clicking on the delete button.",
     "deleteObjectButton": "Delete <longText>from list</longText>",
+    "deleteObjectSuccess": "Object has been deleted from the list",
+    "deleteObjectError": "Something went wrong while deleting the object from the list. Please try again later.",
     "deleteListTitle": "Delete list",
     "deleteListDescription": "If you delete this list, it will be deleted for the members. This can not be undone.",
     "deleteListButton": "Delete this list",
+    "deleteListError": "Something went wrong while deleting the list. Please try again later.",
     "deleteQuestion": "Are you sure you want to delete the list?",
     "confirmDeleteButton": "Yes, delete list",
     "cancelButton": "Cancel"
