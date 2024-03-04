@@ -44,7 +44,7 @@
     "@types/node": "20.10.6",
     "@types/react": "18.2.56",
     "@types/react-dom": "18.2.19",
-    "autoprefixer": "10.4.16",
+    "autoprefixer": "10.4.18",
     "cypress": "13.6.2",
     "encoding": "0.1.13",
     "eslint-config-custom": "*",
