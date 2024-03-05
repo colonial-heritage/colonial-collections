@@ -2,8 +2,7 @@ import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid';
 import {Combobox} from '@headlessui/react';
 import {useState} from 'react';
 import classNames from 'classnames';
-import ISO6391 from 'iso-639-1-dir';
-import {LanguageCode} from 'iso-639-1-dir/dist/data';
+import ISO6391 from 'iso-639-1';
 
 interface Props {
   value: string;
@@ -14,14 +13,14 @@ export default function LanguageSelector({value, setValue}: Props) {
   const [query, setQuery] = useState('');
 
   const filteredLanguageCodes = query
-    ? ISO6391.getLanguages()
-        .filter(languageCode => {
-          // Search in both the name and the native name
-          return `${languageCode.name.toLowerCase()} ${languageCode.nativeName.toLowerCase()}`.includes(
-            query.toLowerCase()
-          );
-        })
-        .map(languageCode => languageCode.code as LanguageCode)
+    ? ISO6391.getAllCodes().filter(code => {
+        const englishName = ISO6391.getName(code);
+        const localName = ISO6391.getNativeName(code);
+        // Search in both the name and the native name
+        return `${englishName.toLowerCase()} ${localName.toLowerCase()}`.includes(
+          query.toLowerCase()
+        );
+      })
     : ISO6391.getAllCodes();
 
   return (
