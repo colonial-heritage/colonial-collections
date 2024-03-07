@@ -178,13 +178,6 @@ export class ConstituentSearcher {
                 ],
               },
             },
-            {
-              // Only return documents of which the dataset they come from is known
-              // (e.g. exclude persons that are creators of objects, coming from external terminology sources)
-              exists: {
-                field: 'https://colonialcollections nl/schema#isPartOf',
-              },
-            },
           ],
         },
       },
