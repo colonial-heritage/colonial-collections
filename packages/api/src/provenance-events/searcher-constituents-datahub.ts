@@ -1,5 +1,6 @@
 import {SearchResult} from './definitions';
 import {localeSchema, Thing} from '../definitions';
+import {search} from '../elastic-client';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -7,6 +8,12 @@ const constructorOptionsSchema = z.object({
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
+
+enum RawKeys {
+  Id = '@id',
+  Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
+  Name = 'https://colonialcollections nl/schema#name',
+}
 
 export const searchOptionsSchema = z.object({
   locale: localeSchema,
@@ -18,8 +25,8 @@ export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
 const rawConstituentSchema = z
   .object({})
-  .setKey('@id', z.string())
-  .setKey('https://colonialcollections nl/schema#name', z.array(z.string()));
+  .setKey(RawKeys.Id, z.string())
+  .setKey(RawKeys.Name, z.array(z.string()));
 
 const rawSearchResponseSchema = z.object({
   hits: z.object({
@@ -42,34 +49,16 @@ export class DatahubConstituentSearcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
-  async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
-    const response = await fetch(this.endpointUrl, {
-      method: 'POST',
-      body: JSON.stringify(searchRequest),
-      headers: {'Content-Type': 'application/json'},
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to retrieve information: ${response.statusText} (${response.status})`
-      );
-    }
-
-    const responseData: T = await response.json();
-
-    return responseData;
-  }
-
   private buildRequest(options: SearchOptions) {
     const searchRequest = {
       size: options.limit,
-      _source: ['@id', 'https://colonialcollections nl/schema#name'],
+      _source: [RawKeys.Id, RawKeys.Name],
       query: {
         bool: {
           must: [
             {
               match_bool_prefix: {
-                'https://colonialcollections nl/schema#name': {
+                [RawKeys.Name]: {
                   query: options.query,
                 },
               },
@@ -79,7 +68,7 @@ export class DatahubConstituentSearcher {
             {
               // Only return documents of a specific type
               terms: {
-                ['http://www w3 org/1999/02/22-rdf-syntax-ns#type.keyword']: [
+                [`${RawKeys.Type}.keyword`]: [
                   'https://colonialcollections.nl/schema#Person',
                 ],
               },
@@ -99,7 +88,7 @@ export class DatahubConstituentSearcher {
     const things = rawThings.map(rawThing => {
       const thing: Thing = {
         id: rawThing['@id'],
-        name: rawThing['https://colonialcollections nl/schema#name'][0],
+        name: rawThing[RawKeys.Name][0],
       };
 
       return thing;
@@ -116,11 +105,11 @@ export class DatahubConstituentSearcher {
     const opts = searchOptionsSchema.parse(options);
 
     const searchRequest = this.buildRequest(opts);
-
-    const rawResponse =
-      await this.makeRequest<RawSearchResponse>(searchRequest);
+    const rawResponse = await search<RawSearchResponse>(
+      this.endpointUrl,
+      searchRequest
+    );
     const searchResponse = rawSearchResponseSchema.parse(rawResponse);
-
     const searchResult = await this.buildResult(searchResponse);
 
     return searchResult;

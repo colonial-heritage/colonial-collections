@@ -8,6 +8,7 @@ import {
 } from '../definitions';
 import type {ConstituentSearchResult} from './definitions';
 import {ConstituentFetcher} from './fetcher';
+import {search} from '../elastic-client';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -104,26 +105,6 @@ export class ConstituentSearcher {
 
     this.endpointUrl = opts.endpointUrl;
     this.constituentFetcher = opts.constituentFetcher;
-  }
-
-  async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
-    // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's
-    // Elasticsearch instance, so we use pure HTTP calls instead
-    const response = await fetch(this.endpointUrl, {
-      method: 'POST',
-      body: JSON.stringify(searchRequest),
-      headers: {'Content-Type': 'application/json'},
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to retrieve information: ${response.statusText} (${response.status})`
-      );
-    }
-
-    const responseData: T = await response.json();
-
-    return responseData;
   }
 
   private buildAggregation(id: string) {
@@ -281,12 +262,12 @@ export class ConstituentSearcher {
     const opts = searchOptionsSchema.parse(options ?? {});
 
     const searchRequest = this.buildRequest(opts);
-
-    const rawResponse =
-      await this.makeRequest<RawSearchResponseWithAggregations>(searchRequest);
+    const rawResponse = await search<RawSearchResponseWithAggregations>(
+      this.endpointUrl,
+      searchRequest
+    );
     const searchResponse =
       rawSearchResponseWithAggregationsSchema.parse(rawResponse);
-
     const searchResult = await this.buildResult(opts, searchResponse);
 
     return searchResult;
