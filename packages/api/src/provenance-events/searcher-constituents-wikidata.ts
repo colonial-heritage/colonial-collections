@@ -32,7 +32,7 @@ export class WikidataConstituentSearcher {
 
     // Wikidata requires specific headers - https://meta.wikimedia.org/wiki/User-Agent_policy
     const headers = new Headers();
-    headers.set('User-Agent', 'ColonialCollections');
+    headers.set('User-Agent', 'Colonial Collections Datahub');
 
     this.fetcher = new SparqlEndpointFetcher({
       defaultHeaders: headers,
