@@ -23,16 +23,14 @@ export const searchOptionsSchema = z.object({
 
 export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
-const rawConstituentSchema = z
-  .object({})
-  .setKey(RawKeys.Id, z.string())
-  .setKey(RawKeys.Name, z.array(z.string()));
-
 const rawSearchResponseSchema = z.object({
   hits: z.object({
     hits: z.array(
       z.object({
-        _source: rawConstituentSchema,
+        _source: z
+          .object({})
+          .setKey(RawKeys.Id, z.string())
+          .setKey(RawKeys.Name, z.array(z.string())),
       })
     ),
   }),

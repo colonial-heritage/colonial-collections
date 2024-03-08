@@ -47,8 +47,6 @@ export const searchOptionsSchema = z.object({
 
 export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
-const rawDatasetSchema = z.object({}).setKey(RawKeys.Id, z.string());
-
 const rawBucketSchema = z.object({
   key: z.string(),
   doc_count: z.number(),
@@ -67,7 +65,7 @@ const rawSearchResponseSchema = z.object({
     }),
     hits: z.array(
       z.object({
-        _source: rawDatasetSchema,
+        _source: z.object({}).setKey(RawKeys.Id, z.string()),
       })
     ),
   }),
@@ -125,6 +123,7 @@ export class DatasetSearcher {
           [sortByRawKey]: options.sortOrder,
         },
       ],
+      _source: [RawKeys.Id],
       query: {
         bool: {
           must: [
