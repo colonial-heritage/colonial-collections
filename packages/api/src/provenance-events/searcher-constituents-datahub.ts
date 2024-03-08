@@ -50,6 +50,11 @@ export class DatahubConstituentSearcher {
   private buildRequest(options: SearchOptions) {
     const searchRequest = {
       size: options.limit,
+      sort: [
+        {
+          [`${RawKeys.Name}.keyword`]: 'asc',
+        },
+      ],
       _source: [RawKeys.Id, RawKeys.Name],
       query: {
         bool: {
