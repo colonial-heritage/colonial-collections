@@ -1,5 +1,5 @@
-import {SearchResult} from './definitions';
-import {localeSchema, Thing} from '../definitions';
+import {searchOptionsSchema, SearchOptions, SearchResult} from './definitions';
+import {Thing} from '../definitions';
 import {getPropertyValue} from '../rdf-helpers';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import type {Readable} from 'node:stream';
@@ -11,21 +11,15 @@ const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
 });
 
-export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
-
-export const searchOptionsSchema = z.object({
-  locale: localeSchema,
-  query: z.string(),
-  limit: z.number().int().positive().optional().default(10),
-});
-
-export type SearchOptions = z.input<typeof searchOptionsSchema>;
+export type WikidataConstituentSearcherConstructorOptions = z.infer<
+  typeof constructorOptionsSchema
+>;
 
 export class WikidataConstituentSearcher {
   private readonly endpointUrl: string;
   private readonly fetcher: SparqlEndpointFetcher;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: WikidataConstituentSearcherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;

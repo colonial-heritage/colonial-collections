@@ -1,5 +1,5 @@
-import {SearchResult} from './definitions';
-import {localeSchema, Thing} from '../definitions';
+import {searchOptionsSchema, SearchOptions, SearchResult} from './definitions';
+import {Thing} from '../definitions';
 import {search} from '../elastic-client';
 import {z} from 'zod';
 
@@ -7,21 +7,15 @@ const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
 });
 
-export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
+export type DatahubConstituentSearcherConstructorOptions = z.infer<
+  typeof constructorOptionsSchema
+>;
 
 enum RawKeys {
   Id = '@id',
   Type = 'http://www w3 org/1999/02/22-rdf-syntax-ns#type',
   Name = 'https://colonialcollections nl/schema#name',
 }
-
-export const searchOptionsSchema = z.object({
-  locale: localeSchema,
-  query: z.string(),
-  limit: z.number().int().positive().optional().default(10),
-});
-
-export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
 const rawSearchResponseSchema = z.object({
   hits: z.object({
@@ -41,7 +35,7 @@ type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
 export class DatahubConstituentSearcher {
   private readonly endpointUrl: string;
 
-  constructor(options: ConstructorOptions) {
+  constructor(options: DatahubConstituentSearcherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
