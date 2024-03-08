@@ -79,7 +79,7 @@ export class DatahubConstituentSearcher {
     return searchRequest;
   }
 
-  private async buildResult(rawSearchResponse: RawSearchResponse) {
+  private buildResult(rawSearchResponse: RawSearchResponse) {
     const {hits} = rawSearchResponse;
 
     const rawThings = hits.hits.map(hit => hit._source);
@@ -108,7 +108,7 @@ export class DatahubConstituentSearcher {
       searchRequest
     );
     const searchResponse = rawSearchResponseSchema.parse(rawResponse);
-    const searchResult = await this.buildResult(searchResponse);
+    const searchResult = this.buildResult(searchResponse);
 
     return searchResult;
   }
