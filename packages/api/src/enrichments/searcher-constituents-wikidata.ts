@@ -61,6 +61,7 @@ export class WikidataConstituentSearcher {
         UNION
         {
           # Only instances of subclasses of "organization"
+          # Beware: this makes the query slow
           ?item wdt:P31/wdt:P279* wd:Q43229 .
           BIND(ex:Organization AS ?type)
         }
