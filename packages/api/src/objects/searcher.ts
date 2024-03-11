@@ -149,13 +149,15 @@ export class HeritageObjectSearcher {
 
   private buildRequest(options: SearchOptions) {
     const locationKey = `${RawKeys.CountryCreated}_${options.locale}.keyword`;
+    const typeKey = `${RawKeys.AdditionalType}_${options.locale}.keyword`;
+    const materialKey = `${RawKeys.Material}_${options.locale}.keyword`;
     const publisherKey = `${RawKeys.Publisher}_${options.locale}.keyword`;
 
     const aggregations = {
-      types: this.buildAggregation(`${RawKeys.AdditionalType}.keyword`),
+      types: this.buildAggregation(typeKey),
       subjects: this.buildAggregation(`${RawKeys.About}.keyword`),
       locations: this.buildAggregation(locationKey),
-      materials: this.buildAggregation(`${RawKeys.Material}.keyword`),
+      materials: this.buildAggregation(materialKey),
       creators: this.buildAggregation(`${RawKeys.Creator}.keyword`),
       publishers: this.buildAggregation(publisherKey),
       dateCreatedStart: this.buildAggregation(RawKeys.YearCreatedStart),
@@ -201,10 +203,10 @@ export class HeritageObjectSearcher {
     };
 
     const queryFilters: Map<string, string[] | undefined> = new Map([
-      [`${RawKeys.AdditionalType}.keyword`, options.filters?.types],
+      [typeKey, options.filters?.types],
       [`${RawKeys.About}.keyword`, options.filters?.subjects],
       [locationKey, options.filters?.locations],
-      [`${RawKeys.Material}.keyword`, options.filters?.materials],
+      [materialKey, options.filters?.materials],
       [`${RawKeys.Creator}.keyword`, options.filters?.creators],
       [publisherKey, options.filters?.publishers],
     ]);
