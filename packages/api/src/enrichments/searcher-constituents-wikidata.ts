@@ -39,8 +39,7 @@ export class WikidataConstituentSearcher {
       PREFIX schema: <http://schema.org/>
 
       CONSTRUCT {
-        ?item a ?type ;
-          ex:name ?label ;
+        ?item ex:name ?label ;
           ex:description ?description .
       }
       WHERE {
@@ -49,24 +48,20 @@ export class WikidataConstituentSearcher {
           bd:serviceParam wikibase:api "EntitySearch" .
           bd:serviceParam mwapi:language "${options.locale}" .
           bd:serviceParam mwapi:search "${options.query}" .
-          bd:serviceParam wikibase:limit 50 .
+          bd:serviceParam wikibase:limit 100 .
           ?item wikibase:apiOutputItem mwapi:item .
         }
 
-        {
-          # Only instances of type "human"
-          ?item wdt:P31 wd:Q5
-          BIND(ex:Person AS ?type)
-        }
-        UNION
-        {
-          # Only instances of subclasses of "organization"
-          # Beware: this makes the query slow
-          ?item wdt:P31/wdt:P279* wd:Q43229 .
-          BIND(ex:Organization AS ?type)
-        }
+        ?item wdt:P31 ?instanceOf
 
-        # TBD: also search for instances of e.g. https://www.wikidata.org/wiki/Q874405?
+        # TBD: this list can be expanded
+        # We cannot simply search for all instances of 'person or organization' because
+        # it takes Wikidata a long time to respond (e.g. ?item wdt:P31/wdt:P279* wd:Q106559804)
+        FILTER(?instanceOf IN (
+          wd:Q5, # Human
+          wd:Q43229, # Organization
+          wd:Q4830453 # Business
+        ))
 
         ?item rdfs:label ?label
         FILTER(LANG(?label) = "${options.locale}")

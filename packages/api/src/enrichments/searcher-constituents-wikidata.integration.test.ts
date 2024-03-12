@@ -20,9 +20,9 @@ describe('search', () => {
     expect(result).toStrictEqual({
       things: [
         {
-          id: 'http://www.wikidata.org/entity/Q29885090',
-          name: 'Neeltje Willemsdr. Zuytbrouck',
-          description: 'moeder van Rembrandt, huishoudster',
+          id: 'http://www.wikidata.org/entity/Q106527653',
+          name: 'Maatschappij Rembrandt',
+          description: 'uitgeverij uit Utrecht',
         },
         {
           id: 'http://www.wikidata.org/entity/Q105964347',
@@ -30,9 +30,9 @@ describe('search', () => {
           description: 'Metaalwarenfabriek Rembrandt BV',
         },
         {
-          id: 'http://www.wikidata.org/entity/Q1300641',
-          name: 'Rembrandt Bugatti',
-          description: 'Italiaans beeldhouwer',
+          id: 'http://www.wikidata.org/entity/Q17330745',
+          name: 'Rembrandts vader',
+          description: 'Nederlands acteur',
         },
       ],
     });
@@ -48,9 +48,9 @@ describe('search', () => {
     expect(result).toStrictEqual({
       things: [
         {
-          id: 'http://www.wikidata.org/entity/Q990960',
-          name: 'Rembrandt',
-          description: 'city in Buena Vista County, Iowa, United States',
+          id: 'http://www.wikidata.org/entity/Q352864',
+          name: 'Pieter Lastman',
+          description: 'Dutch painter',
         },
         {
           id: 'http://www.wikidata.org/entity/Q105964347',
@@ -58,9 +58,9 @@ describe('search', () => {
           description: 'Metaalwarenfabriek Rembrandt BV',
         },
         {
-          id: 'http://www.wikidata.org/entity/Q375926',
-          name: 'Rembrandt Peale',
-          description: 'American painter (1778-1860)',
+          id: 'http://www.wikidata.org/entity/Q1300641',
+          name: 'Rembrandt Bugatti',
+          description: '1884-1916 Italian sculptor',
         },
       ],
     });
