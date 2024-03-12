@@ -42,3 +42,64 @@ describe('Community details page', () => {
     cy.getBySel('community-name').should('not.exist');
   });
 });
+
+describe('Communities page logged in', () => {
+  beforeEach(() => {
+    cy.session('signed-in', () => {
+      cy.signIn();
+    });
+  });
+
+  it("can open the 'add community' modal", () => {
+    cy.visit('/en/communities', {
+      failOnStatusCode: false,
+    });
+
+    cy.getBySel('add-community').click();
+    // I can't add test ids to the modal, so I'm using the h1
+    cy.get('h1').contains('Create Community');
+  });
+
+  it('can find my community with the "Show only my communities" toggle', () => {
+    cy.visit('/en/communities', {
+      failOnStatusCode: false,
+    });
+
+    cy.getBySel('my-community-toggle').click();
+    cy.getBySel('community-item-name').should('have.length', 1);
+  });
+});
+
+describe('Community details page logged in', () => {
+  beforeEach(() => {
+    cy.session('signed-in', () => {
+      cy.signIn();
+    });
+  });
+
+  it('can edit my community', () => {
+    const uniqueIdentifier = Date.now();
+
+    cy.visit(`/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}`, {
+      failOnStatusCode: false,
+    });
+    cy.getBySel('edit-community').click();
+    cy.get('#description')
+      .clear()
+      .type(
+        `This community is used for end-to-end testing; please do not remove or use this community. Unique Identifier: ${uniqueIdentifier}`
+      );
+    cy.getBySel('save-button').click();
+
+    cy.getBySel('notification').should('exist');
+    cy.contains(uniqueIdentifier).should('exist');
+  });
+
+  it('can open the manage user modal', () => {
+    cy.visit(`/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}`, {
+      failOnStatusCode: false,
+    });
+    cy.getBySel('manage-members-button').click();
+    cy.get('h1').contains('Members');
+  });
+});

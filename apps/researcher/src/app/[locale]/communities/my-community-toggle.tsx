@@ -11,6 +11,7 @@ export function MyCommunityToggle() {
 
   return (
     <input
+      data-testid="my-community-toggle"
       type="checkbox"
       id="onlyMy"
       name="onlyMy"

@@ -172,6 +172,7 @@ export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
     <SignedIn>
       <div className="flex justify-end text-consortiumBlue-800">
         <SlideOutButton
+          testId="add-enrichment-button"
           id={`${enrichmentType}-form`}
           className="py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortiumGreen-200"
         >

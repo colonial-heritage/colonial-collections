@@ -91,10 +91,14 @@ function Form({
       )}
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="flex flex-col w-full">
-          <label className="block text-sm font-medium leading-6 text-gray-900">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium leading-6 text-gray-900"
+          >
             <strong>{t('labelName')}</strong>
           </label>
           <input
+            id="name"
             {...register('name')}
             className="border border-neutral-400 rounded p-2 text-sm"
           />
@@ -104,7 +108,7 @@ function Form({
 
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col w-full">
-          <label className="flex flex-col text-sm">
+          <label htmlFor="description" className="flex flex-col text-sm">
             <strong>{t('labelDescription')}</strong>
           </label>
           {t('labelDescriptionSubTitle')}
@@ -120,6 +124,7 @@ function Form({
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="w-full flex gap-2">
           <button
+            data-testid="save-button"
             disabled={isSubmitting}
             type="submit"
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 hover:bg-consortiumGreen-200 transition flex items-center gap-1"

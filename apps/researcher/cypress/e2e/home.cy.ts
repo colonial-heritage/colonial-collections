@@ -127,3 +127,20 @@ describe('Object list filters', () => {
     cy.getBySel('selectedFilter').should('have.length', 3);
   });
 });
+
+describe('Homepage logged in', () => {
+  beforeEach(() => {
+    cy.session('signed-in', () => {
+      cy.signIn();
+    });
+  });
+
+  it('shows the user button in the navigation', () => {
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
+
+    cy.getBySel('signed-in').should('exist');
+    cy.getBySel('sign-in-button').should('not.exist');
+  });
+});

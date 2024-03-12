@@ -1,9 +1,8 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
-import {useTranslations} from 'next-intl';
 import {LocaleEnum} from '@/definitions';
 import {DeleteObjectButton} from './buttons';
 import ImageWithFallback from '@/components/image-with-fallback';
-import {getLocale} from 'next-intl/server';
+import {getLocale, getTranslations} from 'next-intl/server';
 
 interface Props {
   objectIri: string;
@@ -11,7 +10,7 @@ interface Props {
 }
 
 export default async function ManageObjectCard({objectIri, id}: Props) {
-  const t = useTranslations('HeritageObjectCard');
+  const t = await getTranslations('HeritageObjectCard');
   const locale = (await getLocale()) as LocaleEnum;
   const object = await heritageObjects.getById({id: objectIri, locale});
 
