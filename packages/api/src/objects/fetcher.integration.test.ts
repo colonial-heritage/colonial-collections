@@ -175,27 +175,51 @@ describe('get with localized names', () => {
   it('returns a heritage object with English names', async () => {
     const heritageObject = await heritageObjectFetcher.getById({
       locale: 'en',
-      id: 'https://example.org/objects/2',
+      id: 'https://example.org/objects/5',
     });
 
     // Currently the only localized parts
     expect(heritageObject).toMatchObject({
-      id: 'https://example.org/objects/2',
-      locationsCreated: expect.arrayContaining([
+      id: 'https://example.org/objects/5',
+      locationsCreated: [
         {
-          id: 'https://sws.geonames.org/1642911/',
-          name: 'Jakarta',
+          id: 'https://sws.geonames.org/1749659/',
+          name: 'Pulau Sebang',
           isPartOf: {
-            id: 'https://sws.geonames.org/1643084/',
-            name: 'Indonesia',
+            id: 'https://sws.geonames.org/1733045/',
+            name: 'Malaysia',
           },
+        },
+      ],
+      types: expect.arrayContaining([
+        {
+          id: expect.stringContaining(
+            'https://data.colonialcollections.nl/.well-known/genid/'
+          ),
+          name: 'Canvas Painting',
+        },
+      ]),
+      materials: expect.arrayContaining([
+        {
+          id: expect.stringContaining(
+            'https://data.colonialcollections.nl/.well-known/genid/'
+          ),
+          name: 'Oilpaint',
+        },
+        {
+          id: expect.stringContaining(
+            'https://data.colonialcollections.nl/.well-known/genid/'
+          ),
+          name: 'Canvas',
         },
       ]),
       isPartOf: {
-        id: 'https://example.org/datasets/13',
+        id: 'https://example.org/datasets/1',
+        name: 'Dataset 1',
         publisher: {
-          id: 'https://research.example.org/',
-          name: 'Research Organisation',
+          id: 'https://museum.example.org/',
+          type: 'Organization',
+          name: 'The Museum',
         },
       },
     });
@@ -204,27 +228,51 @@ describe('get with localized names', () => {
   it('returns a heritage object with Dutch names', async () => {
     const heritageObject = await heritageObjectFetcher.getById({
       locale: 'nl',
-      id: 'https://example.org/objects/2',
+      id: 'https://example.org/objects/5',
     });
 
     // Currently the only localized parts
     expect(heritageObject).toMatchObject({
-      id: 'https://example.org/objects/2',
-      locationsCreated: expect.arrayContaining([
+      id: 'https://example.org/objects/5',
+      locationsCreated: [
         {
-          id: 'https://sws.geonames.org/1642911/',
-          name: 'Jakarta',
+          id: 'https://sws.geonames.org/1749659/',
+          name: 'Pulau Sebang',
           isPartOf: {
-            id: 'https://sws.geonames.org/1643084/',
-            name: 'Republiek Indonesië',
+            id: 'https://sws.geonames.org/1733045/',
+            name: 'Maleisië',
           },
+        },
+      ],
+      types: expect.arrayContaining([
+        {
+          id: expect.stringContaining(
+            'https://data.colonialcollections.nl/.well-known/genid/'
+          ),
+          name: 'Schildering op doek',
+        },
+      ]),
+      materials: expect.arrayContaining([
+        {
+          id: expect.stringContaining(
+            'https://data.colonialcollections.nl/.well-known/genid/'
+          ),
+          name: 'Olieverf',
+        },
+        {
+          id: expect.stringContaining(
+            'https://data.colonialcollections.nl/.well-known/genid/'
+          ),
+          name: 'Canvas',
         },
       ]),
       isPartOf: {
-        id: 'https://example.org/datasets/13',
+        id: 'https://example.org/datasets/1',
+        name: 'Dataset 1',
         publisher: {
-          id: 'https://research.example.org/',
-          name: 'Onderzoeksinstelling',
+          id: 'https://museum.example.org/',
+          type: 'Organization',
+          name: 'Het Museum',
         },
       },
     });

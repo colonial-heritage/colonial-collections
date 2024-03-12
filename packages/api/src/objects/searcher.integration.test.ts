@@ -750,6 +750,25 @@ describe('search with localized names', () => {
       totalCount: 1,
       filters: {
         locations: [{totalCount: 1, id: 'Malaysia', name: 'Malaysia'}],
+        types: [
+          {
+            totalCount: 1,
+            id: 'Canvas Painting',
+            name: 'Canvas Painting',
+          },
+        ],
+        materials: [
+          {
+            totalCount: 1,
+            id: 'Canvas',
+            name: 'Canvas',
+          },
+          {
+            totalCount: 1,
+            id: 'Oilpaint',
+            name: 'Oilpaint',
+          },
+        ],
         publishers: [
           {
             totalCount: 1,
@@ -774,6 +793,25 @@ describe('search with localized names', () => {
       totalCount: 1,
       filters: {
         locations: [{totalCount: 1, id: 'Maleisië', name: 'Maleisië'}],
+        types: [
+          {
+            totalCount: 1,
+            id: 'Schildering op doek',
+            name: 'Schildering op doek',
+          },
+        ],
+        materials: [
+          {
+            totalCount: 1,
+            id: 'Canvas',
+            name: 'Canvas',
+          },
+          {
+            totalCount: 1,
+            id: 'Olieverf',
+            name: 'Olieverf',
+          },
+        ],
         publishers: [
           {
             totalCount: 1,

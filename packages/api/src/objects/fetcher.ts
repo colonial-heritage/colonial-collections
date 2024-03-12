@@ -62,6 +62,7 @@ export class HeritageObjectFetcher {
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX schema: <https://schema.org/>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       CONSTRUCT {
         ?this a ex:HeritageObject ;
@@ -165,10 +166,17 @@ export class HeritageObjectFetcher {
 
         OPTIONAL {
           ?this crm:P2_has_type ?type .
-          ?type rdfs:label ?typeName .
 
-          # For BC; remove as soon as locale-aware names are in use
-          FILTER(LANG(?typeName) = "" || LANG(?typeName) = "en")
+          # Data providers use different predicates for the type
+          OPTIONAL {
+            ?type skos:prefLabel ?typeName
+            FILTER(LANG(?typeName) = "${options.locale}")
+          }
+
+          OPTIONAL {
+            ?type rdfs:label ?typeName
+            FILTER(LANG(?typeName) = "" || LANG(?typeName) = "${options.locale}")
+          }
         }
 
         ####################
@@ -200,10 +208,17 @@ export class HeritageObjectFetcher {
 
         OPTIONAL {
           ?this crm:P45_consists_of ?material .
-          ?material rdfs:label ?materialName .
 
-          # For BC; remove as soon as locale-aware names are in use
-          FILTER(LANG(?materialName) = "" || LANG(?materialName) = "en")
+          # Data providers use different predicates for the material
+          OPTIONAL {
+            ?material skos:prefLabel ?materialName
+            FILTER(LANG(?materialName) = "${options.locale}")
+          }
+
+          OPTIONAL {
+            ?material rdfs:label ?materialName
+            FILTER(LANG(?materialName) = "" || LANG(?materialName) = "${options.locale}")
+          }
         }
 
         ####################
