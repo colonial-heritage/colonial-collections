@@ -4,7 +4,9 @@ import {locales} from './navigation';
 import {LocaleEnum} from '@/definitions';
 
 export default getRequestConfig(async ({locale}) => {
-  if (!locales.includes(locale as LocaleEnum)) notFound();
+  if (!locales.includes(locale as LocaleEnum)) {
+    notFound();
+  }
 
   return {
     messages: (

@@ -1,6 +1,6 @@
 import type {Config} from 'tailwindcss';
 
-const config = {
+export default {
   content: [
     'src/**/*.{js,ts,jsx,tsx}',
     '../../packages/ui/**/*.{js,ts,jsx,tsx}',
@@ -89,5 +89,3 @@ const config = {
     require('@tailwindcss/aspect-ratio'),
   ],
 } satisfies Config;
-
-export default config;

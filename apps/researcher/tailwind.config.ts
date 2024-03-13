@@ -1,7 +1,5 @@
-import sharedConfig from 'tailwind-config/tailwind.config';
+import config from 'tailwind-config';
 
-const config = {
-  presets: [sharedConfig],
+export default {
+  presets: [config],
 };
-
-export default config;
