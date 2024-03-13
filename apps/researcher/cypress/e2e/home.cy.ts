@@ -40,6 +40,7 @@ describe('Object list filters', () => {
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', '?publishers=');
 
     cy.getBySel('selectedFilter').should('have.length', 2);
   });
@@ -54,6 +55,7 @@ describe('Object list filters', () => {
       cy.get('[type="checkbox"]').eq(0).check();
       cy.get('[type="checkbox"]').eq(1).check();
     });
+    cy.location('search', {timeout: 60000}).should('include', '?materials=');
 
     cy.getBySel('selectedFilter').should('have.length', 3);
   });
@@ -67,10 +69,15 @@ describe('Object list filters', () => {
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', '?publishers=');
 
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().uncheck();
     });
+    cy.location('search', {timeout: 60000}).should(
+      'not.include',
+      '?publishers='
+    );
 
     cy.getBySel('selectedFilter').should('have.length', 1);
   });
@@ -84,6 +91,7 @@ describe('Object list filters', () => {
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', '?publishers=');
 
     cy.getBySel('selectedFilter')
       .first()
@@ -102,6 +110,7 @@ describe('Object list filters', () => {
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', '?types=');
 
     cy.getBySel('selectedFilter').should('have.length', 2);
   });
@@ -119,10 +128,12 @@ describe('Object list filters', () => {
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', '?types=');
 
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', '?publishers=');
 
     cy.getBySel('selectedFilter').should('have.length', 3);
   });
