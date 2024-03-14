@@ -23,7 +23,7 @@
     "db:migrate": "turbo run db:migrate"
   },
   "devDependencies": {
-    "eslint-config-custom": "*",
+    "@colonial-collections/eslint-config": "*",
     "gts": "5.2.0",
     "turbo": "1.12.5"
   },

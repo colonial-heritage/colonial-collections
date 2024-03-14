@@ -16,9 +16,9 @@
   },
   "devDependencies": {
     "dotenv-cli": "7.3.0",
-    "eslint-config-custom": "*",
+    "@colonial-collections/eslint-config": "*",
     "ts-node": "10.9.1",
-    "tsconfig": "*"
+    "@colonial-collections/ts-config": "*"
   },
   "dependencies": {
     "drizzle-kit": "0.20.14",
