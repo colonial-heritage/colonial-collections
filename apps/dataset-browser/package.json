@@ -46,7 +46,7 @@
     "@types/react": "18.2.56",
     "@types/react-dom": "18.2.19",
     "autoprefixer": "10.4.18",
-    "cypress": "13.6.2",
+    "cypress": "13.7.0",
     "encoding": "0.1.13",
     "@colonial-collections/eslint-config": "*",
     "gts": "5.2.0",
