@@ -54,9 +54,10 @@ export class DatahubConstituentSearcher {
         bool: {
           must: [
             {
-              match_bool_prefix: {
+              match_phrase_prefix: {
                 [RawKeys.Name]: {
                   query: options.query,
+                  slop: 2, // E.g. "van Westen 't" matches "Karel van 't Westen"
                 },
               },
             },
