@@ -1,4 +1,7 @@
 import type {Config} from 'tailwindcss';
+import formsPlugin from '@tailwindcss/forms';
+import typographyPlugin from '@tailwindcss/typography';
+import aspectRatioPlugin from '@tailwindcss/aspect-ratio';
 
 export default {
   content: [
@@ -83,9 +86,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
-  ],
+  plugins: [formsPlugin, typographyPlugin, aspectRatioPlugin],
 } satisfies Config;
