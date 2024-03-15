@@ -1,12 +1,16 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type {Config} from 'tailwindcss';
+import formsPlugin from '@tailwindcss/forms';
+import typographyPlugin from '@tailwindcss/typography';
+import aspectRatioPlugin from '@tailwindcss/aspect-ratio';
+
+export default {
   content: [
     'src/**/*.{js,ts,jsx,tsx}',
     '../../packages/ui/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      typography: theme => ({
+      typography: (theme: (color: string) => string) => ({
         DEFAULT: {
           css: {
             color: theme('colors.gray.900'),
@@ -82,9 +86,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
-  ],
-};
+  plugins: [formsPlugin, typographyPlugin, aspectRatioPlugin],
+} satisfies Config;

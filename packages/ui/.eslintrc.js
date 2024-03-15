@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
-  extends: ['custom'],
+  extends: ['@colonial-collections/eslint-config'],
   rules: {
     'node/no-unpublished-require': [
       'error',
       {
-        allowModules: ['tailwind-config'],
+        allowModules: ['@colonial-collections/tailwind-config'],
       },
     ],
   },
