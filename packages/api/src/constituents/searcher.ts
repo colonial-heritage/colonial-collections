@@ -8,6 +8,7 @@ import {
 } from '../definitions';
 import type {ConstituentSearchResult} from './definitions';
 import {ConstituentFetcher} from './fetcher';
+import {search} from '../elastic-client';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -53,8 +54,6 @@ export const searchOptionsSchema = z.object({
 
 export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
-const rawConstituentSchema = z.object({}).setKey(RawKeys.Id, z.string());
-
 const rawBucketSchema = z.object({
   key: z.string().or(z.number()),
   doc_count: z.number(),
@@ -73,7 +72,7 @@ const rawSearchResponseSchema = z.object({
     }),
     hits: z.array(
       z.object({
-        _source: rawConstituentSchema,
+        _source: z.object({}).setKey(RawKeys.Id, z.string()),
       })
     ),
   }),
@@ -104,26 +103,6 @@ export class ConstituentSearcher {
 
     this.endpointUrl = opts.endpointUrl;
     this.constituentFetcher = opts.constituentFetcher;
-  }
-
-  async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
-    // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's
-    // Elasticsearch instance, so we use pure HTTP calls instead
-    const response = await fetch(this.endpointUrl, {
-      method: 'POST',
-      body: JSON.stringify(searchRequest),
-      headers: {'Content-Type': 'application/json'},
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to retrieve information: ${response.statusText} (${response.status})`
-      );
-    }
-
-    const responseData: T = await response.json();
-
-    return responseData;
   }
 
   private buildAggregation(id: string) {
@@ -159,6 +138,7 @@ export class ConstituentSearcher {
           [sortByRawKey]: options.sortOrder,
         },
       ],
+      _source: [RawKeys.Id],
       query: {
         bool: {
           must: [
@@ -176,13 +156,6 @@ export class ConstituentSearcher {
                 [`${RawKeys.Type}.keyword` as string]: [
                   'https://colonialcollections.nl/schema#Person',
                 ],
-              },
-            },
-            {
-              // Only return documents of which the dataset they come from is known
-              // (e.g. exclude persons that are creators of objects, coming from external terminology sources)
-              exists: {
-                field: 'https://colonialcollections nl/schema#isPartOf',
               },
             },
           ],
@@ -288,12 +261,12 @@ export class ConstituentSearcher {
     const opts = searchOptionsSchema.parse(options ?? {});
 
     const searchRequest = this.buildRequest(opts);
-
-    const rawResponse =
-      await this.makeRequest<RawSearchResponseWithAggregations>(searchRequest);
+    const rawResponse = await search<RawSearchResponseWithAggregations>(
+      this.endpointUrl,
+      searchRequest
+    );
     const searchResponse =
       rawSearchResponseWithAggregationsSchema.parse(rawResponse);
-
     const searchResult = await this.buildResult(opts, searchResponse);
 
     return searchResult;

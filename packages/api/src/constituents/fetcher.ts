@@ -91,7 +91,8 @@ export class ConstituentFetcher {
           ${iris}
         }
 
-        ?this a crm:E21_Person .
+        ?this a ?type .
+        FILTER(?type IN (crm:E21_Person, crm:E74_Group, crm:E39_Actor))
 
         ####################
         # Name
@@ -235,7 +236,7 @@ export class ConstituentFetcher {
 
         const constituentWithUndefinedValues: Person = {
           id: iri,
-          type: 'Person',
+          type: 'Person', // TBD: also allow for 'Group' and 'Actor'?
           name,
           birthDate,
           birthPlace,
