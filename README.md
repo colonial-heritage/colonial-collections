@@ -66,6 +66,7 @@ Create the file `apps/researcher/.env.production.local` and set the endpoint URL
     SENDGRID_API_KEY=
     TO_EMAIL_ADDRESS=
     FROM_EMAIL_ADDRESS=
+    GEONAMES_USERNAME=
 
 Then run:
 
@@ -115,6 +116,7 @@ Create the file `.env.production.local` in the root and set the endpoint URLs:
     SENDGRID_API_KEY=
     TO_EMAIL_ADDRESS=
     FROM_EMAIL_ADDRESS=
+    GEONAMES_USERNAME=
 
 Then run:
 
