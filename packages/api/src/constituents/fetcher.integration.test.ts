@@ -27,15 +27,18 @@ describe('getByIds', () => {
 
   it('returns the constituents that match the IDs', async () => {
     const constituents = await constituentFetcher.getByIds({
-      ids: ['https://example.org/persons/1', 'https://example.org/persons/2'],
+      ids: [
+        'https://example.org/constituents/1',
+        'https://example.org/constituents/2',
+      ],
     });
 
     expect(constituents).toMatchObject([
       {
-        id: 'https://example.org/persons/1',
+        id: 'https://example.org/constituents/1',
       },
       {
-        id: 'https://example.org/persons/2',
+        id: 'https://example.org/constituents/2',
       },
     ]);
   });
@@ -60,11 +63,11 @@ describe('getById', () => {
 
   it('returns the constituent that matches the ID', async () => {
     const constituent = await constituentFetcher.getById({
-      id: 'https://example.org/persons/1',
+      id: 'https://example.org/constituents/1',
     });
 
     expect(constituent).toStrictEqual({
-      id: 'https://example.org/persons/1',
+      id: 'https://example.org/constituents/1',
       type: 'Person',
       name: 'Michiel Adriaensz. de Ruyter',
       birthDate: {

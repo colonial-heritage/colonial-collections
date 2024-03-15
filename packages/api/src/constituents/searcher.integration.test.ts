@@ -21,14 +21,14 @@ describe('search', () => {
     const result = await constituentSearcher.search();
 
     expect(result).toStrictEqual({
-      totalCount: 11,
+      totalCount: 14,
       offset: 0,
       limit: 10,
       sortBy: 'birthYear',
       sortOrder: 'asc',
       constituents: [
         {
-          id: 'https://example.org/persons/1',
+          id: 'https://example.org/constituents/1',
           type: 'Person',
           name: 'Michiel Adriaensz. de Ruyter',
           birthDate: {
@@ -68,7 +68,7 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/2',
+          id: 'https://example.org/constituents/2',
           type: 'Person',
           name: 'Jan de Vries',
           birthDate: {
@@ -108,7 +108,7 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/3',
+          id: 'https://example.org/constituents/3',
           type: 'Person',
           name: 'Kees Jansen',
           birthDate: {
@@ -141,7 +141,7 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/9',
+          id: 'https://example.org/constituents/9',
           type: 'Person',
           name: "Karel van 't Westen",
           birthDate: {
@@ -181,7 +181,7 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/4',
+          id: 'https://example.org/constituents/4',
           type: 'Person',
           name: 'Gert Nooitgedacht',
           birthDate: {
@@ -208,7 +208,7 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/10',
+          id: 'https://example.org/constituents/10',
           type: 'Person',
           name: 'Ida Oost',
           birthDate: {
@@ -229,7 +229,7 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/11',
+          id: 'https://example.org/constituents/11',
           type: 'Person',
           name: 'Julienne Noordwest',
           deathDate: {
@@ -250,18 +250,12 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/5',
+          id: 'https://example.org/constituents/12',
           type: 'Person',
-          name: 'Beatrice Vlieger',
-          birthPlace: {
-            id: expect.stringContaining(
-              'https://data.colonialcollections.nl/.well-known/genid/'
-            ),
-            name: 'Rotterdam',
-          },
+          name: 'Art Dealer',
           isPartOf: {
-            id: 'https://example.org/datasets/4',
-            name: 'Dataset 4',
+            id: 'https://example.org/datasets/1',
+            name: 'Dataset 1',
             publisher: {
               id: 'https://museum.example.org/',
               type: 'Organization',
@@ -270,18 +264,12 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/6',
+          id: 'https://example.org/constituents/13',
           type: 'Person',
-          name: 'Geeske van Châtellerault',
-          birthPlace: {
-            id: expect.stringContaining(
-              'https://data.colonialcollections.nl/.well-known/genid/'
-            ),
-            name: 'New York',
-          },
+          name: 'Art Store',
           isPartOf: {
-            id: 'https://example.org/datasets/4',
-            name: 'Dataset 4',
+            id: 'https://example.org/datasets/1',
+            name: 'Dataset 1',
             publisher: {
               id: 'https://museum.example.org/',
               type: 'Organization',
@@ -290,16 +278,16 @@ describe('search', () => {
           },
         },
         {
-          id: 'https://example.org/persons/7',
+          id: 'https://example.org/constituents/14',
           type: 'Person',
-          name: 'Theodora Noord',
+          name: 'Trade Company',
           isPartOf: {
-            id: 'https://example.org/datasets/5',
-            name: 'Dataset 5',
+            id: 'https://example.org/datasets/1',
+            name: 'Dataset 1',
             publisher: {
-              id: 'https://archive.example.org/',
+              id: 'https://museum.example.org/',
               type: 'Organization',
-              name: 'Archive',
+              name: 'The Museum',
             },
           },
         },
@@ -385,7 +373,7 @@ describe('search', () => {
         ],
         publishers: [
           {
-            totalCount: 6,
+            totalCount: 9,
             id: 'The Museum',
             name: 'The Museum',
           },
@@ -473,11 +461,11 @@ describe('search', () => {
     });
 
     expect(result).toMatchObject({
-      totalCount: 6,
+      totalCount: 9,
       filters: {
         publishers: [
           {
-            totalCount: 6,
+            totalCount: 9,
             id: 'The Museum',
             name: 'The Museum',
           },
@@ -498,11 +486,11 @@ describe('search with localized names', () => {
     });
 
     expect(result).toMatchObject({
-      totalCount: 6,
+      totalCount: 9,
       filters: {
         publishers: [
           {
-            totalCount: 6,
+            totalCount: 9,
             id: 'The Museum',
             name: 'The Museum',
           },
@@ -521,11 +509,11 @@ describe('search with localized names', () => {
     });
 
     expect(result).toMatchObject({
-      totalCount: 6,
+      totalCount: 9,
       filters: {
         publishers: [
           {
-            totalCount: 6,
+            totalCount: 9,
             id: 'Het Museum',
             name: 'Het Museum',
           },
