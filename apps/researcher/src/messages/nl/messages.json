@@ -125,7 +125,7 @@
     "objectRemovedFromList": "Object verwijderd van lijst <name></name>.",
     "errorObjectRemovedFromList": "Er is een probleem opgetreden bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
     "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig.",
-    "needAccountToAddNarrativeDescription": "Met dit account kun je meer functionaliteit van deze site ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>.",
+    "needAccountToAddNarrativeDescription": "Met dit account kun je meer functionaliteit van deze platform ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>.",
     "login": "Inloggen",
     "createAccount": "Maak een account aan",
     "cancel": "Annuleren"
