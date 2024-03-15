@@ -123,7 +123,12 @@
     "objectAddedToList": "Object added to list <name></name>.",
     "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
     "objectRemovedFromList": "Object removed from list <name></name>.",
-    "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later."
+    "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later.",
+    "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account.",
+    "needAccountToAddNarrativeDescription": "With this account you can unlock more functionality of this platform. Creating an account free of charge. <link>See what else you can do with an account</link>.",
+    "login": "Login",
+    "createAccount": "Create an account",
+    "cancel": "Cancel"
   },
   "Provenance": {
     "title": "Provenance",
