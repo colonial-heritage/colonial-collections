@@ -1,5 +1,5 @@
 {
-  "extends": "@colonial-collections/ts-config/nextjs.json",
+  "extends": "../../packages/ts-config/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
