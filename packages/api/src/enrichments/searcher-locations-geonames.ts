@@ -41,8 +41,10 @@ export class GeoNamesLocationSearcher {
       ['name_startsWith', options.query],
       ['maxRows', options.limit!.toString()],
       ['lang', options.locale!],
-      ['featureCode', 'ADM1'], // Country, state, region, ...
-      ['featureCode', 'PPL'], // City, village, ...
+      ['featureCode', 'CONT'], // Continent
+      ['featureCode', 'RGN'], // Region
+      ['featureCode', 'ADM1'], // First-order administrative division, e.g. country, state
+      ['featureCode', 'PPL'], // Populated place
       ['type', 'json'],
     ];
 
