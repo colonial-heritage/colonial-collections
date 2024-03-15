@@ -6,6 +6,7 @@ import {ChevronLeftIcon, PencilSquareIcon} from '@heroicons/react/24/solid';
 import ObjectCard from './object-card';
 import {getCommunityBySlug} from '@/lib/community/actions';
 import {
+  LocalizedMarkdown,
   Notifications,
   SlideOut,
   SlideOutButton,
@@ -156,35 +157,50 @@ export default async function Page({params}: Props) {
             </SlideOut>
           </Protect>
 
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-4">
-            <h2 className="text-xl">
-              {t('objectCount', {count: objectList.objects.length})}
-            </h2>
-          </div>
-
-          <SlideOutClosed id={slideOutManageItemsId}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-6 mt-6">
-              {objectList.objects.map(object => (
-                <ObjectCard
-                  key={object.objectId}
-                  objectIri={object.objectIri}
+          {objectList.objects.length === 0 ? (
+            <div className="bg-consortiumGreen-100 px-4 py-8 rounded max-w-3xl">
+              <div className="pb-4">
+                <InformationCircleIcon className="w-6 h-6 stroke-neutral-800" />
+                <LocalizedMarkdown
+                  name="empty-object-list"
+                  contentPath="@/messages"
+                  textProps={{name: objectList.name}}
                 />
-              ))}
-            </div>
-          </SlideOutClosed>
-          <SlideOut id={slideOutManageItemsId}>
-            <div className="block">
-              <div className="flex flex-col mt-6">
-                {objectList.objects.map(object => (
-                  <ManageObjectCard
-                    key={object.objectId}
-                    objectIri={object.objectIri}
-                    id={object.id}
-                  />
-                ))}
               </div>
             </div>
-          </SlideOut>
+          ) : (
+            <>
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-4">
+                <h2 className="text-xl">
+                  {t('objectCount', {count: objectList.objects.length})}
+                </h2>
+              </div>
+
+              <SlideOutClosed id={slideOutManageItemsId}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-6 mt-6">
+                  {objectList.objects.map(object => (
+                    <ObjectCard
+                      key={object.objectId}
+                      objectIri={object.objectIri}
+                    />
+                  ))}
+                </div>
+              </SlideOutClosed>
+              <SlideOut id={slideOutManageItemsId}>
+                <div className="block">
+                  <div className="flex flex-col mt-6">
+                    {objectList.objects.map(object => (
+                      <ManageObjectCard
+                        key={object.objectId}
+                        objectIri={object.objectIri}
+                        id={object.id}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </SlideOut>
+            </>
+          )}
         </main>
       </div>
     </>
