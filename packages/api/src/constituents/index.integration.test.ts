@@ -18,7 +18,7 @@ beforeEach(() => {
 describe('getById', () => {
   it('returns a constituent', async () => {
     const constituent = await constituents.getById({
-      id: 'https://example.org/persons/1',
+      id: 'https://example.org/constituents/1',
     });
 
     expect(constituent).not.toBeUndefined();
@@ -30,7 +30,7 @@ describe('search', () => {
     const result = await constituents.search();
 
     expect(result).toMatchObject({
-      totalCount: 11,
+      totalCount: 14,
     });
   });
 });

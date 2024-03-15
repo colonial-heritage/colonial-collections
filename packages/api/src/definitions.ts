@@ -7,6 +7,7 @@ export const ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal
 export type Thing = {
   id: string;
   name?: string; // Name may not exist (e.g. in a specific locale)
+  description?: string;
 };
 
 export type Term = Thing;
@@ -25,12 +26,9 @@ export type Measurement = {
   metric: Metric;
 };
 
-export type Dataset = {
-  id: string;
-  name?: string;
+export type Dataset = Thing & {
   publisher?: Agent;
   license?: License;
-  description?: string;
   keywords?: string[];
   mainEntityOfPages?: string[];
   dateCreated?: Date;
@@ -65,11 +63,8 @@ export type TimeSpan = {
   endDate?: Date;
 };
 
-export type HeritageObject = {
-  id: string;
+export type HeritageObject = Thing & {
   identifier?: string;
-  name?: string;
-  description?: string;
   inscriptions?: string[];
   types?: Term[];
   subjects?: Term[];
