@@ -9,9 +9,15 @@ interface Props {
   // That is why `contentPath` can only be fixed values.
   contentPath: '@colonial-collections/content' | '@/messages';
   textSize?: 'small' | 'normal';
+  textProps?: {[key: string]: string | number | boolean};
 }
 
-export async function LocalizedMarkdown({name, contentPath, textSize}: Props) {
+export async function LocalizedMarkdown({
+  name,
+  contentPath,
+  textSize,
+  textProps = {},
+}: Props) {
   const locale = useLocale();
   const markdownClassName = classNames(
     'max-w-3xl prose',
@@ -36,7 +42,7 @@ export async function LocalizedMarkdown({name, contentPath, textSize}: Props) {
     }
     return (
       <div className={markdownClassName} data-testid="markdown-container">
-        <Markdown />
+        <Markdown name="test" {...textProps} />
       </div>
     );
   } catch {

@@ -13,8 +13,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import type {AdditionalType} from '@colonial-collections/enricher';
-import ISO6391 from 'iso-639-1-dir';
-import {LanguageCode} from 'iso-639-1-dir/dist/data';
+import ISO6391, {LanguageCode} from 'iso-639-1';
 import {SignedOut} from '@clerk/nextjs';
 import {Link} from '@/navigation';
 

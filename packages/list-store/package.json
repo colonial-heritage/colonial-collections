@@ -5,10 +5,10 @@
   "types": "./src/index.ts",
   "private": true,
   "devDependencies": {
-    "eslint-config-custom": "*",
+    "@colonial-collections/eslint-config": "*",
     "jest": "29.7.0",
     "ts-jest": "29.1.2",
-    "tsconfig": "*"
+    "@colonial-collections/ts-config": "*"
   },
   "scripts": {
     "test": "jest",

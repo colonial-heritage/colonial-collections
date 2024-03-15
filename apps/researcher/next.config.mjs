@@ -1,13 +1,12 @@
-/**
- * @type {import('next').NextConfig}
- */
+// @ts-check
 
-import NextIntlPlugin from 'next-intl/plugin';
+import createNextIntlPlugin from 'next-intl/plugin';
 import MDXPlugin from '@next/mdx';
 
-const withNextIntl = NextIntlPlugin('./src/i18n.ts');
+const withNextIntl = createNextIntlPlugin('./src/i18n.ts');
 const withMDX = MDXPlugin();
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['@colonial-collections/ui'],
   experimental: {
