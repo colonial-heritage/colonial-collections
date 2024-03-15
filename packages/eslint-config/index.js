@@ -8,5 +8,6 @@ module.exports = {
         ignoreConsecutiveComments: true,
       },
     ],
+    'import/no-anonymous-default-export': [2, {allowObject: true}],
   },
 };
