@@ -8,6 +8,7 @@ import {
 } from '../definitions';
 import type {HeritageObjectSearchResult} from './definitions';
 import {HeritageObjectFetcher} from './fetcher';
+import {search} from '../elastic-client';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
@@ -60,8 +61,6 @@ const searchOptionsSchema = z.object({
 
 export type SearchOptions = z.input<typeof searchOptionsSchema>;
 
-const rawHeritageObjectSchema = z.object({}).setKey(RawKeys.Id, z.string());
-
 const rawBucketSchema = z.object({
   key: z.string().or(z.number()),
   doc_count: z.number(),
@@ -80,7 +79,7 @@ const rawSearchResponseSchema = z.object({
     }),
     hits: z.array(
       z.object({
-        _source: rawHeritageObjectSchema,
+        _source: z.object({}).setKey(RawKeys.Id, z.string()),
       })
     ),
   }),
@@ -114,26 +113,6 @@ export class HeritageObjectSearcher {
 
     this.endpointUrl = opts.endpointUrl;
     this.heritageObjectFetcher = opts.heritageObjectFetcher;
-  }
-
-  async makeRequest<T>(searchRequest: Record<string, unknown>): Promise<T> {
-    // Elastic's '@elastic/elasticsearch' package does not work with TriplyDB's
-    // Elasticsearch instance, so we use pure HTTP calls instead
-    const response = await fetch(this.endpointUrl, {
-      method: 'POST',
-      body: JSON.stringify(searchRequest),
-      headers: {'Content-Type': 'application/json'},
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to retrieve information: ${response.statusText} (${response.status})`
-      );
-    }
-
-    const responseData: T = await response.json();
-
-    return responseData;
   }
 
   private buildAggregation(id: string) {
@@ -175,6 +154,7 @@ export class HeritageObjectSearcher {
           [sortByRawKey]: options.sortOrder,
         },
       ],
+      _source: [RawKeys.Id],
       query: {
         bool: {
           must: [
@@ -324,12 +304,12 @@ export class HeritageObjectSearcher {
     const opts = searchOptionsSchema.parse(options ?? {});
 
     const searchRequest = this.buildRequest(opts);
-
-    const rawResponse =
-      await this.makeRequest<RawSearchResponseWithAggregations>(searchRequest);
+    const rawResponse = await search<RawSearchResponseWithAggregations>(
+      this.endpointUrl,
+      searchRequest
+    );
     const searchResponse =
       rawSearchResponseWithAggregationsSchema.parse(rawResponse);
-
     const searchResult = await this.buildResult(opts, searchResponse);
 
     return searchResult;

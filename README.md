@@ -11,11 +11,11 @@ This repo uses [Turborepo](https://turbo.build/) as build system and [npm](https
 
 ### Packages
 
-- `eslint-config-custom`: `eslint` configurations
+- `@colonial-collections/eslint-config`: `eslint` configurations
 - `iris`: helper functions for working with IRIs
-- `tailwind-config`: Tailwind config used by both the apps and the `ui` package
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-- `ui`: a React component library shared by the apps
+- `@colonial-collections/tailwind-config`: Tailwind config used by both the apps and the `ui` package
+- `@colonial-collections/ts-config`: `tsconfig.json`s used throughout the monorepo
+- `@colonial-collections/ui`: a React component library shared by the apps
 
 ## Prerequisites
 
@@ -66,6 +66,7 @@ Create the file `apps/researcher/.env.production.local` and set the endpoint URL
     SENDGRID_API_KEY=
     TO_EMAIL_ADDRESS=
     FROM_EMAIL_ADDRESS=
+    GEONAMES_USERNAME=
 
 Then run:
 
@@ -115,6 +116,7 @@ Create the file `.env.production.local` in the root and set the endpoint URLs:
     SENDGRID_API_KEY=
     TO_EMAIL_ADDRESS=
     FROM_EMAIL_ADDRESS=
+    GEONAMES_USERNAME=
 
 Then run:
 

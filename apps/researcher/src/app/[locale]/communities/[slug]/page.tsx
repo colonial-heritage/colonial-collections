@@ -15,10 +15,12 @@ import {
   SlideOut,
   SlideOutClosed,
   Notifications,
+  LocalizedMarkdown,
 } from '@colonial-collections/ui';
 import EditCommunityForm from './edit-community-form';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import Protect from '@/lib/community/protect';
+import {InformationCircleIcon} from '@heroicons/react/24/outline';
 
 interface Props {
   params: {
@@ -146,7 +148,9 @@ export default async function CommunityPage({params}: Props) {
           <div className="flex justify-between my-4">
             <div>
               <h2 className="text-xl">{t('objectListsTitle')}</h2>
-              <p>{t('objectListsSubTitle', {count: objectLists.length})}</p>
+              {objectLists.length > 0 && (
+                <p>{t('objectListsSubTitle', {count: objectLists.length})}</p>
+              )}
             </div>
             <div>
               <Protect
@@ -172,38 +176,50 @@ export default async function CommunityPage({params}: Props) {
             />
           </SlideOut>
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-16">
-            {objectLists.map(objectList => (
-              <Link
-                data-testid="object-list-item"
-                href={`/communities/${params.slug}/${objectList.id}`}
-                key={objectList.id}
-                className="no-underline"
-              >
-                <h3 className="font-semibold text-lg mt-4 mb-2">
-                  {objectList.name}
-                </h3>
-                <p>{objectList.description}</p>
+          {objectLists.length === 0 ? (
+            <div className="bg-consortiumBlue-50 px-4 py-8 rounded max-w-3xl">
+              <div className="pb-4">
+                <InformationCircleIcon className="w-6 h-6 stroke-neutral-800" />
+                <LocalizedMarkdown
+                  name="empty-community"
+                  contentPath="@/messages"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-16">
+              {objectLists.map(objectList => (
+                <Link
+                  data-testid="object-list-item"
+                  href={`/communities/${params.slug}/${objectList.id}`}
+                  key={objectList.id}
+                  className="no-underline"
+                >
+                  <h3 className="font-semibold text-lg mt-4 mb-2">
+                    {objectList.name}
+                  </h3>
+                  <p>{objectList.description}</p>
 
-                <div className="w-full relative">
-                  <ul className=" mt-4 grid grid-cols-4 gap-2">
-                    {objectList.objects?.map(object => (
-                      <ObjectCard
-                        key={object.objectId}
-                        objectIri={object.objectIri}
-                      />
-                    ))}
-                  </ul>
+                  <div className="w-full relative">
+                    <ul className=" mt-4 grid grid-cols-4 gap-2">
+                      {objectList.objects?.map(object => (
+                        <ObjectCard
+                          key={object.objectId}
+                          objectIri={object.objectIri}
+                        />
+                      ))}
+                    </ul>
 
-                  <div className="absolute bg-gradient-to-l from-white w-full top-0 bottom-0 flex justify-end">
-                    <button className="p-2 self-center flex items-center py-2 px-3 rounded-full bg-consortiumBlue-800 text-white hover:bg-consortiumBlue-700 transition text-xs">
-                      {t('goToListButton')}
-                    </button>
+                    <div className="absolute bg-gradient-to-l from-white w-full top-0 bottom-0 flex justify-end">
+                      <button className="p-2 self-center flex items-center py-2 px-3 rounded-full bg-consortiumBlue-800 text-white hover:bg-consortiumBlue-700 transition text-xs">
+                        {t('goToListButton')}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
 
         <aside className="w-full md:w-1/4 self-stretch">

@@ -1,0 +1,4 @@
+{
+  "root": true,
+  "extends": ["@colonial-collections/eslint-config"]
+}
