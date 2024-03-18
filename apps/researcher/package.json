@@ -58,7 +58,7 @@
     "@next/env": "14.1.0",
     "@types/leaflet": "1.9.8",
     "@types/mdx": "2.0.10",
-    "@types/node": "20.10.6",
+    "@types/node": "20.11.28",
     "@types/openseadragon": "3.0.10",
     "@types/react": "18.2.56",
     "@types/react-dom": "18.2.19",
