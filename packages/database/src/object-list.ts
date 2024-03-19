@@ -133,6 +133,8 @@ export async function deleteObject(id: number) {
 }
 
 export async function deleteList(id: number) {
-  await db.delete(objectLists).where(eq(objectLists.id, id));
-  return db.delete(objectItems).where(eq(objectItems.objectListId, id));
+  return db.transaction(async tx => {
+    await tx.delete(objectLists).where(eq(objectLists.id, id));
+    await tx.delete(objectItems).where(eq(objectItems.objectListId, id));
+  });
 }
