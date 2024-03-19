@@ -32,12 +32,10 @@ describe('Object lists not logged in', () => {
 describe('Object lists on community page logged in', () => {
   beforeEach(() => {
     cy.task('resetDb');
-    cy.session('signed-in', () => {
-      cy.signIn();
-    });
+    cy.session('signed-in', () => cy.signIn());
   });
 
-  it('can add a list', () => {
+  it('adds a list', () => {
     cy.visit(`/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}`, {
       failOnStatusCode: false,
     });
@@ -57,9 +55,7 @@ describe('Object list page logged in', () => {
   beforeEach(() => {
     cy.task('resetDb');
     cy.task('createEmptyList').as('listId');
-    cy.session('signed-in', () => {
-      cy.signIn();
-    });
+    cy.session('signed-in', () => cy.signIn());
   });
 
   it('can edit the list name and description', function () {

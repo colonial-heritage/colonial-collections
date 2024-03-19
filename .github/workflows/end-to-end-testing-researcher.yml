@@ -28,12 +28,12 @@ jobs:
           project: ./apps/researcher
           wait-on: ${{ steps.waitForPreview.outputs.url }}
         env:
-          # Environment variables used in the Cypress tests
+          # Used in the Cypress tests
           CYPRESS_BASE_URL: ${{ steps.waitForPreview.outputs.url }}
           CYPRESS_TEST_USER_EMAIL: ${{secrets.TEST_USER_EMAIL}}
           CYPRESS_TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
           CYPRESS_TEST_COMMUNITY_SLUG: ${{secrets.TEST_COMMUNITY_SLUG}}
-          # Environment variables used in the Cypress tasks
+          # Used in the Cypress tasks
           TEST_USER_ID: ${{secrets.TEST_USER_ID}}
           TEST_COMMUNITY_ID: ${{secrets.TEST_COMMUNITY_ID}}
           DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}

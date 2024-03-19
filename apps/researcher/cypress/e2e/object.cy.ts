@@ -65,12 +65,10 @@ describe('Object details page logged in', () => {
   beforeEach(() => {
     cy.task('resetDb');
     cy.task('createEmptyList').as('listId');
-    cy.session('signed-in', () => {
-      cy.signIn();
-    });
+    cy.session('signed-in', () => cy.signIn());
   });
 
-  it('can add an object to the list', function () {
+  it('adds an object to the list', function () {
     cy.task('getObjectUrl').then(url => {
       cy.visit(url as string, {
         failOnStatusCode: false,

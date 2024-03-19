@@ -45,12 +45,10 @@ describe('Community details page', () => {
 
 describe('Communities page logged in', () => {
   beforeEach(() => {
-    cy.session('signed-in', () => {
-      cy.signIn();
-    });
+    cy.session('signed-in', () => cy.signIn());
   });
 
-  it("can open the 'add community' modal", () => {
+  it("opens the 'add community' modal", () => {
     cy.visit('/en/communities', {
       failOnStatusCode: false,
     });
@@ -72,9 +70,7 @@ describe('Communities page logged in', () => {
 
 describe('Community details page logged in', () => {
   beforeEach(() => {
-    cy.session('signed-in', () => {
-      cy.signIn();
-    });
+    cy.session('signed-in', () => cy.signIn());
   });
 
   it('can edit my community', () => {

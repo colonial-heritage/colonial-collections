@@ -19,7 +19,7 @@ import './commands';
 // "Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418
 // for the full message or use the non-minified dev environment for full errors and additional
 // helpful warnings."
-// I'm not sure why this happens, but it does not impact the functionality of the app.
+// We have not found the cause of this error, but it does not impact the app's functionality.
 // This is a workaround to ignore the error and continue the test.
 Cypress.on('uncaught:exception', err => {
   expect(err.message).to.include('invariant=418');

@@ -141,9 +141,7 @@ describe('Object list filters', () => {
 
 describe('Homepage logged in', () => {
   beforeEach(() => {
-    cy.session('signed-in', () => {
-      cy.signIn();
-    });
+    cy.session('signed-in', () => cy.signIn());
   });
 
   it('shows the user button in the navigation', () => {
