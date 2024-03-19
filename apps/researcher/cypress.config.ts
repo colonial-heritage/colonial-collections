@@ -1,7 +1,7 @@
 import {defineConfig} from 'cypress';
 import {objectList} from '@colonial-collections/database';
-import heritageObjects from '@/lib/heritage-objects-instance';
-import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
+import heritageObjects from './src/lib/heritage-objects-instance';
+import {encodeRouteSegment} from './src/lib/clerk-route-segment-transformer';
 import {env} from 'node:process';
 
 async function getObjects(numberOfObject: number) {
