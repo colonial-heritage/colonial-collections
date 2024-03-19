@@ -1,5 +1,5 @@
 {
-  "extends": "@colonial-collections/ts-config/base.json",
+  "extends": "../ts-config/base.json",
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./build",

@@ -1,0 +1,12 @@
+{
+  "root": true,
+  "extends": ["@colonial-collections/eslint-config"],
+  "rules": {
+    "node/no-unpublished-require": [
+      "error",
+      {
+        "allowModules": ["@colonial-collections/tailwind-config"]
+      }
+    ]
+  }
+}
