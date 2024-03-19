@@ -1,6 +1,7 @@
 {
   "name": "@colonial-collections/api",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "engines": {
     "node": "18.x"
@@ -31,7 +32,7 @@
     "@jest/globals": "29.7.0",
     "@rdfjs/types": "1.1.0",
     "@types/n3": "1.16.4",
-    "@types/node": "20.10.6",
+    "@types/node": "20.11.28",
     "@types/streamify-string": "1.0.4",
     "@colonial-collections/eslint-config": "*",
     "gts": "5.2.0",

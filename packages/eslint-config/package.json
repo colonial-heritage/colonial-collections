@@ -1,7 +1,7 @@
 {
   "name": "@colonial-collections/eslint-config",
   "version": "0.0.0",
-  "main": "index.js",
+  "type": "module",
   "private": true,
   "devDependencies": {
     "eslint-config-next": "14.1.0",
