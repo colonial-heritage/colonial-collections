@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "extends": ["@colonial-collections/eslint-config/index"],
+  "settings": {
+    "next": {
+      "rootDir": ["apps/*/"]
+    }
+  }
+}
