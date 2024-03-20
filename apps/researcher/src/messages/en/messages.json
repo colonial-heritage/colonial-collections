@@ -103,6 +103,7 @@
     "shareButton": "Share object",
     "addToListButton": "Add object to list",
     "createNewListButton": "Create new list",
+    "addToListSignedOutText": "If you want to add an object to a list you need to <signInLink>login</signInLink> or <signUpLink>create an account</signUpLink>.\n\nIf you have an account you can join a <communityLink>community</communityLink> to create a list.",
     "discussion": "Discussion",
     "types": "Types",
     "nameSubTitle": "The name of the object.",

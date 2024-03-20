@@ -103,6 +103,7 @@
     "shareButton": "Object delen",
     "addToListButton": "Object aan lijst toevoegen",
     "createNewListButton": "Nieuwe lijst maken",
+    "addToListSignedOutText": "Als je een object aan een lijst wilt toevoegen, moet je <signInLink>inloggen</signInLink> of een <signUpLink>account aanmaken</signUpLink>.\n\nAls je een account hebt, kun je je aansluiten bij een <communityLink>community</communityLink> om een lijst te maken.",
     "discussion": "Discussie",
     "types": "Types",
     "nameSubTitle": "De naam van het object.",

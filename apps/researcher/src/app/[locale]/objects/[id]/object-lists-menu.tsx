@@ -1,8 +1,8 @@
 'use client';
 
 import {useTranslations} from 'next-intl';
-import {Fragment, useState, useEffect} from 'react';
-import {Menu, Transition} from '@headlessui/react';
+import {Fragment, useState, useEffect, useRef} from 'react';
+import {Menu, Transition, Popover} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/20/solid';
 import {CheckIcon} from '@heroicons/react/24/outline';
 import {useUser} from '@clerk/nextjs';
@@ -14,6 +14,7 @@ import {
 import {ObjectList} from '@colonial-collections/database';
 import {useNotifications} from '@colonial-collections/ui';
 import {useUserCommunities} from '@/lib/community/hooks';
+import {Link} from '@/navigation';
 
 interface CommunityMenuItemsProps {
   communityId: string;
@@ -123,7 +124,7 @@ interface ObjectListsMenuProps {
   objectId: string;
 }
 
-export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
+function SignedInMenu({objectId}: ObjectListsMenuProps) {
   const t = useTranslations('ObjectDetails');
   const {user} = useUser();
 
@@ -140,7 +141,7 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
       className="relative inline-block text-left"
     >
       <div>
-        <Menu.Button className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 flex items-center gap-1">
+        <Menu.Button className="rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumGreen-300 text-consortiumBlue-800 flex gap-1 items-center">
           {t('addToListButton')}
           <ChevronDownIcon
             className="-mr-1 h-5 w-5 text-consortiumBlue-800"
@@ -173,4 +174,91 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
       </Transition>
     </Menu>
   );
+}
+
+const timeoutDuration = 120;
+
+function SignedOutMenu() {
+  const t = useTranslations('ObjectDetails');
+
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const timeOutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleEnter = (isOpen: boolean) => {
+    if (timeOutRef.current) {
+      clearTimeout(timeOutRef.current);
+    }
+    if (!isOpen) {
+      triggerRef.current?.click();
+    }
+  };
+
+  const handleLeave = (isOpen: boolean) => {
+    timeOutRef.current = setTimeout(() => {
+      if (isOpen) {
+        triggerRef.current?.click();
+      }
+    }, timeoutDuration);
+  };
+
+  return (
+    <Popover className="relative">
+      {({open}) => (
+        <div
+          onMouseEnter={() => handleEnter(open)}
+          onMouseLeave={() => handleLeave(open)}
+        >
+          <Popover.Button
+            className="peer rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumGreen-300 text-consortiumBlue-800 flex gap-1 items-center"
+            ref={triggerRef}
+          >
+            {t('addToListButton')}
+            <ChevronDownIcon
+              className="-mr-1 h-5 w-5 text-consortiumBlue-800"
+              aria-hidden="true"
+            />{' '}
+          </Popover.Button>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-200"
+            enterFrom="opacity-0 translate-y-1"
+            enterTo="opacity-100 translate-y-0"
+            leave="transition ease-in duration-150"
+            leaveFrom="opacity-100 translate-y-0"
+            leaveTo="opacity-0 translate-y-1"
+          >
+            <Popover.Panel className="whitespace-pre-wrap w-[250px] bg-consortiumGreen-300 text-consortiumBlue-800 drop-shadow-lg absolute top-9 -left-12 rounded-lg gap-2 border-t border-consortiumBlue-800 p-3 text-sm">
+              {t.rich('addToListSignedOutText', {
+                signInLink: text => (
+                  <Link className="font-semibold" href="/sign-in">
+                    {text}
+                  </Link>
+                ),
+                signUpLink: text => (
+                  <Link className="font-semibold" href="/sign-up">
+                    {text}
+                  </Link>
+                ),
+                communityLink: text => (
+                  <Link className="font-semibold" href="/community">
+                    {text}
+                  </Link>
+                ),
+              })}
+            </Popover.Panel>
+          </Transition>
+        </div>
+      )}
+    </Popover>
+  );
+}
+
+export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
+  const {user} = useUser();
+
+  if (!user || user.organizationMemberships.length === 0) {
+    return <SignedOutMenu />;
+  }
+
+  return <SignedInMenu objectId={objectId} />;
 }
