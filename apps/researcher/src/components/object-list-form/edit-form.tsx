@@ -1,7 +1,10 @@
+'use client';
+
 import {useTranslations} from 'next-intl';
 import ObjectListForm from './form';
 import {updateList} from './actions';
 import {ObjectList} from '@colonial-collections/database';
+import {useSlideOut} from '@colonial-collections/ui';
 
 interface ObjectListFormProps {
   communityId: string;
@@ -15,6 +18,7 @@ export default function EditObjectListForm({
   list,
 }: ObjectListFormProps) {
   const t = useTranslations('ObjectListForm');
+  const {setIsVisible} = useSlideOut();
 
   return (
     <div className="flex flex-col px-4 gap-6 items-start bg-neutral-50 rounded-xl p-4 border border-neutral-300 text-neutral-800 max-w-3xl">
@@ -24,7 +28,9 @@ export default function EditObjectListForm({
           ...list,
           listId: list.id,
           communityId,
-          slideOutId,
+          closeAction() {
+            setIsVisible(slideOutId, false);
+          },
           saveButtonMessageKey: 'buttonEditList',
           successfulSaveMessageKey: 'listSuccessfullyEdited',
           saveAction: updateList,
