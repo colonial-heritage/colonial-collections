@@ -54,11 +54,11 @@ describe('Communities page logged in', () => {
     });
 
     cy.getBySel('add-community').click();
-    // I can't add test ids to the modal, so I'm using the h1
+    // It's not possible to add test IDs to the model, so we're using the h1 instead
     cy.get('h1').contains('Create Community');
   });
 
-  it('can find my community with the "Show only my communities" toggle', () => {
+  it('finds my community with the "Show only my communities" toggle', () => {
     cy.visit('/en/communities', {
       failOnStatusCode: false,
     });
@@ -73,7 +73,7 @@ describe('Community details page logged in', () => {
     cy.session('signed-in', () => cy.signIn());
   });
 
-  it('can edit my community', () => {
+  it('edits my community', () => {
     const uniqueIdentifier = Date.now();
 
     cy.visit(`/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}`, {
@@ -91,7 +91,7 @@ describe('Community details page logged in', () => {
     cy.contains(uniqueIdentifier).should('exist');
   });
 
-  it('can open the manage user modal', () => {
+  it('opens the manage user modal', () => {
     cy.visit(`/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}`, {
       failOnStatusCode: false,
     });

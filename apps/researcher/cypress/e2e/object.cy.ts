@@ -89,7 +89,7 @@ describe('Object details page logged in', () => {
     });
   });
 
-  it("can open the 'add enrichment' form", () => {
+  it("opens the 'add enrichment' form", () => {
     cy.task('getObjectUrl').then(url => {
       cy.visit(url as string, {
         failOnStatusCode: false,

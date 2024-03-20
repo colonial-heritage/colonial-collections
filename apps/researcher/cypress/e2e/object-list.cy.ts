@@ -58,7 +58,7 @@ describe('Object list page logged in', () => {
     cy.session('signed-in', () => cy.signIn());
   });
 
-  it('can edit the list name and description', function () {
+  it('edits the list name and description', function () {
     cy.visit(
       `/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}/${this.listId}`,
       {
@@ -73,7 +73,7 @@ describe('Object list page logged in', () => {
     cy.contains('Edited').should('exist');
   });
 
-  it('can delete the object list', function () {
+  it('deletes the object list', function () {
     cy.visit(
       `/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}/${this.listId}`,
       {
@@ -100,7 +100,7 @@ describe('Object list page logged in', () => {
     cy.getBySel('no-entity').should('exist');
   });
 
-  it('can delete an object from the list', function () {
+  it('deletes an object from the list', function () {
     cy.task('addObjectsToList', {numberOfObject: 3, listId: this.listId});
 
     cy.visit(
