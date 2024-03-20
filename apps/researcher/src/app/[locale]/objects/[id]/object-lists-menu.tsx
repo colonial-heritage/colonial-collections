@@ -257,6 +257,7 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
             onMouseLeave={() => handleLeave(open)}
           >
             <Popover.Button
+              data-testid="add-to-list-button"
               className="peer rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumGreen-300 text-consortiumBlue-800 flex gap-1 items-center"
               ref={triggerRef}
             >
@@ -276,7 +277,10 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
               leaveTo="opacity-0 translate-y-1"
             >
               {!user || user.organizationMemberships.length === 0 ? (
-                <Popover.Panel className="whitespace-pre-wrap block w-[250px] bg-consortiumGreen-300 text-consortiumBlue-800 drop-shadow-lg absolute top-9 -left-12 rounded-lg gap-2 border-t border-consortiumBlue-800 p-3 text-sm">
+                <Popover.Panel
+                  data-testid="add-to-list-not-signed-in-panel"
+                  className="whitespace-pre-wrap block w-[250px] bg-consortiumGreen-300 text-consortiumBlue-800 drop-shadow-lg absolute top-9 -left-12 rounded-lg gap-2 border-t border-consortiumBlue-800 p-3 text-sm"
+                >
                   {t.rich('addToListSignedOutText', {
                     signInLink: text => (
                       <Link className="font-semibold" href="/sign-in">
@@ -296,7 +300,10 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
                   })}
                 </Popover.Panel>
               ) : (
-                <Popover.Panel className="flex w-[200px] flex-col bg-consortiumGreen-300 text-consortiumBlue-800 drop-shadow-lg absolute top-9 -left-10 rounded-lg gap-2 border-t border-consortiumBlue-800">
+                <Popover.Panel
+                  data-testid="add-to-list-signed-in-panel"
+                  className="flex w-[200px] flex-col bg-consortiumGreen-300 text-consortiumBlue-800 drop-shadow-lg absolute top-9 -left-10 rounded-lg gap-2 border-t border-consortiumBlue-800"
+                >
                   <SignedInMenu
                     objectId={objectId}
                     setSelectedCommunityId={setSelectedCommunityId}
