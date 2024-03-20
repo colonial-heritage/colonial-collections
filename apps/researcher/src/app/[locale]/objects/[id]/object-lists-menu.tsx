@@ -98,7 +98,10 @@ function CommunityMenuItems({
   return (
     <div>
       {objectLists.map(objectList => (
-        <Menu.Item key={objectList.id}>
+        <Menu.Item
+          key={objectList.id}
+          data-testid={`object-list-${objectList.id}`}
+        >
           <button
             onClick={() => listClick(objectList)}
             className="group flex items-center px-4 py-2 text-sm consortiumBlue-800"
@@ -131,7 +134,11 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
   }
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu
+      as="div"
+      data-testid="add-to-list"
+      className="relative inline-block text-left"
+    >
       <div>
         <Menu.Button className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 flex items-center gap-1">
           {t('addToListButton')}

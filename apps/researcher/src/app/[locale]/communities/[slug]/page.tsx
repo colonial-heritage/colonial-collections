@@ -49,6 +49,7 @@ export default async function CommunityPage({params}: Props) {
       revalidatePath('/[locale]/communities', 'page');
       return <ErrorMessage error={t('noEntity')} testId="no-entity" />;
     }
+    console.error(err);
     return <ErrorMessage error={t('error')} />;
   }
 
@@ -56,6 +57,7 @@ export default async function CommunityPage({params}: Props) {
   try {
     memberships = await getMemberships(community.id);
   } catch (err) {
+    console.error(err);
     return <ErrorMessage error={t('error')} />;
   }
 
@@ -66,6 +68,7 @@ export default async function CommunityPage({params}: Props) {
       limitObjects: 4,
     });
   } catch (err) {
+    console.error(err);
     return <ErrorMessage error={t('error')} />;
   }
 
@@ -89,6 +92,7 @@ export default async function CommunityPage({params}: Props) {
             >
               <div className="w-full flex justify-end -mb-8">
                 <SlideOutButton
+                  testId="edit-community"
                   id={slideOutEditFormId}
                   className="p-1 sm:py-2 sm:px-3 text-sm rounded-full bg-consortiumBlue-800 text-consortiumGreen-300 transition flex items-center gap-1 hover:bg-consortiumBlue-700"
                 >
@@ -154,6 +158,7 @@ export default async function CommunityPage({params}: Props) {
                 permission="org:sys_profile:manage"
               >
                 <SlideOutButton
+                  testId="add-object-list-button"
                   id={slideOutFormId}
                   className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
                 >
@@ -185,6 +190,7 @@ export default async function CommunityPage({params}: Props) {
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-16">
               {objectLists.map(objectList => (
                 <Link
+                  data-testid="object-list-item"
                   href={`/communities/${params.slug}/${objectList.id}`}
                   key={objectList.id}
                   className="no-underline"

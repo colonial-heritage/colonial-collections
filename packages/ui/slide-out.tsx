@@ -31,11 +31,13 @@ interface SlideOutButtonProps {
   id: string;
   hideIfOpen?: Boolean;
   children: ReactNode;
+  testId?: string;
 }
 
 export function SlideOutButton({
   id,
   hideIfOpen = false,
+  testId,
   children,
   ...buttonProps
 }: SlideOutButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) {
@@ -44,7 +46,11 @@ export function SlideOutButton({
   if (hideIfOpen && isVisible(id)) return null;
 
   return (
-    <button {...buttonProps} onClick={() => setIsVisible(id, !isVisible(id))}>
+    <button
+      {...buttonProps}
+      data-testid={testId}
+      onClick={() => setIsVisible(id, !isVisible(id))}
+    >
       {children}
     </button>
   );

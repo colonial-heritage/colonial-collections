@@ -10,6 +10,7 @@ export function AddCommunityButton() {
 
   return (
     <button
+      data-testid="add-community"
       onClick={() =>
         openCreateCommunity({
           afterCreateOrganizationUrl: organization =>

@@ -9,7 +9,7 @@ describe('Researcher homepage', () => {
     });
     cy.getBySel('searchQuery').type('object');
     cy.getBySel('searchQuery').next('button').click();
-    cy.location('search', {timeout: 60000}).should('include', '?query=');
+    cy.location('search', {timeout: 60000}).should('include', 'query=');
 
     cy.getBySel('error').should('not.exist');
     cy.getBySel('object-card').its('length').should('be.gt', 0);
@@ -25,7 +25,7 @@ describe('Object list filters', () => {
 
     cy.getBySel('searchQuery').type(searchText);
     cy.getBySel('searchQuery').next('button').click();
-    cy.location('search', {timeout: 60000}).should('include', '?query=');
+    cy.location('search', {timeout: 60000}).should('include', 'query=');
 
     cy.getBySel('selectedFilter').should('have.length', 1);
     cy.getBySel('selectedFilter').should('have.text', searchText);
@@ -40,6 +40,7 @@ describe('Object list filters', () => {
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'publishers=');
 
     cy.getBySel('selectedFilter').should('have.length', 2);
   });
@@ -54,6 +55,7 @@ describe('Object list filters', () => {
       cy.get('[type="checkbox"]').eq(0).check();
       cy.get('[type="checkbox"]').eq(1).check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'materials=');
 
     cy.getBySel('selectedFilter').should('have.length', 3);
   });
@@ -67,10 +69,15 @@ describe('Object list filters', () => {
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'publishers=');
 
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().uncheck();
     });
+    cy.location('search', {timeout: 60000}).should(
+      'not.include',
+      '?publishers='
+    );
 
     cy.getBySel('selectedFilter').should('have.length', 1);
   });
@@ -84,6 +91,7 @@ describe('Object list filters', () => {
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'publishers=');
 
     cy.getBySel('selectedFilter')
       .first()
@@ -102,6 +110,7 @@ describe('Object list filters', () => {
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'types=');
 
     cy.getBySel('selectedFilter').should('have.length', 2);
   });
@@ -114,16 +123,33 @@ describe('Object list filters', () => {
 
     cy.getBySel('searchQuery').type(searchText);
     cy.getBySel('searchQuery').next('button').click();
-    cy.location('search', {timeout: 60000}).should('include', '?query=');
+    cy.location('search', {timeout: 60000}).should('include', 'query=');
 
     cy.getBySel('typesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'types=');
 
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'publishers=');
 
     cy.getBySel('selectedFilter').should('have.length', 3);
+  });
+});
+
+describe('Homepage logged in', () => {
+  beforeEach(() => {
+    cy.session('signed-in', () => cy.signIn());
+  });
+
+  it('shows the user button in the navigation', () => {
+    cy.visit('/en', {
+      failOnStatusCode: false,
+    });
+
+    cy.getBySel('signed-in').should('exist');
+    cy.getBySel('sign-in-button').should('not.exist');
   });
 });

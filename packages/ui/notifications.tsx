@@ -59,6 +59,7 @@ export function Notifications() {
         const typeColor = typeColors[notification.type];
         return (
           <div
+            data-testid="notification"
             key={notification.id}
             className={`justify-between items-center bg-${typeColor}-50 border-${typeColor}-100 text-${typeColor}-800 border p-4 rounded-xl flex my-2`}
           >
