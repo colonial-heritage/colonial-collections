@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 declare namespace Cypress {
   interface Chainable {
     /**
@@ -8,5 +9,30 @@ declare namespace Cypress {
       dataTestAttribute: string,
       args?: Partial<Loggable & Timeoutable & Withinable & Shadow>
     ): Chainable<JQuery<HTMLElement>>;
+    /**
+     * Custom command to sign out.
+     * @example cy.signOut()
+     */
+    signOut(): Chainable<void>;
+    /**
+     * Custom command to sign in.
+     * @example cy.signIn()
+     */
+    signIn(): Chainable<void>;
+  }
+
+  interface ApplicationWindow {
+    Clerk: {
+      isReady: () => boolean;
+      client: {
+        signIn: {
+          create: (params: {
+            identifier: string;
+            password: string;
+          }) => Promise<{createdSessionId: string}>;
+        };
+      };
+      setActive: (params: {session: string}) => Promise<void>;
+    };
   }
 }

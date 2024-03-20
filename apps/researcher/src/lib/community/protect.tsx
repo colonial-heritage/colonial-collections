@@ -12,14 +12,13 @@ export default function Protect({
   children: ReactNode;
   permission: string;
 }) {
-  const {setActive, organization, getOrganizationMemberships} = useClerk();
+  const {setActive, organization, user} = useClerk();
   const {isSignedIn} = useAuth();
 
   // Set active organization to communityId if user is signed in and a member of the community
   useEffect(() => {
     async function activate() {
-      const userMemberships = await getOrganizationMemberships();
-      const membership = userMemberships?.find(
+      const membership = user?.organizationMemberships?.find(
         m => m.organization.id === communityId
       );
       if (membership) {
@@ -29,10 +28,10 @@ export default function Protect({
     isSignedIn && organization?.id !== communityId && activate();
   }, [
     communityId,
-    getOrganizationMemberships,
     isSignedIn,
     organization?.id,
     setActive,
+    user?.organizationMemberships,
   ]);
 
   if (organization?.id === communityId) {

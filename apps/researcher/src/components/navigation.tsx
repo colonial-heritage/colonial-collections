@@ -115,10 +115,14 @@ export default function Navigation({datasetBrowserUrl}: Props) {
         <div>
           <SignedIn>
             <UserButton afterSignOutUrl="/" />
+            <span data-testid="signed-in" />
           </SignedIn>
           <SignedOut>
             <SignInButton>
-              <button className="whitespace-nowrap p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 transition flex items-center gap-1 text-consortiumBlue-900 bg-white">
+              <button
+                data-testid="sign-in-button"
+                className="whitespace-nowrap p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 transition flex items-center gap-1 text-consortiumBlue-900 bg-white"
+              >
                 {tNavigation('signIn')}
               </button>
             </SignInButton>

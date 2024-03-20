@@ -37,6 +37,7 @@ export function DeleteObjectButton({id}: DeleteObjectButtonProps) {
 
   return (
     <button
+      data-testid="delete-object-button"
       onClick={deleteObjectFromListClick}
       className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1 whitespace-nowrap"
     >
@@ -78,6 +79,7 @@ export function DeleteListButton({id, communitySlug}: DeleteListButtonProps) {
   return (
     <>
       <ModalButton
+        testId="delete-list-button"
         id="delete-list-modal"
         className="p-1 sm:py-2 sm:px-3 rounded-full text-xs transition flex items-center gap-1 bg-red-700 hover:bg-red-800 text-white whitespace-break-spaces"
       >
@@ -87,6 +89,7 @@ export function DeleteListButton({id, communitySlug}: DeleteListButtonProps) {
         <ModalHeader title={t('deleteQuestion')} />
         <div className="w-full flex mt-6 gap-2">
           <button
+            data-testid="delete-list-confirm-button"
             onClick={deleteListClick}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-red-700 hover:bg-red-800 text-white transition flex items-center gap-1"
           >

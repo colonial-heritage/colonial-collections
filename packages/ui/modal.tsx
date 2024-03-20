@@ -34,16 +34,18 @@ export const useModal = create<ModalState>(set => ({
 interface ModalButtonProps {
   id: string;
   children: ReactNode;
+  testId?: string;
 }
 
 export function ModalButton({
   id,
   children,
+  testId,
   ...buttonProps
 }: ModalButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) {
   const {toggle} = useModal();
   return (
-    <button {...buttonProps} onClick={() => toggle(id)}>
+    <button data-testid={testId} {...buttonProps} onClick={() => toggle(id)}>
       {children}
     </button>
   );

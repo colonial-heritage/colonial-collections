@@ -12,6 +12,7 @@ describe('Dataset list filters', () => {
     cy.getBySel('licensesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'licenses=');
 
     cy.getBySel('selectedFilter').should('have.length', 1);
   });
@@ -22,6 +23,7 @@ describe('Dataset list filters', () => {
       cy.get('[type="checkbox"]').eq(0).check();
       cy.get('[type="checkbox"]').eq(1).check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'licenses=');
 
     cy.getBySel('selectedFilter').should('have.length', 2);
   });
@@ -31,10 +33,12 @@ describe('Dataset list filters', () => {
     cy.getBySel('licensesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'licenses=');
 
     cy.getBySel('licensesFilter').within(() => {
       cy.get('[type="checkbox"]').first().uncheck();
     });
+    cy.location('search', {timeout: 60000}).should('not.include', 'licenses=');
 
     cy.getBySel('selectedFilter').should('have.length', 0);
   });
@@ -44,10 +48,12 @@ describe('Dataset list filters', () => {
     cy.getBySel('licensesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'licenses=');
 
     cy.getBySel('selectedFilter').within(() => {
       cy.get('button').click();
     });
+    cy.location('search', {timeout: 60000}).should('not.include', 'licenses=');
 
     cy.getBySel('selectedFilter').should('have.length', 0);
   });
@@ -57,6 +63,7 @@ describe('Dataset list filters', () => {
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'publishers=');
 
     cy.getBySel('selectedFilter').should('have.length', 1);
   });
@@ -67,7 +74,7 @@ describe('Dataset list filters', () => {
 
     cy.getBySel('searchQuery').type(searchText);
     cy.getBySel('searchQuery').next('button').click();
-
+    cy.location('search', {timeout: 60000}).should('include', 'query=');
     cy.getBySel('selectedFilter').should('have.length', 1);
     cy.getBySel('selectedFilter').should('have.text', searchText);
   });
@@ -78,12 +85,15 @@ describe('Dataset list filters', () => {
 
     cy.getBySel('searchQuery').type(searchText);
     cy.getBySel('searchQuery').next('button').click();
+    cy.location('search', {timeout: 60000}).should('include', 'query=');
     cy.getBySel('publishersFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'publishers=');
     cy.getBySel('licensesFilter').within(() => {
       cy.get('[type="checkbox"]').first().check();
     });
+    cy.location('search', {timeout: 60000}).should('include', 'licenses=');
 
     cy.getBySel('selectedFilter').should('have.length', 3);
   });

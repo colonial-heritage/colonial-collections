@@ -121,6 +121,7 @@ export function UserEnrichmentForm({
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-100 text-neutral-800 self-end flex-col gap-6 flex"
+      data-testid="enrichment-form"
     >
       <div className="flex justify-between items-center border-b -mx-4 px-4 pb-2 mb-2">
         <h3>{t('title')}</h3>

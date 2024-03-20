@@ -35,6 +35,7 @@ export default async function Page({params}: Props) {
   try {
     objectList = await objectListDb.find(+params.listId);
   } catch (err) {
+    console.error(err);
     return <ErrorMessage error={t('error')} />;
   }
 
@@ -90,6 +91,7 @@ export default async function Page({params}: Props) {
                     >
                       <SlideOutButton
                         id={slideOutEditId}
+                        testId="edit-list-button"
                         className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
                       >
                         <PencilSquareIcon className="w-4 h-4 fill-neutral-500" />
@@ -131,6 +133,7 @@ export default async function Page({params}: Props) {
               <div className="flex justify-end w-full mt-16 lg:mt-0 ">
                 <SlideOutButton
                   id={slideOutManageItemsId}
+                  testId="manage-items-button"
                   className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
                 >
                   <PencilSquareIcon className="w-4 h-4 fill-neutral-500" />

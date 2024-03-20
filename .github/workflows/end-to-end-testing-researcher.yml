@@ -28,7 +28,17 @@ jobs:
           project: ./apps/researcher
           wait-on: ${{ steps.waitForPreview.outputs.url }}
         env:
+          # Used in the Cypress tests
           CYPRESS_BASE_URL: ${{ steps.waitForPreview.outputs.url }}
+          CYPRESS_TEST_USER_EMAIL: ${{secrets.TEST_USER_EMAIL}}
+          CYPRESS_TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
+          CYPRESS_TEST_COMMUNITY_SLUG: ${{secrets.TEST_COMMUNITY_SLUG}}
+          # Used in the Cypress tasks
+          TEST_USER_ID: ${{secrets.TEST_USER_ID}}
+          TEST_COMMUNITY_ID: ${{secrets.TEST_COMMUNITY_ID}}
+          DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}
+          SPARQL_ENDPOINT_URL: ${{secrets.SPARQL_ENDPOINT_URL}}
+          SEARCH_ENDPOINT_URL: ${{secrets.SEARCH_ENDPOINT_URL}}
       # Screenshots will be generated only if the test failed
       # thus we store screenshots only on failures
       - name: Upload screenshots
