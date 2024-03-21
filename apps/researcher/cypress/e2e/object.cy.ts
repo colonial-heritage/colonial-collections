@@ -60,7 +60,7 @@ describe('Object details page not signed in', () => {
       });
   });
 
-  it('shows an text when hovering the add-to-list-button', () => {
+  it('shows a text when hovering the add-to-list-button', () => {
     cy.task('getObjectUrl').then(url => {
       cy.visit(url as string, {
         failOnStatusCode: false,
