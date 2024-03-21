@@ -54,7 +54,7 @@ export function ModalButton({
 interface ModalProps {
   id: string;
   children: ReactNode;
-  variant?: 'full' | 'small';
+  variant?: 'full' | 'medium' | 'small';
 }
 
 export function Modal({children, id, variant = 'full'}: ModalProps) {
@@ -98,6 +98,7 @@ export function Modal({children, id, variant = 'full'}: ModalProps) {
                   {
                     'md:h-[80vh] md:max-h-[80vh] h-full max-h-full':
                       variant === 'full',
+                    'max-w-3xl': variant === 'medium',
                     'max-w-md': variant === 'small',
                   }
                 )}
