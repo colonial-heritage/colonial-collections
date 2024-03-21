@@ -19,6 +19,7 @@ import {getDateFormatter} from '@/lib/date-formatter/actions';
 import {LocaleEnum} from '@/definitions';
 import {env} from 'node:process';
 import Map from './map';
+import {ReadMoreText} from '@/components/read-more-text';
 
 export const dynamic = 'force-dynamic';
 
@@ -134,14 +135,14 @@ export default async function Details({params}: Props) {
                 translationKey="name"
                 enrichmentType={AdditionalType.Name}
               >
-                {object.name}
+                <ReadMoreText text={object.name} />
               </Metadata>
 
               <Metadata
                 translationKey="description"
                 enrichmentType={AdditionalType.Description}
               >
-                {object.description}
+                <ReadMoreText text={object.description} />
               </Metadata>
 
               <Metadata
