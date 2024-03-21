@@ -62,41 +62,80 @@ describe('Object details page', () => {
 });
 
 describe('Object details page logged in', () => {
+  const uniqueIdentifier = Date.now();
+
   beforeEach(() => {
     cy.task('resetDb');
     cy.task('createEmptyList').as('listId');
+    cy.task('getObjectUrl').as('objectUrl');
     cy.session('signed-in', () => cy.signIn());
   });
 
   it('adds an object to the list', function () {
-    cy.task('getObjectUrl').then(url => {
-      cy.visit(url as string, {
+    cy.visit(this.objectUrl as string, {
+      failOnStatusCode: false,
+    });
+
+    cy.getBySel('add-to-list').click();
+    cy.getBySel(`object-list-${this.listId}`).click();
+    cy.getBySel('notification').should('exist');
+
+    cy.visit(
+      `/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}/${this.listId}`,
+      {
         failOnStatusCode: false,
-      });
+      }
+    );
 
-      cy.getBySel('add-to-list').click();
-      cy.getBySel(`object-list-${this.listId}`).click();
-      cy.getBySel('notification').should('exist');
+    cy.getBySel('object-card').should('have.length', 1);
+  });
 
-      cy.visit(
-        `/en/communities${Cypress.env('TEST_COMMUNITY_SLUG')}/${this.listId}`,
-        {
-          failOnStatusCode: false,
-        }
+  it("opens the 'add enrichment' form", function () {
+    cy.visit(this.objectUrl as string, {
+      failOnStatusCode: false,
+    });
+
+    cy.getBySel('add-enrichment-button').first().click();
+    cy.getBySel('enrichment-form').should('exist');
+  });
+
+  it('adds an enrichment to the object', function () {
+    cy.visit(this.objectUrl as string, {
+      failOnStatusCode: false,
+    });
+
+    cy.getBySel('add-enrichment-button').first().click();
+    cy.getBySel('enrichment-form').should('exist');
+
+    cy.getBySel('enrichment-form').within(() => {
+      cy.get('textarea[name="description"]').type(
+        'Narrative written by an automated test, identifier: ' +
+          uniqueIdentifier
       );
-
-      cy.getBySel('object-card').should('have.length', 1);
+      cy.get('textarea[name="citation"]').type('End to end test');
+      cy.get('input[name="attributionId"]').type('http://orcid.id/testId');
+      cy.get('input[name="agreedToLicense"]').check();
+      cy.get('button[type="submit"]').click();
     });
+
+    cy.getBySel('notification').should('exist');
   });
 
-  it("opens the 'add enrichment' form", () => {
-    cy.task('getObjectUrl').then(url => {
-      cy.visit(url as string, {
+  it(
+    'shows the new enrichment',
+    // The retries are necessary because the enrichment might not be immediately visible
+    {
+      retries: {
+        runMode: 3,
+        openMode: 3,
+      },
+    },
+    function () {
+      cy.visit(this.objectUrl as string, {
         failOnStatusCode: false,
       });
 
-      cy.getBySel('add-enrichment-button').first().click();
-      cy.getBySel('enrichment-form').should('exist');
-    });
-  });
+      cy.contains(uniqueIdentifier).should('exist');
+    }
+  );
 });
