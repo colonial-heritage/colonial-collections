@@ -11,7 +11,6 @@ import organizations from '@/lib/organizations-instance';
 import {Notifications} from '@colonial-collections/ui';
 import useObject from './use-object';
 import ObjectListsMenu from './object-lists-menu';
-import SignedIn from '@/lib/community/signed-in';
 import {fetcher} from '@/lib/enricher-instances';
 import {AdditionalType} from '@colonial-collections/enricher';
 import ISO6391, {LanguageCode} from 'iso-639-1';
@@ -76,9 +75,7 @@ export default async function Details({params}: Props) {
               </ToFilteredListButton>
             </div>
             <div className="sm:flex justify-end gap-4 hidden">
-              <SignedIn>
-                <ObjectListsMenu objectId={id} />
-              </SignedIn>
+              <ObjectListsMenu objectId={id} />
             </div>
           </div>
 

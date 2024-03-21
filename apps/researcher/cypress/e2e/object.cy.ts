@@ -2,7 +2,7 @@
 // This page might return a 401, so we need to tell Cypress to ignore the 401 and continue.
 // Passing `failOnStatusCode: false` into `cy.visit` accomplishes just that.
 
-describe('Object details page', () => {
+describe('Object details page not signed in', () => {
   it('opens the object page if clicked on in the search list', () => {
     cy.visit('/objects', {
       failOnStatusCode: false,
@@ -59,6 +59,18 @@ describe('Object details page', () => {
         cy.getBySel('selectedFilter').should('have.length', 2);
       });
   });
+
+  it('shows a text when hovering the add-to-list-button', () => {
+    cy.task('getObjectUrl').then(url => {
+      cy.visit(url as string, {
+        failOnStatusCode: false,
+      });
+
+      cy.getBySel('add-to-list-button').trigger('mouseover');
+      cy.getBySel('add-to-list-not-signed-in-panel').should('be.visible');
+      cy.getBySel('add-to-list-signed-in-panel').should('not.exist');
+    });
+  });
 });
 
 describe('Object details page logged in', () => {
@@ -76,7 +88,7 @@ describe('Object details page logged in', () => {
       failOnStatusCode: false,
     });
 
-    cy.getBySel('add-to-list').click();
+    cy.getBySel('add-to-list-button').trigger('mouseover');
     cy.getBySel(`object-list-${this.listId}`).click();
     cy.getBySel('notification').should('exist');
 

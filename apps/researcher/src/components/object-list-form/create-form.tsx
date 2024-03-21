@@ -1,6 +1,9 @@
+'use client';
+
 import {useTranslations} from 'next-intl';
 import ObjectListForm from './form';
 import {addList} from './actions';
+import {useSlideOut} from '@colonial-collections/ui';
 
 interface ObjectListFormProps {
   communityId: string;
@@ -12,6 +15,7 @@ export default function CreateObjectListForm({
   slideOutId,
 }: ObjectListFormProps) {
   const t = useTranslations('ObjectListForm');
+  const {setIsVisible} = useSlideOut();
 
   return (
     <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-100 text-neutral-800 self-end flex-col gap-6 flex">
@@ -19,7 +23,9 @@ export default function CreateObjectListForm({
       <ObjectListForm
         {...{
           communityId,
-          slideOutId,
+          closeAction() {
+            setIsVisible(slideOutId, false);
+          },
           saveButtonMessageKey: 'buttonCreateList',
           successfulSaveMessageKey: 'listSuccessfullyAdded',
           saveAction: addList,

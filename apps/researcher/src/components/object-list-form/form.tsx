@@ -5,7 +5,7 @@ import {useForm, SubmitHandler} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {insertObjectListSchema} from '@colonial-collections/database/client';
 import {useTranslations} from 'next-intl';
-import {useSlideOut, useNotifications} from '@colonial-collections/ui';
+import {useNotifications} from '@colonial-collections/ui';
 import {camelCase} from 'tiny-case';
 import {usePathname} from '@/navigation';
 import {ActionProps} from './actions';
@@ -16,7 +16,7 @@ interface FormProps {
   listId?: number;
   name: string | null;
   description: string | null;
-  slideOutId: string;
+  closeAction: () => void;
   saveButtonMessageKey: string;
   successfulSaveMessageKey: string;
   saveAction: (props: ActionProps) => Promise<void>;
@@ -32,7 +32,7 @@ interface FormValues {
 function Form({
   communityId,
   userId,
-  slideOutId,
+  closeAction,
   saveButtonMessageKey,
   successfulSaveMessageKey,
   listId,
@@ -56,7 +56,6 @@ function Form({
   });
 
   const t = useTranslations('ObjectListForm');
-  const {setIsVisible} = useSlideOut();
   const {addNotification} = useNotifications();
   const pathName = usePathname();
 
@@ -70,7 +69,7 @@ function Form({
         }),
         type: 'success',
       });
-      setIsVisible(slideOutId, false);
+      closeAction();
     } catch (err) {
       setError('root.serverError', {
         message: t('serverError'),
@@ -132,7 +131,7 @@ function Form({
             {t(saveButtonMessageKey)}
           </button>
           <button
-            onClick={() => setIsVisible(slideOutId, false)}
+            onClick={() => closeAction()}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-none hover:bg-neutral-300 text-neutral-800 border border-neutral-300 transition flex items-center gap-1"
           >
             {t('buttonCancel')}
