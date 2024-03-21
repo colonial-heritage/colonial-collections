@@ -338,5 +338,9 @@
    },
     "Image": {
       "errorText": "Afbeelding momenteel niet beschikbaar"
+    },
+    "ReadMoreText": {
+      "readMore": "Lees meer",
+      "readLess": "Lees minder"
     }
 }
