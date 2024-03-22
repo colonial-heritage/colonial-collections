@@ -45,6 +45,7 @@ export class HeritageObjectEnrichmentStorer {
 
     // Make clear what application has published this nanopub
     const softwareTool = DF.namedNode('https://app.colonialcollections.nl/');
+
     publicationStore.addQuad(
       DF.quad(
         softwareTool,
@@ -52,6 +53,7 @@ export class HeritageObjectEnrichmentStorer {
         DF.namedNode('http://purl.org/nanopub/x/SoftwareTool')
       )
     );
+
     publicationStore.addQuad(
       DF.quad(
         softwareTool,
@@ -67,6 +69,7 @@ export class HeritageObjectEnrichmentStorer {
         DF.namedNode(`${ontologyUrl}Nanopub`) // Generic type
       )
     );
+
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -74,6 +77,7 @@ export class HeritageObjectEnrichmentStorer {
         DF.namedNode(fromAdditionalTypeToClass(opts.additionalType)) // Specific type
       )
     );
+
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -116,6 +120,7 @@ export class HeritageObjectEnrichmentStorer {
         DF.namedNode('http://www.w3.org/ns/oa#Annotation')
       )
     );
+
     assertionStore.addQuad(
       DF.quad(
         annotationId,
@@ -123,6 +128,8 @@ export class HeritageObjectEnrichmentStorer {
         bodyId
       )
     );
+
+    // Type of the enrichment: a text
     assertionStore.addQuad(
       DF.quad(
         bodyId,
@@ -130,6 +137,8 @@ export class HeritageObjectEnrichmentStorer {
         DF.namedNode('http://www.w3.org/ns/oa#TextualBody')
       )
     );
+
+    // Description of the enrichment
     assertionStore.addQuad(
       DF.quad(
         bodyId,
@@ -137,6 +146,8 @@ export class HeritageObjectEnrichmentStorer {
         DF.literal(opts.description, languageCode)
       )
     );
+
+    // Format of the description
     assertionStore.addQuad(
       DF.quad(
         bodyId,
@@ -145,6 +156,7 @@ export class HeritageObjectEnrichmentStorer {
       )
     );
 
+    // Language of the description
     if (languageCode !== undefined) {
       assertionStore.addQuad(
         DF.quad(
@@ -155,6 +167,7 @@ export class HeritageObjectEnrichmentStorer {
       );
     }
 
+    // Source used for the description
     assertionStore.addQuad(
       DF.quad(
         annotationId,
@@ -162,6 +175,8 @@ export class HeritageObjectEnrichmentStorer {
         DF.literal(opts.citation, languageCode)
       )
     );
+
+    // The part of an object that the enrichment is about
     assertionStore.addQuad(
       DF.quad(
         annotationId,
@@ -177,6 +192,8 @@ export class HeritageObjectEnrichmentStorer {
         DF.namedNode('http://www.w3.org/ns/oa#SpecificResource')
       )
     );
+
+    // The object that the enrichment is about
     assertionStore.addQuad(
       DF.quad(
         DF.namedNode(opts.about.id),

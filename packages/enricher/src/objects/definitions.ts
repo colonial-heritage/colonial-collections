@@ -1,4 +1,7 @@
-import {BasicEnrichment} from '../definitions';
+import {
+  basicEnrichmentBeingCreatedSchema,
+  BasicEnrichment,
+} from '../definitions';
 import {z} from 'zod';
 
 // An enrichment can be about these types
@@ -15,18 +18,12 @@ export enum AdditionalType {
   Type = 'type',
 }
 
-export const heritageObjectEnrichmentBeingCreatedSchema = z.object({
-  additionalType: z.nativeEnum(AdditionalType),
-  description: z.string(),
-  citation: z.string(),
-  inLanguage: z.string().optional(), // E.g. 'en', 'nl-nl'
-  creator: z.object({
-    id: z.string().url(),
-    name: z.string(),
-  }),
-  license: z.string().url(),
-  about: z.string().url(),
-});
+export const heritageObjectEnrichmentBeingCreatedSchema =
+  basicEnrichmentBeingCreatedSchema.merge(
+    z.object({
+      additionalType: z.nativeEnum(AdditionalType),
+    })
+  );
 
 export type HeritageObjectEnrichmentBeingCreated = z.infer<
   typeof heritageObjectEnrichmentBeingCreatedSchema
