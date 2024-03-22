@@ -1,6 +1,6 @@
-import {NanopubClient} from './client';
+import {NanopubClient} from '../client';
 import {AdditionalType} from './definitions';
-import {EnrichmentStorer} from './storer';
+import {HeritageObjectEnrichmentStorer} from './storer';
 import {describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 
@@ -9,7 +9,7 @@ const nanopubClient = new NanopubClient({
   proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
 });
 
-const storer = new EnrichmentStorer({nanopubClient});
+const storer = new HeritageObjectEnrichmentStorer({nanopubClient});
 
 describe('add', () => {
   it('adds a textual enrichment', async () => {

@@ -1,4 +1,4 @@
-import {ontologyUrl} from './definitions';
+import {ontologyUrl} from '../definitions';
 import {createEnrichment} from './helpers';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
@@ -11,15 +11,15 @@ const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
 });
 
-export type EnrichmentFetcherConstructorOptions = z.infer<
+export type HeritageObjectEnrichmentFetcherConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
-export class EnrichmentFetcher {
-  private endpointUrl: string;
-  private fetcher = new SparqlEndpointFetcher();
+export class HeritageObjectEnrichmentFetcher {
+  private readonly endpointUrl: string;
+  private readonly fetcher = new SparqlEndpointFetcher();
 
-  constructor(options: EnrichmentFetcherConstructorOptions) {
+  constructor(options: HeritageObjectEnrichmentFetcherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
@@ -104,7 +104,7 @@ export class EnrichmentFetcher {
     return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
-  private async fromTriplesToEnrichments(
+  private async fromTriplesToHeritageObjectEnrichments(
     iri: string,
     triplesStream: Readable & Stream
   ) {
@@ -146,7 +146,10 @@ export class EnrichmentFetcher {
     }
 
     const triplesStream = await this.fetchTriples(id);
-    const enrichments = await this.fromTriplesToEnrichments(id, triplesStream);
+    const enrichments = await this.fromTriplesToHeritageObjectEnrichments(
+      id,
+      triplesStream
+    );
 
     return enrichments;
   }

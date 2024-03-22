@@ -1,5 +1,5 @@
-import {NanopubClient} from './client';
-import {EnrichmentCreator} from './creator';
+import {NanopubClient} from '../client';
+import {HeritageObjectEnrichmentCreator} from './creator';
 import {AdditionalType} from './definitions';
 import {describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
@@ -9,7 +9,7 @@ const nanopubClient = new NanopubClient({
   proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
 });
 
-const creator = new EnrichmentCreator({
+const creator = new HeritageObjectEnrichmentCreator({
   endpointUrl: env.SPARQL_ENDPOINT_URL as string,
   nanopubClient,
 });

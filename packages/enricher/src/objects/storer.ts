@@ -1,10 +1,9 @@
-import {nanopubId, NanopubClient} from './client';
+import {nanopubId, NanopubClient} from '../client';
+import {ontologyUrl, type BasicEnrichment} from '../definitions';
 import {
-  fullEnrichmentBeingCreatedSchema,
-  ontologyUrl,
-  FullEnrichmentBeingCreated,
+  fullHeritageObjectEnrichmentBeingCreatedSchema,
+  FullHeritageObjectEnrichmentBeingCreated,
 } from './definitions';
-import type {BasicEnrichment} from './definitions';
 import {fromAdditionalTypeToClass} from './helpers';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
@@ -16,22 +15,25 @@ export const constructorOptionsSchema = z.object({
   nanopubClient: z.instanceof(NanopubClient),
 });
 
-export type EnrichmentStorerConstructorOptions = z.infer<
+export type HeritageObjectEnrichmentStorerConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
-// Low-level class for creating enrichments. You should use EnrichmentCreator in most cases
-export class EnrichmentStorer {
-  private nanopubClient: NanopubClient;
+// Low-level class for creating object enrichments
+// You should use HeritageObjectEnrichmentCreator in most cases
+export class HeritageObjectEnrichmentStorer {
+  private readonly nanopubClient: NanopubClient;
 
-  constructor(options: EnrichmentStorerConstructorOptions) {
+  constructor(options: HeritageObjectEnrichmentStorerConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.nanopubClient = opts.nanopubClient;
   }
 
-  async addText(fullEnrichmentBeingCreated: FullEnrichmentBeingCreated) {
-    const opts = fullEnrichmentBeingCreatedSchema.parse(
+  async addText(
+    fullEnrichmentBeingCreated: FullHeritageObjectEnrichmentBeingCreated
+  ) {
+    const opts = fullHeritageObjectEnrichmentBeingCreatedSchema.parse(
       fullEnrichmentBeingCreated
     );
 

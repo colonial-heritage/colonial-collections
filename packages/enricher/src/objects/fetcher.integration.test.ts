@@ -1,12 +1,12 @@
-import {NanopubClient} from './client';
-import {EnrichmentCreator} from './creator';
+import {NanopubClient} from '../client';
+import {HeritageObjectEnrichmentCreator} from './creator';
 import {AdditionalType} from './definitions';
-import {EnrichmentFetcher} from './fetcher';
+import {HeritageObjectEnrichmentFetcher} from './fetcher';
 import {beforeAll, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
 import {setTimeout} from 'node:timers/promises';
 
-const fetcher = new EnrichmentFetcher({
+const fetcher = new HeritageObjectEnrichmentFetcher({
   endpointUrl: env.NANOPUB_SPARQL_ENDPOINT_URL as string,
 });
 
@@ -19,7 +19,7 @@ beforeAll(async () => {
     proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
   });
 
-  const creator = new EnrichmentCreator({
+  const creator = new HeritageObjectEnrichmentCreator({
     endpointUrl: env.SPARQL_ENDPOINT_URL as string,
     nanopubClient,
   });

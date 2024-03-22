@@ -1,9 +1,5 @@
-import {
-  ontologyVersionIdentifier,
-  ontologyUrl,
-  AdditionalType,
-  Enrichment,
-} from './definitions';
+import {ontologyVersionIdentifier, ontologyUrl} from '../definitions';
+import {AdditionalType, HeritageObjectEnrichment} from './definitions';
 import {defu} from 'defu';
 import type {Resource} from 'rdf-object';
 
@@ -58,7 +54,7 @@ export function createEnrichment(rawEnrichment: Resource) {
   const dateCreated = new Date(rawDateCreated);
 
   // Silence TS errors about 'string | undefined': the values always are strings
-  const enrichment: Enrichment = {
+  const enrichment: HeritageObjectEnrichment = {
     id: rawEnrichment.value,
     additionalType: fromClassToAdditionalType(additionalType),
     // @ts-expect-error:TS2322
