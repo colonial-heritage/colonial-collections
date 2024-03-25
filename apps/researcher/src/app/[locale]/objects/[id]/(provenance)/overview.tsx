@@ -1,12 +1,17 @@
 import {useLocale} from 'next-intl';
 import provenanceEvents from '@/lib/provenance-events-instance';
 import DataTable from './data-table';
-import Timeline from './timeline';
 import {getTranslations} from 'next-intl/server';
 import {sortEvents} from './sort-events';
 import {ProvenanceProvider} from './provenance-store';
 import {ToggleViewButtons} from './buttons';
 import {LocaleEnum} from '@/definitions';
+import useObject from '../use-object';
+import dynamic from 'next/dynamic';
+// SSR needs to be false for plugin 'react-headless-timeline'
+const Timeline = dynamic(() => import('./timeline'), {
+  ssr: false,
+});
 
 export default async function Provenance({objectId}: {objectId: string}) {
   const locale = useLocale() as LocaleEnum;
@@ -15,6 +20,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
     locale,
   });
   const t = await getTranslations('Provenance');
+  const {organization} = useObject.getState();
 
   if (!events || events.length === 0) {
     return (
@@ -56,7 +62,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
             </div>
           </div>
           <Timeline />
-          <DataTable />
+          <DataTable organizationName={organization?.name} />
         </div>
       </div>
     </ProvenanceProvider>
