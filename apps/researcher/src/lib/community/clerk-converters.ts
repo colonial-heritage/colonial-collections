@@ -29,8 +29,8 @@ export function organizationToCommunity(
       'members_count' in organization // Organization
         ? organization.members_count
         : 'membersCount' in organization // OrganizationResource
-        ? organization.membersCount
-        : undefined,
+          ? organization.membersCount
+          : undefined,
   };
 }
 
