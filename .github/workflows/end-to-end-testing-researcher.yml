@@ -8,8 +8,8 @@ on:
       - "apps/researcher/**"
       - ".github/workflows/end-to-end-testing-researcher.yml"
       - "packages/**"
-  concurrency:
-    group: 'end-to-end-tests-with-login'
+concurrency:
+  group: 'end-to-end-tests-with-login'
 
 jobs:
   run-end-to-end-tests:
