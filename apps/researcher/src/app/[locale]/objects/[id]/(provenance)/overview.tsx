@@ -8,6 +8,7 @@ import {ToggleViewButtons} from './buttons';
 import {LocaleEnum} from '@/definitions';
 import useObject from '../use-object';
 import dynamic from 'next/dynamic';
+
 // SSR needs to be false for plugin 'react-headless-timeline'
 const Timeline = dynamic(() => import('./timeline'), {
   ssr: false,
