@@ -17,15 +17,15 @@
     "narrativeExplainText": "Your knowledge about the heritage on this platform is vital. With your narratives and perspectives, we can present the 'objects' in their context and point to biases in collection metadata.\n\nWhen you create an account, you can add your narrative to these 'objects', make communities and create lists.",
     "signupLink": "Create an account",
     "communitiesTitle": "Heritage communities",
-    "communitiesDescription": "Every culture can start its own community on this platform. A community can create lists of objects that tells stories about their history. Communities can also add narratives to the objects in this collection.",
-    "communitiesLink": "Here are some communities to inspire you. Or <link>take a look at all the communities</link>.",
-    "howThisWorksTitle": "See how this works",
-    "howThisWorksText": "Here's a short explanation on how to use this site. Here you'll see how to search for objects and use communities.",
+    "communitiesDescription": "Upon creating an account, every individual or group of people can start their own community on this platform. A community is able to create lists of objects, bringing together their heritage. Communities can also add narratives to the objects in these collections.",
+    "communitiesLink": "Below are some communities to inspire you. Would you like to see all the communities on the platform? <link>Please click here</link>.",
+    "howThisWorksTitle": "How does this platform work?",
+    "howThisWorksText": "Here is a short explanation on how to use the following functionalities on this website: search for objects, add narratives and use communities.",
     "howThisWorksAlt": "An animation about how this site works."
   },
   "ObjectSearch": {
     "title": "Search for heritage objects",
-    "description": "Start by typing a keyword to search.\n\nAfter this initial text search, search facets will appear to refine yor search results."
+    "description": "Start by typing a keyword to search.\n\nAfter this initial text search, search facets will appear to refine your search results."
   },
   "SignUp": {
     "pageTitle": "Create an account",
@@ -227,7 +227,7 @@
     "pageDescription": "Communities are groups of people that represent a specific culture or geographical area. They can collect lists of objects that are meaningfull to their community.",
     "yourCommunityTitle": "Your communities",
     "yourCommunityText": "Use the filters below to discover communities that resonate with you. Selecting a community will give you a closer look; from there, you can join and contribute. Can't find your community represented?",
-    "yourCommunityTextSignedOut": "With an account you can join a community or create one yourself.",
+    "yourCommunityTextSignedOut": "With an account, you can join a community or create one yourself.",
     "error": "Something went wrong while fetching communities. Please try again later.",
     "communityName": "Community of <name></name>",
     "membershipCount": "{count, plural, =0 {0 members} =1 {1 member} other {# members}}",
