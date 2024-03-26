@@ -29,9 +29,9 @@ export function SelectEventsButton({ids, children}: SelectEventsButtonProps) {
       className={classNames(
         'rounded-full h-8 min-w-[33px] px-1 flex justify-center items-center border-2 transition text-xs whitespace-nowrap',
         {
-          'border-consortiumBlue-800 bg-white hover:bg-consortiumBlue-800 hover:border-consortiumBlue-800 hover:text-white':
+          'border-consortiumBlue-200 bg-white hover:bg-consortiumBlue-200 hover:border-consortiumBlue-200 hover:text-white':
             !selected,
-          'border-consortiumBlue-800 bg-consortiumBlue-700 text-white':
+          'border-consortiumBlue-200 bg-consortiumBlue-200 text-white':
             selected,
         }
       )}

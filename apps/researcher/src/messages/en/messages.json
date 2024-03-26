@@ -142,6 +142,8 @@
     "transferredFrom": "Transferred from",
     "transferredTo": "Transferred to",
     "location": "Location",
+    "providedBy": "Provided by",
+    "readMore": "Read more",
     "descriptionTitle": "Description",
     "noData": "No provenance events provided for this object.",
     "dataTableTitle": "Provenance data table",
