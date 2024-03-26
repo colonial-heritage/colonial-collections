@@ -1,5 +1,5 @@
 import {
-  HeritageObjectEnrichmentCreator,
+  EnrichmentCreator,
   HeritageObjectEnrichmentFetcher,
   NanopubClient,
 } from '@colonial-collections/enricher';
@@ -14,7 +14,7 @@ const nanopubClient = new NanopubClient({
   proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
 });
 
-export const creator = new HeritageObjectEnrichmentCreator({
-  endpointUrl: env.SPARQL_ENDPOINT_URL as string,
+export const creator = new EnrichmentCreator({
+  knowledgeGraphEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
   nanopubClient,
 });

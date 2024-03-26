@@ -1,5 +1,5 @@
 import {NanopubClient} from '../client';
-import {HeritageObjectEnrichmentCreator} from './creator';
+import {EnrichmentCreator} from '../creator';
 import {AdditionalType} from './definitions';
 import {HeritageObjectEnrichmentFetcher} from './fetcher';
 import {beforeAll, describe, expect, it} from '@jest/globals';
@@ -19,8 +19,8 @@ beforeAll(async () => {
     proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
   });
 
-  const creator = new HeritageObjectEnrichmentCreator({
-    endpointUrl: env.SPARQL_ENDPOINT_URL as string,
+  const creator = new EnrichmentCreator({
+    knowledgeGraphEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
     nanopubClient,
   });
 

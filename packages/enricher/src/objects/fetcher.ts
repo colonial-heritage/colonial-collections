@@ -45,7 +45,7 @@ export class HeritageObjectEnrichmentFetcher {
         # Need this to easily retrieve the enrichments in the RdfObjectLoader
         ?source ex:hasEnrichment ?annotation .
 
-        ?annotation a ex:Enrichment ;
+        ?annotation a ex:HeritageObjectEnrichment ;
           ex:additionalType ?additionalType ;
           ex:about ?target ;
           ex:isPartOf ?source ;
@@ -134,8 +134,6 @@ export class HeritageObjectEnrichmentFetcher {
 
       return dateCreatedA - dateCreatedB;
     });
-
-    // TBD: group the enrichments by type (e.g. by 'name' or 'description')?
 
     return enrichments;
   }

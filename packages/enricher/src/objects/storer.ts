@@ -11,7 +11,7 @@ import {z} from 'zod';
 
 const DF = new DataFactory();
 
-export const constructorOptionsSchema = z.object({
+const constructorOptionsSchema = z.object({
   nanopubClient: z.instanceof(NanopubClient),
 });
 
@@ -20,7 +20,7 @@ export type HeritageObjectEnrichmentStorerConstructorOptions = z.infer<
 >;
 
 // Low-level class for creating object enrichments
-// You should use HeritageObjectEnrichmentCreator in most cases
+// You should use the high-level EnrichmentCreator in most cases
 export class HeritageObjectEnrichmentStorer {
   private readonly nanopubClient: NanopubClient;
 

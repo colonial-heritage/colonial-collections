@@ -16,7 +16,7 @@ import {z} from 'zod';
 
 const DF = new DataFactory();
 
-export const constructorOptionsSchema = z.object({
+const constructorOptionsSchema = z.object({
   nanopubClient: z.instanceof(NanopubClient),
 });
 
@@ -25,7 +25,7 @@ export type ProvenanceEventEnrichmentStorerConstructorOptions = z.infer<
 >;
 
 // Low-level class for creating provenance event enrichments
-// You should use ProvenanceEventEnrichmentCreator in most cases
+// You should use the high-level EnrichmentCreator in most cases
 export class ProvenanceEventEnrichmentStorer {
   private readonly nanopubClient: NanopubClient;
 
