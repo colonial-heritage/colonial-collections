@@ -1,5 +1,9 @@
 import {nanopubId, NanopubClient} from '../client';
-import {ontologyUrl, type BasicEnrichment} from '../definitions';
+import {
+  ontologyUrl,
+  ontologyVersionIdentifier,
+  type BasicEnrichment,
+} from '../definitions';
 import {getEndDateAsXsd, getStartDateAsXsd} from './helpers';
 import {
   fullProvenanceEventEnrichmentBeingCreatedSchema,
@@ -64,16 +68,27 @@ export class ProvenanceEventEnrichmentStorer {
       )
     );
 
+    // Generic type of the nanopub: a nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode(`${ontologyUrl}Nanopub`) // Generic type
+        DF.namedNode(`${ontologyUrl}Nanopub`)
       )
     );
 
-    // TBD: register the specific type - a 'provenance event'?
+    // Specific type of the nanopub: a provenance event
+    publicationStore.addQuad(
+      DF.quad(
+        nanopubId,
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode(
+          `${ontologyUrl}ProvenanceEvent${ontologyVersionIdentifier}`
+        )
+      )
+    );
 
+    // Licence of the nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -82,6 +97,7 @@ export class ProvenanceEventEnrichmentStorer {
       )
     );
 
+    // Tool that created the nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -247,6 +263,7 @@ export class ProvenanceEventEnrichmentStorer {
     // Date of the provenance event
     if (fullEnrichmentBeingCreated.date !== undefined) {
       const timeSpanId = DF.blankNode();
+      const dateNode = DF.namedNode('http://www.w3.org/2001/XMLSchema#date');
 
       assertionStore.addQuad(
         DF.quad(
@@ -268,7 +285,7 @@ export class ProvenanceEventEnrichmentStorer {
               DF.namedNode(
                 'http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin'
               ),
-              DF.literal(startDate, 'http://www.w3.org/2001/XMLSchema#date')
+              DF.literal(startDate, dateNode)
             )
           );
         }
@@ -286,7 +303,7 @@ export class ProvenanceEventEnrichmentStorer {
               DF.namedNode(
                 'http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end'
               ),
-              DF.literal(endDate, 'http://www.w3.org/2001/XMLSchema#date')
+              DF.literal(endDate, dateNode)
             )
           );
         }
@@ -344,8 +361,50 @@ export class ProvenanceEventEnrichmentStorer {
       );
     }
 
-    // TODO: store the source that a user used for the provenance information
-    // TODO: store the level of certainty or uncertainty
+    // Citation of the provenance event
+    if (fullEnrichmentBeingCreated.citation !== undefined) {
+      const citationId = DF.blankNode();
+
+      assertionStore.addQuad(
+        DF.quad(
+          citationId,
+          DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+          DF.namedNode(
+            'http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object'
+          )
+        )
+      );
+
+      assertionStore.addQuad(
+        DF.quad(
+          citationId,
+          DF.namedNode(
+            'http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content'
+          ),
+          DF.literal(opts.citation, languageCode)
+        )
+      );
+
+      assertionStore.addQuad(
+        DF.quad(
+          citationId,
+          DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P2_has_type'),
+          DF.namedNode('http://vocab.getty.edu/aat/300435423') // "citations"
+        )
+      );
+
+      assertionStore.addQuad(
+        DF.quad(
+          annotationId,
+          DF.namedNode(
+            'http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by'
+          ),
+          citationId
+        )
+      );
+    }
+
+    // TBD: store the level of certainty or uncertainty?
 
     const nanopub = await this.nanopubClient.add({
       assertionStore,
