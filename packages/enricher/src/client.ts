@@ -49,7 +49,7 @@ export type Nanopub = {
 };
 
 // Low-level client for storing enrichments
-// You should use high-level class in most cases, e.g. HeritageObjectEnrichmentCreator
+// You should use the high-level EnrichmentCreator in most cases
 export class NanopubClient {
   private readonly endpointUrl: string;
   private readonly proxyEndpointUrl: string;
