@@ -1,5 +1,6 @@
 import {z} from 'zod';
 
+// TBD: use ARK IRI instead, pointing to the knowledge graph?
 export const ontologyUrl =
   'https://data.colonialcollections.nl/schemas/nanopub#'; // Internal ontology
 

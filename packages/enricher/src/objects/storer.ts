@@ -62,22 +62,25 @@ export class HeritageObjectEnrichmentStorer {
       )
     );
 
+    // Generic type of the nanopub: a nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode(`${ontologyUrl}Nanopub`) // Generic type
+        DF.namedNode(`${ontologyUrl}Nanopub`)
       )
     );
 
+    // Specific type of the nanopub, e.g. about the name or the material of an object
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode(fromAdditionalTypeToClass(opts.additionalType)) // Specific type
+        DF.namedNode(fromAdditionalTypeToClass(opts.additionalType))
       )
     );
 
+    // Licence of the nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -85,6 +88,8 @@ export class HeritageObjectEnrichmentStorer {
         DF.namedNode(opts.license)
       )
     );
+
+    // Tool that created the nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -167,7 +172,7 @@ export class HeritageObjectEnrichmentStorer {
       );
     }
 
-    // Source used for the description
+    // Source used for the description (presumably in the same language as the description)
     assertionStore.addQuad(
       DF.quad(
         annotationId,
