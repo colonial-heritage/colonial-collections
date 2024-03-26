@@ -9,6 +9,6 @@
     "react-library.json"
   ],
   "devDependencies": {
-    "gts": "5.2.0"
+    "gts": "5.3.0"
   }
 }
