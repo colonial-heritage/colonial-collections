@@ -21,8 +21,8 @@ export const provenanceEventEnrichmentBeingCreatedSchema =
         .optional(),
       date: z
         .object({
-          startDate: z.string().optional(),
-          endDate: z.string().optional(),
+          startDate: z.string(),
+          endDate: z.string(),
         })
         .optional(),
       transferredFrom: z

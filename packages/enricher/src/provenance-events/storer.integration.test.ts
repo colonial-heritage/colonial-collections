@@ -40,7 +40,7 @@ describe('add', () => {
         'A citation or reference to a work that supports the information',
       inLanguage: 'en',
       about: {
-        id: 'http://example.org/object',
+        id: 'http://example.org/object1',
       },
       creator: {
         id: 'http://example.com/person',
@@ -62,27 +62,27 @@ describe('add', () => {
         name: 'Returning',
       },
       transferredFrom: {
-        id: 'http://www.wikidata.org/entity/Q517',
-        name: 'Napoleon',
+        id: 'http://www.wikidata.org/entity/Q131691',
+        name: 'Arthur Wellesley',
       },
       transferredTo: {
-        id: 'http://www.wikidata.org/entity/Q171480',
-        name: 'Joséphine de Beauharnais',
+        id: 'http://www.wikidata.org/entity/Q9439',
+        name: 'Victoria',
       },
       location: {
-        id: 'https://sws.geonames.org/2988507/',
-        name: 'Paris',
+        id: 'https://sws.geonames.org/2643743/',
+        name: 'London',
       },
       date: {
-        startDate: '1805-02',
-        endDate: '1806-07-13',
+        startDate: '1850-02',
+        endDate: '1850-07-13',
       },
       description: 'Returned to the owner',
       citation:
         'A citation or reference to a work that supports the information',
       inLanguage: 'en',
       about: {
-        id: 'http://example.org/object',
+        id: 'http://example.org/object1',
       },
       creator: {
         id: 'http://example.com/person',

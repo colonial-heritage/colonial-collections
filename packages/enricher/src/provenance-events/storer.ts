@@ -44,7 +44,7 @@ export class ProvenanceEventEnrichmentStorer {
 
     const publicationStore = RdfStore.createDefault();
     const assertionStore = RdfStore.createDefault();
-    const annotationId = DF.blankNode();
+    const enrichmentId = DF.blankNode();
     const languageCode = opts.inLanguage;
     const isAcquisition =
       fullEnrichmentBeingCreated.type === ProvenanceEventType.Acquisition;
@@ -111,7 +111,7 @@ export class ProvenanceEventEnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://purl.org/nanopub/x/introduces'),
-        annotationId
+        enrichmentId
       )
     );
 
@@ -131,7 +131,7 @@ export class ProvenanceEventEnrichmentStorer {
 
     assertionStore.addQuad(
       DF.quad(
-        annotationId,
+        enrichmentId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode(`http://www.cidoc-crm.org/cidoc-crm/${type}`)
       )
@@ -146,7 +146,7 @@ export class ProvenanceEventEnrichmentStorer {
       // An IRI from a thesaurus, e.g. AAT
       assertionStore.addQuad(
         DF.quad(
-          annotationId,
+          enrichmentId,
           DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P2_has_type'),
           additionalTypeNode
         )
@@ -169,7 +169,7 @@ export class ProvenanceEventEnrichmentStorer {
 
     assertionStore.addQuad(
       DF.quad(
-        annotationId,
+        enrichmentId,
         DF.namedNode(`http://www.cidoc-crm.org/cidoc-crm/${objectPredicate}`),
         DF.namedNode(opts.about.id)
       )
@@ -188,7 +188,7 @@ export class ProvenanceEventEnrichmentStorer {
       // An IRI from a constituent source, e.g. Wikidata
       assertionStore.addQuad(
         DF.quad(
-          annotationId,
+          enrichmentId,
           DF.namedNode(
             `http://www.cidoc-crm.org/cidoc-crm/${transferredFromPredicate}`
           ),
@@ -219,7 +219,7 @@ export class ProvenanceEventEnrichmentStorer {
       // An IRI from a constituent source, e.g. Wikidata
       assertionStore.addQuad(
         DF.quad(
-          annotationId,
+          enrichmentId,
           DF.namedNode(
             `http://www.cidoc-crm.org/cidoc-crm/${transferredToPredicate}`
           ),
@@ -244,7 +244,7 @@ export class ProvenanceEventEnrichmentStorer {
       // An IRI from a location source, e.g. GeoNames
       assertionStore.addQuad(
         DF.quad(
-          annotationId,
+          enrichmentId,
           DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at'),
           locationNode
         )
@@ -273,45 +273,35 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
 
-      if (fullEnrichmentBeingCreated.date.startDate !== undefined) {
-        const startDate = getStartDateAsXsd(
-          fullEnrichmentBeingCreated.date.startDate
-        );
-
-        if (startDate !== undefined) {
-          assertionStore.addQuad(
-            DF.quad(
-              timeSpanId,
-              DF.namedNode(
-                'http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin'
-              ),
-              DF.literal(startDate, dateNode)
-            )
-          );
-        }
-      }
-
-      if (fullEnrichmentBeingCreated.date.endDate !== undefined) {
-        const endDate = getEndDateAsXsd(
-          fullEnrichmentBeingCreated.date.endDate
-        );
-
-        if (endDate !== undefined) {
-          assertionStore.addQuad(
-            DF.quad(
-              timeSpanId,
-              DF.namedNode(
-                'http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end'
-              ),
-              DF.literal(endDate, dateNode)
-            )
-          );
-        }
-      }
+      const startDate = getStartDateAsXsd(
+        fullEnrichmentBeingCreated.date.startDate
+      );
 
       assertionStore.addQuad(
         DF.quad(
-          annotationId,
+          timeSpanId,
+          DF.namedNode(
+            'http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin'
+          ),
+          DF.literal(startDate, dateNode)
+        )
+      );
+
+      const endDate = getEndDateAsXsd(fullEnrichmentBeingCreated.date.endDate);
+
+      assertionStore.addQuad(
+        DF.quad(
+          timeSpanId,
+          DF.namedNode(
+            'http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end'
+          ),
+          DF.literal(endDate, dateNode)
+        )
+      );
+
+      assertionStore.addQuad(
+        DF.quad(
+          enrichmentId,
           DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span'),
           timeSpanId
         )
@@ -352,7 +342,7 @@ export class ProvenanceEventEnrichmentStorer {
 
       assertionStore.addQuad(
         DF.quad(
-          annotationId,
+          enrichmentId,
           DF.namedNode(
             'http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by'
           ),
@@ -395,7 +385,7 @@ export class ProvenanceEventEnrichmentStorer {
 
       assertionStore.addQuad(
         DF.quad(
-          annotationId,
+          enrichmentId,
           DF.namedNode(
             'http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by'
           ),
