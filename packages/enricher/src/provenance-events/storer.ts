@@ -46,8 +46,7 @@ export class ProvenanceEventEnrichmentStorer {
     const assertionStore = RdfStore.createDefault();
     const enrichmentId = DF.blankNode();
     const languageCode = opts.inLanguage;
-    const isAcquisition =
-      fullEnrichmentBeingCreated.type === ProvenanceEventType.Acquisition;
+    const isAcquisition = opts.type === ProvenanceEventType.Acquisition;
 
     // Make clear what application has published this nanopub
     const softwareTool = DF.namedNode('https://app.colonialcollections.nl/');
@@ -106,7 +105,7 @@ export class ProvenanceEventEnrichmentStorer {
       )
     );
 
-    // Connect the publication info to the annotation
+    // Connect the publication info to the enrichment
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -138,10 +137,8 @@ export class ProvenanceEventEnrichmentStorer {
     );
 
     // Classification of the provenance event (e.g. a gift or a purchase)
-    if (fullEnrichmentBeingCreated.additionalType !== undefined) {
-      const additionalTypeNode = DF.namedNode(
-        fullEnrichmentBeingCreated.additionalType.id
-      );
+    if (opts.additionalType !== undefined) {
+      const additionalTypeNode = DF.namedNode(opts.additionalType.id);
 
       // An IRI from a thesaurus, e.g. AAT
       assertionStore.addQuad(
@@ -157,7 +154,7 @@ export class ProvenanceEventEnrichmentStorer {
         DF.quad(
           additionalTypeNode,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-          DF.literal(fullEnrichmentBeingCreated.additionalType.name)
+          DF.literal(opts.additionalType.name)
         )
       );
     }
@@ -176,10 +173,8 @@ export class ProvenanceEventEnrichmentStorer {
     );
 
     // Constituent who owned or kept the object
-    if (fullEnrichmentBeingCreated.transferredFrom !== undefined) {
-      const transferredFromNode = DF.namedNode(
-        fullEnrichmentBeingCreated.transferredFrom.id
-      );
+    if (opts.transferredFrom !== undefined) {
+      const transferredFromNode = DF.namedNode(opts.transferredFrom.id);
 
       const transferredFromPredicate = isAcquisition
         ? 'P23_transferred_title_from'
@@ -201,16 +196,14 @@ export class ProvenanceEventEnrichmentStorer {
         DF.quad(
           transferredFromNode,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-          DF.literal(fullEnrichmentBeingCreated.transferredFrom.name)
+          DF.literal(opts.transferredFrom.name)
         )
       );
     }
 
     // Constituent who received the object
-    if (fullEnrichmentBeingCreated.transferredTo !== undefined) {
-      const transferredToNode = DF.namedNode(
-        fullEnrichmentBeingCreated.transferredTo.id
-      );
+    if (opts.transferredTo !== undefined) {
+      const transferredToNode = DF.namedNode(opts.transferredTo.id);
 
       const transferredToPredicate = isAcquisition
         ? 'P22_transferred_title_to'
@@ -232,14 +225,14 @@ export class ProvenanceEventEnrichmentStorer {
         DF.quad(
           transferredToNode,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-          DF.literal(fullEnrichmentBeingCreated.transferredTo.name)
+          DF.literal(opts.transferredTo.name)
         )
       );
     }
 
     // Location of the provenance event
-    if (fullEnrichmentBeingCreated.location !== undefined) {
-      const locationNode = DF.namedNode(fullEnrichmentBeingCreated.location.id);
+    if (opts.location !== undefined) {
+      const locationNode = DF.namedNode(opts.location.id);
 
       // An IRI from a location source, e.g. GeoNames
       assertionStore.addQuad(
@@ -255,13 +248,13 @@ export class ProvenanceEventEnrichmentStorer {
         DF.quad(
           locationNode,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-          DF.literal(fullEnrichmentBeingCreated.location.name)
+          DF.literal(opts.location.name)
         )
       );
     }
 
     // Date of the provenance event
-    if (fullEnrichmentBeingCreated.date !== undefined) {
+    if (opts.date !== undefined) {
       const timeSpanId = DF.blankNode();
       const dateNode = DF.namedNode('http://www.w3.org/2001/XMLSchema#date');
 
@@ -273,9 +266,7 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
 
-      const startDate = getStartDateAsXsd(
-        fullEnrichmentBeingCreated.date.startDate
-      );
+      const startDate = getStartDateAsXsd(opts.date.startDate);
 
       assertionStore.addQuad(
         DF.quad(
@@ -287,7 +278,7 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
 
-      const endDate = getEndDateAsXsd(fullEnrichmentBeingCreated.date.endDate);
+      const endDate = getEndDateAsXsd(opts.date.endDate);
 
       assertionStore.addQuad(
         DF.quad(
@@ -309,7 +300,7 @@ export class ProvenanceEventEnrichmentStorer {
     }
 
     // Description of the provenance event
-    if (fullEnrichmentBeingCreated.description !== undefined) {
+    if (opts.description !== undefined) {
       const descriptionId = DF.blankNode();
 
       assertionStore.addQuad(
@@ -352,7 +343,7 @@ export class ProvenanceEventEnrichmentStorer {
     }
 
     // Citation of the provenance event
-    if (fullEnrichmentBeingCreated.citation !== undefined) {
+    if (opts.citation !== undefined) {
       const citationId = DF.blankNode();
 
       assertionStore.addQuad(

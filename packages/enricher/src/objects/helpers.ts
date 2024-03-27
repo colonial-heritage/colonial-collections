@@ -1,5 +1,6 @@
 import {ontologyVersionIdentifier, ontologyUrl} from '../definitions';
 import {AdditionalType, HeritageObjectEnrichment} from './definitions';
+import {getPropertyValue} from '../helpers';
 import {defu} from 'defu';
 import type {Resource} from 'rdf-object';
 
@@ -28,15 +29,6 @@ function fromClassToAdditionalType(className: string | undefined) {
   throw new TypeError(`Unknown class name: "${className}"`);
 }
 
-function getPropertyValue(resource: Resource, propertyName: string) {
-  const property = resource.property[propertyName];
-  if (property === undefined) {
-    return undefined;
-  }
-
-  return property.value;
-}
-
 export function createEnrichment(rawEnrichment: Resource) {
   const additionalType = getPropertyValue(rawEnrichment, 'ex:additionalType');
   const isPartOf = getPropertyValue(rawEnrichment, 'ex:isPartOf');
@@ -50,28 +42,20 @@ export function createEnrichment(rawEnrichment: Resource) {
   const creatorName = getPropertyValue(creatorResource, 'ex:name');
 
   const rawDateCreated = getPropertyValue(rawEnrichment, 'ex:dateCreated');
-  // @ts-expect-error:TS2322
-  const dateCreated = new Date(rawDateCreated);
+  const dateCreated = new Date(rawDateCreated!);
 
-  // Silence TS errors about 'string | undefined': the values always are strings
   const enrichment: HeritageObjectEnrichment = {
     id: rawEnrichment.value,
     additionalType: fromClassToAdditionalType(additionalType),
-    // @ts-expect-error:TS2322
-    about: isPartOf,
-    // @ts-expect-error:TS2322
-    description,
-    // @ts-expect-error:TS2322
-    citation,
+    about: isPartOf!,
+    description: description!,
+    citation: citation!,
     inLanguage,
     creator: {
-      // @ts-expect-error:TS2322
-      id: creator,
-      // @ts-expect-error:TS2322
-      name: creatorName,
+      id: creator!,
+      name: creatorName!,
     },
-    // @ts-expect-error:TS2322
-    license,
+    license: license!,
     dateCreated,
   };
 

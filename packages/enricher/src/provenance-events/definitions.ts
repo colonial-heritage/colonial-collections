@@ -12,6 +12,7 @@ export enum ProvenanceEventType {
 export const provenanceEventEnrichmentBeingCreatedSchema =
   basicEnrichmentBeingCreatedSchema.merge(
     z.object({
+      description: z.string().optional(),
       type: z.nativeEnum(ProvenanceEventType),
       additionalType: z
         .object({
