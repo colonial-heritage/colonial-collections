@@ -1,5 +1,5 @@
 import {ontologyUrl} from '../definitions';
-import {createEnrichment} from './helpers';
+import {toProvenanceEventEnrichment} from './rdf-helpers';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import type {Readable} from 'node:stream';
@@ -249,16 +249,8 @@ export class ProvenanceEventEnrichmentFetcher {
 
     const rawEnrichments = resource.properties['ex:hasEnrichment'];
     const enrichments = rawEnrichments.map(rawEnrichment =>
-      createEnrichment(rawEnrichment)
+      toProvenanceEventEnrichment(rawEnrichment)
     );
-
-    // Sort the enrichments by date of creation, from old to new
-    // enrichments.sort((enrichmentA, enrichmentB) => {
-    //   const dateCreatedA = enrichmentA.dateCreated.getTime();
-    //   const dateCreatedB = enrichmentB.dateCreated.getTime();
-
-    //   return dateCreatedA - dateCreatedB;
-    // });
 
     return enrichments;
   }

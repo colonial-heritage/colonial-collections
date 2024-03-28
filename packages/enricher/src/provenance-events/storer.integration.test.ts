@@ -42,11 +42,13 @@ describe('add', () => {
       about: {
         id: 'http://example.org/object1',
       },
-      creator: {
-        id: 'http://example.com/person',
-        name: 'Person',
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
       },
-      license: 'https://creativecommons.org/licenses/by/4.0/',
     });
 
     expect(enrichment).toEqual({
@@ -84,11 +86,13 @@ describe('add', () => {
       about: {
         id: 'http://example.org/object1',
       },
-      creator: {
-        id: 'http://example.com/person',
-        name: 'Person',
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
       },
-      license: 'https://creativecommons.org/licenses/by/4.0/',
     });
 
     expect(enrichment).toEqual({

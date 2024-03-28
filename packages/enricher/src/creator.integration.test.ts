@@ -1,6 +1,6 @@
 import {
-  AdditionalType,
   EnrichmentCreator,
+  HeritageObjectEnrichmentType,
   NanopubClient,
   ProvenanceEventType,
 } from '.';
@@ -20,16 +20,18 @@ const creator = new EnrichmentCreator({
 describe('addText', () => {
   it('adds a textual enrichment', async () => {
     const enrichment = await creator.addText({
-      additionalType: AdditionalType.Name,
+      type: HeritageObjectEnrichmentType.Name,
       description: 'A comment about the name of an object',
       citation: 'A citation or reference to a work that supports the comment',
       inLanguage: 'en',
       about: 'http://example.org/object',
-      creator: {
-        id: 'http://example.com/person',
-        name: 'Person',
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
       },
-      license: 'https://creativecommons.org/licenses/by/4.0/',
     });
 
     expect(enrichment).toEqual({
@@ -62,15 +64,17 @@ describe('addProvenanceEvent', () => {
         startDate: '1805',
         endDate: '1806',
       },
-      description: 'A comment about the name of an object',
+      description: 'A comment',
       citation: 'A citation or reference to a work that supports the comment',
       inLanguage: 'en',
       about: 'http://example.org/object',
-      creator: {
-        id: 'http://example.com/person',
-        name: 'Person',
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
       },
-      license: 'https://creativecommons.org/licenses/by/4.0/',
     });
 
     expect(enrichment).toEqual({

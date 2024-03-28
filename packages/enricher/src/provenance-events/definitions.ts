@@ -1,6 +1,9 @@
 import {
   basicEnrichmentBeingCreatedSchema,
-  BasicEnrichment,
+  Agent,
+  Place,
+  PubInfo,
+  Term,
 } from '../definitions';
 import {z} from 'zod';
 
@@ -12,7 +15,6 @@ export enum ProvenanceEventType {
 export const provenanceEventEnrichmentBeingCreatedSchema =
   basicEnrichmentBeingCreatedSchema.merge(
     z.object({
-      description: z.string().optional(),
       type: z.nativeEnum(ProvenanceEventType),
       additionalType: z
         .object({
@@ -51,11 +53,6 @@ export type ProvenanceEventEnrichmentBeingCreated = z.infer<
   typeof provenanceEventEnrichmentBeingCreatedSchema
 >;
 
-export type ProvenanceEventEnrichment = BasicEnrichment &
-  ProvenanceEventEnrichmentBeingCreated & {
-    dateCreated: Date;
-  };
-
 export const fullProvenanceEventEnrichmentBeingCreatedSchema =
   provenanceEventEnrichmentBeingCreatedSchema.merge(
     z.object({
@@ -68,3 +65,24 @@ export const fullProvenanceEventEnrichmentBeingCreatedSchema =
 export type FullProvenanceEventEnrichmentBeingCreated = z.infer<
   typeof fullProvenanceEventEnrichmentBeingCreatedSchema
 >;
+
+export type TimeSpan = {
+  id: string;
+  startDate?: Date;
+  endDate?: Date;
+};
+
+export type ProvenanceEventEnrichment = {
+  id: string;
+  type: ProvenanceEventType;
+  additionalTypes?: Term[];
+  date?: TimeSpan;
+  transferredFrom?: Agent;
+  transferredTo?: Agent;
+  location?: Place;
+  description?: string;
+  citation?: string;
+  inLanguage?: string;
+  about: string;
+  pubInfo: PubInfo;
+};

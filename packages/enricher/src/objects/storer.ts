@@ -4,7 +4,7 @@ import {
   fullHeritageObjectEnrichmentBeingCreatedSchema,
   FullHeritageObjectEnrichmentBeingCreated,
 } from './definitions';
-import {fromAdditionalTypeToClass} from './helpers';
+import {fromTypeToClass} from './rdf-helpers';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
 import {z} from 'zod';
@@ -76,7 +76,7 @@ export class HeritageObjectEnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode(fromAdditionalTypeToClass(opts.additionalType))
+        DF.namedNode(fromTypeToClass(opts.type))
       )
     );
 
@@ -85,7 +85,7 @@ export class HeritageObjectEnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://purl.org/dc/terms/license'),
-        DF.namedNode(opts.license)
+        DF.namedNode(opts.pubInfo.license)
       )
     );
 
@@ -112,9 +112,9 @@ export class HeritageObjectEnrichmentStorer {
     // creation is preserved.
     publicationStore.addQuad(
       DF.quad(
-        DF.namedNode(opts.creator.id),
+        DF.namedNode(opts.pubInfo.creator.id),
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-        DF.literal(opts.creator.name)
+        DF.literal(opts.pubInfo.creator.name)
       )
     );
 
@@ -144,42 +144,46 @@ export class HeritageObjectEnrichmentStorer {
     );
 
     // Description of the enrichment
-    assertionStore.addQuad(
-      DF.quad(
-        bodyId,
-        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#value'),
-        DF.literal(opts.description, languageCode)
-      )
-    );
-
-    // Format of the description
-    assertionStore.addQuad(
-      DF.quad(
-        bodyId,
-        DF.namedNode('http://purl.org/dc/elements/1.1/format'),
-        DF.literal('text/plain') // Currently no other format allowed
-      )
-    );
-
-    // Language of the description
-    if (languageCode !== undefined) {
+    if (opts.description !== undefined) {
       assertionStore.addQuad(
         DF.quad(
           bodyId,
-          DF.namedNode('http://purl.org/dc/elements/1.1/language'),
-          DF.literal(languageCode)
+          DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#value'),
+          DF.literal(opts.description, languageCode)
         )
       );
+
+      // Format of the description
+      assertionStore.addQuad(
+        DF.quad(
+          bodyId,
+          DF.namedNode('http://purl.org/dc/elements/1.1/format'),
+          DF.literal('text/plain') // Currently no other format allowed
+        )
+      );
+
+      // Language of the description
+      if (languageCode !== undefined) {
+        assertionStore.addQuad(
+          DF.quad(
+            bodyId,
+            DF.namedNode('http://purl.org/dc/elements/1.1/language'),
+            DF.literal(languageCode)
+          )
+        );
+      }
     }
 
     // Source used for the description (presumably in the same language as the description)
-    assertionStore.addQuad(
-      DF.quad(
-        annotationId,
-        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#comment'),
-        DF.literal(opts.citation, languageCode)
-      )
-    );
+    if (opts.citation !== undefined) {
+      assertionStore.addQuad(
+        DF.quad(
+          annotationId,
+          DF.namedNode('http://www.w3.org/2000/01/rdf-schema#comment'),
+          DF.literal(opts.citation, languageCode)
+        )
+      );
+    }
 
     // The part of an object that the enrichment is about
     assertionStore.addQuad(
@@ -210,7 +214,7 @@ export class HeritageObjectEnrichmentStorer {
     const nanopub = await this.nanopubClient.add({
       assertionStore,
       publicationStore,
-      creator: opts.creator.id,
+      creator: opts.pubInfo.creator.id,
     });
 
     const basicEnrichment: BasicEnrichment = {

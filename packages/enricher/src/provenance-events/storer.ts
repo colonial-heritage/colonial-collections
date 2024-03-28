@@ -4,7 +4,7 @@ import {
   ontologyVersionIdentifier,
   type BasicEnrichment,
 } from '../definitions';
-import {getEndDateAsXsd, getStartDateAsXsd} from './helpers';
+import {getDateAsXsd, DateType} from './helpers';
 import {
   fullProvenanceEventEnrichmentBeingCreatedSchema,
   FullProvenanceEventEnrichmentBeingCreated,
@@ -92,7 +92,7 @@ export class ProvenanceEventEnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://purl.org/dc/terms/license'),
-        DF.namedNode(opts.license)
+        DF.namedNode(opts.pubInfo.license)
       )
     );
 
@@ -119,9 +119,9 @@ export class ProvenanceEventEnrichmentStorer {
     // creation is preserved.
     publicationStore.addQuad(
       DF.quad(
-        DF.namedNode(opts.creator.id),
+        DF.namedNode(opts.pubInfo.creator.id),
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-        DF.literal(opts.creator.name)
+        DF.literal(opts.pubInfo.creator.name)
       )
     );
 
@@ -266,7 +266,7 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
 
-      const startDate = getStartDateAsXsd(opts.date.startDate);
+      const startDate = getDateAsXsd(opts.date.startDate, DateType.StartDate);
 
       assertionStore.addQuad(
         DF.quad(
@@ -278,7 +278,7 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
 
-      const endDate = getEndDateAsXsd(opts.date.endDate);
+      const endDate = getDateAsXsd(opts.date.endDate, DateType.EndDate);
 
       assertionStore.addQuad(
         DF.quad(
@@ -370,7 +370,7 @@ export class ProvenanceEventEnrichmentStorer {
         DF.quad(
           citationId,
           DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P2_has_type'),
-          DF.namedNode('http://vocab.getty.edu/aat/300435423') // "citations"
+          DF.namedNode('http://vocab.getty.edu/aat/300435423') // "Citations"
         )
       );
 
@@ -390,7 +390,7 @@ export class ProvenanceEventEnrichmentStorer {
     const nanopub = await this.nanopubClient.add({
       assertionStore,
       publicationStore,
-      creator: opts.creator.id,
+      creator: opts.pubInfo.creator.id,
     });
 
     const basicEnrichment: BasicEnrichment = {

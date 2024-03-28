@@ -1,6 +1,6 @@
 import {NanopubClient} from '../client';
 import {EnrichmentCreator} from '../creator';
-import {AdditionalType} from './definitions';
+import {HeritageObjectEnrichmentType} from './definitions';
 import {HeritageObjectEnrichmentFetcher} from './fetcher';
 import {beforeAll, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
@@ -25,28 +25,32 @@ beforeAll(async () => {
   });
 
   await creator.addText({
-    additionalType: AdditionalType.Name,
+    type: HeritageObjectEnrichmentType.Name,
     description: 'Comment about the name of the resource',
     citation: 'A citation or reference to a work that supports the comment',
     inLanguage: 'en-gb',
-    creator: {
-      id: 'http://example.com/person1',
-      name: 'Person 1',
-    },
-    license: 'https://creativecommons.org/licenses/by/4.0/',
     about: resourceId,
+    pubInfo: {
+      creator: {
+        id: 'http://example.com/person1',
+        name: 'Person 1',
+      },
+      license: 'https://creativecommons.org/licenses/by/4.0/',
+    },
   });
 
   await creator.addText({
-    additionalType: AdditionalType.Description,
+    type: HeritageObjectEnrichmentType.Description,
     description: 'Comment about the description of the resource',
     citation: 'A citation or reference to a work that supports the comment',
-    creator: {
-      id: 'http://example.com/person2',
-      name: 'Person 2',
-    },
-    license: 'https://creativecommons.org/licenses/by/4.0/',
     about: resourceId,
+    pubInfo: {
+      creator: {
+        id: 'http://example.com/person2',
+        name: 'Person 2',
+      },
+      license: 'https://creativecommons.org/licenses/by/4.0/',
+    },
   });
 
   // Wait a bit: storing the nanopubs takes some time
@@ -72,30 +76,34 @@ describe('getById', () => {
     expect(enrichments).toStrictEqual([
       {
         id: expect.stringContaining('https://'),
-        additionalType: AdditionalType.Name,
+        type: HeritageObjectEnrichmentType.Name,
         description: 'Comment about the name of the resource',
         citation: 'A citation or reference to a work that supports the comment',
         inLanguage: 'en-gb',
-        creator: {
-          id: 'http://example.com/person1',
-          name: 'Person 1',
-        },
-        license: 'https://creativecommons.org/licenses/by/4.0/',
-        dateCreated: expect.any(Date),
         about: resourceId,
+        pubInfo: {
+          creator: {
+            id: 'http://example.com/person1',
+            name: 'Person 1',
+          },
+          license: 'https://creativecommons.org/licenses/by/4.0/',
+          dateCreated: expect.any(Date),
+        },
       },
       {
         id: expect.stringContaining('https://'),
-        additionalType: AdditionalType.Description,
+        type: HeritageObjectEnrichmentType.Description,
         description: 'Comment about the description of the resource',
         citation: 'A citation or reference to a work that supports the comment',
-        creator: {
-          id: 'http://example.com/person2',
-          name: 'Person 2',
-        },
-        license: 'https://creativecommons.org/licenses/by/4.0/',
-        dateCreated: expect.any(Date),
         about: resourceId,
+        pubInfo: {
+          creator: {
+            id: 'http://example.com/person2',
+            name: 'Person 2',
+          },
+          license: 'https://creativecommons.org/licenses/by/4.0/',
+          dateCreated: expect.any(Date),
+        },
       },
     ]);
   });

@@ -47,7 +47,7 @@ export class EnrichmentCreator {
 
     // TODO: fetch the resource ID (e.g. the IRI of the name of an object) from the knowledge graph.
     // The KG currently does not have these IDs, so this is a temporary dummy implementation.
-    const resourceId = `${opts.about}#${opts.additionalType}`;
+    const resourceId = `${opts.about}#${opts.type}`;
 
     const fullEnrichmentBeingCreated: FullHeritageObjectEnrichmentBeingCreated =
       {

@@ -12,14 +12,17 @@ import {
   ExclamationCircleIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import type {AdditionalType} from '@colonial-collections/enricher';
+import type {
+  Agent,
+  HeritageObjectEnrichmentType,
+} from '@colonial-collections/enricher';
 import ISO6391, {LanguageCode} from 'iso-639-1';
 import {SignedOut} from '@clerk/nextjs';
 import {Link} from '@/navigation';
 
 interface Props {
   translationKey: string;
-  enrichmentType?: AdditionalType;
+  enrichmentType?: HeritageObjectEnrichmentType;
 }
 
 export function Metadata({
@@ -31,9 +34,7 @@ export function Metadata({
   const {enrichments} = useObject.getState();
 
   const metadataEnrichments = enrichmentType
-    ? enrichments.filter(
-        enrichment => enrichment.additionalType === enrichmentType
-      )
+    ? enrichments.filter(enrichment => enrichment.type === enrichmentType)
     : [];
 
   return (
@@ -66,9 +67,9 @@ export function Metadata({
               <MetadataEntry
                 key={enrichment.id}
                 translationKey={translationKey}
-                dateCreated={enrichment.dateCreated}
+                dateCreated={enrichment.pubInfo.dateCreated}
                 citation={enrichment.citation}
-                creator={enrichment.creator}
+                creator={enrichment.pubInfo.creator}
                 languageCode={enrichment.inLanguage as LanguageCode}
               >
                 {enrichment.description}
@@ -91,7 +92,7 @@ interface MetadataEntryProps {
   isCurrentPublisher?: boolean;
   dateCreated?: Date;
   citation?: string;
-  creator?: {name: string};
+  creator?: Agent;
   languageCode?: LanguageCode;
   translationKey: string;
   children?: ReactNode;
