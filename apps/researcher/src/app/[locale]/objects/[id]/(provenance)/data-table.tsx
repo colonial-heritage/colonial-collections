@@ -1,12 +1,17 @@
 'use client';
 
-import {SlideOut, useSlideOut} from '@colonial-collections/ui';
+import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
 import type {LabeledProvenanceEvent} from './definitions';
 import {useTranslations} from 'next-intl';
 import {useProvenance} from './provenance-store';
 import {SelectEventsButton} from './buttons';
+import {XMarkIcon} from '@heroicons/react/24/outline';
 
-export default function DataTable() {
+interface Props {
+  organizationName?: string;
+}
+
+export default function DataTable({organizationName}: Props) {
   const t = useTranslations('Provenance');
 
   const {
@@ -39,16 +44,10 @@ export default function DataTable() {
           )}
         </div>
       </div>
-      <div className="py-2 rounded bg-neutral-50">
-        <header className="text-sm pl-8 w-full flex flex-col gap-2 sm:flex-row justify-between py-2 border-b border-neutral-200 mb-4 text-neutral-600">
-          <div className="w-full md:w-1/12">{t('id')}</div>
-          <div className="w-full md:w-2/12">{t('type')}</div>
-          <div className="w-full md:w-3/12">{t('transferredFrom')}</div>
-          <div className="w-full md:w-3/12">{t('transferredTo')}</div>
-          <div className="w-full md:w-1/12">{t('location')}</div>
-        </header>
+      <div className="flex flex-col gap-6">
         {Object.entries(eventGroupsFiltered).map(([dateRange, eventGroup]) => (
           <ProvenanceEventRow
+            organizationName={organizationName}
             key={dateRange}
             dateRange={dateRange}
             provenanceEvents={eventGroup}
@@ -62,69 +61,80 @@ export default function DataTable() {
 interface ProvenanceEventRowProps {
   provenanceEvents: LabeledProvenanceEvent[];
   dateRange: string;
+  organizationName?: string;
 }
 
 function ProvenanceEventRow({
   provenanceEvents,
   dateRange,
+  organizationName,
 }: ProvenanceEventRowProps) {
   const t = useTranslations('Provenance');
-  const {setIsVisible, isVisible} = useSlideOut();
 
   return (
-    <div className="border-l-4 mb-16 border-neutral-400">
-      <div className="mb-4 pl-4">
-        <strong>{dateRange}</strong>
+    <div className="flex flex-col md:flex-row gap-4 border-t">
+      <div className="w-1/3 lg:w-1/4 py-2">
+        <div className="sticky top-8">{dateRange}</div>
       </div>
-      <ul className="flex flex-col border-t border-neutral-200">
+      <div className="flex flex-col gap-4 w-2/3 lg:w-3/4 ">
         {provenanceEvents.map(event => (
-          <li
+          <div
             key={event.id}
-            className="list-none pl-4 w-full text-sm md:text-base border-b border-neutral-200 hover:bg-neutral-200 hover:cursor-pointer"
-            onClick={() =>
-              setIsVisible(
-                `eventDescription-${event.id}`,
-                !isVisible(`eventDescription-${event.id}`)
-              )
-            }
+            className="flex flex-col md:flex-row justify-between gap-4 border-b last:border-b-0 py-2"
           >
-            <div
-              id={`eventDescription-${event.id}`}
-              className="w-full flex flex-col gap-2 lg:gap-4 sm:flex-row justify-between items-center py-2"
-            >
-              <>
-                <div className="w-full md:w-1/12 flex flex-col lg:flex-row items-center gap-2">
-                  <div className="flex flex-col gap-2">
-                    <div>
-                      <SelectEventsButton ids={[event.id]}>
-                        {event.label}
-                      </SelectEventsButton>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full md:w-2/12">
-                  <div>{event.types?.map(type => type.name).join(', ')}</div>
-                </div>
-                <div className="w-full md:w-3/12">
-                  {event.transferredFrom?.name}
-                </div>
-                <div className="w-full md:w-3/12">
-                  {event.transferredTo?.name}
-                </div>
-                <div className="w-full md:w-1/12">{event.location?.name}</div>
-              </>
+            <div>
+              <SelectEventsButton ids={[event.id]}>
+                {event.label}
+              </SelectEventsButton>
             </div>
-            <SlideOut id={`eventDescription-${event.id}`}>
-              <div className="w-full py-2 block" id="showProvDescrip">
-                <div className="w-full max-w-2xl flex flex-col">
-                  <strong>{t('descriptionTitle')}</strong>
-                  {event.description || t('noDescription')}
-                </div>
+            <div className="w-2/3">
+              <div>
+                {t('transferredTo')}{' '}
+                <strong>{event.transferredTo?.name}</strong>
               </div>
-            </SlideOut>
-          </li>
+              {event.transferredFrom && (
+                <div>
+                  {t('transferredFrom')}{' '}
+                  <strong>{event.transferredFrom?.name}</strong>
+                </div>
+              )}
+              {event.location && (
+                <div>
+                  {t('location')} <strong>{event.location.name}</strong>
+                </div>
+              )}
+              {event.description && (
+                <>
+                  <SlideOutButton
+                    id={`eventDescription-${event.id}`}
+                    className="italic underline mt-2"
+                  >
+                    {t('readMore')}
+                  </SlideOutButton>
+                  <SlideOut id={`eventDescription-${event.id}`}>
+                    <div className="flex-col max-w-2xl">
+                      <div className="w-full flex justify-end">
+                        <SlideOutButton
+                          id={`eventDescription-${event.id}`}
+                          className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+                        >
+                          <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
+                        </SlideOutButton>
+                      </div>
+                      {event.description}
+                    </div>
+                  </SlideOut>
+                </>
+              )}
+            </div>
+            <div className="w-1/3 text-xs">
+              <div>
+                {t('providedBy')} <strong>{organizationName}</strong>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
