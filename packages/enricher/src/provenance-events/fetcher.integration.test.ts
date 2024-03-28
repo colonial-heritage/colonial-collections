@@ -47,13 +47,48 @@ beforeAll(async () => {
       endDate: '1806',
     },
     description: 'A comment',
-    citation: 'A citation or reference to a work that supports the comment',
+    citation: 'A citation or reference to a work that supports the information',
     inLanguage: 'en',
     about: resourceId,
     pubInfo: {
       creator: {
-        id: 'http://example.com/person1',
-        name: 'Person 1',
+        id: 'http://example.com/person',
+        name: 'Person',
+      },
+      license: 'https://creativecommons.org/licenses/by/4.0/',
+    },
+  });
+
+  await creator.addProvenanceEvent({
+    type: ProvenanceEventType.TransferOfCustody,
+    additionalType: {
+      id: 'http://vocab.getty.edu/aat/300445014',
+      name: 'Returning',
+    },
+    transferredFrom: {
+      id: 'http://www.wikidata.org/entity/Q131691',
+      name: 'Arthur Wellesley',
+    },
+    transferredTo: {
+      id: 'http://www.wikidata.org/entity/Q9439',
+      name: 'Victoria',
+    },
+    location: {
+      id: 'https://sws.geonames.org/2643743/',
+      name: 'London',
+    },
+    date: {
+      startDate: '1850-02',
+      endDate: '1850-07-13',
+    },
+    description: 'Returned to the owner',
+    citation: 'A citation or reference to a work that supports the information',
+    inLanguage: 'en',
+    about: resourceId,
+    pubInfo: {
+      creator: {
+        id: 'http://example.com/person',
+        name: 'Person',
       },
       license: 'https://creativecommons.org/licenses/by/4.0/',
     },
@@ -83,13 +118,23 @@ describe('getById', () => {
       {
         id: expect.stringContaining('https://'),
         type: ProvenanceEventType.Acquisition,
+        about: resourceId,
+        pubInfo: {
+          creator: {
+            id: 'http://example.com/person',
+            name: 'Person',
+          },
+          license: 'https://creativecommons.org/licenses/by/4.0/',
+          dateCreated: expect.any(Date),
+        },
         additionalTypes: [
           {
             id: 'http://vocab.getty.edu/aat/300417642',
             name: 'Purchase',
           },
         ],
-        citation: 'A citation or reference to a work that supports the comment',
+        citation:
+          'A citation or reference to a work that supports the information',
         description: 'A comment',
         inLanguage: 'en',
         date: {
@@ -97,14 +142,57 @@ describe('getById', () => {
           startDate: new Date('1805-01-01T00:00:00.000Z'),
           endDate: new Date('1806-12-31T23:59:59.999Z'),
         },
+        transferredFrom: {
+          id: 'http://www.wikidata.org/entity/Q517',
+          name: 'Napoleon',
+        },
+        transferredTo: {
+          id: 'http://www.wikidata.org/entity/Q171480',
+          name: 'Joséphine de Beauharnais',
+        },
+        location: {
+          id: 'https://sws.geonames.org/2988507/',
+          name: 'Paris',
+        },
+      },
+      {
+        id: expect.stringContaining('https://'),
+        type: ProvenanceEventType.TransferOfCustody,
         about: resourceId,
         pubInfo: {
           creator: {
-            id: 'http://example.com/person1',
-            name: 'Person 1',
+            id: 'http://example.com/person',
+            name: 'Person',
           },
           license: 'https://creativecommons.org/licenses/by/4.0/',
           dateCreated: expect.any(Date),
+        },
+        additionalTypes: [
+          {
+            id: 'http://vocab.getty.edu/aat/300445014',
+            name: 'Returning',
+          },
+        ],
+        citation:
+          'A citation or reference to a work that supports the information',
+        description: 'Returned to the owner',
+        inLanguage: 'en',
+        date: {
+          id: expect.stringContaining('https://'),
+          startDate: new Date('1850-02-01T00:00:00.000Z'),
+          endDate: new Date('1850-07-13T23:59:59.999Z'),
+        },
+        transferredFrom: {
+          id: 'http://www.wikidata.org/entity/Q131691',
+          name: 'Arthur Wellesley',
+        },
+        transferredTo: {
+          id: 'http://www.wikidata.org/entity/Q9439',
+          name: 'Victoria',
+        },
+        location: {
+          id: 'https://sws.geonames.org/2643743/',
+          name: 'London',
         },
       },
     ]);

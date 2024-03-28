@@ -40,24 +40,24 @@ export class ProvenanceEventEnrichmentFetcher {
 
       CONSTRUCT {
         # Need this to easily retrieve the enrichments in the RdfObjectLoader
-        ?source ex:hasEnrichment ?acquisition, ?transferOfCustody .
+        ?source ex:hasEnrichment ?provenanceEvent .
 
-        ?acquisition a ex:Acquisition ;
-          ex:additionalType ?acquisitionType ;
+        ?provenanceEvent a ?type ;
+          ex:additionalType ?additionalType ;
           ex:transferredFrom ?transferredTitleFrom ;
           ex:transferredTo ?transferredTitleTo ;
-          ex:location ?acquisitionLocation ;
-          ex:date ?acquisitionTimeSpan ;
-          ex:description ?acquisitionDescription ;
-          ex:citation ?acquisitionCitation ;
-          ex:inLanguage ?acquisitionLanguage ;
+          ex:location ?location ;
+          ex:date ?timeSpan ;
+          ex:description ?description ;
+          ex:citation ?citation ;
+          ex:inLanguage ?language ;
           ex:about ?source ;
           ex:license ?license ;
           ex:creator ?creator ;
           ex:dateCreated ?dateCreated .
 
-        ?acquisitionType a ex:Term ;
-          ex:name ?acquisitionTypeName .
+        ?additionalType a ex:Term ;
+          ex:name ?additionalTypeName .
 
         ?transferredTitleFrom a ex:Actor ;
           ex:name ?transferredTitleFromName .
@@ -65,45 +65,15 @@ export class ProvenanceEventEnrichmentFetcher {
         ?transferredTitleTo a ex:Actor ;
           ex:name ?transferredTitleToName .
 
-        ?acquisitionLocation a ex:Place ;
-          ex:name ?acquisitionLocationName .
+        ?location a ex:Place ;
+          ex:name ?locationName .
 
-        ?acquisitionTimeSpan a ex:TimeSpan ;
-          ex:startDate ?acquisitionBeginOfTheBegin ;
-          ex:endDate ?acquisitionEndOfTheEnd .
+        ?timeSpan a ex:TimeSpan ;
+          ex:startDate ?beginOfTheBegin ;
+          ex:endDate ?endOfTheEnd .
 
         ?creator a ex:Actor ;
           ex:name ?creatorName .
-
-        ?transferOfCustody a ex:TransferOfCustody ;
-          ex:additionalType ?transferOfCustodyType ;
-          ex:transferredFrom ?custodySurrenderedBy ;
-          ex:transferredTo ?custodyReceivedBy ;
-          ex:location ?transferOfCustodyLocation ;
-          ex:date ?transferOfCustodyTimeSpan ;
-          ex:description ?transferOfCustodyDescription ;
-          ex:citation ?transferOfCustodyCitation ;
-          ex:inLanguage ?transferOfCustodyLanguage ;
-          ex:about ?source ;
-          ex:license ?license ;
-          ex:creator ?creator ;
-          ex:dateCreated ?dateCreated .
-
-        ?transferOfCustodyType a ex:Term ;
-          ex:name ?transferOfCustodyTypeName .
-
-        ?custodySurrenderedBy a ex:Actor ;
-          ex:name ?custodySurrenderedByName .
-
-        ?custodyReceivedBy a ex:Actor ;
-          ex:name ?custodyReceivedByName .
-
-        ?transferOfCustodyLocation a ex:Place ;
-          ex:name ?transferOfCustodyLocationName .
-
-        ?transferOfCustodyTimeSpan a ex:TimeSpan ;
-          ex:startDate ?transferOfCustodyBeginOfTheBegin ;
-          ex:endDate ?transferOfCustodyEndOfTheEnd .
       }
       WHERE {
         BIND(<${iri}> AS ?source)
@@ -129,97 +99,69 @@ export class ProvenanceEventEnrichmentFetcher {
 
         graph ?assertion {
           {
-            ?acquisition a crm:E8_Acquisition ;
+            ?provenanceEvent a crm:E8_Acquisition ;
               crm:P24_transferred_title_of ?source .
 
-            OPTIONAL {
-              ?acquisition crm:P2_has_type ?acquisitionType .
-              ?acquisitionType rdfs:label ?acquisitionTypeName .
-            }
+            BIND(ex:Acquisition AS ?type)
 
             OPTIONAL {
-              ?acquisition crm:P22_transferred_title_to ?transferredTitleTo .
-              ?transferredTitleTo rdfs:label ?transferredTitleToName .
-            }
-
-            OPTIONAL {
-              ?acquisition crm:P23_transferred_title_from ?transferredTitleFrom .
+              ?provenanceEvent crm:P23_transferred_title_from ?transferredTitleFrom .
               ?transferredTitleFrom rdfs:label ?transferredTitleFromName .
             }
 
             OPTIONAL {
-              ?acquisition crm:P7_took_place_at ?acquisitionLocation .
-              ?acquisitionLocation rdfs:label ?acquisitionLocationName .
-            }
-
-            OPTIONAL {
-              ?acquisition crm:P4_has_time-span ?acquisitionTimeSpan .
-              ?acquisitionTimeSpan crm:P82a_begin_of_the_begin ?acquisitionBeginOfTheBegin ;
-                crm:P82b_end_of_the_end ?acquisitionEndOfTheEnd .
-            }
-
-            OPTIONAL {
-              ?acquisition crm:P67i_is_referred_to_by [
-                crm:P2_has_type <http://vocab.getty.edu/aat/300444174> ; # Provenance statement
-                crm:P190_has_symbolic_content ?acquisitionDescription ;
-              ] .
-
-              BIND(LANG(?acquisitionDescription) AS ?acquisitionLanguage)
-            }
-
-            OPTIONAL {
-              ?acquisition crm:P67i_is_referred_to_by [
-                crm:P2_has_type <http://vocab.getty.edu/aat/300435423> ; # Citation
-                crm:P190_has_symbolic_content ?acquisitionCitation ;
-              ] .
+              ?provenanceEvent crm:P22_transferred_title_to ?transferredTitleTo .
+              ?transferredTitleTo rdfs:label ?transferredTitleToName .
             }
           }
           UNION
           {
-            ?transferOfCustody a crm:E10_Transfer_of_Custody ;
+            ?provenanceEvent a crm:E10_Transfer_of_Custody ;
               crm:P30_transferred_custody_of ?source .
 
+            BIND(ex:TransferOfCustody AS ?type)
+
             OPTIONAL {
-              ?transferOfCustody crm:P28_custody_surrendered_by ?custodySurrenderedBy .
-              ?custodySurrenderedBy rdfs:label ?custodySurrenderedByName .
+              ?provenanceEvent crm:P28_custody_surrendered_by ?transferredTitleFrom .
+              ?transferredTitleFrom rdfs:label ?transferredTitleFromName .
             }
 
             OPTIONAL {
-              ?transferOfCustody crm:P29_custody_received_by ?custodyReceivedBy .
-              ?custodyReceivedBy rdfs:label ?custodyReceivedByName .
+              ?provenanceEvent crm:P29_custody_received_by ?transferredTitleTo .
+              ?transferredTitleTo rdfs:label ?transferredTitleToName .
             }
+          }
 
-            OPTIONAL {
-              ?transferOfCustody crm:P2_has_type ?transferOfCustodyType .
-              ?transferOfCustodyType rdfs:label ?transferOfCustodyTypeName .
-            }
+          OPTIONAL {
+            ?provenanceEvent crm:P2_has_type ?additionalType .
+            ?additionalType rdfs:label ?additionalTypeName .
+          }
 
-            OPTIONAL {
-              ?transferOfCustody crm:P7_took_place_at ?transferOfCustodyLocation .
-              ?transferOfCustodyLocation rdfs:label ?transferOfCustodyLocationName .
-            }
+          OPTIONAL {
+            ?provenanceEvent crm:P7_took_place_at ?location .
+            ?location rdfs:label ?locationName .
+          }
 
-            OPTIONAL {
-              ?transferOfCustody crm:P4_has_time-span ?transferOfCustodyTimeSpan .
-              ?transferOfCustodyTimeSpan crm:P82a_begin_of_the_begin ?transferOfCustodyBeginOfTheBegin ;
-                crm:P82b_end_of_the_end ?transferOfCustodyEndOfTheEnd .
-            }
+          OPTIONAL {
+            ?provenanceEvent crm:P4_has_time-span ?timeSpan .
+            ?timeSpan crm:P82a_begin_of_the_begin ?beginOfTheBegin ;
+              crm:P82b_end_of_the_end ?endOfTheEnd .
+          }
 
-            OPTIONAL {
-              ?transferOfCustody crm:P67i_is_referred_to_by [
-                crm:P2_has_type <http://vocab.getty.edu/aat/300444174> ; # Provenance statement
-                crm:P190_has_symbolic_content ?transferOfCustodyDescription ;
-              ] .
+          OPTIONAL {
+            ?provenanceEvent crm:P67i_is_referred_to_by [
+              crm:P2_has_type <http://vocab.getty.edu/aat/300444174> ; # Provenance statement
+              crm:P190_has_symbolic_content ?description ;
+            ] .
 
-              BIND(LANG(?transferOfCustodyDescription) AS ?transferOfCustodyLanguage)
-            }
+            BIND(LANG(?description) AS ?language)
+          }
 
-            OPTIONAL {
-              ?transferOfCustody crm:P67i_is_referred_to_by [
-                crm:P2_has_type <http://vocab.getty.edu/aat/300435423> ; # Citation
-                crm:P190_has_symbolic_content ?transferOfCustodyCitation ;
-              ] .
-            }
+          OPTIONAL {
+            ?provenanceEvent crm:P67i_is_referred_to_by [
+              crm:P2_has_type <http://vocab.getty.edu/aat/300435423> ; # Citation
+              crm:P190_has_symbolic_content ?citation ;
+            ] .
           }
         }
       }

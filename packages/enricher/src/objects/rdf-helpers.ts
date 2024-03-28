@@ -1,11 +1,11 @@
-import {ontologyVersionIdentifier, ontologyUrl} from '../definitions';
+import {ontologyVersionIdentifier, ontologyUrl, Agent} from '../definitions';
 import {
   HeritageObjectEnrichment,
   HeritageObjectEnrichmentType,
 } from './definitions';
 import {
-  createAgents,
   createDates,
+  createThings,
   getPropertyValue,
   onlyOne,
 } from '../rdf-helpers';
@@ -40,7 +40,7 @@ function fromClassToType(className: string | undefined) {
 export function toHeritageObjectEnrichment(rawEnrichment: Resource) {
   const additionalType = getPropertyValue(rawEnrichment, 'ex:additionalType');
   const about = getPropertyValue(rawEnrichment, 'ex:isPartOf')!;
-  const creator = onlyOne(createAgents(rawEnrichment, 'ex:creator'))!;
+  const creator = onlyOne(createThings<Agent>(rawEnrichment, 'ex:creator'))!;
   const license = getPropertyValue(rawEnrichment, 'ex:license')!;
   const dateCreated = onlyOne(createDates(rawEnrichment, 'ex:dateCreated'))!;
 
@@ -55,20 +55,9 @@ export function toHeritageObjectEnrichment(rawEnrichment: Resource) {
     },
   };
 
-  const citation = getPropertyValue(rawEnrichment, 'ex:citation');
-  if (citation !== undefined) {
-    enrichment.citation = citation;
-  }
-
-  const description = getPropertyValue(rawEnrichment, 'ex:description');
-  if (description !== undefined) {
-    enrichment.description = description;
-  }
-
-  const inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
-  if (inLanguage !== undefined) {
-    enrichment.inLanguage = inLanguage;
-  }
+  enrichment.citation = getPropertyValue(rawEnrichment, 'ex:citation');
+  enrichment.description = getPropertyValue(rawEnrichment, 'ex:description');
+  enrichment.inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
 
   const enrichmentWithoutNullishValues = defu(enrichment, {});
 

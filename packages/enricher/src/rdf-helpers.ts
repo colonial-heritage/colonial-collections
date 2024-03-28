@@ -1,4 +1,3 @@
-import {Agent} from './definitions';
 import type {Resource} from 'rdf-object';
 
 export function onlyOne<T>(items: T[] | undefined) {
@@ -17,6 +16,24 @@ export function getPropertyValue(resource: Resource, propertyName: string) {
   return property.value;
 }
 
+function createThing<T>(thingResource: Resource) {
+  const name = getPropertyValue(thingResource, 'ex:name');
+
+  const thing = {
+    id: thingResource.value,
+    name,
+  };
+
+  return thing as T;
+}
+
+export function createThings<T>(resource: Resource, propertyName: string) {
+  const properties = resource.properties[propertyName];
+  const things = properties.map(property => createThing<T>(property));
+
+  return things.length > 0 ? things : undefined;
+}
+
 function createDate(resource: Resource) {
   const date = new Date(resource.term.value);
 
@@ -28,22 +45,4 @@ export function createDates(resource: Resource, propertyName: string) {
   const dates = properties.map(property => createDate(property));
 
   return dates.length > 0 ? dates : undefined;
-}
-
-function createAgent(agentResource: Resource) {
-  const name = getPropertyValue(agentResource, 'ex:name');
-
-  const agent: Agent = {
-    id: agentResource.value,
-    name,
-  };
-
-  return agent;
-}
-
-export function createAgents(resource: Resource, propertyName: string) {
-  const properties = resource.properties[propertyName];
-  const agents = properties.map(property => createAgent(property));
-
-  return agents.length > 0 ? agents : undefined;
 }

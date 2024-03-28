@@ -1,38 +1,18 @@
-import {Term} from '../definitions';
+import {Agent, Place, Term} from '../definitions';
 import {
   ProvenanceEventEnrichment,
   ProvenanceEventType,
   TimeSpan,
 } from './definitions';
 import {
-  createAgents,
   createDates,
+  createThings,
   getPropertyValue,
   onlyOne,
 } from '../rdf-helpers';
 import {defu} from 'defu';
 import edtf from 'edtf';
 import type {Resource} from 'rdf-object';
-
-function createThingFromProperty<T>(thingResource: Resource) {
-  const name = getPropertyValue(thingResource, 'ex:name');
-
-  const thing = {
-    id: thingResource.value,
-    name,
-  };
-
-  return thing as T;
-}
-
-function createThings<T>(resource: Resource, propertyName: string) {
-  const properties = resource.properties[propertyName];
-  const things = properties.map(property =>
-    createThingFromProperty<T>(property)
-  );
-
-  return things.length > 0 ? things : undefined;
-}
 
 function fromStringToEdtf(dateValue: string | undefined) {
   if (dateValue !== undefined) {
@@ -77,7 +57,7 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
       : ProvenanceEventType.TransferOfCustody;
 
   const about = getPropertyValue(rawEnrichment, 'ex:about')!;
-  const creator = onlyOne(createAgents(rawEnrichment, 'ex:creator'))!;
+  const creator = onlyOne(createThings<Agent>(rawEnrichment, 'ex:creator'))!;
   const license = getPropertyValue(rawEnrichment, 'ex:license')!;
   const dateCreated = onlyOne(createDates(rawEnrichment, 'ex:dateCreated'))!;
 
@@ -92,33 +72,23 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
     },
   };
 
-  const additionalTypes = createThings<Term>(
+  enrichment.additionalTypes = createThings<Term>(
     rawEnrichment,
     'ex:additionalType'
   );
-  if (additionalTypes !== undefined) {
-    enrichment.additionalTypes = additionalTypes;
-  }
-
-  const citation = getPropertyValue(rawEnrichment, 'ex:citation');
-  if (citation !== undefined) {
-    enrichment.citation = citation;
-  }
-
-  const description = getPropertyValue(rawEnrichment, 'ex:description');
-  if (description !== undefined) {
-    enrichment.description = description;
-  }
-
-  const inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
-  if (inLanguage !== undefined) {
-    enrichment.inLanguage = inLanguage;
-  }
-
-  const date = onlyOne(createTimeSpans(rawEnrichment, 'ex:date'));
-  if (date !== undefined) {
-    enrichment.date = date;
-  }
+  enrichment.citation = getPropertyValue(rawEnrichment, 'ex:citation');
+  enrichment.description = getPropertyValue(rawEnrichment, 'ex:description');
+  enrichment.inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
+  enrichment.date = onlyOne(createTimeSpans(rawEnrichment, 'ex:date'));
+  enrichment.transferredFrom = onlyOne(
+    createThings<Agent>(rawEnrichment, 'ex:transferredFrom')
+  );
+  enrichment.transferredTo = onlyOne(
+    createThings<Agent>(rawEnrichment, 'ex:transferredTo')
+  );
+  enrichment.location = onlyOne(
+    createThings<Place>(rawEnrichment, 'ex:location')
+  );
 
   const enrichmentWithoutNullishValues = defu(enrichment, {});
 

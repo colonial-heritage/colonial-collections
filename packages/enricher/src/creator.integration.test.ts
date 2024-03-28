@@ -65,7 +65,8 @@ describe('addProvenanceEvent', () => {
         endDate: '1806',
       },
       description: 'A comment',
-      citation: 'A citation or reference to a work that supports the comment',
+      citation:
+        'A citation or reference to a work that supports the information',
       inLanguage: 'en',
       about: 'http://example.org/object',
       pubInfo: {
