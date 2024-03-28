@@ -11,7 +11,7 @@ import organizations from '@/lib/organizations-instance';
 import {Notifications} from '@colonial-collections/ui';
 import useObject from './use-object';
 import ObjectListsMenu from './object-lists-menu';
-import {fetcher} from '@/lib/enricher-instances';
+import {heritageObjectEnrichmentFetcher} from '@/lib/enricher-instances';
 import {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
 import ISO6391, {LanguageCode} from 'iso-639-1';
 import Provenance from './(provenance)/overview';
@@ -37,7 +37,7 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  const enrichments = await fetcher.getById(id);
+  const enrichments = await heritageObjectEnrichmentFetcher.getById(id);
   useObject.setState({objectId: object.id, locale, enrichments});
   const enrichmentsAboutName = enrichments?.filter(
     enrichment => enrichment.type === HeritageObjectEnrichmentType.Name

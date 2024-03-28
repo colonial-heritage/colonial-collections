@@ -4,6 +4,7 @@ import {
   Place,
   PubInfo,
   Term,
+  TimeSpan,
 } from '../definitions';
 import {z} from 'zod';
 
@@ -65,12 +66,6 @@ export const fullProvenanceEventEnrichmentBeingCreatedSchema =
 export type FullProvenanceEventEnrichmentBeingCreated = z.infer<
   typeof fullProvenanceEventEnrichmentBeingCreatedSchema
 >;
-
-export type TimeSpan = {
-  id: string;
-  startDate?: Date;
-  endDate?: Date;
-};
 
 export type ProvenanceEventEnrichment = {
   id: string;

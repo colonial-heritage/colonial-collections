@@ -34,6 +34,12 @@ export type Term = Thing;
 export type Place = Thing;
 export type Agent = Thing;
 
+export type TimeSpan = {
+  id: string;
+  startDate?: Date;
+  endDate?: Date;
+};
+
 export type PubInfo = {
   creator: Agent;
   license: string;
