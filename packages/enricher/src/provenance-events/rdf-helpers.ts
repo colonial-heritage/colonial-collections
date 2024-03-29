@@ -22,35 +22,40 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
   const creator = onlyOne(createThings<Agent>(rawEnrichment, 'ex:creator'))!;
   const license = getPropertyValue(rawEnrichment, 'ex:license')!;
   const dateCreated = onlyOne(createDates(rawEnrichment, 'ex:dateCreated'))!;
+  const citation = getPropertyValue(rawEnrichment, 'ex:citation');
+  const description = getPropertyValue(rawEnrichment, 'ex:description');
+  const inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
+  const location = onlyOne(createThings<Place>(rawEnrichment, 'ex:location'));
+  const transferredFrom = onlyOne(
+    createThings<Agent>(rawEnrichment, 'ex:transferredFrom')
+  );
+  const transferredTo = onlyOne(
+    createThings<Agent>(rawEnrichment, 'ex:transferredTo')
+  );
+  const date = onlyOne(createTimeSpans(rawEnrichment, 'ex:date'));
+  const additionalTypes = createThings<Term>(
+    rawEnrichment,
+    'ex:additionalType'
+  );
 
   const enrichment: ProvenanceEventEnrichment = {
     id,
     type,
+    additionalTypes,
     about,
+    citation,
+    description,
+    inLanguage,
+    location,
+    transferredFrom,
+    transferredTo,
+    date,
     pubInfo: {
       creator,
       license,
       dateCreated,
     },
   };
-
-  enrichment.additionalTypes = createThings<Term>(
-    rawEnrichment,
-    'ex:additionalType'
-  );
-  enrichment.citation = getPropertyValue(rawEnrichment, 'ex:citation');
-  enrichment.description = getPropertyValue(rawEnrichment, 'ex:description');
-  enrichment.inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
-  enrichment.date = onlyOne(createTimeSpans(rawEnrichment, 'ex:date'));
-  enrichment.transferredFrom = onlyOne(
-    createThings<Agent>(rawEnrichment, 'ex:transferredFrom')
-  );
-  enrichment.transferredTo = onlyOne(
-    createThings<Agent>(rawEnrichment, 'ex:transferredTo')
-  );
-  enrichment.location = onlyOne(
-    createThings<Place>(rawEnrichment, 'ex:location')
-  );
 
   const enrichmentWithoutNullishValues = defu(enrichment, {});
 

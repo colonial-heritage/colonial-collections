@@ -56,7 +56,7 @@ export class HeritageObjectEnrichmentFetcher {
           ex:creator ?creator ;
           ex:dateCreated ?dateCreated .
 
-        ?creator a ex:Agent ;
+        ?creator a ex:Actor ;
           ex:name ?creatorName .
       }
       WHERE {

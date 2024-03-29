@@ -56,7 +56,7 @@ export class ProvenanceEventEnrichmentFetcher {
           ex:creator ?creator ;
           ex:dateCreated ?dateCreated .
 
-        ?additionalType a ex:Term ;
+        ?additionalType a ex:DefinedTerm ;
           ex:name ?additionalTypeName .
 
         ?transferredTitleFrom a ex:Actor ;

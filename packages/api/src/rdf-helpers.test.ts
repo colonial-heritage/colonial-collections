@@ -41,10 +41,10 @@ beforeAll(async () => {
       ex:locationCreated ex:location1, ex:location2 ;
       ex:isPartOf ex:dataset1, ex:dataset2, ex:dataset3 .
 
-    ex:subject1 a ex:Term ;
+    ex:subject1 a ex:DefinedTerm ;
       ex:name "Term" .
 
-    ex:subject2 a ex:Term .
+    ex:subject2 a ex:DefinedTerm .
 
     ex:creator1 a ex:Person ;
       ex:name "Person" .

@@ -30,10 +30,10 @@ beforeAll(async () => {
       ex:dateCreated "2023-01-01"^^xsd:date ;
       ex:timeSpan ex:timeSpan1, ex:timeSpan2, ex:timeSpan3, ex:timeSpan4 .
 
-    ex:type1 a ex:Term ;
+    ex:type1 a ex:DefinedTerm ;
       ex:name "Term" .
 
-    ex:type2 a ex:Term .
+    ex:type2 a ex:DefinedTerm .
 
     ex:timeSpan1 a ex:TimeSpan ;
       ex:startDate "-1900"^^xsd:gYear ;

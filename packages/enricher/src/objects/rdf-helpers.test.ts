@@ -1,5 +1,6 @@
-import {ProvenanceEventType} from './definitions';
-import {toProvenanceEventEnrichment} from './rdf-helpers';
+import {ontologyUrl, ontologyVersionIdentifier} from '../definitions';
+import {HeritageObjectEnrichmentType} from './definitions';
+import {toHeritageObjectEnrichment} from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
 import {StreamParser} from 'n3';
 import {RdfObjectLoader, Resource} from 'rdf-object';
@@ -20,48 +21,26 @@ beforeAll(async () => {
     @prefix ex: <https://example.org/> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-    ex:basicEnrichment a ex:TransferOfCustody ;
-      ex:about <https://example.com/object> ;
+    ex:basicEnrichment a ex:HeritageObjectEnrichment ;
+      ex:additionalType <${ontologyUrl}Material${ontologyVersionIdentifier}> ;
+      ex:isPartOf <https://example.com/object> ;
       ex:creator ex:creator1 ;
       ex:license <https://example.com/license> ;
       ex:dateCreated "2023-01-01"^^xsd:date .
 
-    ex:fullEnrichment a ex:Acquisition ;
-      ex:about <https://example.com/object> ;
+    ex:fullEnrichment a ex:HeritageObjectEnrichment ;
+      ex:additionalType <${ontologyUrl}Material${ontologyVersionIdentifier}> ;
+      ex:isPartOf <https://example.com/object> ;
       ex:creator ex:creator1 ;
       ex:license <https://example.com/license> ;
       ex:dateCreated "2023-01-01"^^xsd:date ;
-      ex:additionalType ex:additionalType1 ;
       ex:citation "Citation" ;
       ex:description "Description" ;
-      ex:inLanguage "en" ;
-      ex:date ex:timeSpan1 ;
-      ex:transferredFrom ex:transferredFrom1 ;
-      ex:transferredTo ex:transferredTo1 ;
-      ex:location ex:location1 .
+      ex:inLanguage "en" .
 
     ex:creator1 a ex:Actor ;
       ex:id <https://example.com/creator> ;
       ex:name "Creator Name" .
-
-    ex:additionalType1 a ex:DefinedTerm ;
-      ex:name "Term Name" .
-
-    ex:timeSpan1 a ex:TimeSpan ;
-      ex:startDate "1889"^^xsd:gYear ;
-      ex:endDate "1900"^^xsd:gYear .
-
-    ex:transferredFrom1 a ex:Actor ;
-      ex:id <https://example.com/transferredFrom> ;
-      ex:name "Transferred From Name" .
-
-    ex:transferredTo1 a ex:Actor ;
-      ex:id <https://example.com/transferredTo> ;
-      ex:name "Transferred To Name" .
-
-    ex:location1 a ex:Place ;
-      ex:id <https://example.com/location> ;
-      ex:name "Location Name" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -75,13 +54,13 @@ beforeAll(async () => {
     loader.resources['https://example.org/fullEnrichment'];
 });
 
-describe('toProvenanceEventEnrichment', () => {
+describe('toHeritageObjectEnrichment', () => {
   it('returns a basic enrichment', () => {
-    const enrichment = toProvenanceEventEnrichment(basicEnrichmentResource);
+    const enrichment = toHeritageObjectEnrichment(basicEnrichmentResource);
 
     expect(enrichment).toStrictEqual({
       id: 'https://example.org/basicEnrichment',
-      type: ProvenanceEventType.TransferOfCustody,
+      type: HeritageObjectEnrichmentType.Material,
       about: 'https://example.com/object',
       pubInfo: {
         creator: {
@@ -95,11 +74,11 @@ describe('toProvenanceEventEnrichment', () => {
   });
 
   it('returns a full enrichment', () => {
-    const enrichment = toProvenanceEventEnrichment(fullEnrichmentResource);
+    const enrichment = toHeritageObjectEnrichment(fullEnrichmentResource);
 
     expect(enrichment).toStrictEqual({
       id: 'https://example.org/fullEnrichment',
-      type: ProvenanceEventType.Acquisition,
+      type: HeritageObjectEnrichmentType.Material,
       about: 'https://example.com/object',
       pubInfo: {
         creator: {
@@ -109,32 +88,9 @@ describe('toProvenanceEventEnrichment', () => {
         license: 'https://example.com/license',
         dateCreated: new Date('2023-01-01T00:00:00.000Z'),
       },
-      additionalTypes: [
-        {
-          id: 'https://example.org/additionalType1',
-          name: 'Term Name',
-        },
-      ],
       citation: 'Citation',
       description: 'Description',
       inLanguage: 'en',
-      date: {
-        id: 'https://example.org/timeSpan1',
-        startDate: new Date('1889-01-01T00:00:00.000Z'),
-        endDate: new Date('1900-12-31T23:59:59.999Z'),
-      },
-      transferredFrom: {
-        id: 'https://example.org/transferredFrom1',
-        name: 'Transferred From Name',
-      },
-      transferredTo: {
-        id: 'https://example.org/transferredTo1',
-        name: 'Transferred To Name',
-      },
-      location: {
-        id: 'https://example.org/location1',
-        name: 'Location Name',
-      },
     });
   });
 });

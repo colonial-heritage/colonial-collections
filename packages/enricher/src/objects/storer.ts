@@ -4,7 +4,7 @@ import {
   fullHeritageObjectEnrichmentBeingCreatedSchema,
   FullHeritageObjectEnrichmentBeingCreated,
 } from './definitions';
-import {fromTypeToClass} from './rdf-helpers';
+import {fromTypeToClass} from './helpers';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
 import {z} from 'zod';
