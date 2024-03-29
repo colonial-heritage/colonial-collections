@@ -1,3 +1,4 @@
+import {ProvenanceEventType} from '../definitions';
 import {ProvenanceEventsFetcher} from './fetcher';
 import {beforeEach, describe, expect, it} from '@jest/globals';
 import {env} from 'node:process';
@@ -46,7 +47,8 @@ describe('getByHeritageObjectId', () => {
       expect.arrayContaining([
         {
           id: 'https://example.org/objects/1/provenance/event/3/activity/1',
-          types: expect.arrayContaining([
+          type: ProvenanceEventType.TransferOfCustody,
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300055292',
               name: 'theft (social issue)',
@@ -75,7 +77,8 @@ describe('getByHeritageObjectId', () => {
         },
         {
           id: 'https://example.org/objects/1/provenance/event/5/activity/1',
-          types: expect.arrayContaining([
+          type: ProvenanceEventType.Acquisition,
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417642',
               name: 'purchase (method of acquisition)',
@@ -112,7 +115,8 @@ describe('getByHeritageObjectId', () => {
         },
         {
           id: 'https://example.org/objects/1/provenance/event/4/activity/1',
-          types: expect.arrayContaining([
+          type: ProvenanceEventType.TransferOfCustody,
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300445014',
               name: 'returning',
@@ -142,7 +146,8 @@ describe('getByHeritageObjectId', () => {
         },
         {
           id: 'https://example.org/objects/1/provenance/event/2/activity/1',
-          types: expect.arrayContaining([
+          type: ProvenanceEventType.Acquisition,
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417642',
               name: 'purchase (method of acquisition)',
@@ -179,7 +184,8 @@ describe('getByHeritageObjectId', () => {
         },
         {
           id: 'https://example.org/objects/1/provenance/event/1/activity/1',
-          types: expect.arrayContaining([
+          type: ProvenanceEventType.Acquisition,
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417644',
               name: 'transfer (method of acquisition)',
@@ -236,7 +242,7 @@ describe('get with localized names', () => {
       expect.arrayContaining([
         expect.objectContaining({
           id: 'https://example.org/objects/1/provenance/event/3/activity/1',
-          types: expect.arrayContaining([
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300055292',
               name: 'theft (social issue)',
@@ -245,7 +251,7 @@ describe('get with localized names', () => {
         }),
         expect.objectContaining({
           id: 'https://example.org/objects/1/provenance/event/5/activity/1',
-          types: expect.arrayContaining([
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417642',
               name: 'purchase (method of acquisition)',
@@ -254,7 +260,7 @@ describe('get with localized names', () => {
         }),
         expect.objectContaining({
           id: 'https://example.org/objects/1/provenance/event/4/activity/1',
-          types: expect.arrayContaining([
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300445014',
               name: 'returning',
@@ -263,7 +269,7 @@ describe('get with localized names', () => {
         }),
         expect.objectContaining({
           id: 'https://example.org/objects/1/provenance/event/2/activity/1',
-          types: expect.arrayContaining([
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417642',
               name: 'purchase (method of acquisition)',
@@ -272,7 +278,7 @@ describe('get with localized names', () => {
         }),
         expect.objectContaining({
           id: 'https://example.org/objects/1/provenance/event/1/activity/1',
-          types: expect.arrayContaining([
+          additionalTypes: expect.arrayContaining([
             {
               id: 'http://vocab.getty.edu/aat/300417642',
               name: 'purchase (method of acquisition)',
@@ -299,7 +305,7 @@ describe('get with localized names', () => {
       expect.arrayContaining([
         expect.objectContaining({
           id: 'https://example.org/objects/1/provenance/event/3/activity/1',
-          types: [
+          additionalTypes: [
             {
               id: 'http://vocab.getty.edu/aat/300055292',
               name: 'diefstal',

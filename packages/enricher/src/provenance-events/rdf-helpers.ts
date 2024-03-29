@@ -11,6 +11,7 @@ import {defu} from 'defu';
 import type {Resource} from 'rdf-object';
 
 export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
+  const id = rawEnrichment.value;
   const rawType = getPropertyValue(rawEnrichment, 'rdf:type');
   const type =
     rawType === 'https://example.org/Acquisition'
@@ -23,7 +24,7 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
   const dateCreated = onlyOne(createDates(rawEnrichment, 'ex:dateCreated'))!;
 
   const enrichment: ProvenanceEventEnrichment = {
-    id: rawEnrichment.value,
+    id,
     type,
     about,
     pubInfo: {
