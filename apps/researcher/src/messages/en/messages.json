@@ -226,9 +226,9 @@
   },
   "Communities": {
     "title": "Communities",
-    "pageDescription": "Communities are groups of people that represent a specific culture or geographical area. They can collect lists of objects that are meaningfull to their community.",
+    "pageDescription": "Heritage communities are groups of people representing a specific culture or geographical area, or that connect to certain heritage for intrinsic reasons. On this platform, a community can make lists of objects and records that are meaningful to them, and provide them with context and perspectives.\n\nThe option to make a community is a direct response to the wishes expressed in an international user workshop for this platform. Since the workshop also brought forward the wish to have multiple perspectives coexist on the platform, a community is not an all-encompassing claim to representation, but rather an inclusive collaborative effort.",
     "yourCommunityTitle": "Your communities",
-    "yourCommunityText": "Use the filters below to discover communities that resonate with you. Selecting a community will give you a closer look; from there, you can join and contribute. Can't find your community represented?",
+    "yourCommunityText": "Use the search bar and filters below to discover communities that resonate with you. Selecting a community will give you a closer look at its lists of objects, and give you the option to join and contribute. Would you like to make a community?",
     "yourCommunityTextSignedOut": "With an account you can join a community or create one yourself.",
     "error": "Something went wrong while fetching communities. Please try again later.",
     "communityName": "Community of <name></name>",
