@@ -229,7 +229,7 @@
     "pageDescription": "Erfgoedgemeenschappen zijn groepen mensen die een specifieke cultuur of geografisch gebied vertegenwoordigen, of die om intrinsieke redenen verbonden zijn met bepaald erfgoed. Op dit platform kan een community lijsten maken van objecten en records die voor hen betekenisvol zijn, en deze voorzien van context en perspectieven.\n\nDe mogelijkheid om een community te maken is een direct antwoord op de wensen die naar voren kwamen in een internationale gebruikersworkshop voor dit platform. Aangezien de workshop ook de wens naar voren bracht om meerdere perspectieven naast elkaar te laten bestaan op het platform, is een community geen allesomvattende claim tot representatie, maar een inclusieve samenwerking.",
     "yourCommunityTitle": "Jouw communities",
     "yourCommunityText": "Gebruik de zoekbalk en filters hieronder om gemeenschappen te ontdekken waar jij je thuis bij voelt. Als je een community selecteert, krijg je een beter beeld van de lijsten met objecten en kun je lid worden en bijdragen leveren. Wil je een community aanmaken?",
-    "yourCommunityTextSignedOut": "Met een account kun je lid worden van een community of er zelf een community aanmaken.",
+    "yourCommunityTextSignedOut": "Met een account kun je lid worden van een community of er zelf een aanmaken.",
     "error": "Er is een fout opgetreden bij het ophalen van de communities. Probeer het later opnieuw.",
     "communityName": "Community van <name></name>",
     "membershipCount": "{count, plural, =0 {0 leden} =1 {1 lid} other {# leden}}",
