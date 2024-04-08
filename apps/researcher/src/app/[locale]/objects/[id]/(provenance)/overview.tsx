@@ -8,6 +8,9 @@ import {ToggleViewButtons} from './buttons';
 import {LocaleEnum} from '@/definitions';
 import useObject from '../use-object';
 import dynamic from 'next/dynamic';
+import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
+import {XMarkIcon} from '@heroicons/react/24/outline';
+import AddProvenanceForm from './add-form';
 
 // SSR needs to be false for plugin 'react-headless-timeline'
 const Timeline = dynamic(() => import('./timeline'), {
@@ -57,11 +60,32 @@ export default async function Provenance({objectId}: {objectId: string}) {
             {t('description')}
           </p>
           <div className="flex justify-between items-center my-6">
-            <div>{/* Place 'Add provenance' button here */}</div>
+            <div>
+              <SlideOutButton
+                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+                id="addProvenance"
+              >
+                {t('addProvenanceButton')}
+              </SlideOutButton>
+            </div>
             <div className=" flex gap-1">
               <ToggleViewButtons />
             </div>
           </div>
+          <SlideOut id="addProvenance">
+            <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-300 text-neutral-800 flex-col flex">
+              <div className="flex justify-between items-center border-b  -mx-4 px-4 pb-2">
+                <h3 className="">{t('addProvenanceTitle')}</h3>
+                <SlideOutButton
+                  id="addProvenance"
+                  className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+                >
+                  <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
+                </SlideOutButton>
+              </div>
+              <AddProvenanceForm objectId={objectId} />
+            </div>
+          </SlideOut>
           <Timeline />
           <DataTable organizationName={organization?.name} />
         </div>

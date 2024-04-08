@@ -12,7 +12,7 @@ import {useLocale, useTranslations} from 'next-intl';
 import {z} from 'zod';
 import {addUserEnrichment} from './actions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
-import LanguageSelector from '@/components/language-selector';
+import LanguageSelector from '@/components/form';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
 import {Suspense, useMemo} from 'react';
 import {useUser} from '@clerk/nextjs';

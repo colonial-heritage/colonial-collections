@@ -155,7 +155,9 @@
     "hideTimelineButton": "Tijdlijn verbergen",
     "showDataTableButton": "Datatabel weergeven",
     "hideDataTableButton": "Datatabel verbergen",
-    "noDescription": "Geen beschrijving"
+    "noDescription": "Geen beschrijving",
+    "addProvenanceButton": "Herkomstgebeurtenis toevoegen",
+    "addProvenanceTitle": "Herkomstgebeurtenis toevoegen"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",

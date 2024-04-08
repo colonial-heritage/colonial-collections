@@ -155,7 +155,33 @@
     "hideTimelineButton": "Hide timeline",
     "showDataTableButton": "Show data table",
     "hideDataTableButton": "Hide data table",
-    "noDescription": "No description"
+    "noDescription": "No description",
+    "addProvenanceButton": "Add provenance",
+    "addProvenanceTitle": "Add provenance"
+  },
+  "ProvenanceForm": {
+    "TabWhat": "What happened",
+    "TabWho": "Who, where and when",
+    "TabMoreInfo": "More info",
+    "type": "What happened to the object?",
+    "typeDescription": "",
+    "additionalType": "Classification",
+    "additionalTypeDescription": "",
+    "transferredFrom": "Who owned it BEFORE the transition",
+    "transferredFromDescription": "Select or add a person or institution from whom the object has been transferred.",
+    "transferredTo": "Who owned it AFTER the transition",
+    "transferredToDescription": "Select or add a person or institution to whom the object has been transferred.",
+    "location": "Location",
+    "locationDescription": "What is the new location of the object. Start typing to select a location.",
+    "startDate": "Start date",
+    "startDateDescription": "If you have an exact date you can fill it in here. If you are not sure about the date you can select a range of dates in which the event occur.",
+    "endDate": "End date",
+    "endDateDescription": "If the start date is an exact date, place the same date as the start date."
+  },
+  "SearchSelector": {
+    "beforeTyping": "Start typing to search",
+    "loading": "Loading...",
+    "noResults": "No results found"
   },
   "PersonDetails": {
     "backButton": "Back to results",
