@@ -72,6 +72,6 @@
     "@colonial-collections/tailwind-config": "*",
     "tailwindcss": "3.4.1",
     "@colonial-collections/ts-config": "*",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   }
 }

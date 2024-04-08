@@ -12,7 +12,7 @@
     "postcss": "8.4.33",
     "@colonial-collections/tailwind-config": "*",
     "@colonial-collections/ts-config": "*",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   },
   "dependencies": {
     "@colonial-collections/list-store": "*",

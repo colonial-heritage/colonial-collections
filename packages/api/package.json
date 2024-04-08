@@ -40,7 +40,7 @@
     "n3": "1.17.2",
     "streamify-string": "1.0.1",
     "@colonial-collections/ts-config": "*",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   },
   "jest": {
     "preset": "ts-jest",
