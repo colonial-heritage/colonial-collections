@@ -12,7 +12,12 @@ import {z} from 'zod';
 // Import {addUserEnrichment} from './actions';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
-import {SearchSelector, LanguageSelector, Textarea} from '@/components/form';
+import {
+  SearchSelector,
+  LanguageSelector,
+  Textarea,
+  Input,
+} from '@/components/form';
 
 enum ProvenanceEventType {
   Acquisition = 'acquisition',
@@ -52,7 +57,7 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
     agreedToLicense: z.literal<boolean>(true, {
       errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
     }),
-    // TODO: add descriptions
+    // TODO: add validation
     type: z.nativeEnum(ProvenanceEventType),
     additionalType: z
       .object({
@@ -60,12 +65,8 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
         name: z.string(),
       })
       .optional(),
-    date: z
-      .object({
-        startDate: z.string(),
-        endDate: z.string(),
-      })
-      .optional(),
+    startDate: z.string(),
+    endDate: z.string(),
     transferredFrom: z
       .object({
         id: z.string().url(),
@@ -101,10 +102,8 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
       location: undefined,
       type: ProvenanceEventType.TransferOfCustody,
       additionalType: undefined,
-      date: {
-        startDate: '',
-        endDate: '',
-      },
+      startDate: '',
+      endDate: '',
     },
   });
 
@@ -228,6 +227,18 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                     ]}
                     name="location"
                   />
+                </InputGroup>
+                <InputGroup>
+                  <InputLabel
+                    title={t('startDate')}
+                    description={t('startDateDescription')}
+                  />
+                  <Input name="startDate" type="date" />
+                  <InputLabel
+                    title={t('endDate')}
+                    description={t('startDateDescription')}
+                  />
+                  <Input name="endDate" type="date" />
                 </InputGroup>
               </FormWrapper>
             </Tab.Panel>
