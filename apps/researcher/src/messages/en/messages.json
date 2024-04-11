@@ -176,7 +176,23 @@
     "startDate": "Start date",
     "startDateDescription": "If you have an exact date you can fill it in here. If you are not sure about the date you can select a range of dates in which the event occur.",
     "endDate": "End date",
-    "endDateDescription": "If the start date is an exact date, place the same date as the start date."
+    "endDateDescription": "If the start date is an exact date, place the same date as the start date.",
+    "citation": "Resource",
+    "citationDescription": "Please provide information that supports your provenance event.",
+    "inLanguage": "Language",
+    "inLanguageDescription": "Select a language of the provenance event. Start typing to select a language.",
+    "typePlaceholder": "Select what happened",
+    "additionalTypePlaceholder": "Select a classification",
+    "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
+    "attributionId": "Persoonlijke URL",
+    "attributionIdDescription": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
+    "typeRequired": "Type is required",
+    "citationRequired": "Resource is required",
+    "invalidAttributionId": "Invalid personal profile URL",
+    "agreedToLicenseUnchecked": "You need to agree to the license before you can add a narrative",
+    "previousButton": "Previous step",
+    "nextButton": "Next step",
+    "saveButton": "Save provenance"
   },
   "SearchSelector": {
     "beforeTyping": "Start typing to search",
@@ -371,5 +387,35 @@
   "ReadMoreText": {
     "readMore": "Read more",
     "readLess": "Read less"
+  },
+  "ProvenanceEventType": {
+    "Acquisition": "Acquisition",
+    "AcquisitionDescription": "The process of acquiring an object.",
+    "TransferOfCustody": "Transfer of custody",
+    "TransferOfCustodyDescription": "The process of transferring the custody of an object from one owner to another."
+  },
+  "ProvenanceAdditionalType": {
+    "bequest": "Bequest",
+    "bequestDescription": "",
+    "donation": "Donation",
+    "donationDescription": "",
+    "gift": "Gift",
+    "giftDescription": "",
+    "transfer": "Transfer",
+    "transferDescription": "",
+    "purchase": "Purchase",
+    "purchaseDescription": "",
+    "originalOwner": "Original owner",
+    "originalOwnerDescription": "",
+    "restitution": "Restitution",
+    "restitutionDescription": "",
+    "inheritance": "Inheritance",
+    "inheritanceDescription": "",
+    "stolen": "Stolen",
+    "stolenDescription": "",
+    "loot": "Loot",
+    "lootDescription": "",
+    "confiscated": "Confiscated",
+    "confiscatedDescription": ""
   }
 }

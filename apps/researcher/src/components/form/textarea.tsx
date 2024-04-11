@@ -4,7 +4,7 @@ interface Props extends React.HTMLProps<HTMLInputElement> {
   name: string;
 }
 
-export function Textarea({name, cols = 30, rows = 30}: Props) {
+export function Textarea({name, cols = 30, rows = 3}: Props) {
   const {register} = useFormContext();
 
   return (

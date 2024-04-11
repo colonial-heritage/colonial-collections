@@ -6,8 +6,15 @@ export function FormWrapper({children}: {children: ReactNode}) {
   );
 }
 
-export function InputGroup({children}: {children: ReactNode}) {
+export function FormColumn({children}: {children: ReactNode}) {
   return <div className="flex flex-col w-full">{children}</div>;
+}
+
+interface InputLabelProps {
+  title: string | ReactNode;
+  description: string | ReactNode;
+  required?: boolean;
+  id?: string;
 }
 
 export function InputLabel({
@@ -15,16 +22,13 @@ export function InputLabel({
   description,
   id,
   required = false,
-}: {
-  title: string;
-  description: string;
-  required?: boolean;
-  id?: string;
-}) {
+}: InputLabelProps) {
   return (
     <label className="flex flex-col gap-1 mb-1" htmlFor={id}>
-      <strong>{title}</strong>
-      {required && <span className="font-normal text-neutral-600">*</span>}
+      <strong>
+        {title}
+        {required && <span className="font-normal text-neutral-600">*</span>}
+      </strong>
       <div>{description}</div>
     </label>
   );

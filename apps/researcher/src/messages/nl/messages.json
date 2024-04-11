@@ -159,6 +159,37 @@
     "addProvenanceButton": "Herkomstgebeurtenis toevoegen",
     "addProvenanceTitle": "Herkomstgebeurtenis toevoegen"
   },
+  "ProvenanceForm": {
+    "TabWhat": "What happened",
+    "TabWho": "Who, where and when",
+    "TabMoreInfo": "More info",
+    "type": "What happened to the object?",
+    "typeDescription": "",
+    "additionalType": "Classification",
+    "additionalTypeDescription": "",
+    "transferredFrom": "Who owned it BEFORE the transition",
+    "transferredFromDescription": "Select or add a person or institution from whom the object has been transferred.",
+    "transferredTo": "Who owned it AFTER the transition",
+    "transferredToDescription": "Select or add a person or institution to whom the object has been transferred.",
+    "location": "Location",
+    "locationDescription": "What is the new location of the object. Start typing to select a location.",
+    "startDate": "Start date",
+    "startDateDescription": "If you have an exact date you can fill it in here. If you are not sure about the date you can select a range of dates in which the event occur.",
+    "endDate": "End date",
+    "endDateDescription": "If the start date is an exact date, place the same date as the start date.",
+    "citation": "Resource",
+    "citationDescription": "Please provide information that supports your provenance event.",
+    "inLanguage": "Language",
+    "inLanguageDescription": "Select a language of the provenance event. Start typing to select a language.",
+    "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
+    "labelAttributionId": "Persoonlijke URL",
+    "descriptionAttributionId": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
+    "typePlaceholder": "Select what happened",
+    "additionalTypePlaceholder": "Select a classification",
+    "previousButton": "Previous step",
+    "nextButton": "Next step",
+    "saveButton": "Save provenance"
+  },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
     "noEntity": "Persoon kon niet gevonden worden",
@@ -346,5 +377,35 @@
     "ReadMoreText": {
       "readMore": "Lees meer",
       "readLess": "Lees minder"
-    }
+    },
+    "ProvenanceEventType": {
+      "Acquisition": "Verwerving",
+      "AcquisitionDescription": "Het proces van het verwerven van een object.",
+      "TransferOfCustody": "Overdracht van bewaring",
+      "TransferOfCustodyDescription": "Het proces van het overdragen van de bewaring van een object van de ene eigenaar naar de andere."
+    },
+    "ProvenanceAdditionalType": {
+      "bequest": "Legaat",
+      "bequestDescription": "",
+      "donation": "Donatie",
+      "donationDescription": "",
+      "gift": "Geschenk",
+      "giftDescription": "",
+      "transfer": "Overdracht",
+      "transferDescription": "",
+      "purchase": "Aankoop",
+      "purchaseDescription": "",
+      "originalOwner": "Oorspronkelijke eigenaar",
+      "originalOwnerDescription": "",
+      "restitution": "Restitutie",
+      "restitutionDescription": "",
+      "inheritance": "Erfenis",
+      "inheritanceDescription": "",
+      "stolen": "Gestolen",
+      "stolenDescription": "",
+      "loot": "Buit",
+      "lootDescription": "",
+      "confiscated": "In beslag genomen",
+      "confiscatedDescription": ""
+    }  
 }

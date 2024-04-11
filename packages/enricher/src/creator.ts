@@ -68,6 +68,7 @@ export class EnrichmentCreator {
   async addProvenanceEvent(
     enrichmentBeingCreated: ProvenanceEventEnrichmentBeingCreated
   ) {
+    console.log(enrichmentBeingCreated);
     const opts = provenanceEventEnrichmentBeingCreatedSchema.parse(
       enrichmentBeingCreated
     );
