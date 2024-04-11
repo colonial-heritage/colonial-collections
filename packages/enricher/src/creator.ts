@@ -1,52 +1,85 @@
 import {NanopubClient} from './client';
 import {
-  enrichmentBeingCreatedSchema,
-  EnrichmentBeingCreated,
-  FullEnrichmentBeingCreated,
-} from './definitions';
-import {EnrichmentStorer} from './storer';
+  heritageObjectEnrichmentBeingCreatedSchema,
+  HeritageObjectEnrichmentBeingCreated,
+  HeritageObjectEnrichmentStorer,
+  FullHeritageObjectEnrichmentBeingCreated,
+} from './objects';
+import {
+  FullProvenanceEventEnrichmentBeingCreated,
+  ProvenanceEventEnrichmentBeingCreated,
+  ProvenanceEventEnrichmentStorer,
+  provenanceEventEnrichmentBeingCreatedSchema,
+} from './provenance-events';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
+  knowledgeGraphEndpointUrl: z.string(),
   nanopubClient: z.instanceof(NanopubClient),
-  endpointUrl: z.string(),
 });
 
-export type EnrichmentWriterConstructorOptions = z.infer<
+export type EnrichmentCreatorConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
 // High-level class for creating enrichments
 export class EnrichmentCreator {
-  private endpointUrl: string;
-  private enrichmentStorer: EnrichmentStorer;
+  private readonly knowledgeGraphEndpointUrl: string;
+  private readonly heritageObjectEnrichmentStorer: HeritageObjectEnrichmentStorer;
+  private readonly provenanceEventEnrichmentStorer: ProvenanceEventEnrichmentStorer;
 
-  constructor(options: EnrichmentWriterConstructorOptions) {
+  constructor(options: EnrichmentCreatorConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
-    this.endpointUrl = opts.endpointUrl;
-    this.enrichmentStorer = new EnrichmentStorer({
+    this.knowledgeGraphEndpointUrl = opts.knowledgeGraphEndpointUrl;
+    this.heritageObjectEnrichmentStorer = new HeritageObjectEnrichmentStorer({
+      nanopubClient: opts.nanopubClient,
+    });
+    this.provenanceEventEnrichmentStorer = new ProvenanceEventEnrichmentStorer({
       nanopubClient: opts.nanopubClient,
     });
   }
 
-  async addText(enrichmentBeingCreated: EnrichmentBeingCreated) {
-    const opts = enrichmentBeingCreatedSchema.parse(enrichmentBeingCreated);
+  async addText(enrichmentBeingCreated: HeritageObjectEnrichmentBeingCreated) {
+    const opts = heritageObjectEnrichmentBeingCreatedSchema.parse(
+      enrichmentBeingCreated
+    );
 
     // TODO: fetch the resource ID (e.g. the IRI of the name of an object) from the knowledge graph.
     // The KG currently does not have these IDs, so this is a temporary dummy implementation.
-    const resourceId = `${opts.about}#${opts.additionalType}`;
+    const resourceId = `${opts.about}#${opts.type}`;
 
-    const fullEnrichmentBeingCreated: FullEnrichmentBeingCreated = {
-      ...opts,
-      about: {
-        id: resourceId,
-        isPartOf: {
+    const fullEnrichmentBeingCreated: FullHeritageObjectEnrichmentBeingCreated =
+      {
+        ...opts,
+        about: {
+          id: resourceId,
+          isPartOf: {
+            id: opts.about,
+          },
+        },
+      };
+
+    return this.heritageObjectEnrichmentStorer.addText(
+      fullEnrichmentBeingCreated
+    );
+  }
+
+  async addProvenanceEvent(
+    enrichmentBeingCreated: ProvenanceEventEnrichmentBeingCreated
+  ) {
+    const opts = provenanceEventEnrichmentBeingCreatedSchema.parse(
+      enrichmentBeingCreated
+    );
+
+    const fullEnrichmentBeingCreated: FullProvenanceEventEnrichmentBeingCreated =
+      {
+        ...opts,
+        about: {
           id: opts.about,
         },
-      },
-    };
+      };
 
-    return this.enrichmentStorer.addText(fullEnrichmentBeingCreated);
+    return this.provenanceEventEnrichmentStorer.add(fullEnrichmentBeingCreated);
   }
 }

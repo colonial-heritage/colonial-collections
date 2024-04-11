@@ -1,5 +1,5 @@
-import {ontologyUrl} from './definitions';
-import {createEnrichment} from './helpers';
+import {ontologyUrl} from '../definitions';
+import {toHeritageObjectEnrichment} from './rdf-helpers';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import type {Readable} from 'node:stream';
@@ -11,15 +11,15 @@ const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
 });
 
-export type EnrichmentFetcherConstructorOptions = z.infer<
+export type HeritageObjectEnrichmentFetcherConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
-export class EnrichmentFetcher {
-  private endpointUrl: string;
-  private fetcher = new SparqlEndpointFetcher();
+export class HeritageObjectEnrichmentFetcher {
+  private readonly endpointUrl: string;
+  private readonly fetcher = new SparqlEndpointFetcher();
 
-  constructor(options: EnrichmentFetcherConstructorOptions) {
+  constructor(options: HeritageObjectEnrichmentFetcherConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
@@ -45,7 +45,7 @@ export class EnrichmentFetcher {
         # Need this to easily retrieve the enrichments in the RdfObjectLoader
         ?source ex:hasEnrichment ?annotation .
 
-        ?annotation a ex:Enrichment ;
+        ?annotation a ex:HeritageObjectEnrichment ;
           ex:additionalType ?additionalType ;
           ex:about ?target ;
           ex:isPartOf ?source ;
@@ -56,7 +56,7 @@ export class EnrichmentFetcher {
           ex:creator ?creator ;
           ex:dateCreated ?dateCreated .
 
-        ?creator a ex:Agent ;
+        ?creator a ex:Actor ;
           ex:name ?creatorName .
       }
       WHERE {
@@ -104,7 +104,7 @@ export class EnrichmentFetcher {
     return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
-  private async fromTriplesToEnrichments(
+  private async fromTriplesToHeritageObjectEnrichments(
     iri: string,
     triplesStream: Readable & Stream
   ) {
@@ -124,18 +124,16 @@ export class EnrichmentFetcher {
 
     const rawEnrichments = resource.properties['ex:hasEnrichment'];
     const enrichments = rawEnrichments.map(rawEnrichment =>
-      createEnrichment(rawEnrichment)
+      toHeritageObjectEnrichment(rawEnrichment)
     );
 
     // Sort the enrichments by date of creation, from old to new
     enrichments.sort((enrichmentA, enrichmentB) => {
-      const dateCreatedA = enrichmentA.dateCreated.getTime();
-      const dateCreatedB = enrichmentB.dateCreated.getTime();
+      const dateCreatedA = enrichmentA.pubInfo.dateCreated.getTime();
+      const dateCreatedB = enrichmentB.pubInfo.dateCreated.getTime();
 
       return dateCreatedA - dateCreatedB;
     });
-
-    // TBD: group the enrichments by type (e.g. by 'name' or 'description')?
 
     return enrichments;
   }
@@ -146,7 +144,10 @@ export class EnrichmentFetcher {
     }
 
     const triplesStream = await this.fetchTriples(id);
-    const enrichments = await this.fromTriplesToEnrichments(id, triplesStream);
+    const enrichments = await this.fromTriplesToHeritageObjectEnrichments(
+      id,
+      triplesStream
+    );
 
     return enrichments;
   }

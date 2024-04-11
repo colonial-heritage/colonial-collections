@@ -1,37 +1,39 @@
-import {nanopubId, NanopubClient} from './client';
+import {nanopubId, NanopubClient} from '../client';
+import {ontologyUrl, type BasicEnrichment} from '../definitions';
 import {
-  fullEnrichmentBeingCreatedSchema,
-  ontologyUrl,
-  FullEnrichmentBeingCreated,
+  fullHeritageObjectEnrichmentBeingCreatedSchema,
+  FullHeritageObjectEnrichmentBeingCreated,
 } from './definitions';
-import type {BasicEnrichment} from './definitions';
-import {fromAdditionalTypeToClass} from './helpers';
+import {fromTypeToClass} from './helpers';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
 import {z} from 'zod';
 
 const DF = new DataFactory();
 
-export const constructorOptionsSchema = z.object({
+const constructorOptionsSchema = z.object({
   nanopubClient: z.instanceof(NanopubClient),
 });
 
-export type EnrichmentStorerConstructorOptions = z.infer<
+export type HeritageObjectEnrichmentStorerConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
-// Low-level class for creating enrichments. You should use EnrichmentCreator in most cases
-export class EnrichmentStorer {
-  private nanopubClient: NanopubClient;
+// Low-level class for creating object enrichments
+// You should use the high-level EnrichmentCreator in most cases
+export class HeritageObjectEnrichmentStorer {
+  private readonly nanopubClient: NanopubClient;
 
-  constructor(options: EnrichmentStorerConstructorOptions) {
+  constructor(options: HeritageObjectEnrichmentStorerConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.nanopubClient = opts.nanopubClient;
   }
 
-  async addText(fullEnrichmentBeingCreated: FullEnrichmentBeingCreated) {
-    const opts = fullEnrichmentBeingCreatedSchema.parse(
+  async addText(
+    fullEnrichmentBeingCreated: FullHeritageObjectEnrichmentBeingCreated
+  ) {
+    const opts = fullHeritageObjectEnrichmentBeingCreatedSchema.parse(
       fullEnrichmentBeingCreated
     );
 
@@ -43,6 +45,7 @@ export class EnrichmentStorer {
 
     // Make clear what application has published this nanopub
     const softwareTool = DF.namedNode('https://app.colonialcollections.nl/');
+
     publicationStore.addQuad(
       DF.quad(
         softwareTool,
@@ -50,6 +53,7 @@ export class EnrichmentStorer {
         DF.namedNode('http://purl.org/nanopub/x/SoftwareTool')
       )
     );
+
     publicationStore.addQuad(
       DF.quad(
         softwareTool,
@@ -58,27 +62,34 @@ export class EnrichmentStorer {
       )
     );
 
+    // Generic type of the nanopub: a nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode(`${ontologyUrl}Nanopub`) // Generic type
+        DF.namedNode(`${ontologyUrl}Nanopub`)
       )
     );
+
+    // Specific type of the nanopub, e.g. about the name or the material of an object
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode(fromAdditionalTypeToClass(opts.additionalType)) // Specific type
+        DF.namedNode(fromTypeToClass(opts.type))
       )
     );
+
+    // Licence of the nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
         DF.namedNode('http://purl.org/dc/terms/license'),
-        DF.namedNode(opts.license)
+        DF.namedNode(opts.pubInfo.license)
       )
     );
+
+    // Tool that created the nanopub
     publicationStore.addQuad(
       DF.quad(
         nanopubId,
@@ -101,9 +112,9 @@ export class EnrichmentStorer {
     // creation is preserved.
     publicationStore.addQuad(
       DF.quad(
-        DF.namedNode(opts.creator.id),
+        DF.namedNode(opts.pubInfo.creator.id),
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-        DF.literal(opts.creator.name)
+        DF.literal(opts.pubInfo.creator.name)
       )
     );
 
@@ -114,6 +125,7 @@ export class EnrichmentStorer {
         DF.namedNode('http://www.w3.org/ns/oa#Annotation')
       )
     );
+
     assertionStore.addQuad(
       DF.quad(
         annotationId,
@@ -121,6 +133,8 @@ export class EnrichmentStorer {
         bodyId
       )
     );
+
+    // Type of the enrichment: a text
     assertionStore.addQuad(
       DF.quad(
         bodyId,
@@ -128,38 +142,50 @@ export class EnrichmentStorer {
         DF.namedNode('http://www.w3.org/ns/oa#TextualBody')
       )
     );
-    assertionStore.addQuad(
-      DF.quad(
-        bodyId,
-        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#value'),
-        DF.literal(opts.description, languageCode)
-      )
-    );
-    assertionStore.addQuad(
-      DF.quad(
-        bodyId,
-        DF.namedNode('http://purl.org/dc/elements/1.1/format'),
-        DF.literal('text/plain') // Currently no other format allowed
-      )
-    );
 
-    if (languageCode !== undefined) {
+    // Description of the enrichment
+    if (opts.description !== undefined) {
       assertionStore.addQuad(
         DF.quad(
           bodyId,
-          DF.namedNode('http://purl.org/dc/elements/1.1/language'),
-          DF.literal(languageCode)
+          DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#value'),
+          DF.literal(opts.description, languageCode)
+        )
+      );
+
+      // Format of the description
+      assertionStore.addQuad(
+        DF.quad(
+          bodyId,
+          DF.namedNode('http://purl.org/dc/elements/1.1/format'),
+          DF.literal('text/plain') // Currently no other format allowed
+        )
+      );
+
+      // Language of the description
+      if (languageCode !== undefined) {
+        assertionStore.addQuad(
+          DF.quad(
+            bodyId,
+            DF.namedNode('http://purl.org/dc/elements/1.1/language'),
+            DF.literal(languageCode)
+          )
+        );
+      }
+    }
+
+    // Source used for the description (presumably in the same language as the description)
+    if (opts.citation !== undefined) {
+      assertionStore.addQuad(
+        DF.quad(
+          annotationId,
+          DF.namedNode('http://www.w3.org/2000/01/rdf-schema#comment'),
+          DF.literal(opts.citation, languageCode)
         )
       );
     }
 
-    assertionStore.addQuad(
-      DF.quad(
-        annotationId,
-        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#comment'),
-        DF.literal(opts.citation, languageCode)
-      )
-    );
+    // The part of an object that the enrichment is about
     assertionStore.addQuad(
       DF.quad(
         annotationId,
@@ -175,6 +201,8 @@ export class EnrichmentStorer {
         DF.namedNode('http://www.w3.org/ns/oa#SpecificResource')
       )
     );
+
+    // The object that the enrichment is about
     assertionStore.addQuad(
       DF.quad(
         DF.namedNode(opts.about.id),
@@ -186,7 +214,7 @@ export class EnrichmentStorer {
     const nanopub = await this.nanopubClient.add({
       assertionStore,
       publicationStore,
-      creator: opts.creator.id,
+      creator: opts.pubInfo.creator.id,
     });
 
     const basicEnrichment: BasicEnrichment = {
