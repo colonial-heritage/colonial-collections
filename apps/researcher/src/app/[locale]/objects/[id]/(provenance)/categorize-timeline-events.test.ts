@@ -65,6 +65,7 @@ describe('categorizeEvents', () => {
       ],
     };
 
+    // @ts-expect-error:TS2345
     const result = categorizeEvents(eventGroups);
 
     expect(result.eventsWithoutDates).toEqual([]);
@@ -106,6 +107,7 @@ describe('categorizeEvents', () => {
       ],
     };
 
+    // @ts-expect-error:TS2345
     const result = categorizeEvents(eventGroups);
 
     expect(result.eventsWithoutDates).toEqual([]);
@@ -167,6 +169,7 @@ describe('categorizeEvents', () => {
       ],
     };
 
+    // @ts-expect-error:TS2345
     const result = categorizeEvents(eventGroups);
 
     expect(result.eventsWithoutDates).toEqual([

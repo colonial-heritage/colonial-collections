@@ -12,7 +12,7 @@ This repo uses [Turborepo](https://turbo.build/) as build system and [npm](https
 ### Packages
 
 - `@colonial-collections/eslint-config`: `eslint` configurations
-- `iris`: helper functions for working with IRIs
+- `@colonial-collections/iris`: helper functions for working with IRIs
 - `@colonial-collections/tailwind-config`: Tailwind config used by both the apps and the `ui` package
 - `@colonial-collections/ts-config`: `tsconfig.json`s used throughout the monorepo
 - `@colonial-collections/ui`: a React component library shared by the apps

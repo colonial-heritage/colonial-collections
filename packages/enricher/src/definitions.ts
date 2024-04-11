@@ -1,63 +1,47 @@
 import {z} from 'zod';
 
+// TBD: use ARK IRI instead, pointing to the knowledge graph?
 export const ontologyUrl =
   'https://data.colonialcollections.nl/schemas/nanopub#'; // Internal ontology
 
 // We currently have just one version of our ontology
 export const ontologyVersionIdentifier = 'Version1';
 
-// An enrichment can be about these types
-export enum AdditionalType {
-  Creator = 'creator',
-  DateCreated = 'dateCreated',
-  LocationCreated = 'locationCreated',
-  Description = 'description',
-  Inscription = 'inscription',
-  Material = 'material',
-  Name = 'name',
-  Subject = 'subject',
-  Technique = 'technique',
-  Type = 'type',
-}
-
 export type BasicEnrichment = {
   id: string;
 };
 
-export const enrichmentBeingCreatedSchema = z.object({
-  additionalType: z.nativeEnum(AdditionalType),
-  description: z.string(),
-  citation: z.string(),
+export const basicEnrichmentBeingCreatedSchema = z.object({
+  description: z.string().optional(),
+  citation: z.string().optional(),
   inLanguage: z.string().optional(), // E.g. 'en', 'nl-nl'
-  creator: z.object({
-    id: z.string().url(),
-    name: z.string(),
-  }),
-  license: z.string().url(),
   about: z.string().url(),
+  pubInfo: z.object({
+    creator: z.object({
+      id: z.string().url(),
+      name: z.string(),
+    }),
+    license: z.string().url(),
+  }),
 });
 
-export type EnrichmentBeingCreated = z.infer<
-  typeof enrichmentBeingCreatedSchema
->;
+export type Thing = {
+  id: string;
+  name?: string; // Name may not exist (e.g. in a specific locale)
+};
 
-export type Enrichment = BasicEnrichment &
-  EnrichmentBeingCreated & {
-    dateCreated: Date;
-  };
+export type Term = Thing;
+export type Place = Thing;
+export type Agent = Thing;
 
-export const fullEnrichmentBeingCreatedSchema =
-  enrichmentBeingCreatedSchema.merge(
-    z.object({
-      about: z.object({
-        id: z.string().url(),
-        isPartOf: z.object({
-          id: z.string().url(),
-        }),
-      }),
-    })
-  );
+export type TimeSpan = {
+  id: string;
+  startDate?: Date;
+  endDate?: Date;
+};
 
-export type FullEnrichmentBeingCreated = z.infer<
-  typeof fullEnrichmentBeingCreatedSchema
->;
+export type PubInfo = {
+  creator: Agent;
+  license: string;
+  dateCreated: Date;
+};

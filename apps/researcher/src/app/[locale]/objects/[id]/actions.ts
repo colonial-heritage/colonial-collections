@@ -7,7 +7,7 @@ import {revalidatePath} from 'next/cache';
 import {creator} from '@/lib/enricher-instances';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import {enrichmentLicence} from '@/lib/enrichment-licence';
-import type {AdditionalType} from '@colonial-collections/enricher';
+import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
 
 export async function getCommunityLists(communityId: string, objectId: string) {
   return objectList.getByCommunityId(communityId, {objectIri: objectId});
@@ -43,7 +43,7 @@ interface AddUserEnrichmentProps {
   citation: string;
   inLanguage?: string;
   objectId: string;
-  additionalType: AdditionalType;
+  additionalType: HeritageObjectEnrichmentType;
   user: {
     id: string;
     name: string;
@@ -59,13 +59,15 @@ export async function addUserEnrichment({
   user,
 }: AddUserEnrichmentProps) {
   const enrichment = await creator.addText({
-    additionalType,
+    type: additionalType,
     description,
     citation,
     inLanguage,
     about: objectId,
-    creator: user,
-    license: enrichmentLicence,
+    pubInfo: {
+      creator: user,
+      license: enrichmentLicence,
+    },
   });
 
   revalidatePath(`/[locale]/objects/${encodeRouteSegment(objectId)}`, 'page');

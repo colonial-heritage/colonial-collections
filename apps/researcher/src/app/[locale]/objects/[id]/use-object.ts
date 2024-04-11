@@ -1,12 +1,12 @@
 import {create} from 'zustand';
 import {Organization} from '@colonial-collections/api';
-import {Enrichment} from '@colonial-collections/enricher';
+import {HeritageObjectEnrichment} from '@colonial-collections/enricher';
 
 interface State {
   organization?: Organization;
   objectId: string;
   locale: string;
-  enrichments: Enrichment[];
+  enrichments: HeritageObjectEnrichment[];
 }
 
 export default create<State>(() => ({

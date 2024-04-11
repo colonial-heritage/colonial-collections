@@ -1,6 +1,7 @@
 {
   "name": "@colonial-collections/enricher",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "engines": {
     "node": "18.x"
@@ -13,7 +14,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "lint": "gts check",
-    "test": "jest --passWithNoTests --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
+    "test": "jest --testPathIgnorePatterns '<rootDir>/src/.*/*.integration.test.ts'",
     "test:ci": "npm test -- --ci",
     "test:watch": "npm test -- --watchAll",
     "test:integration": "jest --testMatch '**/src/**/*.integration.test.ts'",
@@ -22,6 +23,7 @@
   "dependencies": {
     "@colonial-collections/iris": "*",
     "defu": "6.1.4",
+    "edtf": "4.6.0",
     "fetch-sparql-endpoint": "4.1.0",
     "rdf-data-factory": "1.1.2",
     "rdf-object": "1.14.0",
@@ -31,15 +33,17 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
+    "@colonial-collections/eslint-config": "*",
+    "@colonial-collections/ts-config": "*",
     "@jest/globals": "29.7.0",
     "@rdfjs/types": "1.1.0",
     "@types/jest": "29.5.12",
     "@types/node": "20.11.28",
-    "@colonial-collections/eslint-config": "*",
     "gts": "5.3.0",
     "jest": "29.7.0",
+    "n3": "1.17.2",
+    "streamify-string": "1.0.1",
     "ts-jest": "29.1.2",
-    "@colonial-collections/ts-config": "*",
     "typescript": "5.4.3"
   },
   "jest": {

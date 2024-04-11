@@ -1,4 +1,9 @@
-import {localeSchema, ProvenanceEvent, Term} from '../definitions';
+import {
+  localeSchema,
+  ProvenanceEvent,
+  ProvenanceEventType,
+  Term,
+} from '../definitions';
 import {
   createAgents,
   createPlaces,
@@ -51,7 +56,7 @@ export class ProvenanceEventsFetcher {
         ?this a ex:HeritageObject ;
           ex:subjectOf ?acquisition, ?transferOfCustody .
 
-        ?acquisition a ex:Event ;
+        ?acquisition a ex:Acquisition ;
           ex:additionalType ?acquisitionType ;
           ex:date ?acquisitionTimeSpan ;
           ex:transferredFrom ?acquisitionOwnerFrom ;
@@ -75,7 +80,7 @@ export class ProvenanceEventsFetcher {
         ?acquisitionLocation a ex:Place ;
           ex:name ?acquisitionLocationName .
 
-        ?transferOfCustody a ex:Event ;
+        ?transferOfCustody a ex:TransferOfCustody ;
           ex:additionalType ?transferOfCustodyType ;
           ex:date ?transferOfCustodyTimeSpan ;
           ex:transferredFrom ?transferOfCustodyCustodianFrom ;
@@ -289,11 +294,20 @@ export class ProvenanceEventsFetcher {
 
   private toProvenanceEvent(rawProvenanceEvent: Resource) {
     const id = rawProvenanceEvent.value;
+    const rawType = getPropertyValue(rawProvenanceEvent, 'rdf:type');
+    const type =
+      rawType === 'https://example.org/Acquisition'
+        ? ProvenanceEventType.Acquisition
+        : ProvenanceEventType.TransferOfCustody;
+
     const date = onlyOne(createTimeSpans(rawProvenanceEvent, 'ex:date'));
     const description = getPropertyValue(rawProvenanceEvent, 'ex:description');
     const startsAfter = getPropertyValue(rawProvenanceEvent, 'ex:startsAfter');
     const endsBefore = getPropertyValue(rawProvenanceEvent, 'ex:endsBefore');
-    const types = createThings<Term>(rawProvenanceEvent, 'ex:additionalType');
+    const additionalTypes = createThings<Term>(
+      rawProvenanceEvent,
+      'ex:additionalType'
+    );
     const location = onlyOne(createPlaces(rawProvenanceEvent, 'ex:location'));
     const transferredFromAgent = onlyOne(
       createAgents(rawProvenanceEvent, 'ex:transferredFrom')
@@ -304,7 +318,8 @@ export class ProvenanceEventsFetcher {
 
     const provenanceEventWithUndefinedValues: ProvenanceEvent = {
       id,
-      types,
+      type,
+      additionalTypes,
       description,
       date,
       startsAfter,

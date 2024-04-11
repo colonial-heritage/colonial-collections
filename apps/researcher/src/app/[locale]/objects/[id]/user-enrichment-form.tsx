@@ -13,7 +13,7 @@ import {z} from 'zod';
 import {addUserEnrichment} from './actions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import LanguageSelector from '@/components/language-selector';
-import type {AdditionalType} from '@colonial-collections/enricher';
+import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
 import {Suspense, useMemo} from 'react';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
@@ -28,7 +28,7 @@ interface FormValues {
 
 interface Props {
   slideOutId: string;
-  enrichmentType: AdditionalType;
+  enrichmentType: HeritageObjectEnrichmentType;
   objectId: string;
 }
 

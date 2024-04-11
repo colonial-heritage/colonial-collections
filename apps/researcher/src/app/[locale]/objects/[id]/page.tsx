@@ -11,8 +11,8 @@ import organizations from '@/lib/organizations-instance';
 import {Notifications} from '@colonial-collections/ui';
 import useObject from './use-object';
 import ObjectListsMenu from './object-lists-menu';
-import {fetcher} from '@/lib/enricher-instances';
-import {AdditionalType} from '@colonial-collections/enricher';
+import {heritageObjectEnrichmentFetcher} from '@/lib/enricher-instances';
+import {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
 import ISO6391, {LanguageCode} from 'iso-639-1';
 import Provenance from './(provenance)/overview';
 import {getDateFormatter} from '@/lib/date-formatter/actions';
@@ -38,10 +38,10 @@ export default async function Details({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
-  const enrichments = await fetcher.getById(id);
+  const enrichments = await heritageObjectEnrichmentFetcher.getById(id);
   useObject.setState({objectId: object.id, locale, enrichments});
   const enrichmentsAboutName = enrichments?.filter(
-    enrichment => enrichment.additionalType === AdditionalType.Name
+    enrichment => enrichment.type === HeritageObjectEnrichmentType.Name
   );
 
   let organization;
@@ -133,21 +133,21 @@ export default async function Details({params}: Props) {
             <div className="flex flex-col gap-8 self-stretch">
               <Metadata
                 translationKey="name"
-                enrichmentType={AdditionalType.Name}
+                enrichmentType={HeritageObjectEnrichmentType.Name}
               >
                 <ReadMoreText text={object.name} />
               </Metadata>
 
               <Metadata
                 translationKey="description"
-                enrichmentType={AdditionalType.Description}
+                enrichmentType={HeritageObjectEnrichmentType.Description}
               >
                 <ReadMoreText text={object.description} />
               </Metadata>
 
               <Metadata
                 translationKey="locationsCreated"
-                enrichmentType={AdditionalType.LocationCreated}
+                enrichmentType={HeritageObjectEnrichmentType.LocationCreated}
               >
                 {object.locationsCreated?.map(locationCreated => (
                   <div key={locationCreated.id}>
@@ -160,7 +160,7 @@ export default async function Details({params}: Props) {
 
               <Metadata
                 translationKey="materials"
-                enrichmentType={AdditionalType.Material}
+                enrichmentType={HeritageObjectEnrichmentType.Material}
               >
                 {object.materials?.map(material => (
                   <div key={material.id}>{material.name}</div>
@@ -169,14 +169,14 @@ export default async function Details({params}: Props) {
 
               <Metadata
                 translationKey="dateCreated"
-                enrichmentType={AdditionalType.DateCreated}
+                enrichmentType={HeritageObjectEnrichmentType.DateCreated}
               >
                 {object.dateCreated && formatDateRange(object.dateCreated)}
               </Metadata>
 
               <Metadata
                 translationKey="types"
-                enrichmentType={AdditionalType.Type}
+                enrichmentType={HeritageObjectEnrichmentType.Type}
               >
                 {object.types?.map(type => (
                   <div key={type.id}>{type.name}</div>
@@ -185,7 +185,7 @@ export default async function Details({params}: Props) {
 
               <Metadata
                 translationKey="techniques"
-                enrichmentType={AdditionalType.Technique}
+                enrichmentType={HeritageObjectEnrichmentType.Technique}
               >
                 {object.techniques?.map(technique => (
                   <div key={technique.id}>{technique.name}</div>
@@ -194,7 +194,7 @@ export default async function Details({params}: Props) {
 
               <Metadata
                 translationKey="creators"
-                enrichmentType={AdditionalType.Creator}
+                enrichmentType={HeritageObjectEnrichmentType.Creator}
               >
                 {object.creators?.map(creator => (
                   <div key={creator.id}>{creator.name}</div>
@@ -203,7 +203,7 @@ export default async function Details({params}: Props) {
 
               <Metadata
                 translationKey="inscriptions"
-                enrichmentType={AdditionalType.Inscription}
+                enrichmentType={HeritageObjectEnrichmentType.Inscription}
               >
                 {object.inscriptions?.map(inscription => (
                   <div key={inscription}>{inscription}</div>
