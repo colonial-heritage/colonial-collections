@@ -142,7 +142,7 @@
     "transferredFrom": "Transferred from",
     "transferredTo": "Transferred to",
     "location": "Location",
-    "providedBy": "Provided by",
+    "providedBy": "Provided by <name></name>",
     "readMore": "Read more",
     "descriptionTitle": "Description",
     "noData": "No provenance events provided for this object.",

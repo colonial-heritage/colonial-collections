@@ -128,9 +128,19 @@ function ProvenanceEventRow({
               )}
             </div>
             <div className="w-1/3 text-xs">
-              <div>
-                {t('providedBy')} <strong>{organizationName}</strong>
-              </div>
+              {'pubInfo' in event ? (
+                <div className="bg-consortiumGreen-100 text-consortiumBlue-800 p-1 rounded">
+                  {t.rich('providedBy', {
+                    name: () => <strong>{event.pubInfo.creator.name}</strong>,
+                  })}
+                </div>
+              ) : (
+                <div>
+                  {t.rich('providedBy', {
+                    name: () => <strong>{organizationName}</strong>,
+                  })}
+                </div>
+              )}
             </div>
           </div>
         ))}

@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic';
 import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import AddProvenanceForm from './add-form';
+import {provenanceEventEnrichmentFetcher} from '@/lib/enricher-instances';
 
 // SSR needs to be false for plugin 'react-headless-timeline'
 const Timeline = dynamic(() => import('./timeline'), {
@@ -19,14 +20,21 @@ const Timeline = dynamic(() => import('./timeline'), {
 
 export default async function Provenance({objectId}: {objectId: string}) {
   const locale = useLocale() as LocaleEnum;
-  const events = await provenanceEvents.getByHeritageObjectId({
-    id: objectId,
-    locale,
-  });
+  const baseEvents =
+    (await provenanceEvents.getByHeritageObjectId({
+      id: objectId,
+      locale,
+    })) || [];
+
+  const provenanceEnrichmentEvents =
+    (await provenanceEventEnrichmentFetcher.getById(objectId)) || [];
+
+  const events = [...baseEvents, ...provenanceEnrichmentEvents];
+
   const t = await getTranslations('Provenance');
   const {organization} = useObject.getState();
 
-  if (!events || events.length === 0) {
+  if (events.length === 0) {
     return (
       <div className="w-full">
         <div className="mx-auto px-4 sm:px-10 max-w-[1800px]">

@@ -143,7 +143,7 @@
     "transferredTo": "Overgedragen aan",
     "location": "Locatie",
     "descriptionTitle": "Beschrijving",
-    "providedBy": "Aangeleverd door",
+    "providedBy": "Aangeleverd door <name></name>",
     "readMore": "Lees meer",
     "noData": "Geen herkomstgegevens aangeleverd.",
     "dataTableTitle": "Herkomst data tabel",
