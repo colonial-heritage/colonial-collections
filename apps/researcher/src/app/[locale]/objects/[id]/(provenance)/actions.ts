@@ -22,8 +22,10 @@ interface AddProvenanceEnrichmentProps {
     id: string;
     name: string;
   };
-  startDate: string;
-  endDate: string;
+  date: {
+    startDate: string;
+    endDate: string;
+  };
   transferredFrom: {
     id: string;
     name: string;
@@ -45,8 +47,7 @@ export async function addProvenanceEnrichment({
   user,
   type,
   additionalType,
-  startDate,
-  endDate,
+  date,
   transferredFrom,
   transferredTo,
   location,
@@ -61,10 +62,7 @@ export async function addProvenanceEnrichment({
     },
     type: type.id as ProvenanceEventType,
     additionalType: additionalType.id ? additionalType : undefined,
-    date: {
-      startDate,
-      endDate,
-    },
+    date,
     transferredFrom: transferredFrom.id ? transferredFrom : undefined,
     transferredTo: transferredTo.id ? transferredTo : undefined,
     location: location.id ? location : undefined,

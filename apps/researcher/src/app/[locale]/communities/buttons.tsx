@@ -13,6 +13,7 @@ export function AddCommunityButton() {
       data-testid="add-community"
       onClick={() =>
         openCreateCommunity({
+          skipInvitationScreen: true,
           afterCreateOrganizationUrl: organization =>
             `/revalidate/?path=${encodeRouteSegment(
               '/[locale]/communities'

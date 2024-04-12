@@ -12,7 +12,7 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {z} from 'zod';
+import {date, z} from 'zod';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
 import {
@@ -24,8 +24,10 @@ import {
   LanguageSelector,
   Textarea,
   Input,
+  EdtfInput,
   Select,
   FieldValidationMessage,
+  isEdtf,
 } from '@/components/form';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
 import {ProvenanceEventType} from './definitions';
@@ -63,8 +65,10 @@ interface FormValues {
   location: {id: string; name: string};
   type: {id: string; name: string};
   additionalType: {id: string; name: string};
-  startDate: string;
-  endDate: string;
+  date: {
+    startDate: string;
+    endDate: string;
+  };
   agreedToLicense: boolean;
 }
 
@@ -110,8 +114,16 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
         name: z.string(),
       })
       .optional(),
-    startDate: z.string(),
-    endDate: z.string(),
+    date: z.object({
+      startDate: z.union([
+        z.literal(''),
+        z.string().refine(isEdtf, {message: t('invalidStartDate')}),
+      ]),
+      endDate: z.union([
+        z.literal(''),
+        z.string().refine(isEdtf, {message: t('invalidEndDate')}),
+      ]),
+    }),
     transferredFrom: z
       .object({
         id: z.string(),
@@ -147,8 +159,7 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
       location: {id: '', name: ''},
       type: {id: '', name: ''},
       additionalType: {id: '', name: ''},
-      startDate: '',
-      endDate: '',
+      date: {startDate: '', endDate: ''},
     },
   });
 
@@ -239,13 +250,7 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
           <ProvenanceTab
             number={2}
             title={t('TabWho')}
-            fields={[
-              'transferredFrom',
-              'transferredTo',
-              'location',
-              'startDate',
-              'endDate',
-            ]}
+            fields={['transferredFrom', 'transferredTo', 'location', 'date']}
           />
           <ProvenanceTab
             number={3}
@@ -347,12 +352,14 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                     title={t('startDate')}
                     description={t('startDateDescription')}
                   />
-                  <Input name="startDate" type="date" />
+                  <EdtfInput name="date.startDate" />
+                  <FieldValidationMessage field="date.startDate" />
                   <InputLabel
                     title={t('endDate')}
                     description={t('startDateDescription')}
                   />
-                  <Input name="endDate" type="date" />
+                  <EdtfInput name="date.endDate" />
+                  <FieldValidationMessage field="date.endDate" />
                 </FormColumn>
               </FormWrapper>
               <ButtonGroup>

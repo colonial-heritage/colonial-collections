@@ -3,7 +3,10 @@
     "beforeCommonEraFormat": "{date, date, ::yyyy} BCE",
     "noDateRange": "No date",
     "noStartDate": "No start date",
-    "noEndDate": "No end date"
+    "noEndDate": "No end date",
+    "yearInputLabel": "yyyy",
+    "monthInputLabel": "mm",
+    "dayInputLabel": "dd"
   },
   "Meta": {
     "title": "Colonial Collections Datahub"
