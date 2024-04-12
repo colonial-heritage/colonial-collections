@@ -38,7 +38,7 @@
     "@types/streamify-string": "1.0.4",
     "gts": "5.3.0",
     "jest": "29.7.0",
-    "n3": "1.17.2",
+    "n3": "1.17.3",
     "streamify-string": "1.0.1",
     "typescript": "5.4.3"
   },
