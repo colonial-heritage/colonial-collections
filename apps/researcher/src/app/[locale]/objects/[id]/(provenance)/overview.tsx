@@ -12,6 +12,10 @@ import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import AddProvenanceForm from './add-form';
 import {provenanceEventEnrichmentFetcher} from '@/lib/enricher-instances';
+import SignedIn from '@/lib/community/signed-in';
+import {SignedOut} from '@clerk/nextjs';
+import SignedOutSlideOut from '@/components/signed-out-slide-out';
+import {Link} from '@/navigation';
 
 // SSR needs to be false for plugin 'react-headless-timeline'
 const Timeline = dynamic(() => import('./timeline'), {
@@ -47,6 +51,12 @@ export default async function Provenance({objectId}: {objectId: string}) {
           <p className="text-neutral-600 text-sm max-w-2xl mb-6">
             {t('noData')}
           </p>
+          <div className="flex justify-between items-center my-6">
+            <div>
+              <AddProvenanceButton />
+            </div>
+          </div>
+          <AddProvenanceSlideOut objectId={objectId} />
         </div>
       </div>
     );
@@ -69,35 +79,59 @@ export default async function Provenance({objectId}: {objectId: string}) {
           </p>
           <div className="flex justify-between items-center my-6">
             <div>
-              <SlideOutButton
-                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-                id="addProvenance"
-              >
-                {t('addProvenanceButton')}
-              </SlideOutButton>
+              <AddProvenanceButton />
             </div>
             <div className=" flex gap-1">
               <ToggleViewButtons />
             </div>
           </div>
-          <SlideOut id="addProvenance">
-            <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-300 text-neutral-800 flex-col flex">
-              <div className="flex justify-between items-center border-b  -mx-4 px-4 pb-2">
-                <h3 className="">{t('addProvenanceTitle')}</h3>
-                <SlideOutButton
-                  id="addProvenance"
-                  className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-                >
-                  <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
-                </SlideOutButton>
-              </div>
-              <AddProvenanceForm objectId={objectId} />
-            </div>
-          </SlideOut>
+          <AddProvenanceSlideOut objectId={objectId} />
           <Timeline />
           <DataTable organizationName={organization?.name} />
         </div>
       </div>
     </ProvenanceProvider>
+  );
+}
+
+async function AddProvenanceButton() {
+  const t = await getTranslations('Provenance');
+
+  return (
+    <SlideOutButton
+      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+      id="addProvenance"
+    >
+      {t('addProvenanceButton')}
+    </SlideOutButton>
+  );
+}
+
+async function AddProvenanceSlideOut({objectId}: {objectId: string}) {
+  const t = await getTranslations('Provenance');
+
+  return (
+    <SlideOut id="addProvenance">
+      <SignedIn>
+        <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-300 text-neutral-800 flex-col flex">
+          <div className="flex justify-between items-center border-b  -mx-4 px-4 pb-2">
+            <h3 className="">{t('addProvenanceTitle')}</h3>
+            <SlideOutButton
+              id="addProvenance"
+              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+            >
+              <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
+            </SlideOutButton>
+          </div>
+          <AddProvenanceForm objectId={objectId} />
+        </div>
+      </SignedIn>
+      <SignedOut>
+        <SignedOutSlideOut
+          slideOutId="addProvenance"
+          title={t('needAccountToAddProvenanceTitle')}
+        />
+      </SignedOut>
+    </SlideOut>
   );
 }

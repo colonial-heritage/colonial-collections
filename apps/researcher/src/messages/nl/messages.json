@@ -130,11 +130,7 @@
     "errorObjectAddedToList": "Er is een probleem opgetreden bij het toevoegen van het object aan de lijst. Probeer het later opnieuw.",
     "objectRemovedFromList": "Object verwijderd van lijst <name></name>.",
     "errorObjectRemovedFromList": "Er is een probleem opgetreden bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
-    "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig.",
-    "needAccountToAddNarrativeDescription": "Met dit account kun je meer functionaliteit van deze platform ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>.",
-    "login": "Inloggen",
-    "createAccount": "Maak een account aan",
-    "cancel": "Annuleren"
+    "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig."
   },
   "Provenance": {
     "title": "Herkomst",
@@ -160,7 +156,8 @@
     "hideDataTableButton": "Datatabel verbergen",
     "noDescription": "Geen beschrijving",
     "addProvenanceButton": "Herkomstgebeurtenis toevoegen",
-    "addProvenanceTitle": "Herkomstgebeurtenis toevoegen"
+    "addProvenanceTitle": "Herkomstgebeurtenis toevoegen",
+    "needAccountToAddProvenanceTitle": "Om herkomstgegevens toe te voegen, heb je een account nodig."
   },
   "ProvenanceForm": {
     "TabWhat": "Wat is er gebeurd",
@@ -199,6 +196,11 @@
     "previousButton": "Vorige stap",
     "nextButton": "Volgende stap",
     "saveButton": "Provenance opslaan"
+  },
+  "SearchSelector": {
+    "beforeTyping": "Begin met typen om te zoeken",
+    "loading": "Laden...",
+    "noResults": "Geen resultaten"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
@@ -339,11 +341,12 @@
     "deleteObjectButton": "Verwijder <longText>van lijst</longText>",
     "deleteObjectSuccess": "Object is verwijderd van de lijst",
     "deleteObjectError": "Er is iets misgegaan bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
+    "deleteListTitle": "Verwijder lijst",
     "deleteListDescription": "Als u deze lijst verwijdert, wordt deze voor alle leden verwijderd. Dit kan niet ongedaan worden gemaakt.",
     "deleteListButton": "Verwijder deze lijst",
+    "deleteListError": "Er is iets misgegaan bij het verwijderen van de lijst. Probeer het later opnieuw.",
     "deleteQuestion": "Weet u zeker dat u de lijst wilt verwijderen?",
     "confirmDeleteButton": "Ja, verwijder lijst",
-    "deleteListError": "Er is iets misgegaan bij het verwijderen van de lijst. Probeer het later opnieuw.",
     "cancelButton": "Annuleren"
   },
   "UserEnrichmentForm": {
@@ -417,5 +420,11 @@
       "lootDescription": "",
       "confiscated": "In beslag genomen",
       "confiscatedDescription": ""
-    }  
+    },
+    "SignedOutSlideOut": {
+      "login": "Inloggen",
+      "createAccount": "Maak een account aan",
+      "cancel": "Annuleren",
+      "description": "Met dit account kun je meer functionaliteit van deze platform ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>."
+    }
 }

@@ -449,7 +449,9 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                 <DefaultButton onClick={() => setSelectedIndex(1)}>
                   {t('previousButton')}
                 </DefaultButton>
-                <PrimaryButton type="submit">{t('saveButton')}</PrimaryButton>
+                <PrimaryButton type="submit" disabled={isSubmitting}>
+                  {t('saveButton')}
+                </PrimaryButton>
               </ButtonGroup>
             </Tab.Panel>
           </form>

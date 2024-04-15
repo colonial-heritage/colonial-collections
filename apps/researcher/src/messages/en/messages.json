@@ -130,11 +130,7 @@
     "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
     "objectRemovedFromList": "Object removed from list <name></name>.",
     "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later.",
-    "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account.",
-    "needAccountToAddNarrativeDescription": "With this account you can unlock more functionality of this platform. Creating an account free of charge. <link>See what else you can do with an account</link>.",
-    "login": "Login",
-    "createAccount": "Create an account",
-    "cancel": "Cancel"
+    "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account."
   },
   "Provenance": {
     "title": "Provenance",
@@ -160,7 +156,8 @@
     "hideDataTableButton": "Hide data table",
     "noDescription": "No description",
     "addProvenanceButton": "Add provenance",
-    "addProvenanceTitle": "Add provenance"
+    "addProvenanceTitle": "Add provenance",
+    "needAccountToAddProvenanceTitle": "To add provenance to this object you need to have an account."
   },
   "ProvenanceForm": {
     "TabWhat": "What happened",
@@ -423,5 +420,11 @@
     "lootDescription": "",
     "confiscated": "Confiscated",
     "confiscatedDescription": ""
+  },
+  "SignedOutSlideOut": {
+    "needAccountToAddNarrativeDescription": "With this account you can unlock more functionality of this platform. Creating an account free of charge. <link>See what else you can do with an account</link>.",
+    "login": "Login",
+    "createAccount": "Create an account",
+    "cancel": "Cancel"
   }
 }
