@@ -12,7 +12,7 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {date, z} from 'zod';
+import {z} from 'zod';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
 import edtf from 'edtf';
@@ -31,31 +31,10 @@ import {
   isEdtf,
 } from '@/components/form';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
-import {ProvenanceEventType} from './definitions';
 import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
 import {addProvenanceEnrichment} from './actions';
-
-const additionalTypes = {
-  [ProvenanceEventType.Acquisition]: [
-    {id: 'http://vocab.getty.edu/aat/300417641', translationKey: 'bequest'},
-    {id: 'http://vocab.getty.edu/aat/300417638', translationKey: 'donation'},
-    {id: 'http://vocab.getty.edu/aat/300417637', translationKey: 'gift'},
-    {id: 'http://vocab.getty.edu/aat/300417644', translationKey: 'transfer'},
-    {id: 'http://vocab.getty.edu/aat/300417642', translationKey: 'purchase'},
-  ],
-  [ProvenanceEventType.TransferOfCustody]: [
-    {
-      id: 'http://vocab.getty.edu/aat/300417653',
-      translationKey: 'originalOwner',
-    },
-    {id: 'http://vocab.getty.edu/aat/300417843', translationKey: 'restitution'},
-    {id: 'http://vocab.getty.edu/aat/300444188', translationKey: 'inheritance'},
-    {id: 'http://vocab.getty.edu/aat/300417657', translationKey: 'stolen'},
-    {id: 'http://vocab.getty.edu/aat/300417659', translationKey: 'loot'},
-    {id: 'http://vocab.getty.edu/aat/300417658', translationKey: 'confiscated'},
-  ],
-};
+import {UserTypeOption, typeMapping} from './type-mapping';
 
 interface FormValues {
   attributionId: string;
@@ -65,7 +44,6 @@ interface FormValues {
   transferredTo: {id: string; name: string};
   location: {id: string; name: string};
   type: {id: string; name: string};
-  additionalType: {id: string; name: string};
   date: {
     startDate: string;
     endDate: string;
@@ -76,14 +54,9 @@ interface FormValues {
 export default function AddProvenanceForm({objectId}: {objectId: string}) {
   const t = useTranslations('ProvenanceForm');
   const tType = useTranslations('ProvenanceEventType');
-  const tAdditionalType = useTranslations('ProvenanceAdditionalType');
 
   const locale = useLocale();
   const {user} = useUser();
-
-  const [additionalTypeOptions, setAdditionalTypeOptions] = useState<
-    {id: string; name: string}[]
-  >([]);
 
   const attributionIds = useMemo(
     () => user?.publicMetadata?.attributionIds as string[] | undefined,
@@ -104,17 +77,11 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
       errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
     }),
     type: z.object({
-      id: z.nativeEnum(ProvenanceEventType, {
+      id: z.nativeEnum(UserTypeOption, {
         errorMap: () => ({message: t('typeRequired')}),
       }),
       name: z.string(),
     }),
-    additionalType: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-      })
-      .optional(),
     date: z
       .object({
         startDate: z.union([
@@ -172,7 +139,6 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
       transferredTo: {id: '', name: ''},
       location: {id: '', name: ''},
       type: {id: '', name: ''},
-      additionalType: {id: '', name: ''},
       date: {startDate: '', endDate: ''},
     },
   });
@@ -180,32 +146,16 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
   const {
     handleSubmit,
     setError,
-    setValue,
     formState: {errors, isSubmitting},
   } = methods;
 
   const typeOptions = useMemo(() => {
-    return Object.entries(ProvenanceEventType).map(([key, value]) => ({
+    return Object.values(UserTypeOption).map(value => ({
       id: value,
-      name: tType(key),
-      description: tType(`${key}Description`),
+      name: tType(typeMapping[value].translationKey),
+      description: tType(`${typeMapping[value].translationKey}Description`),
     }));
   }, [tType]);
-
-  const typeChange = (type: {id: string; name: string}) => {
-    setValue('additionalType', {id: '', name: ''});
-    if (!type.id) setAdditionalTypeOptions([]);
-
-    const newOptions = additionalTypes[type.id as ProvenanceEventType].map(
-      ({id, translationKey}) => ({
-        id,
-        name: tAdditionalType(translationKey),
-        description: tAdditionalType(`${translationKey}Description`),
-      })
-    );
-
-    setAdditionalTypeOptions(newOptions);
-  };
 
   const onSubmit: SubmitHandler<FormValues> = async provenanceEnrichment => {
     try {
@@ -256,11 +206,7 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
         onChange={setSelectedIndex}
       >
         <Tab.List className="w-full pb-4 pt-8 flex flex-row flex-wrap gap-4 lg:gap-8 border-b  -mx-4 px-4 mb-4 italic">
-          <ProvenanceTab
-            fields={['type', 'additionalType']}
-            number={1}
-            title={t('TabWhat')}
-          />
+          <ProvenanceTab fields={['type']} number={1} title={t('TabWhat')} />
           <ProvenanceTab
             number={2}
             title={t('TabWho')}
@@ -285,19 +231,9 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                   <Select
                     name="type"
                     options={typeOptions}
-                    onChangeCallback={typeChange}
                     placeholder={t('typePlaceholder')}
                   />
                   <FieldValidationMessage field="type.id" />
-                  <InputLabel
-                    title={t('additionalType')}
-                    description={t('additionalTypeDescription')}
-                  />
-                  <Select
-                    name="additionalType"
-                    options={additionalTypeOptions}
-                    placeholder={t('additionalTypePlaceholder')}
-                  />
                 </FormColumn>
               </FormWrapper>
               <ButtonGroup>

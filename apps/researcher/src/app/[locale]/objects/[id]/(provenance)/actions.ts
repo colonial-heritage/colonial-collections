@@ -4,7 +4,7 @@ import {revalidatePath} from 'next/cache';
 import {creator} from '@/lib/enricher-instances';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import {enrichmentLicence} from '@/lib/enrichment-licence';
-import {ProvenanceEventType} from '@colonial-collections/api';
+import {UserTypeOption, typeMapping} from './type-mapping';
 
 interface AddProvenanceEnrichmentProps {
   citation: string;
@@ -15,10 +15,6 @@ interface AddProvenanceEnrichmentProps {
     name: string;
   };
   type: {
-    id: string;
-    name: string;
-  };
-  additionalType: {
     id: string;
     name: string;
   };
@@ -46,7 +42,6 @@ export async function addProvenanceEnrichment({
   objectId,
   user,
   type,
-  additionalType,
   date,
   transferredFrom,
   transferredTo,
@@ -60,8 +55,11 @@ export async function addProvenanceEnrichment({
       creator: user,
       license: enrichmentLicence,
     },
-    type: type.id as ProvenanceEventType,
-    additionalType: additionalType.id ? additionalType : undefined,
+    type: typeMapping[type.id as UserTypeOption].type,
+    additionalType: {
+      id: typeMapping[type.id as UserTypeOption].additionalType,
+      name: type.name,
+    },
     date,
     transferredFrom: transferredFrom.id ? transferredFrom : undefined,
     transferredTo: transferredTo.id ? transferredTo : undefined,

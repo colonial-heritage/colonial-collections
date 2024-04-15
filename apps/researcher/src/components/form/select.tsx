@@ -6,15 +6,10 @@ import {Controller, useFormContext} from 'react-hook-form';
 interface Props {
   name: string;
   options: {id: string; name: string; description?: string}[];
-  onChangeCallback?: (value: {
-    id: string;
-    name: string;
-    description?: string;
-  }) => void;
   placeholder?: string;
 }
 
-export function Select({name, options, onChangeCallback, placeholder}: Props) {
+export function Select({name, options, placeholder}: Props) {
   const {control} = useFormContext();
 
   return (
@@ -23,15 +18,8 @@ export function Select({name, options, onChangeCallback, placeholder}: Props) {
       defaultValue={{id: '', name: ''}}
       name={name}
       rules={{required: true}}
-      render={({field: {ref, onChange, ...rest}}) => (
-        <Listbox
-          as="div"
-          onChange={value => {
-            onChange(value);
-            onChangeCallback?.(value);
-          }}
-          {...rest}
-        >
+      render={({field: {ref, ...inputProps}}) => (
+        <Listbox as="div" {...inputProps}>
           {({value}) => (
             <div className="relative mt-2">
               <Listbox.Button
