@@ -15,6 +15,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {date, z} from 'zod';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
+import edtf from 'edtf';
 import {
   ButtonGroup,
   FormWrapper,
@@ -114,16 +115,29 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
         name: z.string(),
       })
       .optional(),
-    date: z.object({
-      startDate: z.union([
-        z.literal(''),
-        z.string().refine(isEdtf, {message: t('invalidStartDate')}),
-      ]),
-      endDate: z.union([
-        z.literal(''),
-        z.string().refine(isEdtf, {message: t('invalidEndDate')}),
-      ]),
-    }),
+    date: z
+      .object({
+        startDate: z.union([
+          z.literal(''),
+          z.string().refine(isEdtf, {message: t('invalidStartDate')}),
+        ]),
+        endDate: z.union([
+          z.literal(''),
+          z.string().refine(isEdtf, {message: t('invalidEndDate')}),
+        ]),
+      })
+      .refine(
+        ({startDate, endDate}) => {
+          if (!isEdtf(startDate) || !isEdtf(endDate)) return true;
+          return (
+            edtf(startDate).min <= edtf(endDate).min &&
+            edtf(endDate).max >= edtf(startDate).max
+          );
+        },
+        {
+          message: t('invalidDateRange'),
+        }
+      ),
     transferredFrom: z
       .object({
         id: z.string(),
@@ -298,7 +312,9 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
               <FormWrapper>
                 <FormColumn>
                   <InputLabel
-                    title={t('transferredFrom')}
+                    title={t.rich('transferredFrom', {
+                      important: text => <em>{text}</em>,
+                    })}
                     description={t('transferredFromDescription')}
                   />
                   <SearchSelector
@@ -315,7 +331,9 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                     name="transferredFrom"
                   />
                   <InputLabel
-                    title={t('transferredTo')}
+                    title={t.rich('transferredTo', {
+                      important: text => <em>{text}</em>,
+                    })}
                     description={t('transferredToDescription')}
                   />
                   <SearchSelector
@@ -360,6 +378,7 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                   />
                   <EdtfInput name="date.endDate" />
                   <FieldValidationMessage field="date.endDate" />
+                  <FieldValidationMessage field="date" />
                 </FormColumn>
               </FormWrapper>
               <ButtonGroup>

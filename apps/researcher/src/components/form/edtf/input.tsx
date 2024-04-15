@@ -1,6 +1,6 @@
 'use client';
 
-import {useFormContext} from 'react-hook-form';
+import {useController, useFormContext} from 'react-hook-form';
 import {useEffect, useMemo, useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {fromDateString, toDateString} from './converter';
@@ -10,10 +10,19 @@ interface Props extends React.HTMLProps<HTMLInputElement> {
 }
 
 export function EdtfInput({name}: Props) {
-  const {setValue, watch} = useFormContext();
+  const {control} = useFormContext();
 
-  const defaultValues = useMemo(() => {
-    const date = watch(name);
+  const controller = useController({
+    name,
+    control,
+  });
+
+  const defaultValues: {
+    yyyy: string;
+    mm: string;
+    dd: string;
+  } = useMemo(() => {
+    const date = controller.field.value || '';
     return fromDateString(date);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -26,8 +35,8 @@ export function EdtfInput({name}: Props) {
 
   useEffect(() => {
     const dateString = toDateString(yyyy, mm, dd);
-    setValue(name, dateString);
-  }, [yyyy, mm, dd, name, setValue]);
+    controller.field.onChange(dateString);
+  }, [yyyy, mm, dd, name, controller.field]);
 
   return (
     <div className="flex w-fit border border-neutral-300">
@@ -37,6 +46,7 @@ export function EdtfInput({name}: Props) {
         className="w-20 border-none bg-transparent"
         value={yyyy}
         onChange={e => setYyyy(e.target.value)}
+        onBlur={controller.field.onBlur}
       />
       <span className="py-2 text-gray-300"> / </span>
       <input
@@ -47,6 +57,7 @@ export function EdtfInput({name}: Props) {
         onChange={e => setMm(e.target.value)}
         min={1}
         max={12}
+        onBlur={controller.field.onBlur}
       />
       <span className="py-2 text-gray-300"> / </span>
       <input
@@ -57,6 +68,7 @@ export function EdtfInput({name}: Props) {
         onChange={e => setDd(e.target.value)}
         min={1}
         max={31}
+        onBlur={controller.field.onBlur}
       />
     </div>
   );

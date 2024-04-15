@@ -7,7 +7,7 @@ export function FormWrapper({children}: {children: ReactNode}) {
 }
 
 export function FormColumn({children}: {children: ReactNode}) {
-  return <div className="flex flex-col w-full">{children}</div>;
+  return <div className="flex flex-col w-full -mt-8">{children}</div>;
 }
 
 interface InputLabelProps {
@@ -24,7 +24,7 @@ export function InputLabel({
   required = false,
 }: InputLabelProps) {
   return (
-    <label className="flex flex-col gap-1 mb-1" htmlFor={id}>
+    <label className="flex flex-col gap-1 mb-1 mt-8" htmlFor={id}>
       <strong>
         {title}
         {required && <span className="font-normal text-neutral-600">*</span>}
