@@ -18,7 +18,7 @@
   "devDependencies": {
     "@colonial-collections/eslint-config": "*",
     "@colonial-collections/ts-config": "*",
-    "dotenv-cli": "7.3.0",
+    "dotenv-cli": "7.4.1",
     "ts-node": "10.9.2"
   },
   "dependencies": {
