@@ -1,7 +1,9 @@
 import {
+  createActors,
   createDates,
   createThings,
   createTimeSpans,
+  getProperty,
   getPropertyValue,
   onlyOne,
 } from './rdf-helpers';
@@ -26,30 +28,43 @@ beforeAll(async () => {
 
     ex:enrichment1 a ex:Enrichment ;
       ex:name "Name" ;
-      ex:type ex:type1, ex:type2 ;
+      ex:type ex:myType1, ex:myType2 ;
       ex:dateCreated "2023-01-01"^^xsd:date ;
-      ex:timeSpan ex:timeSpan1, ex:timeSpan2, ex:timeSpan3, ex:timeSpan4 .
+      ex:timeSpan ex:myTimeSpan1, ex:myTimeSpan2, ex:myTimeSpan3, ex:myTimeSpan4 ;
+      ex:creator ex:myPerson1, ex:myPerson2 .
 
-    ex:type1 a ex:DefinedTerm ;
+    ex:myType1 a ex:DefinedTerm ;
       ex:name "Term" .
 
-    ex:type2 a ex:DefinedTerm .
+    ex:myType2 a ex:DefinedTerm .
 
-    ex:timeSpan1 a ex:TimeSpan ;
+    ex:myTimeSpan1 a ex:TimeSpan ;
       ex:startDate "-1900"^^xsd:gYear ;
       ex:endDate "-1889"^^xsd:gYear .
 
     # No end date
-    ex:timeSpan2 a ex:TimeSpan ;
+    ex:myTimeSpan2 a ex:TimeSpan ;
       ex:startDate "1889"^^xsd:gYear .
 
     # No start date
-    ex:timeSpan3 a ex:TimeSpan ;
+    ex:myTimeSpan3 a ex:TimeSpan ;
       ex:endDate "1900"^^xsd:gYear .
 
     # Invalid date
-    ex:timeSpan4 a ex:TimeSpan ;
+    ex:myTimeSpan4 a ex:TimeSpan ;
       ex:startDate "badValue" .
+
+    # Is not a part of another actor
+    ex:myPerson1 a ex:Actor ;
+      ex:name "Person 1" .
+
+    # Is a part of another actor (e.g. a community)
+    ex:myPerson2 a ex:Actor ;
+      ex:name "Person 2" ;
+      ex:isPartOf ex:myGroup .
+
+    ex:myGroup a ex:Actor ;
+      ex:name "Group" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -58,6 +73,20 @@ beforeAll(async () => {
   await loader.import(streamParser);
 
   enrichmentResource = loader.resources['https://example.org/enrichment1'];
+});
+
+describe('getProperty', () => {
+  it('returns undefined if property does not exist', () => {
+    const property = getProperty(enrichmentResource, 'ex:unknown');
+
+    expect(property).toBeUndefined();
+  });
+
+  it('returns property if it exists', () => {
+    const property = getProperty(enrichmentResource, 'ex:name');
+
+    expect(property).toBeInstanceOf(Resource);
+  });
 });
 
 describe('getPropertyValue', () => {
@@ -101,12 +130,12 @@ describe('createThings', () => {
     expect(things).toBeUndefined();
   });
 
-  it('returns things if properties exist', () => {
+  it('returns things', () => {
     const things = createThings(enrichmentResource, 'ex:type');
 
     expect(things).toStrictEqual([
-      {id: 'https://example.org/type1', name: 'Term'},
-      {id: 'https://example.org/type2', name: undefined},
+      {id: 'https://example.org/myType1', name: 'Term'},
+      {id: 'https://example.org/myType2', name: undefined},
     ]);
   });
 });
@@ -118,43 +147,70 @@ describe('createDates', () => {
     expect(things).toBeUndefined();
   });
 
-  it('returns dates if properties exist', () => {
+  it('returns dates', () => {
     const dates = createDates(enrichmentResource, 'ex:dateCreated');
 
     expect(dates).toStrictEqual([new Date('2023-01-01')]);
   });
 });
 
-describe('createTimeSpan', () => {
+describe('createTimeSpans', () => {
   it('returns undefined if properties do not exist', () => {
     const timeSpans = createTimeSpans(enrichmentResource, 'ex:unknown');
 
     expect(timeSpans).toBeUndefined();
   });
 
-  it('returns time spans if properties exist', () => {
+  it('returns time spans', () => {
     const timeSpans = createTimeSpans(enrichmentResource, 'ex:timeSpan');
 
     expect(timeSpans).toStrictEqual([
       {
-        id: 'https://example.org/timeSpan1',
+        id: 'https://example.org/myTimeSpan1',
         startDate: new Date('-001900-01-01T00:00:00.000Z'),
         endDate: new Date('-001889-12-31T23:59:59.999Z'),
       },
       {
-        id: 'https://example.org/timeSpan2',
+        id: 'https://example.org/myTimeSpan2',
         startDate: new Date('1889-01-01T00:00:00.000Z'),
         endDate: undefined,
       },
       {
-        id: 'https://example.org/timeSpan3',
+        id: 'https://example.org/myTimeSpan3',
         startDate: undefined,
         endDate: new Date('1900-12-31T23:59:59.999Z'),
       },
       {
-        id: 'https://example.org/timeSpan4',
+        id: 'https://example.org/myTimeSpan4',
         startDate: undefined,
         endDate: undefined,
+      },
+    ]);
+  });
+});
+
+describe('createActors', () => {
+  it('returns undefined if properties do not exist', () => {
+    const actors = createActors(enrichmentResource, 'ex:unknown');
+
+    expect(actors).toBeUndefined();
+  });
+
+  it('returns actors', () => {
+    const actors = createActors(enrichmentResource, 'ex:creator');
+
+    expect(actors).toStrictEqual([
+      {
+        id: 'https://example.org/myPerson1',
+        name: 'Person 1',
+      },
+      {
+        id: 'https://example.org/myPerson2',
+        name: 'Person 2',
+        isPartOf: {
+          id: 'https://example.org/myGroup',
+          name: 'Group',
+        },
       },
     ]);
   });

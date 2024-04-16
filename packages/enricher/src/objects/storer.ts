@@ -110,13 +110,35 @@ export class HeritageObjectEnrichmentStorer {
     // The server automatically adds 'dcterms:creator'.
     // A creator can change his or her name later on, but the name at the time of
     // creation is preserved.
+    const creatorNode = DF.namedNode(opts.pubInfo.creator.id);
+
     publicationStore.addQuad(
       DF.quad(
-        DF.namedNode(opts.pubInfo.creator.id),
+        creatorNode,
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
         DF.literal(opts.pubInfo.creator.name)
       )
     );
+
+    if (opts.pubInfo.creator.isPartOf !== undefined) {
+      const groupNode = DF.namedNode(opts.pubInfo.creator.isPartOf.id);
+
+      publicationStore.addQuad(
+        DF.quad(
+          creatorNode,
+          DF.namedNode('http://purl.org/dc/terms/isPartOf'),
+          groupNode
+        )
+      );
+
+      publicationStore.addQuad(
+        DF.quad(
+          groupNode,
+          DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+          DF.literal(opts.pubInfo.creator.isPartOf.name)
+        )
+      );
+    }
 
     assertionStore.addQuad(
       DF.quad(

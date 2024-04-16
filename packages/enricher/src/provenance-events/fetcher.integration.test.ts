@@ -52,8 +52,12 @@ beforeAll(async () => {
     about: resourceId,
     pubInfo: {
       creator: {
-        id: 'http://example.com/person',
-        name: 'Person',
+        id: 'http://example.com/person1',
+        name: 'Person 1',
+        isPartOf: {
+          id: 'http://example.com/group1',
+          name: 'Group 1',
+        },
       },
       license: 'https://creativecommons.org/licenses/by/4.0/',
     },
@@ -87,8 +91,12 @@ beforeAll(async () => {
     about: resourceId,
     pubInfo: {
       creator: {
-        id: 'http://example.com/person',
-        name: 'Person',
+        id: 'http://example.com/person2',
+        name: 'Person 2',
+        isPartOf: {
+          id: 'http://example.com/group2',
+          name: 'Group 2',
+        },
       },
       license: 'https://creativecommons.org/licenses/by/4.0/',
     },
@@ -122,8 +130,12 @@ describe('getById', () => {
           about: resourceId,
           pubInfo: {
             creator: {
-              id: 'http://example.com/person',
-              name: 'Person',
+              id: 'http://example.com/person1',
+              name: 'Person 1',
+              isPartOf: {
+                id: 'http://example.com/group1',
+                name: 'Group 1',
+              },
             },
             license: 'https://creativecommons.org/licenses/by/4.0/',
             dateCreated: expect.any(Date),
@@ -162,8 +174,12 @@ describe('getById', () => {
           about: resourceId,
           pubInfo: {
             creator: {
-              id: 'http://example.com/person',
-              name: 'Person',
+              id: 'http://example.com/person2',
+              name: 'Person 2',
+              isPartOf: {
+                id: 'http://example.com/group2',
+                name: 'Group 2',
+              },
             },
             license: 'https://creativecommons.org/licenses/by/4.0/',
             dateCreated: expect.any(Date),

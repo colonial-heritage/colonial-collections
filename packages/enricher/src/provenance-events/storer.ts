@@ -117,13 +117,35 @@ export class ProvenanceEventEnrichmentStorer {
     // The server automatically adds 'dcterms:creator'.
     // A creator can change his or her name later on, but the name at the time of
     // creation is preserved.
+    const creatorNode = DF.namedNode(opts.pubInfo.creator.id);
+
     publicationStore.addQuad(
       DF.quad(
-        DF.namedNode(opts.pubInfo.creator.id),
+        creatorNode,
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
         DF.literal(opts.pubInfo.creator.name)
       )
     );
+
+    if (opts.pubInfo.creator.isPartOf !== undefined) {
+      const groupNode = DF.namedNode(opts.pubInfo.creator.isPartOf.id);
+
+      publicationStore.addQuad(
+        DF.quad(
+          creatorNode,
+          DF.namedNode('http://purl.org/dc/terms/isPartOf'),
+          groupNode
+        )
+      );
+
+      publicationStore.addQuad(
+        DF.quad(
+          groupNode,
+          DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+          DF.literal(opts.pubInfo.creator.isPartOf.name)
+        )
+      );
+    }
 
     // Type of the provenance event
     const type = isAcquisition ? 'E8_Acquisition' : 'E10_Transfer_of_Custody';
@@ -172,7 +194,7 @@ export class ProvenanceEventEnrichmentStorer {
       )
     );
 
-    // Constituent who owned or kept the object
+    // Actor who owned or kept the object
     if (opts.transferredFrom !== undefined) {
       const transferredFromNode = DF.namedNode(opts.transferredFrom.id);
 
@@ -180,7 +202,7 @@ export class ProvenanceEventEnrichmentStorer {
         ? 'P23_transferred_title_from'
         : 'P28_custody_surrendered_by';
 
-      // An IRI from a constituent source, e.g. Wikidata
+      // An IRI from an actor source, e.g. Wikidata
       assertionStore.addQuad(
         DF.quad(
           enrichmentId,
@@ -191,7 +213,7 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
 
-      // The name of the constituent
+      // The name of the actor
       assertionStore.addQuad(
         DF.quad(
           transferredFromNode,
@@ -201,7 +223,7 @@ export class ProvenanceEventEnrichmentStorer {
       );
     }
 
-    // Constituent who received the object
+    // Actor who received the object
     if (opts.transferredTo !== undefined) {
       const transferredToNode = DF.namedNode(opts.transferredTo.id);
 
@@ -209,7 +231,7 @@ export class ProvenanceEventEnrichmentStorer {
         ? 'P22_transferred_title_to'
         : 'P29_custody_received_by';
 
-      // An IRI from a constituent source, e.g. Wikidata
+      // An IRI from an actor source, e.g. Wikidata
       assertionStore.addQuad(
         DF.quad(
           enrichmentId,
@@ -220,7 +242,7 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
 
-      // The name of the constituent
+      // The name of the actor
       assertionStore.addQuad(
         DF.quad(
           transferredToNode,

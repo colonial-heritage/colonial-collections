@@ -1,9 +1,18 @@
-import {TimeSpan} from './definitions';
+import {Actor, TimeSpan} from './definitions';
 import edtf from 'edtf';
 import type {Resource} from 'rdf-object';
 
-export function getPropertyValue(resource: Resource, propertyName: string) {
+export function getProperty(resource: Resource, propertyName: string) {
   const property = resource.property[propertyName];
+  if (property === undefined) {
+    return undefined;
+  }
+
+  return property;
+}
+
+export function getPropertyValue(resource: Resource, propertyName: string) {
+  const property = getProperty(resource, propertyName);
   if (property === undefined) {
     return undefined;
   }
@@ -82,4 +91,28 @@ export function createTimeSpans(resource: Resource, propertyName: string) {
   const timeSpans = properties.map(property => createTimeSpan(property));
 
   return timeSpans.length > 0 ? timeSpans : undefined;
+}
+
+function createActor(actorResource: Resource) {
+  const name = getPropertyValue(actorResource, 'ex:name');
+
+  const actor: Actor = {
+    id: actorResource.value,
+    name,
+  };
+
+  // Recursively get the parent actors, if any
+  const parentActor = getProperty(actorResource, 'ex:isPartOf');
+  if (parentActor !== undefined) {
+    actor.isPartOf = createActor(parentActor);
+  }
+
+  return actor;
+}
+
+export function createActors(resource: Resource, propertyName: string) {
+  const properties = resource.properties[propertyName];
+  const actors = properties.map(property => createActor(property));
+
+  return actors.length > 0 ? actors : undefined;
 }
