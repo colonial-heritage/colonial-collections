@@ -1,9 +1,8 @@
-import {Agent} from '../definitions';
 import {fromClassToType} from './helpers';
 import {HeritageObjectEnrichment} from './definitions';
 import {
+  createActors,
   createDates,
-  createThings,
   getPropertyValue,
   onlyOne,
 } from '../rdf-helpers';
@@ -13,7 +12,7 @@ import type {Resource} from 'rdf-object';
 export function toHeritageObjectEnrichment(rawEnrichment: Resource) {
   const additionalType = getPropertyValue(rawEnrichment, 'ex:additionalType');
   const about = getPropertyValue(rawEnrichment, 'ex:isPartOf')!;
-  const creator = onlyOne(createThings<Agent>(rawEnrichment, 'ex:creator'))!;
+  const creator = onlyOne(createActors(rawEnrichment, 'ex:creator'))!;
   const license = getPropertyValue(rawEnrichment, 'ex:license')!;
   const dateCreated = onlyOne(createDates(rawEnrichment, 'ex:dateCreated'))!;
   const citation = getPropertyValue(rawEnrichment, 'ex:citation');

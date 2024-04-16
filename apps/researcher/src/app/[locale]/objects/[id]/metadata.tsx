@@ -13,7 +13,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import type {
-  Agent,
+  Actor,
   HeritageObjectEnrichmentType,
 } from '@colonial-collections/enricher';
 import ISO6391, {LanguageCode} from 'iso-639-1';
@@ -93,7 +93,7 @@ interface MetadataEntryProps {
   isCurrentPublisher?: boolean;
   dateCreated?: Date;
   citation?: string;
-  creator?: Agent;
+  creator?: Actor;
   languageCode?: LanguageCode;
   translationKey: string;
   children?: ReactNode;

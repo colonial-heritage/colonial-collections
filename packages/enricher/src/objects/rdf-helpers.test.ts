@@ -24,23 +24,26 @@ beforeAll(async () => {
     ex:basicEnrichment a ex:HeritageObjectEnrichment ;
       ex:additionalType <${ontologyUrl}Material${ontologyVersionIdentifier}> ;
       ex:isPartOf <https://example.com/object> ;
-      ex:creator ex:creator1 ;
+      ex:creator ex:myPerson ;
       ex:license <https://example.com/license> ;
       ex:dateCreated "2023-01-01"^^xsd:date .
 
     ex:fullEnrichment a ex:HeritageObjectEnrichment ;
       ex:additionalType <${ontologyUrl}Material${ontologyVersionIdentifier}> ;
       ex:isPartOf <https://example.com/object> ;
-      ex:creator ex:creator1 ;
+      ex:creator ex:myPerson ;
       ex:license <https://example.com/license> ;
       ex:dateCreated "2023-01-01"^^xsd:date ;
       ex:citation "Citation" ;
       ex:description "Description" ;
       ex:inLanguage "en" .
 
-    ex:creator1 a ex:Actor ;
-      ex:id <https://example.com/creator> ;
-      ex:name "Creator Name" .
+    ex:myPerson a ex:Actor ;
+      ex:name "Person" ;
+      ex:isPartOf ex:myGroup .
+
+    ex:myGroup a ex:Actor ;
+      ex:name "Group" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -64,8 +67,12 @@ describe('toHeritageObjectEnrichment', () => {
       about: 'https://example.com/object',
       pubInfo: {
         creator: {
-          id: 'https://example.org/creator1',
-          name: 'Creator Name',
+          id: 'https://example.org/myPerson',
+          name: 'Person',
+          isPartOf: {
+            id: 'https://example.org/myGroup',
+            name: 'Group',
+          },
         },
         license: 'https://example.com/license',
         dateCreated: new Date('2023-01-01T00:00:00.000Z'),
@@ -82,8 +89,12 @@ describe('toHeritageObjectEnrichment', () => {
       about: 'https://example.com/object',
       pubInfo: {
         creator: {
-          id: 'https://example.org/creator1',
-          name: 'Creator Name',
+          id: 'https://example.org/myPerson',
+          name: 'Person',
+          isPartOf: {
+            id: 'https://example.org/myGroup',
+            name: 'Group',
+          },
         },
         license: 'https://example.com/license',
         dateCreated: new Date('2023-01-01T00:00:00.000Z'),

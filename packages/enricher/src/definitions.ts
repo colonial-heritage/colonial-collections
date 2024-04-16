@@ -20,6 +20,12 @@ export const basicEnrichmentBeingCreatedSchema = z.object({
     creator: z.object({
       id: z.string().url(),
       name: z.string(),
+      isPartOf: z
+        .object({
+          id: z.string().url(),
+          name: z.string(),
+        })
+        .optional(),
     }),
     license: z.string().url(),
   }),
@@ -32,7 +38,9 @@ export type Thing = {
 
 export type Term = Thing;
 export type Place = Thing;
-export type Agent = Thing;
+export type Actor = Thing & {
+  isPartOf?: Actor; // E.g. a group such as a community
+};
 
 export type TimeSpan = {
   id: string;
@@ -41,7 +49,7 @@ export type TimeSpan = {
 };
 
 export type PubInfo = {
-  creator: Agent;
+  creator: Actor;
   license: string;
   dateCreated: Date;
 };
