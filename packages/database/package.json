@@ -16,10 +16,10 @@
     "test:watch": "npm test -- --watchAll"
   },
   "devDependencies": {
-    "dotenv-cli": "7.3.0",
     "@colonial-collections/eslint-config": "*",
-    "ts-node": "10.9.2",
-    "@colonial-collections/ts-config": "*"
+    "@colonial-collections/ts-config": "*",
+    "dotenv-cli": "7.3.0",
+    "ts-node": "10.9.2"
   },
   "dependencies": {
     "drizzle-kit": "0.20.14",
