@@ -130,7 +130,7 @@ describe('createThings', () => {
     expect(things).toBeUndefined();
   });
 
-  it('returns things if properties exist', () => {
+  it('returns things', () => {
     const things = createThings(enrichmentResource, 'ex:type');
 
     expect(things).toStrictEqual([
@@ -147,7 +147,7 @@ describe('createDates', () => {
     expect(things).toBeUndefined();
   });
 
-  it('returns dates if properties exist', () => {
+  it('returns dates', () => {
     const dates = createDates(enrichmentResource, 'ex:dateCreated');
 
     expect(dates).toStrictEqual([new Date('2023-01-01')]);
@@ -161,7 +161,7 @@ describe('createTimeSpans', () => {
     expect(timeSpans).toBeUndefined();
   });
 
-  it('returns time spans if properties exist', () => {
+  it('returns time spans', () => {
     const timeSpans = createTimeSpans(enrichmentResource, 'ex:timeSpan');
 
     expect(timeSpans).toStrictEqual([
@@ -196,7 +196,7 @@ describe('createActors', () => {
     expect(actors).toBeUndefined();
   });
 
-  it('returns actors if properties exist', () => {
+  it('returns actors', () => {
     const actors = createActors(enrichmentResource, 'ex:creator');
 
     expect(actors).toStrictEqual([
