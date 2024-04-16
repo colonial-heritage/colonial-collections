@@ -28,6 +28,10 @@ describe('add', () => {
         creator: {
           id: 'http://example.com/person',
           name: 'Person',
+          isPartOf: {
+            id: 'http://example.com/community',
+            name: 'Community',
+          },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },

@@ -73,7 +73,11 @@ export class ProvenanceEventEnrichmentFetcher {
           ex:endDate ?endOfTheEnd .
 
         ?creator a ex:Actor ;
-          ex:name ?creatorName .
+          ex:name ?creatorName ;
+          ex:isPartOf ?group .
+
+        ?group a ex:Actor ;
+          ex:name ?groupName .
       }
       WHERE {
         BIND(<${iri}> AS ?source)
@@ -95,6 +99,11 @@ export class ProvenanceEventEnrichmentFetcher {
             dcterms:license ?license .
 
           ?creator rdfs:label ?creatorName .
+
+          OPTIONAL {
+            ?creator dcterms:isPartOf ?group .
+            ?group rdfs:label ?groupName
+          }
         }
 
         graph ?assertion {

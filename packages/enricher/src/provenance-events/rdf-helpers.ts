@@ -1,6 +1,7 @@
-import {Agent, Place, Term} from '../definitions';
+import {Place, Term} from '../definitions';
 import {ProvenanceEventEnrichment, ProvenanceEventType} from './definitions';
 import {
+  createActors,
   createDates,
   createThings,
   createTimeSpans,
@@ -19,7 +20,7 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
       : ProvenanceEventType.TransferOfCustody;
 
   const about = getPropertyValue(rawEnrichment, 'ex:about')!;
-  const creator = onlyOne(createThings<Agent>(rawEnrichment, 'ex:creator'))!;
+  const creator = onlyOne(createActors(rawEnrichment, 'ex:creator'))!;
   const license = getPropertyValue(rawEnrichment, 'ex:license')!;
   const dateCreated = onlyOne(createDates(rawEnrichment, 'ex:dateCreated'))!;
   const citation = getPropertyValue(rawEnrichment, 'ex:citation');
@@ -27,10 +28,10 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
   const inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
   const location = onlyOne(createThings<Place>(rawEnrichment, 'ex:location'));
   const transferredFrom = onlyOne(
-    createThings<Agent>(rawEnrichment, 'ex:transferredFrom')
+    createActors(rawEnrichment, 'ex:transferredFrom')
   );
   const transferredTo = onlyOne(
-    createThings<Agent>(rawEnrichment, 'ex:transferredTo')
+    createActors(rawEnrichment, 'ex:transferredTo')
   );
   const date = onlyOne(createTimeSpans(rawEnrichment, 'ex:date'));
   const additionalTypes = createThings<Term>(

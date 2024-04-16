@@ -1,6 +1,6 @@
 import {
   basicEnrichmentBeingCreatedSchema,
-  Agent,
+  Actor,
   Place,
   PubInfo,
   Term,
@@ -72,8 +72,8 @@ export type ProvenanceEventEnrichment = {
   type: ProvenanceEventType;
   additionalTypes?: Term[];
   date?: TimeSpan;
-  transferredFrom?: Agent;
-  transferredTo?: Agent;
+  transferredFrom?: Actor;
+  transferredTo?: Actor;
   location?: Place;
   description?: string;
   citation?: string;

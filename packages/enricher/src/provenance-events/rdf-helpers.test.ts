@@ -22,46 +22,46 @@ beforeAll(async () => {
 
     ex:basicEnrichment a ex:TransferOfCustody ;
       ex:about <https://example.com/object> ;
-      ex:creator ex:creator1 ;
+      ex:creator ex:myPerson ;
       ex:license <https://example.com/license> ;
       ex:dateCreated "2023-01-01"^^xsd:date .
 
     ex:fullEnrichment a ex:Acquisition ;
       ex:about <https://example.com/object> ;
-      ex:creator ex:creator1 ;
+      ex:creator ex:myPerson ;
       ex:license <https://example.com/license> ;
       ex:dateCreated "2023-01-01"^^xsd:date ;
-      ex:additionalType ex:additionalType1 ;
+      ex:additionalType ex:myAdditionalType ;
       ex:citation "Citation" ;
       ex:description "Description" ;
       ex:inLanguage "en" ;
-      ex:date ex:timeSpan1 ;
-      ex:transferredFrom ex:transferredFrom1 ;
-      ex:transferredTo ex:transferredTo1 ;
-      ex:location ex:location1 .
+      ex:date ex:myTimeSpan ;
+      ex:transferredFrom ex:myTransferredFrom ;
+      ex:transferredTo ex:myTransferredTo ;
+      ex:location ex:myLocation .
 
-    ex:creator1 a ex:Actor ;
-      ex:id <https://example.com/creator> ;
-      ex:name "Creator Name" .
+    ex:myPerson a ex:Actor ;
+      ex:name "Person" ;
+      ex:isPartOf ex:myGroup .
 
-    ex:additionalType1 a ex:DefinedTerm ;
-      ex:name "Term Name" .
+    ex:myGroup a ex:Actor ;
+      ex:name "Group" .
 
-    ex:timeSpan1 a ex:TimeSpan ;
+    ex:myAdditionalType a ex:DefinedTerm ;
+      ex:name "Term" .
+
+    ex:myTimeSpan a ex:TimeSpan ;
       ex:startDate "1889"^^xsd:gYear ;
       ex:endDate "1900"^^xsd:gYear .
 
-    ex:transferredFrom1 a ex:Actor ;
-      ex:id <https://example.com/transferredFrom> ;
-      ex:name "Transferred From Name" .
+    ex:myTransferredFrom a ex:Actor ;
+      ex:name "Transferred From" .
 
-    ex:transferredTo1 a ex:Actor ;
-      ex:id <https://example.com/transferredTo> ;
-      ex:name "Transferred To Name" .
+    ex:myTransferredTo a ex:Actor ;
+      ex:name "Transferred To" .
 
-    ex:location1 a ex:Place ;
-      ex:id <https://example.com/location> ;
-      ex:name "Location Name" .
+    ex:myLocation a ex:Place ;
+      ex:name "Location" .
   `;
 
   const stringStream = streamifyString(triples);
@@ -85,8 +85,12 @@ describe('toProvenanceEventEnrichment', () => {
       about: 'https://example.com/object',
       pubInfo: {
         creator: {
-          id: 'https://example.org/creator1',
-          name: 'Creator Name',
+          id: 'https://example.org/myPerson',
+          name: 'Person',
+          isPartOf: {
+            id: 'https://example.org/myGroup',
+            name: 'Group',
+          },
         },
         license: 'https://example.com/license',
         dateCreated: new Date('2023-01-01T00:00:00.000Z'),
@@ -103,37 +107,41 @@ describe('toProvenanceEventEnrichment', () => {
       about: 'https://example.com/object',
       pubInfo: {
         creator: {
-          id: 'https://example.org/creator1',
-          name: 'Creator Name',
+          id: 'https://example.org/myPerson',
+          name: 'Person',
+          isPartOf: {
+            id: 'https://example.org/myGroup',
+            name: 'Group',
+          },
         },
         license: 'https://example.com/license',
         dateCreated: new Date('2023-01-01T00:00:00.000Z'),
       },
       additionalTypes: [
         {
-          id: 'https://example.org/additionalType1',
-          name: 'Term Name',
+          id: 'https://example.org/myAdditionalType',
+          name: 'Term',
         },
       ],
       citation: 'Citation',
       description: 'Description',
       inLanguage: 'en',
       date: {
-        id: 'https://example.org/timeSpan1',
+        id: 'https://example.org/myTimeSpan',
         startDate: new Date('1889-01-01T00:00:00.000Z'),
         endDate: new Date('1900-12-31T23:59:59.999Z'),
       },
       transferredFrom: {
-        id: 'https://example.org/transferredFrom1',
-        name: 'Transferred From Name',
+        id: 'https://example.org/myTransferredFrom',
+        name: 'Transferred From',
       },
       transferredTo: {
-        id: 'https://example.org/transferredTo1',
-        name: 'Transferred To Name',
+        id: 'https://example.org/myTransferredTo',
+        name: 'Transferred To',
       },
       location: {
-        id: 'https://example.org/location1',
-        name: 'Location Name',
+        id: 'https://example.org/myLocation',
+        name: 'Location',
       },
     });
   });
