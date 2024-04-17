@@ -192,7 +192,9 @@
     "invalidDateRange": "Invalid date range, start date should be before end date",
     "previousButton": "Previous step",
     "nextButton": "Next step",
-    "saveButton": "Save provenance"
+    "saveButton": "Save provenance",
+    "successfullyAdded": "Your provenance event has been added to the object. It could take a moment before it is visible.",
+    "serverError": "Something went wrong while creating the provenance event. Please try again later."
   },
   "SearchSelector": {
     "beforeTyping": "Start typing to search",

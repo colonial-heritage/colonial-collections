@@ -4,7 +4,11 @@ import {Tab} from '@headlessui/react';
 import {useLocale, useTranslations} from 'next-intl';
 import {Fragment, Suspense, useMemo, useState} from 'react';
 import classNames from 'classnames';
-import {LocalizedMarkdown, useNotifications} from '@colonial-collections/ui';
+import {
+  LocalizedMarkdown,
+  useNotifications,
+  useSlideOut,
+} from '@colonial-collections/ui';
 import {
   useForm,
   SubmitHandler,
@@ -51,7 +55,12 @@ interface FormValues {
   agreedToLicense: boolean;
 }
 
-export default function AddProvenanceForm({objectId}: {objectId: string}) {
+interface Props {
+  objectId: string;
+  slideOutId: string;
+}
+
+export default function AddProvenanceForm({objectId, slideOutId}: Props) {
   const t = useTranslations('ProvenanceForm');
   const tType = useTranslations('ProvenanceEventType');
 
@@ -63,6 +72,7 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
     [user?.publicMetadata?.attributionIds]
   );
   const {addNotification} = useNotifications();
+  const {setIsVisible} = useSlideOut();
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -178,7 +188,7 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
         message: t('successfullyAdded'),
         type: 'success',
       });
-      // SetIsVisible(slideOutId, false);
+      setIsVisible(slideOutId, false);
     } catch (err) {
       console.error(err);
       setError('root.serverError', {

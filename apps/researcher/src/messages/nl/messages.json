@@ -176,9 +176,9 @@
     "endDate": "Einddatum",
     "endDateDescription": "Als de startdatum een exacte datum is, plaats dan dezelfde datum als de startdatum.",
     "citation": "Bron",
-    "citationDescription": "Geef informatie die uw provenance-evenement ondersteunt.",
+    "citationDescription": "Geef informatie die uw herkomstgebeurtenis ondersteunt.",
     "inLanguage": "Taal",
-    "inLanguageDescription": "Selecteer een taal van het provenance-evenement. Begin met typen om een taal te selecteren.",
+    "inLanguageDescription": "Selecteer een taal van het herkomstgebeurtenis. Begin met typen om een taal te selecteren.",
     "typePlaceholder": "Selecteer wat er is gebeurd",
     "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
     "attributionId": "Persoonlijke URL",
@@ -192,7 +192,9 @@
     "invalidDateRange": "Ongeldig datumbereik, de startdatum moet vóór de einddatum zijn",
     "previousButton": "Vorige stap",
     "nextButton": "Volgende stap",
-    "saveButton": "Provenance opslaan"
+    "saveButton": "Herkomstgebeurtenis opslaan",
+    "successfullyAdded": "Uw herkomstgebeurtenis is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
+    "serverError": "Er is iets misgegaan bij het aanmaken van uw herkomstgebeurtenis. Probeer het later opnieuw."
   },
   "SearchSelector": {
     "beforeTyping": "Begin met typen om te zoeken",

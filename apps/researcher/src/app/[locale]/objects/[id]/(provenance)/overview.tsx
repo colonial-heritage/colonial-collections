@@ -15,7 +15,7 @@ import {provenanceEventEnrichmentFetcher} from '@/lib/enricher-instances';
 import SignedIn from '@/lib/community/signed-in';
 import {SignedOut} from '@clerk/nextjs';
 import SignedOutSlideOut from '@/components/signed-out-slide-out';
-import {Link} from '@/navigation';
+import {Notifications} from '@colonial-collections/ui';
 
 // SSR needs to be false for plugin 'react-headless-timeline'
 const Timeline = dynamic(() => import('./timeline'), {
@@ -94,13 +94,15 @@ export default async function Provenance({objectId}: {objectId: string}) {
   );
 }
 
+const slideOutId = 'addProvenance';
+
 async function AddProvenanceButton() {
   const t = await getTranslations('Provenance');
 
   return (
     <SlideOutButton
       className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-      id="addProvenance"
+      id={slideOutId}
     >
       {t('addProvenanceButton')}
     </SlideOutButton>
@@ -111,27 +113,30 @@ async function AddProvenanceSlideOut({objectId}: {objectId: string}) {
   const t = await getTranslations('Provenance');
 
   return (
-    <SlideOut id="addProvenance">
-      <SignedIn>
-        <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-300 text-neutral-800 flex-col flex">
-          <div className="flex justify-between items-center border-b  -mx-4 px-4 pb-2">
-            <h3 className="">{t('addProvenanceTitle')}</h3>
-            <SlideOutButton
-              id="addProvenance"
-              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-            >
-              <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
-            </SlideOutButton>
+    <>
+      <Notifications />
+      <SlideOut id={slideOutId}>
+        <SignedIn>
+          <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-300 text-neutral-800 flex-col flex">
+            <div className="flex justify-between items-center border-b  -mx-4 px-4 pb-2">
+              <h3 className="">{t('addProvenanceTitle')}</h3>
+              <SlideOutButton
+                id={slideOutId}
+                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+              >
+                <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
+              </SlideOutButton>
+            </div>
+            <AddProvenanceForm objectId={objectId} slideOutId={slideOutId} />
           </div>
-          <AddProvenanceForm objectId={objectId} />
-        </div>
-      </SignedIn>
-      <SignedOut>
-        <SignedOutSlideOut
-          slideOutId="addProvenance"
-          title={t('needAccountToAddProvenanceTitle')}
-        />
-      </SignedOut>
-    </SlideOut>
+        </SignedIn>
+        <SignedOut>
+          <SignedOutSlideOut
+            slideOutId="addProvenance"
+            title={t('needAccountToAddProvenanceTitle')}
+          />
+        </SignedOut>
+      </SlideOut>
+    </>
   );
 }
