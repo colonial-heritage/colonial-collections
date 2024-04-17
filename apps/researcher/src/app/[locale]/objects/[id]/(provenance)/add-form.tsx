@@ -235,6 +235,14 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                   />
                   <FieldValidationMessage field="type.id" />
                 </FormColumn>
+                <FormColumn>
+                  <InputLabel
+                    title={t('inLanguage')}
+                    description={t('inLanguageDescription')}
+                    required
+                  />
+                  <LanguageSelector name="inLanguage" />
+                </FormColumn>
               </FormWrapper>
               <ButtonGroup>
                 <DefaultButton disabled>{t('previousButton')}</DefaultButton>
@@ -336,15 +344,6 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                     required
                   />
                   <Textarea name="citation" />
-                  <FieldValidationMessage field="citation" />
-                  <InputLabel
-                    title={t('attributionId')}
-                    description={t('attributionIdDescription')}
-                    required
-                  />
-                  <Input name="attributionId" />
-                  <FieldValidationMessage field="attributionId" />
-
                   <div className="mt-4">
                     <CheckboxWithLabel
                       name="agreedToLicense"
@@ -373,12 +372,14 @@ export default function AddProvenanceForm({objectId}: {objectId: string}) {
                   </div>
                 </FormColumn>
                 <FormColumn>
+                  <FieldValidationMessage field="citation" />
                   <InputLabel
-                    title={t('inLanguage')}
-                    description={t('inLanguageDescription')}
+                    title={t('attributionId')}
+                    description={t('attributionIdDescription')}
                     required
                   />
-                  <LanguageSelector name="inLanguage" />
+                  <Input name="attributionId" />
+                  <FieldValidationMessage field="attributionId" />
                 </FormColumn>
               </FormWrapper>
               <ButtonGroup>
