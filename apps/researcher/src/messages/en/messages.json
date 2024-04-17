@@ -133,6 +133,14 @@
     "createAccount": "Create an account",
     "cancel": "Cancel"
   },
+  "TraditionalKnowledgeLabels": {
+    "title": "Traditional Knowledge Labels",
+    "description": "The TK Labels support the inclusion of local protocols for access and use to cultural heritage that is digitally circulating outside community contexts. <link> Learn more about the Traditional Knowledge Labels </link>.",
+    "nonVerified": "Non-Verified",
+    "nonVerifiedDescription": "This material has not been verified by the community. Reasons for this could include that it has not been appropriately vetted, has mistakes, omissions, derogatory language, lack of informed consent, or its process of creation was through dishonest research which did not follow proper community protocols. Each Label is meant to be customized by a community. See below for a Label template text.",
+    "providedBy": "Provided by <name></name>",
+    "defaultLabel": "This is a default label if no other labels are asigned."
+  },
   "Provenance": {
     "title": "Provenance",
     "description": "Provenance information shows the trail an object has made before it came at the current location. It can contain information about previous owners to technical processing information. This provenance data is often incomplete.",

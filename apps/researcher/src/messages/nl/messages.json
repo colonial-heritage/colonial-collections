@@ -133,6 +133,14 @@
     "createAccount": "Maak een account aan",
     "cancel": "Annuleren"
   },
+  "TraditionalKnowledgeLabels": {
+    "title": "Labels voor Traditionele Kennis",
+    "description": "De TK Labels ondersteunen de opname van lokale protocollen voor toegang tot en gebruik van cultureel erfgoed dat digitaal circuleert buiten de gemeenschapscontexten. <link> Meer leren over de Labels voor Traditionele Kennis </link>.",
+    "nonVerified": "Niet geverifieerd",
+    "nonVerifiedDescription": "Dit materiaal is niet geverifieerd door de gemeenschap. Redenen hiervoor kunnen zijn dat het niet adequaat is gecontroleerd, fouten bevat, weglatingen heeft, denigrerend taalgebruik, gebrek aan geïnformeerde toestemming, of het creatieproces was gebaseerd op oneerlijk onderzoek dat niet de juiste gemeenschapsprotocollen volgde. Elk label is bedoeld om door een gemeenschap aangepast te worden. Zie hieronder voor een sjabloontekst van een label.",
+    "providedBy": "Aangeboden door <name></name>",
+    "defaultLabel": "Dit is een standaardlabel als er geen andere labels zijn toegewezen."
+  },
   "Provenance": {
     "title": "Herkomst",
     "description": "Informatie over de herkomst toont het pad dat een object heeft afgelegd voordat het op de huidige locatie kwam. Het kan informatie bevatten over vorige eigenaren tot technische verwerkingsinformatie. Deze herkomstgegevens zijn vaak onvolledig.",
