@@ -14,6 +14,7 @@ export function organizationToCommunity(
     name: organization.name,
     // The type of `publicMetadata` is `{ [k: string]: unknown } | null `. Redeclare custom metadata.
     description: organization.publicMetadata?.description as string | undefined,
+    iri: organization.publicMetadata?.iri as string | undefined,
     slug: organization.slug!,
     imageUrl: organization.imageUrl,
     // In OrganizationResource `createdAt` is a `Date` object.
