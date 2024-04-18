@@ -7,9 +7,10 @@ interface Props {
   name: string;
   options: {id: string; name: string; description?: string}[];
   placeholder?: string;
+  disabled?: boolean;
 }
 
-export function Select({name, options, placeholder}: Props) {
+export function Select({name, options, placeholder, disabled = false}: Props) {
   const {control} = useFormContext();
 
   return (
@@ -19,7 +20,7 @@ export function Select({name, options, placeholder}: Props) {
       name={name}
       rules={{required: true}}
       render={({field: {ref, ...inputProps}}) => (
-        <Listbox as="div" {...inputProps}>
+        <Listbox as="div" disabled={disabled} {...inputProps}>
           {({value}) => (
             <div className="relative mt-2">
               <Listbox.Button

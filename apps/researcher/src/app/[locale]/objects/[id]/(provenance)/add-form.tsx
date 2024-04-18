@@ -33,6 +33,7 @@ import {
   Select,
   FieldValidationMessage,
   isEdtf,
+  CommunitySelector,
 } from '@/components/form';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
 import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
@@ -48,6 +49,7 @@ interface FormValues {
   transferredTo: {id: string; name: string};
   location: {id: string; name: string};
   type: {id: string; name: string};
+  community: {id: string; name: string};
   date: {
     startDate: string;
     endDate: string;
@@ -133,6 +135,12 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
         name: z.string(),
       })
       .optional(),
+    community: z
+      .object({
+        id: z.string(),
+        name: z.string(),
+      })
+      .optional(),
   });
 
   const methods = useForm({
@@ -145,10 +153,11 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
       citation: '',
       inLanguage: locale,
       agreedToLicense: false,
+      type: {id: '', name: ''},
       transferredFrom: {id: '', name: ''},
       transferredTo: {id: '', name: ''},
       location: {id: '', name: ''},
-      type: {id: '', name: ''},
+      community: {id: '', name: ''},
       date: {startDate: '', endDate: ''},
     },
   });
@@ -252,6 +261,13 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     required
                   />
                   <LanguageSelector name="inLanguage" />
+                </FormColumn>
+                <FormColumn>
+                  <InputLabel
+                    title={t('community')}
+                    description={t('communityDescription')}
+                  />
+                  <CommunitySelector />
                 </FormColumn>
               </FormWrapper>
               <ButtonGroup>
