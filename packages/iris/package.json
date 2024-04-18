@@ -31,7 +31,7 @@
     "gts": "5.3.0",
     "jest": "29.7.0",
     "ts-jest": "29.1.2",
-    "typescript": "5.4.3"
+    "typescript": "5.4.5"
   },
   "jest": {
     "preset": "ts-jest",
