@@ -2,12 +2,12 @@ import {expect} from '@jest/globals';
 import {fromDateString, toDateString} from './converter';
 
 describe('toDateString', () => {
-  it('returns an empty string when no date components are provided', () => {
+  it('returns an empty string when no date parts are provided', () => {
     const result = toDateString();
     expect(result).toEqual('');
   });
 
-  it('returns the correct date string when all date components are provided', () => {
+  it('returns the correct date string when all date parts are provided', () => {
     const yyyy = '2022';
     const mm = '10';
     const dd = '15';
