@@ -51,6 +51,7 @@ export class ProvenanceEventEnrichmentFetcher {
           ex:description ?description ;
           ex:citation ?citation ;
           ex:inLanguage ?language ;
+          ex:qualifier ?qualifier ;
           ex:about ?source ;
           ex:license ?license ;
           ex:creator ?creator ;
@@ -71,6 +72,9 @@ export class ProvenanceEventEnrichmentFetcher {
         ?timeSpan a ex:TimeSpan ;
           ex:startDate ?beginOfTheBegin ;
           ex:endDate ?endOfTheEnd .
+
+        ?qualifier a ex:DefinedTerm ;
+          ex:name ?qualifierName .
 
         ?creator a ex:Actor ;
           ex:name ?creatorName ;
@@ -94,7 +98,7 @@ export class ProvenanceEventEnrichmentFetcher {
 
         graph ?pubInfo {
           ?np a cc:Nanopub ;
-            npx:introduces ?provenanceEvent ;
+            npx:introduces ?attributeAssignment ;
             dcterms:creator ?creator ;
             dcterms:license ?license .
 
@@ -105,6 +109,13 @@ export class ProvenanceEventEnrichmentFetcher {
             ?group rdfs:label ?groupName
           }
         }
+
+        OPTIONAL {
+          ?attributeAssignment crm:P2_has_type ?qualifier .
+          ?qualifier rdfs:label ?qualifierName .
+        }
+
+        ?attributeAssignment crm:P141_assigned ?provenanceEvent .
 
         graph ?assertion {
           {

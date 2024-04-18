@@ -47,6 +47,12 @@ export const provenanceEventEnrichmentBeingCreatedSchema =
           name: z.string(),
         })
         .optional(),
+      qualifier: z
+        .object({
+          id: z.string().url(),
+          name: z.string(),
+        })
+        .optional(),
     })
   );
 
@@ -78,6 +84,7 @@ export type ProvenanceEventEnrichment = {
   description?: string;
   citation?: string;
   inLanguage?: string;
+  qualifier?: Term;
   about: string;
   pubInfo: PubInfo;
 };

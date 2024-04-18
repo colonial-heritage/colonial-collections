@@ -49,11 +49,11 @@ export class ProvenanceEventEnrichmentStorer {
     const isAcquisition = opts.type === ProvenanceEventType.Acquisition;
 
     // Make clear what application has published this nanopub
-    const softwareTool = DF.namedNode('https://app.colonialcollections.nl/');
+    const softwareToolId = DF.namedNode('https://app.colonialcollections.nl/');
 
     publicationStore.addQuad(
       DF.quad(
-        softwareTool,
+        softwareToolId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('http://purl.org/nanopub/x/SoftwareTool')
       )
@@ -61,7 +61,7 @@ export class ProvenanceEventEnrichmentStorer {
 
     publicationStore.addQuad(
       DF.quad(
-        softwareTool,
+        softwareToolId,
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
         DF.literal('Colonial Collections')
       )
@@ -101,7 +101,7 @@ export class ProvenanceEventEnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://purl.org/nanopub/x/wasCreatedWith'),
-        softwareTool
+        softwareToolId
       )
     );
 
@@ -117,42 +117,102 @@ export class ProvenanceEventEnrichmentStorer {
     // The server automatically adds 'dcterms:creator'.
     // A creator can change his or her name later on, but the name at the time of
     // creation is preserved.
-    const creatorNode = DF.namedNode(opts.pubInfo.creator.id);
+    const creatorId = DF.namedNode(opts.pubInfo.creator.id);
 
     publicationStore.addQuad(
       DF.quad(
-        creatorNode,
+        creatorId,
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
         DF.literal(opts.pubInfo.creator.name)
       )
     );
 
     if (opts.pubInfo.creator.isPartOf !== undefined) {
-      const groupNode = DF.namedNode(opts.pubInfo.creator.isPartOf.id);
+      const groupId = DF.namedNode(opts.pubInfo.creator.isPartOf.id);
 
       publicationStore.addQuad(
         DF.quad(
-          creatorNode,
+          creatorId,
           DF.namedNode('http://purl.org/dc/terms/isPartOf'),
-          groupNode
+          groupId
         )
       );
 
       publicationStore.addQuad(
         DF.quad(
-          groupNode,
+          groupId,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
           DF.literal(opts.pubInfo.creator.isPartOf.name)
         )
       );
     }
 
+    assertionStore.addQuad(
+      DF.quad(
+        enrichmentId,
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode(
+          'http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment'
+        )
+      )
+    );
+
+    // Qualifier of the provenance event, e.g. the event 'probably' or 'possibly' happened
+    if (opts.qualifier !== undefined) {
+      const qualifierId = DF.namedNode(opts.qualifier.id);
+
+      // An IRI from a qualifier source, e.g. AAT
+      assertionStore.addQuad(
+        DF.quad(
+          enrichmentId,
+          DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P2_has_type'),
+          qualifierId
+        )
+      );
+
+      // The name of the qualifier
+      assertionStore.addQuad(
+        DF.quad(
+          qualifierId,
+          DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+          DF.literal(opts.qualifier.name)
+        )
+      );
+    }
+
+    // Relationship between the attribute assignment and the object to which the provenance event belongs
+    const assignedPropertyOfType = isAcquisition
+      ? 'P24i_changed_ownership_through'
+      : 'P30i_custody_transferred_through';
+
+    assertionStore.addQuad(
+      DF.quad(
+        enrichmentId,
+        DF.namedNode(
+          'http://www.cidoc-crm.org/cidoc-crm/P177_assigned_property_of_type'
+        ),
+        DF.namedNode(
+          `http://www.cidoc-crm.org/cidoc-crm/${assignedPropertyOfType}`
+        )
+      )
+    );
+
+    const provenanceEventId = DF.blankNode();
+
+    assertionStore.addQuad(
+      DF.quad(
+        enrichmentId,
+        DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P141_assigned'),
+        provenanceEventId
+      )
+    );
+
     // Type of the provenance event
     const type = isAcquisition ? 'E8_Acquisition' : 'E10_Transfer_of_Custody';
 
     assertionStore.addQuad(
       DF.quad(
-        enrichmentId,
+        provenanceEventId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode(`http://www.cidoc-crm.org/cidoc-crm/${type}`)
       )
@@ -160,21 +220,21 @@ export class ProvenanceEventEnrichmentStorer {
 
     // Classification of the provenance event (e.g. a gift or a purchase)
     if (opts.additionalType !== undefined) {
-      const additionalTypeNode = DF.namedNode(opts.additionalType.id);
+      const additionalType = DF.namedNode(opts.additionalType.id);
 
       // An IRI from a thesaurus, e.g. AAT
       assertionStore.addQuad(
         DF.quad(
-          enrichmentId,
+          provenanceEventId,
           DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P2_has_type'),
-          additionalTypeNode
+          additionalType
         )
       );
 
       // The name of the type
       assertionStore.addQuad(
         DF.quad(
-          additionalTypeNode,
+          additionalType,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
           DF.literal(opts.additionalType.name)
         )
@@ -188,7 +248,7 @@ export class ProvenanceEventEnrichmentStorer {
 
     assertionStore.addQuad(
       DF.quad(
-        enrichmentId,
+        provenanceEventId,
         DF.namedNode(`http://www.cidoc-crm.org/cidoc-crm/${objectPredicate}`),
         DF.namedNode(opts.about.id)
       )
@@ -196,7 +256,7 @@ export class ProvenanceEventEnrichmentStorer {
 
     // Actor who owned or kept the object
     if (opts.transferredFrom !== undefined) {
-      const transferredFromNode = DF.namedNode(opts.transferredFrom.id);
+      const transferredFromId = DF.namedNode(opts.transferredFrom.id);
 
       const transferredFromPredicate = isAcquisition
         ? 'P23_transferred_title_from'
@@ -205,18 +265,18 @@ export class ProvenanceEventEnrichmentStorer {
       // An IRI from an actor source, e.g. Wikidata
       assertionStore.addQuad(
         DF.quad(
-          enrichmentId,
+          provenanceEventId,
           DF.namedNode(
             `http://www.cidoc-crm.org/cidoc-crm/${transferredFromPredicate}`
           ),
-          transferredFromNode
+          transferredFromId
         )
       );
 
       // The name of the actor
       assertionStore.addQuad(
         DF.quad(
-          transferredFromNode,
+          transferredFromId,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
           DF.literal(opts.transferredFrom.name)
         )
@@ -225,7 +285,7 @@ export class ProvenanceEventEnrichmentStorer {
 
     // Actor who received the object
     if (opts.transferredTo !== undefined) {
-      const transferredToNode = DF.namedNode(opts.transferredTo.id);
+      const transferredToId = DF.namedNode(opts.transferredTo.id);
 
       const transferredToPredicate = isAcquisition
         ? 'P22_transferred_title_to'
@@ -234,18 +294,18 @@ export class ProvenanceEventEnrichmentStorer {
       // An IRI from an actor source, e.g. Wikidata
       assertionStore.addQuad(
         DF.quad(
-          enrichmentId,
+          provenanceEventId,
           DF.namedNode(
             `http://www.cidoc-crm.org/cidoc-crm/${transferredToPredicate}`
           ),
-          transferredToNode
+          transferredToId
         )
       );
 
       // The name of the actor
       assertionStore.addQuad(
         DF.quad(
-          transferredToNode,
+          transferredToId,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
           DF.literal(opts.transferredTo.name)
         )
@@ -254,21 +314,21 @@ export class ProvenanceEventEnrichmentStorer {
 
     // Location of the provenance event
     if (opts.location !== undefined) {
-      const locationNode = DF.namedNode(opts.location.id);
+      const locationId = DF.namedNode(opts.location.id);
 
       // An IRI from a location source, e.g. GeoNames
       assertionStore.addQuad(
         DF.quad(
-          enrichmentId,
+          provenanceEventId,
           DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at'),
-          locationNode
+          locationId
         )
       );
 
       // The name of the location
       assertionStore.addQuad(
         DF.quad(
-          locationNode,
+          locationId,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
           DF.literal(opts.location.name)
         )
@@ -278,7 +338,7 @@ export class ProvenanceEventEnrichmentStorer {
     // Date of the provenance event
     if (opts.date !== undefined) {
       const timeSpanId = DF.blankNode();
-      const dateNode = DF.namedNode('http://www.w3.org/2001/XMLSchema#date');
+      const dateId = DF.namedNode('http://www.w3.org/2001/XMLSchema#date');
 
       assertionStore.addQuad(
         DF.quad(
@@ -296,7 +356,7 @@ export class ProvenanceEventEnrichmentStorer {
           DF.namedNode(
             'http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin'
           ),
-          DF.literal(startDate, dateNode)
+          DF.literal(startDate, dateId)
         )
       );
 
@@ -308,13 +368,13 @@ export class ProvenanceEventEnrichmentStorer {
           DF.namedNode(
             'http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end'
           ),
-          DF.literal(endDate, dateNode)
+          DF.literal(endDate, dateId)
         )
       );
 
       assertionStore.addQuad(
         DF.quad(
-          enrichmentId,
+          provenanceEventId,
           DF.namedNode('http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span'),
           timeSpanId
         )
@@ -355,7 +415,7 @@ export class ProvenanceEventEnrichmentStorer {
 
       assertionStore.addQuad(
         DF.quad(
-          enrichmentId,
+          provenanceEventId,
           DF.namedNode(
             'http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by'
           ),
@@ -398,7 +458,7 @@ export class ProvenanceEventEnrichmentStorer {
 
       assertionStore.addQuad(
         DF.quad(
-          enrichmentId,
+          provenanceEventId,
           DF.namedNode(
             'http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by'
           ),
@@ -406,8 +466,6 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
     }
-
-    // TBD: store the level of certainty or uncertainty?
 
     const nanopub = await this.nanopubClient.add({
       assertionStore,
