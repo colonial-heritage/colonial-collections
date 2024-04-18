@@ -1,4 +1,4 @@
-export function toDateString(yyyy = '', mm = '', dd = ''): string {
+export function toDateString(yyyy = '', mm = '', dd = '') {
   if (yyyy === '' && mm === '' && dd === '') {
     return '';
   }
@@ -16,11 +16,7 @@ export function toDateString(yyyy = '', mm = '', dd = ''): string {
   return `${yyyyPadded}-${mmPadded}-${ddPadded}`;
 }
 
-export function fromDateString(dateString: string): {
-  yyyy: string;
-  mm: string;
-  dd: string;
-} {
+export function fromDateString(dateString: string) {
   const parts = dateString.split(/(?<=^-?\d{1,4}|\d{2})-/);
   let yyyy = parts[0] || '';
   if (yyyy.startsWith('-')) {
