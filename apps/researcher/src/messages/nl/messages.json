@@ -6,7 +6,10 @@
     "beforeCommonEraFormat": "{date, date, ::yyyy} v.Chr.",
     "noDateRange": "Geen datum",
     "noStartDate": "Geen startdatum",
-    "noEndDate": "Geen einddatum"
+    "noEndDate": "Geen einddatum",
+    "yearInputLabel": "jjjj",
+    "monthInputLabel": "mm",
+    "dayInputLabel": "dd"
   },
   "Home": {
     "title": "Koloniale Collecties Datahub",
@@ -127,11 +130,7 @@
     "errorObjectAddedToList": "Er is een probleem opgetreden bij het toevoegen van het object aan de lijst. Probeer het later opnieuw.",
     "objectRemovedFromList": "Object verwijderd van lijst <name></name>.",
     "errorObjectRemovedFromList": "Er is een probleem opgetreden bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
-    "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig.",
-    "needAccountToAddNarrativeDescription": "Met dit account kun je meer functionaliteit van deze platform ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>.",
-    "login": "Inloggen",
-    "createAccount": "Maak een account aan",
-    "cancel": "Annuleren"
+    "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig."
   },
   "TraditionalKnowledgeLabels": {
     "title": "Labels voor Traditionele Kennis",
@@ -151,7 +150,7 @@
     "transferredTo": "Overgedragen aan",
     "location": "Locatie",
     "descriptionTitle": "Beschrijving",
-    "providedBy": "Aangeleverd door",
+    "providedBy": "Aangeleverd door <name></name>",
     "readMore": "Lees meer",
     "noData": "Geen herkomstgegevens aangeleverd.",
     "dataTableTitle": "Herkomst data tabel",
@@ -163,7 +162,52 @@
     "hideTimelineButton": "Tijdlijn verbergen",
     "showDataTableButton": "Datatabel weergeven",
     "hideDataTableButton": "Datatabel verbergen",
-    "noDescription": "Geen beschrijving"
+    "noDescription": "Geen beschrijving",
+    "addProvenanceButton": "Herkomstgebeurtenis toevoegen",
+    "addProvenanceTitle": "Herkomstgebeurtenis toevoegen",
+    "needAccountToAddProvenanceTitle": "Om herkomstgegevens toe te voegen, heb je een account nodig."
+  },
+  "ProvenanceForm": {
+    "TabWhat": "Wat is er gebeurd",
+    "TabWho": "Wie, waar en wanneer",
+    "TabMoreInfo": "Meer info",
+    "type": "Wat is er met het object gebeurd?",
+    "typeDescription": "Selecteer een van de opties die het beste bij de situatie past.",
+    "transferredFrom": "Wie was de eigenaar <important>VOOR</important> de overgang",
+    "transferredFromDescription": "Selecteer of voeg een persoon of instelling toe van wie het object is overgedragen.",
+    "transferredTo": "Wie was de eigenaar <important>NA</important> de overgang",
+    "transferredToDescription": "Selecteer of voeg een persoon of instelling toe aan wie het object is overgedragen.",
+    "location": "Locatie",
+    "locationDescription": "Wat is de nieuwe locatie van het object. Begin met typen om een locatie te selecteren.",
+    "startDate": "Startdatum",
+    "startDateDescription": "Als u een exacte datum heeft, kunt u deze hier invullen. Als u niet zeker bent van de datum, kunt u een datumbereik selecteren waarin het evenement heeft plaatsgevonden.",
+    "endDate": "Einddatum",
+    "endDateDescription": "Als de startdatum een exacte datum is, plaats dan dezelfde datum als de startdatum.",
+    "citation": "Bron",
+    "citationDescription": "Geef informatie die uw herkomstgebeurtenis ondersteunt.",
+    "inLanguage": "Taal",
+    "inLanguageDescription": "Selecteer een taal van het herkomstgebeurtenis. Begin met typen om een taal te selecteren.",
+    "typePlaceholder": "Selecteer wat er is gebeurd",
+    "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
+    "attributionId": "Persoonlijke URL",
+    "attributionIdDescription": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
+    "typeRequired": "Type is vereist",
+    "citationRequired": "Bron is vereist",
+    "invalidAttributionId": "Ongeldige persoonlijke profiel-URL",
+    "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een verhaal kunt toevoegen",
+    "invalidStartDate": "Ongeldige startdatum",
+    "invalidEndDate": "Ongeldige einddatum",
+    "invalidDateRange": "Ongeldig datumbereik, de startdatum moet vóór de einddatum zijn",
+    "previousButton": "Vorige stap",
+    "nextButton": "Volgende stap",
+    "saveButton": "Herkomstgebeurtenis opslaan",
+    "successfullyAdded": "Uw herkomstgebeurtenis is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
+    "serverError": "Er is iets misgegaan bij het aanmaken van uw herkomstgebeurtenis. Probeer het later opnieuw."
+  },
+  "SearchSelector": {
+    "beforeTyping": "Begin met typen om te zoeken",
+    "loading": "Laden...",
+    "noResults": "Geen resultaten"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
@@ -304,11 +348,12 @@
     "deleteObjectButton": "Verwijder <longText>van lijst</longText>",
     "deleteObjectSuccess": "Object is verwijderd van de lijst",
     "deleteObjectError": "Er is iets misgegaan bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
+    "deleteListTitle": "Verwijder lijst",
     "deleteListDescription": "Als u deze lijst verwijdert, wordt deze voor alle leden verwijderd. Dit kan niet ongedaan worden gemaakt.",
     "deleteListButton": "Verwijder deze lijst",
+    "deleteListError": "Er is iets misgegaan bij het verwijderen van de lijst. Probeer het later opnieuw.",
     "deleteQuestion": "Weet u zeker dat u de lijst wilt verwijderen?",
     "confirmDeleteButton": "Ja, verwijder lijst",
-    "deleteListError": "Er is iets misgegaan bij het verwijderen van de lijst. Probeer het later opnieuw.",
     "cancelButton": "Annuleren"
   },
   "UserEnrichmentForm": {
@@ -352,5 +397,35 @@
     "ReadMoreText": {
       "readMore": "Lees meer",
       "readLess": "Lees minder"
+    },
+    "ProvenanceEventType": {
+      "bequest": "Legaat",
+      "bequestDescription": "Methode om eigendom te verwerven door overdracht of schenking na het overlijden van een weldoener, via een testament of andere methode.",
+      "donation": "Donatie",
+      "donationDescription": "Methode om fondsen of eigendommen te verwerven door eigendomsoverdracht van de ene partij naar de andere als een vrije gift.",
+      "gift": "Geschenk",
+      "giftDescription": "Algemene term voor de methode om eigendom te verwerven door overdracht door een persoon of instelling aan een andere persoon of instelling, vrijwillig en zonder betaling vereist.",
+      "transfer": "Overdracht",
+      "transferDescription": "Methode om eigendom te verwerven door wettelijk bestaande eigendom over te dragen aan een andere persoon of instelling; het omvat niet noodzakelijkerwijs weldoeners.",
+      "purchase": "Aankoop",
+      "purchaseDescription": "Methode om eigendom te verwerven door betaling van geld.",
+      "originalOwner": "Oorspronkelijke eigenaar",
+      "originalOwnerDescription": "In het catalogiseren van kunst en cultureel erfgoed verwijst dit naar de eerste bekende eigenaar van het werk, wanneer de verwervingsmethode onbekend of niet van toepassing is.",
+      "restitution": "Restitutie",
+      "restitutionDescription": "Het teruggeven van iets aan de rechtmatige eigenaar of het maken van herstelbetalingen voor een eerder toegebrachte schade; herstel van een verloren, genomen of beschadigd voorwerp.",
+      "inheritance": "Erfenis",
+      "inheritanceDescription": "Erfopvolging van eigendom, kwaliteit of immaterieel bezit. Wanneer de erfenis wordt overgedragen door een juridisch document zoals een testament, ongeacht de familieband, gebruik 'legaat'.",
+      "stolen": "Gestolen",
+      "stolenDescription": "De status of toestand van eigendom dat door diefstal is verkregen.",
+      "loot": "Buit",
+      "lootDescription": "De status of toestand van eigendom dat als oorlogsbuit beschadigd of meegenomen is in tijden van oorlog of onrust.",
+      "confiscated": "Geconfisqueerd",
+      "confiscatedDescription": "De status of toestand van eigendom dat is ingenomen of verbeurd verklaard door een regeringsinstantie of andere machthebbende entiteit."
+    },
+    "SignedOutSlideOut": {
+      "login": "Inloggen",
+      "createAccount": "Maak een account aan",
+      "cancel": "Annuleren",
+      "description": "Met dit account kun je meer functionaliteit van deze platform ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>."
     }
 }
