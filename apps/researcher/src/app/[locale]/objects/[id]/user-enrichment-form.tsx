@@ -81,8 +81,6 @@ export function UserEnrichmentForm({
     handleSubmit,
     setError,
     formState: {errors, isSubmitting},
-    setValue,
-    watch,
   } = methods;
 
   const {setIsVisible} = useSlideOut();
