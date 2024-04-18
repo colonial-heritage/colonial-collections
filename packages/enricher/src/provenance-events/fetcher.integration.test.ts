@@ -133,53 +133,6 @@ describe('getById', () => {
     expect(enrichments).toMatchObject([
       {
         id: expect.stringContaining('https://'),
-        type: 'acquisition',
-        additionalTypes: [
-          {
-            id: 'http://vocab.getty.edu/aat/300417642',
-            name: 'Purchase',
-          },
-        ],
-        about: resourceId,
-        citation:
-          'A citation or reference to a work that supports the information',
-        description: 'A comment',
-        inLanguage: 'en',
-        qualifier: {
-          id: 'http://vocab.getty.edu/aat/300435722',
-          name: 'Possibly',
-        },
-        date: {
-          id: expect.stringContaining('https://'),
-          startDate: new Date('1805-01-01T00:00:00.000Z'),
-          endDate: new Date('1806-12-31T23:59:59.999Z'),
-        },
-        location: {
-          id: 'https://sws.geonames.org/2988507/',
-          name: 'Paris',
-        },
-        transferredFrom: {
-          id: 'http://www.wikidata.org/entity/Q517',
-          name: 'Napoleon',
-        },
-        transferredTo: {
-          id: 'http://www.wikidata.org/entity/Q171480',
-          name: 'Josephine de Beauharnais',
-        },
-        pubInfo: {
-          creator: {
-            id: 'http://example.com/person1',
-            name: 'Person 1',
-            isPartOf: {
-              id: 'http://example.com/group1',
-              name: 'Group 1',
-            },
-          },
-          license: 'https://creativecommons.org/licenses/by/4.0/',
-        },
-      },
-      {
-        id: expect.stringContaining('https://'),
         type: 'transferOfCustody',
         additionalTypes: [
           {
@@ -223,6 +176,55 @@ describe('getById', () => {
             },
           },
           license: 'https://creativecommons.org/licenses/by/4.0/',
+          dateCreated: expect.any(Date),
+        },
+      },
+      {
+        id: expect.stringContaining('https://'),
+        type: 'acquisition',
+        additionalTypes: [
+          {
+            id: 'http://vocab.getty.edu/aat/300417642',
+            name: 'Purchase',
+          },
+        ],
+        about: resourceId,
+        citation:
+          'A citation or reference to a work that supports the information',
+        description: 'A comment',
+        inLanguage: 'en',
+        qualifier: {
+          id: 'http://vocab.getty.edu/aat/300435722',
+          name: 'Possibly',
+        },
+        date: {
+          id: expect.stringContaining('https://'),
+          startDate: new Date('1805-01-01T00:00:00.000Z'),
+          endDate: new Date('1806-12-31T23:59:59.999Z'),
+        },
+        location: {
+          id: 'https://sws.geonames.org/2988507/',
+          name: 'Paris',
+        },
+        transferredFrom: {
+          id: 'http://www.wikidata.org/entity/Q517',
+          name: 'Napoleon',
+        },
+        transferredTo: {
+          id: 'http://www.wikidata.org/entity/Q171480',
+          name: 'Josephine de Beauharnais',
+        },
+        pubInfo: {
+          creator: {
+            id: 'http://example.com/person1',
+            name: 'Person 1',
+            isPartOf: {
+              id: 'http://example.com/group1',
+              name: 'Group 1',
+            },
+          },
+          license: 'https://creativecommons.org/licenses/by/4.0/',
+          dateCreated: expect.any(Date),
         },
       },
     ]);
