@@ -172,7 +172,7 @@ interface UpdateCommunityIriProps {
   iri: string;
 }
 
-export async function addUriToCommunity({id, iri}: UpdateCommunityIriProps) {
+export async function addIriToCommunity({id, iri}: UpdateCommunityIriProps) {
   noStore();
 
   const community = await getCommunityById(id);

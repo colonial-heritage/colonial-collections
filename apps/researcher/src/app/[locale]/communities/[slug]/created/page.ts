@@ -1,7 +1,7 @@
 import {redirect} from 'next/navigation';
 import {revalidatePath} from 'next/cache';
 import {createPersistentIri} from '@colonial-collections/iris';
-import {getCommunityBySlug, addUriToCommunity} from '@/lib/community/actions';
+import {getCommunityBySlug, addIriToCommunity} from '@/lib/community/actions';
 
 interface Props {
   params: {
@@ -17,7 +17,7 @@ export default async function CommunityCreated({params}: Props) {
 
   const iri = createPersistentIri();
 
-  await addUriToCommunity({
+  await addIriToCommunity({
     id: community.id,
     iri,
   });
