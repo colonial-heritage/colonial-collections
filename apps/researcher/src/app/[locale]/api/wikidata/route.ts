@@ -1,4 +1,6 @@
+import {LocaleEnum} from '@/definitions';
 import {WikidataConstituentSearcher} from '@colonial-collections/api';
+import {getLocale} from 'next-intl/server';
 import {NextRequest} from 'next/server';
 
 const datahubConstituentSearcher = new WikidataConstituentSearcher({
@@ -6,12 +8,13 @@ const datahubConstituentSearcher = new WikidataConstituentSearcher({
 });
 
 export async function GET(request: NextRequest) {
+  const locale = (await getLocale()) as LocaleEnum;
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get('query');
 
   const result = await datahubConstituentSearcher.search({
     query: query || '',
-    locale: 'en',
+    locale,
     limit: 10,
   });
 
