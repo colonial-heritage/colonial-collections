@@ -1,6 +1,10 @@
 import {ProvenanceEvent} from '@colonial-collections/api';
+import {ProvenanceEventEnrichment} from '@colonial-collections/enricher';
 
-export type LabeledProvenanceEvent = ProvenanceEvent & {label: string};
+export type LabeledProvenanceEvent = (
+  | ProvenanceEvent
+  | ProvenanceEventEnrichment
+) & {label: string};
 
 export type TimelineEvent = {
   id: string;
@@ -9,3 +13,8 @@ export type TimelineEvent = {
   selectIds: string[];
   labels: string[];
 };
+
+export enum ProvenanceEventType {
+  Acquisition = 'acquisition',
+  TransferOfCustody = 'transferOfCustody',
+}

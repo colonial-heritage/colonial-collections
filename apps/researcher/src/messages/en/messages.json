@@ -3,7 +3,10 @@
     "beforeCommonEraFormat": "{date, date, ::yyyy} BCE",
     "noDateRange": "No date",
     "noStartDate": "No start date",
-    "noEndDate": "No end date"
+    "noEndDate": "No end date",
+    "yearInputLabel": "yyyy",
+    "monthInputLabel": "mm",
+    "dayInputLabel": "dd"
   },
   "Meta": {
     "title": "Colonial Collections Datahub"
@@ -127,11 +130,7 @@
     "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
     "objectRemovedFromList": "Object removed from list <name></name>.",
     "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later.",
-    "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account.",
-    "needAccountToAddNarrativeDescription": "With this account you can unlock more functionality of this platform. Creating an account free of charge. <link>See what else you can do with an account</link>.",
-    "login": "Login",
-    "createAccount": "Create an account",
-    "cancel": "Cancel"
+    "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account."
   },
   "TraditionalKnowledgeLabels": {
     "title": "Traditional Knowledge Labels",
@@ -150,7 +149,7 @@
     "transferredFrom": "Transferred from",
     "transferredTo": "Transferred to",
     "location": "Location",
-    "providedBy": "Provided by",
+    "providedBy": "Provided by <name></name>",
     "readMore": "Read more",
     "descriptionTitle": "Description",
     "noData": "No provenance events provided for this object.",
@@ -163,7 +162,52 @@
     "hideTimelineButton": "Hide timeline",
     "showDataTableButton": "Show data table",
     "hideDataTableButton": "Hide data table",
-    "noDescription": "No description"
+    "noDescription": "No description",
+    "addProvenanceButton": "Add provenance",
+    "addProvenanceTitle": "Add provenance",
+    "needAccountToAddProvenanceTitle": "To add provenance to this object you need to have an account."
+  },
+  "ProvenanceForm": {
+    "TabWhat": "What happened",
+    "TabWho": "Who, where and when",
+    "TabMoreInfo": "More info",
+    "type": "What happened to the object?",
+    "typeDescription": "Select one of the options that best suit the situation.",
+    "transferredFrom": "Who owned it <important>BEFORE</important> the transition",
+    "transferredFromDescription": "Select or add a person or institution from whom the object has been transferred.",
+    "transferredTo": "Who owned it <important>AFTER</important> the transition",
+    "transferredToDescription": "Select or add a person or institution to whom the object has been transferred.",
+    "location": "Location",
+    "locationDescription": "What is the new location of the object. Start typing to select a location.",
+    "startDate": "Start date",
+    "startDateDescription": "If you have an exact date you can fill it in here. If you are not sure about the date you can select a range of dates in which the event occur.",
+    "endDate": "End date",
+    "endDateDescription": "If the start date is an exact date, place the same date as the start date.",
+    "citation": "Resource",
+    "citationDescription": "Please provide information that supports your provenance event.",
+    "inLanguage": "Language",
+    "inLanguageDescription": "Select a language of the provenance event. Start typing to select a language.",
+    "typePlaceholder": "Select what happened",
+    "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
+    "attributionId": "Persoonlijke URL",
+    "attributionIdDescription": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
+    "typeRequired": "Type is required",
+    "citationRequired": "Resource is required",
+    "invalidAttributionId": "Invalid personal profile URL",
+    "agreedToLicenseUnchecked": "You need to agree to the license before you can add a narrative",
+    "invalidStartDate": "Invalid start date",
+    "invalidEndDate": "Invalid end date",
+    "invalidDateRange": "Invalid date range, start date should be before end date",
+    "previousButton": "Previous step",
+    "nextButton": "Next step",
+    "saveButton": "Save provenance",
+    "successfullyAdded": "Your provenance event has been added to the object. It could take a moment before it is visible.",
+    "serverError": "Something went wrong while creating the provenance event. Please try again later."
+  },
+  "SearchSelector": {
+    "beforeTyping": "Start typing to search",
+    "loading": "Loading...",
+    "noResults": "No results found"
   },
   "PersonDetails": {
     "backButton": "Back to results",
@@ -353,5 +397,35 @@
   "ReadMoreText": {
     "readMore": "Read more",
     "readLess": "Read less"
+  },
+  "ProvenanceEventType": {
+    "bequest": "Bequest",
+    "bequestDescription": "Method of acquiring property by transference or bestowal following the death of a benefactor, by means of the last will or other method.",
+    "donation": "Donation",
+    "donationDescription": "Method of acquiring funds or property through transference of ownership from one party to another as a free gift.",
+    "gift": "Gift",
+    "giftDescription": "General term for the method of acquiring property through transference by one person or institution to another person or institution, voluntarily and without any payment required.",
+    "transfer": "Transfer",
+    "transferDescription": "Method of acquiring property by legally conferring existing ownership to another person or institution; it does not necessarily involve benefactors.",
+    "purchase": "Purchase",
+    "purchaseDescription": "Method of acquiring property by payment of funds.",
+    "originalOwner": "Original owner",
+    "originalOwnerDescription": "In cataloging art and cultural heritage, refers to the first known owner of the work, when the method of acquisition is unknown or not applicable.",
+    "restitution": "Restitution",
+    "restitutionDescription": "The action of restoring or giving back something to its rightful owner, or of making reparation for a loss previously inflicted; restoration of a thing lost, taken, or damaged.",
+    "inheritance": "Inheritance",
+    "inheritanceDescription": "Hereditary succession to property, quality, or immaterial possession. When the inheritance is transferred by a legal document such as a will, regardless of familial relationship, use 'bequest.'",
+    "stolen": "Stolen",
+    "stolenDescription": "The status or condition of property having been obtained by theft.",
+    "loot": "Loot",
+    "lootDescription": "The status or condition of property having been damaged or carried off as booty in time of war or unrest.",
+    "confiscated": "Confiscated",
+    "confiscatedDescription": "The status or condition of property having been taken or forfeited by a governmental or other entity in power or having authority."
+  },
+  "SignedOutSlideOut": {
+    "needAccountToAddNarrativeDescription": "With this account you can unlock more functionality of this platform. Creating an account free of charge. <link>See what else you can do with an account</link>.",
+    "login": "Login",
+    "createAccount": "Create an account",
+    "cancel": "Cancel"
   }
 }

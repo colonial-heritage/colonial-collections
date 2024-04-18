@@ -2,44 +2,60 @@ import {sortEvents} from './sort-events';
 import {describe, expect} from '@jest/globals';
 
 describe('sortEvents', () => {
-  it('sorts events based on `startsAfter` and `endsBefore`', () => {
+  it('sorts events based on `startDate` and `endDate`', () => {
     const events = [
-      {id: '5', startsAfter: '4', endsBefore: null},
-      {id: '3', startsAfter: '2', endsBefore: '4'},
-      {id: '4', startsAfter: '3', endsBefore: '5'},
-      {id: '1', startsAfter: null, endsBefore: '2'},
-      {id: '2', startsAfter: '1', endsBefore: '3'},
+      {id: '5', date: {startDate: new Date('2022-04-01'), endDate: null}},
+      {
+        id: '3',
+        date: {
+          startDate: new Date('2022-02-01'),
+          endDate: new Date('2022-04-01'),
+        },
+      },
+      {
+        id: '4',
+        date: {
+          startDate: new Date('2022-03-01'),
+          endDate: new Date('2022-05-01'),
+        },
+      },
+      {id: '1', date: {startDate: null, endDate: new Date('2022-02-01')}},
+      {
+        id: '2',
+        date: {
+          startDate: new Date('2022-01-01'),
+          endDate: new Date('2022-03-01'),
+        },
+      },
     ];
-    // @ts-expect-error:TS2322
-    const sorted = sortEvents(events);
-    expect(sorted).toEqual([
-      {id: '1', startsAfter: null, endsBefore: '2'},
-      {id: '2', startsAfter: '1', endsBefore: '3'},
-      {id: '3', startsAfter: '2', endsBefore: '4'},
-      {id: '4', startsAfter: '3', endsBefore: '5'},
-      {id: '5', startsAfter: '4', endsBefore: null},
-    ]);
-  });
 
-  it('sorts an event that is placed in between two existing events`', () => {
-    const events = [
-      {id: '1', startsAfter: null, endsBefore: '2'},
-      {id: '2', startsAfter: '1', endsBefore: '3'},
-      {id: '3', startsAfter: '2', endsBefore: '4'},
-      {id: '4', startsAfter: '3', endsBefore: '5'},
-      {id: '5', startsAfter: '4', endsBefore: null},
-      // This event is placed in between two existing events
-      {id: '6', startsAfter: '2', endsBefore: '3'},
-    ];
     // @ts-expect-error:TS2322
     const sorted = sortEvents(events);
+
     expect(sorted).toEqual([
-      {id: '1', startsAfter: null, endsBefore: '2'},
-      {id: '2', startsAfter: '1', endsBefore: '3'},
-      {id: '6', startsAfter: '2', endsBefore: '3'},
-      {id: '3', startsAfter: '2', endsBefore: '4'},
-      {id: '4', startsAfter: '3', endsBefore: '5'},
-      {id: '5', startsAfter: '4', endsBefore: null},
+      {id: '1', date: {startDate: null, endDate: new Date('2022-02-01')}},
+      {
+        id: '2',
+        date: {
+          startDate: new Date('2022-01-01'),
+          endDate: new Date('2022-03-01'),
+        },
+      },
+      {
+        id: '3',
+        date: {
+          startDate: new Date('2022-02-01'),
+          endDate: new Date('2022-04-01'),
+        },
+      },
+      {
+        id: '4',
+        date: {
+          startDate: new Date('2022-03-01'),
+          endDate: new Date('2022-05-01'),
+        },
+      },
+      {id: '5', date: {startDate: new Date('2022-04-01'), endDate: null}},
     ]);
   });
 });
