@@ -154,12 +154,38 @@ export async function updateCommunity({
 }: UpdateCommunityProps) {
   noStore();
 
+  const community = await getCommunityById(id);
+
   const organization = await clerkClient.organizations.updateOrganization(id, {
     name,
     publicMetadata: {
+      iri: community.iri,
       description,
     },
   });
 
   return organizationToCommunity(organization);
+}
+
+interface UpdateCommunityIriProps {
+  id: string;
+  iri: string;
+}
+
+export async function addIriToCommunity({id, iri}: UpdateCommunityIriProps) {
+  noStore();
+
+  const community = await getCommunityById(id);
+
+  // Only add the IRI if it is not already set
+  if (!community.iri) {
+    const organization =
+      await clerkClient.organizations.updateOrganizationMetadata(id, {
+        publicMetadata: {
+          iri,
+        },
+      });
+    return organizationToCommunity(organization);
+  }
+  return community;
 }

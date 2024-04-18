@@ -3,6 +3,7 @@ export interface Community {
   name: string;
   slug: string;
   description?: string;
+  iri?: string;
   imageUrl: string;
   createdAt: number;
   membershipCount?: number;
