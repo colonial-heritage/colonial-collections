@@ -4,12 +4,7 @@ import useObject from './use-object';
 import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
 import SignedIn from '@/lib/community/signed-in';
-import {getFormatter} from 'next-intl/server';
-import classNames from 'classnames';
-import {
-  ChatBubbleBottomCenterTextIcon,
-  InformationCircleIcon,
-} from '@heroicons/react/24/outline';
+import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import type {
   Actor,
   HeritageObjectEnrichmentType,

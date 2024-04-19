@@ -166,7 +166,7 @@
     "needAccountToAddProvenanceTitle": "To add provenance to this object you need to have an account."
   },
   "ProvidedBy": {
-    "name": "Proved by <name></name>",
+    "name": "Provided by <name></name>",
     "community": "On behalf of <name></name> community",
     "date": "On <date></date>",
     "showCitationButton": "Show resource",
@@ -217,7 +217,7 @@
     "noResults": "No results found"
   },
   "CommunitySelector": {
-    "noCommunities": "You are not yet a member of a community. If you want to your contribution to be part of a community, you can create a community or join an existing community.",
+    "noCommunities": "You are not yet a member of a community. If you want your contribution to be part of a community, you can create a community or join an existing community.",
     "communityPlaceholder": "Select a community",
     "communitiesLoading": "Loading your communities..."
   },
