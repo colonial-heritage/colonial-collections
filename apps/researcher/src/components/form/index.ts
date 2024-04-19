@@ -7,3 +7,4 @@ export * from './layout';
 export * from './edtf/input';
 export * from './edtf/is-edtf';
 export * from './field-validation-message';
+export * from './community-selector';

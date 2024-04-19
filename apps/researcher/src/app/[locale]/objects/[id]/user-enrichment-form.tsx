@@ -12,11 +12,22 @@ import {useLocale, useTranslations} from 'next-intl';
 import {z} from 'zod';
 import {addUserEnrichment} from './actions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
-import {LanguageSelector} from '@/components/form';
+import {
+  FormRow,
+  InputLabel,
+  LanguageSelector,
+  Textarea,
+  FieldValidationMessage,
+  Input,
+  CommunitySelector,
+  ButtonGroup,
+} from '@/components/form';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
-import {Suspense, useMemo} from 'react';
+import {ReactNode, Suspense, useMemo} from 'react';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
+import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
+import {DefaultButton, PrimaryButton} from '@/components/buttons';
 
 interface FormValues {
   description: string;
@@ -24,6 +35,7 @@ interface FormValues {
   citation: string;
   inLanguage?: string;
   agreedToLicense: boolean;
+  community: {id: string; name: string};
 }
 
 interface Props {
@@ -60,6 +72,12 @@ export function UserEnrichmentForm({
     agreedToLicense: z.literal<boolean>(true, {
       errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
     }),
+    community: z
+      .object({
+        id: z.string(),
+        name: z.string(),
+      })
+      .optional(),
   });
 
   const methods = useForm({
@@ -73,11 +91,11 @@ export function UserEnrichmentForm({
       citation: '',
       inLanguage: locale,
       agreedToLicense: false,
+      community: {id: '', name: ''},
     },
   });
 
   const {
-    register,
     handleSubmit,
     setError,
     formState: {errors, isSubmitting},
@@ -144,59 +162,57 @@ export function UserEnrichmentForm({
             </div>
           )}
         </div>
-
-        <div className="flex flex-col lg:flex-row gap-4">
-          <div className='className="flex flex-col w-full lg:w-2/3'>
-            <label htmlFor="description" className="flex flex-col gap-1 mb-1">
-              <strong>
-                {t('description')}
-                <span className="font-normal text-neutral-600">*</span>
-              </strong>
-              <div>{t('descriptionSubTitle')}</div>
-            </label>
-            <textarea
-              {...register('description')}
-              rows={4}
-              className="border border-neutral-400 rounded p-2 text-sm w-full"
+        <FormRow>
+          <LeftFormColumn>
+            <InputLabel
+              title={t('description')}
+              description={t('descriptionSubTitle')}
+              required
+              id="description"
             />
-            <p>{errors.description?.message}</p>
-          </div>
-          <div className="flex flex-col w-full lg:w-1/3">
-            <div className="flex flex-col gap-1 mb-1">
-              <label>
-                <strong>{t('inLanguage')}</strong>
-                <div>{t('languageSubTitle')}</div>
-              </label>
-              <LanguageSelector name="inLanguage" />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex flex-col w-full lg:w-2/3">
-            <label htmlFor="citation" className="flex flex-col gap-1 mb-1">
-              <strong>
-                {t('citation')}
-                <span className="font-normal text-neutral-600">*</span>
-              </strong>
-              <div>{t('citationSubTitle')}</div>
-            </label>
-            <textarea
-              {...register('citation')}
-              cols={30}
-              rows={2}
-              className="border border-greenGrey-200 rounded p-2"
+            <Textarea name="description" />
+            <FieldValidationMessage field="description" />
+          </LeftFormColumn>
+          <RightFormColumn>
+            <InputLabel
+              title={t('inLanguage')}
+              description={t('languageSubTitle')}
             />
-            <p>{errors.citation?.message}</p>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex flex-col w-full lg:w-2/3">
-            <label htmlFor="attributionId" className="flex flex-col gap-1 mb-1">
-              <strong>{t('labelAttributionId')}</strong>
-              <div className="text-sm mb-1 whitespace-pre-line">
-                {t.rich('descriptionAttributionId', {
+            <LanguageSelector name="inLanguage" />
+          </RightFormColumn>
+        </FormRow>
+        <FormRow>
+          <LeftFormColumn>
+            <InputLabel
+              title={t('citation')}
+              description={t('citationSubTitle')}
+              required
+              id="citation"
+            />
+            <Textarea name="citation" />
+          </LeftFormColumn>
+          <RightFormColumn>
+            <InputLabel
+              title={t('community')}
+              description={t('communityDescription')}
+            />
+            <CommunitySelector />
+          </RightFormColumn>
+          <FieldValidationMessage field="citation" />
+        </FormRow>
+        <FormRow>
+          <LeftFormColumn>
+            <InputLabel
+              title={t('attributionId')}
+              description={t('attributionIdDescription')}
+              required
+            />
+            <Input name="attributionId" />
+            <FieldValidationMessage field="attributionId" />
+            <div className="mt-4">
+              <CheckboxWithLabel
+                name="agreedToLicense"
+                labelText={t.rich('license', {
                   link: text => (
                     <a
                       href="https://orcid.org"
@@ -207,37 +223,8 @@ export function UserEnrichmentForm({
                     </a>
                   ),
                 })}
-              </div>
-            </label>
-            <input
-              id="attributionId"
-              {...register('attributionId')}
-              className="border border-neutral-500 rounded p-2 text-sm"
-            />
-            <p>{errors.attributionId?.message}</p>
-
-            <div className="mt-4">
-              <div className="flex justify-start gap-2 items-center">
-                <input
-                  type="checkbox"
-                  id="license"
-                  {...register('agreedToLicense')}
-                />
-                <label className="flex flex-col gap-1 mb-1" htmlFor="license">
-                  {t.rich('labelLicense', {
-                    link: text => (
-                      <a
-                        href={t('licenseLink')}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {text}
-                      </a>
-                    ),
-                  })}
-                </label>
-              </div>
-              <p>{errors.agreedToLicense?.message}</p>
+              />
+              <FieldValidationMessage field="agreedToLicense" />
               <div className="text-sm mb-1">
                 <Suspense>
                   <LocalizedMarkdown
@@ -248,32 +235,25 @@ export function UserEnrichmentForm({
                 </Suspense>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-4">
-          <div className="w-full lg:w-2/3 flex gap-2">
-            {isSubmitting ? (
-              <p className="text-xs p-1 sm:py-2 sm:px-3 text-neutral-800">
-                {t('saving')}
-              </p>
-            ) : (
-              <button
-                type="submit"
-                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-              >
-                {t('buttonSubmit')}
-              </button>
-            )}
-            <button
-              onClick={() => setIsVisible(slideOutId, false)}
-              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-none hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1 border border-neutral-300"
-            >
-              {t('buttonCancel')}
-            </button>
-          </div>
-        </div>
+          </LeftFormColumn>
+        </FormRow>
+        <ButtonGroup>
+          <PrimaryButton type="submit" disabled={isSubmitting}>
+            {t('buttonSubmit')}
+          </PrimaryButton>
+          <DefaultButton onClick={() => setIsVisible(slideOutId, false)}>
+            {t('buttonCancel')}
+          </DefaultButton>
+        </ButtonGroup>
       </form>
     </FormProvider>
   );
+}
+
+function LeftFormColumn({children}: {children: ReactNode}) {
+  return <div className="flex flex-col w-full lg:w-2/3">{children}</div>;
+}
+
+function RightFormColumn({children}: {children: ReactNode}) {
+  return <div className="flex flex-col w-full lg:w-1/3 gap-4">{children}</div>;
 }
