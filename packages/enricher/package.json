@@ -44,7 +44,7 @@
     "n3": "1.17.3",
     "streamify-string": "1.0.1",
     "ts-jest": "29.1.2",
-    "typescript": "5.4.3"
+    "typescript": "5.4.5"
   },
   "jest": {
     "preset": "ts-jest",
