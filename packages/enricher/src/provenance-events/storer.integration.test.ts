@@ -39,6 +39,10 @@ describe('add', () => {
       citation:
         'A citation or reference to a work that supports the information',
       inLanguage: 'en',
+      qualifier: {
+        id: 'http://vocab.getty.edu/aat/300435722',
+        name: 'Possibly',
+      },
       about: {
         id: 'http://example.org/object1',
       },
@@ -87,6 +91,10 @@ describe('add', () => {
       citation:
         'A citation or reference to a work that supports the information',
       inLanguage: 'en',
+      qualifier: {
+        id: 'http://vocab.getty.edu/aat/300435722',
+        name: 'Possibly',
+      },
       about: {
         id: 'http://example.org/object1',
       },
