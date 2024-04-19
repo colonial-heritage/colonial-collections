@@ -35,6 +35,7 @@ beforeAll(async () => {
       ex:citation "Citation" ;
       ex:description "Description" ;
       ex:inLanguage "en" ;
+      ex:qualifier ex:myQualifier ;
       ex:date ex:myTimeSpan ;
       ex:transferredFrom ex:myTransferredFrom ;
       ex:transferredTo ex:myTransferredTo ;
@@ -49,6 +50,9 @@ beforeAll(async () => {
 
     ex:myAdditionalType a ex:DefinedTerm ;
       ex:name "Term" .
+
+    ex:myQualifier a ex:DefinedTerm ;
+      ex:name "Possibly" .
 
     ex:myTimeSpan a ex:TimeSpan ;
       ex:startDate "1889"^^xsd:gYear ;
@@ -126,6 +130,10 @@ describe('toProvenanceEventEnrichment', () => {
       citation: 'Citation',
       description: 'Description',
       inLanguage: 'en',
+      qualifier: {
+        id: 'https://example.org/myQualifier',
+        name: 'Possibly',
+      },
       date: {
         id: 'https://example.org/myTimeSpan',
         startDate: new Date('1889-01-01T00:00:00.000Z'),
