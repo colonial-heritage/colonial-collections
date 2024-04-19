@@ -72,7 +72,7 @@ export async function ProvidedBy({
       {citation && (
         <SlideOut id={`${id}-${dateCreated}-citation`}>
           <div className="flex-col w-full mt-1 flex">
-            <em>{t('resourceTitle')}:</em>
+            <em>{t('citationTitle')}:</em>
             {citation}
           </div>
         </SlideOut>
