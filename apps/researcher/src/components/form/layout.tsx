@@ -1,8 +1,8 @@
 import {ReactNode} from 'react';
 
-export function FormWrapper({children}: {children: ReactNode}) {
+export function FormRow({children}: {children: ReactNode}) {
   return (
-    <div className="flex flex-col lg:flex-row max-w-7xl gap-6">{children}</div>
+    <div className="flex flex-col lg:flex-row gap-4 lg:gap-12">{children}</div>
   );
 }
 

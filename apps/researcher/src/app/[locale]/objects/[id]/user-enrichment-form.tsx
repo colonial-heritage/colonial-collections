@@ -6,15 +6,14 @@ import {
   SlideOutButton,
   LocalizedMarkdown,
 } from '@colonial-collections/ui';
-import {useForm, SubmitHandler, FormProvider, Form} from 'react-hook-form';
+import {useForm, SubmitHandler, FormProvider} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useLocale, useTranslations} from 'next-intl';
 import {z} from 'zod';
 import {addUserEnrichment} from './actions';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {
-  FormColumn,
-  FormWrapper,
+  FormRow,
   InputLabel,
   LanguageSelector,
   Textarea,
@@ -24,7 +23,7 @@ import {
   ButtonGroup,
 } from '@/components/form';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
-import {Suspense, useMemo} from 'react';
+import {ReactNode, Suspense, useMemo} from 'react';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
@@ -163,8 +162,8 @@ export function UserEnrichmentForm({
             </div>
           )}
         </div>
-        <FormWrapper>
-          <FormColumn>
+        <FormRow>
+          <LeftFormColumn>
             <InputLabel
               title={t('description')}
               description={t('descriptionSubTitle')}
@@ -173,6 +172,17 @@ export function UserEnrichmentForm({
             />
             <Textarea name="description" />
             <FieldValidationMessage field="description" />
+          </LeftFormColumn>
+          <RightFormColumn>
+            <InputLabel
+              title={t('inLanguage')}
+              description={t('languageSubTitle')}
+            />
+            <LanguageSelector name="inLanguage" />
+          </RightFormColumn>
+        </FormRow>
+        <FormRow>
+          <LeftFormColumn>
             <InputLabel
               title={t('citation')}
               description={t('citationSubTitle')}
@@ -180,7 +190,18 @@ export function UserEnrichmentForm({
               id="citation"
             />
             <Textarea name="citation" />
-            <FieldValidationMessage field="citation" />
+          </LeftFormColumn>
+          <RightFormColumn>
+            <InputLabel
+              title={t('community')}
+              description={t('communityDescription')}
+            />
+            <CommunitySelector />
+          </RightFormColumn>
+          <FieldValidationMessage field="citation" />
+        </FormRow>
+        <FormRow>
+          <LeftFormColumn>
             <InputLabel
               title={t('attributionId')}
               description={t('attributionIdDescription')}
@@ -214,20 +235,8 @@ export function UserEnrichmentForm({
                 </Suspense>
               </div>
             </div>
-          </FormColumn>
-          <FormColumn>
-            <InputLabel
-              title={t('inLanguage')}
-              description={t('languageSubTitle')}
-            />
-            <LanguageSelector name="inLanguage" />
-            <InputLabel
-              title={t('community')}
-              description={t('communityDescription')}
-            />
-            <CommunitySelector />
-          </FormColumn>
-        </FormWrapper>
+          </LeftFormColumn>
+        </FormRow>
         <ButtonGroup>
           <PrimaryButton type="submit" disabled={isSubmitting}>
             {t('buttonSubmit')}
@@ -239,4 +248,12 @@ export function UserEnrichmentForm({
       </form>
     </FormProvider>
   );
+}
+
+function LeftFormColumn({children}: {children: ReactNode}) {
+  return <div className="flex flex-col w-full lg:w-2/3">{children}</div>;
+}
+
+function RightFormColumn({children}: {children: ReactNode}) {
+  return <div className="flex flex-col w-full lg:w-1/3 gap-4">{children}</div>;
 }

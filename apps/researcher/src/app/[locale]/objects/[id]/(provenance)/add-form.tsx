@@ -22,7 +22,7 @@ import {addAttributionId} from '@/lib/user/actions';
 import edtf from 'edtf';
 import {
   ButtonGroup,
-  FormWrapper,
+  FormRow,
   FormColumn,
   InputLabel,
   SearchSelector,
@@ -240,7 +240,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
         <Tab.Panels>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Tab.Panel>
-              <FormWrapper>
+              <FormRow>
                 <FormColumn>
                   <InputLabel
                     title={t('type')}
@@ -269,7 +269,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   />
                   <CommunitySelector />
                 </FormColumn>
-              </FormWrapper>
+              </FormRow>
               <ButtonGroup>
                 <DefaultButton disabled>{t('previousButton')}</DefaultButton>
                 <DefaultButton onClick={() => setSelectedIndex(1)}>
@@ -279,7 +279,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
             </Tab.Panel>
 
             <Tab.Panel>
-              <FormWrapper>
+              <FormRow>
                 <FormColumn>
                   <InputLabel
                     title={t.rich('transferredFrom', {
@@ -350,7 +350,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   <FieldValidationMessage field="date.endDate" />
                   <FieldValidationMessage field="date" />
                 </FormColumn>
-              </FormWrapper>
+              </FormRow>
               <ButtonGroup>
                 <DefaultButton onClick={() => setSelectedIndex(0)}>
                   {t('previousButton')}
@@ -362,7 +362,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
             </Tab.Panel>
 
             <Tab.Panel>
-              <FormWrapper>
+              <FormRow>
                 <FormColumn>
                   <InputLabel
                     title={t('citation')}
@@ -407,7 +407,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   <Input name="attributionId" />
                   <FieldValidationMessage field="attributionId" />
                 </FormColumn>
-              </FormWrapper>
+              </FormRow>
               <ButtonGroup>
                 <DefaultButton onClick={() => setSelectedIndex(1)}>
                   {t('previousButton')}
