@@ -214,6 +214,14 @@ export class ProvenanceEventEnrichmentFetcher {
       toProvenanceEventEnrichment(rawEnrichment)
     );
 
+    // Sort the enrichments by date of creation, from old to new
+    enrichments.sort((enrichmentA, enrichmentB) => {
+      const dateCreatedA = enrichmentA.pubInfo.dateCreated.getTime();
+      const dateCreatedB = enrichmentB.pubInfo.dateCreated.getTime();
+
+      return dateCreatedA - dateCreatedB;
+    });
+
     return enrichments;
   }
 
