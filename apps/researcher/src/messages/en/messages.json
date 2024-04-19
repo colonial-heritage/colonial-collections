@@ -118,7 +118,6 @@
     "techniquesSubTitle": "",
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
-    "addedBy": "Added by <name></name>",
     "currentPublisher": "Current location of object",
     "noOrganizationFound": "No organization found.",
     "dateCreated": "Date made",
@@ -149,7 +148,6 @@
     "transferredFrom": "Transferred from",
     "transferredTo": "Transferred to",
     "location": "Location",
-    "providedBy": "Provided by <name></name>",
     "readMore": "Read more",
     "descriptionTitle": "Description",
     "noData": "No provenance events provided for this object.",
@@ -166,6 +164,13 @@
     "addProvenanceButton": "Add provenance",
     "addProvenanceTitle": "Add provenance",
     "needAccountToAddProvenanceTitle": "To add provenance to this object you need to have an account."
+  },
+  "ProvidedBy": {
+    "name": "Provided by <name></name>",
+    "community": "On behalf of <name></name> community",
+    "date": "On <date></date>",
+    "showCitationButton": "Show resource",
+    "citationTitle": "Resource"
   },
   "ProvenanceForm": {
     "TabWhat": "What happened",
@@ -187,6 +192,8 @@
     "citationDescription": "Please provide information that supports your provenance event.",
     "inLanguage": "Language",
     "inLanguageDescription": "Select a language of the provenance event. Start typing to select a language.",
+    "community": "Community",
+    "communityDescription": "Select the community you speak on behalf of.",
     "typePlaceholder": "Select what happened",
     "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
     "attributionId": "Persoonlijke URL",
@@ -208,6 +215,11 @@
     "beforeTyping": "Start typing to search",
     "loading": "Loading...",
     "noResults": "No results found"
+  },
+  "CommunitySelector": {
+    "noCommunities": "You are not yet a member of a community. If you want your contribution to be part of a community, you can create a community or join an existing community.",
+    "communityPlaceholder": "Select a community",
+    "communitiesLoading": "Loading your communities..."
   },
   "PersonDetails": {
     "backButton": "Back to results",
@@ -365,9 +377,11 @@
     "inLanguage": "Language",
     "languageSubTitle": "Select a language of the narrative. Start typing to select a language.",
     "successfullyAdded": "Your narrative has been added to the object. It could take a moment before it is visible.",
-    "labelAttributionId": "Personal profile URL",
-    "descriptionAttributionId": "By adding your narrative, your personal URL will be stored with the narrative. This can be a link to your personal LinkedIn, Facebook or ORCID profile. It may not be visible to other visitors but the data is being stored in the cloud.",
-    "labelLicense": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
+    "community": "Community",
+    "communityDescription": "Select the community you speak on behalf of.",
+    "attributionId": "Personal profile URL",
+    "attributionIdDescription": "By adding your narrative, your personal URL will be stored with the narrative. This can be a link to your personal LinkedIn, Facebook or ORCID profile. It may not be visible to other visitors but the data is being stored in the cloud.",
+    "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
     "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.en",
     "serverError": "Something went wrong while creating the narrative. Please try again later.",
     "buttonSubmit": "Add your narrative",

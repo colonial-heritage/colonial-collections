@@ -6,6 +6,7 @@ import {useTranslations} from 'next-intl';
 import {useProvenance} from './provenance-store';
 import {SelectEventsButton} from './buttons';
 import {XMarkIcon} from '@heroicons/react/24/outline';
+import {ProvidedBy} from './provided-by';
 
 interface Props {
   organizationName?: string;
@@ -129,17 +130,20 @@ function ProvenanceEventRow({
             </div>
             <div className="w-1/3 text-xs">
               {'pubInfo' in event ? (
-                <div className="bg-consortiumGreen-100 text-consortiumBlue-800 p-1 rounded">
-                  {t.rich('providedBy', {
-                    name: () => <strong>{event.pubInfo.creator.name}</strong>,
-                  })}
-                </div>
+                <ProvidedBy
+                  dateCreated={event.pubInfo.dateCreated}
+                  citation={event.citation}
+                  name={event.pubInfo.creator.name}
+                  communityName={event.pubInfo.creator.isPartOf?.name}
+                  id={event.id}
+                  isCurrentPublisher={false}
+                />
               ) : (
-                <div>
-                  {t.rich('providedBy', {
-                    name: () => <strong>{organizationName}</strong>,
-                  })}
-                </div>
+                <ProvidedBy
+                  isCurrentPublisher
+                  id={event.id}
+                  name={organizationName}
+                />
               )}
             </div>
           </div>

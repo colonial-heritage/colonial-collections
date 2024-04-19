@@ -22,7 +22,7 @@ import {addAttributionId} from '@/lib/user/actions';
 import edtf from 'edtf';
 import {
   ButtonGroup,
-  FormWrapper,
+  FormRow,
   FormColumn,
   InputLabel,
   SearchSelector,
@@ -33,6 +33,7 @@ import {
   Select,
   FieldValidationMessage,
   isEdtf,
+  CommunitySelector,
 } from '@/components/form';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
 import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
@@ -48,6 +49,7 @@ interface FormValues {
   transferredTo: {id: string; name: string};
   location: {id: string; name: string};
   type: {id: string; name: string};
+  community: {id: string; name: string};
   date: {
     startDate: string;
     endDate: string;
@@ -133,6 +135,12 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
         name: z.string(),
       })
       .optional(),
+    community: z
+      .object({
+        id: z.string(),
+        name: z.string(),
+      })
+      .optional(),
   });
 
   const methods = useForm({
@@ -145,10 +153,11 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
       citation: '',
       inLanguage: locale,
       agreedToLicense: false,
+      type: {id: '', name: ''},
       transferredFrom: {id: '', name: ''},
       transferredTo: {id: '', name: ''},
       location: {id: '', name: ''},
-      type: {id: '', name: ''},
+      community: {id: '', name: ''},
       date: {startDate: '', endDate: ''},
     },
   });
@@ -231,7 +240,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
         <Tab.Panels>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Tab.Panel>
-              <FormWrapper>
+              <FormRow>
                 <FormColumn>
                   <InputLabel
                     title={t('type')}
@@ -253,7 +262,14 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   />
                   <LanguageSelector name="inLanguage" />
                 </FormColumn>
-              </FormWrapper>
+                <FormColumn>
+                  <InputLabel
+                    title={t('community')}
+                    description={t('communityDescription')}
+                  />
+                  <CommunitySelector />
+                </FormColumn>
+              </FormRow>
               <ButtonGroup>
                 <DefaultButton disabled>{t('previousButton')}</DefaultButton>
                 <DefaultButton onClick={() => setSelectedIndex(1)}>
@@ -263,7 +279,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
             </Tab.Panel>
 
             <Tab.Panel>
-              <FormWrapper>
+              <FormRow>
                 <FormColumn>
                   <InputLabel
                     title={t.rich('transferredFrom', {
@@ -334,7 +350,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   <FieldValidationMessage field="date.endDate" />
                   <FieldValidationMessage field="date" />
                 </FormColumn>
-              </FormWrapper>
+              </FormRow>
               <ButtonGroup>
                 <DefaultButton onClick={() => setSelectedIndex(0)}>
                   {t('previousButton')}
@@ -346,7 +362,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
             </Tab.Panel>
 
             <Tab.Panel>
-              <FormWrapper>
+              <FormRow>
                 <FormColumn>
                   <InputLabel
                     title={t('citation')}
@@ -391,7 +407,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   <Input name="attributionId" />
                   <FieldValidationMessage field="attributionId" />
                 </FormColumn>
-              </FormWrapper>
+              </FormRow>
               <ButtonGroup>
                 <DefaultButton onClick={() => setSelectedIndex(1)}>
                   {t('previousButton')}
