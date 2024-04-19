@@ -347,7 +347,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   />
                   <EdtfInput name="date.endDate" />
                   <FieldValidationMessage field="date.endDate" />
-                  <FieldValidationMessage field="date" />
+                  <FieldValidationMessage field="date.root" />
                 </FormColumn>
               </FormRow>
               <ButtonGroup>
@@ -377,9 +377,9 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     required
                   />
                   <Textarea name="citation" />
+                  <FieldValidationMessage field="citation" />
                 </FormColumn>
                 <FormColumn>
-                  <FieldValidationMessage field="citation" />
                   <InputLabel
                     title={t('attributionId')}
                     description={t('attributionIdDescription')}
