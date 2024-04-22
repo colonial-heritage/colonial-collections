@@ -23,7 +23,7 @@ import {
   ButtonGroup,
 } from '@/components/form';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
-import {ReactNode, Suspense, useMemo} from 'react';
+import {ReactNode, useMemo} from 'react';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';

@@ -2,7 +2,7 @@
 
 import {Tab} from '@headlessui/react';
 import {useLocale, useTranslations} from 'next-intl';
-import {Fragment, Suspense, useMemo, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import classNames from 'classnames';
 import {
   LocalizedMarkdown,
