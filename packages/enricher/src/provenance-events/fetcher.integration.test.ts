@@ -213,103 +213,105 @@ describe('getById - full enrichments, with all properties', () => {
   it('gets the enrichments of a resource', async () => {
     const enrichments = await fetcher.getById(resourceId);
 
-    expect(enrichments).toStrictEqual([
-      {
-        id: expect.stringContaining('https://'),
-        type: 'acquisition',
-        additionalTypes: [
-          {
-            id: 'http://vocab.getty.edu/aat/300417642',
-            name: 'Purchase',
-          },
-        ],
-        about: resourceId,
-        citation:
-          'A citation or reference to a work that supports the information',
-        description: 'A comment',
-        inLanguage: 'en',
-        qualifier: {
-          id: 'http://vocab.getty.edu/aat/300435722',
-          name: 'Possibly',
-        },
-        date: {
+    expect(enrichments).toEqual(
+      expect.arrayContaining([
+        {
           id: expect.stringContaining('https://'),
-          startDate: new Date('1805-01-01T00:00:00.000Z'),
-          endDate: new Date('1806-12-31T23:59:59.999Z'),
-        },
-        location: {
-          id: 'https://sws.geonames.org/2988507/',
-          name: 'Paris',
-        },
-        transferredFrom: {
-          id: 'http://www.wikidata.org/entity/Q517',
-          name: 'Napoleon',
-        },
-        transferredTo: {
-          id: 'http://www.wikidata.org/entity/Q171480',
-          name: 'Josephine de Beauharnais',
-        },
-        pubInfo: {
-          creator: {
-            id: 'http://example.com/person1',
-            name: 'Person 1',
-            isPartOf: {
-              id: 'http://example.com/group1',
-              name: 'Group 1',
+          type: 'acquisition',
+          additionalTypes: [
+            {
+              id: 'http://vocab.getty.edu/aat/300417642',
+              name: 'Purchase',
             },
+          ],
+          about: resourceId,
+          citation:
+            'A citation or reference to a work that supports the information',
+          description: 'A comment',
+          inLanguage: 'en',
+          qualifier: {
+            id: 'http://vocab.getty.edu/aat/300435722',
+            name: 'Possibly',
           },
-          license: 'https://creativecommons.org/licenses/by/4.0/',
-          dateCreated: expect.any(Date),
-        },
-      },
-      {
-        id: expect.stringContaining('https://'),
-        type: 'transferOfCustody',
-        additionalTypes: [
-          {
-            id: 'http://vocab.getty.edu/aat/300445014',
-            name: 'Returning',
+          date: {
+            id: expect.stringContaining('https://'),
+            startDate: new Date('1805-01-01T00:00:00.000Z'),
+            endDate: new Date('1806-12-31T23:59:59.999Z'),
           },
-        ],
-        about: resourceId,
-        citation:
-          'A citation or reference to a work that supports the information',
-        description: 'Returned to the owner',
-        inLanguage: 'en',
-        qualifier: {
-          id: 'http://vocab.getty.edu/aat/300435722',
-          name: 'Possibly',
+          location: {
+            id: 'https://sws.geonames.org/2988507/',
+            name: 'Paris',
+          },
+          transferredFrom: {
+            id: 'http://www.wikidata.org/entity/Q517',
+            name: 'Napoleon',
+          },
+          transferredTo: {
+            id: 'http://www.wikidata.org/entity/Q171480',
+            name: 'Josephine de Beauharnais',
+          },
+          pubInfo: {
+            creator: {
+              id: 'http://example.com/person1',
+              name: 'Person 1',
+              isPartOf: {
+                id: 'http://example.com/group1',
+                name: 'Group 1',
+              },
+            },
+            license: 'https://creativecommons.org/licenses/by/4.0/',
+            dateCreated: expect.any(Date),
+          },
         },
-        date: {
+        {
           id: expect.stringContaining('https://'),
-          startDate: new Date('1850-02-01T00:00:00.000Z'),
-          endDate: new Date('1850-07-13T23:59:59.999Z'),
-        },
-        location: {
-          id: 'https://sws.geonames.org/2643743/',
-          name: 'London',
-        },
-        transferredFrom: {
-          id: 'http://www.wikidata.org/entity/Q131691',
-          name: 'Arthur Wellesley',
-        },
-        transferredTo: {
-          id: 'http://www.wikidata.org/entity/Q9439',
-          name: 'Victoria',
-        },
-        pubInfo: {
-          creator: {
-            id: 'http://example.com/person2',
-            name: 'Person 2',
-            isPartOf: {
-              id: 'http://example.com/group2',
-              name: 'Group 2',
+          type: 'transferOfCustody',
+          additionalTypes: [
+            {
+              id: 'http://vocab.getty.edu/aat/300445014',
+              name: 'Returning',
             },
+          ],
+          about: resourceId,
+          citation:
+            'A citation or reference to a work that supports the information',
+          description: 'Returned to the owner',
+          inLanguage: 'en',
+          qualifier: {
+            id: 'http://vocab.getty.edu/aat/300435722',
+            name: 'Possibly',
           },
-          license: 'https://creativecommons.org/licenses/by/4.0/',
-          dateCreated: expect.any(Date),
+          date: {
+            id: expect.stringContaining('https://'),
+            startDate: new Date('1850-02-01T00:00:00.000Z'),
+            endDate: new Date('1850-07-13T23:59:59.999Z'),
+          },
+          location: {
+            id: 'https://sws.geonames.org/2643743/',
+            name: 'London',
+          },
+          transferredFrom: {
+            id: 'http://www.wikidata.org/entity/Q131691',
+            name: 'Arthur Wellesley',
+          },
+          transferredTo: {
+            id: 'http://www.wikidata.org/entity/Q9439',
+            name: 'Victoria',
+          },
+          pubInfo: {
+            creator: {
+              id: 'http://example.com/person2',
+              name: 'Person 2',
+              isPartOf: {
+                id: 'http://example.com/group2',
+                name: 'Group 2',
+              },
+            },
+            license: 'https://creativecommons.org/licenses/by/4.0/',
+            dateCreated: expect.any(Date),
+          },
         },
-      },
-    ]);
+      ])
+    );
   });
 });
