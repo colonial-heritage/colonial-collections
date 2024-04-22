@@ -118,7 +118,6 @@
     "techniquesSubTitle": "",
     "creatorsSubTitle": "",
     "inscriptionsSubTitle": "",
-    "addedBy": "Toegevoegd door <name></name>",
     "currentPublisher": "Huidige locatie van object",
     "noOrganizationFound": "Geen organisatie gevonden.",
     "dateCreated": "Datum van creatie",
@@ -150,7 +149,6 @@
     "transferredTo": "Overgedragen aan",
     "location": "Locatie",
     "descriptionTitle": "Beschrijving",
-    "providedBy": "Aangeleverd door <name></name>",
     "readMore": "Lees meer",
     "noData": "Geen herkomstgegevens aangeleverd.",
     "dataTableTitle": "Herkomst data tabel",
@@ -166,6 +164,13 @@
     "addProvenanceButton": "Herkomstgebeurtenis toevoegen",
     "addProvenanceTitle": "Herkomstgebeurtenis toevoegen",
     "needAccountToAddProvenanceTitle": "Om herkomstgegevens toe te voegen, heb je een account nodig."
+  },
+  "ProvidedBy": {
+    "name": "Geleverd door <name></name>",
+    "community": "Namens de <name></name> gemeenschap",
+    "date": "Op <date></date>",
+    "showCitationButton": "Toon bron",
+    "citationTitle": "Bron"
   },
   "ProvenanceForm": {
     "TabWhat": "Wat is er gebeurd",
@@ -187,6 +192,8 @@
     "citationDescription": "Geef informatie die uw herkomstgebeurtenis ondersteunt.",
     "inLanguage": "Taal",
     "inLanguageDescription": "Selecteer een taal van het herkomstgebeurtenis. Begin met typen om een taal te selecteren.",
+    "community": "Community",
+    "communityDescription": "Selecteer de community waarvoor u spreekt.",
     "typePlaceholder": "Selecteer wat er is gebeurd",
     "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
     "attributionId": "Persoonlijke URL",
@@ -208,6 +215,11 @@
     "beforeTyping": "Begin met typen om te zoeken",
     "loading": "Laden...",
     "noResults": "Geen resultaten"
+  },
+  "CommunitySelector": {
+    "noCommunities": "U bent nog geen lid van een community. Als u wilt dat uw bijdrage deel uitmaakt van een community, kunt u een community creëren of toetreden tot een bestaande community.",
+    "communityPlaceholder": "Selecteer een community",
+    "communitiesLoading": "Uw communities worden geladen..."
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
@@ -365,9 +377,11 @@
     "inLanguage": "Taal",
     "languageSubTitle": "Selecteer de taal van het verhaal. Begin met typen om een taal te selecteren.",
     "successfullyAdded": "Uw verhaal is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
-    "labelAttributionId": "Persoonlijke URL",
-    "descriptionAttributionId": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
-    "labelLicense": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
+    "community": "Community",
+    "communityDescription": "Selecteer de community waarvoor u spreekt.",
+    "attributionId": "Persoonlijke URL",
+    "attributionIdDescription": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
+    "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
     "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.nl",
     "serverError": "Er is iets misgegaan bij het aanmaken van het verhaal. Probeer het later opnieuw.",
     "buttonSubmit": "Voeg uw verhaal toe",

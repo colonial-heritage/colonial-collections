@@ -38,6 +38,7 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
     rawEnrichment,
     'ex:additionalType'
   );
+  const qualifier = onlyOne(createThings<Term>(rawEnrichment, 'ex:qualifier'));
 
   const enrichment: ProvenanceEventEnrichment = {
     id,
@@ -47,6 +48,7 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
     citation,
     description,
     inLanguage,
+    qualifier,
     location,
     transferredFrom,
     transferredTo,

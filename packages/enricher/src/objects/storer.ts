@@ -39,16 +39,16 @@ export class HeritageObjectEnrichmentStorer {
 
     const publicationStore = RdfStore.createDefault();
     const assertionStore = RdfStore.createDefault();
-    const annotationId = DF.blankNode();
+    const enrichmentId = DF.blankNode();
     const bodyId = DF.blankNode();
     const languageCode = opts.inLanguage;
 
     // Make clear what application has published this nanopub
-    const softwareTool = DF.namedNode('https://app.colonialcollections.nl/');
+    const softwareToolId = DF.namedNode('https://app.colonialcollections.nl/');
 
     publicationStore.addQuad(
       DF.quad(
-        softwareTool,
+        softwareToolId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('http://purl.org/nanopub/x/SoftwareTool')
       )
@@ -56,7 +56,7 @@ export class HeritageObjectEnrichmentStorer {
 
     publicationStore.addQuad(
       DF.quad(
-        softwareTool,
+        softwareToolId,
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
         DF.literal('Colonial Collections')
       )
@@ -94,7 +94,7 @@ export class HeritageObjectEnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://purl.org/nanopub/x/wasCreatedWith'),
-        softwareTool
+        softwareToolId
       )
     );
 
@@ -103,37 +103,37 @@ export class HeritageObjectEnrichmentStorer {
       DF.quad(
         nanopubId,
         DF.namedNode('http://purl.org/nanopub/x/introduces'),
-        annotationId
+        enrichmentId
       )
     );
 
     // The server automatically adds 'dcterms:creator'.
     // A creator can change his or her name later on, but the name at the time of
     // creation is preserved.
-    const creatorNode = DF.namedNode(opts.pubInfo.creator.id);
+    const creatorId = DF.namedNode(opts.pubInfo.creator.id);
 
     publicationStore.addQuad(
       DF.quad(
-        creatorNode,
+        creatorId,
         DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
         DF.literal(opts.pubInfo.creator.name)
       )
     );
 
     if (opts.pubInfo.creator.isPartOf !== undefined) {
-      const groupNode = DF.namedNode(opts.pubInfo.creator.isPartOf.id);
+      const groupId = DF.namedNode(opts.pubInfo.creator.isPartOf.id);
 
       publicationStore.addQuad(
         DF.quad(
-          creatorNode,
+          creatorId,
           DF.namedNode('http://purl.org/dc/terms/isPartOf'),
-          groupNode
+          groupId
         )
       );
 
       publicationStore.addQuad(
         DF.quad(
-          groupNode,
+          groupId,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
           DF.literal(opts.pubInfo.creator.isPartOf.name)
         )
@@ -142,7 +142,7 @@ export class HeritageObjectEnrichmentStorer {
 
     assertionStore.addQuad(
       DF.quad(
-        annotationId,
+        enrichmentId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('http://www.w3.org/ns/oa#Annotation')
       )
@@ -150,7 +150,7 @@ export class HeritageObjectEnrichmentStorer {
 
     assertionStore.addQuad(
       DF.quad(
-        annotationId,
+        enrichmentId,
         DF.namedNode('http://www.w3.org/ns/oa#hasBody'),
         bodyId
       )
@@ -200,7 +200,7 @@ export class HeritageObjectEnrichmentStorer {
     if (opts.citation !== undefined) {
       assertionStore.addQuad(
         DF.quad(
-          annotationId,
+          enrichmentId,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#comment'),
           DF.literal(opts.citation, languageCode)
         )
@@ -208,17 +208,19 @@ export class HeritageObjectEnrichmentStorer {
     }
 
     // The part of an object that the enrichment is about
+    const objectId = DF.namedNode(opts.about.id);
+
     assertionStore.addQuad(
       DF.quad(
-        annotationId,
+        enrichmentId,
         DF.namedNode('http://www.w3.org/ns/oa#hasTarget'),
-        DF.namedNode(opts.about.id)
+        objectId
       )
     );
 
     assertionStore.addQuad(
       DF.quad(
-        DF.namedNode(opts.about.id),
+        objectId,
         DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         DF.namedNode('http://www.w3.org/ns/oa#SpecificResource')
       )
@@ -227,7 +229,7 @@ export class HeritageObjectEnrichmentStorer {
     // The object that the enrichment is about
     assertionStore.addQuad(
       DF.quad(
-        DF.namedNode(opts.about.id),
+        objectId,
         DF.namedNode('http://www.w3.org/ns/oa#hasSource'),
         DF.namedNode(opts.about.isPartOf.id)
       )

@@ -34,6 +34,10 @@ interface AddProvenanceEnrichmentProps {
     id: string;
     name: string;
   };
+  community: {
+    id: string;
+    name: string;
+  };
 }
 
 export async function addProvenanceEnrichment({
@@ -46,13 +50,18 @@ export async function addProvenanceEnrichment({
   transferredFrom,
   transferredTo,
   location,
+  community,
 }: AddProvenanceEnrichmentProps) {
   const enrichment = await creator.addProvenanceEvent({
     citation,
     inLanguage,
     about: objectId,
     pubInfo: {
-      creator: user,
+      creator: {
+        id: user.id,
+        name: user.name,
+        isPartOf: community.id ? community : undefined,
+      },
       license: enrichmentLicence,
     },
     type: typeMapping[type.id as UserTypeOption].type,

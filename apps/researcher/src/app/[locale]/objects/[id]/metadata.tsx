@@ -4,12 +4,7 @@ import useObject from './use-object';
 import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
 import SignedIn from '@/lib/community/signed-in';
-import {getFormatter} from 'next-intl/server';
-import classNames from 'classnames';
-import {
-  ChatBubbleBottomCenterTextIcon,
-  InformationCircleIcon,
-} from '@heroicons/react/24/outline';
+import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import type {
   Actor,
   HeritageObjectEnrichmentType,
@@ -18,6 +13,7 @@ import ISO6391, {LanguageCode} from 'iso-639-1';
 import {SignedOut} from '@clerk/nextjs';
 import {ReadMoreText} from '@/components/read-more-text';
 import SignedOutSlideOut from '@/components/signed-out-slide-out';
+import {ProvidedBy} from './(provenance)/provided-by';
 
 interface Props {
   translationKey: string;
@@ -107,10 +103,6 @@ export async function MetadataEntry({
   children,
 }: MetadataEntryProps) {
   const {organization} = useObject.getState();
-  const t = useTranslations('ObjectDetails');
-  const formatter = await getFormatter();
-
-  const author = creator ? creator : organization;
 
   return (
     <div className="border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-2 first:border-0 ">
@@ -122,44 +114,15 @@ export async function MetadataEntry({
           </div>
         )}
       </div>
-      <div
-        className={classNames(
-          'px-2 py-3 text-xs my-1 self-start w-full lg:w-1/3',
-          {
-            'text-neutral-900 border-l': isCurrentPublisher,
-            'bg-consortiumGreen-100 text-consortiumBlue-800 rounded':
-              !isCurrentPublisher,
-          }
-        )}
-      >
-        <div>
-          {t.rich('addedBy', {
-            name: () => <strong>{author?.name}</strong>,
-          })}
-        </div>
-        {(dateCreated || citation) && (
-          <div className="flex justify-between">
-            {dateCreated &&
-              formatter.dateTime(dateCreated, {
-                dateStyle: 'medium',
-              })}
-            {citation && (
-              <div>
-                <SlideOutButton
-                  id={`${translationKey}-${dateCreated}-citation`}
-                  className="p-1 rounded hover:bg-consortiumBlue-800 -mt-1"
-                >
-                  <InformationCircleIcon className="w-5 h-5 stroke-consortiumBlue-800 hover:stroke-consortiumGreen-300" />
-                </SlideOutButton>
-              </div>
-            )}
-          </div>
-        )}
-        {citation && (
-          <SlideOut id={`${translationKey}-${dateCreated}-citation`}>
-            {citation}
-          </SlideOut>
-        )}
+      <div className="my-1 w-full lg:w-1/3">
+        <ProvidedBy
+          dateCreated={dateCreated}
+          citation={citation}
+          name={creator?.name || organization?.name}
+          communityName={creator?.isPartOf?.name}
+          id={translationKey}
+          isCurrentPublisher={isCurrentPublisher}
+        />
       </div>
     </div>
   );
