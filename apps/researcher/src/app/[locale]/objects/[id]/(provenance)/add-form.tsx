@@ -2,7 +2,7 @@
 
 import {Tab} from '@headlessui/react';
 import {useLocale, useTranslations} from 'next-intl';
-import {Fragment, Suspense, useMemo, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import classNames from 'classnames';
 import {
   LocalizedMarkdown,
@@ -404,13 +404,11 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     />
                     <FieldValidationMessage field="agreedToLicense" />
                     <div className="text-sm mb-1">
-                      <Suspense>
-                        <LocalizedMarkdown
-                          name="license"
-                          contentPath="@/messages"
-                          textSize="small"
-                        />
-                      </Suspense>
+                      <LocalizedMarkdown
+                        name="license"
+                        contentPath="@/messages"
+                        textSize="small"
+                      />
                     </div>
                   </div>
                 </FormColumn>
