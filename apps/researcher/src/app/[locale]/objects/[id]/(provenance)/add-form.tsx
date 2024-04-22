@@ -34,6 +34,7 @@ import {
   FieldValidationMessage,
   isEdtf,
   CommunitySelector,
+  QualifierSelector,
 } from '@/components/form';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
 import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
@@ -50,6 +51,7 @@ interface FormValues {
   location: {id: string; name: string};
   type: {id: string; name: string};
   community: {id: string; name: string};
+  qualifier: {id: string; name: string};
   date: {
     startDate: string;
     endDate: string;
@@ -117,30 +119,26 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
           message: t('invalidDateRange'),
         }
       ),
-    transferredFrom: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-      })
-      .optional(),
-    transferredTo: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-      })
-      .optional(),
-    location: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-      })
-      .optional(),
-    community: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-      })
-      .optional(),
+    transferredFrom: z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
+    transferredTo: z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
+    location: z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
+    community: z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
+    qualifier: z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
   });
 
   const methods = useForm({
@@ -158,6 +156,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
       transferredTo: {id: '', name: ''},
       location: {id: '', name: ''},
       community: {id: '', name: ''},
+      qualifier: {id: '', name: ''},
       date: {startDate: '', endDate: ''},
     },
   });
@@ -365,11 +364,29 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
               <FormRow>
                 <FormColumn>
                   <InputLabel
+                    title={t('qualifier')}
+                    description={t('qualifierDescription')}
+                    required
+                  />
+                  <QualifierSelector name="qualifier" />
+                </FormColumn>
+                <FormColumn>
+                  <InputLabel
                     title={t('citation')}
                     description={t('citationDescription')}
                     required
                   />
                   <Textarea name="citation" />
+                </FormColumn>
+                <FormColumn>
+                  <FieldValidationMessage field="citation" />
+                  <InputLabel
+                    title={t('attributionId')}
+                    description={t('attributionIdDescription')}
+                    required
+                  />
+                  <Input name="attributionId" />
+                  <FieldValidationMessage field="attributionId" />
                   <div className="mt-4">
                     <CheckboxWithLabel
                       name="agreedToLicense"
@@ -396,16 +413,6 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                       </Suspense>
                     </div>
                   </div>
-                </FormColumn>
-                <FormColumn>
-                  <FieldValidationMessage field="citation" />
-                  <InputLabel
-                    title={t('attributionId')}
-                    description={t('attributionIdDescription')}
-                    required
-                  />
-                  <Input name="attributionId" />
-                  <FieldValidationMessage field="attributionId" />
                 </FormColumn>
               </FormRow>
               <ButtonGroup>
