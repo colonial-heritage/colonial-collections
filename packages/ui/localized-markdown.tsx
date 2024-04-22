@@ -1,6 +1,7 @@
 import {useLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import classNames from 'classnames';
+import dynamic from 'next/dynamic';
 
 interface Props {
   name: string;
@@ -12,7 +13,7 @@ interface Props {
   textProps?: {[key: string]: string | number | boolean};
 }
 
-export async function LocalizedMarkdown({
+export function LocalizedMarkdown({
   name,
   contentPath,
   textSize,
@@ -33,16 +34,19 @@ export async function LocalizedMarkdown({
   let Markdown;
   try {
     if (contentPath === '@colonial-collections/content') {
-      Markdown = (
-        await import(`@colonial-collections/content/${locale}/${name}.mdx`)
-      ).default;
+      Markdown = dynamic(
+        () => import(`@colonial-collections/content/${locale}/${name}.mdx`)
+      );
     }
     if (contentPath === '@/messages') {
-      Markdown = (await import(`@/messages/${locale}/${name}.mdx`)).default;
+      Markdown = dynamic(() => import(`@/messages/${locale}/${name}.mdx`));
+    }
+    if (!Markdown) {
+      notFound();
     }
     return (
       <div className={markdownClassName} data-testid="markdown-container">
-        <Markdown name="test" {...textProps} />
+        <Markdown {...textProps} />
       </div>
     );
   } catch {

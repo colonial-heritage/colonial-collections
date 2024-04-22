@@ -14,7 +14,7 @@ interface ProvidedByProps {
   isCurrentPublisher: boolean;
 }
 
-export async function ProvidedBy({
+export function ProvidedBy({
   isCurrentPublisher,
   dateCreated,
   citation,

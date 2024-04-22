@@ -387,13 +387,11 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     />
                     <FieldValidationMessage field="agreedToLicense" />
                     <div className="text-sm mb-1">
-                      <Suspense>
-                        <LocalizedMarkdown
-                          name="license"
-                          contentPath="@/messages"
-                          textSize="small"
-                        />
-                      </Suspense>
+                      <LocalizedMarkdown
+                        name="license"
+                        contentPath="@/messages"
+                        textSize="small"
+                      />
                     </div>
                   </div>
                 </FormColumn>
