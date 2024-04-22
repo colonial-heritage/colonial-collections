@@ -38,6 +38,10 @@ interface AddProvenanceEnrichmentProps {
     id: string;
     name: string;
   };
+  qualifier: {
+    id: string;
+    name: string;
+  };
 }
 
 export async function addProvenanceEnrichment({
@@ -51,6 +55,7 @@ export async function addProvenanceEnrichment({
   transferredTo,
   location,
   community,
+  qualifier,
 }: AddProvenanceEnrichmentProps) {
   const enrichment = await creator.addProvenanceEvent({
     citation,
@@ -73,6 +78,7 @@ export async function addProvenanceEnrichment({
     transferredFrom: transferredFrom.id ? transferredFrom : undefined,
     transferredTo: transferredTo.id ? transferredTo : undefined,
     location: location.id ? location : undefined,
+    qualifier: qualifier.id ? qualifier : undefined,
   });
 
   revalidatePath(`/[locale]/objects/${encodeRouteSegment(objectId)}`, 'page');
