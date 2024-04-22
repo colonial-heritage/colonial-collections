@@ -23,7 +23,7 @@ import {
   ButtonGroup,
 } from '@/components/form';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
-import {ReactNode, Suspense, useMemo} from 'react';
+import {ReactNode, useMemo} from 'react';
 import {useUser} from '@clerk/nextjs';
 import {addAttributionId} from '@/lib/user/actions';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
@@ -226,13 +226,11 @@ export function UserEnrichmentForm({
               />
               <FieldValidationMessage field="agreedToLicense" />
               <div className="text-sm mb-1">
-                <Suspense>
-                  <LocalizedMarkdown
-                    name="license"
-                    contentPath="@/messages"
-                    textSize="small"
-                  />
-                </Suspense>
+                <LocalizedMarkdown
+                  name="license"
+                  contentPath="@/messages"
+                  textSize="small"
+                />
               </div>
             </div>
           </LeftFormColumn>
