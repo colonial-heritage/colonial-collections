@@ -12,7 +12,27 @@ const nanopubClient = new NanopubClient({
 const storer = new ProvenanceEventEnrichmentStorer({nanopubClient});
 
 describe('add', () => {
-  it('adds an acquisition event', async () => {
+  it('adds a basic acquisition event, with only required properties', async () => {
+    const enrichment = await storer.add({
+      type: ProvenanceEventType.Acquisition,
+      about: {
+        id: 'http://example.org/object1',
+      },
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+
+  it('adds a full acquisition event, with all properties', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.Acquisition,
       additionalType: {
@@ -64,7 +84,27 @@ describe('add', () => {
     });
   });
 
-  it('adds a transfer of custody event', async () => {
+  it('adds a basic transfer of custody event, with only required properties', async () => {
+    const enrichment = await storer.add({
+      type: ProvenanceEventType.TransferOfCustody,
+      about: {
+        id: 'http://example.org/object1',
+      },
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+
+  it('adds a full transfer of custody event, with all properties', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.TransferOfCustody,
       additionalType: {
