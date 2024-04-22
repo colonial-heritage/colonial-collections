@@ -197,13 +197,13 @@
     "typePlaceholder": "Selecteer wat er is gebeurd",
     "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
     "attributionId": "Persoonlijke URL",
-    "attributionIdDescription": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
+    "attributionIdDescription": "Door uw herkomstgebeurtenis toe te voegen, wordt uw persoonlijke URL opgeslagen bij het herkomstgebeurtenis. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
     "qualifier": "Zekerheidsniveau",
     "qualifierDescription": "Als u niet zeker bent over deze informatie, selecteer dan een van de twee opties. Als u zeker bent, laat ze dan onaangevinkt.",
     "typeRequired": "Type is vereist",
     "citationRequired": "Bron is vereist",
     "invalidAttributionId": "Ongeldige persoonlijke profiel-URL",
-    "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een verhaal kunt toevoegen",
+    "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een herkomstgebeurtenis kunt toevoegen",
     "invalidStartDate": "Ongeldige startdatum",
     "invalidEndDate": "Ongeldige einddatum",
     "invalidDateRange": "Ongeldig datumbereik, de startdatum moet vóór de einddatum zijn",
@@ -443,9 +443,9 @@
       "confiscatedDescription": "De status of toestand van eigendom dat is ingenomen of verbeurd verklaard door een regeringsinstantie of andere machthebbende entiteit."
     },
     "SignedOutSlideOut": {
+      "description": "Met dit account kun je meer functionaliteit van deze platform ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>.",
       "login": "Inloggen",
       "createAccount": "Maak een account aan",
-      "cancel": "Annuleren",
-      "description": "Met dit account kun je meer functionaliteit van deze platform ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>."
+      "cancel": "Annuleren"
     }
 }

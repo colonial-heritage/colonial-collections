@@ -196,14 +196,14 @@
     "communityDescription": "Select the community you speak on behalf of.",
     "typePlaceholder": "Select what happened",
     "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
-    "attributionId": "Persoonlijke URL",
-    "attributionIdDescription": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
+    "attributionId": "Personal profile URL",
+    "attributionIdDescription": "By adding your provenance event, your personal URL will be stored with the provenance event. This can be a link to your personal LinkedIn, Facebook or ORCID profile. It may not be visible to other visitors but the data is being stored in the cloud.",
     "qualifier": "Level of certainty",
     "qualifierDescription": "If you are uncertain about this information select one of the two options. If you are certain, leave them unchecked.",
     "typeRequired": "Type is required",
     "citationRequired": "Resource is required",
     "invalidAttributionId": "Invalid personal profile URL",
-    "agreedToLicenseUnchecked": "You need to agree to the license before you can add a narrative",
+    "agreedToLicenseUnchecked": "You need to agree to the license before you can add a provenance event",
     "invalidStartDate": "Invalid start date",
     "invalidEndDate": "Invalid end date",
     "invalidDateRange": "Invalid date range, start date should be before end date",
@@ -443,7 +443,7 @@
     "confiscatedDescription": "The status or condition of property having been taken or forfeited by a governmental or other entity in power or having authority."
   },
   "SignedOutSlideOut": {
-    "needAccountToAddNarrativeDescription": "With this account you can unlock more functionality of this platform. Creating an account free of charge. <link>See what else you can do with an account</link>.",
+    "description": "With this account you can unlock more functionality of this platform. Creating an account free of charge. <link>See what else you can do with an account</link>.",
     "login": "Login",
     "createAccount": "Create an account",
     "cancel": "Cancel"
