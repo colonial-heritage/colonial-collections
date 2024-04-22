@@ -46,7 +46,7 @@
     "@next/env": "14.1.0",
     "@types/mdx": "2.0.10",
     "@types/node": "20.11.28",
-    "@types/react": "18.2.56",
+    "@types/react": "18.2.79",
     "@types/react-dom": "18.2.22",
     "autoprefixer": "10.4.18",
     "cypress": "13.7.0",
