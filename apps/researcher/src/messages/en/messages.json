@@ -198,6 +198,8 @@
     "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
     "attributionId": "Persoonlijke URL",
     "attributionIdDescription": "Door uw verhaal toe te voegen, wordt uw persoonlijke URL opgeslagen bij het verhaal. Dit kan een link zijn naar uw persoonlijke LinkedIn-, Facebook- of ORCID-profiel. Het is mogelijk niet zichtbaar voor andere bezoekers, maar de URL wordt wel opgeslagen in de cloud.",
+    "qualifier": "Level of certainty",
+    "qualifierDescription": "If you are uncertain about this information select one of the two options. If you are certain, leave them unchecked.",
     "typeRequired": "Type is required",
     "citationRequired": "Resource is required",
     "invalidAttributionId": "Invalid personal profile URL",
@@ -220,6 +222,10 @@
     "noCommunities": "You are not yet a member of a community. If you want your contribution to be part of a community, you can create a community or join an existing community.",
     "communityPlaceholder": "Select a community",
     "communitiesLoading": "Loading your communities..."
+  },
+  "QualifierSelector": {
+    "possibly": "Possibly",
+    "probably": "Probably"
   },
   "PersonDetails": {
     "backButton": "Back to results",
