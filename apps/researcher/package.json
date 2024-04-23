@@ -44,7 +44,7 @@
     "leaflet-defaulticon-compatibility": "0.1.2",
     "next": "14.1.4",
     "next-intl": "3.8.0",
-    "openseadragon": "4.1.0",
+    "openseadragon": "4.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-headless-timeline": "0.3.4",
