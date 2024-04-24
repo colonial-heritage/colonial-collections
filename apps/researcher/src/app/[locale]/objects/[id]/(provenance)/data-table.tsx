@@ -1,19 +1,14 @@
 'use client';
 
 import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
-import type {LabeledProvenanceEvent} from './definitions';
+import type {UserProvenanceEvent} from './definitions';
 import {useTranslations} from 'next-intl';
 import {useProvenance} from './provenance-store';
 import {SelectEventsButton} from './buttons';
 import {ExclamationTriangleIcon, XMarkIcon} from '@heroicons/react/24/outline';
 import {ProvidedBy} from './provided-by';
-import {qualifierOptions, typeMapping} from '@/lib/provenance-options';
 
-interface Props {
-  organizationName?: string;
-}
-
-export default function DataTable({organizationName}: Props) {
+export default function DataTable() {
   const t = useTranslations('Provenance');
 
   const {
@@ -49,7 +44,6 @@ export default function DataTable({organizationName}: Props) {
       <div className="flex flex-col gap-6">
         {Object.entries(eventGroupsFiltered).map(([dateRange, eventGroup]) => (
           <ProvenanceEventRow
-            organizationName={organizationName}
             key={dateRange}
             dateRange={dateRange}
             provenanceEvents={eventGroup}
@@ -61,19 +55,25 @@ export default function DataTable({organizationName}: Props) {
 }
 
 interface ProvenanceEventRowProps {
-  provenanceEvents: LabeledProvenanceEvent[];
+  provenanceEvents: UserProvenanceEvent[];
   dateRange: string;
-  organizationName?: string;
 }
+
+const metadata: ReadonlyArray<{
+  prop: keyof UserProvenanceEvent;
+  translationKey: string;
+}> = [
+  {prop: 'transferredToName', translationKey: 'transferredTo'},
+  {prop: 'transferredFromName', translationKey: 'transferredFrom'},
+  {prop: 'typeName', translationKey: 'type'},
+  {prop: 'locationName', translationKey: 'location'},
+];
 
 function ProvenanceEventRow({
   provenanceEvents,
   dateRange,
-  organizationName,
 }: ProvenanceEventRowProps) {
   const t = useTranslations('Provenance');
-  const tQualifier = useTranslations('QualifierSelector');
-  const tType = useTranslations('ProvenanceEventType');
 
   return (
     <div className="flex flex-col md:flex-row gap-4 border-t">
@@ -92,61 +92,20 @@ function ProvenanceEventRow({
               </SelectEventsButton>
             </div>
             <div className="w-2/3">
-              <div>
-                {t('transferredTo')}{' '}
-                <strong>{event.transferredTo?.name}</strong>
-              </div>
-              {event.transferredFrom && (
-                <div>
-                  {t('transferredFrom')}{' '}
-                  <strong>{event.transferredFrom?.name}</strong>
+              {metadata.map(({prop, translationKey}) => (
+                <div key={prop}>
+                  {t(translationKey)} <strong>{event[prop] as string}</strong>
                 </div>
-              )}
-              {event.type && (
-                <div>
-                  {t('type')}{' '}
-                  <strong>
-                    {event.additionalTypes
-                      ?.map(type => {
-                        const translationKey = Object.values(typeMapping).find(
-                          mapping =>
-                            mapping.type === event.type &&
-                            mapping.additionalType === type.id
-                        )?.translationKey;
-
-                        const name = translationKey
-                          ? tType(translationKey)
-                          : type.name;
-                        return name;
-                      })
-                      .join(', ')}
-                  </strong>
-                </div>
-              )}
-              {event.location && (
-                <div>
-                  {t('location')} <strong>{event.location.name}</strong>
-                </div>
-              )}
-              {'qualifier' in event && event.qualifier && (
+              ))}
+              {event.qualifierName && (
                 <div className="text-sm text-neutral-600 flex items-center gap-1 italic mt-1">
                   <ExclamationTriangleIcon className="w-4 h-4 stroke-neutral-600" />
                   {t.rich('qualifier', {
-                    qualifier: () => {
-                      const translationKey = qualifierOptions.find(
-                        qualifier => qualifier.id === event.qualifier!.id
-                      )?.translationKey;
-
-                      const name = translationKey
-                        ? tQualifier(translationKey)
-                        : event.qualifier!.name;
-
-                      return <strong>{name}</strong>;
-                    },
+                    qualifier: () => event.qualifierName,
                   })}
                 </div>
               )}
-              {event.description && (
+              {event.motivations && (
                 <>
                   <SlideOutButton
                     id={`eventDescription-${event.id}`}
@@ -164,29 +123,28 @@ function ProvenanceEventRow({
                           <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
                         </SlideOutButton>
                       </div>
-                      {event.description}
+                      {Object.entries(event.motivations).map(
+                        ([key, motivation]) => (
+                          <div key={key} className="mb-3">
+                            <div className="font-bold mb-1">{key}</div>
+                            <div>{motivation}</div>
+                          </div>
+                        )
+                      )}
                     </div>
                   </SlideOut>
                 </>
               )}
             </div>
             <div className="w-1/3 text-xs">
-              {'pubInfo' in event ? (
-                <ProvidedBy
-                  dateCreated={event.pubInfo.dateCreated}
-                  citation={event.citation}
-                  name={event.pubInfo.creator.name}
-                  communityName={event.pubInfo.creator.isPartOf?.name}
-                  id={event.id}
-                  isCurrentPublisher={false}
-                />
-              ) : (
-                <ProvidedBy
-                  isCurrentPublisher
-                  id={event.id}
-                  name={organizationName}
-                />
-              )}
+              <ProvidedBy
+                dateCreated={event.dateCreated}
+                citation={event.citation}
+                name={event.creatorName}
+                communityName={event.communityName}
+                id={event.id}
+                isCurrentPublisher={event.isCurrentPublisher}
+              />
             </div>
           </div>
         ))}

@@ -1,6 +1,6 @@
 import {describe, expect} from '@jest/globals';
 import {groupByDateRange} from './group-events';
-import {LabeledProvenanceEvent} from './definitions';
+import {UserProvenanceEvent} from './definitions';
 
 // A simple `formatDateRange` mock that returns a string representation of a date range.
 function formatDateRange({
@@ -55,7 +55,7 @@ describe('groupByDateRange', () => {
   });
 
   it('handles empty events array', () => {
-    const events: LabeledProvenanceEvent[] = [];
+    const events: UserProvenanceEvent[] = [];
 
     const result = groupByDateRange({events, formatDateRange});
 

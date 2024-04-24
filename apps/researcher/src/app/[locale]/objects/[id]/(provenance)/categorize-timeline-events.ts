@@ -1,9 +1,9 @@
-import {LabeledProvenanceEvent, TimelineEvent} from './definitions';
+import {UserProvenanceEvent, TimelineEvent} from './definitions';
 
 interface CategorizedEvents {
   rangeEvents: TimelineEvent[];
   singleEvents: TimelineEvent[];
-  eventsWithoutDates: LabeledProvenanceEvent[];
+  eventsWithoutDates: UserProvenanceEvent[];
 }
 
 /* Events within one event group are rendered as a single timeline event,
@@ -17,7 +17,7 @@ and the start and end date are different.
 or events that have the same start and end date.
 3. Events without dates: Events that have no start or end date. */
 export function categorizeEvents(eventGroups: {
-  [label: string]: LabeledProvenanceEvent[];
+  [label: string]: UserProvenanceEvent[];
 }) {
   return Object.entries(eventGroups).reduce<CategorizedEvents>(
     (categorizedEvents, [id, eventGroups]) => {
@@ -64,7 +64,7 @@ export function categorizeEvents(eventGroups: {
   );
 }
 
-export function getEarliestDate(events: LabeledProvenanceEvent[]): Date {
+export function getEarliestDate(events: UserProvenanceEvent[]): Date {
   return events.reduce((earliestDate, event) => {
     if (event.date?.startDate && event.date.startDate < earliestDate) {
       return event.date.startDate;

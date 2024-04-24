@@ -1,6 +1,6 @@
 import {describe, expect} from '@jest/globals';
 import {getEarliestDate, categorizeEvents} from './categorize-timeline-events';
-import {LabeledProvenanceEvent} from './definitions';
+import {UserProvenanceEvent} from './definitions';
 
 describe('categorizeEvents', () => {
   it('categorizes events without a date time span correctly', () => {
@@ -227,7 +227,7 @@ describe('getEarliestDate', () => {
     const now = new Date('2020-01-01');
     jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
 
-    const events: LabeledProvenanceEvent[] = [];
+    const events: UserProvenanceEvent[] = [];
 
     const result = getEarliestDate(events);
 

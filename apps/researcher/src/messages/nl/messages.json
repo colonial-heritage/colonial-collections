@@ -228,6 +228,12 @@
     "possibly": "Mogelijk",
     "probably": "Waarschijnlijk"
   },
+  "MotivationInput": {
+    "openButton": "Motivatie toevoegen",
+    "description": "In dit motivatieveld kunt u een extra motivatie toevoegen over en alleen over het bovenstaande veld. Het zal alleen worden getoond in de provenance-sectie en zal de zoekresultaten beïnvloeden.",
+    "saveButton": "Motivatie opslaan",
+    "cancelButton": "Annuleren"
+  },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",
     "noEntity": "Persoon kon niet gevonden worden",

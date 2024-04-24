@@ -228,6 +228,13 @@
     "possibly": "Possibly",
     "probably": "Probably"
   },
+  "MotivationInput": {
+    "openButton": "Add motivation",
+    "editButton": "Edit motivation",
+    "description": "In this motivation field you can add an extra motivation about and only about the above field. It will only be display at the provenance section and will affect the search results.",
+    "saveButton": "Save motivation",
+    "cancelButton": "Cancel"
+  },
   "PersonDetails": {
     "backButton": "Back to results",
     "noEntity": "Person could not be found",

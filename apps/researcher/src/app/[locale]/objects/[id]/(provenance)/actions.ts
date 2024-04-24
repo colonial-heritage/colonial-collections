@@ -6,6 +6,7 @@ import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import {enrichmentLicence} from '@/lib/enrichment-licence';
 import {UserTypeOption, typeMapping} from '@/lib/provenance-options';
 import {getTranslations} from 'next-intl/server';
+import YAML from 'yaml';
 
 interface AddProvenanceEnrichmentProps {
   citation: string;
@@ -43,6 +44,15 @@ interface AddProvenanceEnrichmentProps {
     id: string;
     translationKey: string;
   };
+  motivations: {
+    type: string;
+    transferredFrom: string;
+    transferredTo: string;
+    location: string;
+    startDate: string;
+    endDate: string;
+    qualifier: string;
+  };
 }
 
 export async function addProvenanceEnrichment({
@@ -57,6 +67,7 @@ export async function addProvenanceEnrichment({
   location,
   community,
   qualifier,
+  motivations,
 }: AddProvenanceEnrichmentProps) {
   const tEnQualifier = await getTranslations({
     locale: 'en',
@@ -67,6 +78,15 @@ export async function addProvenanceEnrichment({
     locale: 'en',
     namespace: 'ProvenanceEventType',
   });
+  const motivationsWithValues = Object.entries(motivations).reduce(
+    (list, [key, motivation]) => {
+      if (motivation) {
+        list[key] = motivation;
+      }
+      return list;
+    },
+    {} as Record<string, string>
+  );
 
   const enrichment = await creator.addProvenanceEvent({
     citation,
@@ -80,6 +100,9 @@ export async function addProvenanceEnrichment({
       },
       license: enrichmentLicence,
     },
+    description: Object.keys(motivationsWithValues).length
+      ? YAML.stringify(motivationsWithValues)
+      : undefined,
     type: typeMapping[type.id as UserTypeOption].type,
     additionalType: {
       id: typeMapping[type.id as UserTypeOption].additionalType,

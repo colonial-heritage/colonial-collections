@@ -35,6 +35,7 @@ import {
   isEdtf,
   CommunitySelector,
   QualifierSelector,
+  MotivationInput,
 } from '@/components/form';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
 import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
@@ -57,6 +58,15 @@ interface FormValues {
     endDate: string;
   };
   agreedToLicense: boolean;
+  motivations: {
+    type: string;
+    transferredFrom: string;
+    transferredTo: string;
+    location: string;
+    startDate: string;
+    endDate: string;
+    qualifier: string;
+  };
 }
 
 interface Props {
@@ -139,6 +149,15 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
       id: z.string(),
       translationKey: z.string(),
     }),
+    motivations: z.object({
+      type: z.string(),
+      transferredFrom: z.string(),
+      transferredTo: z.string(),
+      location: z.string(),
+      startDate: z.string(),
+      endDate: z.string(),
+      qualifier: z.string(),
+    }),
   });
 
   const methods = useForm({
@@ -158,6 +177,15 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
       community: {id: '', name: ''},
       qualifier: {id: '', translationKey: ''},
       date: {startDate: '', endDate: ''},
+      motivations: {
+        type: '',
+        transferredFrom: '',
+        transferredTo: '',
+        location: '',
+        startDate: '',
+        endDate: '',
+        qualifier: '',
+      },
     },
   });
 
@@ -253,6 +281,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     placeholder={t('typePlaceholder')}
                   />
                   <FieldValidationMessage field="type.id" />
+                  <MotivationInput name="motivations.type" />
                 </FormColumn>
                 <FormColumn>
                   <InputLabel
@@ -300,6 +329,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     ]}
                     name="transferredFrom"
                   />
+                  <MotivationInput name="motivations.transferredFrom" />
                   <InputLabel
                     title={t.rich('transferredTo', {
                       important: text => <em>{text}</em>,
@@ -319,6 +349,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     ]}
                     name="transferredTo"
                   />
+                  <MotivationInput name="motivations.transferredTo" />
                 </FormColumn>
                 <FormColumn>
                   <InputLabel
@@ -334,6 +365,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     ]}
                     name="location"
                   />
+                  <MotivationInput name="motivations.location" />
                 </FormColumn>
                 <FormColumn>
                   <InputLabel
@@ -342,6 +374,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   />
                   <EdtfInput name="date.startDate" />
                   <FieldValidationMessage field="date.startDate" />
+                  <MotivationInput name="motivations.startDate" />
                   <InputLabel
                     title={t('endDate')}
                     description={t('startDateDescription')}
@@ -349,6 +382,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   <EdtfInput name="date.endDate" />
                   <FieldValidationMessage field="date.endDate" />
                   <FieldValidationMessage field="date.root" />
+                  <MotivationInput name="motivations.endDate" />
                 </FormColumn>
               </FormRow>
               <ButtonGroup>
@@ -370,6 +404,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                     required
                   />
                   <QualifierSelector name="qualifier" />
+                  <MotivationInput name="motivations.qualifier" />
                 </FormColumn>
                 <FormColumn>
                   <InputLabel

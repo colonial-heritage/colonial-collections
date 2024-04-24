@@ -9,16 +9,16 @@ import {
   useMemo,
   useState,
 } from 'react';
-import {LabeledProvenanceEvent} from './definitions';
+import {UserProvenanceEvent} from './definitions';
 import {groupByDateRange} from './group-events';
 import {useDateFormatter} from '@/lib/date-formatter/hooks';
 
 interface SelectedEventContextType {
   selectedEvents: string[];
   setSelectedEvents: Dispatch<SetStateAction<string[]>>;
-  events: LabeledProvenanceEvent[];
-  eventGroups: {[dateRange: string]: LabeledProvenanceEvent[]};
-  eventGroupsFiltered: {[dateRange: string]: LabeledProvenanceEvent[]};
+  events: UserProvenanceEvent[];
+  eventGroups: {[dateRange: string]: UserProvenanceEvent[]};
+  eventGroupsFiltered: {[dateRange: string]: UserProvenanceEvent[]};
   showTimeline: boolean;
   showDataTable: boolean;
   setShowTimeline: Dispatch<SetStateAction<boolean>>;
@@ -42,7 +42,7 @@ export function ProvenanceProvider({
   events,
 }: {
   children: ReactNode;
-  events: LabeledProvenanceEvent[];
+  events: UserProvenanceEvent[];
 }) {
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
   const [showTimeline, setShowTimeline] = useState(true);
