@@ -148,6 +148,7 @@
     "transferredFrom": "Transferred from",
     "transferredTo": "Transferred to",
     "location": "Location",
+    "qualifier": "The provider qualified this information as <qualifier></qualifier>",
     "readMore": "Read more",
     "descriptionTitle": "Description",
     "noData": "No provenance events provided for this object.",

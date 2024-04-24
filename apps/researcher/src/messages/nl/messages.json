@@ -149,6 +149,7 @@
     "transferredTo": "Overgedragen aan",
     "location": "Locatie",
     "descriptionTitle": "Beschrijving",
+    "qualifier": "De verstrekker heeft deze informatie gekwalificeerd als <qualifier></qualifier>",
     "readMore": "Lees meer",
     "noData": "Geen herkomstgegevens aangeleverd.",
     "dataTableTitle": "Herkomst data tabel",

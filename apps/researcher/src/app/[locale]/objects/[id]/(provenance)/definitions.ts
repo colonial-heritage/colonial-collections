@@ -13,8 +13,3 @@ export type TimelineEvent = {
   selectIds: string[];
   labels: string[];
 };
-
-export enum ProvenanceEventType {
-  Acquisition = 'acquisition',
-  TransferOfCustody = 'transferOfCustody',
-}

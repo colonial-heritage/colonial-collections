@@ -74,3 +74,8 @@ export const typeMapping = {
     translationKey: 'confiscated',
   },
 };
+
+export const qualifierOptions = [
+  {translationKey: 'possibly', id: 'http://vocab.getty.edu/aat/300435722'},
+  {translationKey: 'probably', id: 'http://vocab.getty.edu/aat/300435721'},
+];

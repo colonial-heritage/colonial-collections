@@ -40,7 +40,7 @@ import {DefaultButton, PrimaryButton} from '@/components/buttons';
 import {ExclamationTriangleIcon} from '@heroicons/react/24/outline';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
 import {addProvenanceEnrichment} from './actions';
-import {UserTypeOption, typeMapping} from './type-mapping';
+import {UserTypeOption, typeMapping} from '@/lib/provenance-options';
 
 interface FormValues {
   attributionId: string;
@@ -49,9 +49,9 @@ interface FormValues {
   transferredFrom: {id: string; name: string};
   transferredTo: {id: string; name: string};
   location: {id: string; name: string};
-  type: {id: string; name: string};
+  type: {id: string; translationKey: string};
   community: {id: string; name: string};
-  qualifier: {id: string; name: string};
+  qualifier: {id: string; translationKey: string};
   date: {
     startDate: string;
     endDate: string;
@@ -94,7 +94,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
       id: z.nativeEnum(UserTypeOption, {
         errorMap: () => ({message: t('typeRequired')}),
       }),
-      name: z.string(),
+      translationKey: z.string(),
     }),
     date: z
       .object({
@@ -137,7 +137,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
     }),
     qualifier: z.object({
       id: z.string(),
-      name: z.string(),
+      translationKey: z.string(),
     }),
   });
 
@@ -151,12 +151,12 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
       citation: '',
       inLanguage: locale,
       agreedToLicense: false,
-      type: {id: '', name: ''},
+      type: {id: '', translationKey: ''},
       transferredFrom: {id: '', name: ''},
       transferredTo: {id: '', name: ''},
       location: {id: '', name: ''},
       community: {id: '', name: ''},
-      qualifier: {id: '', name: ''},
+      qualifier: {id: '', translationKey: ''},
       date: {startDate: '', endDate: ''},
     },
   });
@@ -170,6 +170,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
   const typeOptions = useMemo(() => {
     return Object.values(UserTypeOption).map(value => ({
       id: value,
+      translationKey: typeMapping[value].translationKey,
       name: tType(typeMapping[value].translationKey),
       description: tType(`${typeMapping[value].translationKey}Description`),
     }));

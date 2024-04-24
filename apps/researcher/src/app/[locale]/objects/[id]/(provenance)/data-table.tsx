@@ -5,8 +5,9 @@ import type {LabeledProvenanceEvent} from './definitions';
 import {useTranslations} from 'next-intl';
 import {useProvenance} from './provenance-store';
 import {SelectEventsButton} from './buttons';
-import {XMarkIcon} from '@heroicons/react/24/outline';
+import {ExclamationTriangleIcon, XMarkIcon} from '@heroicons/react/24/outline';
 import {ProvidedBy} from './provided-by';
+import {qualifierOptions, typeMapping} from '@/lib/provenance-options';
 
 interface Props {
   organizationName?: string;
@@ -71,6 +72,8 @@ function ProvenanceEventRow({
   organizationName,
 }: ProvenanceEventRowProps) {
   const t = useTranslations('Provenance');
+  const tQualifier = useTranslations('QualifierSelector');
+  const tType = useTranslations('ProvenanceEventType');
 
   return (
     <div className="flex flex-col md:flex-row gap-4 border-t">
@@ -99,9 +102,48 @@ function ProvenanceEventRow({
                   <strong>{event.transferredFrom?.name}</strong>
                 </div>
               )}
+              {event.type && (
+                <div>
+                  {t('type')}{' '}
+                  <strong>
+                    {event.additionalTypes
+                      ?.map(type => {
+                        const translationKey = Object.values(typeMapping).find(
+                          mapping =>
+                            mapping.type === event.type &&
+                            mapping.additionalType === type.id
+                        )?.translationKey;
+
+                        const name = translationKey
+                          ? tType(translationKey)
+                          : type.name;
+                        return name;
+                      })
+                      .join(', ')}
+                  </strong>
+                </div>
+              )}
               {event.location && (
                 <div>
                   {t('location')} <strong>{event.location.name}</strong>
+                </div>
+              )}
+              {'qualifier' in event && event.qualifier && (
+                <div className="text-sm text-neutral-600 flex items-center gap-1 italic mt-1">
+                  <ExclamationTriangleIcon className="w-4 h-4 stroke-neutral-600" />
+                  {t.rich('qualifier', {
+                    qualifier: () => {
+                      const translationKey = qualifierOptions.find(
+                        qualifier => qualifier.id === event.qualifier!.id
+                      )?.translationKey;
+
+                      const name = translationKey
+                        ? tQualifier(translationKey)
+                        : event.qualifier!.name;
+
+                      return <strong>{name}</strong>;
+                    },
+                  })}
                 </div>
               )}
               {event.description && (
