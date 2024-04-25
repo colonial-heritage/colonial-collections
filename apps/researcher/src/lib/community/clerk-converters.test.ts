@@ -1,5 +1,5 @@
 import {describe, expect, it} from '@jest/globals';
-import {Organization, OrganizationMembership} from '@clerk/backend/dist/types';
+import {Organization, OrganizationMembership} from '@clerk/nextjs/server';
 import {OrganizationResource} from '@clerk/types';
 import {Community, Membership} from './definitions';
 import {
@@ -18,8 +18,7 @@ const organization: Organization = {
   imageUrl: 'https://example.com/image.png',
   createdAt: 1620000000000,
   updatedAt: 1620000000000,
-  members_count: 10,
-  logoUrl: 'https://example.com/logo.png',
+  membersCount: 10,
   hasImage: true,
   createdBy: 'user1',
   privateMetadata: {},
@@ -82,7 +81,6 @@ describe('organizationMembershipToCommunityMembership', () => {
         lastName: 'Doe',
         imageUrl: 'https://example.com/image.png',
         identifier: '',
-        profileImageUrl: '',
         hasImage: false,
       },
       privateMetadata: {},

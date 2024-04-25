@@ -1,4 +1,4 @@
-import {clerkClient, auth} from '@clerk/nextjs';
+import {clerkClient, auth} from '@clerk/nextjs/server';
 import {unstable_noStore as noStore} from 'next/cache';
 import {
   organizationMembershipToCommunityMembership,
@@ -23,7 +23,7 @@ export async function getCommunityById(id: string) {
 }
 
 export async function getMemberships(communityId: string) {
-  const organizationMembership =
+  const {data: organizationMembership} =
     await clerkClient.organizations.getOrganizationMembershipList({
       organizationId: communityId,
     });
@@ -66,12 +66,13 @@ export async function getCommunities({
   offset = 0,
   includeMembersCount = false,
 }: GetCommunitiesProps = {}) {
-  const organizations = await clerkClient.organizations.getOrganizationList({
-    limit,
-    offset,
-    query,
-    includeMembersCount,
-  });
+  const {data: organizations} =
+    await clerkClient.organizations.getOrganizationList({
+      limit,
+      offset,
+      query,
+      includeMembersCount,
+    });
 
   const communities = organizations.map(organizationToCommunity);
 
@@ -93,11 +94,13 @@ export async function getMyCommunities({
   }
 
   const memberships = userId
-    ? await clerkClient.users.getOrganizationMembershipList({
-        userId,
-        limit,
-        offset,
-      })
+    ? (
+        await clerkClient.users.getOrganizationMembershipList({
+          userId,
+          limit,
+          offset,
+        })
+      ).data
     : [];
 
   const organizations = memberships.map(membership => membership.organization);
@@ -106,13 +109,13 @@ export async function getMyCommunities({
     organizations.map(async organization => {
       if (includeMembersCount) {
         try {
-          const members =
+          const {totalCount} =
             await clerkClient.organizations.getOrganizationMembershipList({
               organizationId: organization.id,
             });
           return organizationToCommunity({
             ...organization,
-            members_count: members.length,
+            membersCount: totalCount,
           });
         } catch (err) {
           console.error('Error fetching members count', err);

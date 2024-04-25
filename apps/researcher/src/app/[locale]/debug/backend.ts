@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import {auth} from '@clerk/nextjs';
+import {auth} from '@clerk/nextjs/server';
 import {jwtDecode} from 'jwt-decode';
 
 const dateTimeFormat = new Intl.DateTimeFormat('nl', {
@@ -10,7 +10,7 @@ const dateTimeFormat = new Intl.DateTimeFormat('nl', {
 });
 
 export async function backendLogAction(frontendLog: any) {
-  const {getToken, sessionId, session, userId} = await auth();
+  const {getToken, sessionId, userId} = await auth();
   const token = await getToken();
   const tokenDecoded = token ? jwtDecode(token) : null;
   const date = tokenDecoded?.exp
@@ -22,7 +22,6 @@ export async function backendLogAction(frontendLog: any) {
     token,
     tokenDecoded,
     sessionId,
-    session,
     userId,
   });
 }
