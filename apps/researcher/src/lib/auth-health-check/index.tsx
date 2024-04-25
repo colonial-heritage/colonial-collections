@@ -1,4 +1,4 @@
-import {currentUser} from '@clerk/nextjs';
+import {currentUser} from '@clerk/nextjs/server';
 import FrontendHealthCheck from './frontend';
 
 export default async function AuthHealthCheck() {

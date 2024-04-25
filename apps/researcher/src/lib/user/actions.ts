@@ -1,6 +1,6 @@
 'use server';
 
-import {clerkClient} from '@clerk/nextjs';
+import {clerkClient} from '@clerk/nextjs/server';
 import {unstable_noStore as noStore} from 'next/cache';
 
 interface AddAttributionIdProps {

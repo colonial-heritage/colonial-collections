@@ -45,7 +45,6 @@ export default async function Page() {
             <div className="w-full p-4 md:sticky top-0 {{> styles/style_form }} rounded-lg min-h-[300px]">
               <div className="-translate-x-5 md:-translate-x-10">
                 <SignUp
-                  redirectUrl="/"
                   path={`/${locale}${env.NEXT_PUBLIC_CLERK_SIGN_UP_URL}`}
                 />
               </div>
