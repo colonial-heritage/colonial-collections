@@ -92,11 +92,15 @@ function ProvenanceEventRow({
               </SelectEventsButton>
             </div>
             <div className="w-2/3">
-              {metadata.map(({prop, translationKey}) => (
-                <div key={prop}>
-                  {t(translationKey)} <strong>{event[prop] as string}</strong>
-                </div>
-              ))}
+              {metadata.map(
+                ({prop, translationKey}) =>
+                  event[prop] && (
+                    <div key={prop}>
+                      {t(translationKey)}{' '}
+                      <strong>{event[prop] as string}</strong>
+                    </div>
+                  )
+              )}
               {event.qualifierName && (
                 <div className="text-sm text-neutral-600 flex items-center gap-1 italic mt-1">
                   <ExclamationTriangleIcon className="w-4 h-4 stroke-neutral-600" />
