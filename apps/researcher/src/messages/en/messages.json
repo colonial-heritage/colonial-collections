@@ -148,6 +148,7 @@
     "transferredFrom": "Transferred from",
     "transferredTo": "Transferred to",
     "location": "Location",
+    "qualifier": "The provider qualified this information as <qualifier></qualifier>",
     "readMore": "Read more",
     "descriptionTitle": "Description",
     "noData": "No provenance events provided for this object.",
@@ -226,6 +227,13 @@
   "QualifierSelector": {
     "possibly": "Possibly",
     "probably": "Probably"
+  },
+  "MotivationInput": {
+    "openButton": "Add motivation",
+    "editButton": "Edit motivation",
+    "description": "Please explain the reason or context for the information provided in the field above. Include any relevant sources, historical events, or specific circumstances that justify this entry.",
+    "saveButton": "Save motivation",
+    "cancelButton": "Cancel"
   },
   "PersonDetails": {
     "backButton": "Back to results",

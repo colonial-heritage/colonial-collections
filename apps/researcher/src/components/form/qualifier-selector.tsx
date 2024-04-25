@@ -2,11 +2,7 @@
 
 import {useController, useFormContext} from 'react-hook-form';
 import {useTranslations} from 'next-intl';
-
-const options = [
-  {translationKey: 'possibly', id: 'http://vocab.getty.edu/aat/300435722'},
-  {translationKey: 'probably', id: 'http://vocab.getty.edu/aat/300435721'},
-];
+import {qualifierOptions} from '@/lib/provenance-options';
 
 interface Props extends React.HTMLProps<HTMLInputElement> {
   name: string;
@@ -21,15 +17,16 @@ export function QualifierSelector({name}: Props) {
 
   return (
     <>
-      {options.map(option => (
+      {qualifierOptions.map(option => (
         <div key={option.id} className="flex gap-2">
           <input
+            id={option.translationKey}
             type="checkbox"
             checked={controller.field.value.id === option.id}
             onChange={event =>
               event.target.checked
                 ? controller.field.onChange(option)
-                : controller.field.onChange({id: '', name: ''})
+                : controller.field.onChange({id: '', translationKey: ''})
             }
             onBlur={controller.field.onBlur}
           />

@@ -1,7 +1,7 @@
-import {LabeledProvenanceEvent} from './definitions';
+import {UserProvenanceEvent} from './definitions';
 
 interface GroupByDateRangeProps {
-  events: LabeledProvenanceEvent[];
+  events: UserProvenanceEvent[];
   formatDateRange: (props: {startDate?: Date; endDate?: Date}) => string;
 }
 
@@ -13,7 +13,7 @@ export function groupByDateRange({
   formatDateRange,
 }: GroupByDateRangeProps) {
   return events.reduce(
-    (eventGroups: {[dateRange: string]: LabeledProvenanceEvent[]}, event) => {
+    (eventGroups: {[dateRange: string]: UserProvenanceEvent[]}, event) => {
       const dateRange = formatDateRange(event.date || {}) || '';
       if (!eventGroups[dateRange]) {
         eventGroups[dateRange] = [];

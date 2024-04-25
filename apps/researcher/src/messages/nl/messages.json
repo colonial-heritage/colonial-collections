@@ -149,6 +149,7 @@
     "transferredTo": "Overgedragen aan",
     "location": "Locatie",
     "descriptionTitle": "Beschrijving",
+    "qualifier": "De verstrekker heeft deze informatie gekwalificeerd als <qualifier></qualifier>",
     "readMore": "Lees meer",
     "noData": "Geen herkomstgegevens aangeleverd.",
     "dataTableTitle": "Herkomst data tabel",
@@ -226,6 +227,13 @@
   "QualifierSelector": {
     "possibly": "Mogelijk",
     "probably": "Waarschijnlijk"
+  },
+  "MotivationInput": {
+    "openButton": "Motivatie toevoegen",
+    "editButton": "Motivatie bewerken",
+    "description": "Leg alstublieft de reden of context uit voor de informatie die in het bovenstaande veld is verstrekt. Vermeld eventuele relevante bronnen, historische gebeurtenissen of specifieke omstandigheden die deze invoer rechtvaardigen.",
+    "saveButton": "Motivatie opslaan",
+    "cancelButton": "Annuleren"
   },
   "PersonDetails": {
     "backButton": "Terug naar resultaten",

@@ -9,3 +9,4 @@ export * from './edtf/is-edtf';
 export * from './field-validation-message';
 export * from './community-selector';
 export * from './qualifier-selector';
+export * from './motivation-input';
