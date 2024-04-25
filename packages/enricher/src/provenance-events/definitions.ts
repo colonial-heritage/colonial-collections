@@ -25,10 +25,11 @@ export const provenanceEventEnrichmentBeingCreatedSchema =
         .optional(),
       date: z
         .object({
-          startDate: z.string(),
-          endDate: z.string(),
+          startDate: z.string().optional(),
+          endDate: z.string().optional(),
         })
-        .optional(),
+        .optional()
+        .refine(date => date === undefined || date.startDate || date.endDate), // `startDate` or `endDate` or both must be provided
       transferredFrom: z
         .object({
           id: z.string().url(),

@@ -11,8 +11,56 @@ const nanopubClient = new NanopubClient({
 
 const storer = new ProvenanceEventEnrichmentStorer({nanopubClient});
 
-describe('add', () => {
-  it('adds a basic acquisition event, with only required properties', async () => {
+describe('add event', () => {
+  it('adds an event with only a start date', async () => {
+    const enrichment = await storer.add({
+      type: ProvenanceEventType.Acquisition,
+      about: {
+        id: 'http://example.org/object1',
+      },
+      date: {
+        startDate: '1805',
+      },
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+
+  it('adds an event with only an end date', async () => {
+    const enrichment = await storer.add({
+      type: ProvenanceEventType.Acquisition,
+      about: {
+        id: 'http://example.org/object1',
+      },
+      date: {
+        endDate: '1806',
+      },
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+});
+
+describe('add acquisition event', () => {
+  it('adds a basic event, with only required properties', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.Acquisition,
       about: {
@@ -32,7 +80,7 @@ describe('add', () => {
     });
   });
 
-  it('adds a full acquisition event, with all properties', async () => {
+  it('adds a full event, with all properties', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.Acquisition,
       additionalType: {
@@ -83,8 +131,10 @@ describe('add', () => {
       id: expect.stringContaining('https://'),
     });
   });
+});
 
-  it('adds a basic transfer of custody event, with only required properties', async () => {
+describe('add transfer of custody event', () => {
+  it('adds a basic event, with only required properties', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.TransferOfCustody,
       about: {
@@ -104,7 +154,7 @@ describe('add', () => {
     });
   });
 
-  it('adds a full transfer of custody event, with all properties', async () => {
+  it('adds a full event, with all properties', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.TransferOfCustody,
       additionalType: {
