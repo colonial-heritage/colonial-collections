@@ -230,7 +230,8 @@
   },
   "MotivationInput": {
     "openButton": "Motivatie toevoegen",
-    "description": "In dit motivatieveld kunt u een extra motivatie toevoegen over en alleen over het bovenstaande veld. Het zal alleen worden getoond in de provenance-sectie en zal de zoekresultaten beïnvloeden.",
+    "editButton": "Motivatie bewerken",
+    "description": "Leg alstublieft de reden of context uit voor de informatie die in het bovenstaande veld is verstrekt. Vermeld eventuele relevante bronnen, historische gebeurtenissen of specifieke omstandigheden die deze invoer rechtvaardigen.",
     "saveButton": "Motivatie opslaan",
     "cancelButton": "Annuleren"
   },

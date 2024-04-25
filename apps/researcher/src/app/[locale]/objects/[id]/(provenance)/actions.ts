@@ -78,12 +78,13 @@ export async function addProvenanceEnrichment({
     locale: 'en',
     namespace: 'ProvenanceEventType',
   });
+
   const motivationsWithValues = Object.entries(motivations).reduce(
-    (list, [key, motivation]) => {
+    (motivationsList, [key, motivation]) => {
       if (motivation) {
-        list[key] = motivation;
+        motivationsList[key] = motivation;
       }
-      return list;
+      return motivationsList;
     },
     {} as Record<string, string>
   );

@@ -231,7 +231,7 @@
   "MotivationInput": {
     "openButton": "Add motivation",
     "editButton": "Edit motivation",
-    "description": "In this motivation field you can add an extra motivation about and only about the above field. It will only be display at the provenance section and will affect the search results.",
+    "description": "Please explain the reason or context for the information provided in the field above. Include any relevant sources, historical events, or specific circumstances that justify this entry.",
     "saveButton": "Save motivation",
     "cancelButton": "Cancel"
   },
