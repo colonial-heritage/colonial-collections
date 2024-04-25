@@ -348,29 +348,33 @@ export class ProvenanceEventEnrichmentStorer {
         )
       );
 
-      const startDate = getDateAsXsd(opts.date.startDate, DateType.StartDate);
+      if (opts.date.startDate !== undefined) {
+        const startDate = getDateAsXsd(opts.date.startDate, DateType.StartDate);
 
-      assertionStore.addQuad(
-        DF.quad(
-          timeSpanId,
-          DF.namedNode(
-            'http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin'
-          ),
-          DF.literal(startDate, dateId)
-        )
-      );
+        assertionStore.addQuad(
+          DF.quad(
+            timeSpanId,
+            DF.namedNode(
+              'http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin'
+            ),
+            DF.literal(startDate, dateId)
+          )
+        );
+      }
 
-      const endDate = getDateAsXsd(opts.date.endDate, DateType.EndDate);
+      if (opts.date.endDate !== undefined) {
+        const endDate = getDateAsXsd(opts.date.endDate, DateType.EndDate);
 
-      assertionStore.addQuad(
-        DF.quad(
-          timeSpanId,
-          DF.namedNode(
-            'http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end'
-          ),
-          DF.literal(endDate, dateId)
-        )
-      );
+        assertionStore.addQuad(
+          DF.quad(
+            timeSpanId,
+            DF.namedNode(
+              'http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end'
+            ),
+            DF.literal(endDate, dateId)
+          )
+        );
+      }
 
       assertionStore.addQuad(
         DF.quad(
