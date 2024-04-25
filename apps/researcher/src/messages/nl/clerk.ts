@@ -27,11 +27,11 @@ export const nlNL: LocalizationResource = {
   badge__userDevice: 'Gebruikersapparaat',
   badge__you: 'Jij',
   createOrganization: {
-    formButtonSubmit: 'Maak organisatie aan',
+    formButtonSubmit: 'Maak community aan',
     invitePage: {
       formButtonReset: 'Overslaan',
     },
-    title: 'Organisatie aanmaken',
+    title: 'Community aanmaken',
   },
   dates: {
     lastDay: "Gisteren om {{ date | timeString('nl-NL') }}",
@@ -91,7 +91,7 @@ export const nlNL: LocalizationResource = {
   formFieldLabel__organizationDomainEmailAddress: 'Verification email address',
   formFieldLabel__organizationDomainEmailAddressDescription:
     'Enter an email address under this domain to receive a code and verify this domain.',
-  formFieldLabel__organizationName: 'Organisatienaam',
+  formFieldLabel__organizationName: 'Communitynaam',
   formFieldLabel__organizationSlug: 'Slug',
   formFieldLabel__passkeyName: undefined,
   formFieldLabel__password: 'Wachtwoord',
@@ -133,7 +133,7 @@ export const nlNL: LocalizationResource = {
         'De uitnodigingen konden niet verzonden worden. Los het volgende op en probeer het opnieuw:',
       formButtonPrimary__continue: 'Uitnodigingen verzenden',
       selectDropdown__role: 'Select role',
-      subtitle: 'Nodig nieuwe leden uit voor deze organisatie',
+      subtitle: 'Nodig nieuwe leden uit voor deze community',
       successMessage: 'Uitnodigingen succesvol verzonden',
       title: 'Leden uitnodigen',
     },
@@ -196,10 +196,10 @@ export const nlNL: LocalizationResource = {
         leaveOrganization: {
           actionDescription: 'Type "{{organizationName}}" below to continue.',
           messageLine1:
-            'Weet je zeker dat je deze organisatie wilt verlaten? Je zult toegang verliezen tot deze organisatie en haar applicaties.',
+            'Weet je zeker dat je deze community wilt verlaten? Je zult toegang verliezen tot deze community en haar applicaties.',
           messageLine2: 'Deze actie is permanent en onomkeerbaar.',
-          successMessage: 'Je hebt deze organisatie verlaten.',
-          title: 'Verlaat organisatie',
+          successMessage: 'Je hebt deze community verlaten.',
+          title: 'Verlaat community',
         },
         title: 'Gevaar',
       },
@@ -212,8 +212,8 @@ export const nlNL: LocalizationResource = {
           'Allow users to join the organization automatically or request to join based on a verified email domain.',
         title: 'Verified domains',
       },
-      successMessage: 'De organisatie is bijgewerkt.',
-      title: 'Organisatieprofiel',
+      successMessage: 'De community is bijgewerkt.',
+      title: 'Communityprofiel',
     },
     removeDomainPage: {
       messageLine1: 'The email domain {{domain}} will be removed.',
@@ -276,11 +276,11 @@ export const nlNL: LocalizationResource = {
     },
   },
   organizationSwitcher: {
-    action__createOrganization: 'Maak organisatie aan',
+    action__createOrganization: 'Maak community aan',
     action__invitationAccept: 'Join',
-    action__manageOrganization: 'Beheer organisatie',
+    action__manageOrganization: 'Beheer community',
     action__suggestionsAccept: 'Request to join',
-    notSelected: 'Geen organisatie geselecteerd',
+    notSelected: 'Geen community geselecteerd',
     personalWorkspace: 'Persoonlijke werkruimte',
     suggestionsAcceptedLabel: 'Pending approval',
   },

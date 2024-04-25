@@ -15,11 +15,11 @@ export const enUS: LocalizationResource = {
   badge__userDevice: 'User device',
   badge__you: 'You',
   createOrganization: {
-    formButtonSubmit: 'Create organization',
+    formButtonSubmit: 'Create community',
     invitePage: {
       formButtonReset: 'Skip',
     },
-    title: 'Create organization',
+    title: 'Create community',
   },
   dates: {
     lastDay: "Yesterday at {{ date | timeString('en-US') }}",
@@ -97,15 +97,15 @@ export const enUS: LocalizationResource = {
   membershipRole__basicMember: 'Member',
   membershipRole__guestMember: 'Guest',
   organizationList: {
-    action__createOrganization: 'Create organization',
+    action__createOrganization: 'Create community',
     action__invitationAccept: 'Join',
     action__suggestionsAccept: 'Request to join',
-    createOrganization: 'Create Organization',
+    createOrganization: 'Create Community',
     invitationAcceptedLabel: 'Joined',
     subtitle: 'to continue to {{applicationName}}',
     suggestionsAcceptedLabel: 'Pending approval',
     title: 'Choose an account',
-    titleWithoutPersonal: 'Choose an organization',
+    titleWithoutPersonal: 'Choose an community',
   },
   organizationProfile: {
     badge__automaticInvitation: 'Automatic invitations',
@@ -114,7 +114,7 @@ export const enUS: LocalizationResource = {
     badge__unverified: 'Unverified',
     createDomainPage: {
       subtitle:
-        'Add the domain to verify. Users with email addresses at this domain can join the organization automatically or request to join.',
+        'Add the domain to verify. Users with email addresses at this domain can join the community automatically or request to join.',
       title: 'Add domain',
     },
     invitePage: {
@@ -140,7 +140,7 @@ export const enUS: LocalizationResource = {
       invitationsTab: {
         autoInvitations: {
           headerSubtitle:
-            'Invite users by connecting an email domain with your organization. Anyone who signs up with a matching email domain will be able to join the organization anytime.',
+            'Invite users by connecting an email domain with your community. Anyone who signs up with a matching email domain will be able to join the community anytime.',
           headerTitle: 'Automatic invitations',
           primaryButton: 'Manage verified domains',
         },
@@ -153,7 +153,7 @@ export const enUS: LocalizationResource = {
       requestsTab: {
         autoSuggestions: {
           headerSubtitle:
-            'Users who sign up with a matching email domain, will be able to see a suggestion to request to join your organization.',
+            'Users who sign up with a matching email domain, will be able to see a suggestion to request to join your community.',
           headerTitle: 'Automatic suggestions',
           primaryButton: 'Manage verified domains',
         },
@@ -169,27 +169,27 @@ export const enUS: LocalizationResource = {
       },
     },
     navbar: {
-      description: 'Manage your organization.',
+      description: 'Manage your community.',
       general: 'General',
       members: 'Members',
-      title: 'Organization',
+      title: 'Community',
     },
     profilePage: {
       dangerSection: {
         deleteOrganization: {
           actionDescription: 'Type "{{organizationName}}" below to continue.',
-          messageLine1: 'Are you sure you want to delete this organization?',
+          messageLine1: 'Are you sure you want to delete this community?',
           messageLine2: 'This action is permanent and irreversible.',
-          successMessage: 'You have deleted the organization.',
-          title: 'Delete organization',
+          successMessage: 'You have deleted the community.',
+          title: 'Delete community',
         },
         leaveOrganization: {
           actionDescription: 'Type "{{organizationName}}" below to continue.',
           messageLine1:
-            'Are you sure you want to leave this organization? You will lose access to this organization and its applications.',
+            'Are you sure you want to leave this community? You will lose access to this community and its applications.',
           messageLine2: 'This action is permanent and irreversible.',
-          successMessage: 'You have left the organization.',
-          title: 'Leave organization',
+          successMessage: 'You have left the community.',
+          title: 'Leave community',
         },
         title: 'Danger',
       },
@@ -199,16 +199,16 @@ export const enUS: LocalizationResource = {
         menuAction__verify: 'Verify',
         primaryButton: 'Add domain',
         subtitle:
-          'Allow users to join the organization automatically or request to join based on a verified email domain.',
+          'Allow users to join the community automatically or request to join based on a verified email domain.',
         title: 'Verified domains',
       },
-      successMessage: 'The organization has been updated.',
+      successMessage: 'The community has been updated.',
       title: 'Update profile',
     },
     removeDomainPage: {
       messageLine1: 'The email domain {{domain}} will be removed.',
       messageLine2:
-        'Users won’t be able to join the organization automatically after this.',
+        'Users won’t be able to join the community automatically after this.',
       successMessage: '{{domain}} has been removed.',
       title: 'Remove domain',
     },
@@ -217,7 +217,7 @@ export const enUS: LocalizationResource = {
       headerTitle__members: 'Members',
       profileSection: {
         primaryButton: 'Update profile',
-        title: 'Organization Profile',
+        title: 'Community Profile',
         uploadAction__title: 'Logo',
       },
     },
@@ -230,10 +230,10 @@ export const enUS: LocalizationResource = {
       },
       enrollmentTab: {
         automaticInvitationOption__description:
-          'Users are automatically invited to join the organization when they sign-up and can join anytime.',
+          'Users are automatically invited to join the community when they sign-up and can join anytime.',
         automaticInvitationOption__label: 'Automatic invitations',
         automaticSuggestionOption__description:
-          'Users receive a suggestion to request to join, but must be approved by an admin before they are able to join the organization.',
+          'Users receive a suggestion to request to join, but must be approved by an admin before they are able to join the community.',
         automaticSuggestionOption__label: 'Automatic suggestions',
         calloutInfoLabel:
           'Changing the enrollment mode will only affect new users.',
@@ -242,10 +242,9 @@ export const enUS: LocalizationResource = {
         calloutSuggestionCountLabel:
           'Pending suggestions sent to users: {{count}}',
         manualInvitationOption__description:
-          'Users can only be invited manually to the organization.',
+          'Users can only be invited manually to the community.',
         manualInvitationOption__label: 'No automatic enrollment',
-        subtitle:
-          'Choose how users from this domain can join the organization.',
+        subtitle: 'Choose how users from this domain can join the community.',
       },
       start: {
         headerTitle__danger: 'Danger',
@@ -266,11 +265,11 @@ export const enUS: LocalizationResource = {
     },
   },
   organizationSwitcher: {
-    action__createOrganization: 'Create organization',
+    action__createOrganization: 'Create community',
     action__invitationAccept: 'Join',
     action__manageOrganization: 'Manage',
     action__suggestionsAccept: 'Request to join',
-    notSelected: 'No organization selected',
+    notSelected: 'No community selected',
     personalWorkspace: 'Personal account',
     suggestionsAcceptedLabel: 'Pending approval',
   },
