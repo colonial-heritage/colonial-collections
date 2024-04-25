@@ -4,7 +4,10 @@ import useObject from './use-object';
 import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
 import SignedIn from '@/lib/community/signed-in';
-import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
+import {
+  ChatBubbleBottomCenterTextIcon,
+  LanguageIcon,
+} from '@heroicons/react/24/outline';
 import type {
   Actor,
   HeritageObjectEnrichmentType,
@@ -109,8 +112,11 @@ export async function MetadataEntry({
       <div className="w-full lg:w-2/3 py-3 whitespace-pre-wrap">
         {children}
         {languageCode && (
-          <div className="text-xs font-normal text-neutral-600">
-            {ISO6391.getName(languageCode)}
+          <div>
+            <span className="inline-flex items-end gap-1 text-xs italic text-neutral-600 mt-2">
+              <LanguageIcon className="w-4 h-4 stroke-neutral-600 scale-90" />
+              {ISO6391.getName(languageCode)}
+            </span>
           </div>
         )}
       </div>

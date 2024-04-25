@@ -15,6 +15,7 @@ export type UserProvenanceEvent = {
   creatorName?: string;
   communityName?: string;
   isCurrentPublisher: boolean;
+  inLanguage?: string;
 };
 
 export type TimelineEvent = {

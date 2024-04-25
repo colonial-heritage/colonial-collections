@@ -5,6 +5,7 @@ import YAML from 'yaml';
 import {UserProvenanceEvent} from './definitions';
 import {qualifierOptions, typeMapping} from '@/lib/provenance-options';
 import useObject from '../use-object';
+import ISO6391 from 'iso-639-1';
 
 export async function getQualifierName(
   event: ProvenanceEvent | ProvenanceEventEnrichment
@@ -83,6 +84,10 @@ export async function transformEvents(
           ? event.pubInfo.creator.isPartOf?.name
           : undefined,
         isCurrentPublisher: !isEnrichment,
+        inLanguage:
+          isEnrichment && event.inLanguage
+            ? ISO6391.getName(event.inLanguage)
+            : undefined,
       };
     })
   );

@@ -5,7 +5,11 @@ import type {UserProvenanceEvent} from './definitions';
 import {useTranslations} from 'next-intl';
 import {useProvenance} from './provenance-store';
 import {SelectEventsButton} from './buttons';
-import {ExclamationTriangleIcon, XMarkIcon} from '@heroicons/react/24/outline';
+import {
+  ExclamationTriangleIcon,
+  LanguageIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import {ProvidedBy} from './provided-by';
 
 export default function DataTable() {
@@ -112,6 +116,7 @@ function ProvenanceEventRow({
               {event.motivations && (
                 <>
                   <SlideOutButton
+                    hideIfOpen
                     id={`eventDescription-${event.id}`}
                     className="italic underline mt-2"
                   >
@@ -134,6 +139,12 @@ function ProvenanceEventRow({
                             <div>{motivation}</div>
                           </div>
                         )
+                      )}
+                      {event.inLanguage && (
+                        <span className="inline-flex items-end gap-1 text-xs italic text-neutral-600 mt-2">
+                          <LanguageIcon className="w-4 h-4 stroke-neutral-600 scale-90" />
+                          {event.inLanguage}
+                        </span>
                       )}
                     </div>
                   </SlideOut>
