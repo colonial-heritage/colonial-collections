@@ -6,7 +6,6 @@ import {sortEvents} from './sort-events';
 import {ProvenanceProvider} from './provenance-store';
 import {ToggleViewButtons} from './buttons';
 import {LocaleEnum} from '@/definitions';
-import useObject from '../use-object';
 import dynamic from 'next/dynamic';
 import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
 import {XMarkIcon} from '@heroicons/react/24/outline';
@@ -16,6 +15,7 @@ import SignedIn from '@/lib/community/signed-in';
 import {SignedOut} from '@clerk/nextjs';
 import SignedOutSlideOut from '@/components/signed-out-slide-out';
 import {Notifications} from '@colonial-collections/ui';
+import {transformEvents} from './transform-events';
 
 // SSR needs to be false for plugin 'react-headless-timeline'
 const Timeline = dynamic(() => import('./timeline'), {
@@ -36,7 +36,6 @@ export default async function Provenance({objectId}: {objectId: string}) {
   const events = [...baseEvents, ...provenanceEnrichmentEvents];
 
   const t = await getTranslations('Provenance');
-  const {organization} = useObject.getState();
 
   if (events.length === 0) {
     return (
@@ -63,12 +62,9 @@ export default async function Provenance({objectId}: {objectId: string}) {
   }
 
   const sortedEvents = sortEvents(events);
-  const labeledEvents = sortedEvents?.map((event, index) => ({
-    ...event,
-    label: `${t('initial')}${index + 1}`,
-  }));
+  const userEvents = await transformEvents(sortedEvents);
   return (
-    <ProvenanceProvider events={labeledEvents}>
+    <ProvenanceProvider events={userEvents}>
       <div className="w-full">
         <div className="mx-auto px-4 sm:px-10 max-w-[1800px]">
           <h2 id="provenance" className="text-2xl mb-2 mt-20">
@@ -87,7 +83,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
           </div>
           <AddProvenanceSlideOut objectId={objectId} />
           <Timeline />
-          <DataTable organizationName={organization?.name} />
+          <DataTable />
         </div>
       </div>
     </ProvenanceProvider>

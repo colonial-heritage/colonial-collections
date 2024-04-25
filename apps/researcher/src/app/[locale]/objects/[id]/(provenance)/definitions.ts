@@ -1,10 +1,21 @@
-import {ProvenanceEvent} from '@colonial-collections/api';
-import {ProvenanceEventEnrichment} from '@colonial-collections/enricher';
+import {TimeSpan} from '@colonial-collections/api';
 
-export type LabeledProvenanceEvent = (
-  | ProvenanceEvent
-  | ProvenanceEventEnrichment
-) & {label: string};
+export type UserProvenanceEvent = {
+  id: string;
+  label: string;
+  motivations: Record<string, string>;
+  typeName?: string;
+  qualifierName?: string;
+  transferredToName?: string;
+  transferredFromName?: string;
+  locationName?: string;
+  date?: TimeSpan;
+  dateCreated?: Date;
+  citation?: string;
+  creatorName?: string;
+  communityName?: string;
+  isCurrentPublisher: boolean;
+};
 
 export type TimelineEvent = {
   id: string;
@@ -13,8 +24,3 @@ export type TimelineEvent = {
   selectIds: string[];
   labels: string[];
 };
-
-export enum ProvenanceEventType {
-  Acquisition = 'acquisition',
-  TransferOfCustody = 'transferOfCustody',
-}
