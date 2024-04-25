@@ -39,7 +39,7 @@ export function EdtfInput({name}: Props) {
   }, [yyyy, mm, dd, name, controller.field]);
 
   return (
-    <div className="flex w-fit border border-neutral-300">
+    <div className="flex w-fit border border-neutral-300 bg-white">
       <input
         placeholder={t('yearInputLabel')}
         type="number"

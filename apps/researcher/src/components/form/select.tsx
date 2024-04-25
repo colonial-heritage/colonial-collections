@@ -25,7 +25,7 @@ export function Select({name, options, placeholder, disabled = false}: Props) {
             <div className="relative mt-2">
               <Listbox.Button
                 ref={ref}
-                className="rounded p-2 text-sm border bg-neutral-100 flex items-center justify-between w-full"
+                className="rounded border border-neutral-300 p-2 text-sm flex items-center justify-between w-full bg-white"
               >
                 {value?.id ? (
                   <div>{value?.name}</div>
