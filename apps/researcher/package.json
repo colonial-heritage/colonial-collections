@@ -58,7 +58,6 @@
     "zustand": "4.5.1"
   },
   "devDependencies": {
-    "@clerk/shared": "2.0.0",
     "@colonial-collections/eslint-config": "*",
     "@colonial-collections/tailwind-config": "*",
     "@colonial-collections/ts-config": "*",
