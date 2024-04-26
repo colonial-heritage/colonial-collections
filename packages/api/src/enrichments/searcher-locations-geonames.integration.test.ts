@@ -6,7 +6,6 @@ let locationSearcher: GeoNamesLocationSearcher;
 
 beforeEach(() => {
   locationSearcher = new GeoNamesLocationSearcher({
-    endpointUrl: 'http://api.geonames.org',
     username: env.GEONAMES_USERNAME as string,
   });
 });
@@ -22,14 +21,14 @@ describe('search', () => {
     expect(result).toStrictEqual({
       things: [
         {
-          id: 'https://sws.geonames.org/5028921/',
+          id: 'https://sws.geonames.org/2755251/',
           name: 'Groningen',
-          description: 'Minnesota, VS',
+          description: 'Groningen, Nederland',
         },
         {
-          id: 'https://sws.geonames.org/2904901/',
-          name: 'Heynburg',
-          description: 'Saksen-Anhalt, Duitsland',
+          id: 'https://sws.geonames.org/6296685/',
+          name: 'Groningen Airport Eelde',
+          description: 'Drenthe, Nederland',
         },
         {
           id: 'https://sws.geonames.org/2755249/',
@@ -50,14 +49,14 @@ describe('search', () => {
     expect(result).toStrictEqual({
       things: [
         {
-          id: 'https://sws.geonames.org/5028921/',
+          id: 'https://sws.geonames.org/2755251/',
           name: 'Groningen',
-          description: 'Minnesota, United States',
+          description: 'Groningen, The Netherlands',
         },
         {
-          id: 'https://sws.geonames.org/2904901/',
-          name: 'Heynburg',
-          description: 'Saxony-Anhalt, Germany',
+          id: 'https://sws.geonames.org/6296685/',
+          name: 'Groningen Airport Eelde',
+          description: 'Drenthe, The Netherlands',
         },
         {
           id: 'https://sws.geonames.org/2755249/',
