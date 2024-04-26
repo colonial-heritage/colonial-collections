@@ -43,7 +43,7 @@ export function SearchSelector({name, searchers}: Props) {
             setQuery(e.target.value);
           }}
           displayValue={(searchItem: Thing) => searchItem?.name ?? ''}
-          className="h-12 w-full border border-neutral-300 bg-transparent pl-11 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+          className="h-12 w-full border border-neutral-300 bg-white pl-11 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
           autoComplete={'off'}
           onFocus={() => {
             buttonRef.current?.click();
