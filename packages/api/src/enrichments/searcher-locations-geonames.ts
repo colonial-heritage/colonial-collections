@@ -3,11 +3,11 @@ import {Thing} from '../definitions';
 import {z} from 'zod';
 
 const constructorOptionsSchema = z.object({
-  endpointUrl: z.string(),
+  endpointUrl: z.string().optional().default('http://api.geonames.org'),
   username: z.string(),
 });
 
-export type GeoNamesLocationSearcherConstructorOptions = z.infer<
+export type GeoNamesLocationSearcherConstructorOptions = z.input<
   typeof constructorOptionsSchema
 >;
 
@@ -24,6 +24,7 @@ const rawSearchResponseSchema = z.object({
 
 type RawSearchResponse = z.infer<typeof rawSearchResponseSchema>;
 
+// Docs: http://www.geonames.org/export/geonames-search.html
 export class GeoNamesLocationSearcher {
   private readonly endpointUrl: string;
   private readonly username: string;
@@ -36,16 +37,15 @@ export class GeoNamesLocationSearcher {
   }
 
   private buildRequest(options: SearchOptions) {
+    // If the precision of the results is too low, we could limit the
+    // results to specific feature codes: https://www.geonames.org/export/codes.html
     const searchParams: [string, string][] = [
       ['username', this.username],
       ['name_startsWith', options.query],
       ['maxRows', options.limit!.toString()],
       ['lang', options.locale!],
-      ['featureCode', 'CONT'], // Continent
-      ['featureCode', 'RGN'], // Region
-      ['featureCode', 'ADM1'], // First-order administrative division, e.g. country, state
-      ['featureCode', 'PPL'], // Populated place
       ['type', 'json'],
+      ['orderby', 'relevance'],
     ];
 
     const urlSearchParams = new URLSearchParams(searchParams);
