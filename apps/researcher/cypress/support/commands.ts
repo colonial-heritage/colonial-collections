@@ -23,7 +23,7 @@ Cypress.Commands.add('signIn', () => {
   cy.window()
     .should(window => {
       expect(window).to.not.have.property('Clerk', undefined);
-      expect(window.Clerk.isReady()).to.eq(true);
+      expect(window.Clerk.loaded).to.eq(true);
     })
     .then(async window => {
       cy.clearCookies({domain: window.location.host}).then(async () => {

@@ -23,7 +23,7 @@ declare namespace Cypress {
 
   interface ApplicationWindow {
     Clerk: {
-      isReady: () => boolean;
+      loaded: boolean;
       client: {
         signIn: {
           create: (params: {
