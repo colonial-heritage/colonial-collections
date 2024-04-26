@@ -109,7 +109,13 @@ export async function addProvenanceEnrichment({
       id: typeMapping[type.id as UserTypeOption].additionalType,
       name: tEnType(type.translationKey),
     },
-    date,
+    date:
+      date.startDate || date.endDate
+        ? {
+            startDate: date.startDate || undefined,
+            endDate: date.endDate || undefined,
+          }
+        : undefined,
     transferredFrom: transferredFrom.id ? transferredFrom : undefined,
     transferredTo: transferredTo.id ? transferredTo : undefined,
     location: location.id ? location : undefined,
