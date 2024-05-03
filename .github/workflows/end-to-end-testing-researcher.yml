@@ -50,6 +50,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-        name: researcher-playwright-report
-        path: apps/researcher/playwright-report/
-        retention-days: 30
+          name: researcher-playwright-report
+          path: apps/researcher/playwright-report/
+          retention-days: 30

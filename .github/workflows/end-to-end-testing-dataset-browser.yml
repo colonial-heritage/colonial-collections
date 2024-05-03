@@ -43,6 +43,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-        name: dataset-browser-playwright-report
-        path: apps/dataset-browser/playwright-report/
-        retention-days: 30
+          name: dataset-browser-playwright-report
+          path: apps/dataset-browser/playwright-report/
+          retention-days: 30
