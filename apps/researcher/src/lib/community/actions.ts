@@ -86,7 +86,7 @@ export async function getMyCommunities({
   includeMembersCount = false,
 }: GetCommunitiesProps = {}) {
   noStore();
-  const {userId} = await auth();
+  const {userId} = auth();
 
   if (!userId) {
     console.error('`getMyCommunities()` called without a user');

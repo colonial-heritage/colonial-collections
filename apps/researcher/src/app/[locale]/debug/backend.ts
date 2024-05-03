@@ -10,7 +10,7 @@ const dateTimeFormat = new Intl.DateTimeFormat('nl', {
 });
 
 export async function backendLogAction(frontendLog: any) {
-  const {getToken, sessionId, userId} = await auth();
+  const {getToken, sessionId, userId} = auth();
   const token = await getToken();
   const tokenDecoded = token ? jwtDecode(token) : null;
   const date = tokenDecoded?.exp

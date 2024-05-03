@@ -3,7 +3,7 @@ import {Notifications} from '@colonial-collections/ui';
 import {auth} from '@clerk/nextjs/server';
 
 export default async function DebugPage() {
-  const authenticationObject = await auth();
+  const authenticationObject = auth();
 
   return (
     <div>
