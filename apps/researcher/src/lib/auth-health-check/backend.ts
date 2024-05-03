@@ -14,7 +14,7 @@ export async function logFailedAuthHealthCheck({
   isLoaded,
 }: props) {
   const backendUser = await currentUser();
-  const backendAuth = auth();
+  const backendAuth = await auth();
 
   console.error('AUTH HEATH CHECK FAILED');
   console.error(message);
