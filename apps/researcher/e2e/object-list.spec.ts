@@ -1,7 +1,12 @@
 import {expect} from '@playwright/test';
 import test from './lib/app-test';
 import {env} from 'node:process';
-import {addObjectsToList, createEmptyList, getObjectUrl, resetDb} from './lib/database';
+import {
+  addObjectsToList,
+  createEmptyList,
+  getObjectUrl,
+  resetDb,
+} from './lib/database';
 
 // Run these tests one by one so the db state won't be affected by other tests
 test.describe.configure({mode: 'serial'});
