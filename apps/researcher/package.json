@@ -17,8 +17,8 @@
     "test:watch": "npm test -- --watchAll",
     "test:integration": "jest --passWithNoTests --testMatch '**/src/**/*.integration.test.ts'",
     "test:integration:watch": "npm run test:integration -- --watchAll",
-    "test:e2e": "dotenv -c -- cypress run",
-    "test:e2e:open": "dotenv -c -- cypress open"
+    "test:e2e": "dotenv -c -- playwright test",
+    "test:e2e:open": "dotenv -c -- playwright test --ui"
   },
   "dependencies": {
     "@clerk/localizations": "1.26.13",
@@ -59,11 +59,13 @@
   },
   "devDependencies": {
     "@clerk/shared": "1.3.3",
+    "@clerk/testing": "1.0.2",
     "@colonial-collections/eslint-config": "*",
     "@colonial-collections/tailwind-config": "*",
     "@colonial-collections/ts-config": "*",
     "@jest/globals": "29.7.0",
     "@next/env": "14.1.0",
+    "@playwright/test": "^1.43.1",
     "@types/leaflet": "1.9.8",
     "@types/mdx": "2.0.10",
     "@types/node": "20.11.28",

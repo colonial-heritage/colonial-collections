@@ -39,3 +39,9 @@ next-env.d.ts
 # cypress
 apps/**/cypress/videos
 apps/**/cypress/screenshots
+
+# playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

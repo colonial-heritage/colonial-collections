@@ -13,7 +13,7 @@ export function Loading({variant}: Props) {
     }
   );
   return (
-    <div className={loadingClassName}>
+    <div data-testid="loading-element" className={loadingClassName}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="58"
