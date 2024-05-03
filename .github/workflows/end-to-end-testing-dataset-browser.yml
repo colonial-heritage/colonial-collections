@@ -10,18 +10,6 @@ on:
       - "packages/**"
 
 jobs:
-  test_setup:
-    name: Test setup
-    runs-on: ubuntu-latest
-    outputs:
-      preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
-    steps:
-      - name: Wait for a successful Vercel Preview
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
-        id: waitForVercelPreviewDeployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 600
   run-end-to-end-tests:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
@@ -33,13 +21,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
-        working-directory: apps/dataset-browser
         run: npx playwright install --with-deps
+      - name: Wait for a successful Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitForVercelPreviewDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
       - name: Run Playwright tests
-        working-directory: apps/dataset-browser
-        run: npx playwright test
+        run: npm run test:e2e -w dataset-browser
         env:
-          PLAYWRIGHT_BASE_URL: ${{ needs.test_setup.outputs.preview_url }}
+          PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
