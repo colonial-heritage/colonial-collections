@@ -13,16 +13,12 @@ const test = base.extend<ExtendedFixtures>({
 
       await page.goto('/sign-in');
       await page.waitForSelector('.cl-signIn-root', {state: 'attached'});
-      await page
-        .locator('input[name=identifier]')
-        .fill(env.E2E_CLERK_USER_USERNAME!);
-      await page.locator('button:has-text("Continue")').click();
-      await page
-        .locator('input[name=password]')
-        .fill(env.E2E_CLERK_USER_PASSWORD!);
-      await page.locator('button:has-text("Continue")').click();
+      await page.locator('input[name=identifier]').fill(env.TEST_USER_EMAIL!);
+      await page.getByRole('button', {name: 'Continue', exact: true}).click();
+      await page.locator('input[name=password]').fill(env.TEST_USER_PASSWORD!);
+      await page.getByRole('button', {name: 'Continue', exact: true}).click();
       await page.waitForSelector('.cl-userButtonAvatarBox', {state: 'visible'});
-      await page.goto(url, {waitUntil: 'networkidle'});
+      await page.goto(url);
       await page.waitForSelector('.cl-userButtonAvatarBox', {state: 'visible'});
     });
   },

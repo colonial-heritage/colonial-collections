@@ -1,7 +1,12 @@
 import {expect} from '@playwright/test';
 import test from './lib/app-test';
 import {env} from 'node:process';
-import {addObjectsToList, createEmptyList, getObjectUrl, resetDb} from './lib/database';
+import {
+  addObjectsToList,
+  createEmptyList,
+  getObjectUrl,
+  resetDb,
+} from './lib/database';
 
 // Run these tests one by one so the db state won't be affected by other tests
 test.describe.configure({mode: 'serial'});
@@ -13,9 +18,7 @@ test.describe('Object lists not logged in', () => {
   test('opens the object list from the community page', async ({page}) => {
     const listId = await createEmptyList();
 
-    await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}`, {
-      waitUntil: 'networkidle',
-    });
+    await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}`);
     await page.getByTestId('object-list-item').first().click();
     await page.waitForURL(
       `/en/communities${env.TEST_COMMUNITY_SLUG}/${listId}`
@@ -28,9 +31,7 @@ test.describe('Object lists not logged in', () => {
   test('shows an error message if no community matches the ID', async ({
     page,
   }) => {
-    await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}/1234567890`, {
-      waitUntil: 'networkidle',
-    });
+    await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}/1234567890`);
 
     await expect(page.getByTestId('no-entity')).toBeVisible();
     await expect(page.getByTestId('error')).toHaveCount(0);
@@ -78,9 +79,7 @@ test.describe('Object list page logged in', () => {
 
     await expect(page).toHaveURL(`/en/communities${env.TEST_COMMUNITY_SLUG}`);
 
-    await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}/${listId}`, {
-      waitUntil: 'networkidle',
-    });
+    await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}/${listId}`);
 
     await expect(page.getByTestId('no-entity')).toBeVisible();
   });
@@ -108,9 +107,7 @@ test.describe('Object list page logged in', () => {
     await page.getByTestId('add-to-list-button').hover();
     await page.getByTestId(`object-list-${listId}`).click();
     await expect(page.getByTestId('notification')).toHaveCount(2);
-    await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}/${listId}`, {
-      waitUntil: 'networkidle',
-    });
+    await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}/${listId}`);
     await expect(page.getByTestId('object-card')).toHaveCount(1);
   });
 });

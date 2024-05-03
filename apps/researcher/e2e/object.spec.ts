@@ -6,13 +6,13 @@ test.describe('Object details page not signed in', () => {
   test('opens the object page if clicked on in the search list', async ({
     page,
   }) => {
-    await page.goto('/objects?query=object', {waitUntil: 'networkidle'});
+    await page.goto('/objects?query=object');
     const cardName = await page
       .getByTestId('object-card-name')
       .first()
       .textContent();
     await page.getByTestId('object-card').first().click();
-    await page.waitForURL(/.*\/objects\/.+/, {waitUntil: 'networkidle'});
+    await page.waitForURL(/.*\/objects\/.+/);
 
     await expect(page.getByTestId('error')).toHaveCount(0);
     await expect(page.getByTestId('no-entity')).toHaveCount(0);
@@ -21,9 +21,7 @@ test.describe('Object details page not signed in', () => {
   });
 
   test('shows an error message if no object matches the ID', async ({page}) => {
-    await page.goto('/en/objects/anIdThatDoesNotExist', {
-      waitUntil: 'networkidle',
-    });
+    await page.goto('/en/objects/anIdThatDoesNotExist');
     await expect(page.getByTestId('no-entity')).toBeVisible();
     await expect(page.getByTestId('object-name')).toHaveCount(0);
   });
@@ -31,7 +29,7 @@ test.describe('Object details page not signed in', () => {
   test('navigates back to the list with the previously selected filters', async ({
     page,
   }) => {
-    await page.goto('/objects?query=object', {waitUntil: 'networkidle'});
+    await page.goto('/objects?query=object');
     await page
       .getByTestId('typesFilter')
       .locator('input[type="checkbox"]')
@@ -40,7 +38,7 @@ test.describe('Object details page not signed in', () => {
     await page.waitForURL(/.*\/objects\?.+/);
     const url = page.url();
     await page.getByTestId('object-card').first().click();
-    await page.waitForURL(/.*\/objects\/.+/, {waitUntil: 'networkidle'});
+    await page.waitForURL(/.*\/objects\/.+/);
     await page.getByTestId('to-filtered-list-button').first().click();
     await page.waitForURL(/.*\/objects\?.+/);
     expect(page.url()).toEqual(url);
@@ -49,7 +47,7 @@ test.describe('Object details page not signed in', () => {
 
   test('shows a text when hovering the add-to-list-button', async ({page}) => {
     const url = await getObjectUrl();
-    await page.goto(url, {waitUntil: 'networkidle'});
+    await page.goto(url);
     await page.getByTestId('add-to-list-button').hover();
     await expect(
       page.getByTestId('add-to-list-not-signed-in-panel')

@@ -4,7 +4,7 @@ import {env} from 'node:process';
 
 test.describe('Communities page', () => {
   test('shows a list of communities', async ({page}) => {
-    await page.goto('/en/communities', {waitUntil: 'networkidle'});
+    await page.goto('/en/communities');
     await expect(page.getByTestId('community-item-name').first()).toBeVisible();
     await expect(page.getByTestId('error')).not.toBeVisible();
   });
@@ -14,7 +14,7 @@ test.describe('Community details page', () => {
   test('opens the community page if clicked on in the communities list', async ({
     page,
   }) => {
-    await page.goto('/communities', {waitUntil: 'networkidle'});
+    await page.goto('/communities');
     const communityItemName = await page
       .getByTestId('community-item-name')
       .first();
@@ -33,9 +33,7 @@ test.describe('Community details page', () => {
   test('shows an error message if no community matches the ID', async ({
     page,
   }) => {
-    await page.goto('/communities/anIdThatDoesNotExist', {
-      waitUntil: 'networkidle',
-    });
+    await page.goto('/communities/anIdThatDoesNotExist');
     await expect(page.getByTestId('no-entity')).toBeVisible();
     await expect(page.getByTestId('community-name')).not.toBeVisible();
   });
