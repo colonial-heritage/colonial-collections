@@ -36,10 +36,6 @@ next-env.d.ts
 # turbo
 .turbo
 
-# cypress
-apps/**/cypress/videos
-apps/**/cypress/screenshots
-
 # playwright
 test-results/
 playwright-report/

@@ -8,12 +8,6 @@ on:
       - "apps/researcher/**"
       - ".github/workflows/end-to-end-testing-researcher.yml"
       - "packages/**"
-
-concurrency:
-  # Clerk blocks the test user, if multiple tests are running at the same time
-  # Therefore, we limit the concurrency to 1
-  group: 'end-to-end-tests-with-login'
-
 jobs:
   test_setup:
     name: Test setup
