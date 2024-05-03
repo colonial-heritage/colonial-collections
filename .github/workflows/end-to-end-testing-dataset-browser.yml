@@ -10,37 +10,39 @@ on:
       - "packages/**"
 
 jobs:
-  run-end-to-end-tests:
-    runs-on: ubuntu-22.04
+  test_setup:
+    name: Test setup
+    runs-on: ubuntu-latest
+    outputs:
+      preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
     steps:
       - name: Wait for a successful Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
-        id: waitForPreview
+        id: waitForVercelPreviewDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
-          environment: Preview – colonial-collections-dataset-browser
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Run Cypress for Dataset Browser 🌲
-        uses: cypress-io/github-action@v6
+  run-end-to-end-tests:
+    timeout-minutes: 10
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          project: ./apps/dataset-browser
-          wait-on: ${{ steps.waitForPreview.outputs.url }}
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        working-directory: apps/dataset-browser
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        working-directory: apps/dataset-browser
+        run: npx playwright test
         env:
-          CYPRESS_BASE_URL: ${{ steps.waitForPreview.outputs.url }}
-      # Screenshots will be generated only if the test failed
-      # thus we store screenshots only on failures
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v4
-        if: failure()
+          PLAYWRIGHT_BASE_URL: ${{ needs.test_setup.outputs.preview_url }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
         with:
-          name: cypress-screenshots
-          path: ./apps/dataset-browser/cypress/screenshots
-      # Test run video is always captured, so this action uses "always()" condition
-      - name: Upload videos
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cypress-videos
-          path: ./apps/dataset-browser/cypress/videos
+        name: dataset-browser-playwright-report
+        path: apps/dataset-browser/playwright-report/
+        retention-days: 30
