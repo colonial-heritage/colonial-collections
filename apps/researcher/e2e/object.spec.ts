@@ -12,7 +12,7 @@ test.describe('Object details page not signed in', () => {
       .first()
       .textContent();
     await page.getByTestId('object-card').first().click();
-    await page.waitForURL(/.*\/objects\/.+/);
+    await page.waitForURL(/.*\/objects\/.+/, {waitUntil: 'networkidle'});
 
     await expect(page.getByTestId('error')).toHaveCount(0);
     await expect(page.getByTestId('no-entity')).toHaveCount(0);
@@ -37,9 +37,10 @@ test.describe('Object details page not signed in', () => {
       .locator('input[type="checkbox"]')
       .first()
       .check();
+    await page.waitForURL(/.*\/objects\?.+/);
     const url = page.url();
     await page.getByTestId('object-card').first().click();
-    await page.waitForURL(/.*\/objects\/.+/);
+    await page.waitForURL(/.*\/objects\/.+/, {waitUntil: 'networkidle'});
     await page.getByTestId('to-filtered-list-button').first().click();
     await page.waitForURL(/.*\/objects\?.+/);
     expect(page.url()).toEqual(url);
