@@ -13,9 +13,7 @@
  * =====================================================================================
  */
 
-import type {LocalizationResource} from '@clerk/types';
-
-export const nlNL: LocalizationResource = {
+export default {
   locale: 'nl-NL',
   backButton: 'Terug',
   badge__default: 'Standaard',

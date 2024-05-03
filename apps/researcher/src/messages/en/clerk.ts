@@ -1,9 +1,7 @@
 // This file is based on https://github.com/clerkinc/javascript/blob/main/packages/localizations/src/en-US.ts
 // With the main difference a rename of 'organization' to 'community'
 
-import type {LocalizationResource} from '@clerk/types';
-
-export const enUS: LocalizationResource = {
+export default {
   locale: 'en-US',
   backButton: 'Back',
   badge__default: 'Default',
