@@ -86,10 +86,6 @@ test.describe('Object details page logged in', () => {
       .fill('End to end test');
     await page
       .getByTestId('enrichment-form')
-      .locator('input[name="attributionId"]')
-      .fill('http://orcid.id/testId');
-    await page
-      .getByTestId('enrichment-form')
       .locator('input[name="agreedToLicense"]')
       .check();
     await page
