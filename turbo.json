@@ -20,6 +20,7 @@
     "test:integration": {},
     "test:integration:watch": {},
     "test:e2e": {},
+    "test:e2e:open": {},
     "db:generate": {
       "cache": false
     },

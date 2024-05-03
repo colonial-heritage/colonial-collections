@@ -20,6 +20,7 @@
     "test:integration": "turbo run test:integration",
     "test:integration:watch": "turbo run test:integration:watch",
     "test:e2e": "turbo run test:e2e",
+    "test:e2e:open": "turbo run test:e2e:open",
     "db:generate": "turbo run db:generate",
     "db:migrate": "turbo run db:migrate"
   },
