@@ -12,6 +12,8 @@ jobs:
   run-end-to-end-tests:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.43.0-jammy
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,8 +21,8 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      # - name: Install Playwright Browsers
+      #   run: npx playwright install --with-deps
       - name: Wait for a successful Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         id: waitForVercelPreviewDeployment
@@ -30,6 +32,7 @@ jobs:
       - name: Run Playwright tests
         run: npm run test:e2e -w researcher
         env:
+          HOME: /root
           PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
           TEST_USER_EMAIL: ${{secrets.TEST_USER_EMAIL}}
           TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
