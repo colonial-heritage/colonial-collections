@@ -1,4 +1,4 @@
-name: End-to-end testing Researcher
+name: End-to-end testing Test
 
 on:
   pull_request:
@@ -29,7 +29,7 @@ jobs:
         max_timeout: 600
         environment: Preview – colonial-collections-researcher
     - name: Run Playwright tests
-      run: npm run test:e2e:ci -w researcher
+      run: npm run test:e2e:ci -w e2e-test
       env:
         PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
         TEST_USER_EMAIL: ${{secrets.TEST_USER_EMAIL}}
@@ -45,7 +45,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: researcher-playwright-report
-        path: apps/researcher/playwright-report/
+        name: e2e-test-playwright-report
+        path: apps/e2e-test/playwright-report/
         retention-days: 30
   
