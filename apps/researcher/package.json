@@ -18,7 +18,8 @@
     "test:integration": "jest --passWithNoTests --testMatch '**/src/**/*.integration.test.ts'",
     "test:integration:watch": "npm run test:integration -- --watchAll",
     "test:e2e": "dotenv -c -- playwright test",
-    "test:e2e:open": "dotenv -c -- playwright test --ui"
+    "test:e2e:open": "dotenv -c -- playwright test --ui",
+    "test:e2e:ci": "playwright test"
   },
   "dependencies": {
     "@clerk/localizations": "1.26.13",

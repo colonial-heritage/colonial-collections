@@ -28,6 +28,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
+          environment: Preview – colonial-collections-dataset-browser
       - name: Run Playwright tests
         run: npm run test:e2e -w dataset-browser
         env:

@@ -29,8 +29,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
+          environment: Preview – colonial-collections-researcher 
       - name: Run Playwright tests
-        run: npm run test:e2e -w researcher
+        run: npm run test:e2e:ci -w researcher
         env:
           HOME: /root
           PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
