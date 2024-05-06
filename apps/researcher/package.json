@@ -21,7 +21,7 @@
     "test:e2e:open": "dotenv -c -- cypress open"
   },
   "dependencies": {
-    "@clerk/localizations": "1.26.13",
+    "@clerk/localizations": "2.3.0",
     "@clerk/nextjs": "4.29.9",
     "@clerk/types": "3.60.0",
     "@colonial-collections/api": "*",
