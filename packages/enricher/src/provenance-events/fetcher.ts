@@ -36,6 +36,7 @@ export class ProvenanceEventEnrichmentFetcher {
       PREFIX np: <http://www.nanopub.org/nschema#>
       PREFIX npa: <http://purl.org/nanopub/admin/>
       PREFIX npx: <http://purl.org/nanopub/x/>
+      PREFIX prov: <http://www.w3.org/ns/prov#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
       CONSTRUCT {
@@ -87,13 +88,14 @@ export class ProvenanceEventEnrichmentFetcher {
         BIND(<${iri}> AS ?source)
 
         graph npa:graph {
-          ?np npa:hasHeadGraph ?head .
-          ?np dcterms:created ?dateCreated .
+          ?np npa:hasHeadGraph ?head ;
+            dcterms:created ?dateCreated .
         }
 
         graph ?head {
-          ?np np:hasProvenance ?provenance .
-          ?np np:hasPublicationInfo ?pubInfo .
+          ?np np:hasProvenance ?provenance ;
+            np:hasPublicationInfo ?pubInfo ;
+            np:hasAssertion ?assertion .
         }
 
         graph ?pubInfo {
@@ -101,13 +103,19 @@ export class ProvenanceEventEnrichmentFetcher {
             npx:introduces ?attributeAssignment ;
             dcterms:creator ?creator ;
             dcterms:license ?license .
+        }
 
-          ?creator rdfs:label ?creatorName .
+        graph ?provenance {
+          ?assertion prov:wasAttributedTo ?creator ;
+            prov:wasGeneratedBy ?assertingActivity .
 
-          OPTIONAL {
-            ?creator dcterms:isPartOf ?group .
-            ?group rdfs:label ?groupName
-          }
+          ?creator rdfs:label ?creatorName ;
+            prov:qualifiedDelegation ?delegation .
+
+          ?delegation prov:agent ?group ;
+            prov:hadActivity ?assertingActivity .
+
+          ?group rdfs:label ?groupName .
         }
 
         OPTIONAL {

@@ -20,12 +20,11 @@ export const basicEnrichmentBeingCreatedSchema = z.object({
     creator: z.object({
       id: z.string().url(),
       name: z.string(),
-      isPartOf: z
-        .object({
-          id: z.string().url(),
-          name: z.string(),
-        })
-        .optional(),
+      // The community the creator speaks on behalf of
+      isPartOf: z.object({
+        id: z.string().url(),
+        name: z.string(),
+      }),
     }),
     license: z.string().url(),
   }),

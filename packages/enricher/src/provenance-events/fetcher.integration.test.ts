@@ -46,6 +46,10 @@ describe('getById - basic enrichments, with only required properties', () => {
         creator: {
           id: 'http://example.com/person1',
           name: 'Person 1',
+          isPartOf: {
+            id: 'http://example.com/group1',
+            name: 'Group 1',
+          },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },
@@ -56,8 +60,12 @@ describe('getById - basic enrichments, with only required properties', () => {
       about: resourceId,
       pubInfo: {
         creator: {
-          id: 'http://example.com/person2',
-          name: 'Person 2',
+          id: 'http://example.com/person1',
+          name: 'Person 1',
+          isPartOf: {
+            id: 'http://example.com/group2',
+            name: 'Group 2',
+          },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },
@@ -80,6 +88,10 @@ describe('getById - basic enrichments, with only required properties', () => {
             creator: {
               id: 'http://example.com/person1',
               name: 'Person 1',
+              isPartOf: {
+                id: 'http://example.com/group1',
+                name: 'Group 1',
+              },
             },
             license: 'https://creativecommons.org/licenses/by/4.0/',
             dateCreated: expect.any(Date),
@@ -91,8 +103,12 @@ describe('getById - basic enrichments, with only required properties', () => {
           about: resourceId,
           pubInfo: {
             creator: {
-              id: 'http://example.com/person2',
-              name: 'Person 2',
+              id: 'http://example.com/person1',
+              name: 'Person 1',
+              isPartOf: {
+                id: 'http://example.com/group2',
+                name: 'Group 2',
+              },
             },
             license: 'https://creativecommons.org/licenses/by/4.0/',
             dateCreated: expect.any(Date),

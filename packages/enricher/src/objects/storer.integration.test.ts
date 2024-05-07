@@ -29,8 +29,8 @@ describe('add', () => {
           id: 'http://example.com/person',
           name: 'Person',
           isPartOf: {
-            id: 'http://example.com/community',
-            name: 'Community',
+            id: 'http://example.com/group',
+            name: 'Group',
           },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',

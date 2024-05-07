@@ -67,30 +67,32 @@ export class HeritageObjectEnrichmentFetcher {
         BIND(<${iri}> AS ?source)
 
         graph npa:graph {
-          ?np npa:hasHeadGraph ?head .
-          ?np dcterms:created ?dateCreated .
+          ?np npa:hasHeadGraph ?head ;
+            dcterms:created ?dateCreated .
         }
 
         graph ?head {
-          ?np np:hasProvenance ?provenance .
-          ?np np:hasPublicationInfo ?pubInfo .
+          ?np np:hasProvenance ?provenance ;
+            np:hasPublicationInfo ?pubInfo ;
+            np:hasAssertion ?assertion .
         }
 
         graph ?pubInfo {
           ?np a cc:Nanopub ;
             npx:introduces ?annotation ;
-            dcterms:creator ?creator ;
             dcterms:license ?license .
-
-          ?creator rdfs:label ?creatorName .
-
-          OPTIONAL {
-            ?creator dcterms:isPartOf ?group .
-            ?group rdfs:label ?groupName
-          }
 
           ?np a ?additionalType
           FILTER(?additionalType != cc:Nanopub)
+        }
+
+        graph ?provenance {
+          ?assertion prov:wasAttributedTo ?creator .
+
+          ?creator rdfs:label ?creatorName ;
+            prov:qualifiedDelegation [ prov:agent ?group ] .
+
+          ?group rdfs:label ?groupName .
         }
 
         graph ?assertion {

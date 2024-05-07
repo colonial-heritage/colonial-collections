@@ -107,39 +107,6 @@ export class HeritageObjectEnrichmentStorer {
       )
     );
 
-    // The server automatically adds 'dcterms:creator'.
-    // A creator can change his or her name later on, but the name at the time of
-    // creation is preserved.
-    const creatorId = DF.namedNode(opts.pubInfo.creator.id);
-
-    publicationStore.addQuad(
-      DF.quad(
-        creatorId,
-        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-        DF.literal(opts.pubInfo.creator.name)
-      )
-    );
-
-    if (opts.pubInfo.creator.isPartOf !== undefined) {
-      const groupId = DF.namedNode(opts.pubInfo.creator.isPartOf.id);
-
-      publicationStore.addQuad(
-        DF.quad(
-          creatorId,
-          DF.namedNode('http://purl.org/dc/terms/isPartOf'),
-          groupId
-        )
-      );
-
-      publicationStore.addQuad(
-        DF.quad(
-          groupId,
-          DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-          DF.literal(opts.pubInfo.creator.isPartOf.name)
-        )
-      );
-    }
-
     assertionStore.addQuad(
       DF.quad(
         enrichmentId,
@@ -238,7 +205,7 @@ export class HeritageObjectEnrichmentStorer {
     const nanopub = await this.nanopubClient.add({
       assertionStore,
       publicationStore,
-      creator: opts.pubInfo.creator.id,
+      creator: opts.pubInfo.creator,
     });
 
     const basicEnrichment: BasicEnrichment = {
