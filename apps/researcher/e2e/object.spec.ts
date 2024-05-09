@@ -35,7 +35,7 @@ test.describe('Object details page not signed in', () => {
       .locator('input[type="checkbox"]')
       .first()
       .check();
-    await page.waitForURL(/.*\/objects\?.+/);
+    await page.waitForURL(/.*types=.+/);
     const url = page.url();
     await page.getByTestId('object-card').first().click();
     await page.waitForURL(/.*\/objects\/.+/);

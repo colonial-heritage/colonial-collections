@@ -47,8 +47,9 @@ test.describe('Object list filters', () => {
       .getByTestId('materialsFilter')
       .locator('input[type="checkbox"]');
     await checkboxes.nth(0).check();
-    await checkboxes.nth(1).check();
     await page.waitForURL(/materials=/);
+    await checkboxes.nth(1).check();
+    await page.waitForURL(/materials=.*&materials=.*/);
 
     await expect(page.getByTestId('selectedFilter')).toHaveCount(3);
   });

@@ -19,7 +19,7 @@ test.describe('Object lists not logged in', () => {
     const listId = await createEmptyList();
 
     await page.goto(`/en/communities${env.TEST_COMMUNITY_SLUG}`);
-    await page.getByTestId('object-list-item').first().click();
+    await page.getByTestId(`object-list-item-${listId}`).click();
     await page.waitForURL(
       `/en/communities${env.TEST_COMMUNITY_SLUG}/${listId}`
     );
@@ -52,7 +52,9 @@ test.describe('Object lists on community page logged in', () => {
     await page.getByTestId('save-button').click();
 
     await expect(page.getByTestId('notification')).toBeVisible();
-    await expect(page.getByTestId('object-list-item')).toHaveCount(1);
+    await expect(
+      page.locator('[data-testid^="object-list-item-"]')
+    ).toHaveCount(1);
   });
 });
 

@@ -15,6 +15,7 @@ const test = base.extend<ExtendedFixtures>({
       await page.waitForSelector('.cl-signIn-root', {state: 'attached'});
       await page.locator('input[name=identifier]').fill(env.TEST_USER_EMAIL!);
       await page.getByRole('button', {name: 'Continue', exact: true}).click();
+      await page.waitForSelector('.cl-signIn-password', {state: 'attached'});
       await page.locator('input[name=password]').fill(env.TEST_USER_PASSWORD!);
       await page.getByRole('button', {name: 'Continue', exact: true}).click();
       await page.waitForSelector('.cl-userButtonAvatarBox', {state: 'visible'});

@@ -17,7 +17,7 @@ test.describe('Dataset list filters', () => {
       .locator('input[type="checkbox"]')
       .first()
       .check();
-    await page.waitForURL('**/*licenses=*');
+    await page.waitForURL(/licenses=/);
     await expect(page.getByTestId('selectedFilter')).toHaveCount(1);
   });
 
@@ -27,8 +27,9 @@ test.describe('Dataset list filters', () => {
       .getByTestId('licensesFilter')
       .locator('input[type="checkbox"]');
     await checkboxes.nth(0).check();
+    await page.waitForURL(/licenses=/);
     await checkboxes.nth(1).check();
-    await page.waitForURL('**/*licenses=*');
+    await page.waitForURL(/licenses=.*&licenses=.*/);
     await expect(page.getByTestId('selectedFilter')).toHaveCount(2);
   });
 
@@ -41,7 +42,7 @@ test.describe('Dataset list filters', () => {
       .locator('input[type="checkbox"]')
       .first()
       .check();
-    await page.waitForURL('**/*licenses=*');
+    await page.waitForURL(/licenses=/);
     await page
       .getByTestId('licensesFilter')
       .locator('input[type="checkbox"]')
@@ -60,7 +61,7 @@ test.describe('Dataset list filters', () => {
       .locator('input[type="checkbox"]')
       .first()
       .check();
-    await page.waitForURL('**/*licenses=*');
+    await page.waitForURL(/licenses=/);
     await page.getByTestId('selectedFilter').locator('button').click();
     await page.waitForURL('**/*');
     await expect(page.getByTestId('selectedFilter')).toHaveCount(0);
@@ -73,7 +74,7 @@ test.describe('Dataset list filters', () => {
       .locator('input[type="checkbox"]')
       .first()
       .check();
-    await page.waitForURL('**/*publishers=*');
+    await page.waitForURL(/publishers=/);
     await expect(page.getByTestId('selectedFilter')).toHaveCount(1);
   });
 
@@ -82,7 +83,7 @@ test.describe('Dataset list filters', () => {
     const searchText = 'dataset';
     await page.getByTestId('searchQuery').fill(searchText);
     await page.locator('button:near([data-testid="searchQuery"])').click();
-    await page.waitForURL('**/*query=*');
+    await page.waitForURL(/query=/);
     await expect(page.getByTestId('selectedFilter')).toHaveCount(1);
     await expect(page.getByTestId('selectedFilter')).toHaveText(searchText);
   });
@@ -94,19 +95,19 @@ test.describe('Dataset list filters', () => {
     const searchText = 'dataset';
     await page.getByTestId('searchQuery').fill(searchText);
     await page.locator('button:near([data-testid="searchQuery"])').click();
-    await page.waitForURL('**/*query=*');
+    await page.waitForURL(/query=/);
     await page
       .getByTestId('publishersFilter')
       .locator('input[type="checkbox"]')
       .first()
       .check();
-    await page.waitForURL('**/*publishers=*');
+    await page.waitForURL(/publishers=/);
     await page
       .getByTestId('licensesFilter')
       .locator('input[type="checkbox"]')
       .first()
       .check();
-    await page.waitForURL('**/*licenses=*');
+    await page.waitForURL(/licenses=/);
     await expect(page.getByTestId('selectedFilter')).toHaveCount(3);
   });
 });
