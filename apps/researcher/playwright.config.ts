@@ -19,8 +19,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL:
-      'https://colonial-collections-researcher-git-e2e-colonial-heritage.vercel.app',
+    baseURL: env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -39,6 +38,11 @@ export default defineConfig({
     {
       name: 'global setup',
       testMatch: /global\.setup\.ts/,
+      teardown: 'cleanup',
+    },
+    {
+      name: 'cleanup',
+      testMatch: /global\.teardown\.ts/,
     },
     {
       name: 'Desktop Chrome',

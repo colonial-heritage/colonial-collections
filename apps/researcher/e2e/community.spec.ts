@@ -1,6 +1,6 @@
 import {expect} from '@playwright/test';
 import test from './lib/app-test';
-import {env} from 'node:process';
+import {projectTestId} from './lib/community';
 
 test.describe('Communities page', () => {
   test('shows a list of communities', async ({page}) => {
@@ -62,9 +62,10 @@ test.describe('Communities page logged in', () => {
 });
 
 test.describe('Community details page logged in', () => {
-  test('edits my community', async ({page, gotoSignedIn}) => {
+  test('edits my community', async ({page, gotoSignedIn}, testInfo) => {
+    const communitySlug = projectTestId(testInfo.project.name);
     const uniqueIdentifier = Date.now();
-    await gotoSignedIn(`/en/communities${env.TEST_COMMUNITY_SLUG}`);
+    await gotoSignedIn(`/en/communities/${communitySlug}`);
     await page.getByTestId('edit-community').click();
     await page.fill(
       '#description',
@@ -75,8 +76,12 @@ test.describe('Community details page logged in', () => {
     await expect(page.locator('main')).toContainText(`${uniqueIdentifier}`);
   });
 
-  test('opens the manage user modal', async ({page, gotoSignedIn}) => {
-    await gotoSignedIn(`/en/communities${env.TEST_COMMUNITY_SLUG}`);
+  test('opens the manage user modal', async ({
+    page,
+    gotoSignedIn,
+  }, testInfo) => {
+    const communitySlug = projectTestId(testInfo.project.name);
+    await gotoSignedIn(`/en/communities/${communitySlug}`);
     await page.getByTestId('manage-members-button').click();
     await expect(page.locator('.cl-headerTitle')).toContainText('Members');
   });
