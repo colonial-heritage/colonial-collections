@@ -1,3 +1,4 @@
+import {creatorSchema} from './definitions';
 import type * as RDF from '@rdfjs/types';
 import {DataFactory} from 'rdf-data-factory';
 import rdfSerializer from 'rdf-serialize';
@@ -27,14 +28,7 @@ export type NanopubClientConstructorOptions = z.infer<
 const addOptionsSchema = z.object({
   assertionStore: z.instanceof(RdfStore<number>),
   publicationStore: z.instanceof(RdfStore<number>),
-  creator: z.object({
-    id: z.string().url(),
-    name: z.string(),
-    isPartOf: z.object({
-      id: z.string().url(),
-      name: z.string(),
-    }),
-  }),
+  creator: creatorSchema,
 });
 
 export type AddOptions = z.infer<typeof addOptionsSchema>;
@@ -148,9 +142,7 @@ export class NanopubClient {
     const assertingActivityNode = DF.namedNode(
       `${nanopubTempIri}asserting-activity`
     );
-    const qualifiedDelegationNode = DF.namedNode(`${nanopubTempIri}delegation`);
     const userNode = DF.namedNode(opts.creator.id);
-    const communityNode = DF.namedNode(opts.creator.isPartOf.id);
 
     primaryStore.addQuad(
       DF.quad(
@@ -184,54 +176,63 @@ export class NanopubClient {
         provenanceGraph
       )
     );
-    primaryStore.addQuad(
-      DF.quad(
-        userNode,
-        DF.namedNode('http://www.w3.org/ns/prov#actedOnBehalfOf'),
-        communityNode,
-        provenanceGraph
-      )
-    );
-    primaryStore.addQuad(
-      DF.quad(
-        userNode,
-        DF.namedNode('http://www.w3.org/ns/prov#qualifiedDelegation'),
-        qualifiedDelegationNode,
-        provenanceGraph
-      )
-    );
-    primaryStore.addQuad(
-      DF.quad(
-        qualifiedDelegationNode,
-        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode('http://www.w3.org/ns/prov#Delegation'),
-        provenanceGraph
-      )
-    );
-    primaryStore.addQuad(
-      DF.quad(
-        qualifiedDelegationNode,
-        DF.namedNode('http://www.w3.org/ns/prov#agent'),
-        communityNode,
-        provenanceGraph
-      )
-    );
-    primaryStore.addQuad(
-      DF.quad(
-        qualifiedDelegationNode,
-        DF.namedNode('http://www.w3.org/ns/prov#hadActivity'),
-        assertingActivityNode,
-        provenanceGraph
-      )
-    );
-    primaryStore.addQuad(
-      DF.quad(
-        communityNode,
-        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
-        DF.literal(opts.creator.isPartOf.name),
-        provenanceGraph
-      )
-    );
+
+    // The group that a creator speaks on behalf of
+    if (opts.creator.isPartOf !== undefined) {
+      const qualifiedDelegationNode = DF.namedNode(
+        `${nanopubTempIri}delegation`
+      );
+      const communityNode = DF.namedNode(opts.creator.isPartOf.id);
+
+      primaryStore.addQuad(
+        DF.quad(
+          userNode,
+          DF.namedNode('http://www.w3.org/ns/prov#actedOnBehalfOf'),
+          communityNode,
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          userNode,
+          DF.namedNode('http://www.w3.org/ns/prov#qualifiedDelegation'),
+          qualifiedDelegationNode,
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          qualifiedDelegationNode,
+          DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+          DF.namedNode('http://www.w3.org/ns/prov#Delegation'),
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          qualifiedDelegationNode,
+          DF.namedNode('http://www.w3.org/ns/prov#agent'),
+          communityNode,
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          qualifiedDelegationNode,
+          DF.namedNode('http://www.w3.org/ns/prov#hadActivity'),
+          assertingActivityNode,
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          communityNode,
+          DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+          DF.literal(opts.creator.isPartOf.name),
+          provenanceGraph
+        )
+      );
+    }
 
     // Assertion graph
     const assertionQuads = assertionStore.getQuads();

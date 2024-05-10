@@ -25,10 +25,6 @@ describe('add event', () => {
         creator: {
           id: 'http://example.com/person',
           name: 'Person',
-          isPartOf: {
-            id: 'http://example.com/group',
-            name: 'Group',
-          },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },
@@ -52,10 +48,6 @@ describe('add event', () => {
         creator: {
           id: 'http://example.com/person',
           name: 'Person',
-          isPartOf: {
-            id: 'http://example.com/group',
-            name: 'Group',
-          },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },
@@ -78,10 +70,6 @@ describe('add acquisition event', () => {
         creator: {
           id: 'http://example.com/person',
           name: 'Person',
-          isPartOf: {
-            id: 'http://example.com/group',
-            name: 'Group',
-          },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },
@@ -156,10 +144,6 @@ describe('add transfer of custody event', () => {
         creator: {
           id: 'http://example.com/person',
           name: 'Person',
-          isPartOf: {
-            id: 'http://example.com/group',
-            name: 'Group',
-          },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },

@@ -106,11 +106,14 @@ export class ProvenanceEventEnrichmentFetcher {
 
         graph ?provenance {
           ?assertion prov:wasAttributedTo ?creator .
+          ?creator rdfs:label ?creatorName .
 
-          ?creator rdfs:label ?creatorName ;
-            prov:qualifiedDelegation [ prov:agent ?group ] .
-
-          ?group rdfs:label ?groupName .
+          OPTIONAL {
+            ?creator prov:qualifiedDelegation [
+              prov:agent ?group
+            ] .
+            ?group rdfs:label ?groupName
+          }
         }
 
         graph ?assertion {

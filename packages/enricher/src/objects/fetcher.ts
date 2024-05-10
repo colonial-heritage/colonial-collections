@@ -88,26 +88,34 @@ export class HeritageObjectEnrichmentFetcher {
 
         graph ?provenance {
           ?assertion prov:wasAttributedTo ?creator .
+          ?creator rdfs:label ?creatorName .
 
-          ?creator rdfs:label ?creatorName ;
-            prov:qualifiedDelegation [ prov:agent ?group ] .
-
-          ?group rdfs:label ?groupName .
+          OPTIONAL {
+            ?creator prov:qualifiedDelegation [
+              prov:agent ?group
+            ] .
+            ?group rdfs:label ?groupName
+          }
         }
 
         graph ?assertion {
           ?annotation a oa:Annotation ;
-            rdfs:comment ?comment ;
-            oa:hasBody ?body ;
-            oa:hasTarget ?target .
-
-          ?body rdf:value ?value .
-          OPTIONAL {
-            ?body dc:language ?language .
-          }
+             oa:hasTarget ?target .
 
           ?target a oa:SpecificResource ;
-            oa:hasSource ?source .
+             oa:hasSource ?source .
+
+          OPTIONAL {
+            ?annotation rdfs:comment ?comment
+          }
+
+          OPTIONAL {
+            ?annotation oa:hasBody ?body .
+            ?body rdf:value ?value .
+            OPTIONAL {
+              ?body dc:language ?language .
+            }
+         }
         }
       }
     `;

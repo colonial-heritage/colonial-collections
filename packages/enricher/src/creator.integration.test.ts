@@ -18,7 +18,25 @@ const creator = new EnrichmentCreator({
 });
 
 describe('addText', () => {
-  it('adds a textual enrichment', async () => {
+  it('adds a basic textual enrichment, with only required properties', async () => {
+    const enrichment = await creator.addText({
+      type: HeritageObjectEnrichmentType.Name,
+      about: 'http://example.org/object',
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+
+  it('adds a full textual enrichment, with all properties', async () => {
     const enrichment = await creator.addText({
       type: HeritageObjectEnrichmentType.Name,
       description: 'A comment about the name of an object',
@@ -45,7 +63,25 @@ describe('addText', () => {
 });
 
 describe('addProvenanceEvent', () => {
-  it('adds a provenance event enrichment', async () => {
+  it('adds a basic provenance event enrichment, with only required properties', async () => {
+    const enrichment = await creator.addProvenanceEvent({
+      type: ProvenanceEventType.Acquisition,
+      about: 'http://example.org/object',
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+
+  it('adds a full provenance event enrichment, with all properties', async () => {
     const enrichment = await creator.addProvenanceEvent({
       type: ProvenanceEventType.Acquisition,
       additionalType: {
