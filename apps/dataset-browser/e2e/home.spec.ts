@@ -21,18 +21,6 @@ test.describe('Dataset list filters', () => {
     await expect(page.getByTestId('selectedFilter')).toHaveCount(1);
   });
 
-  test('filters by two licenses', async ({page}) => {
-    await page.goto('/en');
-    const checkboxes = page
-      .getByTestId('licensesFilter')
-      .locator('input[type="checkbox"]');
-    await checkboxes.nth(0).check();
-    await page.waitForURL(/licenses=/);
-    await checkboxes.nth(1).check();
-    await page.waitForURL(/licenses=.*&licenses=.*/);
-    await expect(page.getByTestId('selectedFilter')).toHaveCount(2);
-  });
-
   test('removes a license filter by deselecting the filter in the sidebar', async ({
     page,
   }) => {

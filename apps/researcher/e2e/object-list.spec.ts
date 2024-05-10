@@ -83,13 +83,13 @@ test.describe('Object list page logged in', () => {
   test('deletes the object list', async ({page, gotoSignedIn}, testInfo) => {
     const communitySlug = projectTestId(testInfo.project.name);
     const listId = await createEmptyList(communitySlug);
-    await gotoSignedIn(`/en/communities${communitySlug}/${listId}`);
+    await gotoSignedIn(`/en/communities/${communitySlug}/${listId}`);
 
     await page.getByTestId('edit-list-button').click();
     await page.getByTestId('delete-list-button').click();
     await page.getByTestId('delete-list-confirm-button').click();
 
-    await expect(page).toHaveURL(`/en/communities${communitySlug}`);
+    await expect(page).toHaveURL(`/en/communities/${communitySlug}`);
 
     await page.goto(`/en/communities/${communitySlug}/${listId}`);
 
