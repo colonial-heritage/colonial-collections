@@ -211,8 +211,8 @@ describe('getById - full enrichments, with all properties', () => {
       about: resourceId,
       pubInfo: {
         creator: {
-          id: 'http://example.com/person2',
-          name: 'Person 2',
+          id: 'http://example.com/person1',
+          name: 'Person 1',
           isPartOf: {
             id: 'http://example.com/group2',
             name: 'Group 2',
@@ -316,8 +316,8 @@ describe('getById - full enrichments, with all properties', () => {
           },
           pubInfo: {
             creator: {
-              id: 'http://example.com/person2',
-              name: 'Person 2',
+              id: 'http://example.com/person1',
+              name: 'Person 1',
               isPartOf: {
                 id: 'http://example.com/group2',
                 name: 'Group 2',

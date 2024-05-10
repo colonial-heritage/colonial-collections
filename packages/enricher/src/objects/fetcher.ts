@@ -54,11 +54,11 @@ export class HeritageObjectEnrichmentFetcher {
           ex:inLanguage ?language ;
           ex:license ?license ;
           ex:creator ?creator ;
+          ex:createdOnBehalfOf ?group ;
           ex:dateCreated ?dateCreated .
 
         ?creator a ex:Actor ;
-          ex:name ?creatorName ;
-          ex:isPartOf ?group .
+          ex:name ?creatorName .
 
         ?group a ex:Actor ;
           ex:name ?groupName .

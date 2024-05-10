@@ -21,6 +21,7 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
 
   const about = getPropertyValue(rawEnrichment, 'ex:about')!;
   const creator = onlyOne(createActors(rawEnrichment, 'ex:creator'))!;
+  const group = onlyOne(createActors(rawEnrichment, 'ex:createdOnBehalfOf'));
   const license = getPropertyValue(rawEnrichment, 'ex:license')!;
   const dateCreated = onlyOne(createDates(rawEnrichment, 'ex:dateCreated'))!;
   const citation = getPropertyValue(rawEnrichment, 'ex:citation');
@@ -40,6 +41,9 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
   );
   const qualifier = onlyOne(createThings<Term>(rawEnrichment, 'ex:qualifier'));
 
+  const creatorWithGroup =
+    group !== undefined ? {...creator, ...{isPartOf: group}} : creator;
+
   const enrichment: ProvenanceEventEnrichment = {
     id,
     type,
@@ -54,7 +58,7 @@ export function toProvenanceEventEnrichment(rawEnrichment: Resource) {
     transferredTo,
     date,
     pubInfo: {
-      creator,
+      creator: creatorWithGroup,
       license,
       dateCreated,
     },

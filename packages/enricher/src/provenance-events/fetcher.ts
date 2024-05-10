@@ -56,6 +56,7 @@ export class ProvenanceEventEnrichmentFetcher {
           ex:about ?source ;
           ex:license ?license ;
           ex:creator ?creator ;
+          ex:createdOnBehalfOf ?group ;
           ex:dateCreated ?dateCreated .
 
         ?additionalType a ex:DefinedTerm ;
@@ -78,8 +79,7 @@ export class ProvenanceEventEnrichmentFetcher {
           ex:name ?qualifierName .
 
         ?creator a ex:Actor ;
-          ex:name ?creatorName ;
-          ex:isPartOf ?group .
+          ex:name ?creatorName .
 
         ?group a ex:Actor ;
           ex:name ?groupName .
@@ -101,31 +101,26 @@ export class ProvenanceEventEnrichmentFetcher {
         graph ?pubInfo {
           ?np a cc:Nanopub ;
             npx:introduces ?attributeAssignment ;
-            dcterms:creator ?creator ;
             dcterms:license ?license .
         }
 
         graph ?provenance {
-          ?assertion prov:wasAttributedTo ?creator ;
-            prov:wasGeneratedBy ?assertingActivity .
+          ?assertion prov:wasAttributedTo ?creator .
 
           ?creator rdfs:label ?creatorName ;
-            prov:qualifiedDelegation ?delegation .
-
-          ?delegation prov:agent ?group ;
-            prov:hadActivity ?assertingActivity .
+            prov:qualifiedDelegation [ prov:agent ?group ] .
 
           ?group rdfs:label ?groupName .
         }
 
-        OPTIONAL {
-          ?attributeAssignment crm:P2_has_type ?qualifier .
-          ?qualifier rdfs:label ?qualifierName .
-        }
-
-        ?attributeAssignment crm:P141_assigned ?provenanceEvent .
-
         graph ?assertion {
+          ?attributeAssignment crm:P141_assigned ?provenanceEvent .
+
+          OPTIONAL {
+            ?attributeAssignment crm:P2_has_type ?qualifier .
+            ?qualifier rdfs:label ?qualifierName .
+          }
+
           {
             ?provenanceEvent a crm:E8_Acquisition ;
               crm:P24_transferred_title_of ?source .
