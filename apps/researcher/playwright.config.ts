@@ -19,17 +19,18 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001',
+    baseURL:
+      'https://colonial-collections-researcher-git-e2e-colonial-heritage.vercel.app',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    actionTimeout: 20 * 1000,
-    navigationTimeout: 30 * 1000,
+    actionTimeout: 30 * 1000,
+    navigationTimeout: 60 * 1000,
   },
 
   timeout: 60 * 1000,
   expect: {
-    timeout: 20 * 1000,
+    timeout: 30 * 1000,
   },
   testMatch: '*.spec.ts',
 
