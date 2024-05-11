@@ -22,6 +22,8 @@ const test = base.extend<ExtendedFixtures>({
           .fill(projectTestEmail(testInfo.project.name));
         await page.getByRole('button', {name: 'Continue', exact: true}).click();
         await page.waitForSelector('.cl-signIn-password', {state: 'attached'});
+      }).toPass({timeout: 50000});
+      await expect(async () => {
         await page
           .locator('input[name=password]')
           .fill(env.TEST_USER_PASSWORD!);
@@ -30,7 +32,7 @@ const test = base.extend<ExtendedFixtures>({
           state: 'visible',
           timeout: 50000,
         });
-      }).toPass();
+      }).toPass({timeout: 50000});
 
       await page.goto(url);
       await page.waitForSelector('.cl-userButtonAvatarBox', {

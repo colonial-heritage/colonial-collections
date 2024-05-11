@@ -18,20 +18,16 @@ Beware: the integration tests are not run in CI. The application does not have i
 
 ## End-to-end testing
 
-For end-to-end testing we use [Cypress](https://www.cypress.io/). You can run the tests with the following command:
+For end-to-end testing we use [Playwright](https://playwright.dev/). You can run the tests with the following command:
 
-    npm run cypress
+    npm run test:e2e
 
-### Writing Cypress tests
+For writing and debugging tests, you can use [UI mode](https://playwright.dev/docs/test-ui-mode) with the command:
 
-[As recommended in the Cypress documentation](https://docs.cypress.io/guides/references/best-practices#Selecting-Elements), we use the attribute **data-testid** to make it easier to target elements.
+    npm run test:e2e:open
 
-Select this attribute with the custom selector `getBySel`, for example:
+### Writing end-t0-end tests
 
-```javascript
-it('shows an error message', () => {
-  cy.getBySel('error-message').should('exist');
-});
-```
+We use the attribute **data-testid** to make it easier to target elements.
 
 If you need to forward the data-testid to a component, use the component attribute `testId`. See the [badge component](https://github.com/colonial-heritage/dataset-browser/blob/main/src/components/badge.tsx) for an example.
