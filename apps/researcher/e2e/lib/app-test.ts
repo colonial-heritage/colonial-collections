@@ -70,21 +70,33 @@ const test = base.extend<ExtendedFixtures, ExtendedWorkerFixture>({
     await use(async (url: string) => {
       await setupClerkTestingToken({page});
 
-      await expect(async () => {
-        await page.goto('/sign-in');
-        await page.waitForSelector('.cl-signIn-root', {state: 'attached'});
-        await page.locator('input[name=identifier]').fill(emailAddress);
-        await page.getByRole('button', {name: 'Continue', exact: true}).click();
-        await page.waitForSelector('.cl-signIn-password', {state: 'attached'});
-      }).toPass({timeout: 50000});
-      await expect(async () => {
-        await page.locator('input[name=password]').fill(password);
-        await page.getByRole('button', {name: 'Continue', exact: true}).click();
-        await page.waitForSelector('.cl-userButtonAvatarBox', {
-          state: 'visible',
-          timeout: 50000,
-        });
-      }).toPass({timeout: 50000});
+      await expect
+        .poll(
+          async () => {
+            await page.goto('/sign-in');
+            await page.waitForSelector('.cl-signIn-root', {state: 'attached'});
+            await page.locator('input[name=identifier]').fill(emailAddress);
+            await page
+              .getByRole('button', {name: 'Continue', exact: true})
+              .click();
+            await page.waitForSelector('.cl-signIn-password', {
+              state: 'attached',
+            });
+            return await page.locator('input[name=password]').isEnabled();
+          },
+          {
+            intervals: [5000],
+            timeout: 21000,
+          }
+        )
+        .toBe(true);
+
+      await page.locator('input[name=password]').fill(password);
+      await page.getByRole('button', {name: 'Continue', exact: true}).click();
+      await page.waitForSelector('.cl-userButtonAvatarBox', {
+        state: 'visible',
+        timeout: 50000,
+      });
 
       await page.goto(url);
       await page.waitForSelector('.cl-userButtonAvatarBox', {
