@@ -33,8 +33,6 @@ jobs:
       env:
         HOME: /root
         PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
-        TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
-        TEST_COMMUNITY_ID: ${{secrets.TEST_COMMUNITY_ID}}
         DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}
         SPARQL_ENDPOINT_URL: ${{secrets.SPARQL_ENDPOINT_URL}}
         SEARCH_ENDPOINT_URL: ${{secrets.SEARCH_ENDPOINT_URL}}

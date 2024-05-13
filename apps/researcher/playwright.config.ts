@@ -38,11 +38,6 @@ export default defineConfig({
     {
       name: 'global setup',
       testMatch: /global\.setup\.ts/,
-      teardown: 'cleanup',
-    },
-    {
-      name: 'cleanup',
-      testMatch: /global\.teardown\.ts/,
     },
     {
       name: 'Desktop Chrome',

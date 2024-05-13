@@ -1,7 +1,7 @@
 import {objectList} from '@colonial-collections/database';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
-import {getTestCommunity, getTestUser} from './community';
+// Import {getTestCommunity, getTestUser} from './community';
 
 export async function getObjects(numberOfObject: number) {
   const response = await heritageObjects.search({
@@ -12,22 +12,18 @@ export async function getObjects(numberOfObject: number) {
   return response.heritageObjects;
 }
 
-export async function resetDb(communitySlug: string) {
-  const community = await getTestCommunity(communitySlug);
-  const lists = await objectList.getByCommunityId(community.id);
+export async function resetDb(communityId: string) {
+  const lists = await objectList.getByCommunityId(communityId);
 
   return Promise.all(lists.map(list => objectList.deleteList(list.id)));
 }
 
-export async function createEmptyList(communitySlug: string) {
-  const community = await getTestCommunity(communitySlug);
-  const testUser = await getTestUser(community.id);
-
+export async function createEmptyList(communityId: string, userId: string) {
   // Create one test list
   const objectListInsert = await objectList.create({
-    communityId: community.id,
+    communityId: communityId,
     name: 'Test List 1',
-    createdBy: testUser.id,
+    createdBy: userId,
     description:
       'This list is used for end-to-end testing; please do not remove or use this list',
   });
@@ -38,16 +34,14 @@ export async function createEmptyList(communitySlug: string) {
 interface AddObjectsToListProps {
   numberOfObject: number;
   listId: number;
-  communitySlug: string;
+  userId: string;
 }
 
 export async function addObjectsToList({
   numberOfObject,
   listId,
-  communitySlug,
+  userId,
 }: AddObjectsToListProps) {
-  const community = await getTestCommunity(communitySlug);
-  const testUser = await getTestUser(community.id);
   const objects = await getObjects(numberOfObject);
 
   await Promise.all(
@@ -55,7 +49,7 @@ export async function addObjectsToList({
       objectList.addObject({
         objectListId: listId,
         objectIri: object.id,
-        createdBy: testUser.id,
+        createdBy: userId,
       })
     )
   );
