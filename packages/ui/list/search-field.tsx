@@ -21,6 +21,12 @@ export function SearchField({
   const queryChange = useListStore(s => s.queryChange);
   const [inputText, setInputText] = useState(query);
   const t = useTranslations('Filters');
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Wait for hydration to complete before enabling the input
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const inputClassName = classNames(
     'w-full rounded-l text-consortiumBlue-800',
@@ -52,6 +58,7 @@ export function SearchField({
 
   const search = () => {
     queryChange(inputText);
+    console.log(inputText);
     if (onSearch) {
       onSearch(inputText);
     }
@@ -77,8 +84,10 @@ export function SearchField({
           aria-label={t('accessibilityTypeToFilter')}
           placeholder={placeholder}
           onKeyUp={handleKeyPress}
+          disabled={!isMounted}
         />
         <button
+          disabled={!isMounted}
           className={buttonClassName}
           aria-label={t('accessibilityTypeToFilter')}
           onClick={search}
