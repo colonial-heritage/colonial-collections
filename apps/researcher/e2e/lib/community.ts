@@ -63,7 +63,7 @@ export async function deleteCommunityWithData(communityId: string) {
     });
   await Promise.all(
     memberships.map(m => {
-      if (m.publicUserData?.firstName === 'TestUser') {
+      if (m.publicUserData?.firstName === 'End-to-end') {
         clerkClient.users.deleteUser(m.publicUserData!.userId);
       }
     })

@@ -1,7 +1,6 @@
 import {objectList} from '@colonial-collections/database';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
-// Import {getTestCommunity, getTestUser} from './community';
 
 export async function getObjects(numberOfObject: number) {
   const response = await heritageObjects.search({

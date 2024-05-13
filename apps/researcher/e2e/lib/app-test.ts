@@ -1,6 +1,5 @@
 import {setupClerkTestingToken} from '@clerk/testing/playwright';
 import {test as base, expect} from '@playwright/test';
-import {env} from 'node:process';
 import {
   createCommunity,
   createUser,
@@ -29,9 +28,9 @@ const test = base.extend<ExtendedFixtures, ExtendedWorkerFixture>({
     // eslint-disable-next-line no-empty-pattern
     async ({}, use) => {
       // Create a unique user for each worker
-      const workerIdentifier = `test-${test.info().workerIndex}-${
-        env.GITHUB_RUN_NUMBER ?? 'local'
-      }`;
+      const workerIdentifier = `test-${
+        test.info().workerIndex
+      }-${new Date().getTime()}`;
 
       const firstName = 'End-to-end';
       const lastName = `Test ${workerIdentifier}`;
