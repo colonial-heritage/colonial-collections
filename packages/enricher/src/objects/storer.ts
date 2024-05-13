@@ -167,7 +167,7 @@ export class HeritageObjectEnrichmentStorer {
     if (opts.citation !== undefined) {
       assertionStore.addQuad(
         DF.quad(
-          enrichmentId,
+          bodyId,
           DF.namedNode('http://www.w3.org/2000/01/rdf-schema#comment'),
           DF.literal(opts.citation, languageCode)
         )
