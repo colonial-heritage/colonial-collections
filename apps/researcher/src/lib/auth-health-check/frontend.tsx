@@ -1,6 +1,6 @@
 'use client';
 
-import {useUser} from '@clerk/nextjs';
+import {useUser} from '@/lib/user/hooks';
 import {logFailedAuthHealthCheck} from './backend';
 import {useEffect, useRef} from 'react';
 

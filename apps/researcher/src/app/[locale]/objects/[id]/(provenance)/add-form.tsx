@@ -17,8 +17,7 @@ import {
 } from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
-import {useUser} from '@clerk/nextjs';
-import {addAttributionId} from '@/lib/user/actions';
+import {useUser} from '@/lib/user/hooks';
 import edtf from 'edtf';
 import {
   ButtonGroup,
@@ -28,7 +27,6 @@ import {
   SearchSelector,
   LanguageSelector,
   Textarea,
-  Input,
   EdtfInput,
   Select,
   FieldValidationMessage,
@@ -44,7 +42,6 @@ import {addProvenanceEnrichment} from './actions';
 import {UserTypeOption, typeMapping} from '@/lib/provenance-options';
 
 interface FormValues {
-  attributionId: string;
   citation: string;
   inLanguage?: string;
   transferredFrom: {id: string; name: string};
@@ -81,10 +78,6 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
   const locale = useLocale();
   const {user} = useUser();
 
-  const attributionIds = useMemo(
-    () => user?.publicMetadata?.attributionIds as string[] | undefined,
-    [user?.publicMetadata?.attributionIds]
-  );
   const {addNotification} = useNotifications();
   const {setIsVisible} = useSlideOut();
 
@@ -96,7 +89,6 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
       .trim()
       .min(1, {message: t('citationRequired')}),
     inLanguage: z.string().optional(),
-    attributionId: z.string().url({message: t('invalidAttributionId')}),
     agreedToLicense: z.literal<boolean>(true, {
       errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
     }),
@@ -163,10 +155,6 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
   const methods = useForm({
     resolver: zodResolver(provenanceEnricherSchema),
     defaultValues: {
-      attributionId:
-        attributionIds && attributionIds.length > 0
-          ? attributionIds[attributionIds.length - 1]
-          : '',
       citation: '',
       inLanguage: locale,
       agreedToLicense: false,
@@ -211,13 +199,8 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
         objectId,
         user: {
           name: user!.fullName!,
-          id: provenanceEnrichment.attributionId,
+          id: user!.iri,
         },
-      });
-
-      await addAttributionId({
-        userId: user!.id,
-        attributionId: provenanceEnrichment.attributionId,
       });
 
       addNotification({
@@ -416,13 +399,6 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                   <FieldValidationMessage field="citation" />
                 </FormColumn>
                 <FormColumn>
-                  <InputLabel
-                    title={t('attributionId')}
-                    description={t('attributionIdDescription')}
-                    required
-                  />
-                  <Input name="attributionId" />
-                  <FieldValidationMessage field="attributionId" />
                   <div className="mt-4">
                     <CheckboxWithLabel
                       name="agreedToLicense"

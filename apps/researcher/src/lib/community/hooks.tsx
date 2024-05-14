@@ -1,6 +1,4 @@
-import {useClerk, useUser} from '@clerk/nextjs';
-import {organizationToCommunity} from './clerk-converters';
-import {useMemo} from 'react';
+import {useClerk} from '@clerk/nextjs';
 import {encodeRouteSegment} from '../clerk-route-segment-transformer';
 
 interface UseCommunityProfile {
@@ -39,22 +37,6 @@ export function useCommunityProfile({
   }
 
   return {openProfile};
-}
-
-export function useUserCommunities() {
-  const {user, isLoaded} = useUser();
-
-  const communities = useMemo(() => {
-    if (!user || !user.organizationMemberships.length) {
-      return [];
-    }
-
-    return user.organizationMemberships.map(membership =>
-      organizationToCommunity(membership.organization)
-    );
-  }, [user]);
-
-  return {communities, isLoaded};
 }
 
 export function useCreateCommunity() {

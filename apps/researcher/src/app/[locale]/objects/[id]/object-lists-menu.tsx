@@ -5,7 +5,7 @@ import {Fragment, useState, useEffect, useRef, useTransition} from 'react';
 import {Transition, Popover} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/20/solid';
 import {CheckIcon} from '@heroicons/react/24/outline';
-import {useUser} from '@clerk/nextjs';
+import {useUser} from '@/lib/user/hooks';
 import {
   getCommunityLists,
   addObjectToList,
@@ -13,7 +13,6 @@ import {
 } from './actions';
 import {ObjectList} from '@colonial-collections/database';
 import {useNotifications} from '@colonial-collections/ui';
-import {useUserCommunities} from '@/lib/community/hooks';
 import {Link} from '@/navigation';
 import {Modal, useModal} from '@colonial-collections/ui/modal';
 import ObjectListForm from '@/components/object-list-form/form';
@@ -159,14 +158,14 @@ function SignedInMenu({objectId, setSelectedCommunityId}: SignedInMenuProps) {
 
   return (
     <>
-      {user!.organizationMemberships.map(membership => (
+      {user!.communityMemberships.map(membership => (
         <div key={membership.id}>
           <div className="px-3 py-1 no-underline">
-            {membership.organization!.name}
+            {membership.community!.name}
           </div>
           <CommunityMenuItems
             userId={user!.id}
-            communityId={membership.organization!.id}
+            communityId={membership.community!.id}
             objectId={objectId}
             setSelectedCommunityId={setSelectedCommunityId}
             canAddList={membership.permissions.includes(
@@ -185,15 +184,16 @@ interface AddListModalProps {
 
 function AddListModal({selectedCommunityId}: AddListModalProps) {
   const t = useTranslations('ObjectDetails');
-  const {communities} = useUserCommunities();
+  const {user} = useUser();
   const {hide} = useModal();
 
   return (
     <Modal variant="medium" id="add-list-modal">
       <h2 className="font-semibold text-xl">
         {t('createObjectListTitle', {
-          communityName: communities.find(c => c.id === selectedCommunityId)
-            ?.name,
+          communityName: user?.communityMemberships.find(
+            membership => membership.community.id === selectedCommunityId
+          )?.community.name,
         })}
       </h2>
       <div className="mt-4 w-full lg:w-2/3">
@@ -276,7 +276,7 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              {!user || user.organizationMemberships.length === 0 ? (
+              {!user || user.communityMemberships.length === 0 ? (
                 <Popover.Panel
                   data-testid="add-to-list-not-signed-in-panel"
                   className="whitespace-pre-wrap block w-[250px] bg-consortiumGreen-300 text-consortiumBlue-800 drop-shadow-lg absolute top-9 -left-12 rounded-lg gap-2 border-t border-consortiumBlue-800 p-3 text-sm"
