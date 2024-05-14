@@ -125,7 +125,6 @@ describe('Object details page logged in', () => {
           uniqueIdentifier
       );
       cy.get('textarea[name="citation"]').type('End to end test');
-      cy.get('input[name="attributionId"]').type('http://orcid.id/testId');
       cy.get('input[name="agreedToLicense"]').check();
       cy.get('button[type="submit"]').click();
     });

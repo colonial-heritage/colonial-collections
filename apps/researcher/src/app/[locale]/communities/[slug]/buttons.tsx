@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 import {useTranslations} from 'next-intl';
-import {useUser} from '@clerk/nextjs';
+import {useUser} from '@/lib/user/hooks';
 import {useTransition} from 'react';
 import {joinCommunityAndRevalidate} from './actions';
 import {useCommunityProfile} from '@/lib/community/hooks';
@@ -22,8 +22,8 @@ export function JoinCommunityButton({communityId, communitySlug}: Props) {
 
   const userIsMember =
     !!user &&
-    user.organizationMemberships.some(
-      membership => membership.organization.id === communityId
+    user.communityMemberships.some(
+      membership => membership.community.id === communityId
     );
 
   const showJoinButton = isLoaded && isSignedIn && !userIsMember;
