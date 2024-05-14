@@ -3,8 +3,19 @@ import {EnrichmentCreator} from '../creator';
 import {ProvenanceEventType} from './definitions';
 import {ProvenanceEventEnrichmentFetcher} from './fetcher';
 import {beforeAll, describe, expect, it} from '@jest/globals';
+import {randomUUID} from 'node:crypto';
 import {env} from 'node:process';
 import {setTimeout} from 'node:timers/promises';
+
+const nanopubClient = new NanopubClient({
+  endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
+  proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
+});
+
+const creator = new EnrichmentCreator({
+  knowledgeGraphEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
+  nanopubClient,
+});
 
 const fetcher = new ProvenanceEventEnrichmentFetcher({
   endpointUrl: env.NANOPUB_SPARQL_ENDPOINT_URL as string,
@@ -25,20 +36,10 @@ describe('getById', () => {
 });
 
 describe('getById - basic enrichments, with only required properties', () => {
-  const resourceId = `http://example.org/${Date.now()}`;
+  const resourceId = `http://example.org/${randomUUID()}`;
 
   // Create some enrichments
   beforeAll(async () => {
-    const nanopubClient = new NanopubClient({
-      endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
-      proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
-    });
-
-    const creator = new EnrichmentCreator({
-      knowledgeGraphEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
-      nanopubClient,
-    });
-
     await creator.addProvenanceEvent({
       type: ProvenanceEventType.Acquisition,
       about: resourceId,
@@ -56,8 +57,8 @@ describe('getById - basic enrichments, with only required properties', () => {
       about: resourceId,
       pubInfo: {
         creator: {
-          id: 'http://example.com/person2',
-          name: 'Person 2',
+          id: 'http://example.com/person1',
+          name: 'Person 1',
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
       },
@@ -91,8 +92,8 @@ describe('getById - basic enrichments, with only required properties', () => {
           about: resourceId,
           pubInfo: {
             creator: {
-              id: 'http://example.com/person2',
-              name: 'Person 2',
+              id: 'http://example.com/person1',
+              name: 'Person 1',
             },
             license: 'https://creativecommons.org/licenses/by/4.0/',
             dateCreated: expect.any(Date),
@@ -104,20 +105,10 @@ describe('getById - basic enrichments, with only required properties', () => {
 });
 
 describe('getById - full enrichments, with all properties', () => {
-  const resourceId = `http://example.org/${Date.now()}`;
+  const resourceId = `http://example.org/${randomUUID()}`;
 
   // Create some enrichments
   beforeAll(async () => {
-    const nanopubClient = new NanopubClient({
-      endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
-      proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
-    });
-
-    const creator = new EnrichmentCreator({
-      knowledgeGraphEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
-      nanopubClient,
-    });
-
     await creator.addProvenanceEvent({
       type: ProvenanceEventType.Acquisition,
       additionalType: {
@@ -195,8 +186,8 @@ describe('getById - full enrichments, with all properties', () => {
       about: resourceId,
       pubInfo: {
         creator: {
-          id: 'http://example.com/person2',
-          name: 'Person 2',
+          id: 'http://example.com/person1',
+          name: 'Person 1',
           isPartOf: {
             id: 'http://example.com/group2',
             name: 'Group 2',
@@ -300,8 +291,8 @@ describe('getById - full enrichments, with all properties', () => {
           },
           pubInfo: {
             creator: {
-              id: 'http://example.com/person2',
-              name: 'Person 2',
+              id: 'http://example.com/person1',
+              name: 'Person 1',
               isPartOf: {
                 id: 'http://example.com/group2',
                 name: 'Group 2',

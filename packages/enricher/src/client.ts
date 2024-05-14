@@ -1,3 +1,4 @@
+import {creatorSchema} from './definitions';
 import type * as RDF from '@rdfjs/types';
 import {DataFactory} from 'rdf-data-factory';
 import rdfSerializer from 'rdf-serialize';
@@ -7,13 +8,13 @@ import {z} from 'zod';
 
 const DF = new DataFactory();
 
-export const nanopubIri = 'http://purl.org/nanopub/temp/temp-nanopub-id/';
-export const nanopubId = DF.namedNode(nanopubIri);
+export const nanopubTempIri = 'http://purl.org/nanopub/temp/temp-nanopub-id/';
+export const nanopubId = DF.namedNode(nanopubTempIri);
 
-const headGraph = DF.namedNode(`${nanopubIri}Head`);
-const publicationGraph = DF.namedNode(`${nanopubIri}pubinfo`);
-const assertionGraph = DF.namedNode(`${nanopubIri}assertion`);
-const provenanceGraph = DF.namedNode(`${nanopubIri}provenance`);
+const headGraph = DF.namedNode(`${nanopubTempIri}Head`);
+const publicationGraph = DF.namedNode(`${nanopubTempIri}pubinfo`);
+const assertionGraph = DF.namedNode(`${nanopubTempIri}assertion`);
+const provenanceGraph = DF.namedNode(`${nanopubTempIri}provenance`);
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
@@ -27,7 +28,7 @@ export type NanopubClientConstructorOptions = z.infer<
 const addOptionsSchema = z.object({
   assertionStore: z.instanceof(RdfStore<number>),
   publicationStore: z.instanceof(RdfStore<number>),
-  creator: z.string().url(),
+  creator: creatorSchema,
 });
 
 export type AddOptions = z.infer<typeof addOptionsSchema>;
@@ -138,14 +139,100 @@ export class NanopubClient {
     );
 
     // Provenance graph
+    const assertingActivityNode = DF.namedNode(
+      `${nanopubTempIri}asserting-activity`
+    );
+    const userNode = DF.namedNode(opts.creator.id);
+
+    primaryStore.addQuad(
+      DF.quad(
+        assertingActivityNode,
+        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        DF.namedNode('http://www.w3.org/ns/prov#Activity'),
+        provenanceGraph
+      )
+    );
+    primaryStore.addQuad(
+      DF.quad(
+        assertionGraph,
+        DF.namedNode('http://www.w3.org/ns/prov#wasGeneratedBy'),
+        assertingActivityNode,
+        provenanceGraph
+      )
+    );
     primaryStore.addQuad(
       DF.quad(
         assertionGraph,
         DF.namedNode('http://www.w3.org/ns/prov#wasAttributedTo'),
-        DF.namedNode(opts.creator),
+        userNode,
         provenanceGraph
       )
     );
+    primaryStore.addQuad(
+      DF.quad(
+        userNode,
+        DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+        DF.literal(opts.creator.name),
+        provenanceGraph
+      )
+    );
+
+    // The group that a creator speaks on behalf of
+    if (opts.creator.isPartOf !== undefined) {
+      const qualifiedDelegationNode = DF.namedNode(
+        `${nanopubTempIri}delegation`
+      );
+      const communityNode = DF.namedNode(opts.creator.isPartOf.id);
+
+      primaryStore.addQuad(
+        DF.quad(
+          userNode,
+          DF.namedNode('http://www.w3.org/ns/prov#actedOnBehalfOf'),
+          communityNode,
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          userNode,
+          DF.namedNode('http://www.w3.org/ns/prov#qualifiedDelegation'),
+          qualifiedDelegationNode,
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          qualifiedDelegationNode,
+          DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+          DF.namedNode('http://www.w3.org/ns/prov#Delegation'),
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          qualifiedDelegationNode,
+          DF.namedNode('http://www.w3.org/ns/prov#agent'),
+          communityNode,
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          qualifiedDelegationNode,
+          DF.namedNode('http://www.w3.org/ns/prov#hadActivity'),
+          assertingActivityNode,
+          provenanceGraph
+        )
+      );
+      primaryStore.addQuad(
+        DF.quad(
+          communityNode,
+          DF.namedNode('http://www.w3.org/2000/01/rdf-schema#label'),
+          DF.literal(opts.creator.isPartOf.name),
+          provenanceGraph
+        )
+      );
+    }
 
     // Assertion graph
     const assertionQuads = assertionStore.getQuads();
@@ -164,7 +251,7 @@ export class NanopubClient {
     });
 
     const nanopubIri = await this.save({
-      creator: opts.creator,
+      creator: opts.creator.id,
       store: primaryStore,
     });
 

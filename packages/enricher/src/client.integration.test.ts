@@ -34,7 +34,14 @@ describe('add', () => {
     const nanopub = await nanopubClient.add({
       assertionStore,
       publicationStore,
-      creator: 'http://example.com/person',
+      creator: {
+        id: 'http://example.com/person',
+        name: 'Name of person',
+        isPartOf: {
+          id: 'http://example.com/community',
+          name: 'Name of community',
+        },
+      },
     });
 
     expect(nanopub).toEqual({

@@ -7,6 +7,18 @@ export const ontologyUrl =
 // We currently have just one version of our ontology
 export const ontologyVersionIdentifier = 'Version1';
 
+export const creatorSchema = z.object({
+  id: z.string().url(),
+  name: z.string(),
+  // The group the creator speaks on behalf of
+  isPartOf: z
+    .object({
+      id: z.string().url(),
+      name: z.string(),
+    })
+    .optional(),
+});
+
 export type BasicEnrichment = {
   id: string;
 };
@@ -17,16 +29,7 @@ export const basicEnrichmentBeingCreatedSchema = z.object({
   inLanguage: z.string().optional(), // E.g. 'en', 'nl-nl'
   about: z.string().url(),
   pubInfo: z.object({
-    creator: z.object({
-      id: z.string().url(),
-      name: z.string(),
-      isPartOf: z
-        .object({
-          id: z.string().url(),
-          name: z.string(),
-        })
-        .optional(),
-    }),
+    creator: creatorSchema,
     license: z.string().url(),
   }),
 });

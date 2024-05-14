@@ -13,11 +13,15 @@ export function toHeritageObjectEnrichment(rawEnrichment: Resource) {
   const additionalType = getPropertyValue(rawEnrichment, 'ex:additionalType');
   const about = getPropertyValue(rawEnrichment, 'ex:isPartOf')!;
   const creator = onlyOne(createActors(rawEnrichment, 'ex:creator'))!;
+  const group = onlyOne(createActors(rawEnrichment, 'ex:createdOnBehalfOf'));
   const license = getPropertyValue(rawEnrichment, 'ex:license')!;
   const dateCreated = onlyOne(createDates(rawEnrichment, 'ex:dateCreated'))!;
   const citation = getPropertyValue(rawEnrichment, 'ex:citation');
   const description = getPropertyValue(rawEnrichment, 'ex:description');
   const inLanguage = getPropertyValue(rawEnrichment, 'ex:inLanguage');
+
+  const creatorWithGroup =
+    group !== undefined ? {...creator, ...{isPartOf: group}} : creator;
 
   const enrichment: HeritageObjectEnrichment = {
     id: rawEnrichment.value,
@@ -27,7 +31,7 @@ export function toHeritageObjectEnrichment(rawEnrichment: Resource) {
     description,
     inLanguage,
     pubInfo: {
-      creator,
+      creator: creatorWithGroup,
       license,
       dateCreated,
     },

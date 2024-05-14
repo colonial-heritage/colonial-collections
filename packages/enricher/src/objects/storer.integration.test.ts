@@ -12,7 +12,30 @@ const nanopubClient = new NanopubClient({
 const storer = new HeritageObjectEnrichmentStorer({nanopubClient});
 
 describe('add', () => {
-  it('adds a textual enrichment', async () => {
+  it('adds a basic textual enrichment, with only required properties', async () => {
+    const enrichment = await storer.addText({
+      type: HeritageObjectEnrichmentType.Name,
+      about: {
+        id: 'http://example.org/object#name',
+        isPartOf: {
+          id: 'http://example.org/object',
+        },
+      },
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+
+  it('adds a full textual enrichment, with all properties', async () => {
     const enrichment = await storer.addText({
       type: HeritageObjectEnrichmentType.Name,
       description: 'A comment about the name of an object',
@@ -29,8 +52,8 @@ describe('add', () => {
           id: 'http://example.com/person',
           name: 'Person',
           isPartOf: {
-            id: 'http://example.com/community',
-            name: 'Community',
+            id: 'http://example.com/group',
+            name: 'Group',
           },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',

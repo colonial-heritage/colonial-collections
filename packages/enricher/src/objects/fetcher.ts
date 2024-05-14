@@ -54,11 +54,11 @@ export class HeritageObjectEnrichmentFetcher {
           ex:inLanguage ?language ;
           ex:license ?license ;
           ex:creator ?creator ;
+          ex:createdOnBehalfOf ?group ;
           ex:dateCreated ?dateCreated .
 
         ?creator a ex:Actor ;
-          ex:name ?creatorName ;
-          ex:isPartOf ?group .
+          ex:name ?creatorName .
 
         ?group a ex:Actor ;
           ex:name ?groupName .
@@ -67,45 +67,55 @@ export class HeritageObjectEnrichmentFetcher {
         BIND(<${iri}> AS ?source)
 
         graph npa:graph {
-          ?np npa:hasHeadGraph ?head .
-          ?np dcterms:created ?dateCreated .
+          ?np npa:hasHeadGraph ?head ;
+            dcterms:created ?dateCreated .
         }
 
         graph ?head {
-          ?np np:hasProvenance ?provenance .
-          ?np np:hasPublicationInfo ?pubInfo .
+          ?np np:hasProvenance ?provenance ;
+            np:hasPublicationInfo ?pubInfo ;
+            np:hasAssertion ?assertion .
         }
 
         graph ?pubInfo {
           ?np a cc:Nanopub ;
             npx:introduces ?annotation ;
-            dcterms:creator ?creator ;
             dcterms:license ?license .
-
-          ?creator rdfs:label ?creatorName .
-
-          OPTIONAL {
-            ?creator dcterms:isPartOf ?group .
-            ?group rdfs:label ?groupName
-          }
 
           ?np a ?additionalType
           FILTER(?additionalType != cc:Nanopub)
         }
 
+        graph ?provenance {
+          ?assertion prov:wasAttributedTo ?creator .
+          ?creator rdfs:label ?creatorName .
+
+          OPTIONAL {
+            ?creator prov:qualifiedDelegation [
+              prov:agent ?group
+            ] .
+            ?group rdfs:label ?groupName
+          }
+        }
+
         graph ?assertion {
           ?annotation a oa:Annotation ;
-            rdfs:comment ?comment ;
-            oa:hasBody ?body ;
-            oa:hasTarget ?target .
-
-          ?body rdf:value ?value .
-          OPTIONAL {
-            ?body dc:language ?language .
-          }
+             oa:hasTarget ?target .
 
           ?target a oa:SpecificResource ;
-            oa:hasSource ?source .
+             oa:hasSource ?source .
+
+          OPTIONAL {
+            ?annotation rdfs:comment ?comment
+          }
+
+          OPTIONAL {
+            ?annotation oa:hasBody ?body .
+            ?body rdf:value ?value .
+            OPTIONAL {
+              ?body dc:language ?language .
+            }
+         }
         }
       }
     `;
