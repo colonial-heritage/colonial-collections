@@ -1,5 +1,6 @@
 import {expect} from '@playwright/test';
 import test from './lib/app-test';
+
 test.describe('Researcher homepage', () => {
   test('shows the object list after searching', async ({page}) => {
     await page.goto('/en');

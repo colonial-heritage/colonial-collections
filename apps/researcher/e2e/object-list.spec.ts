@@ -9,7 +9,7 @@ import {
 
 // Run these tests one by one so the db state won't be affected by other tests
 test.describe.configure({mode: 'serial'});
-// eslint-disable-next-line no-empty-pattern
+
 test.beforeEach(async ({account}) => {
   await resetDb(account.community.id);
 });

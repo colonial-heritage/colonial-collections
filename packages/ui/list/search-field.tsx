@@ -58,7 +58,6 @@ export function SearchField({
 
   const search = () => {
     queryChange(inputText);
-    console.log(inputText);
     if (onSearch) {
       onSearch(inputText);
     }

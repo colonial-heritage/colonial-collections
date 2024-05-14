@@ -8,6 +8,7 @@ on:
       - "apps/researcher/**"
       - ".github/workflows/end-to-end-testing-researcher.yml"
       - "packages/**"
+
 jobs:
   run-end-to-end-tests:
     timeout-minutes: 10
@@ -44,4 +45,3 @@ jobs:
         name: researcher-playwright-report
         path: apps/researcher/playwright-report/
         retention-days: 30
-  

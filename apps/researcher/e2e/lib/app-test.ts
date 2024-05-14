@@ -40,36 +40,36 @@ const test = base.extend<ExtendedFixtures, ExtendedWorkerFixture>({
       const communityName = `End-2-end Community ${workerIdentifier}`;
       const communitySlug = `test-community-${workerIdentifier}`;
 
-      let user;
-      try {
-        user = await createUser({
-          firstName,
-          lastName,
-          emailAddress,
-          password,
-        });
-      } catch (error) {
-        console.error('Failed to create user', error);
-        throw error;
-      }
+      const user = await createUser({
+        firstName,
+        lastName,
+        emailAddress,
+        password,
+        testId: workerIdentifier,
+      });
+
       const community = (await createCommunity({
         userId: user.id,
         name: communityName,
         slug: communitySlug,
       })) as Community;
-      // Use the account value.
+
       await use({community, user, emailAddress, password});
+
       // Clean up after the tests are done.
       await deleteCommunityWithData(community.id);
     },
     {scope: 'worker'},
   ],
   // Inspired by the official Clerk example: https://github.com/clerk/playwright-clerk-nextjs-example/blob/main/e2e/app.spec.ts
-  // Added extra timeouts to make the tests more reliable.
+  // Added extra timeouts to make the tests more reliable
   gotoSignedIn: async ({page, account: {emailAddress, password}}, use) => {
     await use(async (url: string) => {
+      // Prevent the test from failing bot detection
       await setupClerkTestingToken({page});
 
+      // Sometimes the login page will stay in loading state after clicking the 'continue' button,
+      // retry the login until the password field is visible
       await expect
         .poll(
           async () => {
@@ -79,26 +79,33 @@ const test = base.extend<ExtendedFixtures, ExtendedWorkerFixture>({
             await page
               .getByRole('button', {name: 'Continue', exact: true})
               .click();
-            await page.waitForSelector('.cl-signIn-password', {
-              state: 'attached',
-            });
-            return await page.locator('input[name=password]').isEnabled();
+            try {
+              await page.waitForSelector('.cl-signIn-password', {
+                state: 'attached',
+                timeout: 5000,
+              });
+            } catch (error) {
+              return false;
+            }
+            return true;
           },
-          {
-            intervals: [5000],
-            timeout: 21000,
-          }
+          {timeout: 21000}
         )
         .toBe(true);
 
       await page.locator('input[name=password]').fill(password);
       await page.getByRole('button', {name: 'Continue', exact: true}).click();
+
+      // Wait for the user button to appear so we are sure the user is signed in
       await page.waitForSelector('.cl-userButtonAvatarBox', {
         state: 'visible',
         timeout: 50000,
       });
 
+      // Navigate to the desired page
       await page.goto(url);
+
+      // Wait again for the user button so we are sure the user is loaded
       await page.waitForSelector('.cl-userButtonAvatarBox', {
         state: 'visible',
         timeout: 50000,

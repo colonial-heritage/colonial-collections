@@ -48,6 +48,9 @@ test.describe('Object details page not signed in', () => {
   test('shows a text when hovering the add-to-list-button', async ({page}) => {
     const url = await getObjectUrl();
     await page.goto(url);
+    await page.waitForSelector('[data-testid="add-to-list-button"]', {
+      state: 'attached',
+    });
     await page.getByTestId('add-to-list-button').hover();
     await expect(
       page.getByTestId('add-to-list-not-signed-in-panel')
@@ -94,9 +97,15 @@ test.describe('Object details page logged in', () => {
       timeout: 30000,
     });
 
+    // Retry until successful, it can take a while for the new enrichment to show up
     await expect(async () => {
       await page.reload();
-      await expect(page.locator('main')).toContainText(`${uniqueIdentifier}`);
+      await expect(page.locator('main')).toContainText(`${uniqueIdentifier}`, {
+        // The default timeout is 30 seconds, lower the timeout to 5 seconds,
+        // because a reload should be faster than an initial load.
+        // This will result in more retries, what is good for this test.
+        timeout: 5000,
+      });
     }).toPass();
   });
 });

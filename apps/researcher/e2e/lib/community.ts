@@ -6,6 +6,7 @@ interface CreateUserProps {
   lastName: string;
   emailAddress: string;
   password: string;
+  testId: string;
 }
 
 export async function createUser({
@@ -13,15 +14,15 @@ export async function createUser({
   lastName,
   emailAddress,
   password,
+  testId,
 }: CreateUserProps) {
   return clerkClient.users.createUser({
     firstName,
     lastName,
     emailAddress: [emailAddress],
     password,
-    publicMetadata: {
-      iri: `https://example.com/${emailAddress}`,
-      description: 'This is a user created for end-to-end testing',
+    unsafeMetadata: {
+      iri: `https://example.com/${testId}`,
     },
   });
 }
@@ -49,7 +50,7 @@ export async function createCommunity({
   });
 }
 
-export async function getAllTestCommunities() {
+export async function getTestCommunities() {
   const {data: allCommunities} =
     await clerkClient.organizations.getOrganizationList({limit: 1000});
 

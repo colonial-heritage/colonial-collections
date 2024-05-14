@@ -18,7 +18,6 @@ export async function resetDb(communityId: string) {
 }
 
 export async function createEmptyList(communityId: string, userId: string) {
-  // Create one test list
   const objectListInsert = await objectList.create({
     communityId: communityId,
     name: 'Test List 1',
