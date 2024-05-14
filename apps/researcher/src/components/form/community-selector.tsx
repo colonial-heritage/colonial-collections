@@ -1,24 +1,26 @@
 'use client';
 
-import {useUserCommunities} from '@/lib/community/hooks';
+import {useUser} from '@/lib/user/hooks';
 import {Select} from './select';
 import {useTranslations} from 'next-intl';
 import {useMemo} from 'react';
 
 export function CommunitySelector() {
-  const {communities, isLoaded: communitiesLoaded} = useUserCommunities();
+  const {user, isLoaded: communitiesLoaded} = useUser();
   const t = useTranslations('CommunitySelector');
 
   const communityOptions = useMemo(() => {
-    return communities
-      .filter(community => community.iri)
-      .map(community => ({
-        id: community.iri!,
-        name: community.name,
-      }));
-  }, [communities]);
+    return (
+      user?.communityMemberships
+        .filter(memberships => memberships.community.iri)
+        .map(memberships => ({
+          id: memberships.community.iri!,
+          name: memberships.community.name,
+        })) ?? []
+    );
+  }, [user]);
 
-  if (communitiesLoaded && communities.length === 0) {
+  if (communitiesLoaded && communityOptions.length === 0) {
     return <div className="text-neutral-500">{t('noCommunities')}</div>;
   }
 

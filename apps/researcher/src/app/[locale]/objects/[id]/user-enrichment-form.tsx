@@ -18,20 +18,17 @@ import {
   LanguageSelector,
   Textarea,
   FieldValidationMessage,
-  Input,
   CommunitySelector,
   ButtonGroup,
 } from '@/components/form';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
-import {ReactNode, useMemo} from 'react';
-import {useUser} from '@clerk/nextjs';
-import {addAttributionId} from '@/lib/user/actions';
+import {ReactNode} from 'react';
+import {useUser} from '@/lib/user/hooks';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
 
 interface FormValues {
   description: string;
-  attributionId: string;
   citation: string;
   inLanguage?: string;
   agreedToLicense: boolean;
@@ -51,10 +48,6 @@ export function UserEnrichmentForm({
 }: Props) {
   const locale = useLocale();
   const {user} = useUser();
-  const attributionIds = useMemo(
-    () => user?.publicMetadata?.attributionIds as string[] | undefined,
-    [user?.publicMetadata?.attributionIds]
-  );
 
   const t = useTranslations('UserEnrichmentForm');
 
@@ -68,7 +61,6 @@ export function UserEnrichmentForm({
       .trim()
       .min(1, {message: t('citationRequired')}),
     inLanguage: z.string().optional(),
-    attributionId: z.string().url({message: t('invalidAttributionId')}),
     agreedToLicense: z.literal<boolean>(true, {
       errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
     }),
@@ -84,10 +76,6 @@ export function UserEnrichmentForm({
     resolver: zodResolver(userEnricherSchema),
     defaultValues: {
       description: '',
-      attributionId:
-        attributionIds && attributionIds.length > 0
-          ? attributionIds[attributionIds.length - 1]
-          : '',
       citation: '',
       inLanguage: locale,
       agreedToLicense: false,
@@ -112,13 +100,8 @@ export function UserEnrichmentForm({
         objectId,
         user: {
           name: user!.fullName!,
-          id: userEnrichment.attributionId,
+          id: user!.iri,
         },
-      });
-
-      await addAttributionId({
-        userId: user!.id,
-        attributionId: userEnrichment.attributionId,
       });
 
       addNotification({
@@ -202,13 +185,6 @@ export function UserEnrichmentForm({
         </FormRow>
         <FormRow>
           <LeftFormColumn>
-            <InputLabel
-              title={t('attributionId')}
-              description={t('attributionIdDescription')}
-              required
-            />
-            <Input name="attributionId" />
-            <FieldValidationMessage field="attributionId" />
             <div className="mt-4">
               <CheckboxWithLabel
                 name="agreedToLicense"
