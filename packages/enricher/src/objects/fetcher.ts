@@ -106,16 +106,15 @@ export class HeritageObjectEnrichmentFetcher {
              oa:hasSource ?source .
 
           OPTIONAL {
-            ?annotation rdfs:comment ?comment
-          }
-
-          OPTIONAL {
             ?annotation oa:hasBody ?body .
             ?body rdf:value ?value .
             OPTIONAL {
               ?body dc:language ?language .
             }
-         }
+            OPTIONAL {
+              ?body rdfs:comment ?comment
+            }
+          }
         }
       }
     `;
