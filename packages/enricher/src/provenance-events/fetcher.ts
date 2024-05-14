@@ -36,6 +36,7 @@ export class ProvenanceEventEnrichmentFetcher {
       PREFIX np: <http://www.nanopub.org/nschema#>
       PREFIX npa: <http://purl.org/nanopub/admin/>
       PREFIX npx: <http://purl.org/nanopub/x/>
+      PREFIX prov: <http://www.w3.org/ns/prov#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
       CONSTRUCT {
@@ -55,6 +56,7 @@ export class ProvenanceEventEnrichmentFetcher {
           ex:about ?source ;
           ex:license ?license ;
           ex:creator ?creator ;
+          ex:createdOnBehalfOf ?group ;
           ex:dateCreated ?dateCreated .
 
         ?additionalType a ex:DefinedTerm ;
@@ -77,8 +79,7 @@ export class ProvenanceEventEnrichmentFetcher {
           ex:name ?qualifierName .
 
         ?creator a ex:Actor ;
-          ex:name ?creatorName ;
-          ex:isPartOf ?group .
+          ex:name ?creatorName .
 
         ?group a ex:Actor ;
           ex:name ?groupName .
@@ -87,37 +88,42 @@ export class ProvenanceEventEnrichmentFetcher {
         BIND(<${iri}> AS ?source)
 
         graph npa:graph {
-          ?np npa:hasHeadGraph ?head .
-          ?np dcterms:created ?dateCreated .
+          ?np npa:hasHeadGraph ?head ;
+            dcterms:created ?dateCreated .
         }
 
         graph ?head {
-          ?np np:hasProvenance ?provenance .
-          ?np np:hasPublicationInfo ?pubInfo .
+          ?np np:hasProvenance ?provenance ;
+            np:hasPublicationInfo ?pubInfo ;
+            np:hasAssertion ?assertion .
         }
 
         graph ?pubInfo {
           ?np a cc:Nanopub ;
             npx:introduces ?attributeAssignment ;
-            dcterms:creator ?creator ;
             dcterms:license ?license .
+        }
 
+        graph ?provenance {
+          ?assertion prov:wasAttributedTo ?creator .
           ?creator rdfs:label ?creatorName .
 
           OPTIONAL {
-            ?creator dcterms:isPartOf ?group .
+            ?creator prov:qualifiedDelegation [
+              prov:agent ?group
+            ] .
             ?group rdfs:label ?groupName
           }
         }
 
-        OPTIONAL {
-          ?attributeAssignment crm:P2_has_type ?qualifier .
-          ?qualifier rdfs:label ?qualifierName .
-        }
-
-        ?attributeAssignment crm:P141_assigned ?provenanceEvent .
-
         graph ?assertion {
+          ?attributeAssignment crm:P141_assigned ?provenanceEvent .
+
+          OPTIONAL {
+            ?attributeAssignment crm:P2_has_type ?qualifier .
+            ?qualifier rdfs:label ?qualifierName .
+          }
+
           {
             ?provenanceEvent a crm:E8_Acquisition ;
               crm:P24_transferred_title_of ?source .
