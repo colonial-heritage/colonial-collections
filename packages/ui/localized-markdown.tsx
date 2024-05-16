@@ -1,4 +1,4 @@
-import {useLocale} from 'next-intl';
+import {getLocale} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
@@ -13,13 +13,13 @@ interface Props {
   textProps?: {[key: string]: string | number | boolean};
 }
 
-export function LocalizedMarkdown({
+export async function LocalizedMarkdown({
   name,
   contentPath,
   textSize,
   textProps = {},
 }: Props) {
-  const locale = useLocale();
+  const locale = await getLocale();
   const markdownClassName = classNames(
     'max-w-3xl prose',
     'prose-headings:font-semibold prose:text-blue-100',
