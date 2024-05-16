@@ -1,13 +1,16 @@
-import {useLocale} from 'next-intl';
 import provenanceEvents from '@/lib/provenance-events-instance';
 import DataTable from './data-table';
-import {getTranslations} from 'next-intl/server';
+import {getTranslations, getLocale} from 'next-intl/server';
 import {sortEvents} from './sort-events';
 import {ProvenanceProvider} from './provenance-store';
 import {ToggleViewButtons} from './buttons';
 import {LocaleEnum} from '@/definitions';
 import dynamic from 'next/dynamic';
-import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
+import {
+  SlideOut,
+  SlideOutButton,
+  LocalizedMarkdown,
+} from '@colonial-collections/ui';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import AddProvenanceForm from './add-form';
 import {provenanceEventEnrichmentFetcher} from '@/lib/enricher-instances';
@@ -23,7 +26,7 @@ const Timeline = dynamic(() => import('./timeline'), {
 });
 
 export default async function Provenance({objectId}: {objectId: string}) {
-  const locale = useLocale() as LocaleEnum;
+  const locale = (await getLocale()) as LocaleEnum;
   const baseEvents =
     (await provenanceEvents.getByHeritageObjectId({
       id: objectId,
@@ -123,7 +126,17 @@ async function AddProvenanceSlideOut({objectId}: {objectId: string}) {
                 <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
               </SlideOutButton>
             </div>
-            <AddProvenanceForm objectId={objectId} slideOutId={slideOutId} />
+            <AddProvenanceForm
+              objectId={objectId}
+              slideOutId={slideOutId}
+              licenceComponent={
+                <LocalizedMarkdown
+                  name="license"
+                  contentPath="@/messages"
+                  textSize="small"
+                />
+              }
+            />
           </div>
         </SignedIn>
         <SignedOut>

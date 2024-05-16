@@ -1,7 +1,11 @@
 import {useTranslations} from 'next-intl';
 import {PropsWithChildren, ReactNode} from 'react';
 import useObject from './use-object';
-import {SlideOutButton, SlideOut} from '@colonial-collections/ui';
+import {
+  SlideOutButton,
+  SlideOut,
+  LocalizedMarkdown,
+} from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
 import SignedIn from '@/lib/community/signed-in';
 import {
@@ -166,6 +170,13 @@ export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
             objectId={objectId}
             slideOutId={`${enrichmentType}-form`}
             enrichmentType={enrichmentType}
+            licenceComponent={
+              <LocalizedMarkdown
+                name="license"
+                contentPath="@/messages"
+                textSize="small"
+              />
+            }
           />
         </SignedIn>
         <SignedOut>

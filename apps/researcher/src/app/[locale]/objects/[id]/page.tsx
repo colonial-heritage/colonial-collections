@@ -1,5 +1,4 @@
-import {useLocale} from 'next-intl';
-import {getTranslations} from 'next-intl/server';
+import {getTranslations, getLocale} from 'next-intl/server';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
@@ -30,7 +29,7 @@ interface Props {
 
 export default async function Details({params}: Props) {
   const id = decodeRouteSegment(params.id);
-  const locale = useLocale() as LocaleEnum;
+  const locale = (await getLocale()) as LocaleEnum;
   const object = await heritageObjects.getById({id, locale});
   const t = await getTranslations('ObjectDetails');
   const {formatDateRange} = await getDateFormatter();
