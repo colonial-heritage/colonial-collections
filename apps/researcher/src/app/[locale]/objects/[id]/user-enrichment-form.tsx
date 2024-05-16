@@ -4,7 +4,6 @@ import {
   useSlideOut,
   useNotifications,
   SlideOutButton,
-  LocalizedMarkdown,
 } from '@colonial-collections/ui';
 import {useForm, SubmitHandler, FormProvider} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -39,12 +38,14 @@ interface Props {
   slideOutId: string;
   enrichmentType: HeritageObjectEnrichmentType;
   objectId: string;
+  licenceComponent: ReactNode;
 }
 
 export function UserEnrichmentForm({
   slideOutId,
   enrichmentType,
   objectId,
+  licenceComponent,
 }: Props) {
   const locale = useLocale();
   const {user} = useUser();
@@ -201,13 +202,7 @@ export function UserEnrichmentForm({
                 })}
               />
               <FieldValidationMessage field="agreedToLicense" />
-              <div className="text-sm mb-1">
-                <LocalizedMarkdown
-                  name="license"
-                  contentPath="@/messages"
-                  textSize="small"
-                />
-              </div>
+              <div className="text-sm mb-1">{licenceComponent}</div>
             </div>
           </LeftFormColumn>
         </FormRow>

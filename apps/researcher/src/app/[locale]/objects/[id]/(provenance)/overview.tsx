@@ -6,7 +6,11 @@ import {ProvenanceProvider} from './provenance-store';
 import {ToggleViewButtons} from './buttons';
 import {LocaleEnum} from '@/definitions';
 import dynamic from 'next/dynamic';
-import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
+import {
+  SlideOut,
+  SlideOutButton,
+  LocalizedMarkdown,
+} from '@colonial-collections/ui';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import AddProvenanceForm from './add-form';
 import {provenanceEventEnrichmentFetcher} from '@/lib/enricher-instances';
@@ -122,7 +126,17 @@ async function AddProvenanceSlideOut({objectId}: {objectId: string}) {
                 <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
               </SlideOutButton>
             </div>
-            <AddProvenanceForm objectId={objectId} slideOutId={slideOutId} />
+            <AddProvenanceForm
+              objectId={objectId}
+              slideOutId={slideOutId}
+              licenceComponent={
+                <LocalizedMarkdown
+                  name="license"
+                  contentPath="@/messages"
+                  textSize="small"
+                />
+              }
+            />
           </div>
         </SignedIn>
         <SignedOut>

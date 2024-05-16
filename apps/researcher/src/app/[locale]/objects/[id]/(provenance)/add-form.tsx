@@ -2,13 +2,9 @@
 
 import {Tab} from '@headlessui/react';
 import {useLocale, useTranslations} from 'next-intl';
-import {Fragment, useMemo, useState} from 'react';
+import {Fragment, ReactNode, useMemo, useState} from 'react';
 import classNames from 'classnames';
-import {
-  LocalizedMarkdown,
-  useNotifications,
-  useSlideOut,
-} from '@colonial-collections/ui';
+import {useNotifications, useSlideOut} from '@colonial-collections/ui';
 import {
   useForm,
   SubmitHandler,
@@ -69,9 +65,14 @@ interface FormValues {
 interface Props {
   objectId: string;
   slideOutId: string;
+  licenceComponent: ReactNode;
 }
 
-export default function AddProvenanceForm({objectId, slideOutId}: Props) {
+export default function AddProvenanceForm({
+  objectId,
+  slideOutId,
+  licenceComponent,
+}: Props) {
   const t = useTranslations('ProvenanceForm');
   const tType = useTranslations('ProvenanceEventType');
 
@@ -415,13 +416,7 @@ export default function AddProvenanceForm({objectId, slideOutId}: Props) {
                       })}
                     />
                     <FieldValidationMessage field="agreedToLicense" />
-                    <div className="text-sm mb-1">
-                      <LocalizedMarkdown
-                        name="license"
-                        contentPath="@/messages"
-                        textSize="small"
-                      />
-                    </div>
+                    <div className="text-sm mb-1">{licenceComponent}</div>
                   </div>
                 </FormColumn>
               </FormRow>
