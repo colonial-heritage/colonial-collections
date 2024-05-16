@@ -1,5 +1,5 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
-import {getTranslations} from 'next-intl/server';
+import {getTranslations, getLocale} from 'next-intl/server';
 import HeritageObjectList from './heritage-object-list';
 import {
   SortByUserOption,
@@ -36,7 +36,6 @@ import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from '@/components/list-store-updater';
 import {LocaleEnum} from '@/definitions';
-import {useLocale} from 'next-intl';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -120,7 +119,7 @@ interface Props {
 }
 
 export default async function SearchResults({searchParams = {}}: Props) {
-  const locale = useLocale() as LocaleEnum;
+  const locale = (await getLocale()) as LocaleEnum;
 
   const searchOptions = fromSearchParamsToSearchOptions({
     sortOptions: {
