@@ -40,6 +40,3 @@ jobs:
         name: dataset-browser-playwright-report
         path: apps/dataset-browser/playwright-report/
         retention-days: 30
-
-
-  

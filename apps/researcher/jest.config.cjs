@@ -6,6 +6,7 @@ const createJestConfig = nextJest();
 const customJestConfig = {
   testTimeout: 60000,
   testMatch: ['**/*.test.ts(x)?'],
+  modulePathIgnorePatterns: ['<rootDir>/e2e/'],
   collectCoverage: true,
   setupFiles: ['<rootDir>/jest.setup.cjs'],
   moduleNameMapper: {

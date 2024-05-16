@@ -62,6 +62,7 @@ test.describe('Object details page not signed in', () => {
 });
 
 const objectUrl = await getObjectUrl();
+
 test.describe('Object details page logged in', () => {
   test("opens the 'add enrichment' form", async ({page, gotoSignedIn}) => {
     await gotoSignedIn(objectUrl);
