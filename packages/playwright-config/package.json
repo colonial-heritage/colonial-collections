@@ -1,0 +1,9 @@
+{
+  "name": "@colonial-collections/playwright-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "typescript": "5.4.5"
+  }
+}

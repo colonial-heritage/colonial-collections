@@ -9,53 +9,39 @@ on:
       - ".github/workflows/end-to-end-testing-researcher.yml"
       - "packages/**"
 
-concurrency:
-  # Clerk blocks the test user, if multiple tests are running at the same time
-  # Therefore, we limit the concurrency to 1
-  group: 'end-to-end-tests-with-login'
-
 jobs:
   run-end-to-end-tests:
+    timeout-minutes: 10
     runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.43.0-jammy
     steps:
-      - name: Wait for a successful Vercel Preview
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
-        id: waitForPreview
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 600
-          environment: Preview – colonial-collections-researcher
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Run Cypress for Researcher 🌲
-        uses: cypress-io/github-action@v6
-        with:
-          project: ./apps/researcher
-          wait-on: ${{ steps.waitForPreview.outputs.url }}
-        env:
-          # Used in the Cypress tests
-          CYPRESS_BASE_URL: ${{ steps.waitForPreview.outputs.url }}
-          CYPRESS_TEST_USER_EMAIL: ${{secrets.TEST_USER_EMAIL}}
-          CYPRESS_TEST_USER_PASSWORD: ${{secrets.TEST_USER_PASSWORD}}
-          CYPRESS_TEST_COMMUNITY_SLUG: ${{secrets.TEST_COMMUNITY_SLUG}}
-          # Used in the Cypress tasks
-          TEST_USER_ID: ${{secrets.TEST_USER_ID}}
-          TEST_COMMUNITY_ID: ${{secrets.TEST_COMMUNITY_ID}}
-          DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}
-          SPARQL_ENDPOINT_URL: ${{secrets.SPARQL_ENDPOINT_URL}}
-          SEARCH_ENDPOINT_URL: ${{secrets.SEARCH_ENDPOINT_URL}}
-      # Screenshots will be generated only if the test failed
-      # thus we store screenshots only on failures
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: ./apps/researcher/cypress/screenshots
-      # Test run video is always captured, so this action uses "always()" condition
-      - name: Upload videos
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cypress-videos
-          path: ./apps/researcher/cypress/videos
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+    - name: Install dependencies
+      run: npm ci
+    - name: Wait for a successful Vercel Preview
+      uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+      id: waitForVercelPreviewDeployment
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        max_timeout: 600
+        environment: Preview – colonial-collections-researcher
+    - name: Run Playwright tests
+      run: npm run test:e2e:ci -w researcher
+      env:
+        HOME: /root
+        PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
+        DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}
+        SPARQL_ENDPOINT_URL: ${{secrets.SPARQL_ENDPOINT_URL}}
+        SEARCH_ENDPOINT_URL: ${{secrets.SEARCH_ENDPOINT_URL}}
+        CLERK_PUBLISHABLE_KEY: ${{secrets.CLERK_PUBLISHABLE_KEY}}
+        CLERK_SECRET_KEY: ${{secrets.CLERK_SECRET_KEY}}
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: researcher-playwright-report
+        path: apps/researcher/playwright-report/
+        retention-days: 30

@@ -12,5 +12,4 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["cypress", "**/*.cy.tsx"]
 }

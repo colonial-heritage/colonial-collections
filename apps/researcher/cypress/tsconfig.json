@@ -1,5 +1,0 @@
-{
-  "extends": "@colonial-collections/ts-config/cypress.json",
-  "include": ["**/*.ts", "**/*.tsx", "../src/**/*.cy.tsx"],
-  "exclude": []
-}
