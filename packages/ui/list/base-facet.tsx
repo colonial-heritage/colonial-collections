@@ -1,6 +1,6 @@
 'use client';
 
-import {useCallback, useMemo, ReactNode} from 'react';
+import {useCallback, useMemo, ReactNode, useState, useEffect} from 'react';
 import {useListStore} from '@colonial-collections/list-store';
 
 interface FacetWrapperProps {
@@ -42,6 +42,12 @@ export function FacetCheckBox({
   const selectedFilters = useListStore(s => s.selectedFilters);
   const filterChange = useListStore(s => s.filterChange);
   const newDataNeeded = useListStore(s => s.newDataNeeded);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Wait for hydration to complete before enabling the input
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const selectedFiltersForKey = useMemo(
     () => selectedFilters[filterKey] || [],
@@ -73,7 +79,7 @@ export function FacetCheckBox({
           value={id}
           checked={selectedFiltersForKey.some(filterId => id === filterId)}
           onChange={handleChange}
-          disabled={newDataNeeded}
+          disabled={!isMounted || newDataNeeded}
         />
         <label className="truncate max-w-[230px]" htmlFor={`facet-${id}`}>
           {name}

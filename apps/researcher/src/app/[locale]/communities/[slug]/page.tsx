@@ -190,7 +190,7 @@ export default async function CommunityPage({params}: Props) {
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-16">
               {objectLists.map(objectList => (
                 <Link
-                  data-testid="object-list-item"
+                  data-testid={`object-list-item-${objectList.id}`}
                   href={`/communities/${params.slug}/${objectList.id}`}
                   key={objectList.id}
                   className="no-underline"
