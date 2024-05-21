@@ -1,9 +1,7 @@
 'use client';
 
 import {useTranslations} from 'next-intl';
-import {Fragment, useState, useEffect, useRef, useTransition} from 'react';
-import {Transition, Popover} from '@headlessui/react';
-import {ChevronDownIcon} from '@heroicons/react/20/solid';
+import {useState, useEffect, useTransition} from 'react';
 import {CheckIcon} from '@heroicons/react/24/outline';
 import {useUser} from '@/lib/user/hooks';
 import {
@@ -17,6 +15,7 @@ import {Link} from '@/navigation';
 import {Modal, useModal} from '@colonial-collections/ui/modal';
 import ObjectListForm from '@/components/object-list-form/form';
 import {addList} from '@/components/object-list-form/actions';
+import PopoverMenu from '@/components/popover';
 
 interface CommunityMenuItemsProps {
   communityId: string;
@@ -215,8 +214,6 @@ function AddListModal({selectedCommunityId}: AddListModalProps) {
   );
 }
 
-const timeoutDuration = 120;
-
 interface ObjectListsMenuProps {
   objectId: string;
 }
@@ -227,93 +224,44 @@ export default function ObjectListsMenu({objectId}: ObjectListsMenuProps) {
   const [selectedCommunityId, setSelectedCommunityId] = useState<
     string | undefined
   >(undefined);
-
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const timeOutRef = useRef<NodeJS.Timeout | null>(null);
-
-  function handleEnter(isOpen: boolean) {
-    if (timeOutRef.current) {
-      clearTimeout(timeOutRef.current);
-    }
-    if (!isOpen) {
-      triggerRef.current?.click();
-    }
-  }
-
-  function handleLeave(isOpen: boolean) {
-    timeOutRef.current = setTimeout(() => {
-      if (isOpen) {
-        triggerRef.current?.click();
-      }
-    }, timeoutDuration);
-  }
-
   return (
     <>
-      <Popover className="relative">
-        {({open}) => (
+      <PopoverMenu buttonText={t('addToListButton')} variant="primary">
+        {!user || user.communityMemberships.length === 0 ? (
           <div
-            onMouseEnter={() => handleEnter(open)}
-            onMouseLeave={() => handleLeave(open)}
+            data-testid="add-to-list-not-signed-in-panel"
+            className="whitespace-pre-wrap block w-[250px] p-3 text-sm"
           >
-            <Popover.Button
-              data-testid="add-to-list-button"
-              className="peer rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumGreen-300 text-consortiumBlue-800 flex gap-1 items-center"
-              ref={triggerRef}
-            >
-              {t('addToListButton')}
-              <ChevronDownIcon
-                className="-mr-1 h-5 w-5 text-consortiumBlue-800"
-                aria-hidden="true"
-              />{' '}
-            </Popover.Button>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              {!user || user.communityMemberships.length === 0 ? (
-                <Popover.Panel
-                  data-testid="add-to-list-not-signed-in-panel"
-                  className="whitespace-pre-wrap block w-[250px] bg-consortiumGreen-300 text-consortiumBlue-800 drop-shadow-lg absolute top-9 -left-12 rounded-lg gap-2 border-t border-consortiumBlue-800 p-3 text-sm"
-                >
-                  {t.rich('addToListSignedOutText', {
-                    signInLink: text => (
-                      <Link className="font-semibold" href="/sign-in">
-                        {text}
-                      </Link>
-                    ),
-                    signUpLink: text => (
-                      <Link className="font-semibold" href="/sign-up">
-                        {text}
-                      </Link>
-                    ),
-                    communityLink: text => (
-                      <Link className="font-semibold" href="/community">
-                        {text}
-                      </Link>
-                    ),
-                  })}
-                </Popover.Panel>
-              ) : (
-                <Popover.Panel
-                  data-testid="add-to-list-signed-in-panel"
-                  className="flex w-[200px] flex-col bg-consortiumGreen-300 text-consortiumBlue-800 drop-shadow-lg absolute top-9 -left-10 rounded-lg gap-2 border-t border-consortiumBlue-800"
-                >
-                  <SignedInMenu
-                    objectId={objectId}
-                    setSelectedCommunityId={setSelectedCommunityId}
-                  />
-                </Popover.Panel>
-              )}
-            </Transition>
+            {t.rich('addToListSignedOutText', {
+              signInLink: text => (
+                <Link className="font-semibold" href="/sign-in">
+                  {text}
+                </Link>
+              ),
+              signUpLink: text => (
+                <Link className="font-semibold" href="/sign-up">
+                  {text}
+                </Link>
+              ),
+              communityLink: text => (
+                <Link className="font-semibold" href="/community">
+                  {text}
+                </Link>
+              ),
+            })}
+          </div>
+        ) : (
+          <div
+            data-testid="add-to-list-signed-in-panel"
+            className="flex w-[200px] flex-col"
+          >
+            <SignedInMenu
+              objectId={objectId}
+              setSelectedCommunityId={setSelectedCommunityId}
+            />
           </div>
         )}
-      </Popover>
+      </PopoverMenu>
       <AddListModal selectedCommunityId={selectedCommunityId} />
     </>
   );

@@ -41,10 +41,22 @@
     "useText": "Communities are groups of people that represent a specific culture or geographical area. Anyone with an account can become a member of a community. You can also create your own community."
   },
   "ObjectSearchResults": {
-    "title": "{totalDatasets, plural, =0 {0 Heritage Objects} =1 {1 Heritage Object} other {# Heritage Objects}}",
+    "title": "{totalDatasets, plural, =0 {0 Objects} =1 {1 Object} other {# Objects}}",
     "noResults": "There are no results",
     "fetchError": "There was a problem fetching the objects. Please reload the page to try again.",
-    "filters": "Facet filters"
+    "filters": "Facet filters",
+    "addObjectsToList": "Add objects to list"
+  },
+  "Settings": {
+    "settings": "Settings",
+    "resultView": "Result view",
+    "grid": "Grid",
+    "list": "List",
+    "resultAmount": "Result amount",
+    "images": "Images",
+    "hideImages": "Hide images",
+    "showSmallerImages": "Show smaller images",
+    "showLargerImages": "Show larger images"
   },
   "Navigation": {
     "name": "app",
@@ -262,7 +274,7 @@
     "locationsFilter": "Locations of creation",
     "dateCreatedFilter": "Date made",
     "search": "Search for text",
-    "filters": "Filters",
+    "filters": "Selected facets",
     "fromYear": "From year",
     "tillYear": "Till year",
     "expandFilter": "Expand",

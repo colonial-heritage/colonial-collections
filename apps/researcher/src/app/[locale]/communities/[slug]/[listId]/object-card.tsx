@@ -1,5 +1,5 @@
 import heritageObjects from '@/lib/heritage-objects-instance';
-import HeritageObjectCard from '@/app/[locale]/objects/heritage-object-card';
+import HeritageObjectCard from './heritage-object-card';
 import {LocaleEnum} from '@/definitions';
 import {getLocale} from 'next-intl/server';
 

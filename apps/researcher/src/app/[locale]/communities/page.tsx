@@ -64,7 +64,6 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
           sortBy,
           selectedFilters: {onlyMyCommunities},
           baseUrl: '/communities',
-          defaultSortBy: SortBy.NameAsc,
         }}
       />
 

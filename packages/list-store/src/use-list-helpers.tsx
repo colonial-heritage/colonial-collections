@@ -13,6 +13,8 @@ interface Props {
   selectedFilters?: {
     [filterKey: string]: (string | number)[] | number | string | undefined;
   };
+  view?: string;
+  imageVisibility?: string;
   routerReplace: (url: string, options?: {scroll?: boolean}) => void;
 }
 
@@ -23,6 +25,11 @@ export const useListHref = () => {
   const baseUrl = useListStore(s => s.baseUrl);
   const selectedFilters = useListStore(s => s.selectedFilters);
   const defaultSortBy = useListStore(s => s.defaultSortBy);
+  const defaultView = useListStore(s => s.defaultView);
+  const defaultImageVisibility = useListStore(s => s.defaultImageVisibility);
+  const view = useListStore(s => s.view);
+  const imageVisibility = useListStore(s => s.imageVisibility);
+  const limit = useListStore(s => s.limit);
 
   const href = useMemo(
     () =>
@@ -32,9 +39,26 @@ export const useListHref = () => {
         sortBy,
         filters: selectedFilters,
         defaultSortBy,
+        defaultView,
+        defaultImageVisibility,
         baseUrl,
+        view,
+        imageVisibility,
+        limit,
       }),
-    [baseUrl, defaultSortBy, offset, query, selectedFilters, sortBy]
+    [
+      baseUrl,
+      defaultImageVisibility,
+      defaultSortBy,
+      defaultView,
+      imageVisibility,
+      limit,
+      offset,
+      query,
+      selectedFilters,
+      sortBy,
+      view,
+    ]
   );
 
   return href;
@@ -61,6 +85,8 @@ export const useUpdateListStore = ({
   totalCount,
   offset,
   limit,
+  view,
+  imageVisibility,
   query,
   sortBy,
   selectedFilters,
@@ -72,9 +98,21 @@ export const useUpdateListStore = ({
       totalCount,
       offset,
       limit,
+      view,
+      imageVisibility,
       query,
       sortBy,
       selectedFilters: selectedFilters ?? {},
     });
-  }, [limit, offset, query, selectedFilters, setNewData, sortBy, totalCount]);
+  }, [
+    imageVisibility,
+    limit,
+    offset,
+    query,
+    selectedFilters,
+    setNewData,
+    sortBy,
+    totalCount,
+    view,
+  ]);
 };

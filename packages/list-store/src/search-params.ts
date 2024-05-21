@@ -3,6 +3,8 @@ import {SortBy} from './sort';
 
 export type Type = 'string' | 'array' | 'number';
 
+const defaultLimit = 25;
+
 // Only strings are allowed in the search params.
 const searchParamFilterSchema = z
   .array(z.string())
@@ -11,7 +13,17 @@ const searchParamFilterSchema = z
   .or(z.number().transform(value => `${value}`))
   .default('');
 
-function getSearchParamsSchema(defaultSortBy: string) {
+interface GetSearchParamsSchemaProps {
+  defaultSortBy: string;
+  defaultView?: string;
+  defaultImageVisibility?: string;
+}
+
+function getSearchParamsSchema({
+  defaultSortBy,
+  defaultView,
+  defaultImageVisibility,
+}: GetSearchParamsSchemaProps) {
   return z.object({
     query: z.string().default(''),
     offset: z
@@ -19,6 +31,23 @@ function getSearchParamsSchema(defaultSortBy: string) {
       .default(0)
       // Don't add the default offset of 0 to the search params.
       .transform(offset => (offset > 0 ? `${offset}` : '')),
+    limit: z
+      .number()
+      .default(defaultLimit)
+      // Don't add the default limit of `defaultLimit` to the search params.
+      .transform(limit => (limit !== defaultLimit ? `${limit}` : '')),
+    view: z
+      .string()
+      .default(defaultView || '')
+      // Don't add the default view to the search params.
+      .transform(view => (view === defaultView ? '' : view)),
+    imageVisibility: z
+      .string()
+      .default(defaultImageVisibility || '')
+      // Don't add the default image visibility to the search params.
+      .transform(imageVisibility =>
+        imageVisibility === defaultImageVisibility ? '' : imageVisibility
+      ),
     sortBy: z
       .string()
       .default(defaultSortBy)
@@ -30,26 +59,43 @@ function getSearchParamsSchema(defaultSortBy: string) {
 interface ClientSearchOptions {
   query?: string;
   offset?: number;
+  limit?: number;
+  view?: string;
+  imageVisibility?: string;
   sortBy?: string;
   filters?: {
     [filterKey: string]: (string | number)[] | string | number | undefined;
   };
   baseUrl?: string;
   defaultSortBy: string;
+  defaultView?: string;
+  defaultImageVisibility?: string;
 }
 
 export function getUrlWithSearchParams({
   query,
   offset,
+  limit,
+  view,
+  imageVisibility,
   sortBy,
   filters,
-  defaultSortBy,
   baseUrl = '/',
+  defaultSortBy,
+  defaultImageVisibility,
+  defaultView,
 }: ClientSearchOptions): string {
   const searchParams: {[key: string]: string | string[]} =
-    getSearchParamsSchema(defaultSortBy).parse({
+    getSearchParamsSchema({
+      defaultSortBy,
+      defaultImageVisibility,
+      defaultView,
+    }).parse({
       query,
       offset,
+      limit,
+      view,
+      imageVisibility,
       sortBy,
     });
 
@@ -121,7 +167,7 @@ export interface FromSearchParamsToSearchOptionsProps {
 
 // This function translates the search params to valid search options.
 export function fromSearchParamsToSearchOptions({
-  searchParams: {query, offset, sortBy, ...filters},
+  searchParams: {query, offset, sortBy, limit, ...filters},
   sortOptions: {
     SortByEnum,
     SortOrderEnum,
@@ -143,7 +189,7 @@ export function fromSearchParamsToSearchOptions({
       .string()
       .transform(limitString => +limitString)
       .pipe(z.number().int().positive())
-      .or(fallback(12)),
+      .or(fallback(defaultLimit)),
     filters: z.object(
       filterKeys.reduce(
         (acc, filterKey) => {
@@ -182,7 +228,8 @@ export function fromSearchParamsToSearchOptions({
     filters,
     sortBy: sortBySearchOption,
     sortOrder: sortOrder,
-    query: query,
+    query,
+    limit,
   });
 
   return searchOptions;

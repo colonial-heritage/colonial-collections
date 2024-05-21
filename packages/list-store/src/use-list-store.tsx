@@ -9,10 +9,14 @@ interface ListProps {
   limit: number;
   query: string;
   sortBy: string;
+  view?: string;
+  imageVisibility?: string;
   // Setting newDataNeeded to true will trigger a page reload with new search params
   newDataNeeded: boolean;
   isInitialized: boolean;
   defaultSortBy: string;
+  defaultView?: string;
+  defaultImageVisibility?: string;
   baseUrl: string;
   selectedFilters: {
     [filterKey: string]: (string | number)[] | number | string | undefined;
@@ -26,7 +30,10 @@ export interface ListState extends ListProps {
   ) => void;
   sortChange: (sortBy: string) => void;
   queryChange: (query: string) => void;
+  limitChange: (limit: number) => void;
   pageChange: (direction: 1 | -1) => void;
+  viewChange: (view: string) => void;
+  imageVisibilityChange: (imageVisibility: string) => void;
   transitionStarted: () => void;
   setNewData: ({
     totalCount,
@@ -35,6 +42,8 @@ export interface ListState extends ListProps {
     query,
     sortBy,
     selectedFilters,
+    view,
+    imageVisibility,
   }: {
     totalCount: number;
     offset: number;
@@ -42,6 +51,8 @@ export interface ListState extends ListProps {
     query: string;
     sortBy?: string;
     selectedFilters: ListProps['selectedFilters'];
+    view?: ListProps['view'];
+    imageVisibility?: ListProps['imageVisibility'];
   }) => void;
 }
 
@@ -62,6 +73,15 @@ export const createListStore = (initProps: ListProps) => {
     },
     queryChange: query => {
       set({query, offset: 0, newDataNeeded: true});
+    },
+    viewChange: view => {
+      set({view, newDataNeeded: true});
+    },
+    imageVisibilityChange: imageVisibility => {
+      set({imageVisibility, newDataNeeded: true});
+    },
+    limitChange: limit => {
+      set({limit, offset: 0, newDataNeeded: true});
     },
     pageChange: direction => {
       let newOffset = get().offset + direction * get().limit;
@@ -85,6 +105,8 @@ export const createListStore = (initProps: ListProps) => {
       query,
       sortBy,
       selectedFilters,
+      view,
+      imageVisibility,
     }) => {
       if (!get().isInitialized) {
         set({
@@ -93,6 +115,8 @@ export const createListStore = (initProps: ListProps) => {
           limit,
           query,
           sortBy: sortBy || get().defaultSortBy,
+          view: view || get().defaultView,
+          imageVisibility: imageVisibility || get().defaultImageVisibility,
           selectedFilters,
           isInitialized: true,
         });
@@ -113,22 +137,30 @@ export const initialList = {
   query: '',
   totalCount: 0,
   offset: 0,
-  limit: 10,
+  limit: 20,
   sortBy: undefined,
   defaultSortBy: undefined,
+  defaultView: undefined,
+  defaultImageVisibility: undefined,
   selectedFilters: {},
   newDataNeeded: false,
   isInitialized: false,
-};
+  view: undefined,
+  imageVisibility: undefined,
+} as const;
 
 export type ListProviderProps = PropsWithChildren<{
   defaultSortBy: string;
+  defaultView?: string;
+  defaultImageVisibility?: string;
   baseUrl: string;
 }>;
 
 export function ListProvider({
   children,
   defaultSortBy,
+  defaultView,
+  defaultImageVisibility,
   baseUrl,
 }: ListProviderProps) {
   const storeRef = useRef<ListStore>();
@@ -136,7 +168,12 @@ export function ListProvider({
     storeRef.current = createListStore({
       ...initialList,
       defaultSortBy,
+      defaultView,
+      // Don't set `imageVisibility` to `defaultImageVisibility` here so images won't load by default.
+      // Set the value in the setNewData method instead, so we know if the user changed the value.
+      defaultImageVisibility,
       sortBy: defaultSortBy,
+      view: defaultView,
       baseUrl,
     });
   }

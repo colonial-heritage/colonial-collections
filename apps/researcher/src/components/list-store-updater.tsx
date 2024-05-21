@@ -3,6 +3,7 @@
 import {useRouter} from '@/navigation';
 import {
   getUrlWithSearchParams,
+  useListStore,
   useSearchParamsUpdate,
   useUpdateListStore,
 } from '@colonial-collections/list-store';
@@ -17,8 +18,9 @@ interface Props {
   selectedFilters?: {
     [filterKey: string]: (string | number)[] | number | string | undefined;
   };
-  defaultSortBy: string;
   baseUrl: string;
+  view?: string;
+  imageVisibility?: string;
 }
 
 export function ListStoreUpdater({
@@ -28,10 +30,16 @@ export function ListStoreUpdater({
   query,
   sortBy,
   selectedFilters,
-  defaultSortBy,
   baseUrl,
+  view,
+  imageVisibility,
 }: Props) {
   const router = useRouter();
+
+  const defaultSortBy = useListStore(s => s.defaultSortBy);
+  const defaultView = useListStore(s => s.defaultView);
+  const defaultImageVisibility = useListStore(s => s.defaultImageVisibility);
+
   useUpdateListStore({
     totalCount,
     offset,
@@ -39,8 +47,12 @@ export function ListStoreUpdater({
     query,
     sortBy,
     selectedFilters,
+    view,
+    imageVisibility,
   });
+
   useSearchParamsUpdate(router.replace);
+
   const url = getUrlWithSearchParams({
     query,
     offset,
@@ -48,7 +60,13 @@ export function ListStoreUpdater({
     filters: selectedFilters,
     defaultSortBy,
     baseUrl,
+    limit,
+    view,
+    imageVisibility,
+    defaultView,
+    defaultImageVisibility,
   });
+
   saveLastSearch(baseUrl, url);
 
   return null;
