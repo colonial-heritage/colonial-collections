@@ -10,7 +10,7 @@
     "@colonial-collections/tailwind-config": "*",
     "@colonial-collections/ts-config": "*",
     "@types/react": "18.2.56",
-    "autoprefixer": "10.4.18",
+    "autoprefixer": "10.4.19",
     "postcss": "8.4.38",
     "typescript": "5.4.5"
   },
