@@ -34,7 +34,7 @@
     "classnames": "2.3.2",
     "next": "14.1.4",
     "next-intl": "3.14.0",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-dom": "18.2.0",
     "zod": "3.22.4",
     "zustand": "4.5.1"
@@ -48,7 +48,7 @@
     "@playwright/test": "1.43.1",
     "@types/mdx": "2.0.13",
     "@types/node": "20.11.28",
-    "@types/react": "18.2.56",
+    "@types/react": "18.3.2",
     "@types/react-dom": "18.2.22",
     "autoprefixer": "10.4.19",
     "encoding": "0.1.13",

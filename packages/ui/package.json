@@ -9,7 +9,7 @@
     "@colonial-collections/eslint-config": "*",
     "@colonial-collections/tailwind-config": "*",
     "@colonial-collections/ts-config": "*",
-    "@types/react": "18.2.56",
+    "@types/react": "18.3.2",
     "autoprefixer": "10.4.19",
     "postcss": "8.4.38",
     "typescript": "5.4.5"
@@ -22,7 +22,7 @@
     "classnames": "2.3.2",
     "next": "14.1.4",
     "next-intl": "3.14.0",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "zustand": "4.5.1"
   }
 }
