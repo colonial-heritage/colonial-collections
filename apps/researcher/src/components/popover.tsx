@@ -47,7 +47,7 @@ export default function PopoverMenu({
             onMouseLeave={() => handleLeave(open)}
           >
             <Popover.Button
-              data-testid="add-to-list-button"
+              data-testid="popover-menu-button"
               className={classNames(
                 'rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm flex gap-1 items-center',
                 {
@@ -78,7 +78,6 @@ export default function PopoverMenu({
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel
-                data-testid="add-to-list-signed-in-panel"
                 className={classNames(
                   'drop-shadow-lg absolute top-9 rounded-lg gap-2 z-40 left-1/2 -translate-x-1/2 transform',
                   {

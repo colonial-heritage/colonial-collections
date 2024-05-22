@@ -25,7 +25,10 @@ export function HeritageObjectCard({heritageObject, imageVisibility}: Props) {
       className=" mb-6 flex flex-col gap-2 hover:bg-white min-h-48 no-underline group transition-all border-2 hover:border-consortiumBlue-800 rounded-sm pt-6 bg-neutral-100 border-white"
       aria-label={t('heritageObject')}
     >
-      <div className="font-semibold leading-5 px-2 ">
+      <div
+        className="font-semibold leading-5 px-2 "
+        data-testid="object-card-name"
+      >
         {heritageObject.name || (
           <span className="text-sm text-neutral-600">{t('noName')}</span>
         )}
@@ -95,7 +98,7 @@ export function HeritageObjectListItem({
         )}
       </div>
       <div className="flex flex-col items-baseline gap-1">
-        <div className="">
+        <div data-testid="object-card-name">
           {heritageObject.name || (
             <span className="text-sm text-neutral-600">{t('noName')}</span>
           )}
