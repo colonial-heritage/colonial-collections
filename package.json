@@ -28,7 +28,7 @@
   "devDependencies": {
     "@colonial-collections/eslint-config": "*",
     "gts": "5.3.0",
-    "turbo": "1.13.0"
+    "turbo": "1.13.3"
   },
   "engines": {
     "node": "18.x"
