@@ -14,7 +14,7 @@ interface Props {
     [filterKey: string]: (string | number)[] | number | string | undefined;
   };
   view?: string;
-  imageVisibility?: string;
+  imageFetchMode?: string;
   routerReplace: (url: string, options?: {scroll?: boolean}) => void;
 }
 
@@ -26,9 +26,9 @@ export const useListHref = () => {
   const selectedFilters = useListStore(s => s.selectedFilters);
   const defaultSortBy = useListStore(s => s.defaultSortBy);
   const defaultView = useListStore(s => s.defaultView);
-  const defaultImageVisibility = useListStore(s => s.defaultImageVisibility);
+  const defaultImageFetchMode = useListStore(s => s.defaultImageFetchMode);
   const view = useListStore(s => s.view);
-  const imageVisibility = useListStore(s => s.imageVisibility);
+  const imageFetchMode = useListStore(s => s.imageFetchMode);
   const limit = useListStore(s => s.limit);
 
   const href = useMemo(
@@ -40,18 +40,18 @@ export const useListHref = () => {
         filters: selectedFilters,
         defaultSortBy,
         defaultView,
-        defaultImageVisibility,
+        defaultImageFetchMode,
         baseUrl,
         view,
-        imageVisibility,
+        imageFetchMode,
         limit,
       }),
     [
       baseUrl,
-      defaultImageVisibility,
+      defaultImageFetchMode,
       defaultSortBy,
       defaultView,
-      imageVisibility,
+      imageFetchMode,
       limit,
       offset,
       query,
@@ -86,7 +86,7 @@ export const useUpdateListStore = ({
   offset,
   limit,
   view,
-  imageVisibility,
+  imageFetchMode,
   query,
   sortBy,
   selectedFilters,
@@ -99,13 +99,13 @@ export const useUpdateListStore = ({
       offset,
       limit,
       view,
-      imageVisibility,
+      imageFetchMode,
       query,
       sortBy,
       selectedFilters: selectedFilters ?? {},
     });
   }, [
-    imageVisibility,
+    imageFetchMode,
     limit,
     offset,
     query,

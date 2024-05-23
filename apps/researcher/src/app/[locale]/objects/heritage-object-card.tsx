@@ -4,14 +4,14 @@ import {HeritageObject} from '@colonial-collections/api';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import ImageWithFallback from '@/components/image-with-fallback';
 import classNames from 'classnames';
-import {ImageVisibility} from './definitions';
+import {ImageFetchMode} from './definitions';
 
 interface Props {
   heritageObject: HeritageObject;
-  imageVisibility: string;
+  imageFetchMode: string;
 }
 
-export function HeritageObjectCard({heritageObject, imageVisibility}: Props) {
+export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
   const t = useTranslations('HeritageObjectCard');
   const imageUrl =
     heritageObject.images && heritageObject.images.length > 0
@@ -38,21 +38,19 @@ export function HeritageObjectCard({heritageObject, imageVisibility}: Props) {
       </div>
 
       {imageUrl &&
-        (imageVisibility === ImageVisibility.Large ||
-          imageVisibility === ImageVisibility.Small) && (
+        (imageFetchMode === ImageFetchMode.Large ||
+          imageFetchMode === ImageFetchMode.Small) && (
           <div>
             <ImageWithFallback
               src={imageUrl}
               alt={heritageObject.name || ''}
               width="0"
               height="0"
-              sizes={
-                imageVisibility === ImageVisibility.Large ? '270px' : '90px'
-              }
+              sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'}
               quality={40}
               className={classNames('max-h-72 object-cover object-center', {
-                'w-full max-h-72': imageVisibility === ImageVisibility.Large,
-                'w-1/3': imageVisibility === ImageVisibility.Small,
+                'w-full max-h-72': imageFetchMode === ImageFetchMode.Large,
+                'w-1/3': imageFetchMode === ImageFetchMode.Small,
               })}
             />
           </div>
@@ -63,7 +61,7 @@ export function HeritageObjectCard({heritageObject, imageVisibility}: Props) {
 
 export function HeritageObjectListItem({
   heritageObject,
-  imageVisibility,
+  imageFetchMode,
 }: Props) {
   const t = useTranslations('HeritageObjectCard');
   const imageUrl =
@@ -74,8 +72,8 @@ export function HeritageObjectListItem({
     <div className="flex flex-row justify-start items-center gap-4 border-t border-neutral-200 py-3 w-full">
       <div className="w-30">
         {imageUrl &&
-          (imageVisibility === ImageVisibility.Large ||
-            imageVisibility === ImageVisibility.Small) && (
+          (imageFetchMode === ImageFetchMode.Large ||
+            imageFetchMode === ImageFetchMode.Small) && (
             <div>
               <ImageWithFallback
                 src={imageUrl}
@@ -83,7 +81,7 @@ export function HeritageObjectListItem({
                 width="0"
                 height="0"
                 sizes={
-                  imageVisibility === ImageVisibility.Large ? '270px' : '90px'
+                  imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'
                 }
                 quality={40}
                 className="w-20 -my-3"
@@ -91,7 +89,7 @@ export function HeritageObjectListItem({
             </div>
           )}
 
-        {imageVisibility !== 'hide' && !imageUrl && (
+        {imageFetchMode !== 'hide' && !imageUrl && (
           <div className="w-20 flex flex-col justify-center items-center text-xs text-neutral-400">
             {t('noImage')}
           </div>

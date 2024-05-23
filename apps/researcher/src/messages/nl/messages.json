@@ -52,7 +52,7 @@
     "resultView": "Resultaatweergave",
     "grid": "Raster",
     "list": "Lijst",
-    "resultAmount": "Aantal resultaten",
+    "resultLimit": "Aantal resultaten",
     "images": "Afbeeldingen",
     "hideImages": "Verberg afbeeldingen",
     "showSmallerImages": "Toon kleinere afbeeldingen",

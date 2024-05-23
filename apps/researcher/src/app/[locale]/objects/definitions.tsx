@@ -3,8 +3,8 @@ export enum ListView {
   List = 'list',
 }
 
-export enum ImageVisibility {
-  Hide = 'hide',
+export enum ImageFetchMode {
+  None = 'none',
   Small = 'small',
   Large = 'large',
 }

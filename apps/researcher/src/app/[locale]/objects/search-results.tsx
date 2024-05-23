@@ -182,7 +182,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
               baseUrl: '/objects',
               defaultSortBy: defaultSortByUserOption,
               view: searchParams.view,
-              imageVisibility: searchParams.imageVisibility,
+              imageFetchMode: searchParams.imageFetchMode,
             }}
           />
           <aside

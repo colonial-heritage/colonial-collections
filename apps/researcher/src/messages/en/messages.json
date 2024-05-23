@@ -52,7 +52,7 @@
     "resultView": "Result view",
     "grid": "Grid",
     "list": "List",
-    "resultAmount": "Result amount",
+    "resultLimit": "Number of results",
     "images": "Images",
     "hideImages": "Hide images",
     "showSmallerImages": "Show smaller images",

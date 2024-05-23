@@ -4,14 +4,14 @@ import PopoverMenu from '@/components/popover';
 import {useListStore} from '@colonial-collections/list-store';
 import {ListBulletIcon, Squares2X2Icon} from '@heroicons/react/24/solid';
 import {useTranslations} from 'next-intl';
-import {ImageVisibility} from './definitions';
+import {ImageFetchMode} from './definitions';
 
 export default function SettingsMenu() {
   const t = useTranslations('Settings');
   const view = useListStore(s => s.view);
-  const imageVisibility = useListStore(s => s.imageVisibility);
+  const imageFetchMode = useListStore(s => s.imageFetchMode);
   const viewChange = useListStore(s => s.viewChange);
-  const imageVisibilityChange = useListStore(s => s.imageVisibilityChange);
+  const imageFetchModeChange = useListStore(s => s.imageFetchModeChange);
   const limitChange = useListStore(s => s.limitChange);
   const limit = useListStore(s => s.limit);
 
@@ -36,7 +36,7 @@ export default function SettingsMenu() {
           </button>
         </div>
         <div className="p-4 border-b flex gap-2 flex-wrap">
-          <div className="w-full text-sm italic">{t('resultAmount')}</div>
+          <div className="w-full text-sm italic">{t('resultLimit')}</div>
           <select
             className="rounded p-2 text-sm border bg-neutral-100 pr-6"
             onChange={e => limitChange(parseInt(e.target.value))}
@@ -56,9 +56,9 @@ export default function SettingsMenu() {
               type="radio"
               id="hide"
               name="img"
-              value={ImageVisibility.Hide}
-              onChange={() => imageVisibilityChange(ImageVisibility.Hide)}
-              checked={imageVisibility === ImageVisibility.Hide}
+              value={ImageFetchMode.None}
+              onChange={() => imageFetchModeChange(ImageFetchMode.None)}
+              checked={imageFetchMode === ImageFetchMode.None}
             />
             <label htmlFor="hide">{t('hideImages')}</label>
           </div>
@@ -70,9 +70,9 @@ export default function SettingsMenu() {
                   type="radio"
                   id="small"
                   name="img"
-                  value={ImageVisibility.Small}
-                  onChange={() => imageVisibilityChange(ImageVisibility.Small)}
-                  checked={imageVisibility === ImageVisibility.Small}
+                  value={ImageFetchMode.Small}
+                  onChange={() => imageFetchModeChange(ImageFetchMode.Small)}
+                  checked={imageFetchMode === ImageFetchMode.Small}
                 />
                 <label htmlFor="small">{t('showSmallerImages')}</label>
               </div>
@@ -82,9 +82,9 @@ export default function SettingsMenu() {
                   type="radio"
                   id="large"
                   name="img"
-                  value={ImageVisibility.Large}
-                  onChange={() => imageVisibilityChange(ImageVisibility.Large)}
-                  checked={imageVisibility === ImageVisibility.Large}
+                  value={ImageFetchMode.Large}
+                  onChange={() => imageFetchModeChange(ImageFetchMode.Large)}
+                  checked={imageFetchMode === ImageFetchMode.Large}
                 />
                 <label htmlFor="large">{t('showLargerImages')}</label>
               </div>
@@ -97,11 +97,11 @@ export default function SettingsMenu() {
                 type="radio"
                 id="showImages"
                 name="img"
-                value={ImageVisibility.Small}
-                onChange={() => imageVisibilityChange('large')}
+                value={ImageFetchMode.Small}
+                onChange={() => imageFetchModeChange('large')}
                 checked={
-                  imageVisibility === ImageVisibility.Small ||
-                  imageVisibility === ImageVisibility.Large
+                  imageFetchMode === ImageFetchMode.Small ||
+                  imageFetchMode === ImageFetchMode.Large
                 }
               />
               <label htmlFor="showImages">{t('showImages')}</label>

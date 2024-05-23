@@ -19,7 +19,7 @@ export default function HeritageObjectList({
 }: Props) {
   const t = useTranslations('ObjectSearchResults');
   const view = useListStore(s => s.view);
-  const imageVisibility = useListStore(s => s.imageVisibility);
+  const imageFetchMode = useListStore(s => s.imageFetchMode);
 
   if (totalCount > 0) {
     if (view === 'grid') {
@@ -29,7 +29,7 @@ export default function HeritageObjectList({
             <HeritageObjectCard
               key={heritageObject.id}
               heritageObject={heritageObject}
-              imageVisibility={imageVisibility!}
+              imageFetchMode={imageFetchMode!}
             />
           ))}
         </div>
@@ -42,7 +42,7 @@ export default function HeritageObjectList({
               <HeritageObjectListItem
                 key={heritageObject.id}
                 heritageObject={heritageObject}
-                imageVisibility={imageVisibility!}
+                imageFetchMode={imageFetchMode!}
               />
             ))}
           </div>

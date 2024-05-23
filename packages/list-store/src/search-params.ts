@@ -16,13 +16,13 @@ const searchParamFilterSchema = z
 interface GetSearchParamsSchemaProps {
   defaultSortBy: string;
   defaultView?: string;
-  defaultImageVisibility?: string;
+  defaultImageFetchMode?: string;
 }
 
 function getSearchParamsSchema({
   defaultSortBy,
   defaultView,
-  defaultImageVisibility,
+  defaultImageFetchMode,
 }: GetSearchParamsSchemaProps) {
   return z.object({
     query: z.string().default(''),
@@ -41,12 +41,12 @@ function getSearchParamsSchema({
       .default(defaultView || '')
       // Don't add the default view to the search params.
       .transform(view => (view === defaultView ? '' : view)),
-    imageVisibility: z
+    imageFetchMode: z
       .string()
-      .default(defaultImageVisibility || '')
+      .default(defaultImageFetchMode || '')
       // Don't add the default image visibility to the search params.
-      .transform(imageVisibility =>
-        imageVisibility === defaultImageVisibility ? '' : imageVisibility
+      .transform(imageFetchMode =>
+        imageFetchMode === defaultImageFetchMode ? '' : imageFetchMode
       ),
     sortBy: z
       .string()
@@ -61,7 +61,7 @@ interface ClientSearchOptions {
   offset?: number;
   limit?: number;
   view?: string;
-  imageVisibility?: string;
+  imageFetchMode?: string;
   sortBy?: string;
   filters?: {
     [filterKey: string]: (string | number)[] | string | number | undefined;
@@ -69,7 +69,7 @@ interface ClientSearchOptions {
   baseUrl?: string;
   defaultSortBy: string;
   defaultView?: string;
-  defaultImageVisibility?: string;
+  defaultImageFetchMode?: string;
 }
 
 export function getUrlWithSearchParams({
@@ -77,25 +77,25 @@ export function getUrlWithSearchParams({
   offset,
   limit,
   view,
-  imageVisibility,
+  imageFetchMode,
   sortBy,
   filters,
   baseUrl = '/',
   defaultSortBy,
-  defaultImageVisibility,
+  defaultImageFetchMode,
   defaultView,
 }: ClientSearchOptions): string {
   const searchParams: {[key: string]: string | string[]} =
     getSearchParamsSchema({
       defaultSortBy,
-      defaultImageVisibility,
+      defaultImageFetchMode,
       defaultView,
     }).parse({
       query,
       offset,
       limit,
       view,
-      imageVisibility,
+      imageFetchMode,
       sortBy,
     });
 

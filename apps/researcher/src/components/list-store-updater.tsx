@@ -20,7 +20,7 @@ interface Props {
   };
   baseUrl: string;
   view?: string;
-  imageVisibility?: string;
+  imageFetchMode?: string;
 }
 
 export function ListStoreUpdater({
@@ -32,13 +32,13 @@ export function ListStoreUpdater({
   selectedFilters,
   baseUrl,
   view,
-  imageVisibility,
+  imageFetchMode,
 }: Props) {
   const router = useRouter();
 
   const defaultSortBy = useListStore(s => s.defaultSortBy);
   const defaultView = useListStore(s => s.defaultView);
-  const defaultImageVisibility = useListStore(s => s.defaultImageVisibility);
+  const defaultImageFetchMode = useListStore(s => s.defaultImageFetchMode);
 
   useUpdateListStore({
     totalCount,
@@ -48,7 +48,7 @@ export function ListStoreUpdater({
     sortBy,
     selectedFilters,
     view,
-    imageVisibility,
+    imageFetchMode,
   });
 
   useSearchParamsUpdate(router.replace);
@@ -62,9 +62,9 @@ export function ListStoreUpdater({
     baseUrl,
     limit,
     view,
-    imageVisibility,
+    imageFetchMode,
     defaultView,
-    defaultImageVisibility,
+    defaultImageFetchMode,
   });
 
   saveLastSearch(baseUrl, url);
