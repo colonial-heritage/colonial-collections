@@ -7,16 +7,21 @@ const defaultLimit = 25;
 
 // Only strings are allowed in the search params.
 const searchParamFilterSchema = z
-  .array(z.string())
-  .or(z.array(z.number().transform(value => `${value}`)))
-  .or(z.string())
-  .or(z.number().transform(value => `${value}`))
+  .array(z.coerce.string())
+  .or(z.coerce.string())
   .default('');
 
 interface GetSearchParamsSchemaProps {
   defaultSortBy: string;
   defaultView?: string;
   defaultImageFetchMode?: string;
+}
+
+function transformToStringAndRemoveDefault(defaultValue?: string) {
+  return z.coerce
+    .string()
+    .default('')
+    .transform(value => (value === defaultValue ? '' : value));
 }
 
 function getSearchParamsSchema({
@@ -26,33 +31,11 @@ function getSearchParamsSchema({
 }: GetSearchParamsSchemaProps) {
   return z.object({
     query: z.string().default(''),
-    offset: z
-      .number()
-      .default(0)
-      // Don't add the default offset of 0 to the search params.
-      .transform(offset => (offset > 0 ? `${offset}` : '')),
-    limit: z
-      .number()
-      .default(defaultLimit)
-      // Don't add the default limit of `defaultLimit` to the search params.
-      .transform(limit => (limit !== defaultLimit ? `${limit}` : '')),
-    view: z
-      .string()
-      .default(defaultView || '')
-      // Don't add the default view to the search params.
-      .transform(view => (view === defaultView ? '' : view)),
-    imageFetchMode: z
-      .string()
-      .default(defaultImageFetchMode || '')
-      // Don't add the default image visibility to the search params.
-      .transform(imageFetchMode =>
-        imageFetchMode === defaultImageFetchMode ? '' : imageFetchMode
-      ),
-    sortBy: z
-      .string()
-      .default(defaultSortBy)
-      // Don't add the default sort to the search params.
-      .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
+    offset: transformToStringAndRemoveDefault('0'),
+    limit: transformToStringAndRemoveDefault(`${defaultLimit}`),
+    view: transformToStringAndRemoveDefault(defaultView),
+    imageFetchMode: transformToStringAndRemoveDefault(defaultImageFetchMode),
+    sortBy: transformToStringAndRemoveDefault(defaultSortBy),
   });
 }
 
