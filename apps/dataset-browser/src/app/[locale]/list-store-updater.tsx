@@ -6,16 +6,16 @@ import {
   useUpdateListStore,
 } from '@colonial-collections/list-store';
 
-interface Props {
+interface Props<SortBy> {
   totalCount: number;
   offset: number;
   limit: number;
   query: string;
-  sortBy?: string;
+  sortBy?: SortBy;
   selectedFilters?: {[filterKey: string]: string[] | undefined};
 }
 
-export function ListStoreUpdater(updateProps: Props) {
+export function ListStoreUpdater<SortBy>(updateProps: Props<SortBy>) {
   const router = useRouter();
   useUpdateListStore(updateProps);
   useSearchParamsUpdate(router.replace);

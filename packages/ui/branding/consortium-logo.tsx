@@ -2,7 +2,7 @@ export function ConsortiumLogo() {
   return (
     <svg
       fill="currentColor"
-      className="fill-consortiumGreen-500 w-full h-auto"
+      className="fill-consortium-green-500 w-full h-auto"
       xmlns="http://www.w3.org/2000/svg"
       width="197.66"
       height="171.74"

@@ -2,14 +2,16 @@ import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
 import {HeritageObject} from '@colonial-collections/api';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
-import classNames from 'classnames';
 import ImageWithFallback from '@/components/image-with-fallback';
+import classNames from 'classnames';
+import {ImageFetchMode} from '@colonial-collections/list-store';
 
 interface Props {
   heritageObject: HeritageObject;
+  imageFetchMode: ImageFetchMode;
 }
 
-export default function HeritageObjectCard({heritageObject}: Props) {
+export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
   const t = useTranslations('HeritageObjectCard');
   const imageUrl =
     heritageObject.images && heritageObject.images.length > 0
@@ -20,43 +22,84 @@ export default function HeritageObjectCard({heritageObject}: Props) {
     <Link
       href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
       data-testid="object-card"
-      className="min-h-[200px] bg-neutral-100 border border-neutral-200 rounded-sm flex flex-col sm:flex-row gap-2 cursor-pointer hover:border-consortiumBlue-800 no-underline"
+      className=" mb-6 flex flex-col gap-2 hover:bg-white min-h-48 no-underline group transition-all border-2 hover:border-consortium-blue-800 rounded-sm pt-6 bg-neutral-100 border-white"
       aria-label={t('heritageObject')}
     >
       <div
-        className={classNames('w-full flex flex-col justify-between gap-2', {
-          '': imageUrl,
-        })}
+        className="font-semibold leading-5 px-2 "
+        data-testid="object-card-name"
       >
-        <div className="font-semibold p-2" data-testid="object-card-name">
-          {heritageObject.name || (
-            <span className="text-sm text-neutral-600">{t('noName')}</span>
-          )}
-        </div>
-        <div className="text-sm text-neutral-600 p-2">
-          {heritageObject.isPartOf?.publisher?.name}
-        </div>
+        {heritageObject.name || (
+          <span className="text-sm text-neutral-600">{t('noName')}</span>
+        )}
       </div>
-      {imageUrl ? (
-        <div className="flex justify-start items-start border-l border-neutral-200">
+      <div className="text-sm text-neutral-600 px-2 mb-4 grow">
+        {heritageObject.isPartOf?.publisher?.name}
+      </div>
+
+      {imageUrl && imageFetchMode !== ImageFetchMode.None && (
+        <div>
           <ImageWithFallback
             src={imageUrl}
             alt={heritageObject.name || ''}
             width="0"
             height="0"
-            // The size varies between 200 and 330px depending on the page width.
-            sizes="270px"
+            sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'}
             quality={40}
-            className="object-contain object-center w-full"
+            className={classNames('max-h-72 object-cover object-center', {
+              'w-full max-h-72': imageFetchMode === ImageFetchMode.Large,
+              'w-1/3': imageFetchMode === ImageFetchMode.Small,
+            })}
           />
-        </div>
-      ) : (
-        <div className="text-neutral-600 h-full sm:w-10 flex flex-col justify-center items-center">
-          <div className="text-xs sm:rotate-90 py-2 sm:py-0 whitespace-nowrap">
-            {t('noImage')}
-          </div>
         </div>
       )}
     </Link>
+  );
+}
+
+export function HeritageObjectListItem({
+  heritageObject,
+  imageFetchMode,
+}: Props) {
+  const t = useTranslations('HeritageObjectCard');
+  const imageUrl =
+    heritageObject.images && heritageObject.images.length > 0
+      ? heritageObject.images[0].contentUrl
+      : undefined;
+  return (
+    <div className="flex flex-row justify-start items-center gap-4 border-t border-neutral-200 py-3 w-full">
+      <div className="w-30">
+        {imageUrl && imageFetchMode !== ImageFetchMode.None && (
+          <div>
+            <ImageWithFallback
+              src={imageUrl}
+              alt={heritageObject.name || ''}
+              width="0"
+              height="0"
+              sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'}
+              quality={40}
+              className="w-20 -my-3"
+            />
+          </div>
+        )}
+
+        {!imageUrl && imageFetchMode !== ImageFetchMode.None && (
+          <div className="w-20 flex flex-col justify-center items-center text-xs text-neutral-400">
+            {t('noImage')}
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col items-baseline gap-1">
+        <div data-testid="object-card-name">
+          {heritageObject.name || (
+            <span className="text-sm text-neutral-600">{t('noName')}</span>
+          )}
+        </div>
+        <div className="text-sm text-neutral-600">
+          {heritageObject.isPartOf?.publisher?.name}
+        </div>
+      </div>
+      <div className="md:py-2 grow flex justify-end"></div>
+    </div>
   );
 }

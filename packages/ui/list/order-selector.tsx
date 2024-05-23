@@ -7,7 +7,7 @@ const defaultValues = [SortBy.RelevanceDesc, SortBy.NameAsc, SortBy.NameDesc];
 
 export function OrderSelector({values = defaultValues}: {values?: string[]}) {
   const t = useTranslations('Sort');
-  const sortBy = useListStore(s => s.sortBy);
+  const sortBy = useListStore<SortBy, SortBy>(s => s.sortBy);
   const sortChange = useListStore(s => s.sortChange);
 
   function handleSortByChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -17,7 +17,7 @@ export function OrderSelector({values = defaultValues}: {values?: string[]}) {
   return (
     <select
       name="location"
-      className="text-consortiumBlue-800 rounded p-2 text-sm bg-consortiumBlue-50 pr-6"
+      className="rounded p-2 text-sm border bg-neutral-100"
       value={sortBy}
       onChange={handleSortByChange}
       aria-label={t('accessibilitySelectToChangeOrder')}

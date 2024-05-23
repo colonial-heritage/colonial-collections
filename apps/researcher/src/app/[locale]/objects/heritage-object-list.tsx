@@ -1,6 +1,12 @@
-import HeritageObjectCard from './heritage-object-card';
+'use client';
+
+import {
+  HeritageObjectCard,
+  HeritageObjectListItem,
+} from './heritage-object-card';
 import {useTranslations} from 'next-intl';
 import {HeritageObjectSearchResult} from '@colonial-collections/api';
+import {useListStore} from '@colonial-collections/list-store';
 
 interface Props {
   heritageObjects: HeritageObjectSearchResult['heritageObjects'];
@@ -12,18 +18,37 @@ export default function HeritageObjectList({
   totalCount,
 }: Props) {
   const t = useTranslations('ObjectSearchResults');
+  const view = useListStore(s => s.view);
+  const imageFetchMode = useListStore(s => s.imageFetchMode);
 
   if (totalCount > 0) {
-    return (
-      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6 mt-6">
-        {heritageObjects.map(heritageObject => (
-          <HeritageObjectCard
-            key={heritageObject.id}
-            heritageObject={heritageObject}
-          />
-        ))}
-      </div>
-    );
+    if (view === 'grid') {
+      return (
+        <div className="columns-2 gap-6 lg:columns-3 xl:columns-4 2xl:columns-5 mt-6 *:break-inside-avoid">
+          {heritageObjects.map(heritageObject => (
+            <HeritageObjectCard
+              key={heritageObject.id}
+              heritageObject={heritageObject}
+              imageFetchMode={imageFetchMode!}
+            />
+          ))}
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex-col flex">
+          <div className="flex flex-col mt-6 w-full">
+            {heritageObjects.map(heritageObject => (
+              <HeritageObjectListItem
+                key={heritageObject.id}
+                heritageObject={heritageObject}
+                imageFetchMode={imageFetchMode!}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    }
   }
 
   return <div data-testid="no-results">{t('noResults')}</div>;

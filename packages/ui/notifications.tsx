@@ -6,7 +6,7 @@ import {ReactNode, useEffect} from 'react';
 import {usePathname} from 'next/navigation';
 
 const typeColors = {
-  success: 'greenGrey',
+  success: 'green-grey',
   warning: 'yellow',
   error: 'red',
 };

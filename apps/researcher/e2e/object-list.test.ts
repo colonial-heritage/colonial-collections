@@ -124,7 +124,7 @@ test.describe('Object list page logged in', () => {
     const objectUrl = await getObjectUrl();
 
     await gotoSignedIn(objectUrl);
-    await page.getByTestId('add-to-list-button').hover();
+    await page.getByTestId('popover-menu-button').hover();
     await page.getByTestId(`object-list-${listId}`).click();
     await expect(page.getByTestId('notification')).toHaveCount(2);
     await page.goto(`/en/communities/${community.slug}/${listId}`);

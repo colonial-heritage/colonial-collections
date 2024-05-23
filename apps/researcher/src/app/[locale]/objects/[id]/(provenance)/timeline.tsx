@@ -72,7 +72,7 @@ export default function ProvenanceTimeline() {
                         >
                           <div
                             style={getEventStyles(event)}
-                            className="h-10 mt-1 text-center flex justify-center items-center bg-consortiumBlue-500 rounded-full py-1 min-w-8"
+                            className="h-10 mt-1 text-center flex justify-center items-center bg-consortium-blue-500 rounded-full py-1 min-w-8"
                           >
                             <div className="absolute">
                               <TimelineButton event={event} />
