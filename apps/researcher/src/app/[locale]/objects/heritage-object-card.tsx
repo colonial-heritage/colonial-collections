@@ -4,11 +4,11 @@ import {HeritageObject} from '@colonial-collections/api';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import ImageWithFallback from '@/components/image-with-fallback';
 import classNames from 'classnames';
-import {ImageFetchMode} from './definitions';
+import {ImageFetchMode} from '@colonial-collections/list-store';
 
 interface Props {
   heritageObject: HeritageObject;
-  imageFetchMode: string;
+  imageFetchMode: ImageFetchMode;
 }
 
 export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
@@ -89,11 +89,13 @@ export function HeritageObjectListItem({
             </div>
           )}
 
-        {imageFetchMode !== 'hide' && !imageUrl && (
-          <div className="w-20 flex flex-col justify-center items-center text-xs text-neutral-400">
-            {t('noImage')}
-          </div>
-        )}
+        {(imageFetchMode === ImageFetchMode.Large ||
+          imageFetchMode === ImageFetchMode.Small) &&
+          !imageUrl && (
+            <div className="w-20 flex flex-col justify-center items-center text-xs text-neutral-400">
+              {t('noImage')}
+            </div>
+          )}
       </div>
       <div className="flex flex-col items-baseline gap-1">
         <div data-testid="object-card-name">

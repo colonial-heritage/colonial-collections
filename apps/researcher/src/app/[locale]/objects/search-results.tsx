@@ -9,6 +9,8 @@ import {
 import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
+  ImageFetchMode,
+  ListView,
   Type as SearchParamType,
 } from '@colonial-collections/list-store';
 import {
@@ -181,8 +183,8 @@ export default async function SearchResults({searchParams = {}}: Props) {
               selectedFilters: searchOptions.filters,
               baseUrl: '/objects',
               defaultSortBy: defaultSortByUserOption,
-              view: searchParams.view,
-              imageFetchMode: searchParams.imageFetchMode,
+              view: searchParams.view as ListView,
+              imageFetchMode: searchParams.imageFetchMode as ImageFetchMode,
             }}
           />
           <aside

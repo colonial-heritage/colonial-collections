@@ -1,10 +1,13 @@
 'use client';
 
 import PopoverMenu from '@/components/popover';
-import {useListStore} from '@colonial-collections/list-store';
+import {
+  useListStore,
+  ImageFetchMode,
+  ListView,
+} from '@colonial-collections/list-store';
 import {ListBulletIcon, Squares2X2Icon} from '@heroicons/react/24/solid';
 import {useTranslations} from 'next-intl';
-import {ImageFetchMode} from './definitions';
 
 export default function SettingsMenu() {
   const t = useTranslations('Settings');
@@ -21,14 +24,14 @@ export default function SettingsMenu() {
         <div className="p-4 border-b flex gap-2 flex-wrap">
           <div className="w-full text-sm italic">{t('resultView')}:</div>
           <button
-            onClick={() => viewChange('grid')}
+            onClick={() => viewChange(ListView.Grid)}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
           >
             <Squares2X2Icon className="w-4 h-4 fill-neutral-800" />
             {t('grid')}
           </button>
           <button
-            onClick={() => viewChange('list')}
+            onClick={() => viewChange(ListView.List)}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
           >
             <ListBulletIcon className="w-4 h-4 fill-neutral-800" />
@@ -98,7 +101,7 @@ export default function SettingsMenu() {
                 id="showImages"
                 name="img"
                 value={ImageFetchMode.Small}
-                onChange={() => imageFetchModeChange('large')}
+                onChange={() => imageFetchModeChange(ImageFetchMode.Large)}
                 checked={
                   imageFetchMode === ImageFetchMode.Small ||
                   imageFetchMode === ImageFetchMode.Large

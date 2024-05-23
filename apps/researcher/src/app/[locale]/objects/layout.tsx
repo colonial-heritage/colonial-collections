@@ -1,8 +1,11 @@
 import BaseLayout from '@/components/base-layout';
-import {ListProvider} from '@colonial-collections/list-store';
+import {
+  ListProvider,
+  ImageFetchMode,
+  ListView,
+} from '@colonial-collections/list-store';
 import {defaultSortByUserOption} from './sort-mapping';
 import {ReactNode} from 'react';
-import {ImageFetchMode, ListView} from './definitions';
 
 export default function ObjectLayout({children}: {children: ReactNode}) {
   return (

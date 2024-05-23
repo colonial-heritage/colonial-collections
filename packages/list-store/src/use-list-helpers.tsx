@@ -3,18 +3,19 @@
 import {useEffect, useMemo, useTransition} from 'react';
 import {useListStore} from './use-list-store';
 import {getUrlWithSearchParams} from './search-params';
+import {ImageFetchMode, ListView} from './definitions';
 
-interface Props {
+interface Props<SortBy> {
   totalCount: number;
   offset: number;
   limit: number;
   query: string;
-  sortBy?: string;
+  sortBy?: SortBy;
   selectedFilters?: {
     [filterKey: string]: (string | number)[] | number | string | undefined;
   };
-  view?: string;
-  imageFetchMode?: string;
+  view?: ListView;
+  imageFetchMode?: ImageFetchMode;
   routerReplace: (url: string, options?: {scroll?: boolean}) => void;
 }
 
@@ -64,7 +65,9 @@ export const useListHref = () => {
   return href;
 };
 
-export function useSearchParamsUpdate(routerReplace: Props['routerReplace']) {
+export function useSearchParamsUpdate<SortBy>(
+  routerReplace: Props<SortBy>['routerReplace']
+) {
   const [isPending, startTransition] = useTransition();
   const href = useListHref();
 
@@ -81,7 +84,7 @@ export function useSearchParamsUpdate(routerReplace: Props['routerReplace']) {
   }, [href, isPending, newDataNeeded, routerReplace, transitionStarted]);
 }
 
-export const useUpdateListStore = ({
+export function useUpdateListStore<SortBy>({
   totalCount,
   offset,
   limit,
@@ -90,7 +93,7 @@ export const useUpdateListStore = ({
   query,
   sortBy,
   selectedFilters,
-}: Omit<Props, 'routerReplace'>) => {
+}: Omit<Props<SortBy>, 'routerReplace'>) {
   const setNewData = useListStore(s => s.setNewData);
 
   useEffect(() => {
@@ -115,4 +118,4 @@ export const useUpdateListStore = ({
     totalCount,
     view,
   ]);
-};
+}

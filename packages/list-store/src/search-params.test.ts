@@ -4,7 +4,7 @@ import {
   getClientSortBy,
   FromSearchParamsToSearchOptionsProps,
 } from './search-params';
-import {SortBy, defaultSortBy} from './sort';
+import {SortBy, defaultSortBy} from './definitions';
 import {describe, expect, it} from '@jest/globals';
 import {z} from 'zod';
 

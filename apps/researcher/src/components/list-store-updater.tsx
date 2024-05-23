@@ -2,6 +2,8 @@
 
 import {useRouter} from '@/navigation';
 import {
+  ImageFetchMode,
+  ListView,
   getUrlWithSearchParams,
   useListStore,
   useSearchParamsUpdate,
@@ -9,21 +11,21 @@ import {
 } from '@colonial-collections/list-store';
 import {saveLastSearch} from '@/lib/last-search';
 
-interface Props {
+interface Props<SortBy> {
   totalCount: number;
   offset: number;
   limit: number;
   query: string;
-  sortBy?: string;
+  sortBy?: SortBy;
   selectedFilters?: {
     [filterKey: string]: (string | number)[] | number | string | undefined;
   };
   baseUrl: string;
-  view?: string;
-  imageFetchMode?: string;
+  view?: ListView;
+  imageFetchMode?: ImageFetchMode;
 }
 
-export function ListStoreUpdater({
+export function ListStoreUpdater<SortBy>({
   totalCount,
   offset,
   limit,
@@ -33,10 +35,10 @@ export function ListStoreUpdater({
   baseUrl,
   view,
   imageFetchMode,
-}: Props) {
+}: Props<SortBy>) {
   const router = useRouter();
 
-  const defaultSortBy = useListStore(s => s.defaultSortBy);
+  const defaultSortBy = useListStore<SortBy, SortBy>(s => s.defaultSortBy);
   const defaultView = useListStore(s => s.defaultView);
   const defaultImageFetchMode = useListStore(s => s.defaultImageFetchMode);
 
@@ -53,7 +55,7 @@ export function ListStoreUpdater({
 
   useSearchParamsUpdate(router.replace);
 
-  const url = getUrlWithSearchParams({
+  const url = getUrlWithSearchParams<SortBy>({
     query,
     offset,
     sortBy,

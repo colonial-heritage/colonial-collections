@@ -1,5 +1,5 @@
 import {z, Schema} from 'zod';
-import {SortBy} from './sort';
+import {ImageFetchMode, ListView} from './definitions';
 
 export type Type = 'string' | 'array' | 'number';
 
@@ -11,51 +11,53 @@ const searchParamFilterSchema = z
   .or(z.coerce.string())
   .default('');
 
-interface GetSearchParamsSchemaProps {
-  defaultSortBy: string;
-  defaultView?: string;
-  defaultImageFetchMode?: string;
+interface GetSearchParamsSchemaProps<SortBy> {
+  defaultSortBy: SortBy;
+  defaultView?: ListView;
+  defaultImageFetchMode?: ImageFetchMode;
 }
 
-function transformToStringAndRemoveDefault(defaultValue?: string) {
+function transformToStringAndRemoveDefaultSchema(defaultValue?: string) {
   return z.coerce
     .string()
     .default('')
     .transform(value => (value === defaultValue ? '' : value));
 }
 
-function getSearchParamsSchema({
+function getSearchParamsSchema<SortBy>({
   defaultSortBy,
   defaultView,
   defaultImageFetchMode,
-}: GetSearchParamsSchemaProps) {
+}: GetSearchParamsSchemaProps<SortBy>) {
   return z.object({
     query: z.string().default(''),
-    offset: transformToStringAndRemoveDefault('0'),
-    limit: transformToStringAndRemoveDefault(`${defaultLimit}`),
-    view: transformToStringAndRemoveDefault(defaultView),
-    imageFetchMode: transformToStringAndRemoveDefault(defaultImageFetchMode),
-    sortBy: transformToStringAndRemoveDefault(defaultSortBy),
+    offset: transformToStringAndRemoveDefaultSchema('0'),
+    limit: transformToStringAndRemoveDefaultSchema(`${defaultLimit}`),
+    view: transformToStringAndRemoveDefaultSchema(defaultView),
+    imageFetchMode: transformToStringAndRemoveDefaultSchema(
+      defaultImageFetchMode
+    ),
+    sortBy: transformToStringAndRemoveDefaultSchema(defaultSortBy as string),
   });
 }
 
-interface ClientSearchOptions {
+interface ClientSearchOptions<SortBy> {
   query?: string;
   offset?: number;
   limit?: number;
-  view?: string;
-  imageFetchMode?: string;
-  sortBy?: string;
+  view?: ListView;
+  imageFetchMode?: ImageFetchMode;
+  sortBy?: SortBy;
   filters?: {
     [filterKey: string]: (string | number)[] | string | number | undefined;
   };
   baseUrl?: string;
-  defaultSortBy: string;
-  defaultView?: string;
-  defaultImageFetchMode?: string;
+  defaultSortBy: SortBy;
+  defaultView?: ListView;
+  defaultImageFetchMode?: ImageFetchMode;
 }
 
-export function getUrlWithSearchParams({
+export function getUrlWithSearchParams<SortBy>({
   query,
   offset,
   limit,
@@ -67,7 +69,7 @@ export function getUrlWithSearchParams({
   defaultSortBy,
   defaultImageFetchMode,
   defaultView,
-}: ClientSearchOptions): string {
+}: ClientSearchOptions<SortBy>): string {
   const searchParams: {[key: string]: string | string[]} =
     getSearchParamsSchema({
       defaultSortBy,
@@ -204,7 +206,7 @@ export function fromSearchParamsToSearchOptions({
   });
 
   const {sortBy: sortBySearchOption, sortOrder} =
-    (sortBy && sortMapping[sortBy as SortBy]) || {};
+    (sortBy && sortMapping[sortBy as string]) || {};
 
   const searchOptions = searchOptionsWithFallbackSchema.parse({
     offset,
@@ -228,7 +230,7 @@ interface SortPairProps<SortBySearchOption, SortOrder> {
   };
 }
 
-export function getClientSortBy<SortBySearchOption, SortOrder>({
+export function getClientSortBy<SortBySearchOption, SortOrder, SortBy>({
   sortPair,
   sortMapping,
 }: SortPairProps<SortBySearchOption, SortOrder>): SortBy {
