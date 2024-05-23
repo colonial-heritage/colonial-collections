@@ -37,24 +37,22 @@ export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
         {heritageObject.isPartOf?.publisher?.name}
       </div>
 
-      {imageUrl &&
-        (imageFetchMode === ImageFetchMode.Large ||
-          imageFetchMode === ImageFetchMode.Small) && (
-          <div>
-            <ImageWithFallback
-              src={imageUrl}
-              alt={heritageObject.name || ''}
-              width="0"
-              height="0"
-              sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'}
-              quality={40}
-              className={classNames('max-h-72 object-cover object-center', {
-                'w-full max-h-72': imageFetchMode === ImageFetchMode.Large,
-                'w-1/3': imageFetchMode === ImageFetchMode.Small,
-              })}
-            />
-          </div>
-        )}
+      {imageUrl && imageFetchMode !== ImageFetchMode.None && (
+        <div>
+          <ImageWithFallback
+            src={imageUrl}
+            alt={heritageObject.name || ''}
+            width="0"
+            height="0"
+            sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'}
+            quality={40}
+            className={classNames('max-h-72 object-cover object-center', {
+              'w-full max-h-72': imageFetchMode === ImageFetchMode.Large,
+              'w-1/3': imageFetchMode === ImageFetchMode.Small,
+            })}
+          />
+        </div>
+      )}
     </Link>
   );
 }
@@ -71,31 +69,25 @@ export function HeritageObjectListItem({
   return (
     <div className="flex flex-row justify-start items-center gap-4 border-t border-neutral-200 py-3 w-full">
       <div className="w-30">
-        {imageUrl &&
-          (imageFetchMode === ImageFetchMode.Large ||
-            imageFetchMode === ImageFetchMode.Small) && (
-            <div>
-              <ImageWithFallback
-                src={imageUrl}
-                alt={heritageObject.name || ''}
-                width="0"
-                height="0"
-                sizes={
-                  imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'
-                }
-                quality={40}
-                className="w-20 -my-3"
-              />
-            </div>
-          )}
+        {imageUrl && imageFetchMode !== ImageFetchMode.None && (
+          <div>
+            <ImageWithFallback
+              src={imageUrl}
+              alt={heritageObject.name || ''}
+              width="0"
+              height="0"
+              sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'}
+              quality={40}
+              className="w-20 -my-3"
+            />
+          </div>
+        )}
 
-        {(imageFetchMode === ImageFetchMode.Large ||
-          imageFetchMode === ImageFetchMode.Small) &&
-          !imageUrl && (
-            <div className="w-20 flex flex-col justify-center items-center text-xs text-neutral-400">
-              {t('noImage')}
-            </div>
-          )}
+        {!imageUrl && imageFetchMode !== ImageFetchMode.None && (
+          <div className="w-20 flex flex-col justify-center items-center text-xs text-neutral-400">
+            {t('noImage')}
+          </div>
+        )}
       </div>
       <div className="flex flex-col items-baseline gap-1">
         <div data-testid="object-card-name">

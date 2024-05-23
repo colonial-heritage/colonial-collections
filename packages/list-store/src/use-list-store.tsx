@@ -172,11 +172,12 @@ export function ListProvider<SortBy>({
       ...initialList,
       defaultSortBy,
       defaultView,
-      // Don't set `imageFetchMode` to `defaultImageFetchMode` here so images won't load by default.
-      // Set the value in the setNewData method instead, so we know if the user changed the value.
       defaultImageFetchMode,
       sortBy: defaultSortBy,
       view: defaultView,
+      // Set the default `imageFetchMode` to none so images won't load by default.
+      // As soon as the search results are loaded this will be overridden by the user setting.
+      imageFetchMode: ImageFetchMode.None,
       baseUrl,
     });
   }
