@@ -134,10 +134,10 @@
   "TraditionalKnowledgeLabels": {
     "title": "Traditional Knowledge Labels",
     "description": "The TK Labels support the inclusion of local protocols for access and use to cultural heritage that is digitally circulating outside community contexts. <link> Learn more about the Traditional Knowledge Labels </link>.",
-    "nonVerified": "Non-Verified",
-    "nonVerifiedDescription": "This material has not been verified by the community. Reasons for this could include that it has not been appropriately vetted, has mistakes, omissions, derogatory language, lack of informed consent, or its process of creation was through dishonest research which did not follow proper community protocols. Each Label is meant to be customized by a community. See below for a Label template text.",
+    "attributionIncomplete": "Notice: Attribution Incomplete",
+    "attributionIncompleteDescription": "Collections and items in our institution have incomplete, inaccurate, and/or missing attribution. We are using this notice to clearly identify this material so that it can be updated, or corrected by communities of origin. Our institution is committed to collaboration and partnerships to address this problem of incorrect or missing attribution.",
     "providedBy": "Provided by <name></name>",
-    "defaultLabel": "This is a default label if no other labels are asigned."
+    "defaultLabel": "This is a default notice if no other labels or notices are asigned."
   },
   "Provenance": {
     "title": "Provenance",
