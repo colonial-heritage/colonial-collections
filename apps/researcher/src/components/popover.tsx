@@ -61,10 +61,13 @@ export default function PopoverMenu({
             >
               {buttonText}
               <ChevronDownIcon
-                className={classNames('-mr-1 h-5 w-5 text-consortium-blue-800', {
-                  'text-consortium-blue-800': variant === 'primary',
-                  'text-neutral-800': variant === 'default',
-                })}
+                className={classNames(
+                  '-mr-1 h-5 w-5 text-consortium-blue-800',
+                  {
+                    'text-consortium-blue-800': variant === 'primary',
+                    'text-neutral-800': variant === 'default',
+                  }
+                )}
                 aria-hidden="true"
               />
             </Popover.Button>

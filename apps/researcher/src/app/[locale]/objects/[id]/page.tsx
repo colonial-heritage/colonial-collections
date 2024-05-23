@@ -91,7 +91,9 @@ export default async function Details({params}: Props) {
                 data-testid="page-title"
               >
                 {object.name || (
-                  <span className="text-consortium-blue-100">{t('noName')}</span>
+                  <span className="text-consortium-blue-100">
+                    {t('noName')}
+                  </span>
                 )}
               </h1>
 
