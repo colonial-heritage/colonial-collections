@@ -34,11 +34,11 @@ export default function DataTable() {
     <div className="w-full block">
       <div className="flex justify-between items-center">
         <h3 className="my-4 w-full pt-4">{t('dataTableTitle')}</h3>
-        <div className="flex items-center text-consortiumBlue-800 ">
+        <div className="flex items-center text-consortium-blue-800 ">
           {selectedEvents.length > 0 && (
             <button
               onClick={showAllClick}
-              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumBlue-100 hover:bg-consortiumBlue-50 text-neutral-800 transition flex items-center gap-1 mr-2 whitespace-nowrap"
+              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-neutral-800 transition flex items-center gap-1 mr-2 whitespace-nowrap"
             >
               {t('showAll')}
             </button>

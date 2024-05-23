@@ -108,7 +108,7 @@
     "licensesFilter": "Licenses",
     "publishersFilter": "Publishers",
     "search": "Search",
-    "filters": "Filters",
+    "filters": "Selected facets",
     "expandFilter": "Expand",
     "clearAllFilters": "Clear all",
     "filterSearchPlaceholder": "Filter on {filterName}",

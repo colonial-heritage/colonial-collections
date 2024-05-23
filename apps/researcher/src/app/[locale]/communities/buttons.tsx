@@ -19,7 +19,7 @@ export function AddCommunityButton() {
             `/communities/${organization.slug}/created`,
         })
       }
-      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumBlue-800 text-consortiumGreen-300 transition flex items-center gap-1"
+      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-blue-800 text-consortium-green-300 transition flex items-center gap-1"
     >
       {t('addCommunity')}
     </button>

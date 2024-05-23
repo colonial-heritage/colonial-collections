@@ -1,55 +1,86 @@
 import {z, Schema} from 'zod';
-import {SortBy} from './sort';
+import {ImageFetchMode, ListView} from './definitions';
 
 export type Type = 'string' | 'array' | 'number';
 
+const defaultLimit = 25;
+
 // Only strings are allowed in the search params.
 const searchParamFilterSchema = z
-  .array(z.string())
-  .or(z.array(z.number().transform(value => `${value}`)))
-  .or(z.string())
-  .or(z.number().transform(value => `${value}`))
+  .array(z.coerce.string())
+  .or(z.coerce.string())
   .default('');
 
-function getSearchParamsSchema(defaultSortBy: string) {
+interface GetSearchParamsSchemaProps<SortBy> {
+  defaultSortBy: SortBy;
+  defaultView?: ListView;
+  defaultImageFetchMode?: ImageFetchMode;
+}
+
+function transformToStringAndRemoveDefaultSchema(defaultValue?: string) {
+  return z.coerce
+    .string()
+    .default('')
+    .transform(value => (value === defaultValue ? '' : value));
+}
+
+function getSearchParamsSchema<SortBy>({
+  defaultSortBy,
+  defaultView,
+  defaultImageFetchMode,
+}: GetSearchParamsSchemaProps<SortBy>) {
   return z.object({
     query: z.string().default(''),
-    offset: z
-      .number()
-      .default(0)
-      // Don't add the default offset of 0 to the search params.
-      .transform(offset => (offset > 0 ? `${offset}` : '')),
-    sortBy: z
-      .string()
-      .default(defaultSortBy)
-      // Don't add the default sort to the search params.
-      .transform(sortBy => (sortBy === defaultSortBy ? '' : sortBy)),
+    offset: transformToStringAndRemoveDefaultSchema('0'),
+    limit: transformToStringAndRemoveDefaultSchema(`${defaultLimit}`),
+    view: transformToStringAndRemoveDefaultSchema(defaultView),
+    imageFetchMode: transformToStringAndRemoveDefaultSchema(
+      defaultImageFetchMode
+    ),
+    sortBy: transformToStringAndRemoveDefaultSchema(defaultSortBy as string),
   });
 }
 
-interface ClientSearchOptions {
+interface ClientSearchOptions<SortBy> {
   query?: string;
   offset?: number;
-  sortBy?: string;
+  limit?: number;
+  view?: ListView;
+  imageFetchMode?: ImageFetchMode;
+  sortBy?: SortBy;
   filters?: {
     [filterKey: string]: (string | number)[] | string | number | undefined;
   };
   baseUrl?: string;
-  defaultSortBy: string;
+  defaultSortBy: SortBy;
+  defaultView?: ListView;
+  defaultImageFetchMode?: ImageFetchMode;
 }
 
-export function getUrlWithSearchParams({
+export function getUrlWithSearchParams<SortBy>({
   query,
   offset,
+  limit,
+  view,
+  imageFetchMode,
   sortBy,
   filters,
-  defaultSortBy,
   baseUrl = '/',
-}: ClientSearchOptions): string {
+  defaultSortBy,
+  defaultImageFetchMode,
+  defaultView,
+}: ClientSearchOptions<SortBy>): string {
   const searchParams: {[key: string]: string | string[]} =
-    getSearchParamsSchema(defaultSortBy).parse({
+    getSearchParamsSchema({
+      defaultSortBy,
+      defaultImageFetchMode,
+      defaultView,
+    }).parse({
       query,
       offset,
+      limit,
+      view,
+      imageFetchMode,
       sortBy,
     });
 
@@ -121,7 +152,7 @@ export interface FromSearchParamsToSearchOptionsProps {
 
 // This function translates the search params to valid search options.
 export function fromSearchParamsToSearchOptions({
-  searchParams: {query, offset, sortBy, ...filters},
+  searchParams: {query, offset, sortBy, limit, ...filters},
   sortOptions: {
     SortByEnum,
     SortOrderEnum,
@@ -143,7 +174,7 @@ export function fromSearchParamsToSearchOptions({
       .string()
       .transform(limitString => +limitString)
       .pipe(z.number().int().positive())
-      .or(fallback(12)),
+      .or(fallback(defaultLimit)),
     filters: z.object(
       filterKeys.reduce(
         (acc, filterKey) => {
@@ -175,14 +206,15 @@ export function fromSearchParamsToSearchOptions({
   });
 
   const {sortBy: sortBySearchOption, sortOrder} =
-    (sortBy && sortMapping[sortBy as SortBy]) || {};
+    (sortBy && sortMapping[sortBy as string]) || {};
 
   const searchOptions = searchOptionsWithFallbackSchema.parse({
     offset,
     filters,
     sortBy: sortBySearchOption,
     sortOrder: sortOrder,
-    query: query,
+    query,
+    limit,
   });
 
   return searchOptions;
@@ -198,7 +230,7 @@ interface SortPairProps<SortBySearchOption, SortOrder> {
   };
 }
 
-export function getClientSortBy<SortBySearchOption, SortOrder>({
+export function getClientSortBy<SortBySearchOption, SortOrder, SortBy>({
   sortPair,
   sortMapping,
 }: SortPairProps<SortBySearchOption, SortOrder>): SortBy {

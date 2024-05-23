@@ -64,14 +64,14 @@ export default async function Details({params}: Props) {
   return (
     <>
       <div className="flex flex-col gap-8 pb-40">
-        <div className="bg-consortiumBlue-800 text-white w-full">
+        <div className="bg-consortium-blue-800 text-white w-full">
           <div className="px-4 sm:px-10 flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto pt-10">
             <div>
               <ToFilteredListButton
                 baseUrl="/objects"
-                className="no-underline rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortiumBlue-100 text-consortiumBlue-800 flex gap-1 items-center"
+                className="no-underline rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortium-blue-100 text-consortium-blue-800 flex gap-1 items-center"
               >
-                <ChevronLeftIcon className="w-4 h-4 fill-consortiumBlue-800" />
+                <ChevronLeftIcon className="w-4 h-4 fill-consortium-blue-800" />
                 {t('backButton')}
               </ToFilteredListButton>
             </div>
@@ -82,8 +82,8 @@ export default async function Details({params}: Props) {
 
           <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto py-10 md:pt-10 md:pb-20 xt:py-35 xl:pb-40 flex flex-col lg:flex-row gap-10">
             <div className="w-full lg:w-2/3 xl:w-3/4">
-              <div className="text-sm text-consortiumBlue-100 mb-4 lg:mb-10 flex gap-1">
-                <ObjectIcon className='w-5 h-5 stroke-consortiumBlue-100"' />
+              <div className="text-sm text-consortium-blue-100 mb-4 lg:mb-10 flex gap-1">
+                <ObjectIcon className='w-5 h-5 stroke-consortium-blue-100"' />
                 {t('object')}
               </div>
               <h1
@@ -91,15 +91,17 @@ export default async function Details({params}: Props) {
                 data-testid="page-title"
               >
                 {object.name || (
-                  <span className="text-consortiumBlue-100">{t('noName')}</span>
+                  <span className="text-consortium-blue-100">
+                    {t('noName')}
+                  </span>
                 )}
               </h1>
 
-              <div className="text-consortiumBlue-100 mt-4 lg:mt-10 flex flex-col sm:flex-row gap-5 lg:gap-10">
+              <div className="text-consortium-blue-100 mt-4 lg:mt-10 flex flex-col sm:flex-row gap-5 lg:gap-10">
                 {enrichmentsAboutName?.slice(0, 3).map(enrichment => (
                   <div key={enrichment.id} className="font-semibold text-white">
                     <div>{enrichment.description}</div>
-                    <div className="text-sm font-normal text-consortiumBlue-100">
+                    <div className="text-sm font-normal text-consortium-blue-100">
                       {ISO6391.getName(enrichment.inLanguage as LanguageCode)}
                     </div>
                   </div>
@@ -107,7 +109,7 @@ export default async function Details({params}: Props) {
               </div>
             </div>
 
-            <div className="w-full lg:w-1/3 xl:w-1/4 text-sm text-consortiumBlue-100 lg:pt-16">
+            <div className="w-full lg:w-1/3 xl:w-1/4 text-sm text-consortium-blue-100 lg:pt-16">
               {organization && (
                 <>
                   <div className="italic">{t('providerCurrentHolder')}</div>

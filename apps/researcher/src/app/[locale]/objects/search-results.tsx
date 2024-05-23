@@ -9,6 +9,8 @@ import {
 import {
   fromSearchParamsToSearchOptions,
   getClientSortBy,
+  ImageFetchMode,
+  ListView,
   Type as SearchParamType,
 } from '@colonial-collections/list-store';
 import {
@@ -36,6 +38,8 @@ import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from '@/components/list-store-updater';
 import {LocaleEnum} from '@/definitions';
+import {SettingsButton} from '@/components/buttons';
+import SettingsMenu from './settings-menu';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -179,6 +183,8 @@ export default async function SearchResults({searchParams = {}}: Props) {
               selectedFilters: searchOptions.filters,
               baseUrl: '/objects',
               defaultSortBy: defaultSortByUserOption,
+              view: searchParams.view as ListView,
+              imageFetchMode: searchParams.imageFetchMode as ImageFetchMode,
             }}
           />
           <aside
@@ -188,11 +194,14 @@ export default async function SearchResults({searchParams = {}}: Props) {
             <FacetMenu filters={searchResult.filters} />
           </aside>
 
-          <main className="w-full md:w-2/3 lg:w-4/5 order-2 md:order-1">
+          <main
+            className="w-full md:w-2/3 lg:w-4/5 order-2 md:order-1"
+            id="search-results"
+          >
             <SmallScreenSubMenu>
-              <SubMenuButton className="md:hidden py-2 px-3 rounded-full bg-consortiumGreen-300 text-consortiumBlue-800 transition flex items-center gap-1 text-sm my-2">
+              <SubMenuButton className="md:hidden py-2 px-3 rounded-full bg-consortium-green-300 text-consortium-blue-800 transition flex items-center gap-1 text-sm my-2">
                 <AdjustmentsHorizontalIcon
-                  className="ml-1 h-4 w-4 flex-shrink-0 text-consortiumBlue-800"
+                  className="ml-1 h-4 w-4 flex-shrink-0 text-consortium-blue-800"
                   aria-hidden="true"
                 />
                 <span>{t('filters')}</span>
@@ -201,14 +210,17 @@ export default async function SearchResults({searchParams = {}}: Props) {
                 <FacetMenu filters={searchResult.filters} />
               </SubMenuDialog>
             </SmallScreenSubMenu>
-            <div
-              className="flex flex-col gap-2 sm:flex-row sm:justify-between"
-              id="search-results"
-            >
+            <SelectedFilters
+              filters={searchResult.filters}
+              filterSettings={filterSettings}
+            />
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end mt-4">
               <h2 className="text-xl">
                 {t('title', {totalDatasets: searchResult.totalCount})}
               </h2>
-              <div className="flex flex-col sm:flex-row justify-end gap-2">
+              <div className="flex flex-col sm:flex-row justify-end gap-4 relative flex-wrap">
+                <SettingsButton>{t('addObjectsToList')}</SettingsButton>
+                <SettingsMenu />
                 <OrderSelector
                   values={[
                     SortByUserOption.DateCreatedDesc,
@@ -219,10 +231,6 @@ export default async function SearchResults({searchParams = {}}: Props) {
                 />
               </div>
             </div>
-            <SelectedFilters
-              filters={searchResult.filters}
-              filterSettings={filterSettings}
-            />
             <HeritageObjectList
               heritageObjects={searchResult.heritageObjects}
               totalCount={searchResult.totalCount}

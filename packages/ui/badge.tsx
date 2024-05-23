@@ -10,11 +10,11 @@ interface Props {
 
 export function Badge({children, variant = 'blue', testId}: Props) {
   const variantClassName = classNames(
-    'flex flex-row items-center rounded py-1 px-1',
+    'rounded p-1 flex flex-row items-center',
     {
       'bg-gray-medium text-xs text-gray-900': variant === 'transparent',
       'text-sm bg-stone-100': variant === 'gray',
-      'bg-blueGrey-100 text-blueGrey-900 text-sm': variant === 'blue',
+      'bg-consortium-blue-100 text-neutral-900 text-sm': variant === 'blue',
     }
   );
   return (
@@ -29,15 +29,16 @@ interface BadgeIconProps {
   variant?: 'outline' | 'solid';
 }
 
-function BadgeIcon({Icon = XMarkIcon, variant = 'outline'}: BadgeIconProps) {
-  const variantClassName = classNames(
-    "w-4 h-4 fill-(lookup . 'twColor')-600 mr-1",
-    {
-      'stroke-stone-400': variant === 'outline',
-      'fill-stone-400': variant === 'solid',
-    }
+function BadgeIcon({Icon = XMarkIcon, variant}: BadgeIconProps) {
+  const variantClassName = classNames('w-4 h-4 mr-1', {
+    "stroke-(lookup . 'twColor')": variant === 'outline',
+    "fill-(lookup . 'twColor')": variant === 'solid',
+  });
+  return (
+    <span className="mr-1">
+      <Icon className={variantClassName} />
+    </span>
   );
-  return <Icon className={variantClassName} />;
 }
 
 interface BadgeActionProps {

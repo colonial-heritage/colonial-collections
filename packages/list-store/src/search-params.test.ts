@@ -4,7 +4,7 @@ import {
   getClientSortBy,
   FromSearchParamsToSearchOptionsProps,
 } from './search-params';
-import {SortBy, defaultSortBy} from './sort';
+import {SortBy, defaultSortBy} from './definitions';
 import {describe, expect, it} from '@jest/globals';
 import {z} from 'zod';
 
@@ -166,7 +166,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
-      limit: 12,
+      limit: 25,
       query: undefined,
     });
   });
@@ -188,7 +188,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
-      limit: 12,
+      limit: 25,
       query: undefined,
     });
   });
@@ -210,7 +210,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       offset: 0,
       sortBy: 'relevance',
       sortOrder: 'desc',
-      limit: 12,
+      limit: 25,
       query: undefined,
     });
   });
@@ -243,7 +243,7 @@ describe('fromSearchParamsToSearchOptions', () => {
       offset: 12,
       sortBy: 'name',
       sortOrder: 'asc',
-      limit: 12,
+      limit: 25,
     });
   });
 });

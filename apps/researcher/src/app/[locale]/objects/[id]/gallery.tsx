@@ -47,12 +47,12 @@ export default function Gallery({images, organizationName}: Props) {
                     className="max-h-[450px] w-auto"
                     sizes="40vw"
                   />
-                  <span className="absolute p-1 md:p-3 bg-consortiumBlue-100 hover:bg-consortiumBlue-100/80 rounded-full top-2 left-2 transition">
+                  <span className="absolute p-1 md:p-3 bg-consortium-blue-100 hover:bg-consortium-blue-100/80 rounded-full top-2 left-2 transition">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="w-4 h-4 fill-consortiumBlue-800"
+                      className="w-4 h-4 fill-consortium-blue-800"
                     >
                       <path
                         fillRule="evenodd"
@@ -102,7 +102,7 @@ export default function Gallery({images, organizationName}: Props) {
                     className={classNames(
                       selected
                         ? 'border-white'
-                        : 'border-consortiumBlue-400 hover:border-consortiumBlue-100',
+                        : 'border-consortium-blue-400 hover:border-consortium-blue-100',
                       'w-full border-4 transition'
                     )}
                     sizes="10vw"

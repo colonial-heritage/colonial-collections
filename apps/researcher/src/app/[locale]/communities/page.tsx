@@ -64,11 +64,10 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
           sortBy,
           selectedFilters: {onlyMyCommunities},
           baseUrl: '/communities',
-          defaultSortBy: SortBy.NameAsc,
         }}
       />
 
-      <div className="bg-consortiumGreen-300 text-consortiumBlue-800 py-10 md:py-20">
+      <div className="bg-consortium-green-300 text-consortium-blue-800 py-10 md:py-20">
         <div className="flex flex-col md:flex-row gap-4 md:gap-20 w-full max-w-[1800px] mx-auto px-4 sm:px-10">
           <div className="flex flex-col gap-4 w-full md:w-3/5 max-w-md">
             <h1 className="text-2xl md:text-4xl">{t('title')}</h1>

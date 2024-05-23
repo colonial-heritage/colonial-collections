@@ -5,7 +5,7 @@ import {ReactNode} from 'react';
 
 export default function ObjectLayout({children}: {children: ReactNode}) {
   return (
-    <body className="bg-consortiumGreen-300 text-consortiumBlue-800">
+    <body className="bg-consortium-green-300 text-consortium-blue-800">
       <BaseLayout>
         <ListProvider
           baseUrl="/objects"

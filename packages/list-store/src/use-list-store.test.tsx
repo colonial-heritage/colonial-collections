@@ -8,7 +8,7 @@ import {
   initialList,
   ListProvider,
 } from './use-list-store';
-import {SortBy, defaultSortBy} from './sort';
+import {SortBy, defaultSortBy} from './definitions';
 import {renderHook} from '@testing-library/react';
 
 const initialState = {

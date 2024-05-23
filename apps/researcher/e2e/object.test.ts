@@ -45,13 +45,13 @@ test.describe('Object details page not signed in', () => {
     await expect(page.getByTestId('selectedFilter')).toHaveCount(2);
   });
 
-  test('shows a text when hovering the add-to-list-button', async ({page}) => {
+  test('shows a text when hovering the popover menu button', async ({page}) => {
     const url = await getObjectUrl();
     await page.goto(url);
-    await page.waitForSelector('[data-testid="add-to-list-button"]', {
+    await page.waitForSelector('[data-testid="popover-menu-button"]', {
       state: 'attached',
     });
-    await page.getByTestId('add-to-list-button').hover();
+    await page.getByTestId('popover-menu-button').hover();
     await expect(
       page.getByTestId('add-to-list-not-signed-in-panel')
     ).toBeVisible();

@@ -29,23 +29,23 @@ export function SearchField({
   }, []);
 
   const inputClassName = classNames(
-    'w-full rounded-l text-consortiumBlue-800',
+    'w-full rounded-l text-consortium-blue-800',
     {
-      'py-1 px-3 border border-consortiumBlue-800': variant === 'default',
-      'p-3 placeholder:text-blueGrey-500 placeholder:italic text-consortiumBlue-800 not-italic':
+      'py-1 px-3 border border-consortium-blue-800': variant === 'default',
+      'p-3 placeholder:text-blue-grey-500 placeholder:italic text-consortium-blue-800 not-italic':
         variant === 'home',
     }
   );
 
   const buttonClassName = classNames('rounded-r', {
-    'bg-consortiumBlue-800 py-1 px-3 border-t border-b border-r border-consortiumBlue-800':
+    'bg-consortium-blue-800 py-1 px-3 border-t border-b border-r border-consortium-blue-800':
       variant === 'default',
-    'flex items-center p-3 bg-consortiumGreen-300': variant === 'home',
+    'flex items-center p-3 bg-consortium-green-300': variant === 'home',
   });
 
   const magnifyingGlassClassName = classNames({
     'w-4 h-4 fill-white': variant === 'default',
-    'w-6 h-6 fill-consortiumBlue-800': variant === 'home',
+    'w-6 h-6 fill-consortium-blue-800': variant === 'home',
   });
 
   useEffect(() => {

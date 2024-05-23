@@ -1,32 +1,41 @@
 'use client';
 
-import {createStore, useStore} from 'zustand';
+import {useStore} from 'zustand';
+import {createStore} from 'zustand/vanilla';
 import {useRef, createContext, useContext, PropsWithChildren} from 'react';
+import {ImageFetchMode, ListView} from './definitions';
 
-interface ListProps {
+interface ListProps<SortBy> {
   totalCount: number;
   offset: number;
   limit: number;
   query: string;
-  sortBy: string;
+  sortBy: SortBy;
+  view?: ListView;
+  imageFetchMode?: ImageFetchMode;
   // Setting newDataNeeded to true will trigger a page reload with new search params
   newDataNeeded: boolean;
   isInitialized: boolean;
-  defaultSortBy: string;
+  defaultSortBy: SortBy;
+  defaultView?: ListView;
+  defaultImageFetchMode?: ImageFetchMode;
   baseUrl: string;
   selectedFilters: {
     [filterKey: string]: (string | number)[] | number | string | undefined;
   };
 }
 
-export interface ListState extends ListProps {
+export interface ListState<SortBy> extends ListProps<SortBy> {
   filterChange: (
     key: string,
     value: (string | number)[] | number | string | undefined
   ) => void;
-  sortChange: (sortBy: string) => void;
+  sortChange: (sortBy: SortBy) => void;
   queryChange: (query: string) => void;
+  limitChange: (limit: number) => void;
   pageChange: (direction: 1 | -1) => void;
+  viewChange: (view: ListView) => void;
+  imageFetchModeChange: (imageFetchMode: ImageFetchMode) => void;
   transitionStarted: () => void;
   setNewData: ({
     totalCount,
@@ -35,20 +44,24 @@ export interface ListState extends ListProps {
     query,
     sortBy,
     selectedFilters,
+    view,
+    imageFetchMode,
   }: {
     totalCount: number;
     offset: number;
     limit: number;
     query: string;
-    sortBy?: string;
-    selectedFilters: ListProps['selectedFilters'];
+    sortBy?: SortBy;
+    selectedFilters: ListProps<SortBy>['selectedFilters'];
+    view?: ListProps<SortBy>['view'];
+    imageFetchMode?: ListProps<SortBy>['imageFetchMode'];
   }) => void;
 }
 
-export type ListStore = ReturnType<typeof createListStore>;
+export type ListStore<SortBy> = ReturnType<typeof createListStore<SortBy>>;
 
-export const createListStore = (initProps: ListProps) => {
-  return createStore<ListState>()((set, get) => ({
+export function createListStore<SortBy>(initProps: ListProps<SortBy>) {
+  return createStore<ListState<SortBy>>()((set, get) => ({
     ...initProps,
     filterChange: (key, value) => {
       set({
@@ -62,6 +75,15 @@ export const createListStore = (initProps: ListProps) => {
     },
     queryChange: query => {
       set({query, offset: 0, newDataNeeded: true});
+    },
+    viewChange: view => {
+      set({view, newDataNeeded: true});
+    },
+    imageFetchModeChange: imageFetchMode => {
+      set({imageFetchMode, newDataNeeded: true});
+    },
+    limitChange: limit => {
+      set({limit, offset: 0, newDataNeeded: true});
     },
     pageChange: direction => {
       let newOffset = get().offset + direction * get().limit;
@@ -85,6 +107,8 @@ export const createListStore = (initProps: ListProps) => {
       query,
       sortBy,
       selectedFilters,
+      view,
+      imageFetchMode,
     }) => {
       if (!get().isInitialized) {
         set({
@@ -93,6 +117,8 @@ export const createListStore = (initProps: ListProps) => {
           limit,
           query,
           sortBy: sortBy || get().defaultSortBy,
+          view: view || get().defaultView,
+          imageFetchMode: imageFetchMode || get().defaultImageFetchMode,
           selectedFilters,
           isInitialized: true,
         });
@@ -105,38 +131,53 @@ export const createListStore = (initProps: ListProps) => {
       }
     },
   }));
-};
+}
 
-export const ListContext = createContext<ListStore | null>(null);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ListContext = createContext<ListStore<any> | null>(null);
 
 export const initialList = {
   query: '',
   totalCount: 0,
   offset: 0,
-  limit: 10,
+  limit: 20,
   sortBy: undefined,
   defaultSortBy: undefined,
+  defaultView: undefined,
+  defaultImageFetchMode: undefined,
   selectedFilters: {},
   newDataNeeded: false,
   isInitialized: false,
-};
+  view: undefined,
+  imageFetchMode: undefined,
+} as const;
 
-export type ListProviderProps = PropsWithChildren<{
-  defaultSortBy: string;
+export type ListProviderProps<SortBy> = PropsWithChildren<{
+  defaultSortBy: SortBy;
+  defaultView?: ListView;
+  defaultImageFetchMode?: ImageFetchMode;
   baseUrl: string;
 }>;
 
-export function ListProvider({
+export function ListProvider<SortBy>({
   children,
   defaultSortBy,
+  defaultView,
+  defaultImageFetchMode,
   baseUrl,
-}: ListProviderProps) {
-  const storeRef = useRef<ListStore>();
+}: ListProviderProps<SortBy>) {
+  const storeRef = useRef<ListStore<SortBy>>();
   if (!storeRef.current) {
-    storeRef.current = createListStore({
+    storeRef.current = createListStore<SortBy>({
       ...initialList,
       defaultSortBy,
+      defaultView,
+      defaultImageFetchMode,
       sortBy: defaultSortBy,
+      view: defaultView,
+      // Set the default `imageFetchMode` to none so images won't load by default.
+      // As soon as the search results are loaded this will be overridden by the user setting.
+      imageFetchMode: ImageFetchMode.None,
       baseUrl,
     });
   }
@@ -148,14 +189,13 @@ export function ListProvider({
   );
 }
 
-export function useListStore<T>(
-  selector?: (state: ListState) => T,
-  equals?: (a: T, b: T) => boolean
+export function useListStore<T, SortBy>(
+  selector?: (state: ListState<SortBy>) => T
 ) {
   const store = useContext(ListContext);
   if (!store) {
     throw new Error('Missing StoreProvider');
   }
 
-  return useStore(store, selector!, equals);
+  return useStore(store, selector!);
 }
