@@ -18,7 +18,7 @@ export default {
         },
       }),
       colors: {
-        consortiumBlue: {
+        'consortium-blue': {
           50: '#c6d5f2',
           100: '#a9b9db',
           200: '#6d82ab',
@@ -32,7 +32,7 @@ export default {
           950: '#071e4a',
           970: '#061a41',
         },
-        consortiumGreen: {
+        'consortium-green': {
           50: 'hsl(145, 65%, 96%)',
           100: 'hsl(145, 65%, 90%)',
           200: 'hsl(145, 65%, 80%)',
@@ -56,7 +56,7 @@ export default {
           800: 'hsl(36, 20%, 20%)',
           900: 'hsl(36, 20%, 10%)',
         },
-        blueGrey: {
+        'blue-grey': {
           50: 'hsl(216, 35%, 97%)',
           100: 'hsl(216, 35%, 90%)',
           200: 'hsl(216, 35%, 80%)',
@@ -68,7 +68,7 @@ export default {
           800: 'hsl(216, 35%, 20%)',
           900: 'hsl(216, 35%, 10%)',
         },
-        greenGrey: {
+        ' green-grey': {
           50: 'hsl(170, 35%, 97%)',
           100: 'hsl(170, 35%, 90%)',
           200: 'hsl(170, 35%, 80%)',

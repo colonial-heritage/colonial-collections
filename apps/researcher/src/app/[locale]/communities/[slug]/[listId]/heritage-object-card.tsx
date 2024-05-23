@@ -20,7 +20,7 @@ export default function HeritageObjectCard({heritageObject}: Props) {
     <Link
       href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
       data-testid="object-card"
-      className="min-h-[200px] bg-neutral-100 border border-neutral-200 rounded-sm flex flex-col sm:flex-row gap-2 cursor-pointer hover:border-consortiumBlue-800 no-underline"
+      className="min-h-[200px] bg-neutral-100 border border-neutral-200 rounded-sm flex flex-col sm:flex-row gap-2 cursor-pointer hover:border-consortium-blue-800 no-underline"
       aria-label={t('heritageObject')}
     >
       <div

@@ -51,7 +51,7 @@ export default function PopoverMenu({
               className={classNames(
                 'rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm flex gap-1 items-center',
                 {
-                  'bg-consortiumGreen-300 text-consortiumBlue-800':
+                  'bg-consortium-green-300 text-consortium-blue-800':
                     variant === 'primary',
                   'bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition':
                     variant === 'default',
@@ -61,8 +61,8 @@ export default function PopoverMenu({
             >
               {buttonText}
               <ChevronDownIcon
-                className={classNames('-mr-1 h-5 w-5 text-consortiumBlue-800', {
-                  'text-consortiumBlue-800': variant === 'primary',
+                className={classNames('-mr-1 h-5 w-5 text-consortium-blue-800', {
+                  'text-consortium-blue-800': variant === 'primary',
                   'text-neutral-800': variant === 'default',
                 })}
                 aria-hidden="true"
@@ -81,7 +81,7 @@ export default function PopoverMenu({
                 className={classNames(
                   'drop-shadow-lg absolute top-9 rounded-lg gap-2 z-40 left-1/2 -translate-x-1/2 transform',
                   {
-                    'bg-consortiumGreen-300 text-consortiumBlue-800 border-t border-consortiumBlue-800':
+                    'bg-consortium-green-300 text-consortium-blue-800 border-t border-consortium-blue-800':
                       variant === 'primary',
                     'bg-neutral-100 border border-neutral-200':
                       variant === 'default',

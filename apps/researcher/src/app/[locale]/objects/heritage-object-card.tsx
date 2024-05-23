@@ -22,7 +22,7 @@ export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
     <Link
       href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
       data-testid="object-card"
-      className=" mb-6 flex flex-col gap-2 hover:bg-white min-h-48 no-underline group transition-all border-2 hover:border-consortiumBlue-800 rounded-sm pt-6 bg-neutral-100 border-white"
+      className=" mb-6 flex flex-col gap-2 hover:bg-white min-h-48 no-underline group transition-all border-2 hover:border-consortium-blue-800 rounded-sm pt-6 bg-neutral-100 border-white"
       aria-label={t('heritageObject')}
     >
       <div

@@ -27,7 +27,7 @@ export function PrimaryButton({children, ...buttonProps}: ButtonProps) {
     <button
       className={classNames(
         baseButtonClasses,
-        'bg-consortiumGreen-300 text-consortiumBlue-800 hover:enabled:bg-consortiumGreen-200'
+        'bg-consortium-green-300 text-consortium-blue-800 hover:enabled:bg-consortium-green-200'
       )}
       {...buttonProps}
     >

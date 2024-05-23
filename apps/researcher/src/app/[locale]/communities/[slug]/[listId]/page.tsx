@@ -63,7 +63,7 @@ export default async function Page({params}: Props) {
             href={`/communities/${params.slug}`}
             className="no-underline rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-neutral-100 flex gap-1 items-center"
           >
-            <ChevronLeftIcon className="w-4 h-4 fill-consortiumBlue-800" />
+            <ChevronLeftIcon className="w-4 h-4 fill-consortium-blue-800" />
             {t('backButton')}
           </Link>
         </div>
@@ -161,7 +161,7 @@ export default async function Page({params}: Props) {
           </Protect>
 
           {objectList.objects.length === 0 ? (
-            <div className="bg-consortiumGreen-100 px-4 py-8 rounded max-w-3xl">
+            <div className="bg-consortium-green-100 px-4 py-8 rounded max-w-3xl">
               <div className="pb-4">
                 <InformationCircleIcon className="w-6 h-6 stroke-neutral-800" />
                 <LocalizedMarkdown

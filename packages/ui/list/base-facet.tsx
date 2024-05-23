@@ -72,7 +72,7 @@ export function FacetCheckBox({
     <div className="flex flex-row justify-between gap-2 w-full mb-2 items-center">
       <div className="flex flex-row">
         <input
-          className=" w-5 h-5 mr-2 rounded border-consortiumBlue-300 focus:ring-consortiumGreen-400"
+          className=" w-5 h-5 mr-2 rounded border-consortium-blue-300 focus:ring-consortium-green-400"
           type="checkbox"
           id={`facet-${id}`}
           name={`facet-${id}`}

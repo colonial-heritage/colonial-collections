@@ -29,7 +29,7 @@ export function ProvidedBy({
     <div
       className={classNames('px-2 py-3 text-xs my-1 self-start w-full', {
         'text-neutral-900 border-l': isCurrentPublisher,
-        'bg-consortiumGreen-100 text-consortiumBlue-800 rounded':
+        'bg-consortium-green-100 text-consortium-blue-800 rounded':
           !isCurrentPublisher,
       })}
     >

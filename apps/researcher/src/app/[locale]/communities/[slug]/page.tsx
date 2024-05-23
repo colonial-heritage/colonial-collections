@@ -74,14 +74,14 @@ export default async function CommunityPage({params}: Props) {
 
   return (
     <>
-      <div className="bg-consortiumGreen-300 text-consortiumBlue-800 relative">
+      <div className="bg-consortium-green-300 text-consortium-blue-800 relative">
         <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto pt-10 flex justify-between">
           <div>
             <ToFilteredListButton
               baseUrl="/communities"
               className="flex items-center gap-1 no-underline"
             >
-              <ChevronLeftIcon className="w-4 h-4 fill-consortiumBlue-800" />
+              <ChevronLeftIcon className="w-4 h-4 fill-consortium-blue-800" />
               {t('backButton')}
             </ToFilteredListButton>
           </div>
@@ -94,9 +94,9 @@ export default async function CommunityPage({params}: Props) {
                 <SlideOutButton
                   testId="edit-community"
                   id={slideOutEditFormId}
-                  className="p-1 sm:py-2 sm:px-3 text-sm rounded-full bg-consortiumBlue-800 text-consortiumGreen-300 transition flex items-center gap-1 hover:bg-consortiumBlue-700"
+                  className="p-1 sm:py-2 sm:px-3 text-sm rounded-full bg-consortium-blue-800 text-consortium-green-300 transition flex items-center gap-1 hover:bg-consortium-blue-700"
                 >
-                  <PencilSquareIcon className="w-5 h-5 fill-consortiumGreen-300" />
+                  <PencilSquareIcon className="w-5 h-5 fill-consortium-green-300" />
                   {t('editButton')}
                 </SlideOutButton>
               </div>
@@ -122,7 +122,7 @@ export default async function CommunityPage({params}: Props) {
               <Image
                 width="0"
                 height="0"
-                className="w-32 h-32 lg:w-48 lg:h-48 rounded-full  border border-consortiumBlue-700 object-cover"
+                className="w-32 h-32 lg:w-48 lg:h-48 rounded-full  border border-consortium-blue-700 object-cover"
                 sizes="(min-width: 1024px) 192px, 128px"
                 src={community.imageUrl}
                 alt=""
@@ -177,7 +177,7 @@ export default async function CommunityPage({params}: Props) {
           </SlideOut>
 
           {objectLists.length === 0 ? (
-            <div className="bg-consortiumBlue-50 px-4 py-8 rounded max-w-3xl">
+            <div className="bg-consortium-blue-50 px-4 py-8 rounded max-w-3xl">
               <div className="pb-4">
                 <InformationCircleIcon className="w-6 h-6 stroke-neutral-800" />
                 <LocalizedMarkdown
@@ -211,7 +211,7 @@ export default async function CommunityPage({params}: Props) {
                     </ul>
 
                     <div className="absolute bg-gradient-to-l from-white w-full top-0 bottom-0 flex justify-end">
-                      <button className="p-2 self-center flex items-center py-2 px-3 rounded-full bg-consortiumBlue-800 text-white hover:bg-consortiumBlue-700 transition text-xs">
+                      <button className="p-2 self-center flex items-center py-2 px-3 rounded-full bg-consortium-blue-800 text-white hover:bg-consortium-blue-700 transition text-xs">
                         {t('goToListButton')}
                       </button>
                     </div>

@@ -14,7 +14,7 @@ export function Badge({children, variant = 'blue', testId}: Props) {
     {
       'bg-gray-medium text-xs text-gray-900': variant === 'transparent',
       'text-sm bg-stone-100': variant === 'gray',
-      'bg-consortiumBlue-100 text-neutral-900 text-sm': variant === 'blue',
+      'bg-consortium-blue-100 text-neutral-900 text-sm': variant === 'blue',
     }
   );
   return (

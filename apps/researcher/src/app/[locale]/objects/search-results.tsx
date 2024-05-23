@@ -197,9 +197,9 @@ export default async function SearchResults({searchParams = {}}: Props) {
             id="search-results"
           >
             <SmallScreenSubMenu>
-              <SubMenuButton className="md:hidden py-2 px-3 rounded-full bg-consortiumGreen-300 text-consortiumBlue-800 transition flex items-center gap-1 text-sm my-2">
+              <SubMenuButton className="md:hidden py-2 px-3 rounded-full bg-consortium-green-300 text-consortium-blue-800 transition flex items-center gap-1 text-sm my-2">
                 <AdjustmentsHorizontalIcon
-                  className="ml-1 h-4 w-4 flex-shrink-0 text-consortiumBlue-800"
+                  className="ml-1 h-4 w-4 flex-shrink-0 text-consortium-blue-800"
                   aria-hidden="true"
                 />
                 <span>{t('filters')}</span>

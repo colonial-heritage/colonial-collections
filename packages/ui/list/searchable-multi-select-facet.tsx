@@ -164,10 +164,10 @@ export function SearchableMultiSelectFacet({
         <FacetTitle title={title} />
         <ModalButton
           id={filterKey}
-          className="inline-flex items-center text-consortiumBlue-600"
+          className="inline-flex items-center text-consortium-blue-600"
         >
           <span>{t('expandFilter')}</span>
-          <ChevronRightIcon className="w-4 h-4 fill-bg-consortiumBlue-100" />
+          <ChevronRightIcon className="w-4 h-4 fill-bg-consortium-blue-100" />
         </ModalButton>
       </div>
       <FacetProvider filters={filters}>

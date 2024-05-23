@@ -126,7 +126,7 @@ export default function EditCommunityForm({
       <div className="flex flex-row max-w-2xl w-full">
         <div className=" flex flex-col md:flex-row justify-between  gap-2">
           <button
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 hover:bg-neutral-300 text-neutral-800 transition flex items-center gap-1"
             disabled={isSubmitting}
             data-testid="save-button"
             type="submit"

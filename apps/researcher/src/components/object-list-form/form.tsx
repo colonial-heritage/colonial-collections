@@ -126,7 +126,7 @@ function Form({
             data-testid="save-button"
             disabled={isSubmitting}
             type="submit"
-            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortiumGreen-300 text-consortiumBlue-800 hover:bg-consortiumGreen-200 transition flex items-center gap-1"
+            className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortium-blue-800 hover:bg-consortium-green-200 transition flex items-center gap-1"
           >
             {t(saveButtonMessageKey)}
           </button>

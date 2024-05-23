@@ -104,7 +104,7 @@ function CommunityMenuItems({
 
   if (isPending) {
     return (
-      <div className="pr-4 pl-10 py-2 text-sm consortiumBlue-600 italic">
+      <div className="pr-4 pl-10 py-2 text-sm consortium-blue-600 italic">
         {t('loadingLists')}
       </div>
     );
@@ -113,7 +113,7 @@ function CommunityMenuItems({
   return (
     <>
       {!objectLists.length ? (
-        <div className="pr-4 pl-10 py-2 text-sm consortiumBlue-600 italic">
+        <div className="pr-4 pl-10 py-2 text-sm consortium-blue-600 italic">
           {t('noListsInCommunity')}
         </div>
       ) : (
@@ -123,9 +123,9 @@ function CommunityMenuItems({
               key={objectList.id}
               data-testid={`object-list-${objectList.id}`}
               onClick={() => listClick(objectList)}
-              className="group flex items-center px-4 py-2 text-sm consortiumBlue-800"
+              className="group flex items-center px-4 py-2 text-sm consortium-blue-800"
             >
-              <span className="mr-2 h-4 w-4 blueGrey-500 group-hover:blueGrey-700">
+              <span className="mr-2 h-4 w-4 blue-grey-500 group-hover:blue-grey-700">
                 {objectList.objects!.length ? (
                   <CheckIcon className="h-4 w-4" aria-hidden="true" />
                 ) : null}
@@ -138,7 +138,7 @@ function CommunityMenuItems({
       {canAddList && (
         <button
           onClick={createNewListClick}
-          className="group flex items-center pr-4 pl-10 py-2 text-sm consortiumBlue-800"
+          className="group flex items-center pr-4 pl-10 py-2 text-sm consortium-blue-800"
         >
           {t('createNewListButton')}
         </button>
