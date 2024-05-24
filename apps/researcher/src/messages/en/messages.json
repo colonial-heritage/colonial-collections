@@ -56,7 +56,8 @@
     "images": "Images",
     "hideImages": "Hide images",
     "showSmallerImages": "Show smaller images",
-    "showLargerImages": "Show larger images"
+    "showLargerImages": "Show larger images",
+    "showImages": "Show images"
   },
   "Navigation": {
     "name": "app",

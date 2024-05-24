@@ -56,7 +56,8 @@
     "images": "Afbeeldingen",
     "hideImages": "Verberg afbeeldingen",
     "showSmallerImages": "Toon kleinere afbeeldingen",
-    "showLargerImages": "Toon grotere afbeeldingen"
+    "showLargerImages": "Toon grotere afbeeldingen",
+    "showImages": "Show images"
   },
   "Navigation": {
     "name": "app",
