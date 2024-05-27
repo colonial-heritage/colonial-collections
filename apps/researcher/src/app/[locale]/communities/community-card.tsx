@@ -15,12 +15,16 @@ async function ObjectListCount({communityId}: MembershipCountProps) {
 
   try {
     const objectListCount = await objectList.countByCommunityId(communityId);
-    return t.rich('objectListCount', {
-      count: objectListCount,
-    });
+    return (
+      <>
+        {t.rich('objectListCount', {
+          count: objectListCount,
+        })}
+      </>
+    );
   } catch (err) {
     console.error(err);
-    return t('objectListCountError');
+    return <>{t('objectListCountError')}</>;
   }
 }
 
