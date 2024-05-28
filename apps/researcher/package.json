@@ -34,7 +34,7 @@
     "@colonial-collections/list-store": "*",
     "@colonial-collections/playwright-config": "*",
     "@colonial-collections/ui": "*",
-    "@headlessui/react": "1.7.18",
+    "@headlessui/react": "2.0.4",
     "@heroicons/react": "2.1.3",
     "@hookform/resolvers": "3.3.4",
     "@next/mdx": "14.1.3",
