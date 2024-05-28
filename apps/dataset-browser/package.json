@@ -47,7 +47,7 @@
     "@next/env": "14.1.0",
     "@playwright/test": "1.43.1",
     "@types/mdx": "2.0.13",
-    "@types/node": "20.11.28",
+    "@types/node": "20.12.12",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.2.22",
     "autoprefixer": "10.4.19",
