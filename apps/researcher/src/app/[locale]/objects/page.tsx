@@ -2,6 +2,7 @@ import {getTranslations} from 'next-intl/server';
 import SearchResults from './search-results';
 import {InformationCircleIcon} from '@heroicons/react/24/solid';
 import {InitialSearchField} from './initial-search-field';
+import {InitialImageFetchMode} from './initial-image-fetch-mode';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -11,9 +12,12 @@ interface Props {
 }
 
 export default async function Page({searchParams = {}}: Props) {
+  // Show results if there is a query or selected filters
   const showResults =
-    Object.keys(searchParams).filter(paramKey => paramKey !== 'sortBy').length >
-    0;
+    Object.keys(searchParams).filter(
+      paramKey =>
+        ['sortby', 'limit', 'view', 'imageFetchMode'].indexOf(paramKey) === -1
+    ).length > 0;
 
   const t = await getTranslations('ObjectSearch');
 
@@ -40,6 +44,7 @@ export default async function Page({searchParams = {}}: Props) {
                 </div>
                 <div className="whitespace-pre-line">{t('description')}</div>
               </div>
+              <InitialImageFetchMode />
             </main>
           </>
         )}

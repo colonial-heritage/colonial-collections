@@ -16,3 +16,5 @@ export enum ImageFetchMode {
   Small = 'small',
   Large = 'large',
 }
+
+export const defaultImageFetchMode = ImageFetchMode.Large;

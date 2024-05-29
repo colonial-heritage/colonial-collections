@@ -54,6 +54,7 @@
     "list": "List",
     "resultLimit": "Number of results",
     "images": "Images",
+    "imagesDescription": "You can decrease the amount of data that this site is using. You can change this setting in the <em>View settings</em> on the result page.",
     "hideImages": "Hide images",
     "showSmallerImages": "Show smaller images",
     "showLargerImages": "Show larger images",
