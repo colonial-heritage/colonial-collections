@@ -1,7 +1,14 @@
 'use client';
 
 import {ImageFetchMode, useListStore} from '@colonial-collections/list-store';
+import {Field, Label, Radio, RadioGroup} from '@headlessui/react';
 import {useTranslations} from 'next-intl';
+
+const options = [
+  {translationKey: 'hideImages', value: ImageFetchMode.None},
+  {translationKey: 'showSmallerImages', value: ImageFetchMode.Small},
+  {translationKey: 'showLargerImages', value: ImageFetchMode.Large},
+];
 
 export function InitialImageFetchMode() {
   const imageFetchMode = useListStore(s => s.imageFetchMode);
@@ -18,41 +25,27 @@ export function InitialImageFetchMode() {
         })}
       </p>
 
-      <div className="mt-2 flex gap-6">
-        <div className="inline-flex items-center bg-neutral-100 rounded p-2 w-full md:w-1/3">
-          <input
-            className="mr-2"
-            type="radio"
-            id="hide"
-            value={ImageFetchMode.None}
-            onChange={() => imageFetchModeChange(ImageFetchMode.None)}
-            checked={imageFetchMode === ImageFetchMode.None}
-          />
-          <label htmlFor="hide">{t('hideImages')}</label>
-        </div>
-        <div className="inline-flex items-center bg-neutral-100 rounded p-2 w-full md:w-1/3">
-          <input
-            className="mr-2"
-            type="radio"
-            id="small"
-            value={ImageFetchMode.Small}
-            onChange={() => imageFetchModeChange(ImageFetchMode.Small)}
-            checked={imageFetchMode === ImageFetchMode.Small}
-          />
-          <label htmlFor="small">{t('showSmallerImages')}</label>
-        </div>
-        <div className="inline-flex items-center bg-neutral-100 rounded p-2 w-full md:w-1/3">
-          <input
-            className="mr-2"
-            type="radio"
-            id="large"
-            value={ImageFetchMode.Large}
-            onChange={() => imageFetchModeChange(ImageFetchMode.Large)}
-            checked={imageFetchMode === ImageFetchMode.Large}
-          />
-          <label htmlFor="large">{t('showLargerImages')}</label>
-        </div>
-      </div>
+      <RadioGroup
+        className="mt-2 flex gap-6"
+        value={imageFetchMode}
+        onChange={imageFetchModeChange}
+        aria-label={t('images')}
+      >
+        {options.map(option => (
+          <Field
+            key={option.value}
+            className="inline-flex items-center bg-neutral-100 rounded p-2 w-full md:w-1/3"
+          >
+            <Radio
+              value={option.value}
+              className="mr-2 group flex size-4 items-center justify-center rounded-full border bg-white data-[checked]:border-consortium-blue-400"
+            >
+              <span className="invisible size-2 rounded-full bg-consortium-blue-400 group-data-[checked]:visible" />
+            </Radio>
+            <Label>{t(option.translationKey)}</Label>
+          </Field>
+        ))}
+      </RadioGroup>
     </div>
   );
 }
