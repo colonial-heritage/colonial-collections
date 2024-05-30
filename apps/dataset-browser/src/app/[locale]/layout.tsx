@@ -37,7 +37,7 @@ export default function RootLayout({children, params: {locale}}: Props) {
           <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">
             <Navigation />
           </header>
-          <main className="bg-sand-50 pb-32">
+          <main className="bg-consortium-sand-50 pb-32">
             <div className="max-w-7xl container mx-auto p-8">
               <ListProvider baseUrl="/" defaultSortBy={defaultSortBy}>
                 {children}

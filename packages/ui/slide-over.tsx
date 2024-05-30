@@ -118,7 +118,7 @@ export function SlideOverHeader({children}: SlideOverHeaderProps = {}) {
     'bg-neutral-700': variant === 'gallery',
   });
   const buttonClassName = classNames(
-    'rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sand-700 focus:ring-offset-2',
+    'rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-consortium-sand-800 focus:ring-offset-2',
     {
       'bg-white text-gray-400': variant === 'text',
       'bg-black text-white p-2 my-2 mx-6': variant === 'gallery',

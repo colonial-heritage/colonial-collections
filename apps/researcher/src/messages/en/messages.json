@@ -71,7 +71,8 @@
     "subMenuButton": "About",
     "consortium": "Consortium",
     "signIn": "Sign in",
-    "datasetBrowser": "Dataset Browser"
+    "datasetBrowser": "Dataset Browser",
+    "researchGuide": "Research Guide"
   },
   "LanguageSelector": {
     "nl": "Nederlands",
