@@ -63,7 +63,7 @@ export default function SettingsMenu() {
               onChange={() => imageFetchModeChange(ImageFetchMode.None)}
               checked={imageFetchMode === ImageFetchMode.None}
             />
-            <label htmlFor="hide">{t('hideImages')}</label>
+            <label htmlFor="hide">{t('noImages')}</label>
           </div>
           {view === 'grid' && (
             <>
