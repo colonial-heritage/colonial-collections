@@ -1,10 +1,8 @@
 import {useTranslations} from 'next-intl';
 import Image from 'next/image';
-import useObject from './use-object';
 
 export default function TraditionalKnowledgeLabels() {
   const t = useTranslations('TraditionalKnowledgeLabels');
-  const {organization} = useObject.getState();
 
   return (
     <div className="my-16">
@@ -47,7 +45,7 @@ export default function TraditionalKnowledgeLabels() {
               <div className="p-2 py-3 text-xs  my-1 self-start w-full lg:w-1/3 ">
                 <div>
                   {t.rich('providedBy', {
-                    name: () => <strong>{organization?.name}</strong>,
+                    strong: name => <strong>{name}</strong>,
                   })}
                 </div>
                 <div className="flex flex-col justify-between">
