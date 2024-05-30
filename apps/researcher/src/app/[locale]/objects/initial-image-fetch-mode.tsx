@@ -5,7 +5,7 @@ import {Field, Label, Radio, RadioGroup} from '@headlessui/react';
 import {useTranslations} from 'next-intl';
 
 const options = [
-  {translationKey: 'hideImages', value: ImageFetchMode.None},
+  {translationKey: 'noImages', value: ImageFetchMode.None},
   {translationKey: 'showSmallerImages', value: ImageFetchMode.Small},
   {translationKey: 'showLargerImages', value: ImageFetchMode.Large},
 ];
