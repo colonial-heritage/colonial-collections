@@ -67,7 +67,12 @@ export function HeritageObjectListItem({
       ? heritageObject.images[0].contentUrl
       : undefined;
   return (
-    <div className="flex flex-row justify-start items-center gap-4 border-t border-neutral-200 py-3 w-full">
+    <Link
+      href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
+      data-testid="object-card"
+      className="flex flex-row justify-start items-center gap-4 border-t border-neutral-200 py-3 w-full no-underline"
+      aria-label={t('heritageObject')}
+    >
       <div className="w-30">
         {imageUrl && imageFetchMode !== ImageFetchMode.None && (
           <div>
@@ -100,6 +105,6 @@ export function HeritageObjectListItem({
         </div>
       </div>
       <div className="md:py-2 grow flex justify-end"></div>
-    </div>
+    </Link>
   );
 }

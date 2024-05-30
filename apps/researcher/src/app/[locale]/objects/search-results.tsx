@@ -38,7 +38,6 @@ import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from '@/components/list-store-updater';
 import {LocaleEnum} from '@/definitions';
-import {SettingsButton} from '@/components/buttons';
 import SettingsMenu from './settings-menu';
 
 // Revalidate the page every n seconds
@@ -219,7 +218,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
                 {t('title', {totalDatasets: searchResult.totalCount})}
               </h2>
               <div className="flex flex-col sm:flex-row justify-end gap-4 relative flex-wrap">
-                <SettingsButton>{t('addObjectsToList')}</SettingsButton>
+                {/* <SettingsButton>{t('addObjectsToList')}</SettingsButton> */}
                 <SettingsMenu />
                 <OrderSelector
                   values={[
