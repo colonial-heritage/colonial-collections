@@ -219,7 +219,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
                 {t('title', {totalDatasets: searchResult.totalCount})}
               </h2>
               <div className="flex flex-col sm:flex-row justify-end gap-4 relative flex-wrap">
-                <SettingsButton>{t('addObjectsToList')}</SettingsButton>
+                {/* <SettingsButton>{t('addObjectsToList')}</SettingsButton> */}
                 <SettingsMenu />
                 <OrderSelector
                   values={[
