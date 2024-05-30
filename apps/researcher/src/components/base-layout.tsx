@@ -8,10 +8,9 @@ import AuthHealthCheck from '@/lib/auth-health-check';
 
 interface Props {
   children: ReactNode;
-  wrapperClassName?: string;
 }
 
-export default async function BaseLayout({children, wrapperClassName}: Props) {
+export default async function BaseLayout({children}: Props) {
   const t = await getTranslations('ScreenReaderMenu');
 
   return (
@@ -32,12 +31,10 @@ export default async function BaseLayout({children, wrapperClassName}: Props) {
           </li>
         </ul>
       </div>
-      <div className={wrapperClassName}>
-        <header className="w-full bg-consortium-blue-900 text-white py-2">
-          <Navigation datasetBrowserUrl={env['DATASET_BROWSER_URL']!} />
-        </header>
-        {children}
-      </div>
+      <header className="w-full bg-consortium-blue-900 text-white py-2">
+        <Navigation datasetBrowserUrl={env['DATASET_BROWSER_URL']!} />
+      </header>
+      {children}
     </>
   );
 }

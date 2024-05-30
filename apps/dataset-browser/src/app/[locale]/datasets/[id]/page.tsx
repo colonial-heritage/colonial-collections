@@ -132,7 +132,7 @@ export default async function Details({params}: Props) {
                 return (
                   <div
                     key={metricId}
-                    className="flex flex-1 flex-col gap-3 text-center p-4 bg-sand-50"
+                    className="flex flex-1 flex-col gap-3 text-center p-4 bg-consortium-sand-50"
                   >
                     <div className="flex flex-col items-center h-full w-full font-semibold text-base">
                       {tMetrics(`${translationId}.longTitle`)}
@@ -156,7 +156,7 @@ export default async function Details({params}: Props) {
                   </div>
                 );
               })}
-              <div className="flex-1 gap-3 font-semibold text-base p-4 bg-sand-50">
+              <div className="flex-1 gap-3 font-semibold text-base p-4 bg-consortium-sand-50">
                 <SlideOver>
                   <SlideOverOpenButton className="text-sky-500 underline hover:no-underline inline-block text-left">
                     {t('measurements.moreInfo')}
@@ -173,7 +173,7 @@ export default async function Details({params}: Props) {
                   </SlideOverDialog>
                 </SlideOver>
               </div>
-              <div className="flex flex-1 gap-3 bg-sand-50"></div>
+              <div className="flex flex-1 gap-3 bg-consortium-sand-50"></div>
             </div>
           </div>
           <div className="py-10">

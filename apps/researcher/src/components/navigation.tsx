@@ -7,7 +7,7 @@ import {UserButton, SignInButton, SignedOut} from '@clerk/nextjs';
 import SignedIn from '@/lib/community/signed-in';
 import {ConsortiumLogo} from '@colonial-collections/ui/branding';
 import {NavigationMenu} from '@colonial-collections/ui';
-import logoImage from '@colonial-collections/ui/branding/colonial-collections-consortium.png';
+import logoImage from '@colonial-collections/ui/branding/logo-colonial-collections-datahub-alpha.png';
 import {useMemo} from 'react';
 import ToFilteredListButton from './to-filtered-list-button';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
@@ -59,75 +59,68 @@ export default function Navigation({datasetBrowserUrl}: Props) {
   );
 
   return (
-    <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto flex flex-col xl:flex-row xl:gap-8 xl:justify-between">
-      <div className="order-2 xl:order-1 w-full flex flex-col md:flex-row justify-between md:items-center">
-        <div className="">
-          <Link href="/">
-            <div className="flex items-center gap-2">
-              <div className="w-10">
-                <ConsortiumLogo />
-              </div>
-              <div>
-                <Image
-                  height={20}
-                  width={254}
-                  src={logoImage}
-                  className="h-4 lg:h-5"
-                  alt="Colonial Collections Consortium"
-                />
-              </div>
+    <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto flex flex-row flex-wrap gap-2 md:gap-4">
+      <div className='class="order-1 grow flex items-center'>
+        <Link href="/">
+          <div className="flex items-center gap-2">
+            <div className="w-5 sm:w-10">
+              <ConsortiumLogo />
             </div>
-          </Link>
-        </div>
-        <nav className="flex items-center flex-wrap">
-          <Link
-            href="/"
-            className="text-white font-semibold no-underline py-2 md:py-4 px-3 whitespace-nowrap"
-          >
-            {tNavigation('home')}
-          </Link>
-          <ToFilteredListButton
-            baseUrl="/objects"
-            className="text-white font-semibold no-underline py-2 md:py-4 px-3 whitespace-nowrap"
-          >
-            {tNavigation('searchObjects')}
-          </ToFilteredListButton>
-          <ToFilteredListButton
-            baseUrl="/communities"
-            className="text-white font-semibold no-underline py-2 md:py-4 px-3 whitespace-nowrap"
-          >
-            {tNavigation('communities')}
-          </ToFilteredListButton>
-          <NavigationMenu
-            buttonText={tNavigation('subMenuButton')}
-            menuItems={subMenuItems}
-            className="font-semibold"
-            Link={Link}
-          />
-        </nav>
+            <div className="relative h-6 sm:h-9">
+              <Image
+                src={logoImage}
+                alt="Colonial Collections Consortium"
+                sizes="33vw"
+                style={{
+                  width: 'auto',
+                  height: '100%',
+                }}
+              />
+            </div>
+          </div>
+        </Link>
       </div>
-      <div className="order-1 xl:order-2 w-full flex justify-end items-center gap-4 text-sm xl:w-auto">
+      <nav className="order-5 lg:order-2  w-full lg:w-auto flex justify-end items-center gap-7 text-sm sm:text-base sm:font-semibold">
+        <ToFilteredListButton baseUrl="/objects">
+          {tNavigation('searchObjects')}
+        </ToFilteredListButton>
+        <ToFilteredListButton baseUrl="/communities">
+          {tNavigation('communities')}
+        </ToFilteredListButton>
+        <Link href="/research-guide">{tNavigation('researchGuide')}</Link>
+      </nav>
+      <nav className="order-2 lg:order-3 text-sm  grow flex items-center justify-end gap-2">
+        <Link href="/" className="flex items-center">
+          {tNavigation('home')}
+        </Link>
+        <NavigationMenu
+          buttonText={tNavigation('subMenuButton')}
+          menuItems={subMenuItems}
+          Link={Link}
+        />
+      </nav>
+      <div className="order-4 lg:order-4 text-sm  flex items-center">
         <NavigationMenu
           buttonText={tLanguageSelector(locale)}
           menuItems={languageMenuItems}
           Link="a"
         />
-        <div>
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-            <span data-testid="signed-in" />
-          </SignedIn>
-          <SignedOut>
-            <SignInButton>
-              <button
-                data-testid="sign-in-button"
-                className="whitespace-nowrap p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 transition flex items-center gap-1 text-consortium-blue-900 bg-white"
-              >
-                {tNavigation('signIn')}
-              </button>
-            </SignInButton>
-          </SignedOut>
-        </div>
+      </div>
+      <div className="order-3 lg:order-5 text-sm flex items-center">
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+          <span data-testid="signed-in" />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton>
+            <button
+              data-testid="sign-in-button"
+              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 transition flex items-center gap-1 text-consortium-blue-900 bg-white"
+            >
+              {tNavigation('signIn')}
+            </button>
+          </SignInButton>
+        </SignedOut>
       </div>
     </div>
   );

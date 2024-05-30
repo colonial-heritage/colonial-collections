@@ -26,12 +26,7 @@ export function NavigationMenu({
 }: Props) {
   return (
     <Menu as="div" className="relative">
-      <Menu.Button
-        className={classNames(
-          className,
-          'inline-flex items-center gap-x-1 text-white no-underline py-2 md:py-4 px-3 whitespace-nowrap'
-        )}
-      >
+      <Menu.Button className={classNames(className, 'flex items-center gap-1')}>
         <span>{buttonText}</span>
         <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
       </Menu.Button>
