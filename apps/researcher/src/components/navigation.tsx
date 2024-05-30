@@ -80,7 +80,7 @@ export default function Navigation({datasetBrowserUrl}: Props) {
           </div>
         </Link>
       </div>
-      <nav className="order-5 lg:order-2  w-full lg:w-auto flex justify-end items-center gap-2 sm:gap-3 lg:gap-4 text-sm sm:text-base sm:font-semibold">
+      <nav className="order-5 lg:order-2  w-full lg:w-auto flex justify-end items-center gap-7 text-sm sm:text-base sm:font-semibold">
         <ToFilteredListButton baseUrl="/objects">
           {tNavigation('searchObjects')}
         </ToFilteredListButton>
