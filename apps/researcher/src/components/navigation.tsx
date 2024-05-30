@@ -7,7 +7,7 @@ import {UserButton, SignInButton, SignedOut} from '@clerk/nextjs';
 import SignedIn from '@/lib/community/signed-in';
 import {ConsortiumLogo} from '@colonial-collections/ui/branding';
 import {NavigationMenu} from '@colonial-collections/ui';
-import logoImage from '@colonial-collections/ui/branding/colonial-collections-consortium.png';
+import logoImage from '@colonial-collections/ui/branding/logo-colonial-collections-datahub-alpha.png';
 import {useMemo} from 'react';
 import ToFilteredListButton from './to-filtered-list-button';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
@@ -66,7 +66,7 @@ export default function Navigation({datasetBrowserUrl}: Props) {
             <div className="w-5 sm:w-10">
               <ConsortiumLogo />
             </div>
-            <div className="relative h-4 sm:h-5">
+            <div className="relative h-6 sm:h-9">
               <Image
                 src={logoImage}
                 alt="Colonial Collections Consortium"
