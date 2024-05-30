@@ -140,7 +140,7 @@ export const initialList = {
   query: '',
   totalCount: 0,
   offset: 0,
-  limit: 20,
+  limit: 25,
   sortBy: undefined,
   defaultSortBy: undefined,
   defaultView: undefined,
