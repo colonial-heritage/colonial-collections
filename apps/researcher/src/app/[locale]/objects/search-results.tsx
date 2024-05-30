@@ -38,7 +38,6 @@ import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from '@/components/list-store-updater';
 import {LocaleEnum} from '@/definitions';
-import {SettingsButton} from '@/components/buttons';
 import SettingsMenu from './settings-menu';
 
 // Revalidate the page every n seconds

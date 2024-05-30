@@ -1,6 +1,5 @@
 import {useTranslations} from 'next-intl';
 import Image from 'next/image';
-import useObject from './use-object';
 
 export default function TraditionalKnowledgeLabels() {
   const t = useTranslations('TraditionalKnowledgeLabels');
