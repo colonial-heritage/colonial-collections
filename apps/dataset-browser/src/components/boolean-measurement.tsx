@@ -11,7 +11,7 @@ export default function BooleanMeasurement({value}: Props) {
         viewBox="0 0 24 24"
         strokeWidth="1.5"
         stroke="currentColor"
-        className="stroke-sky-500 w-5 h-5 stroke-[5px]"
+        className="stroke-consortium-green-500 w-5 h-5 stroke-[5px]"
       >
         <path
           strokeLinecap="round"
@@ -28,7 +28,7 @@ export default function BooleanMeasurement({value}: Props) {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="stroke-gray-300 w-5 h-5 stroke-[5px]"
+      className="stroke-neutral-400 w-5 h-5 stroke-[5px]"
     >
       <path
         strokeLinecap="round"

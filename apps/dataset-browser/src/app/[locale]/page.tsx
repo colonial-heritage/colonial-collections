@@ -152,18 +152,20 @@ export default async function Home({searchParams = {}}: Props) {
 
           <section className="w-full md:w-2/3 gap-6 flex flex-col">
             <SmallScreenSubMenu>
-              <SubMenuButton className="inline-flex items-center md:hidden">
-                <span className="text-base font-medium text-gray-900">
-                  {t('filters')}
-                </span>
-                <AdjustmentsHorizontalIcon
-                  className="ml-1 h-5 w-5 flex-shrink-0 text-gray-900"
-                  aria-hidden="true"
-                />
-              </SubMenuButton>
-              <SubMenuDialog title={t('filters')}>
-                <FacetMenu filters={searchResult.filters} />
-              </SubMenuDialog>
+              <div>
+                <SubMenuButton className="md:hidden py-2 px-3 rounded-full bg-consortium-green-300 text-consortium-blue-800 transition flex items-center gap-1 text-sm my-2">
+                  <AdjustmentsHorizontalIcon
+                    className="ml-1 h-5 w-5 flex-shrink-0 text-consortium-blue-900"
+                    aria-hidden="true"
+                  />
+                  <span className="text-base font-medium text-consortium-blue-900">
+                    {t('filters')}
+                  </span>
+                </SubMenuButton>
+                <SubMenuDialog title={t('filters')}>
+                  <FacetMenu filters={searchResult.filters} />
+                </SubMenuDialog>
+              </div>
             </SmallScreenSubMenu>
             <PageHeader>
               <div

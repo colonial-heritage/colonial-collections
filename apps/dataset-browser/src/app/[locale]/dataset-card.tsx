@@ -14,10 +14,10 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
   return (
     <div
       key={dataset.id}
-      className="group relative flex flex-col overflow-hidden drop-shadow-md hover:drop-shadow-lg hover:-translate-y-0.5 transition ease-in-out duration-300 bg-white"
+      className="group relative flex flex-col overflow-hidden  transition ease-in-out duration-300 bg-neutral-100 border border-neutral-100 hover:bg-white hover:border-consortium-blue-800"
       aria-label={t('Dataset')}
     >
-      <div className="flex flex-1 flex-col space-y-2 p-6">
+      <div className="flex flex-1 flex-col space-y-3 p-6">
         <h2 className="font-semibold text-gray-900 mt-0">
           <Link
             href={`/datasets/${encodeURIComponent(dataset.id)}`}
@@ -38,7 +38,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
             return (
               <div
                 key={metricId}
-                className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-gray-100"
+                className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-neutral-300"
               >
                 <div className="flex flex-col items-center justify-end h-full w-full">
                   {/* Language keys can not contain a '.'. */}
