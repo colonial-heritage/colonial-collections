@@ -72,16 +72,14 @@ export function useSearchParamsUpdate<SortBy>(
   const href = useListHref();
 
   const newDataNeeded = useListStore(s => s.newDataNeeded);
-  const transitionStarted = useListStore(s => s.transitionStarted);
 
   useEffect(() => {
     if (newDataNeeded && !isPending) {
       startTransition(() => {
-        transitionStarted();
-        routerReplace(href, {scroll: false});
+        routerReplace(href);
       });
     }
-  }, [href, isPending, newDataNeeded, routerReplace, transitionStarted]);
+  }, [href, isPending, newDataNeeded, routerReplace]);
 }
 
 export function useUpdateListStore<SortBy>({
