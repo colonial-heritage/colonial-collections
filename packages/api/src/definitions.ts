@@ -8,6 +8,7 @@ export type Thing = {
   id: string;
   name?: string; // Name may not exist (e.g. in a specific locale)
   description?: string;
+  sameAs?: string; // An identifier
 };
 
 export type Term = Thing;
