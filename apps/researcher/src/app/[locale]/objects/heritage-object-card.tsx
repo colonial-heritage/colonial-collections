@@ -5,18 +5,45 @@ import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import ImageWithFallback from '@/components/image-with-fallback';
 import classNames from 'classnames';
 import {ImageFetchMode} from '@colonial-collections/list-store';
+import {useMemo} from 'react';
+import {ImageLoader} from 'next/image';
 
 interface Props {
   heritageObject: HeritageObject;
   imageFetchMode: ImageFetchMode;
 }
+type Loader = {
+  test: RegExp;
+  loader: ImageLoader;
+};
 
+function getLoader(src: string) {
+  const loaders: Loader[] = [
+    {
+      test: /^https:\/\/collectie\.wereldculturen\.nl\/cc\/imageproxy\.ashx\?/,
+      loader: ({src, width, quality}) =>
+        `${src}&width=${width}&quality=${quality}`,
+    },
+    {
+      test: /^http:\/\/museumbronbeek\.nl\/cc\/imageproxy\.aspx\?/,
+      loader: ({src, width, quality}) =>
+        `${src}&width=${width}&quality=${quality}`,
+    },
+  ];
+
+  const matchedLoader = loaders.find(({test}) => test.test(src));
+  return matchedLoader ? matchedLoader.loader : undefined;
+}
 export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
   const t = useTranslations('HeritageObjectCard');
   const imageUrl =
     heritageObject.images && heritageObject.images.length > 0
       ? heritageObject.images[0].contentUrl
       : undefined;
+
+  const loader = useMemo(() => {
+    return imageUrl ? getLoader(imageUrl) : undefined;
+  }, [imageUrl]);
 
   return (
     <Link
@@ -50,6 +77,7 @@ export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
               'w-full max-h-72': imageFetchMode === ImageFetchMode.Large,
               'w-1/3': imageFetchMode === ImageFetchMode.Small,
             })}
+            loader={loader}
           />
         </div>
       )}
