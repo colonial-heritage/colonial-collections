@@ -36,7 +36,6 @@ export interface ListState<SortBy> extends ListProps<SortBy> {
   pageChange: (direction: 1 | -1) => void;
   viewChange: (view: ListView) => void;
   imageFetchModeChange: (imageFetchMode: ImageFetchMode) => void;
-  transitionStarted: () => void;
   setNewData: ({
     totalCount,
     offset,
@@ -97,9 +96,6 @@ export function createListStore<SortBy>(initProps: ListProps<SortBy>) {
 
       set({offset: newOffset, newDataNeeded: true});
     },
-    transitionStarted: () => {
-      set({newDataNeeded: false});
-    },
     setNewData: ({
       totalCount,
       offset,
@@ -110,6 +106,9 @@ export function createListStore<SortBy>(initProps: ListProps<SortBy>) {
       view,
       imageFetchMode,
     }) => {
+      set({
+        newDataNeeded: false,
+      });
       if (!get().isInitialized) {
         set({
           totalCount,

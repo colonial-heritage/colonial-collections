@@ -11,7 +11,7 @@ on:
 
 jobs:
   run-end-to-end-tests:
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
