@@ -42,7 +42,8 @@ beforeAll(async () => {
       ex:isPartOf ex:dataset1, ex:dataset2, ex:dataset3 .
 
     ex:subject1 a ex:DefinedTerm ;
-      ex:name "Term" .
+      ex:name "Term" ;
+      ex:sameAs "ID" .
 
     ex:subject2 a ex:DefinedTerm .
 
@@ -77,7 +78,8 @@ beforeAll(async () => {
 
     ex:location2 a ex:Place ;
       ex:name "City 2" ;
-      ex:isPartOf ex:location3 .
+      ex:isPartOf ex:location3 ;
+      ex:sameAs "ID" .
 
     ex:location3 a ex:Place ;
       ex:name "Country" .
@@ -223,8 +225,8 @@ describe('createThings', () => {
     const things = createThings(objectResource, 'ex:subject');
 
     expect(things).toStrictEqual([
-      {id: 'https://example.org/subject1', name: 'Term'},
-      {id: 'https://example.org/subject2', name: undefined},
+      {id: 'https://example.org/subject1', name: 'Term', sameAs: 'ID'},
+      {id: 'https://example.org/subject2', name: undefined, sameAs: undefined},
     ]);
   });
 });
@@ -243,13 +245,16 @@ describe('createPlaces', () => {
       {
         id: 'https://example.org/location1',
         name: 'City 1',
+        sameAs: undefined,
       },
       {
         id: 'https://example.org/location2',
         name: 'City 2',
+        sameAs: 'ID',
         isPartOf: {
           id: 'https://example.org/location3',
           name: 'Country',
+          sameAs: undefined,
         },
       },
     ]);
