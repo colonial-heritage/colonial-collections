@@ -34,6 +34,7 @@ function BadgeIcon({Icon = XMarkIcon, variant}: BadgeIconProps) {
     "stroke-(lookup . 'twColor')": variant === 'outline',
     "fill-(lookup . 'twColor')": variant === 'solid',
   });
+
   return (
     <span className="mr-1">
       <Icon className={variantClassName} />

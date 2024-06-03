@@ -14,7 +14,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
   return (
     <div
       key={dataset.id}
-      className="group relative flex flex-col overflow-hidden  transition ease-in-out duration-300 bg-neutral-100 border border-neutral-100 hover:bg-white hover:border-consortium-blue-800"
+      className="group relative flex flex-col overflow-hidden transition ease-in-out duration-300 bg-neutral-100 border border-neutral-100 hover:bg-white hover:border-consortium-blue-800"
       aria-label={t('Dataset')}
     >
       <div className="flex flex-1 flex-col space-y-3 p-6">

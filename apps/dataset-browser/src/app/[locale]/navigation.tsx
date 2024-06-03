@@ -191,7 +191,7 @@ export default function Navigation() {
                   </div>
                   <div className="-mr-2 flex items-center sm:hidden ">
                     {/* Small screen menu button */}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-consortium-blue-900 hover:bg-consortium-blue-100  focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-consortium-blue-900 hover:bg-consortium-blue-100 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
                       <span className="sr-only">
                         {tLanguageSelector('accessibilityOpenMenu')}
                       </span>
