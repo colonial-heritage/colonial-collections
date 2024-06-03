@@ -9,6 +9,7 @@ import {WipMessage} from '@colonial-collections/ui';
 import {Link} from '@/navigation';
 import {env} from 'node:process';
 import AuthHealthCheck from '@/lib/auth-health-check';
+import Footer from '@/components/footer';
 
 interface Props {
   children: ReactNode;
@@ -65,6 +66,7 @@ export default async function RootLayout({children, params: {locale}}: Props) {
               <Navigation datasetBrowserUrl={env['DATASET_BROWSER_URL']!} />
             </header>
             {children}
+            <Footer />
           </NextIntlClientProvider>
         </body>
       </html>
