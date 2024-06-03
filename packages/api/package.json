@@ -24,7 +24,7 @@
     "@colonial-collections/iris": "*",
     "defu": "6.1.4",
     "edtf": "4.6.0",
-    "fetch-sparql-endpoint": "4.1.0",
+    "fetch-sparql-endpoint": "5.0.0",
     "rdf-object": "1.14.0",
     "zod": "3.22.4"
   },
