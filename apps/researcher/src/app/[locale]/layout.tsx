@@ -28,7 +28,7 @@ export async function generateMetadata({params: {locale}}: MetadataProps) {
 }
 
 export default async function RootLayout({children, params: {locale}}: Props) {
-  const t = await getTranslations({locale, namespace: 'Meta'});
+  const t = await getTranslations('ScreenReaderMenu');
 
   let messages;
   try {
