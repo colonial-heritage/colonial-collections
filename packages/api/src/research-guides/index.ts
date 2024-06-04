@@ -1,5 +1,10 @@
 import {z} from 'zod';
-import {GetByIdOptions, GetByIdsOptions, ResearchGuideFetcher} from './fetcher';
+import {
+  GetByIdOptions,
+  GetByIdsOptions,
+  GetByTopLevelOptions,
+  ResearchGuideFetcher,
+} from './fetcher';
 
 const constructorOptionsSchema = z.object({
   sparqlEndpointUrl: z.string(),
@@ -20,6 +25,10 @@ export class ResearchGuides {
     this.researchGuideFetcher = new ResearchGuideFetcher({
       endpointUrl: opts.sparqlEndpointUrl,
     });
+  }
+
+  async getByTopLevel(options?: GetByTopLevelOptions) {
+    return this.researchGuideFetcher.getByTopLevel(options);
   }
 
   async getByIds(options: GetByIdsOptions) {

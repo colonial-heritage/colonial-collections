@@ -10,6 +10,18 @@ beforeEach(() => {
   });
 });
 
+describe('getByTopLevel', () => {
+  it('returns the top level guides', async () => {
+    const researchGuides = await researchGuideFetcher.getByTopLevel();
+
+    expect(researchGuides).toMatchObject([
+      {
+        id: 'https://guides.example.org/top-level',
+      },
+    ]);
+  });
+});
+
 describe('getByIds', () => {
   it('returns empty list if no IDs were provided', async () => {
     const researchGuides = await researchGuideFetcher.getByIds({ids: []});

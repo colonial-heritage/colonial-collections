@@ -14,6 +14,14 @@ beforeEach(() => {
   });
 });
 
+describe('getByTopLevel', () => {
+  it('returns the top level research guides', async () => {
+    const results = await researchGuides.getByTopLevel();
+
+    expect(results).toHaveLength(1);
+  });
+});
+
 describe('getByIds', () => {
   it('returns the research guides', async () => {
     const results = await researchGuides.getByIds({

@@ -1,19 +1,25 @@
 import {isIri} from '@colonial-collections/iris';
 import type {Stream} from '@rdfjs/types';
-import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
+import {IBindings, SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import {EOL} from 'node:os';
 import type {Readable} from 'node:stream';
 import {RdfObjectLoader} from 'rdf-object';
 import {z} from 'zod';
 import {localeSchema} from '../definitions';
-import {createResearchGuide} from './rdf-helpers';
 import {ResearchGuide} from './definitions';
+import {createResearchGuide} from './rdf-helpers';
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
 });
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
+
+const getByTopLevelOptionsSchema = z.object({
+  locale: localeSchema,
+});
+
+export type GetByTopLevelOptions = z.input<typeof getByTopLevelOptionsSchema>;
 
 const getByIdsOptionsSchema = z.object({
   locale: localeSchema,
@@ -37,6 +43,37 @@ export class ResearchGuideFetcher {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
+  }
+
+  private async getTopLevelIds() {
+    const query = `
+      PREFIX schema: <https://schema.org/>
+
+      SELECT ?this
+      WHERE {
+        ?this a schema:TextDigitalDocument ;
+          schema:additionalType <http://vocab.getty.edu/aat/300027029> . # "Guides"
+
+        FILTER NOT EXISTS {
+          ?this schema:isPartOf [] .
+        }
+      }
+    `;
+
+    const bindingsStream = await this.fetcher.fetchBindings(
+      this.endpointUrl,
+      query
+    );
+
+    const topLevelIds: string[] = [];
+
+    for await (const rawBindings of bindingsStream) {
+      const bindings = rawBindings as unknown as IBindings; // TS assumes it's a string or Buffer
+      const topLevelId = bindings.this.value;
+      topLevelIds.push(topLevelId);
+    }
+
+    return topLevelIds;
   }
 
   private async fetchTriples(options: GetByIdsOptions) {
@@ -227,5 +264,17 @@ export class ResearchGuideFetcher {
     }
 
     return researchGuides[0];
+  }
+
+  async getByTopLevel(options?: GetByTopLevelOptions) {
+    const opts = getByTopLevelOptionsSchema.parse(options || {});
+
+    const topLevelIds = await this.getTopLevelIds();
+    const researchGuides = await this.getByIds({
+      locale: opts.locale,
+      ids: topLevelIds,
+    });
+
+    return researchGuides;
   }
 }
