@@ -1,16 +1,11 @@
-import BaseLayout from '@/components/base-layout';
 import {ListProvider} from '@colonial-collections/list-store';
 import {defaultSortBy} from '@/lib/community/actions';
 import {ReactNode} from 'react';
 
 export default function Layout({children}: {children: ReactNode}) {
   return (
-    <body>
-      <BaseLayout>
-        <ListProvider baseUrl="/communities" defaultSortBy={defaultSortBy}>
-          <div className="pb-40">{children}</div>
-        </ListProvider>
-      </BaseLayout>
-    </body>
+    <ListProvider baseUrl="/communities" defaultSortBy={defaultSortBy}>
+      <div className="pb-40">{children}</div>
+    </ListProvider>
   );
 }
