@@ -90,7 +90,7 @@ export class DatasetFetcher {
 
         OPTIONAL {
           ?this schema:name ?name
-          FILTER(LANG(?name) = "" || LANGMATCHES(LANG(?name), "en"))
+          FILTER(LANG(?name) = "" || LANG(?name) = "${options.locale}")
         }
 
         ####################
@@ -99,7 +99,7 @@ export class DatasetFetcher {
 
         OPTIONAL {
           ?this schema:description ?description
-          FILTER(LANG(?description) = "" || LANGMATCHES(LANG(?description), "en"))
+          FILTER(LANG(?description) = "" || LANG(?description) = "${options.locale}")
         }
 
         ####################
@@ -109,7 +109,7 @@ export class DatasetFetcher {
         OPTIONAL {
           ?this schema:license ?license .
           ?license schema:name ?licenseName .
-          FILTER(LANG(?licenseName) = "" || LANGMATCHES(LANG(?licenseName), "en"))
+          FILTER(LANG(?licenseName) = "" || LANG(?licenseName) = "${options.locale}")
         }
 
         ####################
@@ -119,7 +119,7 @@ export class DatasetFetcher {
         OPTIONAL {
           ?this schema:publisher ?publisher .
           ?publisher schema:name ?publisherName
-          FILTER(LANG(?publisherName) = "" || LANGMATCHES(LANG(?publisherName), "en"))
+          FILTER(LANG(?publisherName) = "${options.locale}")
         }
 
         ####################
@@ -136,7 +136,7 @@ export class DatasetFetcher {
 
         OPTIONAL {
           ?this schema:keywords ?keywords
-          FILTER(LANG(?keywords) = "" || LANGMATCHES(LANG(?keywords), "en"))
+          FILTER(LANG(?keywords) = "" || LANG(?keywords) = "${options.locale}")
         }
 
         ####################
