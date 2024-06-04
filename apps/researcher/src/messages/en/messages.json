@@ -72,7 +72,8 @@
     "consortium": "Consortium",
     "signIn": "Sign in",
     "datasetBrowser": "Dataset Browser",
-    "researchGuide": "Research Guide"
+    "researchGuide": "Research Guide",
+    "footerText": "The Colonial Collections DataHub is a project of the Colonial Collections Consortium.\n\nThe consortium is a partnership between five organizations with expertise in the field of colonial collections."
   },
   "LanguageSelector": {
     "nl": "Nederlands",
