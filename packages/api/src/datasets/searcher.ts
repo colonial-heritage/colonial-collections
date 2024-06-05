@@ -107,8 +107,10 @@ export class DatasetSearcher {
   }
 
   private buildRequest(options: SearchOptions) {
+    const publisherKey = `${RawKeys.Publisher}_${options.locale}.keyword`;
+
     const aggregations = {
-      publishers: this.buildAggregation(`${RawKeys.Publisher}.keyword`),
+      publishers: this.buildAggregation(publisherKey),
       licenses: this.buildAggregation(`${RawKeys.License}.keyword`),
     };
 
@@ -152,8 +154,8 @@ export class DatasetSearcher {
     };
 
     const queryFilters: Map<string, string[] | undefined> = new Map([
-      [RawKeys.Publisher, options.filters?.publishers],
-      [RawKeys.License, options.filters?.licenses],
+      [publisherKey, options.filters?.publishers],
+      [`${RawKeys.License}.keyword`, options.filters?.licenses],
     ]);
 
     for (const [rawDatasetKey, filters] of queryFilters) {
@@ -161,7 +163,7 @@ export class DatasetSearcher {
         const andFilters = filters.map(filter => {
           return {
             terms: {
-              [`${rawDatasetKey}.keyword`]: [filter],
+              [rawDatasetKey]: [filter],
             },
           };
         });
