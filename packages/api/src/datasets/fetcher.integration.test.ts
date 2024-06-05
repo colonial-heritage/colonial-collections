@@ -231,3 +231,37 @@ describe('getById', () => {
     });
   });
 });
+
+describe('get with localized names', () => {
+  it('returns a dataset with English names', async () => {
+    const dataset = await datasetFetcher.getById({
+      locale: 'en',
+      id: 'https://example.org/datasets/1',
+    });
+
+    // Currently the only localized parts
+    expect(dataset).toMatchObject({
+      id: 'https://example.org/datasets/1',
+      publisher: {
+        id: 'https://museum.example.org/',
+        name: 'The Museum',
+      },
+    });
+  });
+
+  it('returns a dataset with Dutch names', async () => {
+    const dataset = await datasetFetcher.getById({
+      locale: 'nl',
+      id: 'https://example.org/datasets/1',
+    });
+
+    // Currently the only localized parts
+    expect(dataset).toMatchObject({
+      id: 'https://example.org/datasets/1',
+      publisher: {
+        id: 'https://museum.example.org/',
+        name: 'Het Museum',
+      },
+    });
+  });
+});
