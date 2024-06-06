@@ -45,29 +45,31 @@ export default async function RootLayout({children, params: {locale}}: Props) {
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <html lang={locale}>
         <body>
-          <AuthHealthCheck />
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <WipMessage Link={Link} />
+          <div className="bg-purple-300 min-h-screen flex flex-col">
+            <AuthHealthCheck />
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              <WipMessage Link={Link} />
 
-            <div className="sr-only">
-              <ul>
-                <li>
-                  <a href="#facets">{t('jumpFilters')}</a>
-                </li>
-                <li>
-                  <a href="#search-results">{t('jumpResults')}</a>
-                </li>
-                <li>
-                  <a href="#page-navigation">{t('jumpNavigation')}</a>
-                </li>
-              </ul>
-            </div>
-            <header className="w-full bg-consortium-blue-900 text-white py-2">
-              <Navigation datasetBrowserUrl={env['DATASET_BROWSER_URL']!} />
-            </header>
-            {children}
-            <Footer />
-          </NextIntlClientProvider>
+              <div className="sr-only">
+                <ul>
+                  <li>
+                    <a href="#facets">{t('jumpFilters')}</a>
+                  </li>
+                  <li>
+                    <a href="#search-results">{t('jumpResults')}</a>
+                  </li>
+                  <li>
+                    <a href="#page-navigation">{t('jumpNavigation')}</a>
+                  </li>
+                </ul>
+              </div>
+              <header className="w-full bg-consortium-blue-900 text-white py-2">
+                <Navigation datasetBrowserUrl={env['DATASET_BROWSER_URL']!} />
+              </header>
+              {children}
+              <Footer />
+            </NextIntlClientProvider>
+          </div>
         </body>
       </html>
     </ClerkProvider>
