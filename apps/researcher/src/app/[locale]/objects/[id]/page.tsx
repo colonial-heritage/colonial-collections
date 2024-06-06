@@ -63,7 +63,7 @@ export default async function Details({params}: Props) {
 
   return (
     <>
-      <div className="flex flex-col gap-8 pb-40">
+      <div className="flex flex-col gap-8 grow">
         <div className="bg-consortium-blue-800 text-white w-full">
           <div className="px-4 sm:px-10 flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto pt-10">
             <div>
