@@ -13,7 +13,7 @@ export function Badge({children, variant = 'blue', testId}: Props) {
     'rounded p-1 flex flex-row items-center',
     {
       'bg-gray-medium text-xs text-gray-900': variant === 'transparent',
-      'text-sm bg-stone-100': variant === 'gray',
+      'text-sm bg-neutral-200': variant === 'gray',
       'bg-consortium-blue-100 text-neutral-900 text-sm': variant === 'blue',
     }
   );
@@ -34,6 +34,7 @@ function BadgeIcon({Icon = XMarkIcon, variant}: BadgeIconProps) {
     "stroke-(lookup . 'twColor')": variant === 'outline',
     "fill-(lookup . 'twColor')": variant === 'solid',
   });
+
   return (
     <span className="mr-1">
       <Icon className={variantClassName} />
