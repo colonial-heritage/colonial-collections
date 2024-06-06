@@ -38,7 +38,7 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
             return (
               <div
                 key={metricId}
-                className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border border-neutral-300"
+                className="flex flex-1 flex-col gap-3 text-center font-semibold leading-2 text-base p-3 border-y border-l border-neutral-300 last:border-r"
               >
                 <div className="flex flex-col items-center justify-end h-full w-full">
                   {/* Language keys can not contain a '.'. */}
