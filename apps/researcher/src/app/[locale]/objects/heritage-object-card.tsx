@@ -73,7 +73,7 @@ export function HeritageObjectListItem({
       className="flex flex-row justify-between items-center gap-4 border-t border-neutral-200 py-3 w-full no-underline"
       aria-label={t('heritageObject')}
     >
-      <div className="w-30">
+      <div className="w-30 bg-blue-200">
         {imageUrl && imageFetchMode !== ImageFetchMode.None && (
           <div>
             <ImageWithFallback
