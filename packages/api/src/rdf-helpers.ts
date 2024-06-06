@@ -43,10 +43,12 @@ export function removeNullish<T>(objectWithNullishValues: object) {
 
 function createPlace(placeResource: Resource) {
   const name = getPropertyValue(placeResource, 'ex:name');
+  const sameAs = getPropertyValue(placeResource, 'ex:sameAs');
 
   const place: Place = {
     id: placeResource.value,
     name,
+    sameAs,
   };
 
   // Recursively get the parent place(s), if any
@@ -58,12 +60,14 @@ function createPlace(placeResource: Resource) {
   return place;
 }
 
-function createThingFromProperty<T>(thingResource: Resource) {
+function createThing<T>(thingResource: Resource) {
   const name = getPropertyValue(thingResource, 'ex:name');
+  const sameAs = getPropertyValue(thingResource, 'ex:sameAs');
 
   const thing = {
     id: thingResource.value,
     name,
+    sameAs,
   };
 
   return thing as T;
@@ -71,9 +75,7 @@ function createThingFromProperty<T>(thingResource: Resource) {
 
 export function createThings<T>(resource: Resource, propertyName: string) {
   const properties = resource.properties[propertyName];
-  const things = properties.map(property =>
-    createThingFromProperty<T>(property)
-  );
+  const things = properties.map(property => createThing<T>(property));
 
   return things.length > 0 ? things : undefined;
 }

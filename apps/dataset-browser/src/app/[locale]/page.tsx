@@ -7,7 +7,7 @@ import {
   SortOrderEnum,
 } from '@colonial-collections/api';
 import {useTranslations} from 'next-intl';
-import {getTranslations} from 'next-intl/server';
+import {getTranslations, getLocale} from 'next-intl/server';
 import DatasetList from './dataset-list';
 import {sortMapping} from './sort-mapping';
 import {
@@ -32,6 +32,7 @@ import {
 import {AdjustmentsHorizontalIcon} from '@heroicons/react/20/solid';
 import {ElementType} from 'react';
 import {ListStoreUpdater} from './list-store-updater';
+import {LocaleEnum} from '@/definitions';
 
 // Revalidate the page every n seconds
 export const revalidate = 60;
@@ -86,6 +87,8 @@ interface Props {
 }
 
 export default async function Home({searchParams = {}}: Props) {
+  const locale = (await getLocale()) as LocaleEnum;
+
   const searchOptions = fromSearchParamsToSearchOptions({
     sortOptions: {
       SortOrderEnum,
@@ -111,7 +114,7 @@ export default async function Home({searchParams = {}}: Props) {
   let hasError;
   let searchResult: DatasetSearchResult | undefined;
   try {
-    searchResult = await datasets.search(searchOptions);
+    searchResult = await datasets.search({...searchOptions, locale});
   } catch (err) {
     hasError = true;
     console.error(err);

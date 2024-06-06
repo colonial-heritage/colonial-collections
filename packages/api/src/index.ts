@@ -5,3 +5,4 @@ export * from './enrichments';
 export * from './objects';
 export * from './organizations';
 export * from './provenance-events';
+export * from './research-guides';

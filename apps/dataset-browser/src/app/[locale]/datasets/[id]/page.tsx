@@ -1,4 +1,4 @@
-import {getTranslations, getFormatter} from 'next-intl/server';
+import {getTranslations, getFormatter, getLocale} from 'next-intl/server';
 import {
   PageHeader,
   PageTitle,
@@ -18,6 +18,7 @@ import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
 import metricIds from '@/lib/transparency-metrics';
 import BackButton from './back-button';
+import {LocaleEnum} from '@/definitions';
 
 interface Props {
   params: {id: string};
@@ -28,7 +29,8 @@ export const revalidate = 0;
 
 export default async function Details({params}: Props) {
   const id = decodeURIComponent(params.id);
-  const dataset = await datasets.getById({id});
+  const locale = (await getLocale()) as LocaleEnum;
+  const dataset = await datasets.getById({id, locale});
   const t = await getTranslations('Details');
   const tMetrics = await getTranslations('TransparencyMetrics');
   const formatter = await getFormatter();

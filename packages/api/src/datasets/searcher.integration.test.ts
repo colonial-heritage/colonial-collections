@@ -105,10 +105,6 @@ describe('search', () => {
         {
           id: 'https://example.org/datasets/10',
           name: 'Dataset 10',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
           license: {
             id: 'https://example.org/custom-license',
             name: 'Custom License',
@@ -173,10 +169,6 @@ describe('search', () => {
         {
           id: 'https://example.org/datasets/11',
           name: 'Dataset 11',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
           license: {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
@@ -244,10 +236,6 @@ describe('search', () => {
           name: 'Dataset 12',
           description:
             'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
           license: {
             id: 'https://creativecommons.org/publicdomain/zero/1.0/',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
@@ -387,10 +375,6 @@ describe('search', () => {
           name: 'Dataset 14',
           description:
             'Donec placerat orci vel erat commodo suscipit. Morbi elementum nunc ut dolor venenatis, vel ultricies nisi euismod. Sed aliquet ultricies sapien, vehicula malesuada nunc tristique ac.',
-          publisher: {
-            id: 'https://library.example.org/',
-            name: 'Library',
-          },
           license: {
             id: 'http://creativecommons.org/publicdomain/zero/1.0/deed.nl',
             name: 'CC0 1.0 Universeel (CC0 1.0) Publiek Domein Verklaring',
@@ -699,11 +683,6 @@ describe('search', () => {
             name: 'Archive',
           },
           {
-            totalCount: 5,
-            id: 'Library',
-            name: 'Library',
-          },
-          {
             totalCount: 3,
             id: 'The Museum',
             name: 'The Museum',
@@ -763,7 +742,7 @@ describe('search', () => {
   it('finds datasets if "publishers" filter matches', async () => {
     const result = await datasetSearcher.search({
       filters: {
-        publishers: ['Library'],
+        publishers: ['Archive'],
       },
     });
 
@@ -773,8 +752,8 @@ describe('search', () => {
         publishers: [
           {
             totalCount: 5,
-            id: 'Library',
-            name: 'Library',
+            id: 'Archive',
+            name: 'Archive',
           },
         ],
       },
@@ -796,6 +775,54 @@ describe('search', () => {
             totalCount: 2,
             id: 'Attribution 4.0 International (CC BY 4.0)',
             name: 'Attribution 4.0 International (CC BY 4.0)',
+          },
+        ],
+      },
+    });
+  });
+});
+
+describe('search with localized names', () => {
+  it('finds datasets with English names', async () => {
+    // Currently the only localized parts
+    const result = await datasetSearcher.search({
+      locale: 'en',
+      filters: {
+        publishers: ['The Museum'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 3,
+      filters: {
+        publishers: [
+          {
+            totalCount: 3,
+            id: 'The Museum',
+            name: 'The Museum',
+          },
+        ],
+      },
+    });
+  });
+
+  it('finds datasets with Dutch names', async () => {
+    // Currently the only localized parts
+    const result = await datasetSearcher.search({
+      locale: 'nl',
+      filters: {
+        publishers: ['Het Museum'],
+      },
+    });
+
+    expect(result).toMatchObject({
+      totalCount: 3,
+      filters: {
+        publishers: [
+          {
+            totalCount: 3,
+            id: 'Het Museum',
+            name: 'Het Museum',
           },
         ],
       },
