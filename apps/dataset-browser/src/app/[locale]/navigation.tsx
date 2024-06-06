@@ -14,6 +14,10 @@ import {useLocale, useTranslations} from 'next-intl';
 import {Fragment} from 'react';
 import {locales} from '@/navigation';
 
+import {ConsortiumLogo} from '@colonial-collections/ui/branding';
+import logoImage from '@colonial-collections/ui/branding/logo-colonial-collections-dataset-browser.png';
+import Image from 'next/image';
+
 export default function Navigation() {
   const pathname = usePathname();
   const locale = useLocale();
@@ -28,11 +32,26 @@ export default function Navigation() {
   ];
 
   return (
-    <>
-      <div className="flex text-sm flex-row justify-between items-center">
-        <div>
-          <div className="text-grey-500">Colonialcollections.nl</div>
-        </div>
+    <div className="max-w-7xl mx-auto">
+      <div className="flex text-sm flex-col sm:flex-row items-start sm:justify-between sm:items-center">
+        <Link href="/">
+          <div className="flex items-center gap-2">
+            <div className="w-5 sm:w-10">
+              <ConsortiumLogo />
+            </div>
+            <div className="relative h-6 sm:h-9">
+              <Image
+                src={logoImage}
+                alt="Colonial Collections Consortium"
+                sizes="33vw"
+                style={{
+                  width: 'auto',
+                  height: '100%',
+                }}
+              />
+            </div>
+          </div>
+        </Link>
         <div>
           {/* Top navigation */}
           <div>
@@ -135,13 +154,7 @@ export default function Navigation() {
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-between ">
-        <Link
-          href="/"
-          className="flex items-center justify font-bold text-sky-700"
-        >
-          {tNavigation('name')}
-        </Link>
+      <div className="flex flex-row justify-end">
         <Disclosure as="nav" id="page-navigation">
           {({open}) => (
             <>
@@ -158,8 +171,8 @@ export default function Navigation() {
                               title={item.name}
                               className={classNames(
                                 isCurrentPathname
-                                  ? 'font-semibold text-gray-900'
-                                  : 'border-transparent hover:font-semibold text-gray-900 ',
+                                  ? 'font-semibold text-white'
+                                  : 'border-transparent hover:font-semibold text-white ',
                                 'inline-flex flex-col items-center',
                                 // Don't shift on hover
                                 // https://css-tricks.com/bold-on-hover-without-the-layout-shift/
@@ -178,7 +191,7 @@ export default function Navigation() {
                   </div>
                   <div className="-mr-2 flex items-center sm:hidden ">
                     {/* Small screen menu button */}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-consortium-blue-900 hover:bg-consortium-blue-100 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2">
                       <span className="sr-only">
                         {tLanguageSelector('accessibilityOpenMenu')}
                       </span>
@@ -199,7 +212,7 @@ export default function Navigation() {
               </div>
 
               <Disclosure.Panel className="sm:hidden">
-                <div className="space-y-1 pt-2 pb-3 absolute bg-sky-50 w-full z-50 left-0">
+                <div className="space-y-1 pt-2 pb-3 absolute bg-consortium-blue-800 w-full z-50 left-0">
                   {navigation.map(item => {
                     const isCurrentPathname = item.href === pathname;
                     return (
@@ -209,9 +222,9 @@ export default function Navigation() {
                         href={item.href}
                         className={classNames(
                           isCurrentPathname
-                            ? 'bg-sky-50 border-sky-700 text-grey-90'
-                            : 'border-transparent text-grey-900 hover:bg-sky-700 hover:border-text-right-300 hover:text-white',
-                          'block pl-3 pr-4 py-2 border-l-4 font-medium'
+                            ? 'bg-consortium-blue-800 text-white'
+                            : ' hover:bg-consortium-blue-400 hover:border-text-right-300',
+                          'block pl-3 pr-4 py-2 font-medium'
                         )}
                         aria-current={isCurrentPathname ? 'page' : undefined}
                       >
@@ -225,6 +238,6 @@ export default function Navigation() {
           )}
         </Disclosure>
       </div>
-    </>
+    </div>
   );
 }

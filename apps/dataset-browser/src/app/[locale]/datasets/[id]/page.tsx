@@ -12,7 +12,7 @@ import {
 import {
   InformationCircleIcon,
   ChevronLeftIcon,
-} from '@heroicons/react/24/solid';
+} from '@heroicons/react/24/outline';
 import datasets from '@/lib/datasets-instance';
 import {Fragment} from 'react';
 import BooleanMeasurement from '@/components/boolean-measurement';
@@ -89,14 +89,14 @@ export default async function Details({params}: Props) {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-6">
-      <aside className="w-full sm:w-1/5 flex flex-row md:flex-col border-r-2 border-white">
-        <div>
+    <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-16 mt-10">
+      <aside className="w-full md:w-1/5 flex flex-row md:flex-col md:border-r border-neutral-200 pr-4">
+        <div className="flex flex-col gap-6">
           <BackButton>
             <ChevronLeftIcon className="h-5 w-5" />
             {t('back')}
           </BackButton>
-          <nav className="flex-1 space-y-1 pb-4">
+          <nav className="flex-1 space-y-1 pb-4 text-sm">
             {navigation.map(item => (
               <a
                 key={item.name}
@@ -158,9 +158,9 @@ export default async function Details({params}: Props) {
                   </div>
                 );
               })}
-              <div className="flex-1 gap-3 font-semibold text-base p-4 bg-consortium-sand-50">
+              <div className="flex-1 gap-3 font-semibold text-base p-4 bg-neutral-50">
                 <SlideOver>
-                  <SlideOverOpenButton className="text-sky-500 underline hover:no-underline inline-block text-left">
+                  <SlideOverOpenButton className="text-consortium-blue-500 underline hover:no-underline inline-block text-left">
                     {t('measurements.moreInfo')}
                     <InformationCircleIcon className="w-6 h-6 align-middle inline-block ml-1" />
                   </SlideOverOpenButton>

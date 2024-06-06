@@ -34,10 +34,10 @@ export default function RootLayout({children, params: {locale}}: Props) {
               </li>
             </ul>
           </div>
-          <header className="max-w-7xl container mx-auto px-4 py-4 md:px-8 md:py-8">
+          <header className="px-4 py-4 md:px-8 bg-consortium-blue-900 text-white">
             <Navigation />
           </header>
-          <main className="bg-consortium-sand-50 pb-32">
+          <main className="bg-white pb-32">
             <div className="max-w-7xl container mx-auto p-8">
               <ListProvider baseUrl="/" defaultSortBy={defaultSortBy}>
                 {children}

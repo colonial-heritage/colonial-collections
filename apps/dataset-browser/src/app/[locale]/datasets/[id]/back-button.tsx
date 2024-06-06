@@ -11,7 +11,7 @@ export default function BackButton({children}: {children: ReactNode}) {
     <Link
       data-testid="to-filtered-list-button"
       href={href}
-      className="inline-flex items-center mb-5 text-gray-900"
+      className="no-underline rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-neutral-100 text-neutral-900 flex gap-1 items-center"
     >
       {children}
     </Link>
