@@ -465,5 +465,16 @@
     "login": "Login",
     "createAccount": "Create an account",
     "cancel": "Cancel"
+  },
+  "ResearchGuide": {
+    "level1Title": "How to do Provenance Research",
+    "navText": "Description",
+    "navCitations": "Resources",
+    "citations": "Resources",
+    "relatedItems": "Related items",
+    "keywords": "Keywords",
+    "contentLocations": "Geographical",
+    "noTopLevel": "The research guide will be added soon. Please check back later.",
+    "noEntity": "Research guide could not be found"
   }
 }
