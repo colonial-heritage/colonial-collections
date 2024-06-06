@@ -45,7 +45,7 @@ export default async function RootLayout({children, params: {locale}}: Props) {
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <html lang={locale}>
         <body>
-          <div className="bg-purple-300 min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col">
             <AuthHealthCheck />
             <NextIntlClientProvider locale={locale} messages={messages}>
               <WipMessage Link={Link} />

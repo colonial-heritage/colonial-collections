@@ -22,7 +22,7 @@ export default async function Page({searchParams = {}}: Props) {
   const t = await getTranslations('ObjectSearch');
 
   return (
-    <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto pt-10 bg-amber-400 grow">
+    <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto pt-10 grow">
       <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full max-w-[1800px] mx-auto">
         {showResults ? (
           <SearchResults searchParams={searchParams} />
