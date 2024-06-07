@@ -13,6 +13,7 @@ import {AddCommunityButton} from './buttons';
 import {MyCommunityToggle} from './my-community-toggle';
 import SignedIn from '@/lib/community/signed-in';
 import {SignedOut} from '@clerk/nextjs';
+import {limit} from './settings';
 
 // 1 day = 60*60*24 = 86400
 export const revalidate = 86400;
@@ -37,7 +38,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
       communities = await getMyCommunities({
         sortBy,
         offset,
-        limit: 24,
+        limit,
         includeMembersCount: true,
       });
     } else {
@@ -45,7 +46,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
         query,
         sortBy,
         offset,
-        limit: 24,
+        limit,
         includeMembersCount: true,
       });
     }
@@ -59,7 +60,7 @@ export default async function CommunitiesPage({searchParams = {}}: Props) {
         {...{
           totalCount: communities.length,
           offset: offset ?? 0,
-          limit: 12,
+          limit,
           query: query ?? '',
           sortBy,
           selectedFilters: {onlyMyCommunities},

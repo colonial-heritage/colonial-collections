@@ -8,7 +8,7 @@ import {
   initialList,
   ListProvider,
 } from './use-list-store';
-import {SortBy, defaultSortBy} from './definitions';
+import {SortBy, defaultSortBy, defaultLimit} from './definitions';
 import {renderHook} from '@testing-library/react';
 
 const initialState = {
@@ -16,13 +16,19 @@ const initialState = {
   defaultSortBy,
   sortBy: defaultSortBy,
   baseUrl: '/',
+  defaultLimit,
+  limit: defaultLimit,
 };
 
 describe('useListStore', () => {
   it('returns the selected state from the store', () => {
     const {result} = renderHook(() => useListStore(s => s.defaultSortBy), {
       wrapper: ({children}) => (
-        <ListProvider baseUrl="/" defaultSortBy={SortBy.NameAsc}>
+        <ListProvider
+          baseUrl="/"
+          defaultSortBy={SortBy.NameAsc}
+          defaultLimit={defaultLimit}
+        >
           {children}
         </ListProvider>
       ),

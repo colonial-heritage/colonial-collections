@@ -9,9 +9,14 @@ import {ImageFetchMode} from '@colonial-collections/list-store';
 interface Props {
   heritageObject: HeritageObject;
   imageFetchMode: ImageFetchMode;
+  isInitialized: boolean;
 }
 
-export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
+export function HeritageObjectCard({
+  heritageObject,
+  imageFetchMode,
+  isInitialized,
+}: Props) {
   const t = useTranslations('HeritageObjectCard');
   const imageUrl =
     heritageObject.images && heritageObject.images.length > 0
@@ -37,7 +42,7 @@ export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
         {heritageObject.isPartOf?.publisher?.name}
       </div>
 
-      {imageUrl && imageFetchMode !== ImageFetchMode.None && (
+      {imageUrl && isInitialized && imageFetchMode !== ImageFetchMode.None && (
         <div>
           <ImageWithFallback
             src={imageUrl}
@@ -60,6 +65,7 @@ export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
 export function HeritageObjectListItem({
   heritageObject,
   imageFetchMode,
+  isInitialized,
 }: Props) {
   const t = useTranslations('HeritageObjectCard');
   const imageUrl =
@@ -74,19 +80,23 @@ export function HeritageObjectListItem({
       aria-label={t('heritageObject')}
     >
       <div className="w-30">
-        {imageUrl && imageFetchMode !== ImageFetchMode.None && (
-          <div>
-            <ImageWithFallback
-              src={imageUrl}
-              alt={heritageObject.name || ''}
-              width="0"
-              height="0"
-              sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'}
-              quality={40}
-              className="w-20 -my-3"
-            />
-          </div>
-        )}
+        {imageUrl &&
+          isInitialized &&
+          imageFetchMode !== ImageFetchMode.None && (
+            <div>
+              <ImageWithFallback
+                src={imageUrl}
+                alt={heritageObject.name || ''}
+                width="0"
+                height="0"
+                sizes={
+                  imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'
+                }
+                quality={40}
+                className="w-20 -my-3"
+              />
+            </div>
+          )}
 
         {!imageUrl && imageFetchMode !== ImageFetchMode.None && (
           <div className="w-20 flex flex-col justify-center items-center text-xs text-neutral-400">

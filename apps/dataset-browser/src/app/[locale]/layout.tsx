@@ -3,7 +3,11 @@ import {ReactNode} from 'react';
 import Navigation from './navigation';
 import {NextIntlClientProvider, useMessages, useTranslations} from 'next-intl';
 import {WipMessage} from '@colonial-collections/ui';
-import {ListProvider, defaultSortBy} from '@colonial-collections/list-store';
+import {
+  ListProvider,
+  defaultSortBy,
+  defaultLimit,
+} from '@colonial-collections/list-store';
 import {Link} from '@/navigation';
 
 interface Props {
@@ -39,7 +43,11 @@ export default function RootLayout({children, params: {locale}}: Props) {
           </header>
           <main className="bg-white pb-32">
             <div className="max-w-7xl container mx-auto p-8">
-              <ListProvider baseUrl="/" defaultSortBy={defaultSortBy}>
+              <ListProvider
+                baseUrl="/"
+                defaultSortBy={defaultSortBy}
+                defaultLimit={defaultLimit}
+              >
                 {children}
               </ListProvider>
             </div>

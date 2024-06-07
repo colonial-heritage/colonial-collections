@@ -11,6 +11,7 @@ import {getTranslations, getLocale} from 'next-intl/server';
 import DatasetList from './dataset-list';
 import {sortMapping} from './sort-mapping';
 import {
+  defaultLimit,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   Type as SearchParamType,
@@ -102,6 +103,7 @@ export default async function Home({searchParams = {}}: Props) {
       type: searchParamType,
     })),
     searchParams,
+    defaultLimit,
   });
   const sortBy = getClientSortBy({
     sortMapping,

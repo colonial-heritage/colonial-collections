@@ -7,6 +7,7 @@ import {
   sortMapping,
 } from './sort-mapping';
 import {
+  defaultLimit,
   fromSearchParamsToSearchOptions,
   getClientSortBy,
   ImageFetchMode,
@@ -137,6 +138,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
       type: searchParamType,
     })),
     searchParams,
+    defaultLimit,
   });
 
   const sortBy = getClientSortBy({

@@ -19,6 +19,7 @@ interface ListProps<SortBy> {
   defaultSortBy: SortBy;
   defaultView?: ListView;
   defaultImageFetchMode?: ImageFetchMode;
+  defaultLimit: number;
   baseUrl: string;
   selectedFilters: {
     [filterKey: string]: (string | number)[] | number | string | undefined;
@@ -139,7 +140,6 @@ export const initialList = {
   query: '',
   totalCount: 0,
   offset: 0,
-  limit: 25,
   sortBy: undefined,
   defaultSortBy: undefined,
   defaultView: undefined,
@@ -155,6 +155,7 @@ export type ListProviderProps<SortBy> = PropsWithChildren<{
   defaultSortBy: SortBy;
   defaultView?: ListView;
   defaultImageFetchMode?: ImageFetchMode;
+  defaultLimit: number;
   baseUrl: string;
 }>;
 
@@ -162,7 +163,8 @@ export function ListProvider<SortBy>({
   children,
   defaultSortBy,
   defaultView,
-  defaultImageFetchMode,
+  defaultImageFetchMode = ImageFetchMode.None,
+  defaultLimit,
   baseUrl,
 }: ListProviderProps<SortBy>) {
   const storeRef = useRef<ListStore<SortBy>>();
@@ -174,10 +176,10 @@ export function ListProvider<SortBy>({
       defaultImageFetchMode,
       sortBy: defaultSortBy,
       view: defaultView,
-      // Set the default `imageFetchMode` to none so images won't load by default.
-      // As soon as the search results are loaded this will be overridden by the user setting.
-      imageFetchMode: ImageFetchMode.None,
+      imageFetchMode: defaultImageFetchMode,
       baseUrl,
+      limit: defaultLimit,
+      defaultLimit,
     });
   }
 
