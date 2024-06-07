@@ -5,7 +5,7 @@ import {ReactNode} from 'react';
 export default function Layout({children}: {children: ReactNode}) {
   return (
     <ListProvider baseUrl="/communities" defaultSortBy={defaultSortBy}>
-      <div className="pb-40">{children}</div>
+      <div>{children}</div>
     </ListProvider>
   );
 }

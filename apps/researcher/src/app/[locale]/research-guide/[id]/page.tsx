@@ -24,7 +24,7 @@ export default async function GuidePage({params}: Props) {
   }
 
   return (
-    <>
+    <div className="grow">
       <div className="w-full px-4 sm:px-10 max-w-7xl mx-auto mt-16  relative">
         <nav className="*:no-underline text-sm flex gap-4 2xl:fixed 2xl:flex-col 2xl:-translate-x-32 2xl:gap-2 2xl:pt-24">
           <a href="#description">{t('navText')}</a>
@@ -99,6 +99,6 @@ export default async function GuidePage({params}: Props) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
