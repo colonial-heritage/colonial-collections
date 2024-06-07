@@ -27,7 +27,7 @@ export default async function Footer() {
   const t = await getTranslations('Navigation');
 
   return (
-    <footer className="w-full bg-consortium-blue-800 text-consortium-blue-50 pt-20 pb-52 px-4 sm:px-10 relative mt-5">
+    <footer className="w-full bg-consortium-blue-800 text-consortium-blue-50 pt-20 pb-52 px-4 sm:px-10 relative mt-20">
       <div className="max-w-7xl w-full flex flex-col gap-4 lg:gap-10 lg:flex-row mx-auto">
         <div className="flex justify-center w-full max-w-6xl absolute bottom-0 opacity-20 z-0">
           <FooterBackground />
