@@ -7,7 +7,7 @@ import researchGuides from '@/lib/research-guides-instance';
 import {getLocale, getTranslations} from 'next-intl/server';
 import {Link} from '@/navigation';
 import {MDXRemote} from 'next-mdx-remote/rsc';
-import {ChevronRightIcon} from '@heroicons/react/20/solid';
+import {ChevronRightIcon, ChevronLeftIcon} from '@heroicons/react/24/solid';
 
 interface Props {
   params: {id: string};
@@ -25,6 +25,15 @@ export default async function GuidePage({params}: Props) {
 
   return (
     <div className="grow">
+      <div className="w-full px-4 sm:px-10 max-w-7xl mx-auto mt-10">
+        <Link
+          href="/research-guide"
+          className="w-fit no-underline p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+        >
+          <ChevronLeftIcon className="w-3 h-3 fill-neutral-600" />
+          {t('backButton')}
+        </Link>
+      </div>
       <div className="w-full px-4 sm:px-10 max-w-7xl mx-auto mt-16  relative">
         <nav className="*:no-underline text-sm flex gap-4 2xl:fixed 2xl:flex-col 2xl:-translate-x-32 2xl:gap-2 2xl:pt-24">
           <a href="#description">{t('navText')}</a>

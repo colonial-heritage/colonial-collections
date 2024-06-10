@@ -475,6 +475,7 @@
     "keywords": "Keywords",
     "contentLocations": "Geographical",
     "noTopLevel": "The research guide will be added soon. Please check back later.",
-    "noEntity": "Research guide could not be found"
+    "noEntity": "Research guide could not be found",
+    "backButton": "Back to overview"
   }
 }
