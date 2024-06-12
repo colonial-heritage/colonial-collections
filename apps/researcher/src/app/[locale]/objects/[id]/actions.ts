@@ -63,8 +63,6 @@ export async function addUserEnrichment({
   user,
   community,
 }: AddUserEnrichmentProps) {
-  console.log(JSON.stringify(user, null, 2));
-
   const enrichment = await creator.addText({
     type: additionalType,
     description,
