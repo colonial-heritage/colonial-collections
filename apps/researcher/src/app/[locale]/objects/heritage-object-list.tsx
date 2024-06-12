@@ -32,7 +32,7 @@ export default function HeritageObjectList({
               key={heritageObject.id}
               heritageObject={heritageObject}
               imageFetchMode={imageFetchMode!}
-              isInitialized={isInitialized}
+              listSettingsLoaded={isInitialized}
             />
           ))}
           <LoadingOverlay loading={loading} />
@@ -47,7 +47,7 @@ export default function HeritageObjectList({
                 key={heritageObject.id}
                 heritageObject={heritageObject}
                 imageFetchMode={imageFetchMode!}
-                isInitialized={isInitialized}
+                listSettingsLoaded={isInitialized}
               />
             ))}
           </div>

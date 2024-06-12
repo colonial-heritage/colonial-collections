@@ -1,14 +1,14 @@
 import {ListProvider} from '@colonial-collections/list-store';
 import {defaultSortBy} from '@/lib/community/actions';
 import {ReactNode} from 'react';
-import {limit} from './settings';
+import {itemsPerPageLimit} from './settings';
 
 export default function Layout({children}: {children: ReactNode}) {
   return (
     <ListProvider
       baseUrl="/communities"
       defaultSortBy={defaultSortBy}
-      defaultLimit={limit}
+      defaultLimit={itemsPerPageLimit}
     >
       <div>{children}</div>
     </ListProvider>
