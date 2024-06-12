@@ -15,12 +15,7 @@ describe('add', () => {
   it('adds a basic textual enrichment, with only required properties', async () => {
     const enrichment = await storer.addText({
       type: HeritageObjectEnrichmentType.Name,
-      about: {
-        id: 'http://example.org/object#name',
-        isPartOf: {
-          id: 'http://example.org/object',
-        },
-      },
+      about: 'http://example.org/object',
       pubInfo: {
         creator: {
           id: 'http://example.com/person',
@@ -41,12 +36,7 @@ describe('add', () => {
       description: 'A comment about the name of an object',
       citation: 'A citation or reference to a work that supports the comment',
       inLanguage: 'en',
-      about: {
-        id: 'http://example.org/object#name',
-        isPartOf: {
-          id: 'http://example.org/object',
-        },
-      },
+      about: 'http://example.org/object',
       pubInfo: {
         creator: {
           id: 'http://example.com/person',

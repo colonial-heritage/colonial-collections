@@ -61,19 +61,6 @@ export type ProvenanceEventEnrichmentBeingCreated = z.infer<
   typeof provenanceEventEnrichmentBeingCreatedSchema
 >;
 
-export const fullProvenanceEventEnrichmentBeingCreatedSchema =
-  provenanceEventEnrichmentBeingCreatedSchema.merge(
-    z.object({
-      about: z.object({
-        id: z.string().url(),
-      }),
-    })
-  );
-
-export type FullProvenanceEventEnrichmentBeingCreated = z.infer<
-  typeof fullProvenanceEventEnrichmentBeingCreatedSchema
->;
-
 export type ProvenanceEventEnrichment = {
   id: string;
   type: ProvenanceEventType;

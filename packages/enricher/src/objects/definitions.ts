@@ -2,6 +2,7 @@ import {basicEnrichmentBeingCreatedSchema, PubInfo} from '../definitions';
 import {z} from 'zod';
 
 // An enrichment can be about these types
+// Beware: the values of these type matter - these are stored in the nanopublications!
 export enum HeritageObjectEnrichmentType {
   Creator = 'creator',
   DateCreated = 'dateCreated',
@@ -24,22 +25,6 @@ export const heritageObjectEnrichmentBeingCreatedSchema =
 
 export type HeritageObjectEnrichmentBeingCreated = z.infer<
   typeof heritageObjectEnrichmentBeingCreatedSchema
->;
-
-export const fullHeritageObjectEnrichmentBeingCreatedSchema =
-  heritageObjectEnrichmentBeingCreatedSchema.merge(
-    z.object({
-      about: z.object({
-        id: z.string().url(),
-        isPartOf: z.object({
-          id: z.string().url(),
-        }),
-      }),
-    })
-  );
-
-export type FullHeritageObjectEnrichmentBeingCreated = z.infer<
-  typeof fullHeritageObjectEnrichmentBeingCreatedSchema
 >;
 
 export type HeritageObjectEnrichment = {
