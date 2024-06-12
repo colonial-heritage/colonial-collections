@@ -57,7 +57,7 @@ export default async function Page({params}: Props) {
 
   return (
     <>
-      <div className="bg-consortium-light-blue-100 w-full mt-12">
+      <div className="bg-consortium-light-blue-100 w-full pt-12">
         <div className="px-10 w-full flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto pb-12">
           <div className="flex gap-2">
             <Link
@@ -72,63 +72,66 @@ export default async function Page({params}: Props) {
       </div>
 
       <main className="w-full order-2 md:order-1">
-        <div className="flex flex-col md:flex-row h-full w-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 max-w-[1800px] mx-auto px-10 bg-consortium-light-blue-100 pb-10">
-          <div className="my-4 flex flex-col gap-4 w-full bg max-w-[1800px] mx-auto">
-            <div className="text-sm text-neutral-600">
-              {t('listCreatedBy')}{' '}
-              <Link href={`/communities/${params.slug}`}>
-                {community?.name}
-              </Link>
-            </div>
-            <Notifications />
-            <SlideOutClosed id={slideOutEditId}>
-              <div className="block">
-                <div className="flex flex-col md:flex-row justify-between">
-                  <h1 className="text-2xl md:text-4xl mb-4">
-                    {objectList.name}
-                  </h1>
-                  <div>
-                    <Protect
-                      communityId={community.id}
-                      permission="org:sys_profile:manage"
-                    >
-                      <SlideOutButton
-                        id={slideOutEditId}
-                        testId="edit-list-button"
-                        className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+        <div className="bg-consortium-light-blue-100 w-full">
+          <div className="flex flex-col md:flex-row w-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 max-w-[1800px] mx-auto px-10 pb-10">
+            <div className="my-4 flex flex-col gap-4 w-full bg max-w-[1800px] mx-auto">
+              <div className="text-sm text-neutral-600">
+                {t('listCreatedBy')}{' '}
+                <Link href={`/communities/${params.slug}`}>
+                  {community?.name}
+                </Link>
+              </div>
+              <Notifications />
+              <SlideOutClosed id={slideOutEditId}>
+                <div className="block">
+                  <div className="flex flex-col md:flex-row justify-between">
+                    <h1 className="text-2xl md:text-4xl mb-4">
+                      {objectList.name}
+                    </h1>
+                    <div>
+                      <Protect
+                        communityId={community.id}
+                        permission="org:sys_profile:manage"
                       >
-                        <PencilSquareIcon className="w-4 h-4 fill-neutral-500" />
-                        {t('editButton')}
-                      </SlideOutButton>
-                    </Protect>
+                        <SlideOutButton
+                          id={slideOutEditId}
+                          testId="edit-list-button"
+                          className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+                        >
+                          <PencilSquareIcon className="w-4 h-4 fill-neutral-500" />
+                          {t('editButton')}
+                        </SlideOutButton>
+                      </Protect>
+                    </div>
+                  </div>
+                  <p className="mb-4 max-w-3xl">{objectList.description}</p>
+                </div>
+              </SlideOutClosed>
+              <SlideOut id={slideOutEditId}>
+                <EditObjectListForm
+                  communityId={community.id}
+                  slideOutId={slideOutEditId}
+                  list={objectList}
+                />
+                <div className="flex flex-row w-full justify-between bg-red-50 p-4 border border-red-100 rounded-xl max-w-3xl">
+                  <div className="w-full md:w-2/3 flex flex-col md:flex-row justify-between gap-4">
+                    <div>
+                      <h2>{t('deleteListTitle')}</h2>
+                      <p>{t('deleteListDescription')}</p>
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/3 flex justify-end items-center">
+                    <DeleteListButton
+                      id={objectList.id}
+                      communitySlug={community.slug}
+                    />
                   </div>
                 </div>
-                <p className="mb-4 max-w-3xl">{objectList.description}</p>
-              </div>
-            </SlideOutClosed>
-            <SlideOut id={slideOutEditId}>
-              <EditObjectListForm
-                communityId={community.id}
-                slideOutId={slideOutEditId}
-                list={objectList}
-              />
-              <div className="flex flex-row w-full justify-between bg-red-50 p-4 border border-red-100 rounded-xl max-w-3xl">
-                <div className="w-full md:w-2/3 flex flex-col md:flex-row justify-between gap-4">
-                  <div>
-                    <h2>{t('deleteListTitle')}</h2>
-                    <p>{t('deleteListDescription')}</p>
-                  </div>
-                </div>
-                <div className="w-full md:w-1/3 flex justify-end items-center">
-                  <DeleteListButton
-                    id={objectList.id}
-                    communitySlug={community.slug}
-                  />
-                </div>
-              </div>
-            </SlideOut>
+              </SlideOut>
+            </div>
           </div>
         </div>
+
         <div className="max-w-[1800px] mx-auto px-10">
           <Protect
             communityId={community.id}
