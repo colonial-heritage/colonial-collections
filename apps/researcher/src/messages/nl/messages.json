@@ -475,6 +475,7 @@
       "keywords": "Trefwoorden", 
       "contentLocations": "Geografisch",
       "noTopLevel": "De onderzoeksgids wordt binnenkort toegevoegd. Kom later terug.",
-      "noEntity": "Onderzoeksgids kon niet worden gevonden"
+      "noEntity": "Onderzoeksgids kon niet worden gevonden",
+      "backButton": "Terug naar overzicht"
     }
 }
