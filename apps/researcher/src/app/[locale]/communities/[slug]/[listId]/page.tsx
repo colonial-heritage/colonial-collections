@@ -72,7 +72,7 @@ export default async function Page({params}: Props) {
       </div>
 
       <main className="w-full order-2 md:order-1">
-        <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 max-w-[1800px] mx-auto px-10 bg-consortium-light-blue-100">
+        <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 max-w-[1800px] mx-auto px-10 bg-consortium-light-blue-100 mb-10">
           <div className="my-4 flex flex-col gap-4 w-full bg max-w-[1800px] mx-auto">
             <div className="text-sm text-neutral-600">
               {t('listCreatedBy')}{' '}
