@@ -57,7 +57,9 @@ function createPlace(placeResource: Resource) {
     place.isPartOf = createPlace(parentPlace);
   }
 
-  return place;
+  const placeWithoutNullishValues = removeNullish<Place>(place);
+
+  return placeWithoutNullishValues;
 }
 
 function createThing<T>(thingResource: Resource) {
@@ -70,7 +72,9 @@ function createThing<T>(thingResource: Resource) {
     sameAs,
   };
 
-  return thing as T;
+  const thingWithoutNullishValues = removeNullish<T>(thing);
+
+  return thingWithoutNullishValues as T;
 }
 
 export function createThings<T>(resource: Resource, propertyName: string) {
