@@ -1,10 +1,9 @@
 import {z} from 'zod';
 
-// TBD: use ARK IRI instead, pointing to the knowledge graph?
 export const ontologyUrl =
-  'https://data.colonialcollections.nl/schemas/nanopub#'; // Internal ontology
+  'https://n2t.net/ark:/27023/9819f32405815dc7f2e0ecd9d8a9e604#';
 
-// We currently have just one version of our ontology
+// There currently is only one version of (the classes in) the ontology
 export const ontologyVersionIdentifier = 'Version1';
 
 export const creatorSchema = z.object({
