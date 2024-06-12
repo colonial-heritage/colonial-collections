@@ -195,10 +195,10 @@ export default async function CommunityPage({params}: Props) {
                   key={objectList.id}
                   className="no-underline bg-consortium-light-blue-100 rounded-lg flex flex-col justify-between"
                 >
-                  <div className="text-sm text-consortium-blue-500 p-4">
+                  <div className="text-sm text-consortium-blue-500 pt-4 px-4 pb-2">
                     List
                   </div>
-                  <div className="p-4">
+                  <div className="pt-2 px-4 pb-2">
                     <h3 className="font-semibold text-lg mt-4 mb-2">
                       {objectList.name}
                     </h3>
@@ -206,7 +206,7 @@ export default async function CommunityPage({params}: Props) {
                   </div>
 
                   <div className="w-full relative">
-                    <ul className=" mt-4 grid grid-cols-4 gap-2">
+                    <ul className="mt-4 grid grid-cols-4 gap-2 min-h-24">
                       {objectList.objects?.map(object => (
                         <ObjectCard
                           key={object.objectId}
