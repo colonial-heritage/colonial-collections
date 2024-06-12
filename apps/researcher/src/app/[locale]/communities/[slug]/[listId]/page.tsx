@@ -71,7 +71,7 @@ export default async function Page({params}: Props) {
         </div>
       </div>
 
-      <main className="w-full order-2 md:order-1">
+      <main className="w-full order-2 md:order-1 grow">
         <div className="bg-consortium-light-blue-100 w-full">
           <div className="flex flex-col md:flex-row w-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 max-w-[1800px] mx-auto px-10 pb-10">
             <div className="my-4 flex flex-col gap-4 w-full bg max-w-[1800px] mx-auto">
