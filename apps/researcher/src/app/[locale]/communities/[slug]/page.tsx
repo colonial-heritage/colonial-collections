@@ -195,7 +195,7 @@ export default async function CommunityPage({params}: Props) {
                   key={objectList.id}
                   className="no-underline bg-consortium-light-blue-100 rounded-lg flex flex-col justify-between"
                 >
-                  <div className="text-sm text-consortiumBlue-500">List</div>
+                  <div className="text-sm text-consortium-blue-500">List</div>
                   <h3 className="font-semibold text-lg mt-4 mb-2">
                     {objectList.name}
                   </h3>
@@ -211,8 +211,8 @@ export default async function CommunityPage({params}: Props) {
                       ))}
                     </ul>
 
-                    <div className="absolute bg-gradient-to-l from-consortiumBlue-800 from-10% w-full top-0 bottom-0 flex justify-end pr-10">
-                      <button className="p-2 self-center flex items-center py-2 px-6 rounded-full bg-consortium-light-blue-100 text-consortiumBlue-800 hover:bg-consortiumGreen-400 transition">
+                    <div className="absolute bg-gradient-to-l from-consortium-blue-800 from-10% w-full top-0 bottom-0 flex justify-end pr-10">
+                      <button className="p-2 self-center flex items-center py-2 px-6 rounded-full bg-consortium-light-blue-100 text-consortium-blue-800 hover:bg-consortium-green-400 transition">
                         {t('goToListButton')}
                       </button>
                     </div>
