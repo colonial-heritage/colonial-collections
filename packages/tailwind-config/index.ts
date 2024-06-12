@@ -46,7 +46,7 @@ export default {
         },
         'consortium-light-blue': {
           50: 'hsl(187, 20%, 99%)',
-          100: 'hsl(188, 10%, 94%)',
+          100: '#D8ECEF',
         },
         'consortium-sand': {
           50: 'hsl(49, 6%, 98%)',

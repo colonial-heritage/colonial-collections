@@ -193,7 +193,7 @@ export default async function CommunityPage({params}: Props) {
                   data-testid={`object-list-item-${objectList.id}`}
                   href={`/communities/${params.slug}/${objectList.id}`}
                   key={objectList.id}
-                  className="no-underline bg-consortium-light-blue-100 rounded-lg flex flex-col justify-between"
+                  className="no-underline bg-consortium-light-blue-100 rounded-lg flex flex-col justify-between p4"
                 >
                   <div className="text-sm text-consortium-blue-500">List</div>
                   <h3 className="font-semibold text-lg mt-4 mb-2">
