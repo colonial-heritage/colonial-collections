@@ -57,8 +57,8 @@ export default async function Page({params}: Props) {
 
   return (
     <>
-      <div className="bg-consortium-light-blue-100 w-full">
-        <div className="px-10 w-full flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto my-12">
+      <div className="bg-consortium-light-blue-100 w-full mt-12">
+        <div className="px-10 w-full flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto mb-12">
           <div className="flex gap-2">
             <Link
               href={`/communities/${params.slug}`}
@@ -70,8 +70,9 @@ export default async function Page({params}: Props) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 max-w-[1800px] mx-auto px-10 mb-40">
-        <main className="w-full order-2 md:order-1">
+
+      <main className="w-full order-2 md:order-1">
+        <div className="flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 max-w-[1800px] mx-auto px-10 bg-consortium-light-blue-100">
           <div className="my-4 flex flex-col gap-4 w-full bg max-w-[1800px] mx-auto">
             <div className="text-sm text-neutral-600">
               {t('listCreatedBy')}{' '}
@@ -127,87 +128,84 @@ export default async function Page({params}: Props) {
               </div>
             </SlideOut>
           </div>
-          <Protect
-            communityId={community.id}
-            permission="org:sys_profile:manage"
-          >
-            <SlideOutClosed id={slideOutManageItemsId}>
-              <div className="flex justify-end w-full mt-16 lg:mt-0 ">
+        </div>
+        <Protect communityId={community.id} permission="org:sys_profile:manage">
+          <SlideOutClosed id={slideOutManageItemsId}>
+            <div className="flex justify-end w-full mt-16 lg:mt-0 ">
+              <SlideOutButton
+                id={slideOutManageItemsId}
+                testId="manage-items-button"
+                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+              >
+                <PencilSquareIcon className="w-4 h-4 fill-neutral-500" />
+                {t('manageItemsButton')}
+              </SlideOutButton>
+            </div>
+          </SlideOutClosed>
+          <SlideOut id={slideOutManageItemsId}>
+            <div className="flex-col md:flex-row justify-between w-full items-center gap-4 mt-16 bg-neutral-50 rounded pl-3 flex">
+              <div className="text-sm">
+                <InformationCircleIcon className="w-5 h-5 stroke-neutral-500" />
+              </div>
+              <div className="text-sm grow">{t('mangeListDescription')}</div>
+              <div>
                 <SlideOutButton
                   id={slideOutManageItemsId}
-                  testId="manage-items-button"
                   className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
                 >
-                  <PencilSquareIcon className="w-4 h-4 fill-neutral-500" />
-                  {t('manageItemsButton')}
+                  <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
+                  {t('closeManageItemsButton')}
                 </SlideOutButton>
+              </div>
+            </div>
+          </SlideOut>
+        </Protect>
+
+        {objectList.objects.length === 0 ? (
+          <div className="bg-consortium-green-100 px-4 py-8 rounded max-w-3xl">
+            <div className="pb-4">
+              <InformationCircleIcon className="w-6 h-6 stroke-neutral-800" />
+              <LocalizedMarkdown
+                name="empty-object-list"
+                contentPath="@/messages"
+                textProps={{name: objectList.name}}
+              />
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-4">
+              <h2 className="text-xl">
+                {t('objectCount', {count: objectList.objects.length})}
+              </h2>
+            </div>
+
+            <SlideOutClosed id={slideOutManageItemsId}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-6 mt-6">
+                {objectList.objects.map(object => (
+                  <ObjectCard
+                    key={object.objectId}
+                    objectIri={object.objectIri}
+                  />
+                ))}
               </div>
             </SlideOutClosed>
             <SlideOut id={slideOutManageItemsId}>
-              <div className="flex-col md:flex-row justify-between w-full items-center gap-4 mt-16 bg-neutral-50 rounded pl-3 flex">
-                <div className="text-sm">
-                  <InformationCircleIcon className="w-5 h-5 stroke-neutral-500" />
-                </div>
-                <div className="text-sm grow">{t('mangeListDescription')}</div>
-                <div>
-                  <SlideOutButton
-                    id={slideOutManageItemsId}
-                    className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-                  >
-                    <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
-                    {t('closeManageItemsButton')}
-                  </SlideOutButton>
-                </div>
-              </div>
-            </SlideOut>
-          </Protect>
-
-          {objectList.objects.length === 0 ? (
-            <div className="bg-consortium-green-100 px-4 py-8 rounded max-w-3xl">
-              <div className="pb-4">
-                <InformationCircleIcon className="w-6 h-6 stroke-neutral-800" />
-                <LocalizedMarkdown
-                  name="empty-object-list"
-                  contentPath="@/messages"
-                  textProps={{name: objectList.name}}
-                />
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-4">
-                <h2 className="text-xl">
-                  {t('objectCount', {count: objectList.objects.length})}
-                </h2>
-              </div>
-
-              <SlideOutClosed id={slideOutManageItemsId}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-6 mt-6">
+              <div className="block">
+                <div className="flex flex-col mt-6">
                   {objectList.objects.map(object => (
-                    <ObjectCard
+                    <ManageObjectCard
                       key={object.objectId}
                       objectIri={object.objectIri}
+                      id={object.id}
                     />
                   ))}
                 </div>
-              </SlideOutClosed>
-              <SlideOut id={slideOutManageItemsId}>
-                <div className="block">
-                  <div className="flex flex-col mt-6">
-                    {objectList.objects.map(object => (
-                      <ManageObjectCard
-                        key={object.objectId}
-                        objectIri={object.objectIri}
-                        id={object.id}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </SlideOut>
-            </>
-          )}
-        </main>
-      </div>
+              </div>
+            </SlideOut>
+          </>
+        )}
+      </main>
     </>
   );
 }
