@@ -195,11 +195,11 @@ export default async function CommunityPage({params}: Props) {
                   key={objectList.id}
                   className="no-underline bg-consortium-light-blue-100 rounded-lg flex flex-col justify-between"
                 >
-                  <div className="text-sm text-consortium-blue-500 pt-4 px-4 pb-1">
+                  <div className="text-sm text-consortium-blue-500 pt-4 px-4">
                     {t('objectListsCardType')}
                   </div>
                   <div className="px-4 pb-2">
-                    <h3 className="font-semibold text-lg mt-4 mb-2">
+                    <h3 className="font-semibold text-lg mb-2">
                       {objectList.name}
                     </h3>
                     <p>{objectList.description}</p>
