@@ -340,6 +340,7 @@
     "membersButton": "Manage members",
     "goToListButton": "See all objects",
     "objectListsTitle": "Lists",
+    "objectListsCardType": "List",
     "objectListsSubTitle": "This community has {count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
     "membersTitle": "Members",
     "error": "Something went wrong while fetching the community. Please try again later.",
