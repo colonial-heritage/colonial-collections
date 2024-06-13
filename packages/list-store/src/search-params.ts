@@ -3,8 +3,6 @@ import {ImageFetchMode, ListView} from './definitions';
 
 export type Type = 'string' | 'array' | 'number';
 
-const defaultLimit = 25;
-
 // Only strings are allowed in the search params.
 const searchParamFilterSchema = z
   .array(z.coerce.string())
@@ -15,6 +13,7 @@ interface GetSearchParamsSchemaProps<SortBy> {
   defaultSortBy: SortBy;
   defaultView?: ListView;
   defaultImageFetchMode?: ImageFetchMode;
+  defaultLimit: number;
 }
 
 function transformToStringAndRemoveDefaultSchema(defaultValue?: string) {
@@ -28,6 +27,7 @@ function getSearchParamsSchema<SortBy>({
   defaultSortBy,
   defaultView,
   defaultImageFetchMode,
+  defaultLimit,
 }: GetSearchParamsSchemaProps<SortBy>) {
   return z.object({
     query: z.string().default(''),
@@ -55,6 +55,7 @@ interface ClientSearchOptions<SortBy> {
   defaultSortBy: SortBy;
   defaultView?: ListView;
   defaultImageFetchMode?: ImageFetchMode;
+  defaultLimit: number;
 }
 
 export function getUrlWithSearchParams<SortBy>({
@@ -69,12 +70,14 @@ export function getUrlWithSearchParams<SortBy>({
   defaultSortBy,
   defaultImageFetchMode,
   defaultView,
+  defaultLimit,
 }: ClientSearchOptions<SortBy>): string {
   const searchParams: {[key: string]: string | string[]} =
     getSearchParamsSchema({
       defaultSortBy,
       defaultImageFetchMode,
       defaultView,
+      defaultLimit,
     }).parse({
       query,
       offset,
@@ -148,6 +151,7 @@ export interface FromSearchParamsToSearchOptionsProps {
     name: string;
     type: Type;
   }[];
+  defaultLimit: number;
 }
 
 // This function translates the search params to valid search options.
@@ -161,6 +165,7 @@ export function fromSearchParamsToSearchOptions({
     sortMapping,
   },
   filterKeys,
+  defaultLimit,
 }: FromSearchParamsToSearchOptionsProps) {
   // Always return a valid SearchOptions object, even if the search params aren't correct,
   // so the application doesn't fail on invalid search params.

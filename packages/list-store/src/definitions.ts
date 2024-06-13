@@ -4,7 +4,7 @@ export enum SortBy {
   NameDesc = 'nameDesc',
 }
 
-export const defaultSortBy = SortBy.RelevanceDesc;
+export const defaultSortBy = SortBy.NameAsc;
 
 export enum ListView {
   Grid = 'grid',
@@ -18,3 +18,5 @@ export enum ImageFetchMode {
 }
 
 export const defaultImageFetchMode = ImageFetchMode.Large;
+
+export const defaultLimit = 25;

@@ -21,6 +21,7 @@ export default function HeritageObjectList({
   const view = useListStore(s => s.view);
   const imageFetchMode = useListStore(s => s.imageFetchMode);
   const loading = useListStore(s => s.newDataNeeded);
+  const isInitialized = useListStore(s => s.isInitialized);
 
   if (totalCount > 0) {
     if (view === 'grid') {
@@ -31,6 +32,7 @@ export default function HeritageObjectList({
               key={heritageObject.id}
               heritageObject={heritageObject}
               imageFetchMode={imageFetchMode!}
+              listSettingsLoaded={isInitialized}
             />
           ))}
           <LoadingOverlay loading={loading} />
@@ -45,6 +47,7 @@ export default function HeritageObjectList({
                 key={heritageObject.id}
                 heritageObject={heritageObject}
                 imageFetchMode={imageFetchMode!}
+                listSettingsLoaded={isInitialized}
               />
             ))}
           </div>

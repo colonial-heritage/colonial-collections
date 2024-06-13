@@ -4,7 +4,7 @@ import {
   getClientSortBy,
   FromSearchParamsToSearchOptionsProps,
 } from './search-params';
-import {SortBy, defaultSortBy} from './definitions';
+import {SortBy, defaultLimit, defaultSortBy} from './definitions';
 import {describe, expect, it} from '@jest/globals';
 import {z} from 'zod';
 
@@ -54,7 +54,7 @@ const sortOptions = {
 
 describe('getUrlWithSearchParams', () => {
   it('returns "/" if there are no filter options', () => {
-    expect(getUrlWithSearchParams({defaultSortBy})).toBe('/');
+    expect(getUrlWithSearchParams({defaultSortBy, defaultLimit})).toBe('/');
   });
 
   it('returns "/" with only default values', () => {
@@ -62,6 +62,7 @@ describe('getUrlWithSearchParams', () => {
       offset: 0,
       sortBy: defaultSortBy,
       defaultSortBy,
+      defaultLimit,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/');
@@ -71,6 +72,7 @@ describe('getUrlWithSearchParams', () => {
     const options = {
       query: '',
       defaultSortBy,
+      defaultLimit,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/');
@@ -80,6 +82,7 @@ describe('getUrlWithSearchParams', () => {
     const options = {
       query: '',
       defaultSortBy,
+      defaultLimit,
       filters: {
         types: [],
         locations: [],
@@ -94,6 +97,7 @@ describe('getUrlWithSearchParams', () => {
     const options = {
       query: 'my query',
       defaultSortBy,
+      defaultLimit,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/?query=my+query');
@@ -103,6 +107,7 @@ describe('getUrlWithSearchParams', () => {
     const options = {
       offset: 12,
       defaultSortBy,
+      defaultLimit,
     };
 
     expect(getUrlWithSearchParams(options)).toBe('/?offset=12');
@@ -110,16 +115,18 @@ describe('getUrlWithSearchParams', () => {
 
   it('adds "sortBy" to the search params if `sortBy` is not the default', () => {
     const options = {
-      sortBy: SortBy.NameAsc,
+      sortBy: SortBy.NameDesc,
       defaultSortBy,
+      defaultLimit,
     };
 
-    expect(getUrlWithSearchParams(options)).toBe('/?sortBy=nameAsc');
+    expect(getUrlWithSearchParams(options)).toBe('/?sortBy=nameDesc');
   });
 
   it('adds "filters" to the search params if the filter arrays are not empty', () => {
     const options = {
       defaultSortBy,
+      defaultLimit,
       filters: {
         types: ['filter1'],
         locations: ['filter2', 'filter3'],
@@ -139,6 +146,7 @@ describe('getUrlWithSearchParams', () => {
       offset: 20,
       sortBy: SortBy.NameDesc,
       defaultSortBy,
+      defaultLimit,
       filters: {
         types: ['filter1'],
         locations: ['filter2', 'filter3'],
@@ -160,6 +168,7 @@ describe('fromSearchParamsToSearchOptions', () => {
         sortOptions,
         searchParams: {},
         filterKeys: [],
+        defaultLimit,
       })
     ).toStrictEqual({
       filters: {},
@@ -182,12 +191,13 @@ describe('fromSearchParamsToSearchOptions', () => {
         sortOptions,
         searchParams,
         filterKeys: [],
+        defaultLimit,
       })
     ).toStrictEqual({
       filters: {},
       offset: 0,
-      sortBy: 'relevance',
-      sortOrder: 'desc',
+      sortBy: 'name',
+      sortOrder: 'asc',
       limit: 25,
       query: undefined,
     });
@@ -204,6 +214,7 @@ describe('fromSearchParamsToSearchOptions', () => {
         sortOptions,
         searchParams,
         filterKeys: [],
+        defaultLimit,
       })
     ).toStrictEqual({
       filters: {},
@@ -231,6 +242,7 @@ describe('fromSearchParamsToSearchOptions', () => {
         sortOptions,
         searchParams,
         filterKeys,
+        defaultLimit,
       })
     ).toStrictEqual({
       query: 'My query',

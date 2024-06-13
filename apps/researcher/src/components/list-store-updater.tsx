@@ -41,6 +41,7 @@ export function ListStoreUpdater<SortBy>({
   const defaultSortBy = useListStore<SortBy, SortBy>(s => s.defaultSortBy);
   const defaultView = useListStore(s => s.defaultView);
   const defaultImageFetchMode = useListStore(s => s.defaultImageFetchMode);
+  const defaultLimit = useListStore(s => s.defaultLimit);
 
   useUpdateListStore({
     totalCount,
@@ -67,6 +68,7 @@ export function ListStoreUpdater<SortBy>({
     imageFetchMode,
     defaultView,
     defaultImageFetchMode,
+    defaultLimit,
   });
 
   saveLastSearch(baseUrl, url);
