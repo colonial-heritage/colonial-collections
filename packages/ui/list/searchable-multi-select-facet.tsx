@@ -162,13 +162,6 @@ export function SearchableMultiSelectFacet({
     <FacetWrapper testId={testId}>
       <div className="flex items-center w-full my-1">
         <FacetTitle title={title} />
-        <ModalButton
-          id={filterKey}
-          className="inline-flex items-center text-consortium-blue-600"
-        >
-          <span>{t('expandFilter')}</span>
-          <ChevronRightIcon className="w-4 h-4 fill-bg-consortium-blue-100" />
-        </ModalButton>
       </div>
       <FacetProvider filters={filters}>
         <>
@@ -179,6 +172,14 @@ export function SearchableMultiSelectFacet({
           </Modal>
         </>
       </FacetProvider>
+      <ModalButton
+        id={filterKey}
+        className="inline-flex items-center text-consortium-blue-600"
+        aria-label="Click to expand for more filter items"
+      >
+        <span>{t('expandFilter')}</span>
+        <ChevronRightIcon className="w-4 h-4 fill-bg-consortium-blue-100" />
+      </ModalButton>
     </FacetWrapper>
   );
 }

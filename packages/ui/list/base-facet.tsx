@@ -10,20 +10,16 @@ interface FacetWrapperProps {
 
 export function FacetWrapper({children, testId}: FacetWrapperProps) {
   return (
-    <div>
+    <fieldset role="application">
       <div className="w-full max-w-[450px]" data-testid={testId}>
         {children}
       </div>
-    </div>
+    </fieldset>
   );
 }
 
 export function FacetTitle({title}: {title: string}) {
-  return (
-    <div className="font-semibold grow">
-      <span>{title}</span>
-    </div>
-  );
+  return <legend className="font-semibold grow">{title}</legend>;
 }
 
 interface FacetCheckBoxProps {
@@ -69,7 +65,10 @@ export function FacetCheckBox({
   );
 
   return (
-    <div className="flex flex-row justify-between gap-2 w-full mb-2 items-center">
+    <label
+      className="flex flex-row justify-between gap-2 w-full mb-2 items-center"
+      htmlFor={`facet-${id}`}
+    >
       <div className="flex flex-row">
         <input
           className=" w-5 h-5 mr-2 rounded border-consortium-blue-300 focus:ring-consortium-green-400"
@@ -81,11 +80,16 @@ export function FacetCheckBox({
           onChange={handleChange}
           disabled={!isMounted || newDataNeeded}
         />
-        <label className="truncate max-w-[230px]" htmlFor={`facet-${id}`}>
+        <div
+          className="truncate max-w-[230px]"
+          aria-label={`filter with ${name}`}
+        >
           {name}
-        </label>
+        </div>
       </div>
-      <div className="text-sm text-neutral-600">{count}</div>
-    </div>
+      <div className="text-sm text-neutral-600" aria-label={`${count} results`}>
+        {count}
+      </div>
+    </label>
   );
 }
