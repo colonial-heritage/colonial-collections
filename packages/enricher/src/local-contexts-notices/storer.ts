@@ -177,7 +177,7 @@ export class LocalContextsNoticeEnrichmentStorer {
       );
     }
 
-    // Context: the enrichment is about a specific Local Context Notice type
+    // Context: the enrichment is about a specific Local Contexts Notice type
     assertionStore.addQuad(
       DF.quad(
         bodyId,
