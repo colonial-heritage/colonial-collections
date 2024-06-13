@@ -1,10 +1,10 @@
 import {nanopubId, NanopubClient} from '../client';
 import {ontologyUrl, type BasicEnrichment} from '../definitions';
 import {
-  fullHeritageObjectEnrichmentBeingCreatedSchema,
-  FullHeritageObjectEnrichmentBeingCreated,
+  heritageObjectEnrichmentBeingCreatedSchema,
+  HeritageObjectEnrichmentBeingCreated,
 } from './definitions';
-import {fromTypeToClass} from './helpers';
+import {fromTypeToClass, fromTypeToProperty} from './helpers';
 import {DataFactory} from 'rdf-data-factory';
 import {RdfStore} from 'rdf-stores';
 import {z} from 'zod';
@@ -30,11 +30,9 @@ export class HeritageObjectEnrichmentStorer {
     this.nanopubClient = opts.nanopubClient;
   }
 
-  async addText(
-    fullEnrichmentBeingCreated: FullHeritageObjectEnrichmentBeingCreated
-  ) {
-    const opts = fullHeritageObjectEnrichmentBeingCreatedSchema.parse(
-      fullEnrichmentBeingCreated
+  async addText(enrichmentBeingCreated: HeritageObjectEnrichmentBeingCreated) {
+    const opts = heritageObjectEnrichmentBeingCreatedSchema.parse(
+      enrichmentBeingCreated
     );
 
     const publicationStore = RdfStore.createDefault();
@@ -175,30 +173,31 @@ export class HeritageObjectEnrichmentStorer {
     }
 
     // The part of an object that the enrichment is about
-    const objectId = DF.namedNode(opts.about.id);
+    const objectPartId = DF.blankNode();
 
     assertionStore.addQuad(
       DF.quad(
         enrichmentId,
         DF.namedNode('http://www.w3.org/ns/oa#hasTarget'),
-        objectId
+        objectPartId
       )
     );
 
+    // The property (e.g. title, date of creation) that the enrichment is about
     assertionStore.addQuad(
       DF.quad(
-        objectId,
-        DF.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-        DF.namedNode('http://www.w3.org/ns/oa#SpecificResource')
+        objectPartId,
+        DF.namedNode('http://www.w3.org/ns/oa#hasScope'),
+        DF.namedNode(fromTypeToProperty(opts.type))
       )
     );
 
     // The object that the enrichment is about
     assertionStore.addQuad(
       DF.quad(
-        objectId,
+        objectPartId,
         DF.namedNode('http://www.w3.org/ns/oa#hasSource'),
-        DF.namedNode(opts.about.isPartOf.id)
+        DF.namedNode(opts.about)
       )
     );
 

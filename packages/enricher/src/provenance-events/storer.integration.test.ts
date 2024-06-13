@@ -15,9 +15,7 @@ describe('add event', () => {
   it('adds an event with only a start date', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.Acquisition,
-      about: {
-        id: 'http://example.org/object1',
-      },
+      about: 'http://example.org/object1',
       date: {
         startDate: '1805',
       },
@@ -38,9 +36,7 @@ describe('add event', () => {
   it('adds an event with only an end date', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.Acquisition,
-      about: {
-        id: 'http://example.org/object1',
-      },
+      about: 'http://example.org/object1',
       date: {
         endDate: '1806',
       },
@@ -63,9 +59,7 @@ describe('add acquisition event', () => {
   it('adds a basic event, with only required properties', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.Acquisition,
-      about: {
-        id: 'http://example.org/object1',
-      },
+      about: 'http://example.org/object1',
       pubInfo: {
         creator: {
           id: 'http://example.com/person',
@@ -111,9 +105,7 @@ describe('add acquisition event', () => {
         id: 'http://vocab.getty.edu/aat/300435722',
         name: 'Possibly',
       },
-      about: {
-        id: 'http://example.org/object1',
-      },
+      about: 'http://example.org/object1',
       pubInfo: {
         creator: {
           id: 'http://example.com/person',
@@ -137,9 +129,7 @@ describe('add transfer of custody event', () => {
   it('adds a basic event, with only required properties', async () => {
     const enrichment = await storer.add({
       type: ProvenanceEventType.TransferOfCustody,
-      about: {
-        id: 'http://example.org/object1',
-      },
+      about: 'http://example.org/object1',
       pubInfo: {
         creator: {
           id: 'http://example.com/person',
@@ -185,9 +175,7 @@ describe('add transfer of custody event', () => {
         id: 'http://vocab.getty.edu/aat/300435722',
         name: 'Possibly',
       },
-      about: {
-        id: 'http://example.org/object1',
-      },
+      about: 'http://example.org/object1',
       pubInfo: {
         creator: {
           id: 'http://example.com/person',

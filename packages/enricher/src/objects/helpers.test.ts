@@ -1,19 +1,36 @@
 import {HeritageObjectEnrichmentType} from './definitions';
-import {fromClassToType, fromTypeToClass} from './helpers';
-import {ontologyUrl, ontologyVersionIdentifier} from '../definitions';
+import {
+  fromPropertyToType,
+  fromTypeToClass,
+  fromTypeToProperty,
+} from './helpers';
+import {ontologyVersionIdentifier, ontologyUrl} from '../definitions';
 import {describe, expect, it} from '@jest/globals';
 
-describe('fromClassToType', () => {
-  it('throws if the type is unknown', () => {
-    expect(() => fromClassToType('badValue')).toThrow(
-      'Unknown class: "badValue"'
+describe('fromTypeToProperty', () => {
+  it('throws if the property is unknown', () => {
+    // @ts-expect-error:TS2345
+    expect(() => fromTypeToProperty('badValue')).toThrow(
+      'Unknown type: "badValue"'
     );
   });
 
-  it('returns the type of a class', () => {
-    const type = fromClassToType(
-      `${ontologyUrl}Material${ontologyVersionIdentifier}`
+  it('returns the property of a type', () => {
+    const property = fromTypeToProperty(HeritageObjectEnrichmentType.Material);
+
+    expect(property).toEqual(`${ontologyUrl}material`);
+  });
+});
+
+describe('fromPropertyToType', () => {
+  it('throws if the type is unknown', () => {
+    expect(() => fromPropertyToType('badValue')).toThrow(
+      'Unknown property: "badValue"'
     );
+  });
+
+  it('returns the type of a property', () => {
+    const type = fromPropertyToType(`${ontologyUrl}material`);
 
     expect(type).toEqual(HeritageObjectEnrichmentType.Material);
   });

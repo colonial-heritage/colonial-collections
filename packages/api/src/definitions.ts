@@ -2,8 +2,6 @@ import {z} from 'zod';
 
 export const localeSchema = z.enum(['en', 'nl']).optional().default('en');
 
-export const ontologyUrl = 'https://colonialcollections.nl/schema#'; // Internal ontology
-
 export type Thing = {
   id: string;
   name?: string; // Name may not exist (e.g. in a specific locale)
