@@ -1,24 +1,49 @@
 'use client';
 
-import {useCallback, useMemo, ReactNode, useState, useEffect} from 'react';
+import {
+  useCallback,
+  useMemo,
+  ReactNode,
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+} from 'react';
 import {useListStore} from '@colonial-collections/list-store';
+
+interface FacetContextProps {
+  title: string;
+}
+
+const FacetContext = createContext<FacetContextProps>({
+  title: '',
+});
 
 interface FacetWrapperProps {
   children: ReactNode;
   testId?: string;
+  title: string;
 }
 
-export function FacetWrapper({children, testId}: FacetWrapperProps) {
+export function FacetWrapper({children, testId, title}: FacetWrapperProps) {
+  const context = {
+    title,
+  };
+
   return (
-    <fieldset>
-      <div className="w-full max-w-[450px]" data-testid={testId}>
-        {children}
-      </div>
-    </fieldset>
+    <FacetContext.Provider value={context}>
+      <fieldset>
+        <div className="w-full max-w-[450px]" data-testid={testId}>
+          {children}
+        </div>
+      </fieldset>
+    </FacetContext.Provider>
   );
 }
 
-export function FacetTitle({title}: {title: string}) {
+export function FacetTitle() {
+  const {title} = useContext(FacetContext);
+
   return <legend className="font-semibold grow">{title}</legend>;
 }
 
@@ -39,6 +64,7 @@ export function FacetCheckBox({
   const filterChange = useListStore(s => s.filterChange);
   const newDataNeeded = useListStore(s => s.newDataNeeded);
   const [isMounted, setIsMounted] = useState(false);
+  const {title} = useContext(FacetContext);
 
   // Wait for hydration to complete before enabling the input
   useEffect(() => {
@@ -82,7 +108,7 @@ export function FacetCheckBox({
         />
         <div
           className="truncate max-w-[230px]"
-          aria-label={`filter with ${name}`}
+          aria-label={`filter on ${name} with ${title}`}
         >
           {name}
         </div>

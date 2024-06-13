@@ -159,9 +159,9 @@ export function SearchableMultiSelectFacet({
   }
 
   return (
-    <FacetWrapper testId={testId}>
+    <FacetWrapper testId={testId} title={title}>
       <div className="flex items-center w-full my-1">
-        <FacetTitle title={title} />
+        <FacetTitle />
       </div>
       <FacetProvider filters={filters}>
         <>

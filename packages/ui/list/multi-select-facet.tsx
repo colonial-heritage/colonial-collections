@@ -16,8 +16,8 @@ export function MultiSelectFacet({title, filters, filterKey, testId}: Props) {
   }
 
   return (
-    <FacetWrapper testId={testId}>
-      <FacetTitle title={title} />
+    <FacetWrapper testId={testId} title={title}>
+      <FacetTitle />
       {filters.map(searchResultFilter => (
         <FacetCheckBox
           key={searchResultFilter.id}
