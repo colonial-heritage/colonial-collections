@@ -10,7 +10,7 @@ interface FacetWrapperProps {
 
 export function FacetWrapper({children, testId}: FacetWrapperProps) {
   return (
-    <fieldset role="application">
+    <fieldset>
       <div className="w-full max-w-[450px]" data-testid={testId}>
         {children}
       </div>

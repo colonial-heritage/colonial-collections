@@ -71,7 +71,7 @@ export function SearchField({
 
   return (
     <>
-      <div className="w-full flex justify-between" role="searchbox">
+      <div className="flex justify-between w-full" role="searchbox">
         <input
           data-testid="searchQuery"
           value={inputText}
