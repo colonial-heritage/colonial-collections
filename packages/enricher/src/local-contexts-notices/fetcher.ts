@@ -1,5 +1,5 @@
 import {ontologyUrl} from '../definitions';
-import {toHeritageObjectEnrichment} from './rdf-helpers';
+import {toLocalContextsNoticeEnrichment} from './rdf-helpers';
 import {isIri} from '@colonial-collections/iris';
 import {SparqlEndpointFetcher} from 'fetch-sparql-endpoint';
 import type {Readable} from 'node:stream';
@@ -11,15 +11,17 @@ const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
 });
 
-export type HeritageObjectEnrichmentFetcherConstructorOptions = z.infer<
+export type LocalContextsNoticesEnrichmentFetcherConstructorOptions = z.infer<
   typeof constructorOptionsSchema
 >;
 
-export class HeritageObjectEnrichmentFetcher {
+export class LocalContextsNoticesEnrichmentFetcher {
   private readonly endpointUrl: string;
   private readonly fetcher = new SparqlEndpointFetcher();
 
-  constructor(options: HeritageObjectEnrichmentFetcherConstructorOptions) {
+  constructor(
+    options: LocalContextsNoticesEnrichmentFetcherConstructorOptions
+  ) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
@@ -29,6 +31,7 @@ export class HeritageObjectEnrichmentFetcher {
     // TBD: is there a limit to the number of enrichments that can be retrieved?
     // Should we start paginating at some point?
     const query = `
+      PREFIX as: <https://www.w3.org/ns/activitystreams#>
       PREFIX cc: <${ontologyUrl}>
       PREFIX dc: <http://purl.org/dc/elements/1.1/>
       PREFIX dcterms: <http://purl.org/dc/terms/>
@@ -45,8 +48,8 @@ export class HeritageObjectEnrichmentFetcher {
         # Need this to easily retrieve the enrichments in the RdfObjectLoader
         ?source ex:hasEnrichment ?annotation .
 
-        ?annotation a ex:HeritageObjectEnrichment ;
-          ex:additionalType ?scope ;
+        ?annotation a ex:LocalContextsNoticeEnrichment ;
+          ex:type ?context ;
           ex:about ?source ;
           ex:description ?value ;
           ex:citation ?comment ;
@@ -96,13 +99,12 @@ export class HeritageObjectEnrichmentFetcher {
 
         graph ?assertion {
           ?annotation a oa:Annotation ;
-             oa:hasTarget ?target .
+             oa:hasTarget ?source .
 
-          ?target oa:hasSource ?source ;
-            oa:hasScope ?scope .
+          ?annotation oa:hasBody ?body .
+          ?body as:context ?context .
 
           OPTIONAL {
-            ?annotation oa:hasBody ?body .
             ?body rdf:value ?value .
             OPTIONAL {
               ?body dc:language ?language .
@@ -138,7 +140,7 @@ export class HeritageObjectEnrichmentFetcher {
 
     const rawEnrichments = resource.properties['ex:hasEnrichment'];
     const enrichments = rawEnrichments.map(rawEnrichment =>
-      toHeritageObjectEnrichment(rawEnrichment)
+      toLocalContextsNoticeEnrichment(rawEnrichment)
     );
 
     // Sort the enrichments by date of creation, from old to new
