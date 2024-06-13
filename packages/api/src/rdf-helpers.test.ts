@@ -226,7 +226,7 @@ describe('createThings', () => {
 
     expect(things).toStrictEqual([
       {id: 'https://example.org/subject1', name: 'Term', sameAs: 'ID'},
-      {id: 'https://example.org/subject2', name: undefined, sameAs: undefined},
+      {id: 'https://example.org/subject2'},
     ]);
   });
 });
@@ -245,7 +245,6 @@ describe('createPlaces', () => {
       {
         id: 'https://example.org/location1',
         name: 'City 1',
-        sameAs: undefined,
       },
       {
         id: 'https://example.org/location2',
@@ -254,7 +253,6 @@ describe('createPlaces', () => {
         isPartOf: {
           id: 'https://example.org/location3',
           name: 'Country',
-          sameAs: undefined,
         },
       },
     ]);

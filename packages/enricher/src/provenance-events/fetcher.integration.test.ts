@@ -12,10 +12,7 @@ const nanopubClient = new NanopubClient({
   proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
 });
 
-const creator = new EnrichmentCreator({
-  knowledgeGraphEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
-  nanopubClient,
-});
+const creator = new EnrichmentCreator({nanopubClient});
 
 const fetcher = new ProvenanceEventEnrichmentFetcher({
   endpointUrl: env.NANOPUB_SPARQL_ENDPOINT_URL as string,

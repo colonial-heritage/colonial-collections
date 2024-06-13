@@ -6,8 +6,8 @@ import {
 } from '../definitions';
 import {getDateAsXsd, DateType} from './helpers';
 import {
-  fullProvenanceEventEnrichmentBeingCreatedSchema,
-  FullProvenanceEventEnrichmentBeingCreated,
+  provenanceEventEnrichmentBeingCreatedSchema,
+  ProvenanceEventEnrichmentBeingCreated,
   ProvenanceEventType,
 } from './definitions';
 import {DataFactory} from 'rdf-data-factory';
@@ -35,11 +35,9 @@ export class ProvenanceEventEnrichmentStorer {
     this.nanopubClient = opts.nanopubClient;
   }
 
-  async add(
-    fullEnrichmentBeingCreated: FullProvenanceEventEnrichmentBeingCreated
-  ) {
-    const opts = fullProvenanceEventEnrichmentBeingCreatedSchema.parse(
-      fullEnrichmentBeingCreated
+  async add(enrichmentBeingCreated: ProvenanceEventEnrichmentBeingCreated) {
+    const opts = provenanceEventEnrichmentBeingCreatedSchema.parse(
+      enrichmentBeingCreated
     );
 
     const publicationStore = RdfStore.createDefault();
@@ -217,7 +215,7 @@ export class ProvenanceEventEnrichmentStorer {
       DF.quad(
         provenanceEventId,
         DF.namedNode(`http://www.cidoc-crm.org/cidoc-crm/${objectPredicate}`),
-        DF.namedNode(opts.about.id)
+        DF.namedNode(opts.about)
       )
     );
 

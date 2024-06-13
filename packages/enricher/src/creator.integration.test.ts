@@ -12,10 +12,7 @@ const nanopubClient = new NanopubClient({
   proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
 });
 
-const creator = new EnrichmentCreator({
-  knowledgeGraphEndpointUrl: env.SPARQL_ENDPOINT_URL as string,
-  nanopubClient,
-});
+const creator = new EnrichmentCreator({nanopubClient});
 
 describe('addText', () => {
   it('adds a basic textual enrichment, with only required properties', async () => {

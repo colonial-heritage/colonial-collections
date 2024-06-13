@@ -1,4 +1,4 @@
-import {ontologyUrl, ontologyVersionIdentifier} from '../definitions';
+import {ontologyUrl} from '../definitions';
 import {HeritageObjectEnrichmentType} from './definitions';
 import {toHeritageObjectEnrichment} from './rdf-helpers';
 import {describe, expect, it} from '@jest/globals';
@@ -22,15 +22,15 @@ beforeAll(async () => {
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
     ex:basicEnrichment a ex:HeritageObjectEnrichment ;
-      ex:additionalType <${ontologyUrl}Material${ontologyVersionIdentifier}> ;
-      ex:isPartOf <https://example.com/object> ;
+      ex:additionalType <${ontologyUrl}material> ;
+      ex:about <https://example.com/object> ;
       ex:creator ex:myPerson ;
       ex:license <https://example.com/license> ;
       ex:dateCreated "2023-01-01"^^xsd:date .
 
     ex:fullEnrichment a ex:HeritageObjectEnrichment ;
-      ex:additionalType <${ontologyUrl}Material${ontologyVersionIdentifier}> ;
-      ex:isPartOf <https://example.com/object> ;
+      ex:additionalType <${ontologyUrl}material> ;
+      ex:about <https://example.com/object> ;
       ex:creator ex:myPerson ;
       ex:license <https://example.com/license> ;
       ex:dateCreated "2023-01-01"^^xsd:date ;

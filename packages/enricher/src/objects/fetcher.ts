@@ -46,9 +46,8 @@ export class HeritageObjectEnrichmentFetcher {
         ?source ex:hasEnrichment ?annotation .
 
         ?annotation a ex:HeritageObjectEnrichment ;
-          ex:additionalType ?additionalType ;
-          ex:about ?target ;
-          ex:isPartOf ?source ;
+          ex:additionalType ?scope ;
+          ex:about ?source ;
           ex:description ?value ;
           ex:citation ?comment ;
           ex:inLanguage ?language ;
@@ -81,9 +80,6 @@ export class HeritageObjectEnrichmentFetcher {
           ?np a cc:Nanopub ;
             npx:introduces ?annotation ;
             dcterms:license ?license .
-
-          ?np a ?additionalType
-          FILTER(?additionalType != cc:Nanopub)
         }
 
         graph ?provenance {
@@ -102,8 +98,8 @@ export class HeritageObjectEnrichmentFetcher {
           ?annotation a oa:Annotation ;
              oa:hasTarget ?target .
 
-          ?target a oa:SpecificResource ;
-             oa:hasSource ?source .
+          ?target oa:hasSource ?source ;
+            oa:hasScope ?scope .
 
           OPTIONAL {
             ?annotation oa:hasBody ?body .

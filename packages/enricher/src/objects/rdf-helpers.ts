@@ -1,4 +1,4 @@
-import {fromClassToType} from './helpers';
+import {fromPropertyToType} from './helpers';
 import {HeritageObjectEnrichment} from './definitions';
 import {
   createActors,
@@ -11,7 +11,7 @@ import type {Resource} from 'rdf-object';
 
 export function toHeritageObjectEnrichment(rawEnrichment: Resource) {
   const additionalType = getPropertyValue(rawEnrichment, 'ex:additionalType');
-  const about = getPropertyValue(rawEnrichment, 'ex:isPartOf')!;
+  const about = getPropertyValue(rawEnrichment, 'ex:about')!;
   const creator = onlyOne(createActors(rawEnrichment, 'ex:creator'))!;
   const group = onlyOne(createActors(rawEnrichment, 'ex:createdOnBehalfOf'));
   const license = getPropertyValue(rawEnrichment, 'ex:license')!;
@@ -25,7 +25,7 @@ export function toHeritageObjectEnrichment(rawEnrichment: Resource) {
 
   const enrichment: HeritageObjectEnrichment = {
     id: rawEnrichment.value,
-    type: fromClassToType(additionalType),
+    type: fromPropertyToType(additionalType),
     about,
     citation,
     description,
