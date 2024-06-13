@@ -31,6 +31,7 @@ export const useListHref = () => {
   const view = useListStore(s => s.view);
   const imageFetchMode = useListStore(s => s.imageFetchMode);
   const limit = useListStore(s => s.limit);
+  const defaultLimit = useListStore(s => s.defaultLimit);
 
   const href = useMemo(
     () =>
@@ -46,10 +47,12 @@ export const useListHref = () => {
         view,
         imageFetchMode,
         limit,
+        defaultLimit,
       }),
     [
       baseUrl,
       defaultImageFetchMode,
+      defaultLimit,
       defaultSortBy,
       defaultView,
       imageFetchMode,
