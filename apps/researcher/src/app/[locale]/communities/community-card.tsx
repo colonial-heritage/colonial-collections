@@ -39,6 +39,7 @@ export default function CommunityCard({community}: CommunityCardProps) {
     <Link
       href={`/communities/${community.slug}`}
       className="mb-20 pb-5 group bg-consortium-green-100 text-consortium-blue-800 rounded hover:bg-consortium-green-200 transition no-underline border border-consortium-blue-800 flex flex-col items"
+      tabIndex={0}
     >
       <div className="-mt-20 w-full flex justify-center">
         <Image

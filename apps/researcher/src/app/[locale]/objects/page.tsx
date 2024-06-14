@@ -36,7 +36,7 @@ export default async function Page({searchParams = {}}: Props) {
               </div>
             </aside>
             <main className="w-full md:w-2/3 lg:w-4/5  order-2 md:order-1">
-              <h2 className="text-xl">{t('title')}</h2>
+              <h1 className="text-xl">{t('title')}</h1>
 
               <div className="flex flex-col gap-2 border rounded mt-6 p-6 max-w-3xl">
                 <div>
