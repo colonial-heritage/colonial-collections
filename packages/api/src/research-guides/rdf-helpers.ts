@@ -7,7 +7,7 @@ import {
 } from '../rdf-helpers';
 import type {Resource} from 'rdf-object';
 import {Citation, ResearchGuide} from './definitions';
-import {Term} from '../definitions';
+import {Term, Thing} from '../definitions';
 
 function createCitation(citationResource: Resource) {
   const name = onlyOne(getPropertyValues(citationResource, 'ex:name'));
@@ -34,6 +34,9 @@ export function createCitations(resource: Resource, propertyName: string) {
 }
 
 export function createResearchGuide(researchGuideResource: Resource) {
+  const identifier = onlyOne(
+    getPropertyValues(researchGuideResource, 'ex:identifier')
+  );
   const name = onlyOne(getPropertyValues(researchGuideResource, 'ex:name'));
   const abstract = onlyOne(
     getPropertyValues(researchGuideResource, 'ex:abstract')
@@ -50,9 +53,11 @@ export function createResearchGuide(researchGuideResource: Resource) {
   );
   const keywords = createThings<Term>(researchGuideResource, 'ex:keyword');
   const citations = createCitations(researchGuideResource, 'ex:citation');
+  const seeAlso = createThings<Thing>(researchGuideResource, 'ex:seeAlso');
 
   const researchGuideWithUndefinedValues: ResearchGuide = {
     id: researchGuideResource.value,
+    identifier,
     name,
     abstract,
     text,
@@ -62,6 +67,7 @@ export function createResearchGuide(researchGuideResource: Resource) {
     contentLocations,
     keywords,
     citations,
+    seeAlso,
   };
 
   const researchGuide = removeNullish<ResearchGuide>(

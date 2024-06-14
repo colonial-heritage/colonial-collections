@@ -8,7 +8,7 @@ import {MDXRemote} from 'next-mdx-remote/rsc';
 
 export default async function Page() {
   const locale = (await getLocale()) as LocaleEnum;
-  const topLevels = await researchGuides.getByTopLevel({locale});
+  const topLevels = await researchGuides.getTopLevels({locale});
   const t = await getTranslations('ResearchGuide');
 
   if (!topLevels.length) {

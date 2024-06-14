@@ -19,6 +19,7 @@ beforeAll(async () => {
       ex:name "Name 1" .
 
     ex:researchGuide2 a ex:CreativeWork ;
+      ex:identifier "1" ;
       ex:name "Name 2" ;
       ex:abstract "Abstract" ;
       ex:text "Text" ;
@@ -37,10 +38,19 @@ beforeAll(async () => {
         ex:name "Citation" ;
         ex:description "Citation Description" ;
         ex:url <https://example.org/citation> ;
-      ] .
+      ] ;
+      ex:seeAlso ex:researchGuide4 .
 
     ex:researchGuide3 a ex:CreativeWork ;
-      ex:name "Name 3" .
+      ex:name "Name 3" ;
+      ex:hasPart ex:researchGuide5 .
+
+    ex:researchGuide5 a ex:CreativeWork ;
+      ex:name "Name 5" ;
+      ex:hasPart ex:researchGuide6 .
+
+    ex:researchGuide6 a ex:CreativeWork ;
+      ex:name "Name 6" .
 
     ex:researchGuide4 a ex:CreativeWork ;
       ex:name "Name A", "Name B" ;
@@ -99,11 +109,26 @@ describe('createResearchGuide', () => {
 
     expect(researchGuide).toStrictEqual({
       id: 'https://example.org/researchGuide2',
+      identifier: '1',
       name: 'Name 2',
       abstract: 'Abstract',
       text: 'Text',
       encodingFormat: 'text/html',
-      hasParts: [{id: 'https://example.org/researchGuide3', name: 'Name 3'}],
+      hasParts: [
+        {
+          id: 'https://example.org/researchGuide3',
+          name: 'Name 3',
+          hasParts: [
+            {
+              id: 'https://example.org/researchGuide5',
+              name: 'Name 5',
+              hasParts: [
+                {id: 'https://example.org/researchGuide6', name: 'Name 6'},
+              ],
+            },
+          ],
+        },
+      ],
       isPartOf: [{id: 'https://example.org/researchGuide1', name: 'Name 1'}],
       contentLocations: [
         {
@@ -121,6 +146,12 @@ describe('createResearchGuide', () => {
           name: 'Citation',
           description: 'Citation Description',
           url: 'https://example.org/citation',
+        },
+      ],
+      seeAlso: [
+        {
+          id: 'https://example.org/researchGuide4',
+          name: 'Name A',
         },
       ],
     });

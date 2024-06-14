@@ -10,13 +10,103 @@ beforeEach(() => {
   });
 });
 
-describe('getByTopLevel', () => {
+describe('getTopLevels', () => {
   it('returns the top level guides', async () => {
-    const researchGuides = await researchGuideFetcher.getByTopLevel();
+    const researchGuides = await researchGuideFetcher.getTopLevels();
 
+    // The sorting order is undefined and can change. Don't use toStrictEqual()
     expect(researchGuides).toMatchObject([
       {
-        id: 'https://guides.example.org/top-level',
+        id: 'https://guides.example.org/top-set',
+        name: 'Digital research guide',
+        abstract:
+          'Research aides for conducting provenance research into colonial collections',
+        text: 'Digital research guide',
+        encodingFormat: 'text/markdown',
+        hasParts: expect.arrayContaining([
+          {
+            id: 'https://guides.example.org/level-3-set',
+            identifier: '3',
+            hasParts: expect.arrayContaining([
+              {
+                id: 'https://guides.example.org/level-3a',
+                name: 'Royal Cabinet of Curiosities',
+              },
+              {
+                id: 'https://guides.example.org/level-3c',
+                name: 'Kunsthandel Van Lier',
+              },
+            ]),
+          },
+          {
+            id: 'https://guides.example.org/level-2-set',
+            identifier: '2',
+            hasParts: expect.arrayContaining([
+              {
+                id: 'https://guides.example.org/level-2c',
+                name: 'Trade',
+                hasParts: [
+                  {
+                    id: 'https://guides.example.org/level-3c',
+                    name: 'Kunsthandel Van Lier',
+                  },
+                ],
+              },
+              {
+                id: 'https://guides.example.org/level-2a',
+                name: 'Military and navy',
+                hasParts: [
+                  {
+                    id: 'https://guides.example.org/level-3a',
+                    name: 'Royal Cabinet of Curiosities',
+                  },
+                ],
+              },
+            ]),
+          },
+          {
+            id: 'https://guides.example.org/level-1-set',
+            identifier: '1',
+            hasParts: expect.arrayContaining([
+              {
+                id: 'https://guides.example.org/level-1b',
+                name: 'How can I use the data hub for my research?',
+              },
+              {
+                id: 'https://guides.example.org/level-1c',
+                name: 'Sources',
+                hasParts: [
+                  {
+                    id: 'https://guides.example.org/level-2c',
+                    name: 'Trade',
+                    hasParts: [
+                      {
+                        id: 'https://guides.example.org/level-3c',
+                        name: 'Kunsthandel Van Lier',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: 'https://guides.example.org/level-1a',
+                name: 'Doing research',
+                hasParts: [
+                  {
+                    id: 'https://guides.example.org/level-2a',
+                    name: 'Military and navy',
+                    hasParts: [
+                      {
+                        id: 'https://guides.example.org/level-3a',
+                        name: 'Royal Cabinet of Curiosities',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ]),
+          },
+        ]),
       },
     ]);
   });

@@ -15,6 +15,12 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
+const getTopLevelsOptionsSchema = z.object({
+  locale: localeSchema,
+});
+
+export type GetTopLevelsOptions = z.input<typeof getTopLevelsOptionsSchema>;
+
 const getByTopLevelOptionsSchema = z.object({
   locale: localeSchema,
 });
@@ -45,17 +51,94 @@ export class ResearchGuideFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
+  private async fetchTopLevelTriples(options: GetByIdsOptions) {
+    const iris = options.ids.map(iri => `<${iri}>`).join(EOL);
+
+    const query = `
+      PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+      PREFIX ex: <https://example.org/>
+      PREFIX la: <https://linked.art/ns/terms/>
+      prefix schema: <https://schema.org/>
+
+      CONSTRUCT {
+        ?topSet a ex:CreativeWork ;
+          ex:name ?topSetName ;
+          ex:abstract ?topSetAbstract ;
+          ex:text ?topSetText ;
+          ex:encodingFormat ?topSetEncodingFormat ;
+          ex:hasPart ?subSet .
+
+        ?subSet a ex:CreativeWork ;
+          ex:identifier ?identifier ;
+          ex:hasPart ?guide .
+
+        ?guide a ex:CreativeWork ;
+          ex:name ?guideName ;
+          ex:hasPart ?subGuide .
+
+        ?subGuide a ex:CreativeWork ;
+            ex:name ?subGuideName .
+      }
+      WHERE {
+        VALUES ?topSet {
+          ${iris}
+        }
+
+        OPTIONAL {
+          ?topSet schema:name ?topSetName ;
+          FILTER(LANG(?topSetName) = "${options.locale}")
+        }
+
+        OPTIONAL {
+          ?topSet schema:abstract ?topSetAbstract
+          FILTER(LANG(?topSetAbstract) = "${options.locale}")
+        }
+
+        OPTIONAL {
+          ?topSet schema:name ?topSetText ;
+          FILTER(LANG(?topSetText) = "${options.locale}")
+        }
+
+        OPTIONAL {
+          ?topSet schema:encodingFormat ?topSetEncodingFormat
+        }
+
+        OPTIONAL {
+          ?topSet la:has_member ?subSet .
+
+          OPTIONAL {
+            ?subSet crm:P1_is_identified_by/crm:P190_has_symbolic_content ?identifier
+          }
+
+          # Get a selection of information from the members, if any
+          OPTIONAL {
+            ?subSet la:has_member ?guide .
+            ?guide schema:name ?guideName
+            FILTER(LANG(?guideName) = "${options.locale}")
+
+            # Get a selection of information from the members, if any
+            OPTIONAL {
+              ?guide schema:hasPart ?subGuide .
+              ?subGuide schema:name ?subGuideName
+              FILTER(LANG(?subGuideName) = "${options.locale}")
+            }
+          }
+        }
+      }
+    `;
+
+    return this.fetcher.fetchTriples(this.endpointUrl, query);
+  }
+
   private async getTopLevelIds() {
     const query = `
-      PREFIX schema: <https://schema.org/>
+      PREFIX la: <https://linked.art/ns/terms/>
 
       SELECT ?this
       WHERE {
-        ?this a schema:TextDigitalDocument ;
-          schema:additionalType <http://vocab.getty.edu/aat/300027029> . # "Guides"
-
+        ?this a la:Set .
         FILTER NOT EXISTS {
-          ?this schema:isPartOf [] .
+          ?this la:member_of []
         }
       }
     `;
@@ -76,7 +159,7 @@ export class ResearchGuideFetcher {
     return topLevelIds;
   }
 
-  private async fetchTriples(options: GetByIdsOptions) {
+  private async fetchResearchGuideTriples(options: GetByIdsOptions) {
     const iris = options.ids.map(iri => `<${iri}>`).join(EOL);
 
     const query = `
@@ -146,6 +229,12 @@ export class ResearchGuideFetcher {
           ?this schema:hasPart ?hasPart .
           ?hasPart schema:name ?hasPartName .
           FILTER(LANG(?hasPartName) = "${options.locale}")
+
+          OPTIONAL {
+            ?hasPart schema:hasPart ?hasSubPart .
+            ?hasSubPart schema:name ?hasSubPartName .
+            FILTER(LANG(?hasSubPartName) = "${options.locale}")
+          }
         }
 
         # Get a selection of information from the parent, if any
@@ -238,7 +327,7 @@ export class ResearchGuideFetcher {
       return [];
     }
 
-    const triplesStream = await this.fetchTriples(opts);
+    const triplesStream = await this.fetchResearchGuideTriples(opts);
     const researchGuides = await this.fromTriplesToResearchGuides(
       opts.ids,
       triplesStream
@@ -266,14 +355,23 @@ export class ResearchGuideFetcher {
     return researchGuides[0];
   }
 
-  async getByTopLevel(options?: GetByTopLevelOptions) {
-    const opts = getByTopLevelOptionsSchema.parse(options || {});
+  async getTopLevels(options?: GetTopLevelsOptions) {
+    const opts = getTopLevelsOptionsSchema.parse(options || {});
 
     const topLevelIds = await this.getTopLevelIds();
-    const researchGuides = await this.getByIds({
-      locale: opts.locale,
+
+    if (topLevelIds.length === 0) {
+      return [];
+    }
+
+    const triplesStream = await this.fetchTopLevelTriples({
       ids: topLevelIds,
+      ...opts,
     });
+    const researchGuides = await this.fromTriplesToResearchGuides(
+      topLevelIds,
+      triplesStream
+    );
 
     return researchGuides;
   }
