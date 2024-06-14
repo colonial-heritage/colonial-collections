@@ -37,6 +37,9 @@ export function FacetWrapper({children, testId, title}: FacetWrapperProps) {
           {children}
         </div>
       </fieldset>
+      <div className="sr-only">
+        <a href="#search-results">Jump to results</a>
+      </div>
     </FacetContext.Provider>
   );
 }
@@ -108,7 +111,7 @@ export function FacetCheckBox({
         />
         <div
           className="truncate max-w-[230px]"
-          aria-label={`filter on ${name} with ${title}`}
+          aria-label={`filter ${title} on  with ${name}`}
         >
           {name}
         </div>

@@ -61,6 +61,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
                       ? 'px-1 bg-black text-white rounded'
                       : ''
                   }
+                  aria-label={`Filter within the filter items with initial letter ${category}`}
                 >
                   {category}
                 </button>
@@ -174,8 +175,8 @@ export function SearchableMultiSelectFacet({
       </FacetProvider>
       <ModalButton
         id={filterKey}
-        className="inline-flex items-center text-consortium-blue-600"
-        aria-label="Click to expand for more filter items"
+        className="inline-flex items-center text-consortium-blue-600 text-sm"
+        aria-label={t('expandFilterAria')}
       >
         <span>{t('expandFilter')}</span>
         <ChevronRightIcon className="w-4 h-4 fill-bg-consortium-blue-100" />
