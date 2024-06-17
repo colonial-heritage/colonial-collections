@@ -19,7 +19,7 @@
   "dependencies": {
     "@testing-library/react": "16.0.0",
     "jest-environment-jsdom": "29.7.0",
-    "next-intl": "3.14.0",
+    "next-intl": "3.15.0",
     "react": "18.3.1",
     "zod": "3.22.4",
     "zustand": "4.5.2"
