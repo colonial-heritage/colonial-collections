@@ -58,7 +58,8 @@ export class ResearchGuideFetcher {
       PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
       PREFIX ex: <https://example.org/>
       PREFIX la: <https://linked.art/ns/terms/>
-      prefix schema: <https://schema.org/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX schema: <https://schema.org/>
 
       CONSTRUCT {
         ?topSet a ex:CreativeWork ;
@@ -66,18 +67,18 @@ export class ResearchGuideFetcher {
           ex:abstract ?topSetAbstract ;
           ex:text ?topSetText ;
           ex:encodingFormat ?topSetEncodingFormat ;
-          ex:hasPart ?subSet .
+          ex:seeAlso ?subSet .
 
         ?subSet a ex:CreativeWork ;
           ex:identifier ?identifier ;
-          ex:hasPart ?guide .
+          ex:seeAlso ?guide .
 
         ?guide a ex:CreativeWork ;
           ex:name ?guideName ;
-          ex:hasPart ?subGuide .
+          ex:seeAlso ?relatedGuide .
 
-        ?subGuide a ex:CreativeWork ;
-            ex:name ?subGuideName .
+        ?relatedGuide a ex:CreativeWork ;
+          ex:name ?subGuideName .
       }
       WHERE {
         VALUES ?topSet {
@@ -110,17 +111,17 @@ export class ResearchGuideFetcher {
             ?subSet crm:P1_is_identified_by/crm:P190_has_symbolic_content ?identifier
           }
 
-          # Get a selection of information from the members, if any
+          # Get a selection of information from member guides, if any
           OPTIONAL {
             ?subSet la:has_member ?guide .
             ?guide schema:name ?guideName
             FILTER(LANG(?guideName) = "${options.locale}")
 
-            # Get a selection of information from the members, if any
+            # Get a selection of information from related guides, if any
             OPTIONAL {
-              ?guide schema:hasPart ?subGuide .
-              ?subGuide schema:name ?subGuideName
-              FILTER(LANG(?subGuideName) = "${options.locale}")
+              ?guide rdfs:seeAlso ?relatedGuide .
+              ?relatedGuide schema:name ?relatedGuideName
+              FILTER(LANG(?relatedGuideName) = "${options.locale}")
             }
           }
         }
@@ -164,6 +165,7 @@ export class ResearchGuideFetcher {
 
     const query = `
       PREFIX ex: <https://example.org/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX schema: <https://schema.org/>
 
       CONSTRUCT {
@@ -172,17 +174,13 @@ export class ResearchGuideFetcher {
           ex:abstract ?abstract ;
           ex:text ?text ;
           ex:encodingFormat ?encodingFormat ;
-          ex:hasPart ?hasPart ;
-          ex:isPartOf ?isPartOf ;
+          ex:seeAlso ?relatedGuide ;
           ex:contentLocation ?contentLocation ;
           ex:keyword ?keyword ;
           ex:citation ?citation .
 
-        ?hasPart a ex:CreativeWork ;
-          ex:name ?hasPartName .
-
-        ?isPartOf a ex:CreativeWork ;
-          ex:name ?isPartOfName .
+        ?relatedGuide a ex:CreativeWork ;
+          ex:name ?relatedGuideName .
 
         ?contentLocation a ex:Place ;
           ex:name ?contentLocationName ;
@@ -224,24 +222,11 @@ export class ResearchGuideFetcher {
           ?this schema:encodingFormat ?encodingFormat .
         }
 
-        # Get a selection of information from the parts, if any
+        # Get a selection of information from related guides, if any
         OPTIONAL {
-          ?this schema:hasPart ?hasPart .
-          ?hasPart schema:name ?hasPartName .
-          FILTER(LANG(?hasPartName) = "${options.locale}")
-
-          OPTIONAL {
-            ?hasPart schema:hasPart ?hasSubPart .
-            ?hasSubPart schema:name ?hasSubPartName .
-            FILTER(LANG(?hasSubPartName) = "${options.locale}")
-          }
-        }
-
-        # Get a selection of information from the parent, if any
-        OPTIONAL {
-          ?this schema:isPartOf ?isPartOf .
-          ?isPartOf schema:name ?isPartOfName .
-          FILTER(LANG(?isPartOfName) = "${options.locale}")
+          ?this rdfs:seeAlso ?relatedGuide .
+          ?relatedGuide schema:name ?relatedGuideName .
+          FILTER(LANG(?relatedGuideName) = "${options.locale}")
         }
 
         OPTIONAL {

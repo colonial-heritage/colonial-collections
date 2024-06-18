@@ -14,7 +14,7 @@ describe('getTopLevels', () => {
   it('returns the top level guides', async () => {
     const researchGuides = await researchGuideFetcher.getTopLevels();
 
-    // The sorting order is undefined and can change. Don't use toStrictEqual()
+    // The sorting order is undefined and can change - dDon't use toStrictEqual()
     expect(researchGuides).toMatchObject([
       {
         id: 'https://guides.example.org/top-set',
@@ -23,29 +23,41 @@ describe('getTopLevels', () => {
           'Research aides for conducting provenance research into colonial collections',
         text: 'Digital research guide',
         encodingFormat: 'text/markdown',
-        hasParts: expect.arrayContaining([
+        seeAlso: expect.arrayContaining([
           {
             id: 'https://guides.example.org/level-3-set',
             identifier: '3',
-            hasParts: expect.arrayContaining([
-              {
-                id: 'https://guides.example.org/level-3a',
-                name: 'Royal Cabinet of Curiosities',
-              },
+            seeAlso: expect.arrayContaining([
               {
                 id: 'https://guides.example.org/level-3c',
                 name: 'Kunsthandel Van Lier',
+                seeAlso: [
+                  {
+                    id: 'https://guides.example.org/level-2a',
+                    name: 'Military and navy',
+                  },
+                ],
+              },
+              {
+                id: 'https://guides.example.org/level-3a',
+                name: 'Royal Cabinet of Curiosities',
+                seeAlso: [
+                  {
+                    id: 'https://guides.example.org/level-2c',
+                    name: 'Trade',
+                  },
+                ],
               },
             ]),
           },
           {
             id: 'https://guides.example.org/level-2-set',
             identifier: '2',
-            hasParts: expect.arrayContaining([
+            seeAlso: expect.arrayContaining([
               {
                 id: 'https://guides.example.org/level-2c',
                 name: 'Trade',
-                hasParts: [
+                seeAlso: [
                   {
                     id: 'https://guides.example.org/level-3c',
                     name: 'Kunsthandel Van Lier',
@@ -55,7 +67,7 @@ describe('getTopLevels', () => {
               {
                 id: 'https://guides.example.org/level-2a',
                 name: 'Military and navy',
-                hasParts: [
+                seeAlso: [
                   {
                     id: 'https://guides.example.org/level-3a',
                     name: 'Royal Cabinet of Curiosities',
@@ -67,7 +79,7 @@ describe('getTopLevels', () => {
           {
             id: 'https://guides.example.org/level-1-set',
             identifier: '1',
-            hasParts: expect.arrayContaining([
+            seeAlso: expect.arrayContaining([
               {
                 id: 'https://guides.example.org/level-1b',
                 name: 'How can I use the data hub for my research?',
@@ -75,32 +87,20 @@ describe('getTopLevels', () => {
               {
                 id: 'https://guides.example.org/level-1c',
                 name: 'Sources',
-                hasParts: [
+                seeAlso: [
                   {
                     id: 'https://guides.example.org/level-2c',
                     name: 'Trade',
-                    hasParts: [
-                      {
-                        id: 'https://guides.example.org/level-3c',
-                        name: 'Kunsthandel Van Lier',
-                      },
-                    ],
                   },
                 ],
               },
               {
                 id: 'https://guides.example.org/level-1a',
                 name: 'Doing research',
-                hasParts: [
+                seeAlso: [
                   {
                     id: 'https://guides.example.org/level-2a',
                     name: 'Military and navy',
-                    hasParts: [
-                      {
-                        id: 'https://guides.example.org/level-3a',
-                        name: 'Royal Cabinet of Curiosities',
-                      },
-                    ],
                   },
                 ],
               },
@@ -175,18 +175,12 @@ describe('getById', () => {
         'Army and Navy personnel who operated in colonized territories collected objects in various ways during the colonial era.',
       text: 'Dutch authority in the [Dutch East Indies](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) and on the [Caribbean Islands](https://www.geonames.org/8505032/netherlands-antilles.html) relied heavily on the use of the military...',
       encodingFormat: 'text/markdown',
-      hasParts: [
+      seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/level-3a',
           name: 'Royal Cabinet of Curiosities',
         },
-      ],
-      isPartOf: [
-        {
-          id: 'https://guides.example.org/level-1a',
-          name: 'Doing research',
-        },
-      ],
+      ]),
       contentLocations: [
         {
           id: expect.stringContaining(
@@ -233,16 +227,12 @@ describe('get with localized names', () => {
       abstract:
         'Army and Navy personnel who operated in colonized territories collected objects in various ways during the colonial era.',
       text: 'Dutch authority in the [Dutch East Indies](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) and on the [Caribbean Islands](https://www.geonames.org/8505032/netherlands-antilles.html) relied heavily on the use of the military...',
-      hasParts: [
+      seeAlso: expect.arrayContaining([
         {
+          id: 'https://guides.example.org/level-3a',
           name: 'Royal Cabinet of Curiosities',
         },
-      ],
-      isPartOf: [
-        {
-          name: 'Doing research',
-        },
-      ],
+      ]),
       contentLocations: [
         {
           name: 'Netherlands Antilles',
@@ -275,16 +265,12 @@ describe('get with localized names', () => {
       abstract:
         'Leger- en marinepersoneel dat actief was in gekoloniseerde gebieden, verzamelde op verschillende manieren objecten tijdens het koloniale tijdperk.',
       text: 'Het Nederlandse gezag in [Nederlands-Indië](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) en op de [Caribische eilanden](https://www.geonames.org/8505032/netherlands-antilles.html) steunde in belangrijke mate op de inzet van het leger.',
-      hasParts: [
+      seeAlso: expect.arrayContaining([
         {
+          id: 'https://guides.example.org/level-3a',
           name: 'Koninklijk Kabinet van Zeldzaamheden',
         },
-      ],
-      isPartOf: [
-        {
-          name: 'Onderzoeken',
-        },
-      ],
+      ]),
       contentLocations: [
         {
           name: 'Antillen',

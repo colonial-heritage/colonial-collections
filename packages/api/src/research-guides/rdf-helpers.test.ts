@@ -21,11 +21,9 @@ beforeAll(async () => {
     ex:researchGuide2 a ex:CreativeWork ;
       ex:identifier "1" ;
       ex:name "Name 2" ;
-      ex:abstract "Abstract" ;
+      ex:abstract "Abstract 2" ;
       ex:text "Text" ;
       ex:encodingFormat "text/html" ;
-      ex:hasPart ex:researchGuide3 ;
-      ex:isPartOf ex:researchGuide1 ;
       ex:contentLocation [
         ex:name "Content Location" ;
         ex:sameAs <https://example.org/place> ;
@@ -39,18 +37,20 @@ beforeAll(async () => {
         ex:description "Citation Description" ;
         ex:url <https://example.org/citation> ;
       ] ;
-      ex:seeAlso ex:researchGuide4 .
+      ex:seeAlso ex:researchGuide3 .
 
     ex:researchGuide3 a ex:CreativeWork ;
       ex:name "Name 3" ;
-      ex:hasPart ex:researchGuide5 .
+      ex:seeAlso ex:researchGuide5 .
 
     ex:researchGuide5 a ex:CreativeWork ;
       ex:name "Name 5" ;
-      ex:hasPart ex:researchGuide6 .
+      ex:abstract "Abstract 5" ;
+      ex:seeAlso ex:researchGuide6 .
 
     ex:researchGuide6 a ex:CreativeWork ;
-      ex:name "Name 6" .
+      ex:name "Name 6" ;
+      ex:abstract "Abstract 6" .
 
     ex:researchGuide4 a ex:CreativeWork ;
       ex:name "Name A", "Name B" ;
@@ -111,25 +111,29 @@ describe('createResearchGuide', () => {
       id: 'https://example.org/researchGuide2',
       identifier: '1',
       name: 'Name 2',
-      abstract: 'Abstract',
+      abstract: 'Abstract 2',
       text: 'Text',
       encodingFormat: 'text/html',
-      hasParts: [
+      seeAlso: [
         {
           id: 'https://example.org/researchGuide3',
           name: 'Name 3',
-          hasParts: [
+          seeAlso: [
             {
               id: 'https://example.org/researchGuide5',
               name: 'Name 5',
-              hasParts: [
-                {id: 'https://example.org/researchGuide6', name: 'Name 6'},
+              abstract: 'Abstract 5',
+              seeAlso: [
+                {
+                  id: 'https://example.org/researchGuide6',
+                  name: 'Name 6',
+                  abstract: 'Abstract 6',
+                },
               ],
             },
           ],
         },
       ],
-      isPartOf: [{id: 'https://example.org/researchGuide1', name: 'Name 1'}],
       contentLocations: [
         {
           id: 'n3-0',
@@ -138,7 +142,11 @@ describe('createResearchGuide', () => {
         },
       ],
       keywords: [
-        {id: 'n3-1', name: 'Keyword', sameAs: 'https://example.org/keyword'},
+        {
+          id: 'n3-1',
+          name: 'Keyword',
+          sameAs: 'https://example.org/keyword',
+        },
       ],
       citations: [
         {
@@ -146,12 +154,6 @@ describe('createResearchGuide', () => {
           name: 'Citation',
           description: 'Citation Description',
           url: 'https://example.org/citation',
-        },
-      ],
-      seeAlso: [
-        {
-          id: 'https://example.org/researchGuide4',
-          name: 'Name A',
         },
       ],
     });

@@ -10,7 +10,5 @@ export type ResearchGuide = Thing & {
   contentLocations?: Place[];
   keywords?: Term[];
   citations?: Citation[];
-  isPartOf?: ResearchGuide[];
-  hasParts?: ResearchGuide[];
-  seeAlso?: Thing[];
+  seeAlso?: ResearchGuide[];
 };

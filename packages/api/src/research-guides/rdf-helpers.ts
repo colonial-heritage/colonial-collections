@@ -7,7 +7,7 @@ import {
 } from '../rdf-helpers';
 import type {Resource} from 'rdf-object';
 import {Citation, ResearchGuide} from './definitions';
-import {Term, Thing} from '../definitions';
+import {Term} from '../definitions';
 
 function createCitation(citationResource: Resource) {
   const name = onlyOne(getPropertyValues(citationResource, 'ex:name'));
@@ -33,7 +33,23 @@ export function createCitations(resource: Resource, propertyName: string) {
   return citations.length > 0 ? citations : undefined;
 }
 
-export function createResearchGuide(researchGuideResource: Resource) {
+function createResearchGuides(
+  resource: Resource,
+  propertyName: string,
+  stackSize: number
+) {
+  const properties = resource.properties[propertyName];
+  const researchGuides = properties.map(property =>
+    createResearchGuide(property, stackSize)
+  );
+
+  return researchGuides.length > 0 ? researchGuides : undefined;
+}
+
+export function createResearchGuide(
+  researchGuideResource: Resource,
+  stackSize = 1
+) {
   const identifier = onlyOne(
     getPropertyValues(researchGuideResource, 'ex:identifier')
   );
@@ -45,15 +61,24 @@ export function createResearchGuide(researchGuideResource: Resource) {
   const encodingFormat = onlyOne(
     getPropertyValues(researchGuideResource, 'ex:encodingFormat')
   );
-  const hasParts = createResearchGuides(researchGuideResource, 'ex:hasPart');
-  const isPartOf = createResearchGuides(researchGuideResource, 'ex:isPartOf');
+
+  let seeAlso: ResearchGuide[] | undefined = undefined;
+
+  // Prevent infinite recursion
+  if (stackSize < 4) {
+    seeAlso = createResearchGuides(
+      researchGuideResource,
+      'ex:seeAlso',
+      stackSize + 1
+    );
+  }
+
   const contentLocations = createPlaces(
     researchGuideResource,
     'ex:contentLocation'
   );
   const keywords = createThings<Term>(researchGuideResource, 'ex:keyword');
   const citations = createCitations(researchGuideResource, 'ex:citation');
-  const seeAlso = createThings<Thing>(researchGuideResource, 'ex:seeAlso');
 
   const researchGuideWithUndefinedValues: ResearchGuide = {
     id: researchGuideResource.value,
@@ -62,12 +87,10 @@ export function createResearchGuide(researchGuideResource: Resource) {
     abstract,
     text,
     encodingFormat,
-    hasParts,
-    isPartOf,
+    seeAlso,
     contentLocations,
     keywords,
     citations,
-    seeAlso,
   };
 
   const researchGuide = removeNullish<ResearchGuide>(
@@ -75,13 +98,4 @@ export function createResearchGuide(researchGuideResource: Resource) {
   );
 
   return researchGuide;
-}
-
-export function createResearchGuides(resource: Resource, propertyName: string) {
-  const properties = resource.properties[propertyName];
-  const researchGuides = properties.map(property =>
-    createResearchGuide(property)
-  );
-
-  return researchGuides.length > 0 ? researchGuides : undefined;
 }
