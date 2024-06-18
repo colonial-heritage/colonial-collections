@@ -66,11 +66,11 @@ export default async function GuidePage({params}: Props) {
             </div>
           </div>
           <div className="w-full md:w-1/3">
-            {guide.hasParts && guide.hasParts?.length > 0 && (
+            {guide.seeAlso && guide.seeAlso?.length > 0 && (
               <>
                 <h2 className="mb-2">{t('relatedItems')}</h2>
                 <div className="flex flex-col gap-2 mb-4">
-                  {guide.hasParts?.map(item => (
+                  {guide.seeAlso?.map(item => (
                     <Link
                       key={item.id}
                       href={`/research-guide/${encodeRouteSegment(item.id)}`}
