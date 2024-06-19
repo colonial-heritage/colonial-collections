@@ -8,19 +8,16 @@ import {
 } from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
 import SignedIn from '@/lib/community/signed-in';
-import {
-  ChatBubbleBottomCenterTextIcon,
-  LanguageIcon,
-} from '@heroicons/react/24/outline';
+import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import type {
   Actor,
   HeritageObjectEnrichmentType,
 } from '@colonial-collections/enricher';
-import ISO6391, {LanguageCode} from 'iso-639-1';
 import {SignedOut} from '@clerk/nextjs';
 import {ReadMoreText} from '@/components/read-more-text';
 import SignedOutSlideOut from '@/components/signed-out-slide-out';
-import {ProvidedBy} from './(provenance)/provided-by';
+import {ProvidedBy} from './provided-by';
+import Language from './language';
 
 interface Props {
   translationKey: string;
@@ -72,7 +69,7 @@ export function Metadata({
                 dateCreated={enrichment.pubInfo.dateCreated}
                 citation={enrichment.citation}
                 creator={enrichment.pubInfo.creator}
-                languageCode={enrichment.inLanguage as LanguageCode}
+                languageCode={enrichment.inLanguage}
               >
                 <ReadMoreText text={enrichment.description} />
               </MetadataEntry>
@@ -95,7 +92,7 @@ interface MetadataEntryProps {
   dateCreated?: Date;
   citation?: string;
   creator?: Actor;
-  languageCode?: LanguageCode;
+  languageCode?: string;
   translationKey: string;
   children?: ReactNode;
 }
@@ -117,10 +114,7 @@ export async function MetadataEntry({
         {children}
         {languageCode && (
           <div>
-            <span className="inline-flex items-end gap-1 text-xs italic text-neutral-600 mt-2">
-              <LanguageIcon className="w-4 h-4 stroke-neutral-600 scale-90" />
-              {ISO6391.getName(languageCode)}
-            </span>
+            <Language languageCode={languageCode} />
           </div>
         )}
       </div>

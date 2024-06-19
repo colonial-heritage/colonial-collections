@@ -12,6 +12,7 @@ interface ProvidedByProps {
   communityName?: string;
   id: string;
   isCurrentPublisher: boolean;
+  subText?: string;
 }
 
 export function ProvidedBy({
@@ -21,6 +22,7 @@ export function ProvidedBy({
   name,
   communityName,
   id,
+  subText,
 }: ProvidedByProps) {
   const t = useTranslations('ProvidedBy');
   const {formatDate} = useDateFormatter();
@@ -47,6 +49,8 @@ export function ProvidedBy({
           </div>
         )}
       </div>
+
+      {subText && <div className="italic mt-1">{subText}</div>}
 
       {(dateCreated || citation) && (
         <div className="flex flex-col justify-between">

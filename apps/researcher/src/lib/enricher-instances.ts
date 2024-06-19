@@ -3,6 +3,7 @@ import {
   HeritageObjectEnrichmentFetcher,
   NanopubClient,
   ProvenanceEventEnrichmentFetcher,
+  LocalContextsNoticesEnrichmentFetcher,
 } from '@colonial-collections/enricher';
 import {env} from 'node:process';
 
@@ -13,6 +14,11 @@ export const heritageObjectEnrichmentFetcher =
 
 export const provenanceEventEnrichmentFetcher =
   new ProvenanceEventEnrichmentFetcher({
+    endpointUrl: env.NANOPUB_SPARQL_ENDPOINT_URL as string,
+  });
+
+export const localContextsNoticesEnrichmentFetcher =
+  new LocalContextsNoticesEnrichmentFetcher({
     endpointUrl: env.NANOPUB_SPARQL_ENDPOINT_URL as string,
   });
 
