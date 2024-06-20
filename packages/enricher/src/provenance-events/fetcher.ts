@@ -196,7 +196,7 @@ export class ProvenanceEventEnrichmentFetcher {
     return this.fetcher.fetchTriples(this.endpointUrl, query);
   }
 
-  private async fromTriplesToProvenanceEventsEnrichments(
+  private async fromTriplesToEnrichments(
     iri: string,
     triplesStream: Readable & Stream
   ) {
@@ -237,10 +237,7 @@ export class ProvenanceEventEnrichmentFetcher {
     }
 
     const triplesStream = await this.fetchTriples(id);
-    const enrichments = await this.fromTriplesToProvenanceEventsEnrichments(
-      id,
-      triplesStream
-    );
+    const enrichments = await this.fromTriplesToEnrichments(id, triplesStream);
 
     return enrichments;
   }

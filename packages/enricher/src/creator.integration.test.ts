@@ -1,6 +1,7 @@
 import {
   EnrichmentCreator,
   HeritageObjectEnrichmentType,
+  LocalContextsNoticeEnrichmentType,
   NanopubClient,
   ProvenanceEventType,
 } from '.';
@@ -15,7 +16,7 @@ const nanopubClient = new NanopubClient({
 const creator = new EnrichmentCreator({nanopubClient});
 
 describe('addText', () => {
-  it('adds a basic textual enrichment, with only required properties', async () => {
+  it('adds a basic enrichment, with only required properties', async () => {
     const enrichment = await creator.addText({
       type: HeritageObjectEnrichmentType.Name,
       about: 'http://example.org/object',
@@ -33,7 +34,7 @@ describe('addText', () => {
     });
   });
 
-  it('adds a full textual enrichment, with all properties', async () => {
+  it('adds a full enrichment, with all properties', async () => {
     const enrichment = await creator.addText({
       type: HeritageObjectEnrichmentType.Name,
       description: 'A comment about the name of an object',
@@ -60,7 +61,7 @@ describe('addText', () => {
 });
 
 describe('addProvenanceEvent', () => {
-  it('adds a basic provenance event enrichment, with only required properties', async () => {
+  it('adds a basic enrichment, with only required properties', async () => {
     const enrichment = await creator.addProvenanceEvent({
       type: ProvenanceEventType.Acquisition,
       about: 'http://example.org/object',
@@ -78,7 +79,7 @@ describe('addProvenanceEvent', () => {
     });
   });
 
-  it('adds a full provenance event enrichment, with all properties', async () => {
+  it('adds a full enrichment, with all properties', async () => {
     const enrichment = await creator.addProvenanceEvent({
       type: ProvenanceEventType.Acquisition,
       additionalType: {
@@ -113,6 +114,51 @@ describe('addProvenanceEvent', () => {
           isPartOf: {
             id: 'http://example.com/community',
             name: 'Community',
+          },
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+});
+
+describe('addLocalContextsNotice', () => {
+  it('adds a basic enrichment, with only required properties', async () => {
+    const enrichment = await creator.addLocalContextsNotice({
+      type: LocalContextsNoticeEnrichmentType.Authorization,
+      about: 'http://example.org/object',
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+        },
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+      },
+    });
+
+    expect(enrichment).toEqual({
+      id: expect.stringContaining('https://'),
+    });
+  });
+
+  it('adds a full enrichment, with all properties', async () => {
+    const enrichment = await creator.addLocalContextsNotice({
+      type: LocalContextsNoticeEnrichmentType.Authorization,
+      description: 'A comment about the use of a Local Contexts Notice',
+      citation: 'A citation or reference to a work that supports the comment',
+      inLanguage: 'en',
+      about: 'http://example.org/object',
+      pubInfo: {
+        creator: {
+          id: 'http://example.com/person',
+          name: 'Person',
+          isPartOf: {
+            id: 'http://example.com/group',
+            name: 'Group',
           },
         },
         license: 'https://creativecommons.org/licenses/by/4.0/',
