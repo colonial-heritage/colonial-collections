@@ -89,6 +89,7 @@ export default async function Details({params}: Props) {
               <h1
                 className="text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl max-w-5xl"
                 data-testid="page-title"
+                tabIndex={0}
               >
                 {object.name || (
                   <span className="text-consortium-blue-100">
@@ -117,7 +118,7 @@ export default async function Details({params}: Props) {
                   <div className="mb-4">
                     {organization.address?.addressLocality}
                   </div>
-                  <a href="#provider" className="p-4 -ml-4 italic">
+                  <a href="#provider" className="p-4 -ml-4 italic" tabIndex={0}>
                     {t('providerInfo')}
                   </a>
                 </>
@@ -130,7 +131,9 @@ export default async function Details({params}: Props) {
           <main className="w-full md:w-2/3 order-2 md:order-1">
             <Notifications />
             <div className="mb-4 mt-10 flex justify-between">
-              <h2 className="text-2xl">{t('metadata')}</h2>
+              <h2 className="text-2xl" tabIndex={0}>
+                {t('metadata')}
+              </h2>
             </div>
             <div className="flex flex-col gap-8 self-stretch">
               <Metadata

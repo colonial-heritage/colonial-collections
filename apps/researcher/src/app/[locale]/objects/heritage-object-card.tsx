@@ -23,7 +23,6 @@ export function HeritageObjectCard({heritageObject, imageFetchMode}: Props) {
       href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
       data-testid="object-card"
       className=" mb-6 flex flex-col gap-2 hover:bg-white min-h-48 no-underline group transition-all border-2 hover:border-consortium-blue-800 rounded-sm pt-6 bg-neutral-100 border-white"
-      aria-label={t('heritageObject')}
     >
       <div
         className="font-semibold leading-5 px-2 "
@@ -71,7 +70,6 @@ export function HeritageObjectListItem({
       href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
       data-testid="object-card"
       className="flex flex-row justify-start items-center gap-4 border-t border-neutral-200 py-3 w-full no-underline"
-      aria-label={t('heritageObject')}
     >
       <div className="w-30">
         {imageUrl && imageFetchMode !== ImageFetchMode.None && (
