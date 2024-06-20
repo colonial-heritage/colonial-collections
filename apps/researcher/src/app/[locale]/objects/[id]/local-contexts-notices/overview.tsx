@@ -155,7 +155,7 @@ async function AddLocalContextsNotice() {
           <SignedOut>
             <SignedOutSlideOut
               slideOutId={'add-local-contexts-notice-form'}
-              title={t('needAccountToAddNarrativeLocalContextsNotice')}
+              title={t('needAccountToAddLocalContextsNotice')}
             />
           </SignedOut>
         </div>

@@ -168,18 +168,18 @@
   "withholdingDescription": "De Achterhouden Kennisgeving wordt gebruikt om aan te geven dat er nooit reproducties van dit item of deze collectie mogen worden gemaakt. Als er al bestaande foto's of reproducties zijn, mogen deze niet worden gebruikt in een tentoonstelling of publicatie in print, online of in enig ander formaat."
 },
 "LocalContextsNoticesOverview": {
-  "title": "Lokale Context Kennisgevingen",
-  "description": "De Lokale Context kennisgevingen ondersteunen de opname van lokale protocollen voor toegang en gebruik van cultureel erfgoed dat digitaal circuleert buiten gemeenschapscontexten. <link> Meer informatie over de Lokale Context kennisgevingen.</link>.",
+  "title": "Local Context Notices",
+  "description": "De Local Context Notices ondersteunen de opname van lokale protocollen voor toegang en gebruik van cultureel erfgoed dat digitaal circuleert buiten gemeenschapscontexten. <link> Meer informatie over de Lokale Context kennisgevingen.</link>.",
   "defaultProvider": "Colonial Collections Consortium",
   "defaultLabel": "Dit is een standaardkennisgeving als er geen andere labels of kennisgevingen zijn toegewezen.",
-  "addLocalContextsNoticeButton": "Voeg uw Lokale Context Kennisgeving toe",
-  "needAccountToAddNarrativeLocalContextsNotice": "Om Lokale Context Kennisgevingen aan dit object toe te voegen, heeft u een account nodig."
+  "addLocalContextsNoticeButton": "Voeg uw Local Context Notice toe",
+  "needAccountToAddLocalContextsNotice": "Om Local Context Notices aan dit object toe te voegen, heeft u een account nodig."
 },
 "LocalContextsNoticeForm": {
-  "title": "Voeg een Lokale Context Kennisgeving toe",
-  "type": "Selecteer een van de Kennisgevingen. Klik op een label voor meer informatie.",
+  "title": "Voeg een Local Context Notice toe",
+  "type": "Selecteer een van de Local Context Notice. Klik op een label voor meer informatie.",
   "description": "Label tekst",
-  "descriptionSubTitle": "Hier kunt u tekst invoegen over het gebruik van deze Kennisgeving.",
+  "descriptionSubTitle": "Hier kunt u tekst invoegen over het gebruik van deze Local Context Notice.",
   "inLanguage": "Taal",
   "languageSubTitle": "Selecteer een taal van het verhaal. Begin met typen om een taal te selecteren.",
   "successfullyAdded": "Uw verhaal is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
@@ -188,7 +188,7 @@
   "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
   "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.nl",
   "serverError": "Er is iets misgegaan bij het aanmaken van het verhaal. Probeer het later opnieuw.",
-  "buttonSubmit": "Voeg uw verhaal toe",
+  "buttonSubmit": "Voeg label toe",
   "buttonCancel": "Annuleren",
   "descriptionRequired": "Verhaal is verplicht",
   "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een verhaal kunt toevoegen",

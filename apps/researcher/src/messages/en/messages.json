@@ -173,7 +173,7 @@
     "defaultProvider": "Colonial Collections Consortium",
     "defaultLabel": "This is a default notice if no other labels or notices are assigned.",
     "addLocalContextsNoticeButton": "Add your Local Context Notice",
-    "needAccountToAddNarrativeLocalContextsNotice": "To add Local Context Notices to this object, you need an account."
+    "needAccountToAddLocalContextsNotice": "To add Local Context Notices to this object, you need an account."
   },
   "LocalContextsNoticeForm": {
     "title": "Add a Local Context Notice",
@@ -181,16 +181,16 @@
     "description": "Label text",
     "descriptionSubTitle": "Here you can insert text about the use of this Notice.",
     "inLanguage": "Language",
-    "languageSubTitle": "Select a language of the narrative. Start typing to select a language.",
-    "successfullyAdded": "Your narrative has been added to the object. It could take a moment before it is visible.",
+    "languageSubTitle": "Select a language of the text. Start typing to select a language.",
+    "successfullyAdded": "Your Local Context Notice has been added to the object. It could take a moment before it is visible.",
     "community": "Community",
     "communityDescription": "Select the community you speak on behalf of.",
     "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
     "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.en",
-    "serverError": "Something went wrong while creating the narrative. Please try again later.",
-    "buttonSubmit": "Add your narrative",
+    "serverError": "Something went wrong while creating the Local Context Notice. Please try again later.",
+    "buttonSubmit": "Add Notice",
     "buttonCancel": "Cancel",
-    "descriptionRequired": "Narrative is required",
+    "descriptionRequired": "Label text is required",
     "agreedToLicenseUnchecked": "You need to agree to the license before you can add a narrative",
     "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community.",
     "saving": "Saving..."
