@@ -14,9 +14,9 @@ beforeEach(() => {
   });
 });
 
-describe('getByTopLevel', () => {
+describe('getTopLevels', () => {
   it('returns the top level research guides', async () => {
-    const results = await researchGuides.getByTopLevel();
+    const results = await researchGuides.getTopLevels();
 
     expect(results).toHaveLength(1);
   });

@@ -15,6 +15,12 @@ const constructorOptionsSchema = z.object({
 
 export type ConstructorOptions = z.infer<typeof constructorOptionsSchema>;
 
+const getTopLevelsOptionsSchema = z.object({
+  locale: localeSchema,
+});
+
+export type GetTopLevelsOptions = z.input<typeof getTopLevelsOptionsSchema>;
+
 const getByTopLevelOptionsSchema = z.object({
   locale: localeSchema,
 });
@@ -45,17 +51,95 @@ export class ResearchGuideFetcher {
     this.endpointUrl = opts.endpointUrl;
   }
 
+  private async fetchTopLevelTriples(options: GetByIdsOptions) {
+    const iris = options.ids.map(iri => `<${iri}>`).join(EOL);
+
+    const query = `
+      PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+      PREFIX ex: <https://example.org/>
+      PREFIX la: <https://linked.art/ns/terms/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX schema: <https://schema.org/>
+
+      CONSTRUCT {
+        ?topSet a ex:CreativeWork ;
+          ex:name ?topSetName ;
+          ex:abstract ?topSetAbstract ;
+          ex:text ?topSetText ;
+          ex:encodingFormat ?topSetEncodingFormat ;
+          ex:seeAlso ?subSet .
+
+        ?subSet a ex:CreativeWork ;
+          ex:identifier ?identifier ;
+          ex:seeAlso ?guide .
+
+        ?guide a ex:CreativeWork ;
+          ex:name ?guideName ;
+          ex:seeAlso ?relatedGuide .
+
+        ?relatedGuide a ex:CreativeWork ;
+          ex:name ?subGuideName .
+      }
+      WHERE {
+        VALUES ?topSet {
+          ${iris}
+        }
+
+        OPTIONAL {
+          ?topSet schema:name ?topSetName ;
+          FILTER(LANG(?topSetName) = "${options.locale}")
+        }
+
+        OPTIONAL {
+          ?topSet schema:abstract ?topSetAbstract
+          FILTER(LANG(?topSetAbstract) = "${options.locale}")
+        }
+
+        OPTIONAL {
+          ?topSet schema:name ?topSetText ;
+          FILTER(LANG(?topSetText) = "${options.locale}")
+        }
+
+        OPTIONAL {
+          ?topSet schema:encodingFormat ?topSetEncodingFormat
+        }
+
+        OPTIONAL {
+          ?topSet la:has_member ?subSet .
+
+          OPTIONAL {
+            ?subSet crm:P1_is_identified_by/crm:P190_has_symbolic_content ?identifier
+          }
+
+          # Get a selection of information from member guides, if any
+          OPTIONAL {
+            ?subSet la:has_member ?guide .
+            ?guide schema:name ?guideName
+            FILTER(LANG(?guideName) = "${options.locale}")
+
+            # Get a selection of information from related guides, if any
+            OPTIONAL {
+              ?guide rdfs:seeAlso ?relatedGuide .
+              ?relatedGuide schema:name ?relatedGuideName
+              FILTER(LANG(?relatedGuideName) = "${options.locale}")
+            }
+          }
+        }
+      }
+    `;
+
+    return this.fetcher.fetchTriples(this.endpointUrl, query);
+  }
+
   private async getTopLevelIds() {
     const query = `
-      PREFIX schema: <https://schema.org/>
+      PREFIX la: <https://linked.art/ns/terms/>
 
       SELECT ?this
       WHERE {
-        ?this a schema:TextDigitalDocument ;
-          schema:additionalType <http://vocab.getty.edu/aat/300027029> . # "Guides"
-
+        ?this a la:Set .
         FILTER NOT EXISTS {
-          ?this schema:isPartOf [] .
+          ?this la:member_of []
         }
       }
     `;
@@ -76,11 +160,12 @@ export class ResearchGuideFetcher {
     return topLevelIds;
   }
 
-  private async fetchTriples(options: GetByIdsOptions) {
+  private async fetchResearchGuideTriples(options: GetByIdsOptions) {
     const iris = options.ids.map(iri => `<${iri}>`).join(EOL);
 
     const query = `
       PREFIX ex: <https://example.org/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX schema: <https://schema.org/>
 
       CONSTRUCT {
@@ -89,17 +174,13 @@ export class ResearchGuideFetcher {
           ex:abstract ?abstract ;
           ex:text ?text ;
           ex:encodingFormat ?encodingFormat ;
-          ex:hasPart ?hasPart ;
-          ex:isPartOf ?isPartOf ;
+          ex:seeAlso ?relatedGuide ;
           ex:contentLocation ?contentLocation ;
           ex:keyword ?keyword ;
           ex:citation ?citation .
 
-        ?hasPart a ex:CreativeWork ;
-          ex:name ?hasPartName .
-
-        ?isPartOf a ex:CreativeWork ;
-          ex:name ?isPartOfName .
+        ?relatedGuide a ex:CreativeWork ;
+          ex:name ?relatedGuideName .
 
         ?contentLocation a ex:Place ;
           ex:name ?contentLocationName ;
@@ -141,18 +222,11 @@ export class ResearchGuideFetcher {
           ?this schema:encodingFormat ?encodingFormat .
         }
 
-        # Get a selection of information from the parts, if any
+        # Get a selection of information from related guides, if any
         OPTIONAL {
-          ?this schema:hasPart ?hasPart .
-          ?hasPart schema:name ?hasPartName .
-          FILTER(LANG(?hasPartName) = "${options.locale}")
-        }
-
-        # Get a selection of information from the parent, if any
-        OPTIONAL {
-          ?this schema:isPartOf ?isPartOf .
-          ?isPartOf schema:name ?isPartOfName .
-          FILTER(LANG(?isPartOfName) = "${options.locale}")
+          ?this rdfs:seeAlso ?relatedGuide .
+          ?relatedGuide schema:name ?relatedGuideName .
+          FILTER(LANG(?relatedGuideName) = "${options.locale}")
         }
 
         OPTIONAL {
@@ -238,7 +312,7 @@ export class ResearchGuideFetcher {
       return [];
     }
 
-    const triplesStream = await this.fetchTriples(opts);
+    const triplesStream = await this.fetchResearchGuideTriples(opts);
     const researchGuides = await this.fromTriplesToResearchGuides(
       opts.ids,
       triplesStream
@@ -266,14 +340,23 @@ export class ResearchGuideFetcher {
     return researchGuides[0];
   }
 
-  async getByTopLevel(options?: GetByTopLevelOptions) {
-    const opts = getByTopLevelOptionsSchema.parse(options || {});
+  async getTopLevels(options?: GetTopLevelsOptions) {
+    const opts = getTopLevelsOptionsSchema.parse(options || {});
 
     const topLevelIds = await this.getTopLevelIds();
-    const researchGuides = await this.getByIds({
-      locale: opts.locale,
+
+    if (topLevelIds.length === 0) {
+      return [];
+    }
+
+    const triplesStream = await this.fetchTopLevelTriples({
       ids: topLevelIds,
+      ...opts,
     });
+    const researchGuides = await this.fromTriplesToResearchGuides(
+      topLevelIds,
+      triplesStream
+    );
 
     return researchGuides;
   }

@@ -8,7 +8,7 @@ import {MDXRemote} from 'next-mdx-remote/rsc';
 
 export default async function Page() {
   const locale = (await getLocale()) as LocaleEnum;
-  const topLevels = await researchGuides.getByTopLevel({locale});
+  const topLevels = await researchGuides.getTopLevels({locale});
   const t = await getTranslations('ResearchGuide');
 
   if (!topLevels.length) {
@@ -27,7 +27,7 @@ export default async function Page() {
       <div className="bg-consortium-sand-100 rounded mt-6 -mx-4 pr-10">
         <h2 className="px-4 pt-4">{t('level1Title')}</h2>
         <div className="pb-4 columns-3 gap-10">
-          {topLevel.hasParts?.map(item => (
+          {topLevel.seeAlso?.map(item => (
             <Link
               key={item.id}
               href={`/research-guide/${encodeRouteSegment(item.id)}`}
