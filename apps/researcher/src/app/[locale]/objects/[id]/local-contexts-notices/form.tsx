@@ -87,7 +87,6 @@ export function LocalContextsNoticeForm({
   const {
     handleSubmit,
     setError,
-    getValues,
     watch,
     formState: {errors, isSubmitting},
   } = methods;
