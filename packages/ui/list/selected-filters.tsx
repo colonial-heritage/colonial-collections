@@ -130,7 +130,9 @@ export function SelectedFilters({filters, filterSettings}: Props) {
 
   return (
     <div className="flex flex-row items-center gap-2 mb-6 py-6 flex-wrap">
-      <h3 className="text-sm text-neutral-500">{t('filters')}:</h3>
+      <span className="text-sm text-neutral-500" tabIndex={0}>
+        {t('filters')}:
+      </span>
       <div className="grow flex flex-row items-center gap-2 flex-wrap">
         {Object.keys(selectedFilters).map(filterKey => {
           const filterSetting = filterSettings.find(

@@ -25,9 +25,9 @@ export function DateRangeFacet({
   const t = useTranslations('Filters');
 
   return (
-    <FacetWrapper testId={testId}>
+    <FacetWrapper testId={testId} title={title}>
       <div className="w-full flex flex-col md:flex-row gap-4 justify-between">
-        <FacetTitle title={title} />
+        <FacetTitle />
       </div>
       <div className="flex flex-col lg:flex-row gap-2 lg:justify-between">
         <div className="flex justify-between lg:flex-col">

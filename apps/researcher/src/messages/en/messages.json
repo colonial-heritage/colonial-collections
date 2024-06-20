@@ -21,7 +21,7 @@
     "signupLink": "Create an account",
     "communitiesTitle": "Heritage communities",
     "communitiesDescription": "Upon creating an account, every individual or group of people can start their own community on this platform. A community is able to create lists of objects, bringing together their heritage. Communities can also add narratives to the objects in these collections.",
-    "communitiesLink": "Below are some communities to inspire you. Would you like to see all the communities on the platform? <link>Please click here</link>.",
+    "communitiesLink": "Below are some communities to inspire you. <link>Click here to see all the communities on the platform.</link>.",
     "howThisWorksTitle": "How does this platform work?",
     "howThisWorksText": "Here is a short explanation on how to use the following functionalities on this website: search for objects, add narratives and use communities.",
     "howThisWorksAlt": "An animation about how this site works."
@@ -48,11 +48,14 @@
     "addObjectsToList": "Add objects to list"
   },
   "Settings": {
-    "settings": "Settings",
+    "settings": "View settings",
     "resultView": "Result view",
     "grid": "Grid",
+    "accessibilityGrid": "View results as a grid",
     "list": "List",
+    "accessibilityList": "Set the amount of results",
     "resultLimit": "Number of results",
+    "accessibilityResultLimit": "Set the number of results",
     "images": "Images",
     "imagesDescription": "You can decrease the amount of data that this site is using. You can change this setting in the <em>View settings</em> on the result page.",
     "noImages": "No images",
@@ -331,8 +334,9 @@
     "filters": "Selected facets",
     "fromYear": "From year",
     "tillYear": "Till year",
-    "expandFilter": "Expand",
-    "clearAllFilters": "Clear all",
+    "expandFilter": "More",
+    "expandFilterAria": "Click for more items to filter",
+    "clearAllFilters": "Clear search filters",
     "filterSearchPlaceholder": "Filter on {filterName}",
     "accessibilityTypeToFilter": "Type to filter on text.",
     "accessibilitySelectToFilter": "Select a checkbox to filter",
@@ -342,7 +346,11 @@
     "orderByCount": "Order by count",
     "selectedFilters": "Selected filters",
     "aboutFacetsHeader": "About these facets",
-    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items.\n\nPlease note that currently, for some facets the items for search filters are provided in Dutch, regardless of the selected interface language. We're working on adding translations soon."
+    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items.\n\nPlease note that currently, for some facets the items for search filters are provided in Dutch, regardless of the selected interface language. We're working on adding translations soon.",
+    "accessibilityFacetLabel": "filter {title} on with {name}",
+    "accessibilityFacetCount": "{count} results",
+    "accessibilityInitLetter": "Filter within the filter items with initial letter {category}",
+    "facetJumpToResults": "Jump to results"
   },
   "Sort": {
     "dateCreatedDesc": "Date made - Descending",

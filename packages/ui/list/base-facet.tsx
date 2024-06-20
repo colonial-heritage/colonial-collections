@@ -1,29 +1,55 @@
 'use client';
 
-import {useCallback, useMemo, ReactNode, useState, useEffect} from 'react';
+import {
+  useCallback,
+  useMemo,
+  ReactNode,
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+} from 'react';
 import {useListStore} from '@colonial-collections/list-store';
+import {useTranslations} from 'next-intl';
+
+interface FacetContextProps {
+  title: string;
+}
+
+const FacetContext = createContext<FacetContextProps>({
+  title: '',
+});
 
 interface FacetWrapperProps {
   children: ReactNode;
   testId?: string;
+  title: string;
 }
 
-export function FacetWrapper({children, testId}: FacetWrapperProps) {
+export function FacetWrapper({children, testId, title}: FacetWrapperProps) {
+  const context = {
+    title,
+  };
+  const t = useTranslations('Filters');
+
   return (
-    <div>
-      <div className="w-full max-w-[450px]" data-testid={testId}>
-        {children}
+    <FacetContext.Provider value={context}>
+      <fieldset>
+        <div className="w-full max-w-[450px]" data-testid={testId}>
+          {children}
+        </div>
+      </fieldset>
+      <div className="sr-only">
+        <a href="#search-results">{t('facetJumpToResults')}</a>
       </div>
-    </div>
+    </FacetContext.Provider>
   );
 }
 
-export function FacetTitle({title}: {title: string}) {
-  return (
-    <div className="font-semibold grow">
-      <span>{title}</span>
-    </div>
-  );
+export function FacetTitle() {
+  const {title} = useContext(FacetContext);
+
+  return <legend className="font-semibold grow">{title}</legend>;
 }
 
 interface FacetCheckBoxProps {
@@ -43,6 +69,8 @@ export function FacetCheckBox({
   const filterChange = useListStore(s => s.filterChange);
   const newDataNeeded = useListStore(s => s.newDataNeeded);
   const [isMounted, setIsMounted] = useState(false);
+  const {title} = useContext(FacetContext);
+  const t = useTranslations('Filters');
 
   // Wait for hydration to complete before enabling the input
   useEffect(() => {
@@ -69,7 +97,10 @@ export function FacetCheckBox({
   );
 
   return (
-    <div className="flex flex-row justify-between gap-2 w-full mb-2 items-center">
+    <label
+      className="flex flex-row justify-between gap-2 w-full mb-2 items-center"
+      htmlFor={`facet-${id}`}
+    >
       <div className="flex flex-row">
         <input
           className=" w-5 h-5 mr-2 rounded border-consortium-blue-300 focus:ring-consortium-green-400"
@@ -81,11 +112,19 @@ export function FacetCheckBox({
           onChange={handleChange}
           disabled={!isMounted || newDataNeeded}
         />
-        <label className="truncate max-w-[230px]" htmlFor={`facet-${id}`}>
+        <div
+          className="truncate max-w-[230px]"
+          aria-label={t('accessibilityFacetLabel', {title, name})}
+        >
           {name}
-        </label>
+        </div>
       </div>
-      <div className="text-sm text-neutral-600">{count}</div>
-    </div>
+      <div
+        className="text-sm text-neutral-600"
+        aria-label={t('accessibilityFacetCount', {count})}
+      >
+        {count}
+      </div>
+    </label>
   );
 }

@@ -21,7 +21,7 @@
     "signupLink": "Account aanmaken",
     "communitiesTitle": "Erfgoedgemeenschap",
     "communitiesDescription": "Na het aanmaken van een account kan elk individu of elke groep mensen zijn eigen gemeenschap starten op dit platform. Een gemeenschap kan lijsten van objecten maken en zo haar erfgoed samenbrengen. Communities kunnen ook context en perspectieven toevoegen aan de objecten in deze collecties.",
-    "communitiesLink": "Hieronder staan enkele communities om je te inspireren. Wil je alle communities op het platform zien? <link>Klik dan hier</link>.",
+    "communitiesLink": "Hieronder staan enkele communities om je te inspireren. <link>Klik hier om alle communities op het platform zien.</link>.",
     "howThisWorksTitle": "Hoe werkt dit platform?",
     "howThisWorksText": "Hier volgt een korte uitleg over het gebruik van de volgende functionaliteiten op deze website: objecten zoeken, perspectieven toevoegen en communities gebruiken.",
     "howThisWorksAlt": "Een animatie over hoe deze site werkt."
@@ -48,11 +48,14 @@
     "addObjectsToList": "Voeg objecten toe aan de lijst"
   },
   "Settings": {
-    "settings": "Instellingen",
+    "settings": "Weergave",
     "resultView": "Resultaatweergave",
     "grid": "Raster",
+    "accessibilityGrid": "Bekijk resultaten in een raster",
     "list": "Lijst",
+    "accessibilityList": "Bekijk resultaten in een lijst",
     "resultLimit": "Aantal resultaten",
+    "accessibilityResultLimit": "Bewerk het aantal resultaten",
     "images": "Afbeeldingen",
     "imagesDescription": "U kunt de hoeveelheid gegevens die deze site gebruikt verminderen. U kunt deze instelling wijzigen in de <em>Weergave-instellingen</em> op de resultatenpagina.",
     "noImages": "Geen afbeeldingen",
@@ -331,8 +334,9 @@
     "filters": "Filters",
     "fromYear": "Van jaar",
     "tillYear": "Tot en met jaar",
-    "expandFilter": "Uitklappen",
-    "clearAllFilters": "Alles verwijderen",
+    "expandFilter": "Meer",
+    "expandFilterAria": "klik voor meer items om op te filteren",
+    "clearAllFilters": "Zoekfilters verwijderen",
     "filterSearchPlaceholder": "Filteren op {filterName}",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
     "accessibilitySelectToFilter": "Selecteer een selectievakje om te filteren",
@@ -342,7 +346,11 @@
     "orderByCount": "Sorteer op aantal",
     "selectedFilters": "Geselecteerde filters",
     "aboutFacetsHeader": "Over de facetten",
-    "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren."
+    "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren.",
+    "accessibilityFacetLabel": "filter op {title} met {name}",
+    "accessibilityFacetCount": "{count} resultaten",
+    "accessibilityInitLetter": "Filter binnen de filteritems op beginletter {category}",
+    "facetJumpToResults": "Ga naar de resultaten"
   },
   "Sort": {
     "dateCreatedDesc": "Datum gemaakt - Aflopend",
