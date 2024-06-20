@@ -192,6 +192,10 @@ export default async function SearchResults({searchParams = {}}: Props) {
             id="facets"
             className="hidden md:block w-full md:w-1/3 lg:w-1/5 order-2 md:order-1"
           >
+            <div className="sr-only">
+              <h1 tabIndex={0}>Search for objects</h1>
+              <h2 tabIndex={0}>Search facets</h2>
+            </div>
             <FacetMenu filters={searchResult.filters} />
           </aside>
 
@@ -216,7 +220,7 @@ export default async function SearchResults({searchParams = {}}: Props) {
               filterSettings={filterSettings}
             />
             <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end mt-4">
-              <h2 className="text-xl">
+              <h2 className="text-xl" tabIndex={0}>
                 {t('title', {totalDatasets: searchResult.totalCount})}
               </h2>
               <div className="flex flex-col sm:flex-row justify-end gap-4 relative flex-wrap">

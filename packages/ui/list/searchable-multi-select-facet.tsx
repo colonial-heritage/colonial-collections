@@ -61,6 +61,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
                       ? 'px-1 bg-black text-white rounded'
                       : ''
                   }
+                  aria-label={t('accessibilityInitLetter', {category})}
                 >
                   {category}
                 </button>
@@ -69,7 +70,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
             <div>
               <select
                 name="facetItemOrder"
-                className="mt-1 block  rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-600 focus:outline-none focus:ring-sky-600 sm:text-sm"
+                className="mt-1 block rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-sky-600 focus:outline-none focus:ring-sky-600 sm:text-sm"
                 aria-label="Select to change the ordering of the result"
                 value={sortBy}
                 onChange={event => setSortBy(event.target.value as FacetSortBy)}
@@ -159,16 +160,9 @@ export function SearchableMultiSelectFacet({
   }
 
   return (
-    <FacetWrapper testId={testId}>
+    <FacetWrapper testId={testId} title={title}>
       <div className="flex items-center w-full my-1">
-        <FacetTitle title={title} />
-        <ModalButton
-          id={filterKey}
-          className="inline-flex items-center text-consortium-blue-600"
-        >
-          <span>{t('expandFilter')}</span>
-          <ChevronRightIcon className="w-4 h-4 fill-bg-consortium-blue-100" />
-        </ModalButton>
+        <FacetTitle />
       </div>
       <FacetProvider filters={filters}>
         <>
@@ -179,6 +173,14 @@ export function SearchableMultiSelectFacet({
           </Modal>
         </>
       </FacetProvider>
+      <ModalButton
+        id={filterKey}
+        className="inline-flex items-center text-consortium-blue-600 text-sm"
+        aria-label={t('expandFilterAria')}
+      >
+        <span>{t('expandFilter')}</span>
+        <ChevronRightIcon className="w-4 h-4 fill-bg-consortium-blue-100" />
+      </ModalButton>
     </FacetWrapper>
   );
 }

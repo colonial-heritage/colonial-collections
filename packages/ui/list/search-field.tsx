@@ -71,7 +71,7 @@ export function SearchField({
 
   return (
     <>
-      <div className="w-full flex justify-between">
+      <div className="flex justify-between w-full" role="searchbox">
         <input
           data-testid="searchQuery"
           value={inputText}
@@ -88,7 +88,7 @@ export function SearchField({
         <button
           disabled={!isMounted}
           className={buttonClassName}
-          aria-label={t('accessibilityTypeToFilter')}
+          aria-label={t('accessibilityClickToSearch')}
           onClick={search}
         >
           <MagnifyingGlassIcon className={magnifyingGlassClassName} />

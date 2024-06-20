@@ -30,7 +30,9 @@ export default async function Home() {
             <Background />
           </div>
           <div className="w-full max-w-4xl px-4 sm:px-10 flex flex-col gap-10 relative pb-16">
-            <h1 className="text-3xl lg:text-5xl mt-4">{t('title')}</h1>
+            <h1 className="text-3xl lg:text-5xl mt-4" tabIndex={0}>
+              {t('title')}
+            </h1>
             <p className="max-w-2xl text-lg">
               {t.rich('description', {
                 em: text => <em>{text}</em>,
@@ -62,13 +64,16 @@ export default async function Home() {
             w-full lg:max-w-[370px]"
             >
               <div className="whitespace-pre-wrap">
-                <h2 className="text-xl mb-2">{t('narrativeExplainTitle')}</h2>
+                <h2 className="text-xl mb-2" tabIndex={0}>
+                  {t('narrativeExplainTitle')}
+                </h2>
                 <p>{t.rich('narrativeExplainText')}</p>
               </div>
               <div className="flex gap-2 lg:justify-between my-2">
                 <Link
                   href="/sign-up"
                   className="rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm bg-consortium-green-300 text-consortium-blue-800 no-underline"
+                  tabIndex={0}
                 >
                   {t('signupLink')}
                 </Link>
@@ -79,7 +84,9 @@ export default async function Home() {
 
         <div className="w-full flex flex-col items-center py-20 gap-6 bg-consortium-green-300 text-consortium-blue-800">
           <div className="w-full max-w-4xl px-4 sm:px-10 flex flex-col gap-10 relative pb-10">
-            <h2 className="text-5xl">{t('communitiesTitle')}</h2>
+            <h2 className="text-5xl" tabIndex={0}>
+              {t('communitiesTitle')}
+            </h2>
             <p className="max-w-xl">{t('communitiesDescription')}</p>
             <p className="max-w-xl">
               {t.rich('communitiesLink', {
@@ -96,7 +103,9 @@ export default async function Home() {
 
         <div className="bg-white" id="how-this-works">
           <div className=" w-full max-w-6xl px-4 sm:px-10 flex flex-col gap-10 relative pb-10 py-20 text-consortium-blue-800 mx-auto mb-32">
-            <h2 className="text-5xl">{t('howThisWorksTitle')}</h2>
+            <h2 className="text-5xl" tabIndex={0}>
+              {t('howThisWorksTitle')}
+            </h2>
             <p className="max-w-md">{t('howThisWorksText')}</p>
             <div>
               <Image

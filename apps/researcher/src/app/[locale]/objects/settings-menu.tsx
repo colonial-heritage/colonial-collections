@@ -26,6 +26,7 @@ export default function SettingsMenu() {
           <button
             onClick={() => viewChange(ListView.Grid)}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+            aria-label={t('accessibilityGrid')}
           >
             <Squares2X2Icon className="w-4 h-4 fill-neutral-800" />
             {t('grid')}
@@ -33,6 +34,7 @@ export default function SettingsMenu() {
           <button
             onClick={() => viewChange(ListView.List)}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+            aria-label={t('accessibilityList')}
           >
             <ListBulletIcon className="w-4 h-4 fill-neutral-800" />
             {t('list')}
@@ -44,6 +46,7 @@ export default function SettingsMenu() {
             className="rounded p-2 text-sm border bg-neutral-100 pr-6"
             onChange={e => limitChange(parseInt(e.target.value))}
             value={limit}
+            aria-label={t('accessibilityResultLimit')}
           >
             <option value="10">10</option>
             <option value="25">25</option>
