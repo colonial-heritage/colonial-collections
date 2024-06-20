@@ -4,7 +4,7 @@ import researchGuides from '@/lib/research-guides-instance';
 import {Link} from '@/navigation';
 import {ChevronRightIcon} from '@heroicons/react/24/solid';
 import {getLocale, getTranslations} from 'next-intl/server';
-import {MDXRemote} from 'next-mdx-remote/rsc';
+import StringToMarkdown from './string-to-markdown';
 
 export default async function Page() {
   const locale = (await getLocale()) as LocaleEnum;
@@ -27,7 +27,7 @@ export default async function Page() {
     <>
       <h1 className="text-2xl md:text-4xl">{topLevel.name}</h1>
       <div className="my-4 w-full max-w-5xl columns-2 gap-6">
-        {topLevel.text && <MDXRemote source={topLevel.text} />}
+        {topLevel.text && <StringToMarkdown text={topLevel.text} />}
       </div>
       <div className="bg-consortium-sand-100 rounded mt-6 -mx-4 pr-10">
         <h2 className="px-4 pt-4">{t('level1Title')}</h2>
