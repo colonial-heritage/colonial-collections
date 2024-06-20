@@ -14,7 +14,7 @@ describe('getTopLevels', () => {
   it('returns the top level guides', async () => {
     const researchGuides = await researchGuideFetcher.getTopLevels();
 
-    // The sorting order is undefined and can change - dDon't use toStrictEqual()
+    // The sorting order is undefined and can change - don't use toStrictEqual()
     expect(researchGuides).toMatchObject([
       {
         id: 'https://guides.example.org/top-set',
