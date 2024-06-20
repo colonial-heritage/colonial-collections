@@ -152,20 +152,28 @@
   "attributionIncompleteDescription": "Collecties en items in onze instelling hebben onvolledige, onjuiste en/of ontbrekende toeschrijving. We gebruiken deze kennisgeving om dit materiaal duidelijk te identificeren zodat het kan worden bijgewerkt of gecorrigeerd door gemeenschappen van herkomst. Onze instelling zet zich in voor samenwerking en partnerschappen om dit probleem van onjuiste of ontbrekende toeschrijving aan te pakken.",
   "authorization": "Autorisatie",
   "authorizationDescription": "De Autorisatiekennisgeving wordt gebruikt om aan te geven dat er door middel van overleg distincte tribale of gemeenschapsautorisatie moet worden verkregen voor elke reproductie van dit item, inclusief het gebruik in tentoonstellingen en publicaties in print of online.",
+  "authorizationInformation": "De Autorisatiekennisgeving erkent dat specifieke tribale of gemeenschapsautorisatie door middel van overleg noodzakelijk is voorafgaand aan het gebruik van specifieke items of collecties in alle vormen van publicatie en tentoonstellingen.",
   "belonging": "Toebehoren",
   "belongingDescription": "De Toebehorenkennisgeving wordt gebruikt om aan te geven dat alleen specifieke personen die tot gemeenschappen, stammen, clans en verenigingen behoren, het recht hebben om deze specifieke items of collecties te bekijken en te behandelen.",
+  "belongingInformation": "De Toebehorenkennisgeving erkent het exclusieve recht van inheemse gemeenschappen, stammen, clans of verenigingen om toegang te hebben tot en om te gaan met items of collecties.",
   "caring": "Verzorging",
   "caringDescription": "De Verzorgingskennisgeving wordt gebruikt om aan te geven dat gespecialiseerde culturele zorg vereist is. Zorg voor items of collecties vereist specifieke gemeenschapsrichtlijnen voor opslag en handling.",
+  "caringInformation": "De Verzorgingskennisgeving erkent culturele manieren van zorg voor materialen, inclusief specifieke manieren van behandeling, opslag of beheer van specifieke items of collecties. In alle gevallen zal zorg worden gedefinieerd door middel van gemeenschapsconsultaties.",
   "genderAware": "Genderbewust",
   "genderAwareDescription": "De Genderbewust Kennisgeving wordt gebruikt om aan te geven dat er specifieke genderverantwoordelijkheden zijn die van invloed zijn op wie toegang kan krijgen tot, kijken naar en/of omgaan met dit item of deze collectie.",
+  "genderAwareInformation": "De Genderbewust Kennisgeving erkent dat gender invloed heeft op toegang, behandeling, bekijken en omgaan met items of collecties. Deze kennisgeving vestigt specifiek de aandacht op wie items of collecties zou moeten behandelen op basis van hun zelf geïdentificeerde gender.",
   "leaveUndisturbed": "Ongestoord Laten",
   "leaveUndisturbedDescription": "De Ongestoord Laten Kennisgeving wordt gebruikt om aan te geven dat items in een collectie niet mogen worden verstoord. Ze mogen alleen onder zeer beperkte omstandigheden volgens gemeenschapsrichtlijnen worden verplaatst of verstoord.",
+  "leaveUndisturbedInformation": "De Ongestoord Laten Kennisgeving erkent het culturele belang en de noodzaak om bepaalde culturele materialen niet te verstoren.",
   "safety": "Veiligheid",
   "safetyDescription": "De Veiligheidskennisgeving wordt gebruikt om aan te geven dat uiterste voorzichtigheid en zorg nodig is bij het bekijken en behandelen van dit item of deze collectie voor het welzijn en de gezondheid van individuen of gemeenschappen.",
+  "safetyInformation": "De Veiligheidskennisgeving vestigt de aandacht op de noodzaak van respectvolle veiligheidsmaatregelen om te voorkomen dat items in collecties worden behandeld wanneer men menstrueert en/of zwanger is, voor het welzijn en de gezondheid van het individu en hun familie.",
   "viewing": "Bekijken",
   "viewingDescription": "De Bekijkkennisgeving wordt gebruikt om aan te geven dat er beperkingen zijn op wie, hoe en wanneer een item/collectie kan worden bekeken, gedistribueerd en gecirculeerd. Dit omvat bestaande afbeeldingen of representaties van een bestaand of gedeaccesioneerd item binnen een collectie.",
+  "viewingInformation": "De Bekijkkennisgeving erkent dat er beperkingen zijn op het bekijken of toegang hebben tot huidige of gedeaccesioneerde items in een collectie(s) of hun representaties.",
   "withholding": "Achterhouden",
-  "withholdingDescription": "De Achterhouden Kennisgeving wordt gebruikt om aan te geven dat er nooit reproducties van dit item of deze collectie mogen worden gemaakt. Als er al bestaande foto's of reproducties zijn, mogen deze niet worden gebruikt in een tentoonstelling of publicatie in print, online of in enig ander formaat."
+  "withholdingDescription": "De Achterhouden Kennisgeving wordt gebruikt om aan te geven dat er nooit reproducties van dit item of deze collectie mogen worden gemaakt. Als er al bestaande foto's of reproducties zijn, mogen deze niet worden gebruikt in een tentoonstelling of publicatie in print, online of in enig ander formaat.",
+  "withholdingInformation": "De Achterhouden Kennisgeving erkent de noodzaak om bepaalde items of collecties volledig te onthouden van fotografie, reproductie, publicaties en elke vorm van tentoonstelling in toekomstige modaliteiten."
 },
 "LocalContextsNoticesOverview": {
   "title": "Local Context Notices",
@@ -193,9 +201,11 @@
   "descriptionRequired": "Verhaal is verplicht",
   "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een verhaal kunt toevoegen",
   "noCommunities": "U bent nog geen lid van een community die toestemming heeft om een verhaal toe te voegen. U kunt een community creëren of lid worden van een bestaande community.",
-  "saving": "Opslaan..."
+  "saving": "Opslaan...",
+  "noticeInformationTitle": "Informatie over notice",
+  "noticeInformationLink": "Meer informatie op localcontexts.org"
 },
-  "Provenance": {
+"Provenance": {
     "title": "Herkomst",
     "description": "Informatie over de herkomst toont het pad dat een object heeft afgelegd voordat het op de huidige locatie kwam. Het kan informatie bevatten over vorige eigenaren tot technische verwerkingsinformatie. Deze herkomstgegevens zijn vaak onvolledig.",
     "initial": "H",

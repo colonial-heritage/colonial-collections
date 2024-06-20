@@ -10,7 +10,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useLocale, useTranslations} from 'next-intl';
 import {z} from 'zod';
 import {addUserNotice} from './actions';
-import {XMarkIcon} from '@heroicons/react/24/outline';
+import {InformationCircleIcon, XMarkIcon} from '@heroicons/react/24/outline';
 import {
   FormRow,
   InputLabel,
@@ -31,7 +31,7 @@ import {
 import {LocalContextsNoticeSelector} from '@/components/form/local-contexts-notice-selector';
 
 interface FormValues {
-  type?: LocalContextsNoticeEnrichmentType;
+  type: LocalContextsNoticeEnrichmentType | null;
   description: string;
   inLanguage?: string;
   agreedToLicense: boolean;
@@ -53,7 +53,7 @@ export function LocalContextsNoticeForm({
   const {user} = useUser();
 
   const t = useTranslations('LocalContextsNoticeForm');
-  const tLabels = useTranslations('LocalContextsNotices');
+  const tNotices = useTranslations('LocalContextsNotices');
 
   const userEnricherSchema = z.object({
     type: z.nativeEnum(LocalContextsNoticeEnrichmentType),
@@ -76,7 +76,7 @@ export function LocalContextsNoticeForm({
   const methods = useForm({
     resolver: zodResolver(userEnricherSchema),
     defaultValues: {
-      type: undefined,
+      type: null,
       description: '',
       inLanguage: locale,
       agreedToLicense: false,
@@ -87,6 +87,8 @@ export function LocalContextsNoticeForm({
   const {
     handleSubmit,
     setError,
+    getValues,
+    watch,
     formState: {errors, isSubmitting},
   } = methods;
 
@@ -189,7 +191,30 @@ export function LocalContextsNoticeForm({
               <div className="text-sm mb-1">{licenceComponent}</div>
             </div>
           </div>
-          <div className="w-full md:w-1/2">info</div>
+          {watch('type') && (
+            <div className="w-full md:w-1/2 prose">
+              <strong className="flex items-center gap-1">
+                <InformationCircleIcon className="w-4 h-4 stroke-neutral-900" />
+                {t('noticeInformationTitle')}
+              </strong>
+              <p>
+                {tNotices(
+                  localContextsNoticeEnrichmentTypeMapping[
+                    watch('type')! as LocalContextsNoticeEnrichmentType
+                  ].informationTranslationKey
+                )}
+              </p>
+              <p>
+                <a
+                  href="http://www.localcontexts.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t('noticeInformationLink')}
+                </a>
+              </p>
+            </div>
+          )}
         </FormRow>
         <ButtonGroup>
           <PrimaryButton type="submit" disabled={isSubmitting}>

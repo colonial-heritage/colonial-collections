@@ -19,7 +19,7 @@ import {getTranslations} from 'next-intl/server';
 
 export default async function LocalContextsNotices() {
   const t = await getTranslations('LocalContextsNoticesOverview');
-  const tLabels = await getTranslations('LocalContextsNotices');
+  const tNotices = await getTranslations('LocalContextsNotices');
   const objectId = useObject.getState().objectId;
   const localContextsNotices =
     await localContextsNoticesEnrichmentFetcher.getById(objectId);
@@ -30,7 +30,7 @@ export default async function LocalContextsNotices() {
 
     return {
       id: notice.id,
-      title: tLabels(titleTranslationKey),
+      title: tNotices(titleTranslationKey),
       description: notice.description,
       imageSrc: imageSrc,
       communityName: notice.pubInfo.creator?.isPartOf?.name,
@@ -44,8 +44,8 @@ export default async function LocalContextsNotices() {
   // Default notice when there are no localContextsNotices
   const defaultNotice = {
     id: 'attributionIncomplete',
-    title: tLabels('attributionIncomplete'),
-    description: tLabels('attributionIncompleteDescription'),
+    title: tNotices('attributionIncomplete'),
+    description: tNotices('attributionIncompleteDescription'),
     imageSrc: '/images/local-contexts-notices/attribution-incomplete.png',
     creatorName: t('defaultProvider'),
     isCurrentPublisher: true,
