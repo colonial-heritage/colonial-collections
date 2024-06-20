@@ -33,7 +33,26 @@ export function createCitations(resource: Resource, propertyName: string) {
   return citations.length > 0 ? citations : undefined;
 }
 
-export function createResearchGuide(researchGuideResource: Resource) {
+function createResearchGuides(
+  resource: Resource,
+  propertyName: string,
+  stackSize: number
+) {
+  const properties = resource.properties[propertyName];
+  const researchGuides = properties.map(property =>
+    createResearchGuide(property, stackSize)
+  );
+
+  return researchGuides.length > 0 ? researchGuides : undefined;
+}
+
+export function createResearchGuide(
+  researchGuideResource: Resource,
+  stackSize = 1
+) {
+  const identifier = onlyOne(
+    getPropertyValues(researchGuideResource, 'ex:identifier')
+  );
   const name = onlyOne(getPropertyValues(researchGuideResource, 'ex:name'));
   const abstract = onlyOne(
     getPropertyValues(researchGuideResource, 'ex:abstract')
@@ -42,8 +61,18 @@ export function createResearchGuide(researchGuideResource: Resource) {
   const encodingFormat = onlyOne(
     getPropertyValues(researchGuideResource, 'ex:encodingFormat')
   );
-  const hasParts = createResearchGuides(researchGuideResource, 'ex:hasPart');
-  const isPartOf = createResearchGuides(researchGuideResource, 'ex:isPartOf');
+
+  let seeAlso: ResearchGuide[] | undefined = undefined;
+
+  // Prevent infinite recursion
+  if (stackSize < 4) {
+    seeAlso = createResearchGuides(
+      researchGuideResource,
+      'ex:seeAlso',
+      stackSize + 1
+    );
+  }
+
   const contentLocations = createPlaces(
     researchGuideResource,
     'ex:contentLocation'
@@ -53,12 +82,12 @@ export function createResearchGuide(researchGuideResource: Resource) {
 
   const researchGuideWithUndefinedValues: ResearchGuide = {
     id: researchGuideResource.value,
+    identifier,
     name,
     abstract,
     text,
     encodingFormat,
-    hasParts,
-    isPartOf,
+    seeAlso,
     contentLocations,
     keywords,
     citations,
@@ -69,13 +98,4 @@ export function createResearchGuide(researchGuideResource: Resource) {
   );
 
   return researchGuide;
-}
-
-export function createResearchGuides(resource: Resource, propertyName: string) {
-  const properties = resource.properties[propertyName];
-  const researchGuides = properties.map(property =>
-    createResearchGuide(property)
-  );
-
-  return researchGuides.length > 0 ? researchGuides : undefined;
 }

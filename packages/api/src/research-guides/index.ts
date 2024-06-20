@@ -2,7 +2,7 @@ import {z} from 'zod';
 import {
   GetByIdOptions,
   GetByIdsOptions,
-  GetByTopLevelOptions,
+  GetTopLevelsOptions,
   ResearchGuideFetcher,
 } from './fetcher';
 
@@ -27,8 +27,8 @@ export class ResearchGuides {
     });
   }
 
-  async getByTopLevel(options?: GetByTopLevelOptions) {
-    return this.researchGuideFetcher.getByTopLevel(options);
+  async getTopLevels(options?: GetTopLevelsOptions) {
+    return this.researchGuideFetcher.getTopLevels(options);
   }
 
   async getByIds(options: GetByIdsOptions) {
