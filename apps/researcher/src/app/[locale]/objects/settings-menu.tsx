@@ -26,7 +26,7 @@ export default function SettingsMenu() {
           <button
             onClick={() => viewChange(ListView.Grid)}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-            aria-label={t('gridAria')}
+            aria-label={t('accessibilityGrid')}
           >
             <Squares2X2Icon className="w-4 h-4 fill-neutral-800" />
             {t('grid')}
@@ -34,7 +34,7 @@ export default function SettingsMenu() {
           <button
             onClick={() => viewChange(ListView.List)}
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-            aria-label={t('listAria')}
+            aria-label={t('accessibilityList')}
           >
             <ListBulletIcon className="w-4 h-4 fill-neutral-800" />
             {t('list')}
