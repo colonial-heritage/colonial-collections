@@ -6,8 +6,8 @@ import {
 import researchGuides from '@/lib/research-guides-instance';
 import {getLocale, getTranslations} from 'next-intl/server';
 import {Link} from '@/navigation';
-import {MDXRemote} from 'next-mdx-remote/rsc';
 import {ChevronRightIcon, ChevronLeftIcon} from '@heroicons/react/24/solid';
+import StringToMarkdown from '../string-to-markdown';
 
 interface Props {
   params: {id: string};
@@ -45,7 +45,7 @@ export default async function GuidePage({params}: Props) {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-2/3">
             <div className="prose" id="#description">
-              {guide.text && <MDXRemote source={guide.text} />}
+              {guide.text && <StringToMarkdown text={guide.text} />}
               {guide.citations && guide.citations.length > 0 && (
                 <>
                   <h2 id="citations">{t('citations')}</h2>
