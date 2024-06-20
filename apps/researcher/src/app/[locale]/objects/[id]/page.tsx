@@ -19,7 +19,7 @@ import {LocaleEnum} from '@/definitions';
 import {env} from 'node:process';
 import Map from './map';
 import {ReadMoreText} from '@/components/read-more-text';
-import TraditionalKnowledgeLabels from './traditional-knowledge-labels';
+import LocalContextsNotices from './local-contexts-notices/overview';
 
 export const dynamic = 'force-dynamic';
 
@@ -212,7 +212,7 @@ export default async function Details({params}: Props) {
                 ))}
               </Metadata>
             </div>
-            <TraditionalKnowledgeLabels />
+            <LocalContextsNotices />
           </main>
           <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-neutral-100 p-1">
             {galleryImages.length > 0 && (
