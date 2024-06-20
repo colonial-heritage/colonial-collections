@@ -1,4 +1,6 @@
 import {NanopubClient} from './client';
+import {LocalContextsNoticeEnrichmentBeingCreated} from './local-contexts-notices/definitions';
+import {LocalContextsNoticeEnrichmentStorer} from './local-contexts-notices/storer';
 import {
   HeritageObjectEnrichmentBeingCreated,
   HeritageObjectEnrichmentStorer,
@@ -21,6 +23,7 @@ export type EnrichmentCreatorConstructorOptions = z.infer<
 export class EnrichmentCreator {
   private readonly heritageObjectEnrichmentStorer: HeritageObjectEnrichmentStorer;
   private readonly provenanceEventEnrichmentStorer: ProvenanceEventEnrichmentStorer;
+  private readonly localContextsNoticeEnrichmentStorer: LocalContextsNoticeEnrichmentStorer;
 
   constructor(options: EnrichmentCreatorConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
@@ -31,6 +34,10 @@ export class EnrichmentCreator {
     this.provenanceEventEnrichmentStorer = new ProvenanceEventEnrichmentStorer({
       nanopubClient: opts.nanopubClient,
     });
+    this.localContextsNoticeEnrichmentStorer =
+      new LocalContextsNoticeEnrichmentStorer({
+        nanopubClient: opts.nanopubClient,
+      });
   }
 
   async addText(enrichmentBeingCreated: HeritageObjectEnrichmentBeingCreated) {
@@ -41,5 +48,11 @@ export class EnrichmentCreator {
     enrichmentBeingCreated: ProvenanceEventEnrichmentBeingCreated
   ) {
     return this.provenanceEventEnrichmentStorer.add(enrichmentBeingCreated);
+  }
+
+  async addLocalContextsNotice(
+    enrichmentBeingCreated: LocalContextsNoticeEnrichmentBeingCreated
+  ) {
+    return this.localContextsNoticeEnrichmentStorer.add(enrichmentBeingCreated);
   }
 }

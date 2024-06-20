@@ -1,7 +1,7 @@
 import {NanopubClient} from '../client';
 import {EnrichmentCreator} from '../creator';
-import {HeritageObjectEnrichmentType} from './definitions';
-import {HeritageObjectEnrichmentFetcher} from './fetcher';
+import {LocalContextsNoticeEnrichmentType} from './definitions';
+import {LocalContextsNoticesEnrichmentFetcher} from './fetcher';
 import {beforeAll, describe, expect, it} from '@jest/globals';
 import {randomUUID} from 'node:crypto';
 import {env} from 'node:process';
@@ -14,7 +14,7 @@ const nanopubClient = new NanopubClient({
 
 const creator = new EnrichmentCreator({nanopubClient});
 
-const fetcher = new HeritageObjectEnrichmentFetcher({
+const fetcher = new LocalContextsNoticesEnrichmentFetcher({
   endpointUrl: env.NANOPUB_SPARQL_ENDPOINT_URL as string,
 });
 
@@ -37,8 +37,8 @@ describe('getById - basic enrichments, with only required properties', () => {
 
   // Create some enrichments
   beforeAll(async () => {
-    await creator.addText({
-      type: HeritageObjectEnrichmentType.Name,
+    await creator.addLocalContextsNotice({
+      type: LocalContextsNoticeEnrichmentType.Authorization,
       about: resourceId,
       pubInfo: {
         creator: {
@@ -49,8 +49,8 @@ describe('getById - basic enrichments, with only required properties', () => {
       },
     });
 
-    await creator.addText({
-      type: HeritageObjectEnrichmentType.Description,
+    await creator.addLocalContextsNotice({
+      type: LocalContextsNoticeEnrichmentType.Withholding,
       about: resourceId,
       pubInfo: {
         creator: {
@@ -71,7 +71,7 @@ describe('getById - basic enrichments, with only required properties', () => {
     expect(enrichments).toStrictEqual([
       {
         id: expect.stringContaining('https://'),
-        type: HeritageObjectEnrichmentType.Name,
+        type: LocalContextsNoticeEnrichmentType.Authorization,
         about: resourceId,
         pubInfo: {
           creator: {
@@ -84,7 +84,7 @@ describe('getById - basic enrichments, with only required properties', () => {
       },
       {
         id: expect.stringContaining('https://'),
-        type: HeritageObjectEnrichmentType.Description,
+        type: LocalContextsNoticeEnrichmentType.Withholding,
         about: resourceId,
         pubInfo: {
           creator: {
@@ -104,9 +104,9 @@ describe('getById - full enrichments, with all properties', () => {
 
   // Create some enrichments
   beforeAll(async () => {
-    await creator.addText({
-      type: HeritageObjectEnrichmentType.Name,
-      description: 'Comment about the name of the resource',
+    await creator.addLocalContextsNotice({
+      type: LocalContextsNoticeEnrichmentType.Authorization,
+      description: 'A comment about the use of a Local Contexts Notice',
       citation: 'A citation or reference to a work that supports the comment',
       inLanguage: 'en-gb',
       about: resourceId,
@@ -123,12 +123,12 @@ describe('getById - full enrichments, with all properties', () => {
       },
     });
 
-    await creator.addText({
-      type: HeritageObjectEnrichmentType.Description,
-      description: 'Comment about the description of the resource',
+    await creator.addLocalContextsNotice({
+      type: LocalContextsNoticeEnrichmentType.Withholding,
+      description: 'A comment about the use of a Local Contexts Notice',
       citation: 'A citation or reference to a work that supports the comment',
-      about: resourceId,
       inLanguage: 'en-gb',
+      about: resourceId,
       pubInfo: {
         creator: {
           id: 'http://example.com/person1',
@@ -152,8 +152,8 @@ describe('getById - full enrichments, with all properties', () => {
     expect(enrichments).toStrictEqual([
       {
         id: expect.stringContaining('https://'),
-        type: HeritageObjectEnrichmentType.Name,
-        description: 'Comment about the name of the resource',
+        type: LocalContextsNoticeEnrichmentType.Authorization,
+        description: 'A comment about the use of a Local Contexts Notice',
         citation: 'A citation or reference to a work that supports the comment',
         inLanguage: 'en-gb',
         about: resourceId,
@@ -172,11 +172,11 @@ describe('getById - full enrichments, with all properties', () => {
       },
       {
         id: expect.stringContaining('https://'),
-        type: HeritageObjectEnrichmentType.Description,
-        description: 'Comment about the description of the resource',
+        type: LocalContextsNoticeEnrichmentType.Withholding,
+        description: 'A comment about the use of a Local Contexts Notice',
         citation: 'A citation or reference to a work that supports the comment',
-        inLanguage: 'en-gb',
         about: resourceId,
+        inLanguage: 'en-gb',
         pubInfo: {
           creator: {
             id: 'http://example.com/person1',
