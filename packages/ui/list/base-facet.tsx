@@ -10,6 +10,7 @@ import {
   useContext,
 } from 'react';
 import {useListStore} from '@colonial-collections/list-store';
+import {useTranslations} from 'next-intl';
 
 interface FacetContextProps {
   title: string;
@@ -29,6 +30,7 @@ export function FacetWrapper({children, testId, title}: FacetWrapperProps) {
   const context = {
     title,
   };
+  const t = useTranslations('Filters');
 
   return (
     <FacetContext.Provider value={context}>
@@ -38,7 +40,7 @@ export function FacetWrapper({children, testId, title}: FacetWrapperProps) {
         </div>
       </fieldset>
       <div className="sr-only">
-        <a href="#search-results">Jump to results</a>
+        <a href="#search-results">{t('facetJumpToResults')}</a>
       </div>
     </FacetContext.Provider>
   );
@@ -68,6 +70,7 @@ export function FacetCheckBox({
   const newDataNeeded = useListStore(s => s.newDataNeeded);
   const [isMounted, setIsMounted] = useState(false);
   const {title} = useContext(FacetContext);
+  const t = useTranslations('Filters');
 
   // Wait for hydration to complete before enabling the input
   useEffect(() => {
@@ -111,12 +114,15 @@ export function FacetCheckBox({
         />
         <div
           className="truncate max-w-[230px]"
-          aria-label={`filter ${title} on  with ${name}`}
+          aria-label={t('accessibilityFacetLabel', {title, name})}
         >
           {name}
         </div>
       </div>
-      <div className="text-sm text-neutral-600" aria-label={`${count} results`}>
+      <div
+        className="text-sm text-neutral-600"
+        aria-label={t('accessibilityFacetCount', {count})}
+      >
         {count}
       </div>
     </label>

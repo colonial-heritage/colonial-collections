@@ -55,7 +55,7 @@
     "list": "Lijst",
     "listAria": "Bekijk resultaten in een lijst",
     "resultLimit": "Aantal resultaten",
-    "resultLimitAria": "Bewerk het aantal resultaten",
+    "accessibilityResultLimit": "Bewerk het aantal resultaten",
     "images": "Afbeeldingen",
     "imagesDescription": "U kunt de hoeveelheid gegevens die deze site gebruikt verminderen. U kunt deze instelling wijzigen in de <em>Weergave-instellingen</em> op de resultatenpagina.",
     "noImages": "Geen afbeeldingen",
@@ -286,7 +286,6 @@
     "tillYear": "Tot en met jaar",
     "expandFilter": "Meer",
     "expandFilterAria": "klik voor meer items om op te filteren",
-    "expandFilterInitLetter": "Meer",
     "clearAllFilters": "Zoekfilters verwijderen",
     "filterSearchPlaceholder": "Filteren op {filterName}",
     "accessibilityTypeToFilter": "Typ om op tekst te filteren",
@@ -297,7 +296,11 @@
     "orderByCount": "Sorteer op aantal",
     "selectedFilters": "Geselecteerde filters",
     "aboutFacetsHeader": "Over de facetten",
-    "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren."
+    "aboutFacetsText": "De gegevens van deze facetten worden verzameld uit meerdere datasets. We zijn bezig de kwaliteit van deze facetten te verbeteren.",
+    "accessibilityFacetLabel": "filter op {title} met {name}",
+    "accessibilityFacetCount": "{count} resultaten",
+    "accessibilityInitLetter": "Filter binnen de filteritems op beginletter {category}",
+    "facetJumpToResults": "Ga naar de resultaten"
   },
   "Sort": {
     "dateCreatedDesc": "Datum gemaakt - Aflopend",

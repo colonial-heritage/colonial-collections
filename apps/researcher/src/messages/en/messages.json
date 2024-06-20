@@ -55,7 +55,7 @@
     "list": "List",
     "listAria": "Set the amount of results",
     "resultLimit": "Number of results",
-    "resultLimitAria": "Set the number of results",
+    "accessibilityResultLimit": "Set the number of results",
     "images": "Images",
     "imagesDescription": "You can decrease the amount of data that this site is using. You can change this setting in the <em>View settings</em> on the result page.",
     "noImages": "No images",
@@ -296,7 +296,11 @@
     "orderByCount": "Order by count",
     "selectedFilters": "Selected filters",
     "aboutFacetsHeader": "About these facets",
-    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items.\n\nPlease note that currently, for some facets the items for search filters are provided in Dutch, regardless of the selected interface language. We're working on adding translations soon."
+    "aboutFacetsText": "The data of these facet items are collected from multiple datasets. We are in the process of improving the quality of these facets items.\n\nPlease note that currently, for some facets the items for search filters are provided in Dutch, regardless of the selected interface language. We're working on adding translations soon.",
+    "accessibilityFacetLabel": "filter {title} on with {name}",
+    "accessibilityFacetCount": "{count} results",
+    "accessibilityInitLetter": "Filter within the filter items with initial letter {category}",
+    "facetJumpToResults": "Jump to results"
   },
   "Sort": {
     "dateCreatedDesc": "Date made - Descending",

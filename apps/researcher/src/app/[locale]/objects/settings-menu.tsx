@@ -46,7 +46,7 @@ export default function SettingsMenu() {
             className="rounded p-2 text-sm border bg-neutral-100 pr-6"
             onChange={e => limitChange(parseInt(e.target.value))}
             value={limit}
-            aria-label={t('resultLimitAria')}
+            aria-label={t('accessibilityResultLimit')}
           >
             <option value="10">10</option>
             <option value="25">25</option>

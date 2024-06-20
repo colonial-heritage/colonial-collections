@@ -61,7 +61,7 @@ function ExpandedFacet({filterKey}: ExpandedFacetProps) {
                       ? 'px-1 bg-black text-white rounded'
                       : ''
                   }
-                  aria-label={`Filter within the filter items with initial letter ${category}`}
+                  aria-label={t('accessibilityInitLetter', {category})}
                 >
                   {category}
                 </button>
