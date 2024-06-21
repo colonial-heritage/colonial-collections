@@ -102,7 +102,9 @@ export default async function GuidePage({params}: Props) {
                 <div className="bg-consortium-sand-50 rounded px-2 py-4">
                   <h3 tabIndex={0}>{t('keywords')}</h3>
                   {guide.keywords.map(keyword => (
-                    <div key={keyword.id}>{keyword.name}</div>
+                    <div key={keyword.id} tabIndex={0}>
+                      {keyword.name}
+                    </div>
                   ))}
                 </div>
               )}
@@ -110,7 +112,9 @@ export default async function GuidePage({params}: Props) {
                 <div className="bg-consortium-sand-50 rounded px-2 py-4">
                   <h3 tabIndex={0}>{t('contentLocations')}</h3>
                   {guide.contentLocations.map(location => (
-                    <div key={location.id}>{location.name}</div>
+                    <div key={location.id} tabIndex={0}>
+                      {location.name}
+                    </div>
                   ))}
                 </div>
               )}
