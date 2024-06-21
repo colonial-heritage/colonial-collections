@@ -61,7 +61,9 @@ export default async function LocalContextsNotices() {
 
   return (
     <div className="my-16" id="localContextNotices">
-      <h2 className="text-2xl mb-4 scroll-mt-20">{t('title')}</h2>
+      <h2 className="text-2xl mb-4 scroll-mt-20" tabIndex={0}>
+        {t('title')}
+      </h2>
       <p className="text-neutral-600 text-sm max-w-xl mb-6">
         {t.rich('description', {
           link: text => (
@@ -84,7 +86,10 @@ export default async function LocalContextsNotices() {
           >
             <div className="w-full xl:w-1/5 border-t border-neutral-400">
               <div className="sticky top-8 py-1">
-                <h3 className="text-lg w-full my-1 flex items-center">
+                <h3
+                  className="text-lg w-full my-1 flex items-center"
+                  tabIndex={0}
+                >
                   {notice.title}
                 </h3>
                 <Image

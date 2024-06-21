@@ -79,7 +79,6 @@ export function HeritageObjectListItem({
       href={`/objects/${encodeRouteSegment(heritageObject.id)}`}
       data-testid="object-card"
       className="flex flex-row justify-start items-center gap-4 border-t border-neutral-200 py-3 w-full no-underline"
-      aria-label={t('heritageObject')}
     >
       <div className="w-30">
         {imageUrl &&

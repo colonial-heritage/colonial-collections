@@ -101,10 +101,10 @@
     "backButton": "Search",
     "noEntity": "Object could not be found",
     "object": "Object",
-    "providerCurrentHolder": "Bronhouder object",
+    "providerCurrentHolder": "Data provider object",
     "providerInfo": "More info",
     "contactInfo": "Contact info",
-    "dataProviderTitle": "Bronhouder object",
+    "dataProviderTitle": "Data provider object",
     "dataProviderDescription": "The data of this object is provided by:",
     "websiteLabel": "Website",
     "objectIdLabel": "Reference or object ID by the the data provider",
@@ -388,7 +388,7 @@
     "addCommunity": "Create a community",
     "showMyCommunities": "Show only my communities"
   },
-  "Community": {
+"Community": {
     "title": "Community of",
     "backButton": "All communities",
     "noEntity": "Community could not be found",
@@ -398,6 +398,7 @@
     "membersButton": "Manage members",
     "goToListButton": "See all objects",
     "objectListsTitle": "Lists",
+    "accessibilityObjectListsTitle": "Lists with objects created by this community",
     "objectListsCardType": "List",
     "objectListsSubTitle": "This community has {count, plural, =0 {0 lists} =1 {1 list} other {# lists}}",
     "membersTitle": "Members",
