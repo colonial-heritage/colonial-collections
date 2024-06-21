@@ -135,7 +135,7 @@ export default function AddProvenanceForm({
       name: z.string(),
     }),
     community: z.object({
-      id: z.string(),
+      id: z.string().min(1, {message: t('communityRequired')}),
       name: z.string(),
     }),
     qualifier: z.object({
@@ -279,8 +279,10 @@ export default function AddProvenanceForm({
                   <InputLabel
                     title={t('community')}
                     description={t('communityDescription')}
+                    required
                   />
                   <CommunitySelector />
+                  <FieldValidationMessage field="community.id" />
                 </FormColumn>
               </FormRow>
               <ButtonGroup>

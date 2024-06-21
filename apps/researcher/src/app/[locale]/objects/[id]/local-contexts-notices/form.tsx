@@ -65,12 +65,10 @@ export function LocalContextsNoticeForm({
     agreedToLicense: z.literal<boolean>(true, {
       errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
     }),
-    community: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-      })
-      .optional(),
+    community: z.object({
+      id: z.string().min(1, {message: t('communityRequired')}),
+      name: z.string(),
+    }),
   });
 
   const methods = useForm({
@@ -169,8 +167,10 @@ export function LocalContextsNoticeForm({
             <InputLabel
               title={t('community')}
               description={t('communityDescription')}
+              required
             />
             <CommunitySelector />
+            <FieldValidationMessage field="community.id" />
             <div className="mt-4">
               <CheckboxWithLabel
                 name="agreedToLicense"
