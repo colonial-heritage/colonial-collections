@@ -6,7 +6,11 @@ export default function TraditionalKnowledgeLabels() {
 
   return (
     <div className="my-16">
-      <h2 className="text-2xl mb-4 scroll-mt-20" id="traditionalKnowledge">
+      <h2
+        className="text-2xl mb-4 scroll-mt-20"
+        id="traditionalKnowledge"
+        tabIndex={0}
+      >
         {t('title')}
       </h2>
       <p className="text-neutral-600 text-sm max-w-xl mb-6">
@@ -26,7 +30,10 @@ export default function TraditionalKnowledgeLabels() {
         <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
           <div className="w-full xl:w-1/5 border-t border-neutral-400">
             <div className="sticky top-8 py-1">
-              <h3 className="text-lg w-full my-1 flex items-center">
+              <h3
+                className="text-lg w-full my-1 flex items-center"
+                tabIndex={0}
+              >
                 {t('attributionIncomplete')}
               </h3>
               <Image
@@ -42,12 +49,12 @@ export default function TraditionalKnowledgeLabels() {
               <div className="w-full lg:w-2/3 py-3">
                 <p>{t('attributionIncompleteDescription')}</p>
               </div>
-              <div className="p-2 py-3 text-xs  my-1 self-start w-full lg:w-1/3 ">
-                <div>
+              <div className="p-2 py-3 text-xs my-1 self-start w-full lg:w-1/3">
+                <span tabIndex={0}>
                   {t.rich('providedBy', {
-                    strong: name => <strong>{name}</strong>,
+                    strong: name => <strong tabIndex={0}>{name}</strong>,
                   })}
-                </div>
+                </span>
                 <div className="flex flex-col justify-between">
                   <div className="italic mt-1">{t('defaultLabel')}</div>
                 </div>

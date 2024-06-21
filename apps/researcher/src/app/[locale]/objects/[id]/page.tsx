@@ -233,7 +233,9 @@ export default async function Details({params}: Props) {
           <div className="w-full">
             <div className="mx-auto px-4 sm:px-10 max-w-[1800px]">
               <div className="mt-10" id="provider">
-                <h2 className="text-xl mt-4">{t('dataProviderTitle')}</h2>
+                <h2 className="text-2xl mt-4" tabIndex={0}>
+                  {t('dataProviderTitle')}
+                </h2>
                 <div className="flex flex-col md:flex-row mt-4">
                   <div className="w-full md:w-1/2">
                     <div className="mb-4">{t('dataProviderDescription')}</div>

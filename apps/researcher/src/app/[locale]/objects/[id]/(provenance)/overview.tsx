@@ -44,7 +44,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
     return (
       <div className="w-full">
         <div className="mx-auto px-4 sm:px-10 max-w-[1800px]">
-          <h2 id="provenance" className="text-2xl mb-2 mt-20">
+          <h2 id="provenance" className="text-2xl mb-2 mt-20" tabIndex={0}>
             {t('title')}
           </h2>
           <p className="text-neutral-600 text-sm max-w-2xl mb-6">
@@ -70,7 +70,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
     <ProvenanceProvider events={userEvents}>
       <div className="w-full">
         <div className="mx-auto px-4 sm:px-10 max-w-[1800px]">
-          <h2 id="provenance" className="text-2xl mb-2 mt-20">
+          <h2 id="provenance" className="text-2xl mb-2 mt-20" tabIndex={0}>
             {t('title')}
           </h2>
           <p className="text-neutral-600 text-sm max-w-2xl mb-6">
@@ -100,7 +100,7 @@ async function AddProvenanceButton() {
 
   return (
     <SlideOutButton
-      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+      className="py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortium-blue-800 transition flex items-center gap-1 hover:bg-consortium-green-200"
       id={slideOutId}
     >
       {t('addProvenanceButton')}

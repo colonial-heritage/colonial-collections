@@ -33,7 +33,9 @@ export default function DataTable() {
   return (
     <div className="w-full block">
       <div className="flex justify-between items-center">
-        <h3 className="my-4 w-full pt-4">{t('dataTableTitle')}</h3>
+        <h3 className="my-4 w-full pt-4" tabIndex={0}>
+          {t('dataTableTitle')}
+        </h3>
         <div className="flex items-center text-consortium-blue-800 ">
           {selectedEvents.length > 0 && (
             <button
@@ -82,7 +84,9 @@ function ProvenanceEventRow({
   return (
     <div className="flex flex-col md:flex-row gap-4 border-t">
       <div className="w-1/3 lg:w-1/4 py-2">
-        <div className="sticky top-8">{dateRange}</div>
+        <div className="sticky top-8" tabIndex={0}>
+          {dateRange}
+        </div>
       </div>
       <div className="flex flex-col gap-4 w-2/3 lg:w-3/4 ">
         {provenanceEvents.map(event => (
@@ -99,9 +103,9 @@ function ProvenanceEventRow({
               {metadata.map(
                 ({prop, translationKey}) =>
                   event[prop] && (
-                    <div key={prop}>
+                    <div key={prop} tabIndex={0}>
                       {t(translationKey)}{' '}
-                      <strong>{event[prop] as string}</strong>
+                      <strong tabIndex={0}>{event[prop] as string}</strong>
                     </div>
                   )
               )}
