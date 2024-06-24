@@ -15,7 +15,10 @@ import type {
 } from '@colonial-collections/enricher';
 import {SignedOut} from '@clerk/nextjs';
 import {ReadMoreText} from '@/components/read-more-text';
-import SignedOutSlideOut from '@/components/signed-out-slide-out';
+import {
+  SignedInWithCommunitySideOut,
+  SignedOutSlideOut,
+} from '@/components/slide-outs';
 import {ProvidedBy} from './provided-by';
 import Language from './language';
 
@@ -158,28 +161,24 @@ export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
           </div>
         </SlideOutButton>
       </div>
-      <SlideOut id={`${enrichmentType}-form`}>
-        <SignedIn>
-          <UserEnrichmentForm
-            objectId={objectId}
-            slideOutId={`${enrichmentType}-form`}
-            enrichmentType={enrichmentType}
-            licenceComponent={
-              <LocalizedMarkdown
-                name="license"
-                contentPath="@/messages"
-                textSize="small"
-              />
-            }
-          />
-        </SignedIn>
-        <SignedOut>
-          <SignedOutSlideOut
-            slideOutId={`${enrichmentType}-form`}
-            title={t('needAccountToAddNarrativeTitle')}
-          />
-        </SignedOut>
-      </SlideOut>
+      <SignedInWithCommunitySideOut
+        slideOutId={`${enrichmentType}-form`}
+        needAccountTitle={t('needAccountToAddNarrativeTitle')}
+        needCommunityTitle={t('needCommunityToAddNarrativeTitle')}
+      >
+        <UserEnrichmentForm
+          objectId={objectId}
+          slideOutId={`${enrichmentType}-form`}
+          enrichmentType={enrichmentType}
+          licenceComponent={
+            <LocalizedMarkdown
+              name="license"
+              contentPath="@/messages"
+              textSize="small"
+            />
+          }
+        />
+      </SignedInWithCommunitySideOut>
     </>
   );
 }

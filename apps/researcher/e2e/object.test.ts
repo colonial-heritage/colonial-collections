@@ -90,6 +90,9 @@ test.describe('Object details page logged in', () => {
       .getByTestId('enrichment-form')
       .locator('input[name="agreedToLicense"]')
       .check();
+    await page.getByTestId('community-selector').click();
+    page.keyboard.press('ArrowDown');
+    page.keyboard.press('Enter');
     await page
       .getByTestId('enrichment-form')
       .locator('button[type="submit"]')
