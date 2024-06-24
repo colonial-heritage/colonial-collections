@@ -136,8 +136,8 @@ export function LocalContextsNoticeForm({
             <XMarkIcon className='className="w-4 h-4 stroke-neutral-900' />
           </SlideOutButton>
         </div>
-        <div className="flex flex-col lg:flex-row gap-4">
-          {errors.root?.serverError.message && (
+        {errors.root?.serverError.message && (
+          <div className="flex flex-col lg:flex-row gap-4">
             <div className="rounded-md bg-red-50 p-4 mt-3">
               <div className="ml-3">
                 <h3 className="text-sm leading-5 font-medium text-red-800">
@@ -145,13 +145,13 @@ export function LocalContextsNoticeForm({
                 </h3>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <div>
           {t('type')}
           <LocalContextsNoticeSelector name="type" />
         </div>
-        <FormRow>
+        <div className="flex flex-col md:flex-row gap-10">
           <div className="w-full md:w-1/2 flex flex-col">
             <InputLabel
               title={t('description')}
@@ -205,7 +205,7 @@ export function LocalContextsNoticeForm({
               </p>
               <p>
                 <a
-                  href="http://www.localcontexts.org"
+                  href="https://localcontexts.org"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -214,7 +214,7 @@ export function LocalContextsNoticeForm({
               </p>
             </div>
           )}
-        </FormRow>
+        </div>
         <ButtonGroup>
           <PrimaryButton type="submit" disabled={isSubmitting}>
             {t('buttonSubmit')}

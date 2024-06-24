@@ -2,42 +2,25 @@
 
 import {useController, useFormContext} from 'react-hook-form';
 import {useTranslations} from 'next-intl';
-import {
-  LocalContextsNoticeEnrichmentType,
-  localContextsNoticeEnrichmentTypeMapping,
-} from '@/app/[locale]/objects/[id]/local-contexts-notices/mapping';
+import {localContextsNoticeEnrichmentTypeMapping} from '@/app/[locale]/objects/[id]/local-contexts-notices/mapping';
 import Image from 'next/image';
 import {Field, Label, Radio, RadioGroup} from '@headlessui/react';
-import {Fragment, useCallback} from 'react';
+import {Fragment} from 'react';
 
 interface Props extends React.HTMLProps<HTMLInputElement> {
   name: string;
 }
 
 export function LocalContextsNoticeSelector({name}: Props) {
-  const {control, setValue} = useFormContext();
+  const {control} = useFormContext();
   const controller = useController({control, name});
 
   const t = useTranslations('LocalContextsNotices');
 
-  const onChange = useCallback(
-    (value: LocalContextsNoticeEnrichmentType) => {
-      setValue(
-        'description',
-        t(
-          localContextsNoticeEnrichmentTypeMapping[value]
-            .descriptionTranslationKey
-        )
-      );
-      controller.field.onChange(value);
-    },
-    [controller.field, setValue, t]
-  );
-
   return (
     <RadioGroup
       value={controller.field.value}
-      onChange={onChange}
+      onChange={controller.field.onChange}
       name="localContextsNoticeEnrichmentType"
       className="w-full flex gap-2 overflow-x-scroll mt-4"
     >
