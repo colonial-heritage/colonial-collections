@@ -6,20 +6,11 @@ import {ProvenanceProvider} from './provenance-store';
 import {ToggleViewButtons} from './buttons';
 import {LocaleEnum} from '@/definitions';
 import dynamic from 'next/dynamic';
-import {
-  SlideOut,
-  SlideOutButton,
-  LocalizedMarkdown,
-} from '@colonial-collections/ui';
+import {SlideOutButton, LocalizedMarkdown} from '@colonial-collections/ui';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import AddProvenanceForm from './add-form';
 import {provenanceEventEnrichmentFetcher} from '@/lib/enricher-instances';
-import SignedIn from '@/lib/community/signed-in';
-import {SignedOut} from '@clerk/nextjs';
-import {
-  SignedInWithCommunitySideOut,
-  SignedOutSlideOut,
-} from '@/components/slide-outs';
+import {SignedInWithCommunitySideOut} from '@/components/slide-outs';
 import {Notifications} from '@colonial-collections/ui';
 import {transformEvents} from './transform-events';
 
