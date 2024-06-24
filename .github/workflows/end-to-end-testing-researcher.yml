@@ -23,7 +23,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Wait for a successful Vercel Preview
-      uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+      uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
       id: waitForVercelPreviewDeployment
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
