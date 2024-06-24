@@ -1,24 +1,15 @@
 import {useTranslations} from 'next-intl';
 import {PropsWithChildren, ReactNode} from 'react';
 import useObject from './use-object';
-import {
-  SlideOutButton,
-  SlideOut,
-  LocalizedMarkdown,
-} from '@colonial-collections/ui';
+import {SlideOutButton, LocalizedMarkdown} from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
-import SignedIn from '@/lib/community/signed-in';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import type {
   Actor,
   HeritageObjectEnrichmentType,
 } from '@colonial-collections/enricher';
-import {SignedOut} from '@clerk/nextjs';
 import {ReadMoreText} from '@/components/read-more-text';
-import {
-  SignedInWithCommunitySideOut,
-  SignedOutSlideOut,
-} from '@/components/slide-outs';
+import {SignedInWithCommunitySideOut} from '@/components/slide-outs';
 import {ProvidedBy} from './provided-by';
 import Language from './language';
 
