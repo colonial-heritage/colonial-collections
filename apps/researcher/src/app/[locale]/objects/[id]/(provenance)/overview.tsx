@@ -16,7 +16,10 @@ import AddProvenanceForm from './add-form';
 import {provenanceEventEnrichmentFetcher} from '@/lib/enricher-instances';
 import SignedIn from '@/lib/community/signed-in';
 import {SignedOut} from '@clerk/nextjs';
-import SignedOutSlideOut from '@/components/signed-out-slide-out';
+import {
+  SignedInWithCommunitySideOut,
+  SignedOutSlideOut,
+} from '@/components/slide-outs';
 import {Notifications} from '@colonial-collections/ui';
 import {transformEvents} from './transform-events';
 
@@ -114,38 +117,34 @@ async function AddProvenanceSlideOut({objectId}: {objectId: string}) {
   return (
     <>
       <Notifications />
-      <SlideOut id={slideOutId}>
-        <SignedIn>
-          <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-300 text-neutral-800 flex-col flex">
-            <div className="flex justify-between items-center border-b  -mx-4 px-4 pb-2">
-              <h3 className="">{t('addProvenanceTitle')}</h3>
-              <SlideOutButton
-                id={slideOutId}
-                className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-              >
-                <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
-              </SlideOutButton>
-            </div>
-            <AddProvenanceForm
-              objectId={objectId}
-              slideOutId={slideOutId}
-              licenceComponent={
-                <LocalizedMarkdown
-                  name="license"
-                  contentPath="@/messages"
-                  textSize="small"
-                />
-              }
-            />
+      <SignedInWithCommunitySideOut
+        slideOutId={slideOutId}
+        needAccountTitle={t('needAccountToAddProvenanceTitle')}
+        needCommunityTitle={t('needCommunityToAddProvenanceTitle')}
+      >
+        <div className="w-full bg-neutral-50 rounded-xl p-4 border border-neutral-300 text-neutral-800 flex-col flex">
+          <div className="flex justify-between items-center border-b  -mx-4 px-4 pb-2">
+            <h3 className="">{t('addProvenanceTitle')}</h3>
+            <SlideOutButton
+              id={slideOutId}
+              className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+            >
+              <XMarkIcon className="w-4 h-4 stroke-neutral-900" />
+            </SlideOutButton>
           </div>
-        </SignedIn>
-        <SignedOut>
-          <SignedOutSlideOut
-            slideOutId="addProvenance"
-            title={t('needAccountToAddProvenanceTitle')}
+          <AddProvenanceForm
+            objectId={objectId}
+            slideOutId={slideOutId}
+            licenceComponent={
+              <LocalizedMarkdown
+                name="license"
+                contentPath="@/messages"
+                textSize="small"
+              />
+            }
           />
-        </SignedOut>
-      </SlideOut>
+        </div>
+      </SignedInWithCommunitySideOut>
     </>
   );
 }

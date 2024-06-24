@@ -148,7 +148,8 @@
     "errorObjectAddedToList": "There was a problem adding the object to the list. Please try again later.",
     "objectRemovedFromList": "Object removed from list <name></name>.",
     "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later.",
-    "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account."
+    "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account.",
+    "needCommunityToAddNarrativeTitle": "To add your narrative to this object you need to be part of a community."
   },
   "LocalContextsNotices": {
     "attributionIncomplete": "Attribution Incomplete",
@@ -184,7 +185,8 @@
     "defaultProvider": "Colonial Collections Consortium",
     "defaultLabel": "This is a default notice if no other labels or notices are assigned.",
     "addLocalContextsNoticeButton": "Add your Local Context Notice",
-    "needAccountToAddLocalContextsNotice": "To add Local Context Notices to this object, you need an account."
+    "needAccountToAddLocalContextsNotice": "To add Local Context Notices to this object, you need an account.",
+    "needCommunityToAddLocalContextsNotice": "To add Local Context Notices to this object, you need to be part of a community."
   },
   "LocalContextsNoticeForm": {
     "title": "Add a Local Context Notice",
@@ -196,6 +198,7 @@
     "successfullyAdded": "Your Local Context Notice has been added to the object. It could take a moment before it is visible.",
     "community": "Community",
     "communityDescription": "Select the community you speak on behalf of.",
+    "communityRequired": "Community is required",
     "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
     "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.en",
     "serverError": "Something went wrong while creating the Local Context Notice. Please try again later.",
@@ -233,7 +236,8 @@
     "noDescription": "No description",
     "addProvenanceButton": "Add provenance",
     "addProvenanceTitle": "Add provenance",
-    "needAccountToAddProvenanceTitle": "To add provenance to this object you need to have an account."
+    "needAccountToAddProvenanceTitle": "To add provenance to this object you need to have an account.",
+    "needCommunityToAddProvenanceTitle": "To add provenance to this object you need to be part of a community."
   },
   "ProvidedBy": {
     "name": "Provided by <name></name>",
@@ -264,6 +268,7 @@
     "inLanguageDescription": "Select a language of the provenance event. Start typing to select a language.",
     "community": "Community",
     "communityDescription": "Select the community you speak on behalf of.",
+    "communityRequired": "Community is required",
     "typePlaceholder": "Select what happened",
     "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
     "qualifier": "Level of certainty",
@@ -465,6 +470,7 @@
     "successfullyAdded": "Your narrative has been added to the object. It could take a moment before it is visible.",
     "community": "Community",
     "communityDescription": "Select the community you speak on behalf of.",
+    "communityRequired": "Community is required",
     "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
     "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.en",
     "serverError": "Something went wrong while creating the narrative. Please try again later.",
@@ -523,6 +529,11 @@
     "description": "With this account you can unlock more functionality of this platform. Creating an account free of charge. <link>See what else you can do with an account</link>.",
     "login": "Login",
     "createAccount": "Create an account",
+    "cancel": "Cancel"
+  },
+  "NoCommunitySlideOut": {
+    "description": "To add information to this object, you must first join or create a community. <link>See what else you can do with a community</link>.",
+    "goToCommunities": "Join a community",
     "cancel": "Cancel"
   },
   "ResearchGuide": {
