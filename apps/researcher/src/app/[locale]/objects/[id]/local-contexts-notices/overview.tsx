@@ -2,18 +2,9 @@ import {localContextsNoticesEnrichmentFetcher} from '@/lib/enricher-instances';
 import Image from 'next/image';
 import useObject from '../use-object';
 import {localContextsNoticeEnrichmentTypeMapping} from './mapping';
-import {
-  LocalizedMarkdown,
-  SlideOut,
-  SlideOutButton,
-} from '@colonial-collections/ui';
+import {LocalizedMarkdown, SlideOutButton} from '@colonial-collections/ui';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
-import SignedIn from '@/lib/community/signed-in';
-import {SignedOut} from '@clerk/nextjs';
-import {
-  SignedInWithCommunitySideOut,
-  SignedOutSlideOut,
-} from '@/components/slide-outs';
+import {SignedInWithCommunitySideOut} from '@/components/slide-outs';
 import {LocalContextsNoticeForm} from './form';
 import {LocalContextsNoticeEnrichment} from '@colonial-collections/enricher';
 import {ProvidedBy} from '../provided-by';
