@@ -267,6 +267,7 @@ export default async function Details({params}: Props) {
                           href={`${
                             env['DATASET_BROWSER_URL']
                           }/datasets/${encodeURIComponent(object.isPartOf.id)}`}
+                          target="_blank"
                         >
                           {t('linkToDatasetBrowser')}
                         </a>
