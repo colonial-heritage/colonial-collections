@@ -197,6 +197,7 @@ export function UserEnrichmentForm({
             <div className="mt-4">
               <CheckboxWithLabel
                 name="agreedToLicense"
+                testId="agreed-to-license"
                 labelText={t.rich('license', {
                   link: text => (
                     <a

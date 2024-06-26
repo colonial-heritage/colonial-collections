@@ -6,9 +6,15 @@ import {useController, useFormContext} from 'react-hook-form';
 interface Props extends React.HTMLProps<HTMLInputElement> {
   name: string;
   labelText: string | ReactNode;
+  testId?: string;
 }
 
-export function CheckboxWithLabel({name, labelText, ...inputProps}: Props) {
+export function CheckboxWithLabel({
+  name,
+  labelText,
+  testId,
+  ...inputProps
+}: Props) {
   const {control} = useFormContext();
   const controller = useController({control, name});
 
@@ -17,6 +23,7 @@ export function CheckboxWithLabel({name, labelText, ...inputProps}: Props) {
       <Checkbox
         {...inputProps}
         {...controller.field}
+        data-testid={testId}
         as="div"
         className="shrink-0 flex-wrap group size-6 bg-white rounded border border-neutral-300 p-1 ring-1 ring-white ring-inset"
       >
