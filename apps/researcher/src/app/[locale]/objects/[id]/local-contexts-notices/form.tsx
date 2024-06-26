@@ -12,7 +12,6 @@ import {z} from 'zod';
 import {addUserNotice} from './actions';
 import {InformationCircleIcon, XMarkIcon} from '@heroicons/react/24/outline';
 import {
-  FormRow,
   InputLabel,
   LanguageSelector,
   Textarea,
