@@ -36,15 +36,15 @@ export function ProvidedBy({
       })}
     >
       <div>
-        <div>
+        <div tabIndex={0}>
           {t.rich('name', {
-            name: () => <strong>{name}</strong>,
+            name: () => <strong tabIndex={0}>{name}</strong>,
           })}
         </div>
         {communityName && (
           <div>
             {t.rich('community', {
-              name: () => <strong>{communityName}</strong>,
+              name: () => <strong tabIndex={0}>{communityName}</strong>,
             })}
           </div>
         )}

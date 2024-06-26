@@ -30,7 +30,9 @@ export default function DataTable() {
   return (
     <div className="w-full block">
       <div className="flex justify-between items-center">
-        <h3 className="my-4 w-full pt-4">{t('dataTableTitle')}</h3>
+        <h3 className="my-4 w-full pt-4" tabIndex={0}>
+          {t('dataTableTitle')}
+        </h3>
         <div className="flex items-center text-consortium-blue-800 ">
           {selectedEvents.length > 0 && (
             <button
@@ -96,9 +98,9 @@ function ProvenanceEventRow({
               {metadata.map(
                 ({prop, translationKey}) =>
                   event[prop] && (
-                    <div key={prop}>
+                    <div key={prop} tabIndex={0}>
                       {t(translationKey)}{' '}
-                      <strong>{event[prop] as string}</strong>
+                      <strong tabIndex={0}>{event[prop] as string}</strong>
                     </div>
                   )
               )}
