@@ -475,7 +475,8 @@
     "citationRequired": "Bron is vereist",
     "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een verhaal kunt toevoegen",
     "noCommunities": "U bent nog geen lid van een gemeenschap die toestemming heeft om een verhaal toe te voegen. U kunt een gemeenschap creëren of lid worden van een bestaande gemeenschap.",
-    "saving": "Opslaan..."
+    "saving": "Opslaan...",
+    "accessibilityCloseButton": "Sluit formulier"
   },
    "ContactForm": {
      "labelEmailAddress": "E-mail",

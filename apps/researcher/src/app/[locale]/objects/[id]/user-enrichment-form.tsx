@@ -131,7 +131,7 @@ export function UserEnrichmentForm({
           <SlideOutButton
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
             id={slideOutId}
-            aira-label="Close form"
+            aira-label={t('accessibilityCloseButton')}
           >
             <XMarkIcon className='className="w-4 h-4 stroke-neutral-900' />
           </SlideOutButton>

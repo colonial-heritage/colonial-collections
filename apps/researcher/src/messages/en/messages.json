@@ -475,7 +475,8 @@
     "citationRequired": "Resource is required",
     "agreedToLicenseUnchecked": "You need to agree to the license before you can add a narrative",
     "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community.",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "accessibilityCloseButton": "Close form"
   },
   "ContactForm": {
     "labelEmailAddress": "Email",
