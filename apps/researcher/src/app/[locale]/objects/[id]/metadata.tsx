@@ -1,21 +1,15 @@
 import {useTranslations} from 'next-intl';
 import {PropsWithChildren, ReactNode} from 'react';
 import useObject from './use-object';
-import {
-  SlideOutButton,
-  SlideOut,
-  LocalizedMarkdown,
-} from '@colonial-collections/ui';
+import {SlideOutButton, LocalizedMarkdown} from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
-import SignedIn from '@/lib/community/signed-in';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import type {
   Actor,
   HeritageObjectEnrichmentType,
 } from '@colonial-collections/enricher';
-import {SignedOut} from '@clerk/nextjs';
 import {ReadMoreText} from '@/components/read-more-text';
-import SignedOutSlideOut from '@/components/signed-out-slide-out';
+import {SignedInWithCommunitySideOut} from '@/components/slide-outs';
 import {ProvidedBy} from './provided-by';
 import Language from './language';
 
@@ -158,28 +152,24 @@ export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
           </div>
         </SlideOutButton>
       </div>
-      <SlideOut id={`${enrichmentType}-form`}>
-        <SignedIn>
-          <UserEnrichmentForm
-            objectId={objectId}
-            slideOutId={`${enrichmentType}-form`}
-            enrichmentType={enrichmentType}
-            licenceComponent={
-              <LocalizedMarkdown
-                name="license"
-                contentPath="@/messages"
-                textSize="small"
-              />
-            }
-          />
-        </SignedIn>
-        <SignedOut>
-          <SignedOutSlideOut
-            slideOutId={`${enrichmentType}-form`}
-            title={t('needAccountToAddNarrativeTitle')}
-          />
-        </SignedOut>
-      </SlideOut>
+      <SignedInWithCommunitySideOut
+        slideOutId={`${enrichmentType}-form`}
+        needAccountTitle={t('needAccountToAddNarrativeTitle')}
+        needCommunityTitle={t('needCommunityToAddNarrativeTitle')}
+      >
+        <UserEnrichmentForm
+          objectId={objectId}
+          slideOutId={`${enrichmentType}-form`}
+          enrichmentType={enrichmentType}
+          licenceComponent={
+            <LocalizedMarkdown
+              name="license"
+              contentPath="@/messages"
+              textSize="small"
+            />
+          }
+        />
+      </SignedInWithCommunitySideOut>
     </>
   );
 }

@@ -26,6 +26,7 @@ export function CommunitySelector() {
 
   return (
     <Select
+      testId="community-selector"
       name="community"
       options={communityOptions}
       placeholder={

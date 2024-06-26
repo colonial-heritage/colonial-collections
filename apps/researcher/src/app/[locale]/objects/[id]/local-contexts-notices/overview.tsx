@@ -2,15 +2,9 @@ import {localContextsNoticesEnrichmentFetcher} from '@/lib/enricher-instances';
 import Image from 'next/image';
 import useObject from '../use-object';
 import {localContextsNoticeEnrichmentTypeMapping} from './mapping';
-import {
-  LocalizedMarkdown,
-  SlideOut,
-  SlideOutButton,
-} from '@colonial-collections/ui';
+import {LocalizedMarkdown, SlideOutButton} from '@colonial-collections/ui';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
-import SignedIn from '@/lib/community/signed-in';
-import {SignedOut} from '@clerk/nextjs';
-import SignedOutSlideOut from '@/components/signed-out-slide-out';
+import {SignedInWithCommunitySideOut} from '@/components/slide-outs';
 import {LocalContextsNoticeForm} from './form';
 import {LocalContextsNoticeEnrichment} from '@colonial-collections/enricher';
 import {ProvidedBy} from '../provided-by';
@@ -135,36 +129,30 @@ async function AddLocalContextsNotice() {
       <SlideOutButton
         testId="add-local-contexts-notice-button"
         id="add-local-contexts-notice-form"
-        className="py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortium-green-200"
+        className="mb-4 py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortium-green-200"
       >
         <ChatBubbleBottomCenterTextIcon className="w-4 h-4 stroke-consortium-blue-800" />
         <div className="whitespace-pre-wrap text-left leading-[.5rem]">
           {t('addLocalContextsNoticeButton')}
         </div>
       </SlideOutButton>
-      <SlideOut id="add-local-contexts-notice-form">
-        <div className="my-4">
-          <SignedIn>
-            <LocalContextsNoticeForm
-              objectId={useObject.getState().objectId}
-              slideOutId="add-local-contexts-notice-form"
-              licenceComponent={
-                <LocalizedMarkdown
-                  name="license"
-                  contentPath="@/messages"
-                  textSize="small"
-                />
-              }
+      <SignedInWithCommunitySideOut
+        slideOutId="add-local-contexts-notice-form"
+        needAccountTitle={t('needAccountToAddLocalContextsNotice')}
+        needCommunityTitle={t('needCommunityToAddLocalContextsNotice')}
+      >
+        <LocalContextsNoticeForm
+          objectId={useObject.getState().objectId}
+          slideOutId="add-local-contexts-notice-form"
+          licenceComponent={
+            <LocalizedMarkdown
+              name="license"
+              contentPath="@/messages"
+              textSize="small"
             />
-          </SignedIn>
-          <SignedOut>
-            <SignedOutSlideOut
-              slideOutId={'add-local-contexts-notice-form'}
-              title={t('needAccountToAddLocalContextsNotice')}
-            />
-          </SignedOut>
-        </div>
-      </SlideOut>
+          }
+        />
+      </SignedInWithCommunitySideOut>
     </>
   );
 }
