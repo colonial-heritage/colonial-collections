@@ -1,7 +1,10 @@
 import {localContextsNoticesEnrichmentFetcher} from '@/lib/enricher-instances';
 import Image from 'next/image';
 import useObject from '../use-object';
-import {localContextsNoticeEnrichmentTypeMapping} from './mapping';
+import {
+  localContextsNoticeEnrichmentTypeMapping,
+  LocalContextsNoticeEnrichmentType,
+} from './mapping';
 import {
   LocalizedMarkdown,
   Notifications,
@@ -36,6 +39,7 @@ export default async function LocalContextsNotices() {
       isCurrentPublisher: false,
       dateCreated: notice.pubInfo.dateCreated,
       inLanguage: notice.inLanguage,
+      type: notice.type,
     };
   }
 
@@ -50,6 +54,7 @@ export default async function LocalContextsNotices() {
     dateCreated: undefined,
     communityName: undefined,
     inLanguage: undefined,
+    type: undefined,
   };
 
   // Determine notices to display
@@ -100,12 +105,27 @@ export default async function LocalContextsNotices() {
               </div>
             </div>
             <div className="w-full xl:w-4/5 flex flex-col gap-2 border-t border-neutral-400 pb-12">
-              <div className="border-t first:border-0 border-neutral-200 flex flex-col lg:flex-row justify-between gap-2 ">
+              <div className="border-t first:border-0 border-neutral-200 flex flex-col lg:flex-row justify-between gap-2">
                 <div className="w-full lg:w-2/3 py-3">
+                  <div className="bg-neutral-50 p-4 rounded-sm italic text-neutral-600 text-sm">
+                    {tNotices(
+                      localContextsNoticeEnrichmentTypeMapping[
+                        notice.type as LocalContextsNoticeEnrichmentType
+                      ].descriptionTranslationKey
+                    )}
+                    <div className="w-full flex justify-end pt-1">
+                      <Image
+                        height={26}
+                        width={80}
+                        src="/images/local-contexts-notices/logo-local-contexts.png"
+                        alt="Logo local context"
+                      />
+                    </div>
+                  </div>
+                  <div className="my-1">{notice.description}</div>
                   {notice.inLanguage && (
                     <Language languageCode={notice.inLanguage} />
                   )}
-                  <p>{notice.description}</p>
                 </div>
                 <div className="w-full lg:w-1/3">
                   <ProvidedBy
