@@ -19,7 +19,7 @@ import {
   CommunitySelector,
   ButtonGroup,
 } from '@/components/form';
-import {ReactNode} from 'react';
+import {Fragment, ReactNode} from 'react';
 import {useUser} from '@/lib/user/hooks';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
@@ -28,6 +28,7 @@ import {
   localContextsNoticeEnrichmentTypeMapping,
 } from './mapping';
 import {LocalContextsNoticeSelector} from '@/components/form/local-contexts-notice-selector';
+import {Field} from '@headlessui/react';
 
 interface FormValues {
   type: LocalContextsNoticeEnrichmentType | null;
@@ -150,26 +151,31 @@ export function LocalContextsNoticeForm({
         </div>
         <div className="flex flex-col md:flex-row gap-10">
           <div className="w-full md:w-1/2 flex flex-col">
-            <InputLabel
-              title={t('description')}
-              description={t('descriptionSubTitle')}
-              required
-              id="description"
-            />
-            <Textarea name="description" />
-            <FieldValidationMessage field="description" />
-            <InputLabel
-              title={t('inLanguage')}
-              description={t('languageSubTitle')}
-            />
-            <LanguageSelector name="inLanguage" />
-            <InputLabel
-              title={t('community')}
-              description={t('communityDescription')}
-              required
-            />
-            <CommunitySelector />
-            <FieldValidationMessage field="community.id" />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('description')}
+                description={t('descriptionSubTitle')}
+                required
+              />
+              <Textarea name="description" />
+              <FieldValidationMessage field="description" />
+            </Field>
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('inLanguage')}
+                description={t('languageSubTitle')}
+              />
+              <LanguageSelector name="inLanguage" />
+            </Field>
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('community')}
+                description={t('communityDescription')}
+                required
+              />
+              <CommunitySelector />
+              <FieldValidationMessage field="community.id" />
+            </Field>
             <div className="mt-4">
               <CheckboxWithLabel
                 name="agreedToLicense"
