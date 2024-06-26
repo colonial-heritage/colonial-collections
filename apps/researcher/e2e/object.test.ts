@@ -86,10 +86,7 @@ test.describe('Object details page logged in', () => {
       .getByTestId('enrichment-form')
       .locator('textarea[name="citation"]')
       .fill('End to end test');
-    await page
-      .getByTestId('enrichment-form')
-      .locator('input[name="agreedToLicense"]')
-      .check();
+    await page.getByTestId('agreed-to-license').click();
     await page.getByTestId('community-selector').click();
     page.keyboard.press('ArrowDown');
     page.keyboard.press('Enter');
