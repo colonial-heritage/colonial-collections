@@ -2,7 +2,11 @@ import {localContextsNoticesEnrichmentFetcher} from '@/lib/enricher-instances';
 import Image from 'next/image';
 import useObject from '../use-object';
 import {localContextsNoticeEnrichmentTypeMapping} from './mapping';
-import {LocalizedMarkdown, SlideOutButton} from '@colonial-collections/ui';
+import {
+  LocalizedMarkdown,
+  Notifications,
+  SlideOutButton,
+} from '@colonial-collections/ui';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import {SignedInWithCommunitySideOut} from '@/components/slide-outs';
 import {LocalContextsNoticeForm} from './form';
@@ -72,6 +76,7 @@ export default async function LocalContextsNotices() {
         })}
       </p>
       <AddLocalContextsNotice />
+      <Notifications />
       <div className="w-full mt-4">
         {noticesToDisplay.map(notice => (
           <div
