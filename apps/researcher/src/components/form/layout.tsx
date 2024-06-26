@@ -1,4 +1,5 @@
 import {ReactNode} from 'react';
+import {Label as HeadlessLabel} from '@headlessui/react';
 
 export function FormRow({children}: {children: ReactNode}) {
   return (
@@ -14,23 +15,21 @@ interface InputLabelProps {
   title: string | ReactNode;
   description: string | ReactNode;
   required?: boolean;
-  id?: string;
 }
 
 export function InputLabel({
   title,
   description,
-  id,
   required = false,
 }: InputLabelProps) {
   return (
-    <label className="flex flex-col gap-1 mb-1 mt-8 first:mt-0" htmlFor={id}>
+    <HeadlessLabel className="flex flex-col gap-1 mb-1 mt-8 first:mt-0">
       <strong>
         {title}
         {required && <span className="font-normal text-neutral-600">*</span>}
       </strong>
       <div>{description}</div>
-    </label>
+    </HeadlessLabel>
   );
 }
 

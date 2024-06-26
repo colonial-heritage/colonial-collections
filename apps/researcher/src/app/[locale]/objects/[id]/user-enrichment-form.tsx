@@ -21,10 +21,11 @@ import {
   ButtonGroup,
 } from '@/components/form';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
-import {ReactNode} from 'react';
+import {Fragment, ReactNode} from 'react';
 import {useUser} from '@/lib/user/hooks';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
+import {Field} from '@headlessui/react';
 
 interface FormValues {
   description: string;
@@ -147,42 +148,48 @@ export function UserEnrichmentForm({
         )}
         <FormRow>
           <LeftFormColumn>
-            <InputLabel
-              title={t('description')}
-              description={t('descriptionSubTitle')}
-              required
-              id="description"
-            />
-            <Textarea name="description" />
-            <FieldValidationMessage field="description" />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('description')}
+                description={t('descriptionSubTitle')}
+                required
+              />
+              <Textarea name="description" />
+              <FieldValidationMessage field="description" />
+            </Field>
           </LeftFormColumn>
           <RightFormColumn>
-            <InputLabel
-              title={t('inLanguage')}
-              description={t('languageSubTitle')}
-            />
-            <LanguageSelector name="inLanguage" />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('inLanguage')}
+                description={t('languageSubTitle')}
+              />
+              <LanguageSelector name="inLanguage" />
+            </Field>
           </RightFormColumn>
         </FormRow>
         <FormRow>
           <LeftFormColumn>
-            <InputLabel
-              title={t('citation')}
-              description={t('citationSubTitle')}
-              required
-              id="citation"
-            />
-            <Textarea name="citation" />
-            <FieldValidationMessage field="citation" />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('citation')}
+                description={t('citationSubTitle')}
+                required
+              />
+              <Textarea name="citation" />
+              <FieldValidationMessage field="citation" />
+            </Field>
           </LeftFormColumn>
           <RightFormColumn>
-            <InputLabel
-              title={t('community')}
-              description={t('communityDescription')}
-              required
-            />
-            <CommunitySelector />
-            <FieldValidationMessage field="community.id" />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('community')}
+                description={t('communityDescription')}
+                required
+              />
+              <CommunitySelector />
+              <FieldValidationMessage field="community.id" />
+            </Field>
           </RightFormColumn>
         </FormRow>
         <FormRow>
@@ -190,6 +197,7 @@ export function UserEnrichmentForm({
             <div className="mt-4">
               <CheckboxWithLabel
                 name="agreedToLicense"
+                testId="agreed-to-license"
                 labelText={t.rich('license', {
                   link: text => (
                     <a

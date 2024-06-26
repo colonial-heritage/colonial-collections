@@ -1,6 +1,13 @@
 'use client';
 
-import {Popover} from '@headlessui/react';
+import {
+  Field,
+  Label,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  Textarea,
+} from '@headlessui/react';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
 import {useController, useFormContext} from 'react-hook-form';
@@ -20,24 +27,24 @@ export function MotivationInput({name}: Props) {
   }
 
   return (
-    <Popover className="w-full text-sm mt-2 relative">
+    <Field as={Popover} className="w-full text-sm mt-2 relative">
       {controller.field.value ? (
         <div className="flex items-center justify-between gap-2">
           {controller.field.value}
-          <Popover.Button className="italic text-xs text-neutral-600 shrink-0">
+          <PopoverButton className="italic text-xs text-neutral-600 shrink-0">
             {t('editButton')}
-          </Popover.Button>
+          </PopoverButton>
         </div>
       ) : (
         <div className="text-right">
-          <Popover.Button className="italic text-xs text-neutral-600">
+          <PopoverButton className="italic text-xs text-neutral-600">
             {t('openButton')}
-          </Popover.Button>
+          </PopoverButton>
         </div>
       )}
-      <Popover.Panel className="w-full bg-neutral-100 p-4 flex-col gap-2 absolute shadow-xl z-40 text-left border border-neutral-200">
-        <label className="text-sm text-neutral-600">{t('description')}</label>
-        <textarea
+      <PopoverPanel className="w-full bg-neutral-100 p-4 flex-col gap-2 absolute shadow-xl z-40 text-left border border-neutral-200">
+        <Label className="text-sm text-neutral-600">{t('description')}</Label>
+        <Textarea
           className="h-28 border border-neutral-400 rounded p-2 text-sm w-full"
           value={motivation}
           onChange={event => setMotivation(event.target.value)}
@@ -54,15 +61,15 @@ export function MotivationInput({name}: Props) {
           >
             {t('saveButton')}
           </button>
-          <Popover.Button
+          <PopoverButton
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-none hover:bg-neutral-300
                         text-neutral-800 transition flex items-center gap-1
                         border border-neutral-300 text-right"
           >
             {t('cancelButton')}
-          </Popover.Button>
+          </PopoverButton>
         </div>
-      </Popover.Panel>
-    </Popover>
+      </PopoverPanel>
+    </Field>
   );
 }
