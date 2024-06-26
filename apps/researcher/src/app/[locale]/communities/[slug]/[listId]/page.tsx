@@ -85,7 +85,7 @@ export default async function Page({params}: Props) {
               <SlideOutClosed id={slideOutEditId}>
                 <div className="block">
                   <div className="flex flex-col md:flex-row justify-between">
-                    <h1 className="text-2xl md:text-4xl mb-4">
+                    <h1 className="text-2xl md:text-4xl mb-4" tabIndex={0}>
                       {objectList.name}
                     </h1>
                     <div>
@@ -182,7 +182,7 @@ export default async function Page({params}: Props) {
           ) : (
             <>
               <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-4">
-                <h2 className="text-xl">
+                <h2 className="text-xl" tabIndex={0}>
                   {t('objectCount', {count: objectList.objects.length})}
                 </h2>
               </div>

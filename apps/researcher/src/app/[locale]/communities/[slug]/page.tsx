@@ -106,7 +106,10 @@ export default async function CommunityPage({params}: Props) {
         <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto pt-4 pb-10 md:pt-10 md:pb-16 xl:pt-16 xl:pb-20 flex flex-col lg:flex-row gap-10">
           <SlideOutClosed id={slideOutEditFormId}>
             <main className="w-full lg:w-2/3 xl:w-3/4">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl max-w-5xl inline-flex gap-2">
+              <h1
+                className="text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl max-w-5xl inline-flex gap-2"
+                tabIndex={0}
+              >
                 <span className="font-normal">{t('title')}</span>
                 <span data-testid="community-name">{community.name}</span>
               </h1>
@@ -147,7 +150,13 @@ export default async function CommunityPage({params}: Props) {
         <div className="w-full md:w-3/4">
           <div className="flex justify-between my-4">
             <div>
-              <h2 className="text-xl">{t('objectListsTitle')}</h2>
+              <h2
+                className="text-xl"
+                tabIndex={0}
+                arial-label={t('accessibilityObjectListsTitle')}
+              >
+                {t('objectListsTitle')}
+              </h2>
               {objectLists.length > 0 && (
                 <p>{t('objectListsSubTitle', {count: objectLists.length})}</p>
               )}

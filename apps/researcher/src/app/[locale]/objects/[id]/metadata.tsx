@@ -35,7 +35,7 @@ export function Metadata({
       <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
         <div className="w-full xl:w-1/5 border-t border-neutral-400 pt-4">
           <div className="sticky top-0 py-1">
-            <h3 className="text-lg w-full my-1 flex items-center">
+            <h3 className="text-lg w-full my-1 flex items-center" tabIndex={0}>
               {t(translationKey)}
             </h3>
             <div className="text-neutral-600 text-sm">
@@ -104,10 +104,10 @@ export async function MetadataEntry({
 
   return (
     <div className="border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-2 first:border-0 ">
-      <div className="w-full lg:w-2/3 py-3 whitespace-pre-wrap">
+      <div className="w-full lg:w-2/3 py-3 whitespace-pre-wrap" tabIndex={0}>
         {children}
         {languageCode && (
-          <div>
+          <div tabIndex={0}>
             <Language languageCode={languageCode} />
           </div>
         )}
