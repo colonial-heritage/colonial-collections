@@ -63,7 +63,7 @@ export default async function Details({params}: Props) {
 
   return (
     <>
-      <div className="flex flex-col gap-8 grow">
+      <div className="flex flex-col grow">
         <div className="bg-consortium-blue-800 text-white w-full">
           <div className="px-4 sm:px-10 flex gap-2 flex-row sm:justify-between max-w-[1800px] mx-auto pt-10">
             <div>
@@ -126,12 +126,44 @@ export default async function Details({params}: Props) {
             </div>
           </div>
         </div>
+        <div className="w-full bg-consortium-blue-800 text-consortium-blue-100 sticky top-0 z-30 text-xs shadow-lg border-t border-consortium-blue-600">
+          <div className="px-4 sm:px-10 max-w-[1800px] mx-auto flex justify-between items-center">
+            <div className="w-auto lg:flex lg:justify-end relative py-2 ">
+              <button className="peer lg:hidden p-2 w-8">V</button>
+
+              <div className="hidden peer-hover:flex hover:flex w-[200px] lg:w-auto flex-col lg:flex lg:flex-row gap-3 absolute lg:relative left-0 bg-consortium-blue-800 p-2 lg:p-0">
+                <a className="whitespace-nowrap no-underline" href="#metadata">
+                  Metadata
+                </a>
+                <a
+                  className="whitespace-nowrap no-underline"
+                  href="#localcontextnotices"
+                >
+                  <span className="hidden xl:inline">Local Context </span>
+                  Notices
+                </a>
+                <a
+                  className="whitespace-nowrap no-underline"
+                  href="#provenance"
+                >
+                  Provenance
+                </a>
+                <a
+                  className="whitespace-nowrap no-underline"
+                  href="#dataprovider"
+                >
+                  Data provider
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full px-4 sm:px-10">
           <main className="w-full md:w-2/3 order-2 md:order-1">
             <Notifications />
             <div className="mb-4 mt-10 flex justify-between">
-              <h2 className="text-2xl" tabIndex={0}>
+              <h2 className="text-2xl" tabIndex={0} id="metadata">
                 {t('metadata')}
               </h2>
             </div>
