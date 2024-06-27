@@ -12,7 +12,6 @@ import {z} from 'zod';
 import {addUserNotice} from './actions';
 import {InformationCircleIcon, XMarkIcon} from '@heroicons/react/24/outline';
 import {
-  FormRow,
   InputLabel,
   LanguageSelector,
   Textarea,
@@ -20,7 +19,7 @@ import {
   CommunitySelector,
   ButtonGroup,
 } from '@/components/form';
-import {ReactNode} from 'react';
+import {Fragment, ReactNode} from 'react';
 import {useUser} from '@/lib/user/hooks';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
@@ -29,6 +28,7 @@ import {
   localContextsNoticeEnrichmentTypeMapping,
 } from './mapping';
 import {LocalContextsNoticeSelector} from '@/components/form/local-contexts-notice-selector';
+import {Field} from '@headlessui/react';
 
 interface FormValues {
   type: LocalContextsNoticeEnrichmentType | null;
@@ -65,12 +65,10 @@ export function LocalContextsNoticeForm({
     agreedToLicense: z.literal<boolean>(true, {
       errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
     }),
-    community: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-      })
-      .optional(),
+    community: z.object({
+      id: z.string().min(1, {message: t('communityRequired')}),
+      name: z.string(),
+    }),
   });
 
   const methods = useForm({
@@ -136,8 +134,8 @@ export function LocalContextsNoticeForm({
             <XMarkIcon className='className="w-4 h-4 stroke-neutral-900' />
           </SlideOutButton>
         </div>
-        <div className="flex flex-col lg:flex-row gap-4">
-          {errors.root?.serverError.message && (
+        {errors.root?.serverError.message && (
+          <div className="flex flex-col lg:flex-row gap-4">
             <div className="rounded-md bg-red-50 p-4 mt-3">
               <div className="ml-3">
                 <h3 className="text-sm leading-5 font-medium text-red-800">
@@ -145,32 +143,39 @@ export function LocalContextsNoticeForm({
                 </h3>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <div>
           {t('type')}
           <LocalContextsNoticeSelector name="type" />
         </div>
-        <FormRow>
+        <div className="flex flex-col md:flex-row gap-10">
           <div className="w-full md:w-1/2 flex flex-col">
-            <InputLabel
-              title={t('description')}
-              description={t('descriptionSubTitle')}
-              required
-              id="description"
-            />
-            <Textarea name="description" />
-            <FieldValidationMessage field="description" />
-            <InputLabel
-              title={t('inLanguage')}
-              description={t('languageSubTitle')}
-            />
-            <LanguageSelector name="inLanguage" />
-            <InputLabel
-              title={t('community')}
-              description={t('communityDescription')}
-            />
-            <CommunitySelector />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('description')}
+                description={t('descriptionSubTitle')}
+                required
+              />
+              <Textarea name="description" />
+              <FieldValidationMessage field="description" />
+            </Field>
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('inLanguage')}
+                description={t('languageSubTitle')}
+              />
+              <LanguageSelector name="inLanguage" />
+            </Field>
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('community')}
+                description={t('communityDescription')}
+                required
+              />
+              <CommunitySelector />
+              <FieldValidationMessage field="community.id" />
+            </Field>
             <div className="mt-4">
               <CheckboxWithLabel
                 name="agreedToLicense"
@@ -205,7 +210,7 @@ export function LocalContextsNoticeForm({
               </p>
               <p>
                 <a
-                  href="http://www.localcontexts.org"
+                  href="https://localcontexts.org"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -214,7 +219,7 @@ export function LocalContextsNoticeForm({
               </p>
             </div>
           )}
-        </FormRow>
+        </div>
         <ButtonGroup>
           <PrimaryButton type="submit" disabled={isSubmitting}>
             {t('buttonSubmit')}

@@ -112,7 +112,7 @@
     "noData": "Geen <subject></subject> beschikbaar",
     "identifier": "ID: {identifier}",
     "metadata": "Metadata",
-    "name": "titel",
+    "name": "Titel",
     "noName": "Geen titel",
     "description": "Beschrijving",
     "locationsCreated": "Locatie van creatie",
@@ -148,7 +148,8 @@
     "errorObjectAddedToList": "Er is een probleem opgetreden bij het toevoegen van het object aan de lijst. Probeer het later opnieuw.",
     "objectRemovedFromList": "Object verwijderd van lijst <name></name>.",
     "errorObjectRemovedFromList": "Er is een probleem opgetreden bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
-    "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig."
+    "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig.",
+    "needCommunityToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, moet je deel uitmaken van een community."
   },
 "LocalContextsNotices": {
   "attributionIncomplete": "Onvolledige Toeschrijving",
@@ -184,7 +185,8 @@
   "defaultProvider": "Colonial Collections Consortium",
   "defaultLabel": "Dit is een standaardkennisgeving als er geen andere labels of kennisgevingen zijn toegewezen.",
   "addLocalContextsNoticeButton": "Voeg uw Local Context Notice toe",
-  "needAccountToAddLocalContextsNotice": "Om Local Context Notices aan dit object toe te voegen, heeft u een account nodig."
+  "needAccountToAddLocalContextsNotice": "Om Local Context Notices aan dit object toe te voegen, heeft u een account nodig.",
+  "needCommunityToAddLocalContextsNotice": "Om Local Context Notices aan dit object toe te voegen, moet je deel uitmaken van een community."
 },
 "LocalContextsNoticeForm": {
   "title": "Voeg een Local Context Notice toe",
@@ -193,9 +195,10 @@
   "descriptionSubTitle": "Hier kunt u tekst invoegen over het gebruik van deze Local Context Notice.",
   "inLanguage": "Taal",
   "languageSubTitle": "Selecteer een taal van het verhaal. Begin met typen om een taal te selecteren.",
-  "successfullyAdded": "Uw verhaal is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
+  "successfullyAdded": "Uw Local Context Notice is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
   "community": "Community",
   "communityDescription": "Selecteer de community namens wie u spreekt.",
+  "communityRequired": "Community is vereist",
   "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
   "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.nl",
   "serverError": "Er is iets misgegaan bij het aanmaken van het verhaal. Probeer het later opnieuw.",
@@ -233,7 +236,8 @@
     "noDescription": "Geen beschrijving",
     "addProvenanceButton": "Herkomstgebeurtenis toevoegen",
     "addProvenanceTitle": "Herkomstgebeurtenis toevoegen",
-    "needAccountToAddProvenanceTitle": "Om herkomstgegevens toe te voegen, heb je een account nodig."
+    "needAccountToAddProvenanceTitle": "Om herkomstgegevens toe te voegen, heb je een account nodig.",
+    "needCommunityToAddProvenanceTitle": "Om herkomstgegevens aan dit object toe te voegen, moet je deel uitmaken van een community."
   },
   "ProvidedBy": {
     "name": "Geleverd door <name></name>",
@@ -264,6 +268,7 @@
     "inLanguageDescription": "Selecteer een taal van het herkomstgebeurtenis. Begin met typen om een taal te selecteren.",
     "community": "Community",
     "communityDescription": "Selecteer de community waarvoor u spreekt.",
+    "communityRequired": "Community is vereist",
     "typePlaceholder": "Selecteer wat er is gebeurd",
     "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
     "qualifier": "Zekerheidsniveau",
@@ -398,6 +403,7 @@
     "membersButton": "Leden beheren",
     "goToListButton": "Bekijk alle objecten",
     "objectListsTitle": "Lijsten",
+    "accessibilityObjectListsTitle": "Lijsten met objecten, aangemaakt door deze community",
     "objectListsCardType": "Lijst",
     "objectListsSubTitle": "Deze community heeft {count, plural, =0 {0 lijsten} =1 {1 lijst} other {# lijsten}}",
     "membersTitle": "Leden",
@@ -465,6 +471,7 @@
     "successfullyAdded": "Uw verhaal is toegevoegd aan het object. Het kan even duren voordat het zichtbaar is.",
     "community": "Community",
     "communityDescription": "Selecteer de community waarvoor u spreekt.",
+    "communityRequired": "Community is vereist",
     "license": "Ik ga ermee akkoord dat alle toegevoegde informatie in de applicatie wordt gepubliceerd met een <link>CC-BY-4.0 licentie</link>",
     "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.nl",
     "serverError": "Er is iets misgegaan bij het aanmaken van het verhaal. Probeer het later opnieuw.",
@@ -474,7 +481,8 @@
     "citationRequired": "Bron is vereist",
     "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een verhaal kunt toevoegen",
     "noCommunities": "U bent nog geen lid van een gemeenschap die toestemming heeft om een verhaal toe te voegen. U kunt een gemeenschap creëren of lid worden van een bestaande gemeenschap.",
-    "saving": "Opslaan..."
+    "saving": "Opslaan...",
+    "accessibilityCloseButton": "Sluit formulier"
   },
    "ContactForm": {
      "labelEmailAddress": "E-mail",
@@ -523,6 +531,11 @@
       "description": "Met dit account kun je meer functionaliteit van deze platform ontgrendelen. Een account aanmaken is gratis. <link>Zie wat je nog meer kunt doen met een account</link>.",
       "login": "Inloggen",
       "createAccount": "Maak een account aan",
+      "cancel": "Annuleren"
+    },
+    "NoCommunitySlideOut": {
+      "description": "Om informatie aan dit object toe te voegen, moet je eerst lid worden van of een community creëren. <link>Zie wat je nog meer kunt doen met een community</link>.",
+      "goToCommunities": "Word lid van een community",
       "cancel": "Annuleren"
     },
     "ResearchGuide": { 

@@ -1,6 +1,13 @@
 'use client';
 
-import {Tab} from '@headlessui/react';
+import {
+  Field,
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
+} from '@headlessui/react';
 import {useLocale, useTranslations} from 'next-intl';
 import {Fragment, ReactNode, useMemo, useState} from 'react';
 import classNames from 'classnames';
@@ -135,7 +142,7 @@ export default function AddProvenanceForm({
       name: z.string(),
     }),
     community: z.object({
-      id: z.string(),
+      id: z.string().min(1, {message: t('communityRequired')}),
       name: z.string(),
     }),
     qualifier: z.object({
@@ -220,8 +227,8 @@ export default function AddProvenanceForm({
 
   return (
     <FormProvider {...methods}>
-      <div className="flex flex-col lg:flex-row gap-4">
-        {errors.root?.serverError.message && (
+      {errors.root?.serverError.message && (
+        <div className="flex flex-col lg:flex-row gap-4">
           <div className="rounded-md bg-red-50 p-4 mt-3">
             <div className="ml-3">
               <h3 className="text-sm leading-5 font-medium text-red-800">
@@ -229,14 +236,14 @@ export default function AddProvenanceForm({
               </h3>
             </div>
           </div>
-        )}
-      </div>
-      <Tab.Group
+        </div>
+      )}
+      <TabGroup
         manual
         selectedIndex={selectedIndex}
         onChange={setSelectedIndex}
       >
-        <Tab.List className="w-full pb-4 pt-8 flex flex-row flex-wrap gap-4 lg:gap-8 border-b  -mx-4 px-4 mb-4 italic">
+        <TabList className="w-full pb-4 pt-8 flex flex-row flex-wrap gap-4 lg:gap-8 border-b  -mx-4 px-4 mb-4 italic">
           <ProvenanceTab fields={['type']} number={1} title={t('TabWhat')} />
           <ProvenanceTab
             number={2}
@@ -248,39 +255,47 @@ export default function AddProvenanceForm({
             title={t('TabMoreInfo')}
             fields={['citation', 'inLanguage']}
           />
-        </Tab.List>
-        <Tab.Panels>
+        </TabList>
+        <TabPanels>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Tab.Panel>
+            <TabPanel>
               <FormRow>
                 <FormColumn>
-                  <InputLabel
-                    title={t('type')}
-                    description={t('typeDescription')}
-                    required
-                  />
-                  <Select
-                    name="type"
-                    options={typeOptions}
-                    placeholder={t('typePlaceholder')}
-                  />
-                  <FieldValidationMessage field="type.id" />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t('type')}
+                      description={t('typeDescription')}
+                      required
+                    />
+                    <Select
+                      name="type"
+                      options={typeOptions}
+                      placeholder={t('typePlaceholder')}
+                    />
+                    <FieldValidationMessage field="type.id" />
+                  </Field>
                   <MotivationInput name="motivations.type" />
                 </FormColumn>
                 <FormColumn>
-                  <InputLabel
-                    title={t('inLanguage')}
-                    description={t('inLanguageDescription')}
-                    required
-                  />
-                  <LanguageSelector name="inLanguage" />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t('inLanguage')}
+                      description={t('inLanguageDescription')}
+                      required
+                    />
+                    <LanguageSelector name="inLanguage" />
+                  </Field>
                 </FormColumn>
                 <FormColumn>
-                  <InputLabel
-                    title={t('community')}
-                    description={t('communityDescription')}
-                  />
-                  <CommunitySelector />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t('community')}
+                      description={t('communityDescription')}
+                      required
+                    />
+                    <CommunitySelector />
+                    <FieldValidationMessage field="community.id" />
+                  </Field>
                 </FormColumn>
               </FormRow>
               <ButtonGroup>
@@ -289,82 +304,92 @@ export default function AddProvenanceForm({
                   {t('nextButton')}
                 </DefaultButton>
               </ButtonGroup>
-            </Tab.Panel>
+            </TabPanel>
 
-            <Tab.Panel>
+            <TabPanel>
               <FormRow>
                 <FormColumn>
-                  <InputLabel
-                    title={t.rich('transferredFrom', {
-                      important: text => <em>{text}</em>,
-                    })}
-                    description={t('transferredFromDescription')}
-                  />
-                  <SearchSelector
-                    searchers={[
-                      {
-                        name: 'Wikidata Constituent',
-                        url: '/api/wikidata',
-                      },
-                      {
-                        name: 'Datahub Constituent',
-                        url: '/api/datahub',
-                      },
-                    ]}
-                    name="transferredFrom"
-                  />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t.rich('transferredFrom', {
+                        important: text => <em>{text}</em>,
+                      })}
+                      description={t('transferredFromDescription')}
+                    />
+                    <SearchSelector
+                      searchers={[
+                        {
+                          name: 'Wikidata Constituent',
+                          url: '/api/wikidata',
+                        },
+                        {
+                          name: 'Datahub Constituent',
+                          url: '/api/datahub',
+                        },
+                      ]}
+                      name="transferredFrom"
+                    />
+                  </Field>
                   <MotivationInput name="motivations.transferredFrom" />
-                  <InputLabel
-                    title={t.rich('transferredTo', {
-                      important: text => <em>{text}</em>,
-                    })}
-                    description={t('transferredToDescription')}
-                  />
-                  <SearchSelector
-                    searchers={[
-                      {
-                        name: 'Wikidata Constituent',
-                        url: '/api/wikidata',
-                      },
-                      {
-                        name: 'Datahub Constituent',
-                        url: '/api/datahub',
-                      },
-                    ]}
-                    name="transferredTo"
-                  />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t.rich('transferredTo', {
+                        important: text => <em>{text}</em>,
+                      })}
+                      description={t('transferredToDescription')}
+                    />
+                    <SearchSelector
+                      searchers={[
+                        {
+                          name: 'Wikidata Constituent',
+                          url: '/api/wikidata',
+                        },
+                        {
+                          name: 'Datahub Constituent',
+                          url: '/api/datahub',
+                        },
+                      ]}
+                      name="transferredTo"
+                    />
+                  </Field>
                   <MotivationInput name="motivations.transferredTo" />
                 </FormColumn>
                 <FormColumn>
-                  <InputLabel
-                    title={t('location')}
-                    description={t('locationDescription')}
-                  />
-                  <SearchSelector
-                    searchers={[
-                      {
-                        name: 'GeoNames Location',
-                        url: '/api/geonames',
-                      },
-                    ]}
-                    name="location"
-                  />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t('location')}
+                      description={t('locationDescription')}
+                    />
+                    <SearchSelector
+                      searchers={[
+                        {
+                          name: 'GeoNames Location',
+                          url: '/api/geonames',
+                        },
+                      ]}
+                      name="location"
+                    />
+                  </Field>
                   <MotivationInput name="motivations.location" />
                 </FormColumn>
                 <FormColumn>
-                  <InputLabel
-                    title={t('startDate')}
-                    description={t('startDateDescription')}
-                  />
-                  <EdtfInput name="date.startDate" />
-                  <FieldValidationMessage field="date.startDate" />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t('startDate')}
+                      description={t('startDateDescription')}
+                    />
+                    <EdtfInput name="date.startDate" />
+                    <FieldValidationMessage field="date.startDate" />
+                  </Field>
                   <MotivationInput name="motivations.startDate" />
-                  <InputLabel
-                    title={t('endDate')}
-                    description={t('startDateDescription')}
-                  />
-                  <EdtfInput name="date.endDate" />
-                  <FieldValidationMessage field="date.endDate" />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t('endDate')}
+                      description={t('startDateDescription')}
+                    />
+                    <EdtfInput name="date.endDate" />
+                    <FieldValidationMessage field="date.endDate" />
+                  </Field>
                   <FieldValidationMessage field="date.root" />
                   <MotivationInput name="motivations.endDate" />
                 </FormColumn>
@@ -377,27 +402,31 @@ export default function AddProvenanceForm({
                   {t('nextButton')}
                 </DefaultButton>
               </ButtonGroup>
-            </Tab.Panel>
+            </TabPanel>
 
-            <Tab.Panel>
+            <TabPanel>
               <FormRow>
                 <FormColumn>
-                  <InputLabel
-                    title={t('qualifier')}
-                    description={t('qualifierDescription')}
-                    required
-                  />
-                  <QualifierSelector name="qualifier" />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t('qualifier')}
+                      description={t('qualifierDescription')}
+                      required
+                    />
+                    <QualifierSelector name="qualifier" />
+                  </Field>
                   <MotivationInput name="motivations.qualifier" />
                 </FormColumn>
                 <FormColumn>
-                  <InputLabel
-                    title={t('citation')}
-                    description={t('citationDescription')}
-                    required
-                  />
-                  <Textarea name="citation" />
-                  <FieldValidationMessage field="citation" />
+                  <Field as={Fragment}>
+                    <InputLabel
+                      title={t('citation')}
+                      description={t('citationDescription')}
+                      required
+                    />
+                    <Textarea name="citation" />
+                    <FieldValidationMessage field="citation" />
+                  </Field>
                 </FormColumn>
                 <FormColumn>
                   <div className="mt-4">
@@ -428,10 +457,10 @@ export default function AddProvenanceForm({
                   {t('saveButton')}
                 </PrimaryButton>
               </ButtonGroup>
-            </Tab.Panel>
+            </TabPanel>
           </form>
-        </Tab.Panels>
-      </Tab.Group>
+        </TabPanels>
+      </TabGroup>
     </FormProvider>
   );
 }

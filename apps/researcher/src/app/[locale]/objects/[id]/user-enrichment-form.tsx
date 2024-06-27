@@ -21,10 +21,11 @@ import {
   ButtonGroup,
 } from '@/components/form';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
-import {ReactNode} from 'react';
+import {Fragment, ReactNode} from 'react';
 import {useUser} from '@/lib/user/hooks';
 import {CheckboxWithLabel} from '@/components/form/checkbox-with-label';
 import {DefaultButton, PrimaryButton} from '@/components/buttons';
+import {Field} from '@headlessui/react';
 
 interface FormValues {
   description: string;
@@ -65,12 +66,10 @@ export function UserEnrichmentForm({
     agreedToLicense: z.literal<boolean>(true, {
       errorMap: () => ({message: t('agreedToLicenseUnchecked')}),
     }),
-    community: z
-      .object({
-        id: z.string(),
-        name: z.string(),
-      })
-      .optional(),
+    community: z.object({
+      id: z.string().min(1, {message: t('communityRequired')}),
+      name: z.string(),
+    }),
   });
 
   const methods = useForm({
@@ -127,16 +126,17 @@ export function UserEnrichmentForm({
         data-testid="enrichment-form"
       >
         <div className="flex justify-between items-center border-b -mx-4 px-4 pb-2 mb-2">
-          <h3>{t('title')}</h3>
+          <h3 tabIndex={0}>{t('title')}</h3>
           <SlideOutButton
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
             id={slideOutId}
+            aira-label={t('accessibilityCloseButton')}
           >
             <XMarkIcon className='className="w-4 h-4 stroke-neutral-900' />
           </SlideOutButton>
         </div>
-        <div className="flex flex-col lg:flex-row gap-4">
-          {errors.root?.serverError.message && (
+        {errors.root?.serverError.message && (
+          <div className="flex flex-col lg:flex-row gap-4">
             <div className="rounded-md bg-red-50 p-4 mt-3">
               <div className="ml-3">
                 <h3 className="text-sm leading-5 font-medium text-red-800">
@@ -144,51 +144,60 @@ export function UserEnrichmentForm({
                 </h3>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <FormRow>
           <LeftFormColumn>
-            <InputLabel
-              title={t('description')}
-              description={t('descriptionSubTitle')}
-              required
-              id="description"
-            />
-            <Textarea name="description" />
-            <FieldValidationMessage field="description" />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('description')}
+                description={t('descriptionSubTitle')}
+                required
+              />
+              <Textarea name="description" />
+              <FieldValidationMessage field="description" />
+            </Field>
           </LeftFormColumn>
           <RightFormColumn>
-            <InputLabel
-              title={t('inLanguage')}
-              description={t('languageSubTitle')}
-            />
-            <LanguageSelector name="inLanguage" />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('inLanguage')}
+                description={t('languageSubTitle')}
+              />
+              <LanguageSelector name="inLanguage" />
+            </Field>
           </RightFormColumn>
         </FormRow>
         <FormRow>
           <LeftFormColumn>
-            <InputLabel
-              title={t('citation')}
-              description={t('citationSubTitle')}
-              required
-              id="citation"
-            />
-            <Textarea name="citation" />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('citation')}
+                description={t('citationSubTitle')}
+                required
+              />
+              <Textarea name="citation" />
+              <FieldValidationMessage field="citation" />
+            </Field>
           </LeftFormColumn>
           <RightFormColumn>
-            <InputLabel
-              title={t('community')}
-              description={t('communityDescription')}
-            />
-            <CommunitySelector />
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('community')}
+                description={t('communityDescription')}
+                required
+              />
+              <CommunitySelector />
+              <FieldValidationMessage field="community.id" />
+            </Field>
           </RightFormColumn>
-          <FieldValidationMessage field="citation" />
         </FormRow>
         <FormRow>
           <LeftFormColumn>
             <div className="mt-4">
               <CheckboxWithLabel
                 name="agreedToLicense"
+                testId="agreed-to-license"
                 labelText={t.rich('license', {
                   link: text => (
                     <a

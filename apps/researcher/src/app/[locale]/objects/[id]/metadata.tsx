@@ -1,21 +1,15 @@
 import {useTranslations} from 'next-intl';
 import {PropsWithChildren, ReactNode} from 'react';
 import useObject from './use-object';
-import {
-  SlideOutButton,
-  SlideOut,
-  LocalizedMarkdown,
-} from '@colonial-collections/ui';
+import {SlideOutButton, LocalizedMarkdown} from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
-import SignedIn from '@/lib/community/signed-in';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import type {
   Actor,
   HeritageObjectEnrichmentType,
 } from '@colonial-collections/enricher';
-import {SignedOut} from '@clerk/nextjs';
 import {ReadMoreText} from '@/components/read-more-text';
-import SignedOutSlideOut from '@/components/signed-out-slide-out';
+import {SignedInWithCommunitySideOut} from '@/components/slide-outs';
 import {ProvidedBy} from './provided-by';
 import Language from './language';
 
@@ -41,7 +35,7 @@ export function Metadata({
       <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
         <div className="w-full xl:w-1/5 border-t border-neutral-400 pt-4">
           <div className="sticky top-0 py-1">
-            <h3 className="text-lg w-full my-1 flex items-center">
+            <h3 className="text-lg w-full my-1 flex items-center" tabIndex={0}>
               {t(translationKey)}
             </h3>
             <div className="text-neutral-600 text-sm">
@@ -110,10 +104,10 @@ export async function MetadataEntry({
 
   return (
     <div className="border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-2 first:border-0 ">
-      <div className="w-full lg:w-2/3 py-3 whitespace-pre-wrap">
+      <div className="w-full lg:w-2/3 py-3 whitespace-pre-wrap" tabIndex={0}>
         {children}
         {languageCode && (
-          <div>
+          <div tabIndex={0}>
             <Language languageCode={languageCode} />
           </div>
         )}
@@ -158,28 +152,24 @@ export function AddMetadataEnrichment({enrichmentType, translationKey}: Props) {
           </div>
         </SlideOutButton>
       </div>
-      <SlideOut id={`${enrichmentType}-form`}>
-        <SignedIn>
-          <UserEnrichmentForm
-            objectId={objectId}
-            slideOutId={`${enrichmentType}-form`}
-            enrichmentType={enrichmentType}
-            licenceComponent={
-              <LocalizedMarkdown
-                name="license"
-                contentPath="@/messages"
-                textSize="small"
-              />
-            }
-          />
-        </SignedIn>
-        <SignedOut>
-          <SignedOutSlideOut
-            slideOutId={`${enrichmentType}-form`}
-            title={t('needAccountToAddNarrativeTitle')}
-          />
-        </SignedOut>
-      </SlideOut>
+      <SignedInWithCommunitySideOut
+        slideOutId={`${enrichmentType}-form`}
+        needAccountTitle={t('needAccountToAddNarrativeTitle')}
+        needCommunityTitle={t('needCommunityToAddNarrativeTitle')}
+      >
+        <UserEnrichmentForm
+          objectId={objectId}
+          slideOutId={`${enrichmentType}-form`}
+          enrichmentType={enrichmentType}
+          licenceComponent={
+            <LocalizedMarkdown
+              name="license"
+              contentPath="@/messages"
+              textSize="small"
+            />
+          }
+        />
+      </SignedInWithCommunitySideOut>
     </>
   );
 }
