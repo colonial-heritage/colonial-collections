@@ -47,7 +47,6 @@ export default async function LocalContextsNotices() {
     };
   }
 
-  // Default notice when there are no localContextsNotices
   const defaultNotice = {
     id: 'attributionIncomplete',
     title: tNotices('attributionIncomplete'),
@@ -61,10 +60,10 @@ export default async function LocalContextsNotices() {
     label: tNotices('attributionIncompleteLabel'),
   };
 
-  // Determine notices to display
-  const noticesToDisplay = localContextsNotices?.length
-    ? localContextsNotices.map(mapNoticeToDisplay)
-    : [defaultNotice];
+  const noticesToDisplay = [
+    ...(localContextsNotices?.map(mapNoticeToDisplay) || []),
+    defaultNotice,
+  ];
 
   return (
     <div className="my-16" id="localContextNotices">
