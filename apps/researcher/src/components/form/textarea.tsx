@@ -13,7 +13,7 @@ export function Textarea({name, cols = 30, rows = 3}: Props) {
       {...register(name)}
       cols={cols}
       rows={rows}
-      className="border border-green-grey-200 rounded p-2"
+      className="border border-neutral-400 rounded p-2 text-sm w-full whitespace-normal max-w-xl"
     />
   );
 }
