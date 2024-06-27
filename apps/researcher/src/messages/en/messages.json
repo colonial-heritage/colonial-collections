@@ -149,7 +149,11 @@
     "objectRemovedFromList": "Object removed from list <name></name>.",
     "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later.",
     "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account.",
-    "needCommunityToAddNarrativeTitle": "To add your narrative to this object you need to be part of a community."
+    "needCommunityToAddNarrativeTitle": "To add your narrative to this object you need to be part of a community.",
+    "pageNavigationMetadata": "Metadata",
+    "pageNavigationNotices": "Local Context Notices",
+    "pageNavigationProvenance": "Provenance",
+    "pageNavigationProvider": "Data provider"
   },
   "LocalContextsNotices": {
     "attributionIncomplete": "Attribution Incomplete",
