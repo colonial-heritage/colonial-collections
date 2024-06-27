@@ -149,32 +149,32 @@ export function LocalContextsNoticeForm({
           {t('type')}
           <LocalContextsNoticeSelector name="type" />
         </div>
+
+        {watch('type') && (
+          <div className="w-full max-w-4xl pb-4">
+            <strong className="flex items-center gap-1">
+              <InformationCircleIcon className="w-4 h-4 stroke-neutral-900" />
+              {t('noticeInformationTitle')}
+            </strong>
+            <em>{t('noticeInformationSubTitle')}</em>
+            <p>
+              {tNotices(
+                localContextsNoticeEnrichmentTypeMapping[
+                  watch('type')! as LocalContextsNoticeEnrichmentType
+                ].labelTranslationKey
+              )}
+            </p>
+          </div>
+        )}
+
         <div className="flex flex-col md:flex-row gap-10">
-          <div className="w-full md:w-1/2 flex flex-col">
+          <div className="w-full md:w-1/2">
             <Field as={Fragment}>
               <InputLabel
                 title={t('description')}
                 description={t('descriptionSubTitle')}
-                required
               />
               <Textarea name="description" />
-              <FieldValidationMessage field="description" />
-            </Field>
-            <Field as={Fragment}>
-              <InputLabel
-                title={t('inLanguage')}
-                description={t('languageSubTitle')}
-              />
-              <LanguageSelector name="inLanguage" />
-            </Field>
-            <Field as={Fragment}>
-              <InputLabel
-                title={t('community')}
-                description={t('communityDescription')}
-                required
-              />
-              <CommunitySelector />
-              <FieldValidationMessage field="community.id" />
             </Field>
             <div className="mt-4">
               <CheckboxWithLabel
@@ -195,30 +195,24 @@ export function LocalContextsNoticeForm({
               <div className="text-sm mb-1">{licenceComponent}</div>
             </div>
           </div>
-          {watch('type') && (
-            <div className="w-full md:w-1/2 prose">
-              <strong className="flex items-center gap-1">
-                <InformationCircleIcon className="w-4 h-4 stroke-neutral-900" />
-                {t('noticeInformationTitle')}
-              </strong>
-              <p>
-                {tNotices(
-                  localContextsNoticeEnrichmentTypeMapping[
-                    watch('type')! as LocalContextsNoticeEnrichmentType
-                  ].informationTranslationKey
-                )}
-              </p>
-              <p>
-                <a
-                  href="https://localcontexts.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t('noticeInformationLink')}
-                </a>
-              </p>
-            </div>
-          )}
+          <div className="w-full md:w-1/2">
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('inLanguage')}
+                description={t('languageSubTitle')}
+              />
+              <LanguageSelector name="inLanguage" />
+            </Field>
+            <Field as={Fragment}>
+              <InputLabel
+                title={t('community')}
+                description={t('communityDescription')}
+                required
+              />
+              <CommunitySelector />
+              <FieldValidationMessage field="community.id" />
+            </Field>
+          </div>
         </div>
         <ButtonGroup>
           <PrimaryButton type="submit" disabled={isSubmitting}>

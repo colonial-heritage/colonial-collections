@@ -9,50 +9,42 @@ export {LocalContextsNoticeEnrichmentType};
 export const localContextsNoticeEnrichmentTypeMapping = {
   [LocalContextsNoticeEnrichmentType.Authorization]: {
     titleTranslationKey: 'authorization',
-    descriptionTranslationKey: 'authorizationDescription',
-    informationTranslationKey: 'authorizationInformation',
+    labelTranslationKey: 'authorizationLabel',
     imageSrc: '/images/local-contexts-notices/authorization.png',
   },
   [LocalContextsNoticeEnrichmentType.Belonging]: {
     titleTranslationKey: 'belonging',
-    descriptionTranslationKey: 'belongingDescription',
-    informationTranslationKey: 'belongingInformation',
+    labelTranslationKey: 'belongingLabel',
     imageSrc: '/images/local-contexts-notices/belonging.png',
   },
   [LocalContextsNoticeEnrichmentType.Caring]: {
     titleTranslationKey: 'caring',
-    descriptionTranslationKey: 'caringDescription',
-    informationTranslationKey: 'caringInformation',
+    labelTranslationKey: 'caringLabel',
     imageSrc: '/images/local-contexts-notices/caring.png',
   },
   [LocalContextsNoticeEnrichmentType.Gender_Aware]: {
     titleTranslationKey: 'genderAware',
-    descriptionTranslationKey: 'genderAwareDescription',
-    informationTranslationKey: 'genderAwareInformation',
+    labelTranslationKey: 'genderAwareLabel',
     imageSrc: '/images/local-contexts-notices/gender-aware.png',
   },
   [LocalContextsNoticeEnrichmentType.Leave_Undisturbed]: {
     titleTranslationKey: 'leaveUndisturbed',
-    descriptionTranslationKey: 'leaveUndisturbedDescription',
-    informationTranslationKey: 'leaveUndisturbedInformation',
+    labelTranslationKey: 'leaveUndisturbedLabel',
     imageSrc: '/images/local-contexts-notices/leave-undisturbed.png',
   },
   [LocalContextsNoticeEnrichmentType.Safety]: {
     titleTranslationKey: 'safety',
-    descriptionTranslationKey: 'safetyDescription',
-    informationTranslationKey: 'safetyInformation',
+    labelTranslationKey: 'safetyLabel',
     imageSrc: '/images/local-contexts-notices/safety.png',
   },
   [LocalContextsNoticeEnrichmentType.Viewing]: {
     titleTranslationKey: 'viewing',
-    descriptionTranslationKey: 'viewingDescription',
-    informationTranslationKey: 'viewingInformation',
+    labelTranslationKey: 'viewingLabel',
     imageSrc: '/images/local-contexts-notices/viewing.png',
   },
   [LocalContextsNoticeEnrichmentType.Withholding]: {
     titleTranslationKey: 'withholding',
-    descriptionTranslationKey: 'withholdingDescription',
-    informationTranslationKey: 'withholdingInformation',
+    labelTranslationKey: 'withholdingLabel',
     imageSrc: '/images/local-contexts-notices/withholding.png',
   },
 } as const;
