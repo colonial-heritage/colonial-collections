@@ -161,7 +161,7 @@ export function LocalContextsNoticeForm({
               {tNotices(
                 localContextsNoticeEnrichmentTypeMapping[
                   watch('type')! as LocalContextsNoticeEnrichmentType
-                ].descriptionTranslationKey
+                ].labelTranslationKey
               )}
             </p>
           </div>

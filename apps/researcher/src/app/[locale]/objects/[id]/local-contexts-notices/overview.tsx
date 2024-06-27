@@ -39,7 +39,11 @@ export default async function LocalContextsNotices() {
       isCurrentPublisher: false,
       dateCreated: notice.pubInfo.dateCreated,
       inLanguage: notice.inLanguage,
-      type: notice.type,
+      label: tNotices(
+        localContextsNoticeEnrichmentTypeMapping[
+          notice.type as LocalContextsNoticeEnrichmentType
+        ].labelTranslationKey
+      ),
     };
   }
 
@@ -47,14 +51,14 @@ export default async function LocalContextsNotices() {
   const defaultNotice = {
     id: 'attributionIncomplete',
     title: tNotices('attributionIncomplete'),
-    description: tNotices('attributionIncompleteDescription'),
+    description: undefined,
     imageSrc: '/images/local-contexts-notices/attribution-incomplete.png',
     creatorName: t('defaultProvider'),
     isCurrentPublisher: true,
     dateCreated: undefined,
     communityName: undefined,
     inLanguage: undefined,
-    type: undefined,
+    label: tNotices('attributionIncompleteLabel'),
   };
 
   // Determine notices to display
@@ -108,11 +112,7 @@ export default async function LocalContextsNotices() {
               <div className="border-t first:border-0 border-neutral-200 flex flex-col lg:flex-row justify-between gap-2">
                 <div className="w-full lg:w-2/3 py-3">
                   <div className="bg-neutral-50 p-4 rounded-sm italic text-neutral-600 text-sm">
-                    {tNotices(
-                      localContextsNoticeEnrichmentTypeMapping[
-                        notice.type as LocalContextsNoticeEnrichmentType
-                      ].descriptionTranslationKey
-                    )}
+                    {notice.label}
                     <div className="w-full flex justify-end pt-1">
                       <Image
                         height={26}
