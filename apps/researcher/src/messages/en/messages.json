@@ -172,35 +172,35 @@
     "withholdingLabel": "The Withholding Notice is being used to indicate that no reproductions of this item or collection should ever be made. If there are already existing photographs or reproductions, these should not be used in any exhibition or publication in print, online, or any other format."
   },
   "LocalContextsNoticesOverview": {
-    "title": "Local Context Notices",
-    "description": "The Local Context notices support the inclusion of local protocols for access and use to cultural heritage that is digitally circulating outside community contexts. <link> Learn more about the Local Context notices.</link>.",
+    "title": "Local Contexts Notices",
+    "description": "The Local Contexts Collections Care (CC) Notices are visible identifiers developed specifically for institutions and repositories to support proper cultural care and stewardship of collections, led and guided by Indigenous protocols and authority. <link> Learn more about the Local Contexts Collections Care Notices.</link>.",
     "defaultProvider": "Colonial Collections Consortium",
-    "defaultLabel": "This is a default notice if no other labels or notices are assigned.",
+    "defaultLabel": "This is a default Notice in case no other Notices are assigned.",
     "addLocalContextsNoticeButton": "Add your Local Context Notice",
-    "needAccountToAddLocalContextsNotice": "To add Local Context Notices to this object, you need an account.",
-    "needCommunityToAddLocalContextsNotice": "To add Local Context Notices to this object, you need to be part of a community."
+    "needAccountToAddLocalContextsNotice": "To add Local Contexts Notices to this object, you need an account.",
+    "needCommunityToAddLocalContextsNotice": "To add Local Contexts Notices to this object, you need to be part of a community."
   },
   "LocalContextsNoticeForm": {
     "title": "Add a Local Context Notice",
-    "type": "Select one of the Notices. Click on a label for more information.",
-    "description": "Notice motivation",
-    "descriptionSubTitle": "Here you can insert text about the use of this Notice.",
+    "type": "Select one of the Local Contexts Notices. Click on a Notice for more information.",
+    "description": "Motivation",
+    "descriptionSubTitle": "Why would you like to add this Notice?",
     "inLanguage": "Language",
-    "languageSubTitle": "Select a language of the text. Start typing to select a language.",
+    "languageSubTitle": "Select the language of your motivation. Start typing to select a language.",
     "successfullyAdded": "Your Local Context Notice has been added to the object. It could take a moment before it is visible.",
     "community": "Community",
     "communityDescription": "Select the community you speak on behalf of.",
     "communityRequired": "Community is required",
     "license": "I agree that all added information in the application is published with a <link>CC-BY-4.0 license</link>",
     "licenseLink": "https://creativecommons.org/licenses/by/4.0/deed.en",
-    "serverError": "Something went wrong while creating the Local Context Notice. Please try again later.",
+    "serverError": "Something went wrong while adding the Local Context Notice. Please try again later.",
     "buttonSubmit": "Add Notice",
     "buttonCancel": "Cancel",
-    "agreedToLicenseUnchecked": "You need to agree to the license before you can add a narrative",
-    "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community.",
+    "agreedToLicenseUnchecked": "You need to agree to the license before you can add a Local Context Notice",
+    "noCommunities": "You are not yet a member of a community that has permission to add a Local Context Notice. You can create a community or join an existing community.",
     "saving": "Saving...",
     "noticeInformationTitle": "Notice text",
-    "noticeInformationSubTitle": "This text will be placed as a label."
+    "noticeInformationSubTitle": "This text will be placed as a Notice."
   },
   "Provenance": {
     "title": "Provenance",
