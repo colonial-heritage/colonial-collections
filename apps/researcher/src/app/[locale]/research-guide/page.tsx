@@ -55,7 +55,7 @@ export default async function Page() {
       <div className="mt-10 flex flex-col lg:flex-row gap-10">
         <div className="w-full lg:w-1/2">
           <h2 className="mb-4" tabIndex={0}>
-            Topics
+            {t('level2Title')}
           </h2>
           <div className="flex flex-col md:block md:columns-2 md:gap-6 *:break-inside">
             {level2Guides.map(item => (
