@@ -162,14 +162,7 @@ export function LocalContextsNoticeForm({
                 localContextsNoticeEnrichmentTypeMapping[
                   watch('type')! as LocalContextsNoticeEnrichmentType
                 ].descriptionTranslationKey
-              )}{' '}
-              <a
-                href="https://localcontexts.org"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t('noticeInformationLink')}
-              </a>
+              )}
             </p>
           </div>
         )}
