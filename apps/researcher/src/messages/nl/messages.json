@@ -208,7 +208,8 @@
   "noCommunities": "U bent nog geen lid van een community die toestemming heeft om een verhaal toe te voegen. U kunt een community creëren of lid worden van een bestaande community.",
   "saving": "Opslaan...",
   "noticeInformationTitle": "Waarom deze notice gebruiken",
-  "noticeTextTitle": "Notice Tekst"
+  "noticeTextTitle": "Notice Tekst",
+    "accessibilityCloseButton": "Formulier sluiten"
 },
 "Provenance": {
     "title": "Herkomst",

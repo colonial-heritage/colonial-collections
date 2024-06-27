@@ -127,7 +127,7 @@ export function LocalContextsNoticeForm({
         data-testid="notice-form"
       >
         <div className="flex justify-between items-center border-b -mx-4 px-4 pb-2 mb-2">
-          <h3>{t('title')}</h3>
+          <h3 tabIndex={0}>{t('title')}</h3>
           <SlideOutButton
             className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
             id={slideOutId}
