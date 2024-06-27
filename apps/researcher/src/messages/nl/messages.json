@@ -153,7 +153,7 @@
   },
 "LocalContextsNotices": {
   "attributionIncomplete": "Onvolledige Toeschrijving",
-  "attributionIncompleteDescription": "Collecties en items in onze instelling hebben onvolledige, onjuiste en/of ontbrekende toeschrijving. We gebruiken deze kennisgeving om dit materiaal duidelijk te identificeren zodat het kan worden bijgewerkt of gecorrigeerd door gemeenschappen van herkomst. Onze instelling zet zich in voor samenwerking en partnerschappen om dit probleem van onjuiste of ontbrekende toeschrijving aan te pakken.",
+  "attributionIncompleteLabel": "Collecties en items in onze instelling hebben onvolledige, onjuiste en/of ontbrekende toeschrijving. We gebruiken deze kennisgeving om dit materiaal duidelijk te identificeren zodat het kan worden bijgewerkt of gecorrigeerd door gemeenschappen van herkomst. Onze instelling zet zich in voor samenwerking en partnerschappen om dit probleem van onjuiste of ontbrekende toeschrijving aan te pakken.",
   "authorization": "Autorisatie",
   "authorizationLabel": "De Autorisatiekennisgeving wordt gebruikt om aan te geven dat er door middel van overleg distincte tribale of gemeenschapsautorisatie moet worden verkregen voor elke reproductie van dit item, inclusief het gebruik in tentoonstellingen en publicaties in print of online.",
   "belonging": "Toebehoren",
@@ -163,13 +163,13 @@
   "genderAware": "Genderbewust",
   "genderAwareLabel": "De Genderbewust Kennisgeving wordt gebruikt om aan te geven dat er specifieke genderverantwoordelijkheden zijn die van invloed zijn op wie toegang kan krijgen tot, kijken naar en/of omgaan met dit item of deze collectie.",
   "leaveUndisturbed": "Ongestoord Laten",
-  "leaveUndisturbedDescription": "De Ongestoord Laten Kennisgeving wordt gebruikt om aan te geven dat items in een collectie niet mogen worden verstoord. Ze mogen alleen onder zeer beperkte omstandigheden volgens gemeenschapsrichtlijnen worden verplaatst of verstoord.",
+  "leaveUndisturbedLabel": "De Ongestoord Laten Kennisgeving wordt gebruikt om aan te geven dat items in een collectie niet mogen worden verstoord. Ze mogen alleen onder zeer beperkte omstandigheden volgens gemeenschapsrichtlijnen worden verplaatst of verstoord.",
   "safety": "Veiligheid",
-  "safetyDescription": "De Veiligheidskennisgeving wordt gebruikt om aan te geven dat uiterste voorzichtigheid en zorg nodig is bij het bekijken en behandelen van dit item of deze collectie voor het welzijn en de gezondheid van individuen of gemeenschappen.",
+  "safetyLabel": "De Veiligheidskennisgeving wordt gebruikt om aan te geven dat uiterste voorzichtigheid en zorg nodig is bij het bekijken en behandelen van dit item of deze collectie voor het welzijn en de gezondheid van individuen of gemeenschappen.",
   "viewing": "Bekijken",
-  "viewingDescription": "De Bekijkkennisgeving wordt gebruikt om aan te geven dat er beperkingen zijn op wie, hoe en wanneer een item/collectie kan worden bekeken, gedistribueerd en gecirculeerd. Dit omvat bestaande afbeeldingen of representaties van een bestaand of gedeaccesioneerd item binnen een collectie.",
+  "viewingLabel": "De Bekijkkennisgeving wordt gebruikt om aan te geven dat er beperkingen zijn op wie, hoe en wanneer een item/collectie kan worden bekeken, gedistribueerd en gecirculeerd. Dit omvat bestaande afbeeldingen of representaties van een bestaand of gedeaccesioneerd item binnen een collectie.",
   "withholding": "Achterhouden",
-  "withholdingDescription": "De Achterhouden Kennisgeving wordt gebruikt om aan te geven dat er nooit reproducties van dit item of deze collectie mogen worden gemaakt. Als er al bestaande foto's of reproducties zijn, mogen deze niet worden gebruikt in een tentoonstelling of publicatie in print, online of in enig ander formaat."
+  "withholdingLabel": "De Achterhouden Kennisgeving wordt gebruikt om aan te geven dat er nooit reproducties van dit item of deze collectie mogen worden gemaakt. Als er al bestaande foto's of reproducties zijn, mogen deze niet worden gebruikt in een tentoonstelling of publicatie in print, online of in enig ander formaat."
 },
 "LocalContextsNoticesOverview": {
   "title": "Local Context Notices",
