@@ -29,6 +29,7 @@ import {
 } from './mapping';
 import {LocalContextsNoticeSelector} from '@/components/form/local-contexts-notice-selector';
 import {Field} from '@headlessui/react';
+import Image from 'next/image';
 
 interface FormValues {
   type: LocalContextsNoticeEnrichmentType | null;
@@ -146,25 +147,46 @@ export function LocalContextsNoticeForm({
             </div>
           </div>
         )}
-        <div>
+        <div tabIndex={0}>
           {t('type')}
           <LocalContextsNoticeSelector name="type" />
         </div>
 
         {watch('type') && (
           <div className="w-full max-w-4xl pb-4">
-            <strong className="flex items-center gap-1">
-              <InformationCircleIcon className="w-4 h-4 stroke-neutral-900" />
-              {t('noticeInformationTitle')}
-            </strong>
-            <em>{t('noticeInformationSubTitle')}</em>
+            <h3>
+              <strong className="flex items-center gap-1 font-semibold">
+                <InformationCircleIcon className="w-4 h-4 stroke-neutral-900" />
+                {t('noticeInformationTitle')}
+              </strong>
+            </h3>
+
             <p>
+              {tNotices(
+                localContextsNoticeEnrichmentTypeMapping[
+                  watch('type')! as LocalContextsNoticeEnrichmentType
+                ].informationTranslationKey
+              )}
+            </p>
+            <h3 className="flex items-center gap-1 mt-4 mb-2">
+              {t('noticeTextTitle')}
+            </h3>
+
+            <div className="bg-neutral-50 p-4 rounded-sm italic text-neutral-600 text-sm border border-neutral-200 max-w-2xl">
               {tNotices(
                 localContextsNoticeEnrichmentTypeMapping[
                   watch('type')! as LocalContextsNoticeEnrichmentType
                 ].labelTranslationKey
               )}
-            </p>
+              <div className="w-full flex justify-end pt-1">
+                <Image
+                  height={26}
+                  width={80}
+                  src="/images/local-contexts-notices/logo-local-contexts.png"
+                  alt="Logo local context"
+                />
+              </div>
+            </div>
           </div>
         )}
 
