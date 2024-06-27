@@ -19,7 +19,7 @@ export function InitialImageFetchMode() {
   return (
     <div className="flex flex-col gap-1 border rounded mt-6 p-6 max-w-3xl">
       <strong>{t('images')}</strong>
-      <p>
+      <p tabIndex={0}>
         {t.rich('imagesDescription', {
           em: children => <em>{children}</em>,
         })}
