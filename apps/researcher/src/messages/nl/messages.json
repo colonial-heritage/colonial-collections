@@ -207,8 +207,8 @@
   "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een verhaal kunt toevoegen",
   "noCommunities": "U bent nog geen lid van een community die toestemming heeft om een verhaal toe te voegen. U kunt een community creëren of lid worden van een bestaande community.",
   "saving": "Opslaan...",
-  "noticeInformationTitle": "Informatie over notice",
-  "noticeTextTitle": "Deze Notice wordt als volgt weergegeven"
+  "noticeInformationTitle": "Waarom deze notice gebruiken",
+  "noticeTextTitle": "Notice Tekst"
 },
 "Provenance": {
     "title": "Herkomst",

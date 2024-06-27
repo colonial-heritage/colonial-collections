@@ -146,7 +146,7 @@ export function LocalContextsNoticeForm({
             </div>
           </div>
         )}
-        <div>
+        <div tabIndex={0}>
           {t('type')}
           <LocalContextsNoticeSelector name="type" />
         </div>
