@@ -25,12 +25,16 @@ export default async function Page() {
 
   return (
     <>
-      <h1 className="text-2xl md:text-4xl">{topLevel.name}</h1>
+      <h1 className="text-2xl md:text-4xl" tabIndex={0}>
+        {topLevel.name}
+      </h1>
       <div className="my-4 w-full max-w-5xl columns-2 gap-6">
         {topLevel.text && <StringToMarkdown text={topLevel.text} />}
       </div>
       <div className="bg-consortium-sand-100 rounded mt-6 -mx-4 pr-10">
-        <h2 className="px-4 pt-4">{t('level1Title')}</h2>
+        <h2 className="px-4 pt-4" tabIndex={0}>
+          {t('level1Title')}
+        </h2>
         <div className="pb-4 columns-3 gap-10">
           {level1Guides.map(item => (
             <Link
@@ -50,7 +54,9 @@ export default async function Page() {
       </div>
       <div className="mt-10 flex flex-col lg:flex-row gap-10">
         <div className="w-full lg:w-1/2">
-          <h2 className="mb-4">Topics</h2>
+          <h2 className="mb-4" tabIndex={0}>
+            {t('level2Title')}
+          </h2>
           <div className="flex flex-col md:block md:columns-2 md:gap-6 *:break-inside">
             {level2Guides.map(item => (
               <div
@@ -73,6 +79,7 @@ export default async function Page() {
                     key={subItem.id}
                     href={`/research-guide/${encodeRouteSegment(subItem.id)}`}
                     className="no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col p-2 -ml-2"
+                    aria-label={`${subItem.name}, item of ${item.name}`}
                   >
                     <div className="flex items-center justify-between gap-2">
                       <div>{subItem.name}</div>
