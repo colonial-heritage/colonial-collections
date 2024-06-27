@@ -200,7 +200,8 @@
     "noCommunities": "You are not yet a member of a community that has permission to add a story. You can create a community or join an existing community.",
     "saving": "Saving...",
     "noticeInformationTitle": "Notice text",
-    "noticeInformationSubTitle": "This text will be placed as a label."
+    "noticeInformationSubTitle": "This text will be placed as a label.",
+    "accessibilityCloseButton": "Close form"
   },
   "Provenance": {
     "title": "Provenance",
