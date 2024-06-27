@@ -41,26 +41,34 @@ export default async function GuidePage({params}: Props) {
         </nav>
       </div>
       <main className="w-full px-4 sm:px-10 max-w-7xl mx-auto mt-16 mb-40">
-        <h1 className="text-2xl md:text-4xl mb-2">{guide.name}</h1>
+        <h1 className="text-2xl md:text-4xl mb-2" tabIndex={0}>
+          {guide.name}
+        </h1>
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-2/3">
             <div className="prose" id="#description">
               {guide.text && <StringToMarkdown text={guide.text} />}
               {guide.citations && guide.citations.length > 0 && (
                 <>
-                  <h2 id="citations">{t('citations')}</h2>
-                  {guide.citations.map(citation => (
-                    <div className="mb-6" key={citation.id}>
-                      <div className="font-semibold">{citation.name}</div>
-                      <div>
-                        {citation.description}
-                        {' — '}
-                        <span className="text-sm">
-                          <a href={citation.url}>{citation.url}</a>
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                  <h2 id="citations" tabIndex={0}>
+                    {t('citations')}
+                  </h2>
+                  <ul className="not-prose">
+                    {guide.citations.map(citation => (
+                      <li className="mb-6" key={citation.id}>
+                        <div className="font-semibold" tabIndex={0}>
+                          {citation.name}
+                        </div>
+                        <div>
+                          {citation.description}
+                          {' — '}
+                          <span className="text-sm">
+                            <a href={citation.url}>{citation.url}</a>
+                          </span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </>
               )}
             </div>
@@ -68,7 +76,9 @@ export default async function GuidePage({params}: Props) {
           <div className="w-full md:w-1/3">
             {guide.seeAlso && guide.seeAlso?.length > 0 && (
               <>
-                <h2 className="mb-2">{t('relatedItems')}</h2>
+                <h2 className="mb-2" tabIndex={0}>
+                  {t('relatedItems')}
+                </h2>
                 <div className="flex flex-col gap-2 mb-4">
                   {guide.seeAlso?.map(item => (
                     <Link
@@ -90,17 +100,21 @@ export default async function GuidePage({params}: Props) {
             <div className="flex flex-col gap-4">
               {guide.keywords && guide.keywords.length > 0 && (
                 <div className="bg-consortium-sand-50 rounded px-2 py-4">
-                  <h3>{t('keywords')}</h3>
+                  <h3 tabIndex={0}>{t('keywords')}</h3>
                   {guide.keywords.map(keyword => (
-                    <div key={keyword.id}>{keyword.name}</div>
+                    <div key={keyword.id} tabIndex={0}>
+                      {keyword.name}
+                    </div>
                   ))}
                 </div>
               )}
               {guide.contentLocations && guide.contentLocations.length > 0 && (
                 <div className="bg-consortium-sand-50 rounded px-2 py-4">
-                  <h3>{t('contentLocations')}</h3>
+                  <h3 tabIndex={0}>{t('contentLocations')}</h3>
                   {guide.contentLocations.map(location => (
-                    <div key={location.id}>{location.name}</div>
+                    <div key={location.id} tabIndex={0}>
+                      {location.name}
+                    </div>
                   ))}
                 </div>
               )}
