@@ -3,6 +3,7 @@ import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
+import {InformationCircleIcon} from '@heroicons/react/24/outline';
 import {ObjectIcon} from '@/components/icons';
 import {Metadata} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
@@ -108,13 +109,18 @@ export default async function Details({params}: Props) {
                   </div>
                 ))}
               </div>
-              <div className="text-sm my-4 xl:my-10 text-consortium-blue-100">
+              <div className="text-sm my-4 xl:my-10 text-consortium-blue-100 flex gap-1">
                 {organization && (
                   <>
-                    Data provider or current object holder:{' '}
+                    {t('providerCurrentHolder')}
                     <span className="text-white">
-                      <a href="#dataprovider" className="underline">
+                      <a
+                        href="#dataprovider"
+                        className="underline inline-flex gap-1 items-center"
+                        aria-label={t('providerCurrentHolder')}
+                      >
                         {organization.name}
+                        <InformationCircleIcon className="w-4 h-4 stroke-white" />
                       </a>
                     </span>
                     , {organization.address?.addressLocality}

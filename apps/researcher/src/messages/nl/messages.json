@@ -102,6 +102,7 @@
     "noEntity": "Object kon niet gevonden worden",
     "object": "Object",
     "providerCurrentHolder": "Data provider of huidig object bewaarder",
+    "accessibilityProviderCurrentHolder": "Meer informatie over de data provider of huidig object bewaarder",
     "providerInfo": "Meer info",
     "contactInfo": "Contact gegevens",
     "dataProviderTitle": "Data provider of huidig object bewaarder",
