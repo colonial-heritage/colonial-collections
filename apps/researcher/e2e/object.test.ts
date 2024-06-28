@@ -94,7 +94,7 @@ test.describe('Object details page logged in', () => {
       .getByTestId('enrichment-form')
       .locator('button[type="submit"]')
       .click();
-    await expect(page.getByTestId('notification')).toHaveCount(3, {
+    await expect(page.getByTestId('notification')).toHaveCount(1, {
       timeout: 30000,
     });
 

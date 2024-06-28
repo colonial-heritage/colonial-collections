@@ -58,7 +58,7 @@ function CommunityMenuItems({
         });
 
         addNotification({
-          id: 'objectAddedToList',
+          id: 'objectList.added.success',
           message: t.rich('objectAddedToList', {
             name: () => <em>{objectList.name}</em>,
           }),
@@ -66,7 +66,7 @@ function CommunityMenuItems({
         });
       } catch (err) {
         addNotification({
-          id: 'errorObjectAddedToList',
+          id: 'objectList.added.error',
           message: t('errorObjectAddedToList'),
           type: 'error',
         });
@@ -76,7 +76,7 @@ function CommunityMenuItems({
         await deleteObjectFromList(objectList.objects![0].id, communityId);
 
         addNotification({
-          id: 'objectRemovedFromList',
+          id: 'objectList.removed.success',
           message: t.rich('objectRemovedFromList', {
             name: () => <em>{objectList.name}</em>,
           }),
@@ -84,7 +84,7 @@ function CommunityMenuItems({
         });
       } catch (err) {
         addNotification({
-          id: 'errorObjectRemovedFromList',
+          id: 'objectList.removed.error',
           message: t('errorObjectRemovedFromList'),
           type: 'error',
         });

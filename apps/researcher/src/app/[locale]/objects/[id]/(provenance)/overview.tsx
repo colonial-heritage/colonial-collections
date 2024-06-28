@@ -111,7 +111,7 @@ async function AddProvenanceSlideOut({objectId}: {objectId: string}) {
 
   return (
     <>
-      <Notifications />
+      <Notifications prefixFilters={['provenance.']} />
       <SignedInWithCommunitySideOut
         slideOutId={slideOutId}
         needAccountTitle={t('needAccountToAddProvenanceTitle')}
