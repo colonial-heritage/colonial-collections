@@ -152,7 +152,7 @@
     "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account.",
     "needCommunityToAddNarrativeTitle": "To add your narrative to this object you need to be part of a community.",
     "pageNavigationMetadata": "Metadata",
-    "pageNavigationNotices": "Local Context Notices",
+    "pageNavigationNotices": "Local Contexts Notices",
     "pageNavigationProvenance": "Provenance",
     "pageNavigationProvider": "Data provider"
   },
@@ -185,13 +185,13 @@
     "withholdingInformation": "The Withholding Notice recognizes the need to completely withhold certain items or collections from photography, reproduction, publications, and any type of exhibit in future modalities."
   },
   "LocalContextsNoticesOverview": {
-    "title": "Local Context Notices",
-    "description": "The Local Context notices support the inclusion of local protocols for access and use to cultural heritage that is digitally circulating outside community contexts. <link> Learn more about the Local Context notices.</link>.",
+    "title": "Local Contexts Notices",
+    "description": "The Local Contexts Notices support the inclusion of local protocols for access and use to cultural heritage that is digitally circulating outside community contexts. <link> Learn more about the Local Contexts Notices.</link>.",
     "defaultProvider": "Colonial Collections Consortium",
     "defaultLabel": "This is a default notice if no other labels or notices are assigned.",
     "addLocalContextsNoticeButton": "Add your Local Context Notice",
-    "needAccountToAddLocalContextsNotice": "To add Local Context Notices to this object, you need an account.",
-    "needCommunityToAddLocalContextsNotice": "To add Local Context Notices to this object, you need to be part of a community."
+    "needAccountToAddLocalContextsNotice": "To add Local Contexts Notices to this object, you need an account.",
+    "needCommunityToAddLocalContextsNotice": "To add Local Contexts Notices to this object, you need to be part of a community."
   },
   "LocalContextsNoticeForm": {
     "title": "Add a Local Context Notice",
