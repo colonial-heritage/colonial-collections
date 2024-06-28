@@ -3,6 +3,7 @@ import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
+import {InformationCircleIcon} from '@heroicons/react/24/outline';
 import {ObjectIcon} from '@/components/icons';
 import {Metadata} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
@@ -81,7 +82,7 @@ export default async function Details({params}: Props) {
             </div>
           </div>
 
-          <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto py-10 md:pt-10 md:pb-20 xt:py-35 xl:pb-40 flex flex-col lg:flex-row gap-10">
+          <div className="w-full px-4 sm:px-10 max-w-[1800px] mx-auto flex flex-col lg:flex-row gap-4 xl:gap-10 py-4">
             <div className="w-full lg:w-2/3 xl:w-3/4">
               <div className="text-sm text-consortium-blue-100 mb-4 lg:mb-10 flex gap-1">
                 <ObjectIcon className='w-5 h-5 stroke-consortium-blue-100"' />
@@ -109,21 +110,24 @@ export default async function Details({params}: Props) {
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="w-full lg:w-1/3 xl:w-1/4 text-sm text-consortium-blue-100 lg:pt-16">
-              {organization && (
-                <>
-                  <div className="italic">{t('providerCurrentHolder')}</div>
-                  <div className="text-white">{organization.name}</div>
-                  <div className="mb-4">
-                    {organization.address?.addressLocality}
-                  </div>
-                  <a href="#provider" className="p-4 -ml-4 italic" tabIndex={0}>
-                    {t('providerInfo')}
-                  </a>
-                </>
-              )}
+              <div className="text-sm my-4 xl:my-10 text-consortium-blue-100 md:flex gap-1">
+                {organization && (
+                  <>
+                    {t('providerCurrentHolder')}
+                    <span className="text-white">
+                      <a
+                        href="#dataprovider"
+                        className="underline inline-flex gap-1 items-center"
+                        aria-label={t('providerCurrentHolder')}
+                      >
+                        {organization.name}
+                        <InformationCircleIcon className="w-4 h-4 stroke-white" />
+                      </a>
+                    </span>
+                    , {organization.address?.addressLocality}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -251,9 +255,9 @@ export default async function Details({params}: Props) {
             </div>
             <LocalContextsNotices />
           </main>
-          <aside className="w-full md:w-1/3 self-stretch order-1 md:order-2  md:mx-0 md:bg-neutral-100 p-1">
+          <aside className="w-full lg:w-1/3 self-stretch flex flex-col justify-start order-1 lg:order-2">
             {galleryImages.length > 0 && (
-              <div className="flex flex-row md:flex-col gap-1 sticky top-4">
+              <div className="flex flex-row md:flex-col gap-1 sticky top-8 lg:-mt-72 z-30 md:mx-0 p-4 rounded bg-consortium-blue-400/10">
                 <Gallery
                   images={galleryImages}
                   organizationName={organization?.name}
