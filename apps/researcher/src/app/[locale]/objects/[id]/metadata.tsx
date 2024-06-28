@@ -34,7 +34,7 @@ export function Metadata({
     <div className="flex flex-col gap-4">
       <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
         <div className="w-full xl:w-1/5 border-t border-neutral-400 pt-4">
-          <div className="sticky top-0 py-1">
+          <div className="sticky top-6 py-1">
             <h3 className="text-lg w-full my-1 flex items-center" tabIndex={0}>
               {t(translationKey)}
             </h3>
