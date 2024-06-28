@@ -32,13 +32,16 @@ export function Metadata({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col xl:flex-row gap-2 xl:gap-10">
-        <div className="w-full xl:w-1/5 border-t border-neutral-400 pt-4">
+      <div className="flex flex-row gap-2 xl:gap-10">
+        <div className="w-2/5 lg:w-1/5 md:border-t border-neutral-400 pt-4">
           <div className="sticky top-0 py-1">
-            <h3 className="text-lg w-full my-1 flex items-center" tabIndex={0}>
+            <h3
+              className="text-sm md:text-lg w-full my-1 flex items-center"
+              tabIndex={0}
+            >
               {t(translationKey)}
             </h3>
-            <div className="text-neutral-600 text-sm">
+            <div className="text-neutral-600 text-sm hidden md:block">
               {t(`${translationKey}SubTitle`)}
             </div>
           </div>
