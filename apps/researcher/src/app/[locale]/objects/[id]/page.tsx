@@ -163,7 +163,7 @@ export default async function Details({params}: Props) {
 
         <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row h-full items-stretch grow content-stretch self-stretch gap-4 md:gap-16 w-full px-4 sm:px-10">
           <main className="w-full md:w-2/3 order-2 md:order-1">
-            <Notifications />
+            <Notifications prefixFilters={['objectList']} />
             <div className="mb-4 mt-10 flex justify-between">
               <h2 className="text-2xl scroll-mt-20" tabIndex={0} id="metadata">
                 {t('metadata')}

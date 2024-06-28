@@ -126,7 +126,7 @@ test.describe('Object list page logged in', () => {
     await gotoSignedIn(objectUrl);
     await page.getByTestId('popover-menu-button').hover();
     await page.getByTestId(`object-list-${listId}`).click();
-    await expect(page.getByTestId('notification')).toHaveCount(3);
+    await expect(page.getByTestId('notification')).toHaveCount(1);
     await page.goto(`/en/communities/${community.slug}/${listId}`);
     await expect(page.getByTestId('object-card')).toHaveCount(1);
   });
