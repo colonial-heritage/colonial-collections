@@ -213,7 +213,8 @@
   "noCommunities": "U bent nog geen lid van een community die toestemming heeft om een Local Context Notice toe te voegen. U kunt een community creëren of lid worden van een bestaande community.",
   "saving": "Opslaan...",
   "noticeInformationTitle": "Waarom deze notice gebruiken",
-  "noticeTextTitle": "Notice tekst"
+  "noticeTextTitle": "Notice tekst",
+    "accessibilityCloseButton": "Formulier sluiten"
 },
 "Provenance": {
     "title": "Herkomst",
