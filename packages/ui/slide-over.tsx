@@ -8,7 +8,12 @@ import {
   useContext,
   Dispatch,
 } from 'react';
-import {Dialog, Transition} from '@headlessui/react';
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 
@@ -57,7 +62,7 @@ export function SlideOverDialog({children}: SlideOverDialogProps) {
   });
 
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
+    <Transition show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
@@ -68,7 +73,7 @@ export function SlideOverDialog({children}: SlideOverDialogProps) {
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-              <Transition.Child
+              <TransitionChild
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
                 enterFrom="translate-x-full"
@@ -77,17 +82,17 @@ export function SlideOverDialog({children}: SlideOverDialogProps) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className={panelClassName}>
+                <DialogPanel className={panelClassName}>
                   <div className="flex h-full flex-col shadow-xl">
                     {children}
                   </div>
-                </Dialog.Panel>
-              </Transition.Child>
+                </DialogPanel>
+              </TransitionChild>
             </div>
           </div>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   );
 }
 
