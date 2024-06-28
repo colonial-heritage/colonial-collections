@@ -65,7 +65,7 @@ export function SlideOverDialog({children}: SlideOverDialogProps) {
     <Transition show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-50"
         onClose={() => setIsOpen(false)}
       >
         <div className="fixed inset-0" />
