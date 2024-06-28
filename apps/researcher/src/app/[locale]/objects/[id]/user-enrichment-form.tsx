@@ -105,7 +105,7 @@ export function UserEnrichmentForm({
       });
 
       addNotification({
-        id: 'add-user-enrichment-success',
+        id: `userEnrichment.${enrichmentType}.added.success`,
         message: t('successfullyAdded'),
         type: 'success',
       });

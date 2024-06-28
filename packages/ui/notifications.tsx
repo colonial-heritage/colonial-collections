@@ -4,12 +4,7 @@ import {create} from 'zustand';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {ReactNode, useEffect} from 'react';
 import {usePathname} from 'next/navigation';
-
-const typeColors = {
-  success: 'green-grey',
-  warning: 'yellow',
-  error: 'red',
-};
+import classNames from 'classnames';
 
 type Notification = {
   id: string;
@@ -40,7 +35,11 @@ export const useNotifications = create<State>(set => ({
     })),
 }));
 
-export function Notifications() {
+interface NotificationsProps {
+  prefixFilters?: string[];
+}
+
+export function Notifications({prefixFilters = []}: NotificationsProps) {
   const {notifications, removeNotification, reset} = useNotifications();
   const pathname = usePathname();
 
@@ -55,24 +54,43 @@ export function Notifications() {
 
   return (
     <div className="my-6">
-      {notifications.map(notification => {
-        const typeColor = typeColors[notification.type];
-        return (
-          <div
-            data-testid="notification"
-            key={notification.id}
-            className={`justify-between items-center bg-${typeColor}-50 border-${typeColor}-100 text-${typeColor}-800 border p-4 rounded-xl flex my-2`}
-          >
-            <div>{notification.message}</div>
-            <button
-              onClick={() => removeNotification(notification)}
-              className={`hover:bg-${typeColor}-200 p-1 rounded`}
+      {notifications
+        .filter(
+          notification =>
+            prefixFilters.length === 0 ||
+            prefixFilters.some(prefix => notification.id.startsWith(prefix))
+        )
+        .map(notification => {
+          return (
+            <div
+              data-testid="notification"
+              key={notification.id}
+              className={classNames(
+                'justify-between items-center border p-4 rounded-xl flex my-2',
+                {
+                  'bg-green-grey-50 border-green-grey-100 text-green-grey-800':
+                    notification.type === 'success',
+                  'bg-yellow-50 border-yellow-100 text-yellow-800':
+                    notification.type === 'warning',
+                  'bg-red-50 border-red-100 text-red-800':
+                    notification.type === 'error',
+                }
+              )}
             >
-              <XMarkIcon className="w-4 h-4" />
-            </button>
-          </div>
-        );
-      })}
+              <div>{notification.message}</div>
+              <button
+                onClick={() => removeNotification(notification)}
+                className={classNames('hover:bg-gray-200 p-1 rounded', {
+                  'text-green-grey-800': notification.type === 'success',
+                  'text-yellow-800': notification.type === 'warning',
+                  'text-red-800': notification.type === 'error',
+                })}
+              >
+                <XMarkIcon className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        })}
     </div>
   );
 }

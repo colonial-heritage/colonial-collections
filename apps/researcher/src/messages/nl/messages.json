@@ -102,6 +102,7 @@
     "noEntity": "Object kon niet gevonden worden",
     "object": "Object",
     "providerCurrentHolder": "Data provider of huidig object bewaarder",
+    "accessibilityProviderCurrentHolder": "Meer informatie over de data provider of huidig object bewaarder",
     "providerInfo": "Meer info",
     "contactInfo": "Contact gegevens",
     "dataProviderTitle": "Data provider of huidig object bewaarder",
@@ -149,7 +150,11 @@
     "objectRemovedFromList": "Object verwijderd van lijst <name></name>.",
     "errorObjectRemovedFromList": "Er is een probleem opgetreden bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
     "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig.",
-    "needCommunityToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, moet je deel uitmaken van een community."
+    "needCommunityToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, moet je deel uitmaken van een community.",
+    "pageNavigationMetadata": "Metadata",
+    "pageNavigationNotices": "Local Context Notices",
+    "pageNavigationProvenance": "Herkomst",
+    "pageNavigationProvider": "Data provider"
   },
 "LocalContextsNotices": {
   "attributionIncomplete": "Onvolledige Toeschrijving",

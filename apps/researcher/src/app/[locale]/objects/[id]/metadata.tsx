@@ -1,7 +1,11 @@
 import {useTranslations} from 'next-intl';
 import {PropsWithChildren, ReactNode} from 'react';
 import useObject from './use-object';
-import {SlideOutButton, LocalizedMarkdown} from '@colonial-collections/ui';
+import {
+  SlideOutButton,
+  LocalizedMarkdown,
+  Notifications,
+} from '@colonial-collections/ui';
 import {UserEnrichmentForm} from './user-enrichment-form';
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import type {
@@ -31,6 +35,7 @@ export function Metadata({
     : [];
 
   return (
+
     <div className="flex flex-col gap-4">
       <div className="flex flex-row gap-2 xl:gap-10">
         <div className="w-2/5 lg:w-1/5 md:border-t border-neutral-400 pt-4">
@@ -43,44 +48,46 @@ export function Metadata({
             </h3>
             <div className="text-neutral-600 text-sm hidden md:block">
               {t(`${translationKey}SubTitle`)}
+
             </div>
           </div>
-        </div>
-        {!children && metadataEnrichments.length === 0 ? (
-          <div className="text-neutral-600 italic w-full py-6 text-sm xl:w-4/5 border-t border-neutral-400">
-            {t.rich('noData', {
-              subject: () => (
-                <span className="lowercase">{t(translationKey)}</span>
-              ),
-            })}
-          </div>
-        ) : (
-          <div className="w-full xl:w-4/5 flex flex-col gap-2 border-t border-neutral-400">
-            <MetadataEntry translationKey={translationKey} isCurrentPublisher>
-              {children}
-            </MetadataEntry>
-            {metadataEnrichments?.map(enrichment => (
-              <MetadataEntry
-                key={enrichment.id}
-                translationKey={translationKey}
-                dateCreated={enrichment.pubInfo.dateCreated}
-                citation={enrichment.citation}
-                creator={enrichment.pubInfo.creator}
-                languageCode={enrichment.inLanguage}
-              >
-                <ReadMoreText text={enrichment.description} />
+          {!children && metadataEnrichments.length === 0 ? (
+            <div className="text-neutral-600 italic w-full py-6 text-sm xl:w-4/5 border-t border-neutral-400">
+              {t.rich('noData', {
+                subject: () => (
+                  <span className="lowercase">{t(translationKey)}</span>
+                ),
+              })}
+            </div>
+          ) : (
+            <div className="w-full xl:w-4/5 flex flex-col gap-2 border-t border-neutral-400">
+              <MetadataEntry translationKey={translationKey} isCurrentPublisher>
+                {children}
               </MetadataEntry>
-            ))}
-          </div>
+              {metadataEnrichments?.map(enrichment => (
+                <MetadataEntry
+                  key={enrichment.id}
+                  translationKey={translationKey}
+                  dateCreated={enrichment.pubInfo.dateCreated}
+                  citation={enrichment.citation}
+                  creator={enrichment.pubInfo.creator}
+                  languageCode={enrichment.inLanguage}
+                >
+                  <ReadMoreText text={enrichment.description} />
+                </MetadataEntry>
+              ))}
+            </div>
+          )}
+        </div>
+        {enrichmentType && (
+          <AddMetadataEnrichment
+            translationKey={translationKey}
+            enrichmentType={enrichmentType}
+          />
         )}
       </div>
-      {enrichmentType && (
-        <AddMetadataEnrichment
-          translationKey={translationKey}
-          enrichmentType={enrichmentType}
-        />
-      )}
-    </div>
+      <Notifications prefixFilters={[`userEnrichment.${enrichmentType}`]} />
+    </>
   );
 }
 
