@@ -63,7 +63,7 @@ function Form({
     try {
       await saveAction({list, pathName, id: listId});
       addNotification({
-        id: 'add-object-list-success',
+        id: 'objectList.created.success',
         message: t.rich(successfulSaveMessageKey, {
           name: () => <em>{list.name}</em>,
         }),

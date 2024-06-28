@@ -88,7 +88,7 @@ export default async function LocalContextsNotices() {
         })}
       </p>
       <AddLocalContextsNotice />
-      <Notifications />
+      <Notifications prefixFilters={['notice.']} />
       <div className="w-full mt-4">
         {noticesToDisplay.map(notice => (
           <div

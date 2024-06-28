@@ -40,7 +40,11 @@ export const useNotifications = create<State>(set => ({
     })),
 }));
 
-export function Notifications() {
+interface NotificationsProps {
+  prefixFilters?: string[];
+}
+
+export function Notifications({prefixFilters = []}: NotificationsProps) {
   const {notifications, removeNotification, reset} = useNotifications();
   const pathname = usePathname();
 
@@ -55,24 +59,30 @@ export function Notifications() {
 
   return (
     <div className="my-6">
-      {notifications.map(notification => {
-        const typeColor = typeColors[notification.type];
-        return (
-          <div
-            data-testid="notification"
-            key={notification.id}
-            className={`justify-between items-center bg-${typeColor}-50 border-${typeColor}-100 text-${typeColor}-800 border p-4 rounded-xl flex my-2`}
-          >
-            <div>{notification.message}</div>
-            <button
-              onClick={() => removeNotification(notification)}
-              className={`hover:bg-${typeColor}-200 p-1 rounded`}
+      {notifications
+        .filter(
+          notification =>
+            prefixFilters.length === 0 ||
+            prefixFilters.some(prefix => notification.id.startsWith(prefix))
+        )
+        .map(notification => {
+          const typeColor = typeColors[notification.type];
+          return (
+            <div
+              data-testid="notification"
+              key={notification.id}
+              className={`justify-between items-center bg-${typeColor}-50 border-${typeColor}-100 text-${typeColor}-800 border p-4 rounded-xl flex my-2`}
             >
-              <XMarkIcon className="w-4 h-4" />
-            </button>
-          </div>
-        );
-      })}
+              <div>{notification.message}</div>
+              <button
+                onClick={() => removeNotification(notification)}
+                className={`hover:bg-${typeColor}-200 p-1 rounded`}
+              >
+                <XMarkIcon className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        })}
     </div>
   );
 }
