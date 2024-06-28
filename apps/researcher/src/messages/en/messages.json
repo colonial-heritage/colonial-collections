@@ -175,7 +175,7 @@
     "title": "Local Contexts Notices",
     "description": "The Local Contexts Collections Care (CC) Notices are visible identifiers developed specifically for institutions and repositories to support proper cultural care and stewardship of collections, led and guided by Indigenous protocols and authority. <link> Learn more about the Local Contexts Collections Care Notices.</link>.",
     "defaultProvider": "Colonial Collections Consortium",
-    "defaultLabel": "This is a default Notice in case no other Notices are assigned.",
+    "defaultLabel": "This is a standard Notice added to each object to indicate an incomplete, incorrect and/or missing attribution.",
     "addLocalContextsNoticeButton": "Add your Local Context Notice",
     "needAccountToAddLocalContextsNotice": "To add Local Contexts Notices to this object, you need an account.",
     "needCommunityToAddLocalContextsNotice": "To add Local Contexts Notices to this object, you need to be part of a community."
@@ -184,7 +184,7 @@
     "title": "Add a Local Context Notice",
     "type": "Select one of the Local Contexts Notices. Click on a Notice for more information.",
     "description": "Motivation",
-    "descriptionSubTitle": "Why would you like to add this Notice?",
+    "descriptionSubTitle": "Can you explain your choice for this notice?",
     "inLanguage": "Language",
     "languageSubTitle": "Select the language of your motivation. Start typing to select a language.",
     "successfullyAdded": "Your Local Context Notice has been added to the object. It could take a moment before it is visible.",
