@@ -102,6 +102,7 @@
     "noEntity": "Object could not be found",
     "object": "Object",
     "providerCurrentHolder": "Data provider object",
+    "accessibilityProviderCurrentHolder": "More information about the data provider",
     "providerInfo": "More info",
     "contactInfo": "Contact info",
     "dataProviderTitle": "Data provider object",
@@ -149,27 +150,39 @@
     "objectRemovedFromList": "Object removed from list <name></name>.",
     "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later.",
     "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account.",
-    "needCommunityToAddNarrativeTitle": "To add your narrative to this object you need to be part of a community."
+    "needCommunityToAddNarrativeTitle": "To add your narrative to this object you need to be part of a community.",
+    "pageNavigationMetadata": "Metadata",
+    "pageNavigationNotices": "Local Context Notices",
+    "pageNavigationProvenance": "Provenance",
+    "pageNavigationProvider": "Data provider"
   },
   "LocalContextsNotices": {
     "attributionIncomplete": "Attribution Incomplete",
     "attributionIncompleteLabel": "Collections and items in our institution have incomplete, inaccurate, and/or missing attribution. We are using this notice to clearly identify this material so that it can be updated, or corrected by communities of origin. Our institution is committed to collaboration and partnerships to address this problem of incorrect or missing attribution.",
     "authorization": "Authorization",
     "authorizationLabel": "The Authorization Notice is being used to indicate that distinct Tribal or community authorization through consultation needs to be obtained for any reproduction of this item, including for the use in exhibitions and publications in print or online.",
+    "authorizationInformation": "The Authorization Notice recognizes that specific Tribal or community authorization through consultation is necessary prior to use of specific items or collections in all forms of publication and exhibits.",
     "belonging": "Belonging",
     "belongingLabel": "The Belonging Notice is being used to indicate that only specific persons belonging to communities, Tribes, Clans, and societies have the right to access and handle these specific items or collections.",
+    "belongingInformation": "The Belonging Notice recognizes the exclusive right of Indigenous communities, Tribes, Clans, or societies to access and handle items or collections.",
     "caring": "Caring",
     "caringLabel": "The Caring Notice is being used to indicate that specialized cultural care is required. Care for items or collections will require specific community guidelines for storage and handling.",
+    "caringInformation": "The Caring Notice recognizes cultural ways of caring for materials including specific ways of handling, storing, or managing specific items or collections. In all cases, care will be defined through community consultations.",
     "genderAware": "Gender Aware",
     "genderAwareLabel": "The Gender Aware Notice is being used to indicate there are specific gender responsibilities that affect who can access, view, and/or handle this item or collection.",
+    "genderAwareInformation": "The Gender Aware Notice recognizes that gender  influences access, handling, viewing, and interacting with items or collections. Specifically, this Notice calls attention to who should handle items or collections based on their self-identified gender.",
     "leaveUndisturbed": "Leave Undisturbed",
     "leaveUndisturbedLabel": "The Leave Undisturbed Notice is being used to indicate that items in a collection should not be disturbed. They should only be moved or disturbed under very limited circumstances according to community guidance.",
+    "leaveUndisturbedInformation": "The Leave Undisturbed Notice recognizes the cultural significance and necessity of not disturbing certain cultural materials.",
     "safety": "Safety",
     "safetyLabel": "The Safety Notice is being used to indicate that extreme caution and care needs to be taken in viewing and handling this item or collection for individual or community well-being and health.",
+    "safetyInformation": "The Safety Notice calls attention to the need for respectful safety precautions to avoid handling items in collections when one is menstruating and/or pregnant for the well-being and health of the individual and their family.",
     "viewing": "Viewing",
     "viewingLabel": "The Viewing Notice is being used to indicate that there are limits to who, how, and when an item/collection can be viewed, distributed, and circulated. This includes existing images or representations of an existing or deaccessioned item(s) within a collection(s).",
+    "viewingInformation": "The Viewing Notice recognizes that there are limits to viewing or accessing current or deaccessioned items in a collection(s) or their representations.",
     "withholding": "Withholding",
-    "withholdingLabel": "The Withholding Notice is being used to indicate that no reproductions of this item or collection should ever be made. If there are already existing photographs or reproductions, these should not be used in any exhibition or publication in print, online, or any other format."
+    "withholdingLabel": "The Withholding Notice is being used to indicate that no reproductions of this item or collection should ever be made. If there are already existing photographs or reproductions, these should not be used in any exhibition or publication in print, online, or any other format.",
+    "withholdingInformation": "The Withholding Notice recognizes the need to completely withhold certain items or collections from photography, reproduction, publications, and any type of exhibit in future modalities."
   },
   "LocalContextsNoticesOverview": {
     "title": "Local Contexts Notices",
@@ -199,8 +212,8 @@
     "agreedToLicenseUnchecked": "You need to agree to the license before you can add a Local Context Notice",
     "noCommunities": "You are not yet a member of a community that has permission to add a Local Context Notice. You can create a community or join an existing community.",
     "saving": "Saving...",
-    "noticeInformationTitle": "Notice text",
-    "noticeInformationSubTitle": "This text will be placed as a Notice."
+    "noticeInformationTitle": "Why use this notice",
+    "noticeTextTitle": "Notice text"
   },
   "Provenance": {
     "title": "Provenance",

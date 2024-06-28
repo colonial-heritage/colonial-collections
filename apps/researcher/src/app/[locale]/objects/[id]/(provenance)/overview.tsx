@@ -64,7 +64,11 @@ export default async function Provenance({objectId}: {objectId: string}) {
     <ProvenanceProvider events={userEvents}>
       <div className="w-full">
         <div className="mx-auto px-4 sm:px-10 max-w-[1800px]">
-          <h2 id="provenance" className="text-2xl mb-2 mt-20" tabIndex={0}>
+          <h2
+            id="provenance"
+            className="text-2xl mb-2 mt-20 scroll-mt-20"
+            tabIndex={0}
+          >
             {t('title')}
           </h2>
           <p className="text-neutral-600 text-sm max-w-2xl mb-6">
@@ -107,7 +111,7 @@ async function AddProvenanceSlideOut({objectId}: {objectId: string}) {
 
   return (
     <>
-      <Notifications />
+      <Notifications prefixFilters={['provenance.']} />
       <SignedInWithCommunitySideOut
         slideOutId={slideOutId}
         needAccountTitle={t('needAccountToAddProvenanceTitle')}

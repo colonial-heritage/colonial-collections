@@ -1,7 +1,7 @@
 'use client';
 
 import {useTranslations} from 'next-intl';
-import {Badge} from '../badge';
+import {Badge, BadgeAction, BadgeIcon} from '../badge';
 import {
   useListStore,
   Type as SearchParamType,
@@ -76,9 +76,9 @@ export function SelectedFiltersForKey({
 
   return badges.map(({label, action, key}) => (
     <Badge key={key} testId="selectedFilter">
-      <Badge.Icon Icon={TagIcon} />
+      <BadgeIcon Icon={TagIcon} />
       {label}
-      <Badge.Action onClick={action} />
+      <BadgeAction onClick={action} />
     </Badge>
   ));
 }
@@ -154,9 +154,9 @@ export function SelectedFilters({filters, filterSettings}: Props) {
         })}
         {query && (
           <Badge testId="selectedFilter">
-            <Badge.Icon Icon={MagnifyingGlassIcon} />
+            <BadgeIcon Icon={MagnifyingGlassIcon} />
             {query}
-            <Badge.Action
+            <BadgeAction
               onClick={() => {
                 queryChange('');
               }}

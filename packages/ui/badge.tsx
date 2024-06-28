@@ -29,7 +29,7 @@ interface BadgeIconProps {
   variant?: 'outline' | 'solid';
 }
 
-function BadgeIcon({Icon = XMarkIcon, variant}: BadgeIconProps) {
+export function BadgeIcon({Icon = XMarkIcon, variant}: BadgeIconProps) {
   const variantClassName = classNames('w-4 h-4 mr-1', {
     "stroke-(lookup . 'twColor')": variant === 'outline',
     "fill-(lookup . 'twColor')": variant === 'solid',
@@ -47,13 +47,10 @@ interface BadgeActionProps {
   onClick: () => void;
 }
 
-function BadgeAction({Icon = XMarkIcon, onClick}: BadgeActionProps) {
+export function BadgeAction({Icon = XMarkIcon, onClick}: BadgeActionProps) {
   return (
     <button type="button" className="ml-1" onClick={onClick}>
       <Icon className="w-5 h-5 fill-(lookup . 'twColor')-800" />
     </button>
   );
 }
-
-Badge.Action = BadgeAction;
-Badge.Icon = BadgeIcon;
