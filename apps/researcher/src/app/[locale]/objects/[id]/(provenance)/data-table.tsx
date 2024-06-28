@@ -80,10 +80,10 @@ function ProvenanceEventRow({
 
   return (
     <div className="flex flex-col md:flex-row gap-4 border-t">
-      <div className="w-1/3 lg:w-1/4 py-2">
+      <div className="w-full md:w-1/3 lg:w-1/4 py-2">
         <div className="sticky top-8">{dateRange}</div>
       </div>
-      <div className="flex flex-col gap-4 w-2/3 lg:w-3/4 ">
+      <div className="flex flex-col gap-4 w-full md:w-2/3 lg:w-3/4 ">
         {provenanceEvents.map(event => (
           <div
             key={event.id}
@@ -94,7 +94,7 @@ function ProvenanceEventRow({
                 {event.label}
               </SelectEventsButton>
             </div>
-            <div className="w-2/3">
+            <div className="w-full md:w-2/3">
               {metadata.map(
                 ({prop, translationKey}) =>
                   event[prop] && (
@@ -147,7 +147,7 @@ function ProvenanceEventRow({
                 </>
               )}
             </div>
-            <div className="w-1/3 text-xs">
+            <div className="w-full md:w-1/3 text-xs">
               <ProvidedBy
                 dateCreated={event.dateCreated}
                 citation={event.citation}
