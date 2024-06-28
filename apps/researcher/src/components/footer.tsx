@@ -27,12 +27,9 @@ export default async function Footer() {
   const t = await getTranslations('Navigation');
 
   return (
-    <footer className="w-full bg-consortium-blue-800 text-consortium-blue-50 pt-20 pb-52 px-4 sm:px-10 relative mt-20">
+    <footer className="w-full bg-consortium-blue-800 text-consortium-blue-50 pt-20 lg:pb-52 px-4 sm:px-10 relative mt-20">
       <div className="max-w-7xl w-full flex flex-col gap-4 lg:gap-10 lg:flex-row mx-auto">
-        <div className="flex justify-center w-full max-w-6xl absolute bottom-0 opacity-20 z-0">
-          <FooterBackground />
-        </div>
-        <div className="w-full lg:w-1/3">
+        <div className="w-full lg:w-1/3 border-consortium-blue-400 lg:border-r pr-4">
           <Link href="/" className="flex flex-row gap-2">
             <div className="w-5 sm:w-10">
               <ConsortiumLogo />
@@ -50,12 +47,12 @@ export default async function Footer() {
             </div>
           </Link>
         </div>
-        <div className="w-full lg:w-1/3 border-consortium-blue-400 border-r">
-          <div className="flex flex-col gap-2 text-sm max-w-80">
+        <div className="w-full lg:w-1/3 border-consortium-blue-400 border-t lg:border-t-0 lg:border-r pt-4">
+          <div className="flex flex-col gap-2 text-sm max-w-80 pr-4">
             <p className="whitespace-pre-wrap">{t('footerText')}</p>
           </div>
         </div>
-        <div className="w-full lg:w-1/3 flex gap-10 border-consortium-blue-400 border-r">
+        <div className="w-full lg:w-1/3 flex gap-10 border-t pt-4 lg:border-t-0 border-consortium-blue-400">
           <nav className="flex flex-col gap-1 text-lg font-semibold">
             <ToFilteredListButton baseUrl="/objects">
               {t('searchObjects')}
@@ -72,6 +69,9 @@ export default async function Footer() {
               </Link>
             ))}
           </nav>
+        </div>
+        <div className="flex justify-center w-full max-w-3xl lg:absolute bottom-0 opacity-20 z-0">
+          <FooterBackground />
         </div>
       </div>
     </footer>
