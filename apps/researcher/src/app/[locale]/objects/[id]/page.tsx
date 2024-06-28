@@ -109,7 +109,7 @@ export default async function Details({params}: Props) {
                   </div>
                 ))}
               </div>
-              <div className="text-sm my-4 xl:my-10 text-consortium-blue-100 flex gap-1">
+              <div className="text-sm my-4 xl:my-10 text-consortium-blue-100 md:flex gap-1">
                 {organization && (
                   <>
                     {t('providerCurrentHolder')}
