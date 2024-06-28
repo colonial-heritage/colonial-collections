@@ -78,7 +78,7 @@ export default async function LocalContextsNotices() {
         {t.rich('description', {
           link: text => (
             <a
-              href="https://localcontexts.org/notices/local-contexts-notices/"
+              href="https://localcontexts.org/notices/cc-notices/"
               target="_blank"
               rel="noopener noreferrer"
             >
