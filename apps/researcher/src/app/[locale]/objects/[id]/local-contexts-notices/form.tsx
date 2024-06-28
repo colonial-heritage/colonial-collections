@@ -106,7 +106,7 @@ export function LocalContextsNoticeForm({
       });
 
       addNotification({
-        id: 'add-user-notice-success',
+        id: 'notice.added.success',
         message: t('successfullyAdded'),
         type: 'success',
       });

@@ -67,14 +67,18 @@ export default async function LocalContextsNotices() {
 
   return (
     <div className="my-16" id="localContextNotices">
-      <h2 className="text-2xl mb-4 scroll-mt-20" tabIndex={0}>
+      <h2
+        className="text-2xl mb-4 scroll-mt-20"
+        tabIndex={0}
+        id="localcontextnotices"
+      >
         {t('title')}
       </h2>
       <p className="text-neutral-600 text-sm max-w-xl mb-6">
         {t.rich('description', {
           link: text => (
             <a
-              href="https://localcontexts.org/notices/local-contexts-notices/"
+              href="https://localcontexts.org/notices/cc-notices/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -84,7 +88,7 @@ export default async function LocalContextsNotices() {
         })}
       </p>
       <AddLocalContextsNotice />
-      <Notifications />
+      <Notifications prefixFilters={['notice.']} />
       <div className="w-full mt-4">
         {noticesToDisplay.map(notice => (
           <div

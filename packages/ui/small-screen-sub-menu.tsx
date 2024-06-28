@@ -8,7 +8,12 @@ import {
   useContext,
   Dispatch,
 } from 'react';
-import {Dialog, Transition} from '@headlessui/react';
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 
 interface SubMenuContextType {
@@ -48,9 +53,9 @@ export function SubMenuDialog({children, title}: SubMenuDialogProps) {
   const {isOpen, setIsOpen} = useContext(SubMenuContext);
 
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
+    <Transition show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-40 lg:hidden" onClose={setIsOpen}>
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="transition-opacity ease-linear duration-300"
           enterFrom="opacity-0"
@@ -60,9 +65,9 @@ export function SubMenuDialog({children, title}: SubMenuDialogProps) {
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-black bg-opacity-50" />
-        </Transition.Child>
+        </TransitionChild>
         <div className="fixed inset-0 z-40 flex">
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="transition ease-in-out duration-300 transform"
             enterFrom="translate-x-full"
@@ -71,7 +76,7 @@ export function SubMenuDialog({children, title}: SubMenuDialogProps) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white px-4 py-4 pb-6 shadow-xl">
+            <DialogPanel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white px-4 py-4 pb-6 shadow-xl">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold">{title}</h2>
                 <button
@@ -84,11 +89,11 @@ export function SubMenuDialog({children, title}: SubMenuDialogProps) {
                 </button>
               </div>
               {children}
-            </Dialog.Panel>
-          </Transition.Child>
+            </DialogPanel>
+          </TransitionChild>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   );
 }
 

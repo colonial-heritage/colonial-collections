@@ -3,7 +3,7 @@ export function FooterBackground() {
     <svg
       version="1.1"
       fill="currentColor"
-      className="w-full h-auto fill-consortium-green-500"
+      className="w-full max-w-[80vw] h-auto fill-consortium-green-500"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       x="0px"

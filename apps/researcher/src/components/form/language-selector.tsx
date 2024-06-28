@@ -1,5 +1,11 @@
 import {CheckIcon, ChevronDownIcon} from '@heroicons/react/20/solid';
-import {Combobox} from '@headlessui/react';
+import {
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+} from '@headlessui/react';
 import {useState} from 'react';
 import classNames from 'classnames';
 import ISO6391 from 'iso-639-1';
@@ -31,7 +37,7 @@ export function LanguageSelector({name}: Props) {
       onChange={value => setValue(name, value)}
     >
       <div className="relative mt-2">
-        <Combobox.Input
+        <ComboboxInput
           className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-12 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={event => setQuery(event.target.value)}
           displayValue={() => {
@@ -41,17 +47,17 @@ export function LanguageSelector({name}: Props) {
               : value;
           }}
         />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+        <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronDownIcon
             className="w-4 h-4 stroke-neutral-900"
             aria-hidden="true"
           />
-        </Combobox.Button>
+        </ComboboxButton>
 
         {filteredLanguageCodes.length > 0 && (
-          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredLanguageCodes.map(languageCode => (
-              <Combobox.Option
+              <ComboboxOption
                 key={languageCode}
                 value={languageCode}
                 className={({active}) =>
@@ -94,9 +100,9 @@ export function LanguageSelector({name}: Props) {
                     )}
                   </>
                 )}
-              </Combobox.Option>
+              </ComboboxOption>
             ))}
-          </Combobox.Options>
+          </ComboboxOptions>
         )}
       </div>
     </Combobox>

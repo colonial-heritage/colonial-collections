@@ -1,6 +1,12 @@
 'use client';
 
-import {Transition, Menu} from '@headlessui/react';
+import {
+  Transition,
+  Menu,
+  MenuButton,
+  MenuItems,
+  MenuItem,
+} from '@headlessui/react';
 import {ChevronDownIcon, CheckIcon} from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import {ElementType, Fragment} from 'react';
@@ -26,10 +32,10 @@ export function NavigationMenu({
 }: Props) {
   return (
     <Menu as="div" className="relative">
-      <Menu.Button className={classNames(className, 'flex items-center gap-1')}>
+      <MenuButton className={classNames(className, 'flex items-center gap-1')}>
         <span>{buttonText}</span>
         <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
-      </Menu.Button>
+      </MenuButton>
 
       <Transition
         as={Fragment}
@@ -40,9 +46,9 @@ export function NavigationMenu({
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 translate-y-1"
       >
-        <Menu.Items className="flex-col bg-consortium-blue-600 absolute z-20 shadow-lg flex">
+        <MenuItems className="flex-col bg-consortium-blue-600 absolute z-20 shadow-lg flex">
           {menuItems.map(item => (
-            <Menu.Item key={item.name}>
+            <MenuItem key={item.name}>
               <Link
                 href={item.href}
                 locale={item.locale}
@@ -56,9 +62,9 @@ export function NavigationMenu({
                   <CheckIcon className="ml-3 h-5 w-5" aria-hidden="true" />
                 )}
               </Link>
-            </Menu.Item>
+            </MenuItem>
           ))}
-        </Menu.Items>
+        </MenuItems>
       </Transition>
     </Menu>
   );
