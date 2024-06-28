@@ -1,7 +1,13 @@
 'use client';
 
 import {MagnifyingGlassIcon} from '@heroicons/react/20/solid';
-import {Combobox} from '@headlessui/react';
+import {
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+} from '@headlessui/react';
 import {useRef, useState} from 'react';
 import {FaceFrownIcon} from '@heroicons/react/24/solid';
 import {useDebounce} from 'use-debounce';
@@ -38,7 +44,7 @@ export function SearchSelector({name, searchers}: Props) {
           className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400"
           aria-hidden="true"
         />
-        <Combobox.Input
+        <ComboboxInput
           onChange={e => {
             setQuery(e.target.value);
           }}
@@ -49,10 +55,10 @@ export function SearchSelector({name, searchers}: Props) {
             buttonRef.current?.click();
           }}
         />
-        <Combobox.Button ref={buttonRef}></Combobox.Button>
+        <ComboboxButton ref={buttonRef}></ComboboxButton>
       </div>
 
-      <Combobox.Options className="scroll-pb-2 scroll-pt-11 space-y-2 overflow-y-auto pb-2 border border-neutral-300">
+      <ComboboxOptions className="scroll-pb-2 scroll-pt-11 space-y-2 overflow-y-auto pb-2 border border-neutral-300">
         {query === '' ? (
           <div className="border-t border-gray-100 px-6 py-14 text-center text-sm sm:px-14">
             <p className="mt-2 text-gray-500">{t('beforeTyping')}</p>
@@ -69,7 +75,7 @@ export function SearchSelector({name, searchers}: Props) {
             ))}
           </>
         )}
-      </Combobox.Options>
+      </ComboboxOptions>
     </Combobox>
   );
 }
@@ -106,7 +112,7 @@ function SearcherItems({
       ) : (
         <ul className="mt-2 text-sm text-gray-800">
           {searchResults!.map(searchItem => (
-            <Combobox.Option
+            <ComboboxOption
               key={searchItem.id}
               value={searchItem}
               className={({active}) =>
@@ -136,7 +142,7 @@ function SearcherItems({
                   </p>
                 </div>
               )}
-            </Combobox.Option>
+            </ComboboxOption>
           ))}
         </ul>
       )}

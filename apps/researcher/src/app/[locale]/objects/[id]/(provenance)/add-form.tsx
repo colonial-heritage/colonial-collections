@@ -212,7 +212,7 @@ export default function AddProvenanceForm({
       });
 
       addNotification({
-        id: 'add-user-enrichment-success',
+        id: 'provenance.added.success',
         message: t('successfullyAdded'),
         type: 'success',
       });
@@ -411,7 +411,6 @@ export default function AddProvenanceForm({
                     <InputLabel
                       title={t('qualifier')}
                       description={t('qualifierDescription')}
-                      required
                     />
                     <QualifierSelector name="qualifier" />
                   </Field>

@@ -1,7 +1,12 @@
 'use client';
 
 import {Fragment, useRef} from 'react';
-import {Transition, Popover} from '@headlessui/react';
+import {
+  Transition,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 
@@ -46,7 +51,7 @@ export default function PopoverMenu({
             onMouseEnter={() => handleEnter(open)}
             onMouseLeave={() => handleLeave(open)}
           >
-            <Popover.Button
+            <PopoverButton
               data-testid="popover-menu-button"
               className={classNames(
                 'rounded-full px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm flex gap-1 items-center',
@@ -70,7 +75,7 @@ export default function PopoverMenu({
                 )}
                 aria-hidden="true"
               />
-            </Popover.Button>
+            </PopoverButton>
             <Transition
               as={Fragment}
               enter="transition ease-out duration-200"
@@ -80,7 +85,7 @@ export default function PopoverMenu({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel
+              <PopoverPanel
                 className={classNames(
                   'drop-shadow-lg absolute top-9 rounded-lg gap-2 z-40 left-1/2 -translate-x-1/2 transform',
                   {
@@ -92,7 +97,7 @@ export default function PopoverMenu({
                 )}
               >
                 {children}
-              </Popover.Panel>
+              </PopoverPanel>
             </Transition>
           </div>
         )}

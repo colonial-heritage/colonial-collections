@@ -84,7 +84,7 @@ export default function Gallery({images, organizationName}: Props) {
       </Tab.Panels>
 
       {images.length > 1 && (
-        <Tab.List className="w-1/2 md:w-full grid grid-cols-2 md:flex md:flex-row md:flex-wrap md:items-end gap-2 md:py-2 md:border-y-4 border-white">
+        <Tab.List className="w-1/2 md:w-full grid grid-cols-2 md:flex md:flex-row md:flex-wrap md:items-end gap-2 md:py-2">
           {images.map(image => (
             <Tab
               as="div"

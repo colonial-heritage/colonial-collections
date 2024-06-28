@@ -102,6 +102,7 @@
     "noEntity": "Object kon niet gevonden worden",
     "object": "Object",
     "providerCurrentHolder": "Data provider of huidig object bewaarder",
+    "accessibilityProviderCurrentHolder": "Meer informatie over de data provider of huidig object bewaarder",
     "providerInfo": "Meer info",
     "contactInfo": "Contact gegevens",
     "dataProviderTitle": "Data provider of huidig object bewaarder",
@@ -149,27 +150,39 @@
     "objectRemovedFromList": "Object verwijderd van lijst <name></name>.",
     "errorObjectRemovedFromList": "Er is een probleem opgetreden bij het verwijderen van het object van de lijst. Probeer het later opnieuw.",
     "needAccountToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, heb je een account nodig.",
-    "needCommunityToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, moet je deel uitmaken van een community."
+    "needCommunityToAddNarrativeTitle": "Om je verhaal aan dit object toe te voegen, moet je deel uitmaken van een community.",
+    "pageNavigationMetadata": "Metadata",
+    "pageNavigationNotices": "Local Context Notices",
+    "pageNavigationProvenance": "Herkomst",
+    "pageNavigationProvider": "Data provider"
   },
 "LocalContextsNotices": {
   "attributionIncomplete": "Onvolledige Toeschrijving",
   "attributionIncompleteLabel": "Collecties en items in onze instelling hebben een onvolledige, onjuiste en/of ontbrekende toeschrijving en beschrijving. We gebruiken deze _notice_ om dit materiaal duidelijk te identificeren zodat het kan worden bijgewerkt of gecorrigeerd door gemeenschappen van herkomst. Onze instelling zet zich in voor samenwerking en partnerschappen om dit probleem van onjuiste of ontbrekende toeschrijving aan te pakken.",
   "authorization": "Autorisatie",
   "authorizationLabel": "De _Autorisatie-notice_ wordt gebruikt om aan te geven dat er door middel van overleg, specifieke gemeenschapsautorisatie moet worden verkregen voor elke reproductie van dit item, inclusief het gebruik in tentoonstellingen en publicaties in print of online.",
+  "authorizationInformation": "De Autorisatie-notice erkent dat specifieke tribale of gemeenschapsautorisatie door middel van overleg noodzakelijk is voorafgaand aan het gebruik van specifieke items of collecties in alle vormen van publicatie en tentoonstellingen.",
   "belonging": "Toebehoren",
   "belongingLabel": "De _Toebehoren-notice_ wordt gebruikt om aan te geven dat alleen specifieke personen die tot gemeenschappen, stammen, clans en verenigingen behoren, het recht hebben om deze specifieke items of collecties te bekijken en te behandelen.",
+  "belongingInformation": "De Toebehoren-notice erkent het exclusieve recht van inheemse gemeenschappen, stammen, clans of verenigingen om toegang te hebben tot en om te gaan met items of collecties.",
   "caring": "Verzorging",
   "caringLabel": "De _Verzorgings-notice_ wordt gebruikt om aan te geven dat gespecialiseerde culturele zorg vereist is. Zorg voor items of collecties vereist specifieke gemeenschapsrichtlijnen voor opslag en hantering.",
+  "caringInformation": "De Verzorgings-notice erkent culturele manieren van zorg voor materialen, inclusief specifieke manieren van behandeling, opslag of beheer van specifieke items of collecties. In alle gevallen zal zorg worden gedefinieerd door middel van gemeenschapsconsultaties.",
   "genderAware": "Genderbewust",
   "genderAwareLabel": "De _Genderbewust-notice_ wordt gebruikt om aan te geven dat er specifieke genderverantwoordelijkheden zijn die van invloed zijn op wie toegang kan krijgen tot, kijken naar en/of omgaan met dit item of deze collectie.",
+  "genderAwareInformation": "De Genderbewust Kennisgeving erkent dat gender invloed heeft op toegang, behandeling, bekijken en omgaan met items of collecties. Deze notice vestigt specifiek de aandacht op wie items of collecties zou moeten behandelen op basis van hun zelf geïdentificeerde gender.",
   "leaveUndisturbed": "Ongemoeid Laten",
   "leaveUndisturbedLabel": "De _Ongemoeid-Laten-notice_ wordt gebruikt om aan te geven dat items in een collectie niet mogen worden verstoord. Ze mogen alleen onder zeer beperkte omstandigheden, volgens gemeenschapsrichtlijnen, worden verplaatst of verstoord.",
+  "leaveUndisturbedInformation": "De Ongestoord Laten Kennisgeving erkent het culturele belang en de noodzaak om bepaalde culturele materialen niet te verstoren.",
   "safety": "Veiligheid",
   "safetyLabel": "De _Veiligheids-notice_ wordt gebruikt om aan te geven dat uiterste voorzichtigheid en zorg nodig is bij het bekijken en behandelen van dit item of deze collectie, voor het welzijn en de gezondheid van individuen of gemeenschappen.",
+  "safetyInformation": "De Veiligheids-notice vestigt de aandacht op de noodzaak van respectvolle veiligheidsmaatregelen om te voorkomen dat items in collecties worden behandeld wanneer men menstrueert en/of zwanger is, voor het welzijn en de gezondheid van het individu en hun familie.",
   "viewing": "Bekijken",
   "viewingLabel": "De _Bekijken-notice_ wordt gebruikt om aan te geven dat er beperkingen zijn op wie, hoe en wanneer een item/collectie kan worden bekeken, gedistribueerd en gecirculeerd. Dit omvat bestaande afbeeldingen of representaties van een bestaand of afgestoten item binnen een collectie.",
+  "viewingInformation": "De Bekijk-notice erkent dat er beperkingen zijn op het bekijken of toegang hebben tot huidige of gedeaccesioneerde items in een collectie(s) of hun representaties.",
   "withholding": "Achterhouden",
-  "withholdingLabel": "De _Achterhouden-notice_ wordt gebruikt om aan te geven dat er nooit reproducties van dit item of deze collectie mogen worden gemaakt. Als er al bestaande foto's of reproducties zijn, dan mogen deze niet worden gebruikt in een tentoonstelling of publicatie in print, online of in enig ander formaat."
+  "withholdingLabel": "De _Achterhouden-notice_ wordt gebruikt om aan te geven dat er nooit reproducties van dit item of deze collectie mogen worden gemaakt. Als er al bestaande foto's of reproducties zijn, dan mogen deze niet worden gebruikt in een tentoonstelling of publicatie in print, online of in enig ander formaat.",
+  "withholdingInformation": "De Achterhouden Kennisgeving erkent de noodzaak om bepaalde items of collecties volledig te onthouden van fotografie, reproductie, publicaties en elke vorm van tentoonstelling in toekomstige modaliteiten."
 },
 "LocalContextsNoticesOverview": {
   "title": "Local Contexts Notices",
@@ -199,8 +212,8 @@
   "agreedToLicenseUnchecked": "U moet akkoord gaan met de licentie voordat u een Local Context Notice kunt toevoegen",
   "noCommunities": "U bent nog geen lid van een community die toestemming heeft om een Local Context Notice toe te voegen. U kunt een community creëren of lid worden van een bestaande community.",
   "saving": "Opslaan...",
-  "noticeInformationTitle": "Notice tekst",
-  "noticeInformationSubTitle": "Deze tekst wordt als Notice geplaatst."
+  "noticeInformationTitle": "Waarom deze notice gebruiken",
+  "noticeTextTitle": "Notice tekst"
 },
 "Provenance": {
     "title": "Herkomst",

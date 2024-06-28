@@ -1,7 +1,7 @@
 import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
 import {Dataset} from '@colonial-collections/api';
-import {Badge} from '@colonial-collections/ui';
+import {Badge, BadgeIcon} from '@colonial-collections/ui';
 import {BuildingLibraryIcon} from '@heroicons/react/24/solid';
 import {DocumentCheckIcon} from '@heroicons/react/24/outline';
 import BooleanMeasurement from '@/components/boolean-measurement';
@@ -59,11 +59,11 @@ export default function DatasetCard({dataset}: {dataset: Dataset}) {
         </div>
         <div className="mt-2 flex flex-wrap gap-3">
           <Badge variant="gray">
-            <Badge.Icon Icon={BuildingLibraryIcon} variant="solid" />
+            <BadgeIcon Icon={BuildingLibraryIcon} variant="solid" />
             {dataset.publisher?.name}
           </Badge>
           <Badge variant="gray">
-            <Badge.Icon Icon={DocumentCheckIcon} />
+            <BadgeIcon Icon={DocumentCheckIcon} />
             {dataset.license?.name}
           </Badge>
         </div>
