@@ -5,8 +5,6 @@ import {NextIntlClientProvider} from 'next-intl';
 import {ClerkProvider} from '@clerk/nextjs';
 import {getTranslations} from 'next-intl/server';
 import Navigation from '@/components/navigation';
-import {WipMessage} from '@colonial-collections/ui';
-import {Link} from '@/navigation';
 import {env} from 'node:process';
 import AuthHealthCheck from '@/lib/auth-health-check';
 import Footer from '@/components/footer';
@@ -48,8 +46,6 @@ export default async function RootLayout({children, params: {locale}}: Props) {
           <div className="min-h-screen flex flex-col">
             <AuthHealthCheck />
             <NextIntlClientProvider locale={locale} messages={messages}>
-              <WipMessage Link={Link} />
-
               <div className="sr-only">
                 <ul>
                   <li>

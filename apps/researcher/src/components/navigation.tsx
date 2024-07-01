@@ -7,7 +7,7 @@ import {UserButton, SignInButton, SignedOut} from '@clerk/nextjs';
 import SignedIn from '@/lib/community/signed-in';
 import {ConsortiumLogo} from '@colonial-collections/ui/branding';
 import {NavigationMenu} from '@colonial-collections/ui';
-import logoImage from '@colonial-collections/ui/branding/logo-colonial-collections-datahub-alpha.png';
+import logoImage from '@colonial-collections/ui/branding/logo-colonial-collections-datahub-beta.png';
 import {useMemo} from 'react';
 import ToFilteredListButton from './to-filtered-list-button';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
