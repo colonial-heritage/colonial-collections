@@ -21,7 +21,7 @@ describe('getTopLevels', () => {
         name: 'Digital research guide',
         abstract:
           'Research aides for conducting provenance research into colonial collections',
-        text: 'Digital research guide',
+        text: 'On this page you find various research aides that can assist...',
         encodingFormat: 'text/markdown',
         seeAlso: expect.arrayContaining([
           {

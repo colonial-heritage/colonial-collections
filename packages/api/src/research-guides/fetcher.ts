@@ -96,7 +96,7 @@ export class ResearchGuideFetcher {
         }
 
         OPTIONAL {
-          ?topSet schema:name ?topSetText ;
+          ?topSet schema:text ?topSetText ;
           FILTER(LANG(?topSetText) = "${options.locale}")
         }
 
