@@ -68,7 +68,7 @@
     "@colonial-collections/tailwind-config": "*",
     "@colonial-collections/ts-config": "*",
     "@jest/globals": "29.7.0",
-    "@next/env": "14.1.0",
+    "@next/env": "14.2.5",
     "@playwright/test": "1.43.1",
     "@types/leaflet": "1.9.12",
     "@types/mdx": "2.0.13",
