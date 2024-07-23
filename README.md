@@ -1,6 +1,6 @@
 # Colonial Collections
 
-This repository contains the frontend applications of Colonial Collections.
+This repository contains the frontend applications of Colonial Collections
 
 ## Development
 
