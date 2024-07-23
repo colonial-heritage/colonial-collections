@@ -2,13 +2,11 @@ import '../globals.css';
 import {ReactNode} from 'react';
 import Navigation from './navigation';
 import {NextIntlClientProvider, useMessages, useTranslations} from 'next-intl';
-import {WipMessage} from '@colonial-collections/ui';
 import {
   ListProvider,
   defaultSortBy,
   defaultLimit,
 } from '@colonial-collections/list-store';
-import {Link} from '@/navigation';
 
 interface Props {
   children: ReactNode;
@@ -24,7 +22,6 @@ export default function RootLayout({children, params: {locale}}: Props) {
     <html className="h-full" lang={locale}>
       <body className="flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
-          <WipMessage Link={Link} />
           <div className="sr-only">
             <ul>
               <li>
