@@ -1,6 +1,6 @@
 import {Link} from '@/navigation';
 import Image from 'next/image';
-import logoImage from '@colonial-collections/ui/branding/logo-colonial-collections-datahub-alpha.png';
+import logoImage from '@colonial-collections/ui/branding/logo-colonial-collections-datahub-beta.png';
 import {
   ConsortiumLogo,
   FooterBackground,
