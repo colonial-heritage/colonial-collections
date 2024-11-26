@@ -25,14 +25,14 @@ describe('search', () => {
           description: 'uitgeverij uit Utrecht',
         },
         {
-          id: 'http://www.wikidata.org/entity/Q105964347',
+          id: 'http://www.wikidata.org/entity/Q131287465',
           name: 'Rembrandt',
-          description: 'Metaalwarenfabriek Rembrandt BV',
+          description: 'fotograaf',
         },
         {
-          id: 'http://www.wikidata.org/entity/Q17330745',
-          name: 'Rembrandts vader',
-          description: 'Nederlands acteur',
+          id: 'http://www.wikidata.org/entity/Q375926',
+          name: 'Rembrandt Peale',
+          description: 'Amerikaans kunstschilder (1778-1860)',
         },
       ],
     });
@@ -48,9 +48,9 @@ describe('search', () => {
     expect(result).toStrictEqual({
       things: [
         {
-          id: 'http://www.wikidata.org/entity/Q352864',
-          name: 'Pieter Lastman',
-          description: 'Dutch painter',
+          id: 'http://www.wikidata.org/entity/Q29885090',
+          name: 'Neeltje Willemsdr. Zuytbrouck',
+          description: "Rembrandt's mother",
         },
         {
           id: 'http://www.wikidata.org/entity/Q105964347',
@@ -60,7 +60,7 @@ describe('search', () => {
         {
           id: 'http://www.wikidata.org/entity/Q1300641',
           name: 'Rembrandt Bugatti',
-          description: '1884-1916 Italian sculptor',
+          description: 'Italian sculptor (1884–1916)',
         },
       ],
     });

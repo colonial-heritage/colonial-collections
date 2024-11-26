@@ -76,6 +76,11 @@ export type HeritageObject = Thing & {
   isPartOf?: Dataset;
 };
 
+export type Event = {
+  id: string;
+  date?: TimeSpan;
+};
+
 export enum ProvenanceEventType {
   Acquisition = 'acquisition',
   TransferOfCustody = 'transferOfCustody',
