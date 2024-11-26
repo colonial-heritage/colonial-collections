@@ -2,7 +2,11 @@ import {describe, expect, it} from '@jest/globals';
 import {StreamParser} from 'n3';
 import {RdfObjectLoader, Resource} from 'rdf-object';
 import streamifyString from 'streamify-string';
-import {createCitations, createResearchGuide} from './rdf-helpers';
+import {
+  createCitations,
+  createEvents,
+  createResearchGuide,
+} from './rdf-helpers';
 
 const loader = new RdfObjectLoader({
   context: {
@@ -21,9 +25,15 @@ beforeAll(async () => {
     ex:researchGuide2 a ex:CreativeWork ;
       ex:identifier "1" ;
       ex:name "Name 2" ;
+      ex:alternateName "Alternate name 2" ;
       ex:abstract "Abstract 2" ;
       ex:text "Text" ;
       ex:encodingFormat "text/html" ;
+      ex:contentReferenceTime [
+        a ex:Event ;
+        ex:startDate "1924" ;
+        ex:endDate "1996" ;
+      ] ;
       ex:contentLocation [
         ex:name "Content Location" ;
         ex:sameAs <https://example.org/place> ;
@@ -65,6 +75,35 @@ beforeAll(async () => {
   await loader.import(streamParser);
 });
 
+describe('contentReferenceTimes', () => {
+  let resource: Resource;
+
+  beforeEach(() => {
+    resource = loader.resources['https://example.org/researchGuide2'];
+  });
+
+  it('returns undefined if property does not exist', () => {
+    const citations = createCitations(resource, 'ex:unknown');
+
+    expect(citations).toBeUndefined();
+  });
+
+  it('returns events if property exists', () => {
+    const events = createEvents(resource, 'ex:contentReferenceTime');
+
+    expect(events).toStrictEqual([
+      {
+        id: expect.any(String),
+        date: {
+          id: expect.any(String),
+          startDate: new Date('1924-01-01T00:00:00.000Z'),
+          endDate: new Date('1996-12-31T23:59:59.999Z'),
+        },
+      },
+    ]);
+  });
+});
+
 describe('createCitations', () => {
   let resource: Resource;
 
@@ -83,7 +122,7 @@ describe('createCitations', () => {
 
     expect(citations).toStrictEqual([
       {
-        id: 'n3-2',
+        id: expect.any(String),
         name: 'Citation',
         description: 'Citation Description',
         url: 'https://example.org/citation',
@@ -111,9 +150,20 @@ describe('createResearchGuide', () => {
       id: 'https://example.org/researchGuide2',
       identifier: '1',
       name: 'Name 2',
+      alternateName: 'Alternate name 2',
       abstract: 'Abstract 2',
       text: 'Text',
       encodingFormat: 'text/html',
+      contentReferenceTimes: [
+        {
+          id: expect.any(String),
+          date: {
+            id: expect.any(String),
+            startDate: new Date('1924-01-01T00:00:00.000Z'),
+            endDate: new Date('1996-12-31T23:59:59.999Z'),
+          },
+        },
+      ],
       seeAlso: [
         {
           id: 'https://example.org/researchGuide3',
@@ -136,21 +186,21 @@ describe('createResearchGuide', () => {
       ],
       contentLocations: [
         {
-          id: 'n3-0',
+          id: expect.any(String),
           name: 'Content Location',
           sameAs: 'https://example.org/place',
         },
       ],
       keywords: [
         {
-          id: 'n3-1',
+          id: expect.any(String),
           name: 'Keyword',
           sameAs: 'https://example.org/keyword',
         },
       ],
       citations: [
         {
-          id: 'n3-2',
+          id: expect.any(String),
           name: 'Citation',
           description: 'Citation Description',
           url: 'https://example.org/citation',

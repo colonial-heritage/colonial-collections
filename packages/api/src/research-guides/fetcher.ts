@@ -70,7 +70,7 @@ export class ResearchGuideFetcher {
           ex:seeAlso ?subSet .
 
         ?subSet a ex:CreativeWork ;
-          ex:identifier ?identifier ;
+          ex:name ?subSetName ;
           ex:seeAlso ?guide .
 
         ?guide a ex:CreativeWork ;
@@ -86,7 +86,7 @@ export class ResearchGuideFetcher {
         }
 
         OPTIONAL {
-          ?topSet schema:name ?topSetName ;
+          ?topSet schema:name ?topSetName
           FILTER(LANG(?topSetName) = "${options.locale}")
         }
 
@@ -96,7 +96,7 @@ export class ResearchGuideFetcher {
         }
 
         OPTIONAL {
-          ?topSet schema:text ?topSetText ;
+          ?topSet schema:text ?topSetText
           FILTER(LANG(?topSetText) = "${options.locale}")
         }
 
@@ -106,10 +106,8 @@ export class ResearchGuideFetcher {
 
         OPTIONAL {
           ?topSet la:has_member ?subSet .
-
-          OPTIONAL {
-            ?subSet crm:P1_is_identified_by/crm:P190_has_symbolic_content ?identifier
-          }
+          ?subSet schema:name ?subSetName
+          FILTER(LANG(?subSetName) = "${options.locale}")
 
           # Get a selection of information from member guides, if any
           OPTIONAL {
@@ -171,20 +169,22 @@ export class ResearchGuideFetcher {
       CONSTRUCT {
         ?this a ex:CreativeWork ;
           ex:name ?name ;
+          ex:alternateName ?alternateName ;
           ex:abstract ?abstract ;
           ex:text ?text ;
           ex:encodingFormat ?encodingFormat ;
           ex:seeAlso ?relatedGuide ;
-          ex:contentLocation ?contentLocation ;
+          ex:contentLocation ?spatial ;
           ex:keyword ?keyword ;
-          ex:citation ?citation .
+          ex:citation ?citation ;
+          ex:contentReferenceTime ?contentReferenceTime .
 
         ?relatedGuide a ex:CreativeWork ;
           ex:name ?relatedGuideName .
 
-        ?contentLocation a ex:Place ;
-          ex:name ?contentLocationName ;
-          ex:sameAs ?contentLocationSameAs .
+        ?spatial a ex:Place ;
+          ex:name ?spatialName ;
+          ex:sameAs ?spatialSameAs .
 
         ?keyword a ex:DefinedTerm ;
           ex:name ?keywordName ;
@@ -194,6 +194,10 @@ export class ResearchGuideFetcher {
           ex:name ?citationName ;
           ex:description ?citationDescription ;
           ex:url ?citationUrl .
+
+        ?contentReferenceTime a ex:Event ;
+            ex:startDate ?contentReferenceTimeStartDate ;
+            ex:endDate ?contentReferenceTimeEndDate .
       }
       WHERE {
         VALUES ?this {
@@ -204,22 +208,27 @@ export class ResearchGuideFetcher {
           schema:additionalType <http://vocab.getty.edu/aat/300027029> . # "Guides"
 
         OPTIONAL {
-          ?this schema:name ?name .
+          ?this schema:name ?name
           FILTER(LANG(?name) = "${options.locale}")
         }
 
         OPTIONAL {
-          ?this schema:abstract ?abstract .
+          ?this schema:alternateName ?alternateName
+          FILTER(LANG(?alternateName) = "${options.locale}")
+        }
+
+        OPTIONAL {
+          ?this schema:abstract ?abstract
           FILTER(LANG(?abstract) = "${options.locale}")
         }
 
         OPTIONAL {
-          ?this schema:text ?text .
+          ?this schema:text ?text
           FILTER(LANG(?text) = "${options.locale}")
         }
 
         OPTIONAL {
-          ?this schema:encodingFormat ?encodingFormat .
+          ?this schema:encodingFormat ?encodingFormat
         }
 
         # Get a selection of information from related guides, if any
@@ -230,15 +239,15 @@ export class ResearchGuideFetcher {
         }
 
         OPTIONAL {
-          ?this schema:contentLocation ?contentLocation .
+          ?this schema:spatial ?spatial .
 
           OPTIONAL {
-            ?contentLocation schema:name ?contentLocationName .
-            FILTER(LANG(?contentLocationName) = "${options.locale}")
+            ?spatial schema:name ?spatialName
+            FILTER(LANG(?spatialName) = "${options.locale}")
           }
 
           OPTIONAL {
-            ?contentLocation schema:sameAs ?contentLocationSameAs
+            ?spatial schema:sameAs ?spatialSameAs
           }
         }
 
@@ -246,7 +255,7 @@ export class ResearchGuideFetcher {
           ?this schema:keywords ?keyword .
 
           OPTIONAL {
-            ?keyword schema:name ?keywordName .
+            ?keyword schema:name ?keywordName
             FILTER(LANG(?keywordName) = "${options.locale}")
           }
 
@@ -259,18 +268,24 @@ export class ResearchGuideFetcher {
           ?this schema:citation ?citation .
 
           OPTIONAL {
-            ?citation schema:name ?citationName .
+            ?citation schema:name ?citationName
             FILTER(LANG(?citationName) = "${options.locale}")
           }
 
           OPTIONAL {
-            ?citation schema:description ?citationDescription .
+            ?citation schema:description ?citationDescription
             FILTER(LANG(?citationDescription) = "${options.locale}")
           }
 
           OPTIONAL {
-            ?citation schema:url ?citationUrl .
+            ?citation schema:url ?citationUrl
           }
+        }
+
+        OPTIONAL {
+          ?this schema:contentReferenceTime ?contentReferenceTime .
+          ?contentReferenceTime schema:startDate ?contentReferenceTimeStartDate ;
+            schema:endDate ?contentReferenceTimeEndDate .
         }
       }
     `;

@@ -1,13 +1,14 @@
 import {
   createPlaces,
   createThings,
+  createTimeSpan,
   getPropertyValues,
   onlyOne,
   removeNullish,
 } from '../rdf-helpers';
 import type {Resource} from 'rdf-object';
 import {Citation, ResearchGuide} from './definitions';
-import {Term} from '../definitions';
+import {Event, Term} from '../definitions';
 
 function createCitation(citationResource: Resource) {
   const name = onlyOne(getPropertyValues(citationResource, 'ex:name'));
@@ -46,6 +47,24 @@ function createResearchGuides(
   return researchGuides.length > 0 ? researchGuides : undefined;
 }
 
+function createEvent(eventResource: Resource) {
+  const timespan = createTimeSpan(eventResource);
+
+  const event: Event = {
+    id: eventResource.value,
+    date: timespan,
+  };
+
+  return event;
+}
+
+export function createEvents(resource: Resource, propertyName: string) {
+  const properties = resource.properties[propertyName];
+  const events = properties.map(property => createEvent(property));
+
+  return events.length > 0 ? events : undefined;
+}
+
 export function createResearchGuide(
   researchGuideResource: Resource,
   stackSize = 1
@@ -54,6 +73,9 @@ export function createResearchGuide(
     getPropertyValues(researchGuideResource, 'ex:identifier')
   );
   const name = onlyOne(getPropertyValues(researchGuideResource, 'ex:name'));
+  const alternateName = onlyOne(
+    getPropertyValues(researchGuideResource, 'ex:alternateName')
+  );
   const abstract = onlyOne(
     getPropertyValues(researchGuideResource, 'ex:abstract')
   );
@@ -73,6 +95,10 @@ export function createResearchGuide(
     );
   }
 
+  const contentReferenceTimes = createEvents(
+    researchGuideResource,
+    'ex:contentReferenceTime'
+  );
   const contentLocations = createPlaces(
     researchGuideResource,
     'ex:contentLocation'
@@ -84,9 +110,11 @@ export function createResearchGuide(
     id: researchGuideResource.value,
     identifier,
     name,
+    alternateName,
     abstract,
     text,
     encodingFormat,
+    contentReferenceTimes,
     seeAlso,
     contentLocations,
     keywords,
