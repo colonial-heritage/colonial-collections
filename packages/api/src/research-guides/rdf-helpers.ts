@@ -69,9 +69,6 @@ export function createResearchGuide(
   researchGuideResource: Resource,
   stackSize = 1
 ) {
-  const identifier = onlyOne(
-    getPropertyValues(researchGuideResource, 'ex:identifier')
-  );
   const name = onlyOne(getPropertyValues(researchGuideResource, 'ex:name'));
   const alternateName = onlyOne(
     getPropertyValues(researchGuideResource, 'ex:alternateName')
@@ -108,7 +105,6 @@ export function createResearchGuide(
 
   const researchGuideWithUndefinedValues: ResearchGuide = {
     id: researchGuideResource.value,
-    identifier,
     name,
     alternateName,
     abstract,

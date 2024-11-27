@@ -23,7 +23,6 @@ beforeAll(async () => {
       ex:name "Name 1" .
 
     ex:researchGuide2 a ex:CreativeWork ;
-      ex:identifier "1" ;
       ex:name "Name 2" ;
       ex:alternateName "Alternate name 2" ;
       ex:abstract "Abstract 2" ;
@@ -148,7 +147,6 @@ describe('createResearchGuide', () => {
 
     expect(researchGuide).toStrictEqual({
       id: 'https://example.org/researchGuide2',
-      identifier: '1',
       name: 'Name 2',
       alternateName: 'Alternate name 2',
       abstract: 'Abstract 2',
