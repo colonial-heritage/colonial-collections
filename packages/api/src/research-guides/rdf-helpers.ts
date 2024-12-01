@@ -84,7 +84,7 @@ export function createResearchGuide(
   let seeAlso: ResearchGuide[] | undefined = undefined;
 
   // Prevent infinite recursion
-  if (stackSize < 4) {
+  if (stackSize < 5) {
     seeAlso = createResearchGuides(
       researchGuideResource,
       'ex:seeAlso',

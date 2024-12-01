@@ -26,8 +26,8 @@ describe('getByIds', () => {
   it('returns the research guides', async () => {
     const results = await researchGuides.getByIds({
       ids: [
-        'https://guides.example.org/sub-set-1a',
-        'https://guides.example.org/sub-set-2a',
+        'https://guides.example.org/guide1',
+        'https://guides.example.org/guide4',
       ],
     });
 
@@ -38,7 +38,7 @@ describe('getByIds', () => {
 describe('getById', () => {
   it('returns the research guide', async () => {
     const researchGuide = await researchGuides.getById({
-      id: 'https://guides.example.org/sub-set-1a',
+      id: 'https://guides.example.org/guide1',
     });
 
     expect(researchGuide).not.toBeUndefined();

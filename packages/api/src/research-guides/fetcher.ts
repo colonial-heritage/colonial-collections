@@ -196,8 +196,8 @@ export class ResearchGuideFetcher {
           ex:url ?citationUrl .
 
         ?contentReferenceTime a ex:Event ;
-            ex:startDate ?contentReferenceTimeStartDate ;
-            ex:endDate ?contentReferenceTimeEndDate .
+          ex:startDate ?contentReferenceTimeStartDate ;
+          ex:endDate ?contentReferenceTimeEndDate .
       }
       WHERE {
         VALUES ?this {
