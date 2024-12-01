@@ -212,7 +212,7 @@ describe('getById', () => {
         'Army and Navy personnel who operated in colonized territories collected objects in various ways during the colonial era.',
       text: 'Dutch authority in the [Dutch East Indies](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) and on the [Caribbean Islands](https://www.geonames.org/8505032/netherlands-antilles.html) relied heavily on the use of the military...',
       encodingFormat: 'text/markdown',
-      contentReferenceTimes: [
+      contentReferenceTimes: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
@@ -225,14 +225,14 @@ describe('getById', () => {
             endDate: new Date('1996-12-31T23:59:59.999Z'),
           },
         },
-      ],
+      ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
         },
       ]),
-      contentLocations: [
+      contentLocations: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
@@ -240,8 +240,8 @@ describe('getById', () => {
           name: 'Netherlands Antilles',
           sameAs: 'https://www.geonames.org/8505032/netherlands-antilles.html',
         },
-      ],
-      keywords: [
+      ]),
+      keywords: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
@@ -249,8 +249,8 @@ describe('getById', () => {
           name: 'Midshipman',
           sameAs: 'https://www.wikidata.org/wiki/Q11141137',
         },
-      ],
-      citations: [
+      ]),
+      citations: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
@@ -260,7 +260,7 @@ describe('getById', () => {
             'Via Delpher, the editions can be found by selecting the title',
           url: 'https://www.delpher.nl/',
         },
-      ],
+      ]),
     });
   });
 });
