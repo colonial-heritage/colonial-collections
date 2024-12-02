@@ -78,7 +78,7 @@ export class ResearchGuideFetcher {
           ex:seeAlso ?relatedGuide .
 
         ?relatedGuide a ex:CreativeWork ;
-          ex:name ?subGuideName .
+          ex:name ?relatedGuideName .
       }
       WHERE {
         VALUES ?topSet {
