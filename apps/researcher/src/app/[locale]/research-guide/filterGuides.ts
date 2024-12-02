@@ -13,9 +13,18 @@ type Guide = {
  * - Each level 1 guide's seeAlso contains level 2 guides.
  * - Each level 2 guide's seeAlso may contain level 1, level 2, and level 3 guides.
  * - Level 3 guides should only be shown once across all level 2 guides.
+ * - The first level 1 guide only shows the level 2 guides.
  */
 export const filterLevel3Guides = (topLevel: Guide): Guide => {
   const displayedLevel3Guides = new Set<string>();
+
+  // For the first level 1 guide only the level 2 guides should be displayed
+  if (topLevel.seeAlso && topLevel.seeAlso[0]) {
+    topLevel.seeAlso[0].seeAlso = topLevel.seeAlso[0].seeAlso?.map(guide => {
+      guide.seeAlso = undefined;
+      return guide;
+    });
+  }
 
   topLevel.seeAlso?.forEach(level1Guide => {
     level1Guide.seeAlso?.forEach(level2Guide => {
