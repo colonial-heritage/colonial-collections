@@ -7,7 +7,7 @@ import {getLocale, getTranslations} from 'next-intl/server';
 import StringToMarkdown from './string-to-markdown';
 import {
   filterLevel3Guides,
-  sortLevel1Guides,
+  sortResearchGuide,
 } from '@/app/[locale]/research-guide/filterGuides';
 
 export default async function Page() {
@@ -21,11 +21,11 @@ export default async function Page() {
 
   // There can be multiple top levels, but the current design only supports one.
   const topLevel = topLevels[0];
-  const filteredTopLevel = filterLevel3Guides(topLevel);
-  const level1Guides = sortLevel1Guides(filteredTopLevel);
+  const sortedGuides = sortResearchGuide(topLevel);
+  const filteredTopLevel = filterLevel3Guides(sortedGuides);
 
-  const firstLevel1Guide = level1Guides[0];
-  const nextLevel1Guides = level1Guides.slice(1);
+  const firstLevel1Guide = filteredTopLevel.seeAlso?.[0];
+  const nextLevel1Guides = filteredTopLevel.seeAlso?.slice(1) || [];
 
   return (
     <>

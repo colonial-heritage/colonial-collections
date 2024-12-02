@@ -1,8 +1,9 @@
-import {filterLevel3Guides, sortLevel1Guides} from './filterGuides';
+import {ResearchGuide} from '@colonial-collections/api/src/research-guides/definitions';
+import {filterLevel3Guides, sortResearchGuide} from './filterGuides';
 
 describe('filterLevel3Guides', () => {
-  it('only shows each level 3 guide once', () => {
-    const topLevel = {
+  it('should filter out level 1 and level 2 guides from level 3 list', () => {
+    const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [
         {
@@ -10,38 +11,40 @@ describe('filterLevel3Guides', () => {
           seeAlso: [
             {
               id: 'level2-1',
-              seeAlso: [{id: 'level3-1'}, {id: 'level3-2'}, {id: 'level3-3'}],
-            },
-            {
-              id: 'level2-2',
-              seeAlso: [{id: 'level3-1'}, {id: 'level3-4'}],
-            },
-          ],
-        },
-        {
-          id: 'level1-2',
-          seeAlso: [
-            {
-              id: 'level2-3',
-              seeAlso: [{id: 'level3-2'}, {id: 'level3-5'}],
+              seeAlso: [
+                {id: 'level3-1'},
+                {id: 'level1-2'}, // This should be filtered out
+                {id: 'level2-2'}, // This should be filtered out
+              ],
             },
           ],
         },
+        {id: 'level1-2'},
       ],
     };
 
-    const filteredTopLevel = filterLevel3Guides(topLevel);
+    const expected: ResearchGuide = {
+      id: 'top',
+      seeAlso: [
+        {
+          id: 'level1-1',
+          seeAlso: [
+            {
+              id: 'level2-1',
+              seeAlso: [{id: 'level3-1'}],
+            },
+          ],
+        },
+        {id: 'level1-2'},
+      ],
+    };
 
-    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[0].seeAlso).toEqual([]);
-    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[1].seeAlso).toEqual([]);
-    expect(filteredTopLevel.seeAlso?.[1].seeAlso?.[0].seeAlso).toEqual([
-      {id: 'level3-2'},
-      {id: 'level3-5'},
-    ]);
+    const result = filterLevel3Guides(topLevel);
+    expect(result).toEqual(expected);
   });
 
-  it('filters out level 1 and 2 guides from the level 2 seeAlso', () => {
-    const topLevel = {
+  it('should handle cases with no level 3 guides', () => {
+    const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [
         {
@@ -50,53 +53,103 @@ describe('filterLevel3Guides', () => {
             {
               id: 'level2-1',
               seeAlso: [
-                {id: 'level1-2'}, // Level 1 guide
-                {id: 'level2-2'}, // Level 2 guide
-                {id: 'level3-1'}, // Level 3 guide
+                {id: 'level1-2'}, // This should be filtered out
+                {id: 'level2-2'}, // This should be filtered out
               ],
             },
           ],
         },
-        {
-          id: 'level1-2',
-          seeAlso: [
-            {
-              id: 'level2-2',
-              seeAlso: [
-                {id: 'level3-2'}, // Level 3 guide
-              ],
-            },
-          ],
-        },
+        {id: 'level1-2'},
       ],
     };
 
-    const filteredTopLevel = filterLevel3Guides(topLevel);
+    const expected: ResearchGuide = {
+      id: 'top',
+      seeAlso: [
+        {
+          id: 'level1-1',
+          seeAlso: [
+            {
+              id: 'level2-1',
+              seeAlso: [],
+            },
+          ],
+        },
+        {id: 'level1-2'},
+      ],
+    };
 
-    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[0].seeAlso).toEqual([]);
-    expect(filteredTopLevel.seeAlso?.[1].seeAlso?.[0].seeAlso).toEqual([
-      {id: 'level3-2'},
-    ]);
+    const result = filterLevel3Guides(topLevel);
+    expect(result).toEqual(expected);
+  });
+
+  it('should handle cases with no seeAlso arrays', () => {
+    const topLevel: ResearchGuide = {
+      id: 'top',
+      seeAlso: [],
+    };
+
+    const expected: ResearchGuide = {
+      id: 'top',
+      seeAlso: [],
+    };
+
+    const result = filterLevel3Guides(topLevel);
+    expect(result).toEqual(expected);
   });
 });
 
-describe('sortLevel1Guides', () => {
-  it('sorts level 1 guides by their names', () => {
-    const topLevel = {
+describe('sortResearchGuide', () => {
+  it('should sort guides by their names', () => {
+    const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [
-        {id: '2', name: 'B'},
-        {id: '1', name: 'A'},
-        {id: '3', name: 'C'},
+        {id: '2', name: 'Beta'},
+        {id: '1', name: 'Alpha'},
+        {id: '3', name: 'Gamma'},
       ],
     };
 
-    const sortedLevel1Guides = sortLevel1Guides(topLevel);
+    const expected: ResearchGuide = {
+      id: 'top',
+      seeAlso: [
+        {id: '1', name: 'Alpha'},
+        {id: '2', name: 'Beta'},
+        {id: '3', name: 'Gamma'},
+      ],
+    };
 
-    expect(sortedLevel1Guides).toEqual([
-      {id: '1', name: 'A'},
-      {id: '2', name: 'B'},
-      {id: '3', name: 'C'},
-    ]);
+    const result = sortResearchGuide(topLevel);
+    expect(result).toEqual(expected);
+  });
+
+  it('should handle guides with missing names', () => {
+    const topLevel: ResearchGuide = {
+      id: 'top',
+      seeAlso: [{id: '2', name: 'Beta'}, {id: '1'}, {id: '3', name: 'Gamma'}],
+    };
+
+    const expected: ResearchGuide = {
+      id: 'top',
+      seeAlso: [{id: '1'}, {id: '2', name: 'Beta'}, {id: '3', name: 'Gamma'}],
+    };
+
+    const result = sortResearchGuide(topLevel);
+    expect(result).toEqual(expected);
+  });
+
+  it('should handle empty seeAlso arrays', () => {
+    const topLevel: ResearchGuide = {
+      id: 'top',
+      seeAlso: [],
+    };
+
+    const expected: ResearchGuide = {
+      id: 'top',
+      seeAlso: [],
+    };
+
+    const result = sortResearchGuide(topLevel);
+    expect(result).toEqual(expected);
   });
 });
