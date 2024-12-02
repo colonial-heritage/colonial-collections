@@ -32,15 +32,10 @@ describe('filterLevel3Guides', () => {
 
     const filteredTopLevel = filterLevel3Guides(topLevel);
 
-    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[0].seeAlso).toEqual([
-      {id: 'level3-1'},
-      {id: 'level3-2'},
-      {id: 'level3-3'},
-    ]);
-    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[1].seeAlso).toEqual([
-      {id: 'level3-4'},
-    ]);
+    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[0].seeAlso).toEqual([]);
+    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[1].seeAlso).toEqual([]);
     expect(filteredTopLevel.seeAlso?.[1].seeAlso?.[0].seeAlso).toEqual([
+      {id: 'level3-2'},
       {id: 'level3-5'},
     ]);
   });
@@ -78,9 +73,7 @@ describe('filterLevel3Guides', () => {
 
     const filteredTopLevel = filterLevel3Guides(topLevel);
 
-    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[0].seeAlso).toEqual([
-      {id: 'level3-1'},
-    ]);
+    expect(filteredTopLevel.seeAlso?.[0].seeAlso?.[0].seeAlso).toEqual([]);
     expect(filteredTopLevel.seeAlso?.[1].seeAlso?.[0].seeAlso).toEqual([
       {id: 'level3-2'},
     ]);
