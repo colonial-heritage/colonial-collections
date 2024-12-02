@@ -8,6 +8,7 @@ import {getLocale, getTranslations} from 'next-intl/server';
 import {Link} from '@/navigation';
 import {ChevronRightIcon, ChevronLeftIcon} from '@heroicons/react/24/solid';
 import StringToMarkdown from '../string-to-markdown';
+import {getDateFormatter} from '@/lib/date-formatter/actions';
 
 interface Props {
   params: {id: string};
@@ -18,6 +19,8 @@ export default async function GuidePage({params}: Props) {
   const locale = (await getLocale()) as LocaleEnum;
   const guide = await researchGuides.getById({id, locale});
   const t = await getTranslations('ResearchGuide');
+
+  const {formatDateRange} = await getDateFormatter();
 
   if (!guide) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
@@ -117,6 +120,20 @@ export default async function GuidePage({params}: Props) {
                   ))}
                 </div>
               )}
+              {guide.contentReferenceTimes &&
+                guide.contentReferenceTimes.length > 0 && (
+                  <div className="bg-consortium-sand-50 rounded px-2 py-4">
+                    <h3 tabIndex={0}>{t('contentReferenceTimes')}</h3>
+                    {guide.contentReferenceTimes.map(
+                      time =>
+                        time.date && (
+                          <div key={time.id} tabIndex={0}>
+                            {formatDateRange(time.date)}
+                          </div>
+                        )
+                    )}
+                  </div>
+                )}
             </div>
           </div>
         </div>
