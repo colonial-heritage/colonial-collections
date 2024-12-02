@@ -32,7 +32,7 @@ export default async function Page() {
       <h1 className="text-2xl md:text-4xl" tabIndex={0}>
         {topLevel.name}
       </h1>
-      <div className="my-4 w-full max-w-5xl columns-2 gap-6">
+      <div className="my-4 w-full max-w-5xl columns-1 md:columns-2 gap-6">
         {topLevel.text && <StringToMarkdown text={topLevel.text} />}
       </div>
       {firstLevel1Guide && (
@@ -40,7 +40,7 @@ export default async function Page() {
           <h2 className="px-4 pt-4" tabIndex={0}>
             {firstLevel1Guide.name}
           </h2>
-          <div className="pb-4 columns-3 gap-10">
+          <div className="pb-4 columns-1 sm:columns-2 lg:columns-3 gap-10">
             {firstLevel1Guide.seeAlso?.map(item => (
               <Link
                 key={item.id}
