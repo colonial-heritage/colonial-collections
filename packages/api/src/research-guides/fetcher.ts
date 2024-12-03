@@ -284,8 +284,14 @@ export class ResearchGuideFetcher {
 
         OPTIONAL {
           ?this schema:contentReferenceTime ?contentReferenceTime .
-          ?contentReferenceTime schema:startDate ?contentReferenceTimeStartDate ;
-            schema:endDate ?contentReferenceTimeEndDate .
+
+          OPTIONAL {
+            ?contentReferenceTime schema:startDate ?contentReferenceTimeStartDate
+          }
+
+          OPTIONAL {
+            ?contentReferenceTime schema:endDate ?contentReferenceTimeEndDate
+          }
         }
       }
     `;
