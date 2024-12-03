@@ -173,6 +173,7 @@ export class HeritageObjectFetcher {
             FILTER(LANG(?typeName) = "${options.locale}")
           }
 
+          # For BC: data providers ought to use the same thesauri
           OPTIONAL {
             ?type rdfs:label ?typeName
             FILTER(LANG(?typeName) = "" || LANG(?typeName) = "${options.locale}")
@@ -215,6 +216,7 @@ export class HeritageObjectFetcher {
             FILTER(LANG(?materialName) = "${options.locale}")
           }
 
+          # For BC: data providers ought to use the same thesauri
           OPTIONAL {
             ?material rdfs:label ?materialName
             FILTER(LANG(?materialName) = "" || LANG(?materialName) = "${options.locale}")
