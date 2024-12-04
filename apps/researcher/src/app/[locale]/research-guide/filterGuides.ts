@@ -32,10 +32,18 @@ export function filterLevel3Guides(topLevel: ResearchGuide): ResearchGuide {
   return topLevel;
 }
 
-export function sortResearchGuide(topLevel: ResearchGuide) {
-  const seeAlsoSorted =
-    topLevel.seeAlso?.sort((a, b) =>
-      (a.name || '').localeCompare(b.name || '')
-    ) || [];
-  return {...topLevel, seeAlso: seeAlsoSorted};
+export function sortResearchGuide(topLevel: ResearchGuide): ResearchGuide {
+  const sortGuides = (guide: ResearchGuide): ResearchGuide => {
+    const sortedSeeAlso =
+      guide.seeAlso?.sort((a, b) =>
+        (a.name || '').localeCompare(b.name || '')
+      ) || [];
+
+    return {
+      ...guide,
+      seeAlso: sortedSeeAlso.map(sortGuides),
+    };
+  };
+
+  return sortGuides(topLevel);
 }

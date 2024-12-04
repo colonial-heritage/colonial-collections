@@ -152,4 +152,53 @@ describe('sortResearchGuide', () => {
     const result = sortResearchGuide(topLevel);
     expect(result).toEqual(expected);
   });
+
+  it('should sort nested seeAlso arrays', () => {
+    const topLevel: ResearchGuide = {
+      id: 'top',
+      seeAlso: [
+        {
+          id: '1',
+          name: 'Alpha',
+          seeAlso: [
+            {id: '3', name: 'Gamma'},
+            {id: '2', name: 'Beta'},
+          ],
+        },
+        {
+          id: '2',
+          name: 'Beta',
+          seeAlso: [
+            {id: '5', name: 'Epsilon'},
+            {id: '4', name: 'Delta'},
+          ],
+        },
+      ],
+    };
+
+    const expected: ResearchGuide = {
+      id: 'top',
+      seeAlso: [
+        {
+          id: '1',
+          name: 'Alpha',
+          seeAlso: [
+            {id: '2', name: 'Beta'},
+            {id: '3', name: 'Gamma'},
+          ],
+        },
+        {
+          id: '2',
+          name: 'Beta',
+          seeAlso: [
+            {id: '4', name: 'Delta'},
+            {id: '5', name: 'Epsilon'},
+          ],
+        },
+      ],
+    };
+
+    const result = sortResearchGuide(topLevel);
+    expect(result).toEqual(expected);
+  });
 });
