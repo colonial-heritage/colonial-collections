@@ -42,7 +42,7 @@ export default async function GuidePage({params}: Props) {
           {guide.name}
         </h1>
         <div className="text-sm text-neutral-600 mb-6">
-          {guide.alternateName}
+          {guide.alternateNames?.join(', ')}
         </div>
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-2/3">
