@@ -21,6 +21,8 @@ export default async function Page() {
 
   // There can be multiple top levels, but the current design only supports one.
   const topLevel = topLevels[0];
+
+  console.log(topLevel);
   const sortedGuides = sortResearchGuide(topLevel);
   const filteredTopLevel = filterLevel3Guides(sortedGuides);
 
@@ -32,32 +34,36 @@ export default async function Page() {
       <h1 className="text-2xl md:text-4xl" tabIndex={0}>
         {topLevel.name}
       </h1>
-      <div className="my-4 w-full max-w-5xl columns-1 md:columns-2 gap-6">
-        {topLevel.text && <StringToMarkdown text={topLevel.text} />}
-      </div>
-      {firstLevel1Guide && (
-        <div className="bg-consortium-sand-100 rounded mt-6 -mx-4 pr-10">
-          <h2 className="px-4 pt-4" tabIndex={0}>
-            {firstLevel1Guide.name}
-          </h2>
-          <div className="pb-4 columns-1 sm:columns-2 lg:columns-3 gap-10">
-            {firstLevel1Guide.seeAlso?.map(item => (
-              <Link
-                key={item.id}
-                href={`/research-guide/${encodeRouteSegment(item.id)}`}
-                className="break-inside-avoid-column bg-consortium-sand-100 text-consortium-sand-800 no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col py-2 px-4"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <div>{item.name}</div>
-                  <div>
-                    <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
-                  </div>
-                </div>
-              </Link>
-            ))}
+      <div className="my-4 w-full flex flex-col md:flex-row gap-6">
+        {topLevel.text && (
+          <div className="flex-1">
+            <StringToMarkdown text={topLevel.text} />
           </div>
-        </div>
-      )}
+        )}
+        {firstLevel1Guide && (
+          <div className="bg-consortium-sand-100 rounded mt-6 md:mt-0 flex-1">
+            <h2 className="px-4 pt-4" tabIndex={0}>
+              {firstLevel1Guide.name}
+            </h2>
+            <div className="pb-4 flex flex-col gap-4">
+              {firstLevel1Guide.seeAlso?.map(item => (
+                <Link
+                  key={item.id}
+                  href={`/research-guide/${encodeRouteSegment(item.id)}`}
+                  className="bg-consortium-sand-100 text-consortium-sand-800 no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col py-2 px-4"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div>{item.name}</div>
+                    <div>
+                      <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
       {nextLevel1Guides.map(level1Guide => (
         <div className="mt-10" key={level1Guide.id}>
           <h2 className="mb-4" tabIndex={0}>
@@ -73,24 +79,26 @@ export default async function Page() {
                   href={`/research-guide/${encodeRouteSegment(
                     level2Guides.id
                   )}`}
-                  className="flex items-center justify-between gap-2 no-underline"
+                  className="no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col p-2"
                 >
-                  <div className="font-semibold">{level2Guides.name}</div>
-                  <div>
-                    <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="font-semibold">{level2Guides.name}</div>
+                    <div>
+                      <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
+                    </div>
                   </div>
                 </Link>
-                {level2Guides.seeAlso?.map(linkedGuides => (
+                {level2Guides.seeAlso?.map(level3Guides => (
                   <Link
-                    key={linkedGuides.id}
+                    key={level3Guides.id}
                     href={`/research-guide/${encodeRouteSegment(
-                      linkedGuides.id
+                      level3Guides.id
                     )}`}
                     className="no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col p-2 mt-2"
-                    aria-label={`${linkedGuides.name}, item of ${level2Guides.name}`}
+                    aria-label={`${level3Guides.name}, item of ${level2Guides.name}`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <div>{linkedGuides.name}</div>
+                      <div>{level3Guides.name}</div>
                       <div>
                         <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
                       </div>
