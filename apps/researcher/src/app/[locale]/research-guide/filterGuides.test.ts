@@ -2,7 +2,7 @@ import {ResearchGuide} from '@colonial-collections/api/src/research-guides/defin
 import {filterLevel3Guides, sortResearchGuide} from './filterGuides';
 
 describe('filterLevel3Guides', () => {
-  it('should filter out level 1 and level 2 guides from level 3 list', () => {
+  it('filters out level 1 and level 2 guides from level 3 list', () => {
     const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [
@@ -13,8 +13,8 @@ describe('filterLevel3Guides', () => {
               id: 'level2-1',
               seeAlso: [
                 {id: 'level3-1'},
-                {id: 'level1-2'}, // This should be filtered out
-                {id: 'level2-2'}, // This should be filtered out
+                {id: 'level1-2'},
+                {id: 'level2-2'},
               ],
             },
           ],
@@ -43,7 +43,7 @@ describe('filterLevel3Guides', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should handle cases with no level 3 guides', () => {
+  it('handles cases with no level 3 guides', () => {
     const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [
@@ -53,8 +53,8 @@ describe('filterLevel3Guides', () => {
             {
               id: 'level2-1',
               seeAlso: [
-                {id: 'level1-2'}, // This should be filtered out
-                {id: 'level2-2'}, // This should be filtered out
+                {id: 'level1-2'},
+                {id: 'level2-2'},
               ],
             },
           ],
@@ -83,7 +83,7 @@ describe('filterLevel3Guides', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should handle cases with no seeAlso arrays', () => {
+  it('handles cases with no seeAlso arrays', () => {
     const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [],
@@ -100,7 +100,7 @@ describe('filterLevel3Guides', () => {
 });
 
 describe('sortResearchGuide', () => {
-  it('should sort guides by their names', () => {
+  it('sorts guides by their names', () => {
     const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [
@@ -123,7 +123,7 @@ describe('sortResearchGuide', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should handle guides with missing names', () => {
+  it('handles guides with missing names', () => {
     const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [{id: '2', name: 'Beta'}, {id: '1'}, {id: '3', name: 'Gamma'}],
@@ -138,7 +138,7 @@ describe('sortResearchGuide', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should handle empty seeAlso arrays', () => {
+  it('handles empty seeAlso arrays', () => {
     const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [],
@@ -153,7 +153,7 @@ describe('sortResearchGuide', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should sort nested seeAlso arrays', () => {
+  it('sorts nested seeAlso arrays', () => {
     const topLevel: ResearchGuide = {
       id: 'top',
       seeAlso: [
