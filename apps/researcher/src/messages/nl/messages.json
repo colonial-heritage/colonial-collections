@@ -544,16 +544,19 @@
       "cancel": "Annuleren"
     },
     "ResearchGuide": { 
-      "level1Title": "Hoe herkomstonderzoek te doen",
-      "level2Title": "Onderwerpen",
+      "nameVariations": "Naamvarianten",
       "navText": "Beschrijving",
       "navCitations": "Bronnen",
       "citations": "Bronnen",
       "relatedItems": "Gerelateerde items",
       "keywords": "Trefwoorden", 
       "contentLocations": "Geografisch",
+      "contentReferenceTimes": "Actieve periode",
       "noTopLevel": "De onderzoeksgids wordt binnenkort toegevoegd. Kom later terug.",
       "noEntity": "Onderzoeksgids kon niet worden gevonden",
-      "backButton": "Terug naar overzicht"
+      "backButton": "Terug naar overzicht",
+      "noDateRange": "Geen actieve periode bekend",
+      "noStartDate": "Geen startdatum bekend",
+      "noEndDate": "Heden"
     }
 }
