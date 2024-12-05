@@ -1,4 +1,4 @@
-import {ResearchGuide} from '@colonial-collections/api/src/research-guides/definitions';
+import {ResearchGuide} from '@colonial-collections/api';
 import {filterLevel3Guides, sortResearchGuide} from './filterGuides';
 
 describe('filterLevel3Guides', () => {

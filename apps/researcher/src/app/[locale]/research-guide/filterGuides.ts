@@ -1,4 +1,4 @@
-import {ResearchGuide} from '@colonial-collections/api/src/research-guides/definitions';
+import {ResearchGuide} from '@colonial-collections/api';
 
 /**
  * Filters out level 1 and level 2 guides from the seeAlso arrays of level 2 guides.

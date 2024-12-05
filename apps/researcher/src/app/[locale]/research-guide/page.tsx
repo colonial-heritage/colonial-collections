@@ -22,7 +22,6 @@ export default async function Page() {
   // There can be multiple top levels, but the current design only supports one.
   const topLevel = topLevels[0];
 
-  console.log(topLevel);
   const sortedGuides = sortResearchGuide(topLevel);
   const filteredTopLevel = filterLevel3Guides(sortedGuides);
 
