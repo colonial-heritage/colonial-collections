@@ -554,6 +554,9 @@
     "contentReferenceTimes": "Period of activity",
     "noTopLevel": "The research guide will be added soon. Please check back later.",
     "noEntity": "Research guide could not be found",
-    "backButton": "Back to overview"
+    "backButton": "Back to overview",
+    "noDateRange": "No activity period known",
+    "noStartDate": "No start date known",
+    "noEndDate": "Present"
   }
 }

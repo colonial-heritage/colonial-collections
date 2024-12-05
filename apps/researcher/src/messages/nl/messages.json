@@ -554,6 +554,9 @@
       "contentReferenceTimes": "Actieve periode",
       "noTopLevel": "De onderzoeksgids wordt binnenkort toegevoegd. Kom later terug.",
       "noEntity": "Onderzoeksgids kon niet worden gevonden",
-      "backButton": "Terug naar overzicht"
+      "backButton": "Terug naar overzicht",
+      "noDateRange": "Geen actieve periode bekend",
+      "noStartDate": "Geen startdatum bekend",
+      "noEndDate": "Heden"
     }
 }
