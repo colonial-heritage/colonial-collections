@@ -544,8 +544,7 @@
     "cancel": "Cancel"
   },
   "ResearchGuide": {
-    "level1Title": "How to do Provenance Research",
-    "level2Title": "Topics",
+    "nameVariations": "Name variations",
     "navText": "Description",
     "navCitations": "Resources",
     "citations": "Resources",

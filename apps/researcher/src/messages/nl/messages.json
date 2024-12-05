@@ -544,8 +544,7 @@
       "cancel": "Annuleren"
     },
     "ResearchGuide": { 
-      "level1Title": "Hoe herkomstonderzoek te doen",
-      "level2Title": "Onderwerpen",
+      "nameVariations": "Naamvarianten",
       "navText": "Beschrijving",
       "navCitations": "Bronnen",
       "citations": "Bronnen",

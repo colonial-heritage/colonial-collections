@@ -41,9 +41,11 @@ export default async function GuidePage({params}: Props) {
         <h1 className="text-2xl md:text-4xl mb-2" tabIndex={0}>
           {guide.name}
         </h1>
-        <div className="text-sm text-neutral-600 mb-6">
-          {guide.alternateNames?.join(', ')}
-        </div>
+        {guide.alternateNames?.length && (
+          <div className="text-sm text-neutral-600 mb-6">
+            {t('nameVariations')}: {guide.alternateNames?.join(', ')}
+          </div>
+        )}
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-2/3">
             <div className="prose" id="#description">
