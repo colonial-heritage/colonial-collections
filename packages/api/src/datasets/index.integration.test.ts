@@ -30,7 +30,7 @@ describe('search', () => {
     const result = await datasets.search();
 
     expect(result).toMatchObject({
-      totalCount: 14,
+      totalCount: 15,
     });
   });
 });

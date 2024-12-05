@@ -21,7 +21,7 @@ describe('search', () => {
     const result = await datasetSearcher.search();
 
     expect(result).toStrictEqual({
-      totalCount: 14,
+      totalCount: 15,
       offset: 0,
       limit: 10,
       sortBy: 'name',
@@ -689,13 +689,18 @@ describe('search', () => {
           },
           {
             totalCount: 1,
+            id: 'NIOD Institute for War, Holocaust and Genocide Studies',
+            name: 'NIOD Institute for War, Holocaust and Genocide Studies',
+          },
+          {
+            totalCount: 1,
             id: 'Research Organisation',
             name: 'Research Organisation',
           },
         ],
         licenses: [
           {
-            totalCount: 6,
+            totalCount: 7,
             id: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
             name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
           },

@@ -1,12 +1,13 @@
-import {Place, Term, Thing} from '../definitions';
+import {Event, Place, Term, Thing} from '../definitions';
 
 export type Citation = Thing & {url?: string};
 
 export type ResearchGuide = Thing & {
-  identifier?: string;
+  alternateNames?: string[];
   abstract?: string;
   text?: string;
   encodingFormat?: string;
+  contentReferenceTimes?: Event[];
   contentLocations?: Place[];
   keywords?: Term[];
   citations?: Citation[];
