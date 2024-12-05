@@ -6,6 +6,9 @@ import {
   ResearchGuideFetcher,
 } from './fetcher';
 
+// Re-export definitions for ease of use in consuming apps
+export * from './definitions';
+
 const constructorOptionsSchema = z.object({
   sparqlEndpointUrl: z.string(),
 });
