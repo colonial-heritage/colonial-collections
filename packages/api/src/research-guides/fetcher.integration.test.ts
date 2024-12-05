@@ -17,96 +17,150 @@ describe('getTopLevels', () => {
     // The sorting order is undefined and can change - don't use toStrictEqual()
     expect(researchGuides).toMatchObject([
       {
-        id: 'https://guides.example.org/top-set',
+        id: 'https://guides.example.org/topset',
         name: 'Digital research guide',
         abstract:
           'Research aides for conducting provenance research into colonial collections',
         text: 'On this page you find various research aides that can assist...',
         encodingFormat: 'text/markdown',
-        seeAlso: expect.arrayContaining([
+        seeAlso: [
           {
-            id: 'https://guides.example.org/level-3-set',
-            identifier: '3',
-            seeAlso: expect.arrayContaining([
+            id: 'https://guides.example.org/subset3',
+            name: '3. Name',
+            seeAlso: [
               {
-                id: 'https://guides.example.org/level-3c',
-                name: 'Kunsthandel Van Lier',
-                seeAlso: [
-                  {
-                    id: 'https://guides.example.org/level-2a',
-                    name: 'Military and navy',
-                  },
-                ],
-              },
-              {
-                id: 'https://guides.example.org/level-3a',
+                id: 'https://guides.example.org/guide6',
                 name: 'Royal Cabinet of Curiosities',
                 seeAlso: [
                   {
-                    id: 'https://guides.example.org/level-2c',
+                    id: 'https://guides.example.org/guide5',
                     name: 'Trade',
+                    seeAlso: [
+                      {
+                        id: 'https://guides.example.org/guide7',
+                        name: 'Kunsthandel Van Lier',
+                      },
+                    ],
                   },
                 ],
               },
-            ]),
+              {
+                id: 'https://guides.example.org/guide7',
+                name: 'Kunsthandel Van Lier',
+                seeAlso: [
+                  {
+                    id: 'https://guides.example.org/guide4',
+                    name: 'Military and navy',
+                    seeAlso: [
+                      {
+                        id: 'https://guides.example.org/guide1',
+                        name: 'Doing research',
+                      },
+                      {
+                        id: 'https://guides.example.org/guide6',
+                        name: 'Royal Cabinet of Curiosities',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
           {
-            id: 'https://guides.example.org/level-2-set',
-            identifier: '2',
-            seeAlso: expect.arrayContaining([
+            id: 'https://guides.example.org/subset1',
+            name: '1. Name',
+            seeAlso: [
               {
-                id: 'https://guides.example.org/level-2c',
-                name: 'Trade',
-                seeAlso: [
-                  {
-                    id: 'https://guides.example.org/level-3c',
-                    name: 'Kunsthandel Van Lier',
-                  },
-                ],
-              },
-              {
-                id: 'https://guides.example.org/level-2a',
-                name: 'Military and navy',
-                seeAlso: [
-                  {
-                    id: 'https://guides.example.org/level-3a',
-                    name: 'Royal Cabinet of Curiosities',
-                  },
-                ],
-              },
-            ]),
-          },
-          {
-            id: 'https://guides.example.org/level-1-set',
-            identifier: '1',
-            seeAlso: expect.arrayContaining([
-              {
-                id: 'https://guides.example.org/level-1b',
-                name: 'How can I use the data hub for my research?',
-              },
-              {
-                id: 'https://guides.example.org/level-1c',
-                name: 'Sources',
-                seeAlso: [
-                  {
-                    id: 'https://guides.example.org/level-2c',
-                    name: 'Trade',
-                  },
-                ],
-              },
-              {
-                id: 'https://guides.example.org/level-1a',
+                id: 'https://guides.example.org/guide1',
                 name: 'Doing research',
                 seeAlso: [
                   {
-                    id: 'https://guides.example.org/level-2a',
+                    id: 'https://guides.example.org/guide4',
                     name: 'Military and navy',
+                    seeAlso: [
+                      {
+                        id: 'https://guides.example.org/guide1',
+                        name: 'Doing research',
+                      },
+                      {
+                        id: 'https://guides.example.org/guide6',
+                        name: 'Royal Cabinet of Curiosities',
+                      },
+                    ],
                   },
                 ],
               },
-            ]),
+              {
+                id: 'https://guides.example.org/guide2',
+                name: 'How can I use the data hub for my research?',
+              },
+              {
+                id: 'https://guides.example.org/guide3',
+                name: 'Sources',
+                seeAlso: [
+                  {
+                    id: 'https://guides.example.org/guide5',
+                    name: 'Trade',
+                    seeAlso: [
+                      {
+                        id: 'https://guides.example.org/guide7',
+                        name: 'Kunsthandel Van Lier',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
-        ]),
+          {
+            id: 'https://guides.example.org/subset2',
+            name: '2. Name',
+            seeAlso: [
+              {
+                id: 'https://guides.example.org/guide4',
+                name: 'Military and navy',
+                seeAlso: [
+                  {
+                    id: 'https://guides.example.org/guide1',
+                    name: 'Doing research',
+                    seeAlso: [
+                      {
+                        id: 'https://guides.example.org/guide4',
+                        name: 'Military and navy',
+                      },
+                    ],
+                  },
+                  {
+                    id: 'https://guides.example.org/guide6',
+                    name: 'Royal Cabinet of Curiosities',
+                    seeAlso: [
+                      {
+                        id: 'https://guides.example.org/guide5',
+                        name: 'Trade',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: 'https://guides.example.org/guide5',
+                name: 'Trade',
+                seeAlso: [
+                  {
+                    id: 'https://guides.example.org/guide7',
+                    name: 'Kunsthandel Van Lier',
+                    seeAlso: [
+                      {
+                        id: 'https://guides.example.org/guide4',
+                        name: 'Military and navy',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
     ]);
   });
@@ -130,17 +184,17 @@ describe('getByIds', () => {
   it('returns the research guides that match the IDs', async () => {
     const researchGuides = await researchGuideFetcher.getByIds({
       ids: [
-        'https://guides.example.org/level-2a',
-        'https://guides.example.org/level-2c',
+        'https://guides.example.org/guide1',
+        'https://guides.example.org/guide4',
       ],
     });
 
     expect(researchGuides).toMatchObject([
       {
-        id: 'https://guides.example.org/level-2a',
+        id: 'https://guides.example.org/guide1',
       },
       {
-        id: 'https://guides.example.org/level-2c',
+        id: 'https://guides.example.org/guide4',
       },
     ]);
   });
@@ -165,23 +219,42 @@ describe('getById', () => {
 
   it('returns the research guide that matches the ID', async () => {
     const researchGuide = await researchGuideFetcher.getById({
-      id: 'https://guides.example.org/level-2a',
+      id: 'https://guides.example.org/guide4',
     });
 
     expect(researchGuide).toStrictEqual({
-      id: 'https://guides.example.org/level-2a',
+      id: 'https://guides.example.org/guide4',
       name: 'Military and navy',
+      alternateNames: ['Navy'],
       abstract:
         'Army and Navy personnel who operated in colonized territories collected objects in various ways during the colonial era.',
       text: 'Dutch authority in the [Dutch East Indies](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) and on the [Caribbean Islands](https://www.geonames.org/8505032/netherlands-antilles.html) relied heavily on the use of the military...',
       encodingFormat: 'text/markdown',
-      seeAlso: expect.arrayContaining([
+      contentReferenceTimes: expect.arrayContaining([
         {
-          id: 'https://guides.example.org/level-3a',
-          name: 'Royal Cabinet of Curiosities',
+          id: expect.stringContaining(
+            'https://data.colonialcollections.nl/.well-known/genid/'
+          ),
+          date: {
+            id: expect.stringContaining(
+              'https://data.colonialcollections.nl/.well-known/genid/'
+            ),
+            startDate: new Date('1924-01-01T00:00:00.000Z'),
+            endDate: new Date('1996-12-31T23:59:59.999Z'),
+          },
         },
       ]),
-      contentLocations: [
+      seeAlso: expect.arrayContaining([
+        {
+          id: 'https://guides.example.org/guide6',
+          name: 'Royal Cabinet of Curiosities',
+        },
+        {
+          id: 'https://guides.example.org/guide1',
+          name: 'Doing research',
+        },
+      ]),
+      contentLocations: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
@@ -189,8 +262,8 @@ describe('getById', () => {
           name: 'Netherlands Antilles',
           sameAs: 'https://www.geonames.org/8505032/netherlands-antilles.html',
         },
-      ],
-      keywords: [
+      ]),
+      keywords: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
@@ -198,8 +271,8 @@ describe('getById', () => {
           name: 'Midshipman',
           sameAs: 'https://www.wikidata.org/wiki/Q11141137',
         },
-      ],
-      citations: [
+      ]),
+      citations: expect.arrayContaining([
         {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
@@ -209,7 +282,7 @@ describe('getById', () => {
             'Via Delpher, the editions can be found by selecting the title',
           url: 'https://www.delpher.nl/',
         },
-      ],
+      ]),
     });
   });
 });
@@ -217,20 +290,25 @@ describe('getById', () => {
 describe('get with localized names', () => {
   it('returns a research guide with English names', async () => {
     const researchGuide = await researchGuideFetcher.getById({
-      id: 'https://guides.example.org/level-2a',
+      id: 'https://guides.example.org/guide4',
       locale: 'en',
     });
 
     expect(researchGuide).toMatchObject({
-      id: 'https://guides.example.org/level-2a',
+      id: 'https://guides.example.org/guide4',
       name: 'Military and navy',
+      alternateNames: expect.arrayContaining(['Navy']),
       abstract:
         'Army and Navy personnel who operated in colonized territories collected objects in various ways during the colonial era.',
       text: 'Dutch authority in the [Dutch East Indies](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) and on the [Caribbean Islands](https://www.geonames.org/8505032/netherlands-antilles.html) relied heavily on the use of the military...',
       seeAlso: expect.arrayContaining([
         {
-          id: 'https://guides.example.org/level-3a',
+          id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+        },
+        {
+          id: 'https://guides.example.org/guide1',
+          name: 'Doing research',
         },
       ]),
       contentLocations: [
@@ -255,20 +333,25 @@ describe('get with localized names', () => {
 
   it('returns a research guide with Dutch names', async () => {
     const researchGuide = await researchGuideFetcher.getById({
-      id: 'https://guides.example.org/level-2a',
+      id: 'https://guides.example.org/guide4',
       locale: 'nl',
     });
 
     expect(researchGuide).toMatchObject({
-      id: 'https://guides.example.org/level-2a',
+      id: 'https://guides.example.org/guide4',
       name: 'Leger en Marine',
+      alternateNames: expect.arrayContaining(['Marine', 'Zeemacht']),
       abstract:
         'Leger- en marinepersoneel dat actief was in gekoloniseerde gebieden, verzamelde op verschillende manieren objecten tijdens het koloniale tijdperk.',
       text: 'Het Nederlandse gezag in [Nederlands-Indië](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) en op de [Caribische eilanden](https://www.geonames.org/8505032/netherlands-antilles.html) steunde in belangrijke mate op de inzet van het leger.',
       seeAlso: expect.arrayContaining([
         {
-          id: 'https://guides.example.org/level-3a',
+          id: 'https://guides.example.org/guide6',
           name: 'Koninklijk Kabinet van Zeldzaamheden',
+        },
+        {
+          id: 'https://guides.example.org/guide1',
+          name: 'Onderzoeken',
         },
       ]),
       contentLocations: [

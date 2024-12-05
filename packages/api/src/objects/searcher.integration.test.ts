@@ -108,6 +108,25 @@ describe('search', () => {
               name: 'Vincent van Gogh',
             },
           ]),
+          types: expect.arrayContaining([
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+            },
+          ]),
+          materials: expect.arrayContaining([
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+            },
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+            },
+          ]),
           dateCreated: {
             id: expect.stringContaining(
               'https://data.colonialcollections.nl/.well-known/genid/'
