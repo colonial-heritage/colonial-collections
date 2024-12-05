@@ -13,7 +13,12 @@ function escapeHtml(unsafe: string) {
 
 const components = {
   a: (props: AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a target="_blank" rel="noopener noreferrer" {...props} />
+    <a
+      target="_blank"
+      className="font-normal no-underline border-b border-dashed border-gray-400"
+      rel="noopener noreferrer"
+      {...props}
+    />
   ),
 };
 

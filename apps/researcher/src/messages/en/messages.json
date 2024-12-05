@@ -544,16 +544,19 @@
     "cancel": "Cancel"
   },
   "ResearchGuide": {
-    "level1Title": "How to do Provenance Research",
-    "level2Title": "Topics",
+    "nameVariations": "Name variations",
     "navText": "Description",
     "navCitations": "Resources",
     "citations": "Resources",
     "relatedItems": "Related items",
     "keywords": "Keywords",
     "contentLocations": "Geographical",
+    "contentReferenceTimes": "Period of activity",
     "noTopLevel": "The research guide will be added soon. Please check back later.",
     "noEntity": "Research guide could not be found",
-    "backButton": "Back to overview"
+    "backButton": "Back to overview",
+    "noDateRange": "No activity period known",
+    "noStartDate": "No start date known",
+    "noEndDate": "Present"
   }
 }

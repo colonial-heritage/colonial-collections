@@ -8,6 +8,7 @@ import {getLocale, getTranslations} from 'next-intl/server';
 import {Link} from '@/navigation';
 import {ChevronRightIcon, ChevronLeftIcon} from '@heroicons/react/24/solid';
 import StringToMarkdown from '../string-to-markdown';
+import {Event} from '@colonial-collections/api';
 
 interface Props {
   params: {id: string};
@@ -34,16 +35,15 @@ export default async function GuidePage({params}: Props) {
           {t('backButton')}
         </Link>
       </div>
-      <div className="w-full px-4 sm:px-10 max-w-7xl mx-auto mt-16  relative">
-        <nav className="*:no-underline text-sm flex gap-4 2xl:fixed 2xl:flex-col 2xl:-translate-x-32 2xl:gap-2 2xl:pt-24">
-          <a href="#description">{t('navText')}</a>
-          <a href="#citations">{t('navCitations')}</a>
-        </nav>
-      </div>
       <main className="w-full px-4 sm:px-10 max-w-7xl mx-auto mt-16 mb-40">
         <h1 className="text-2xl md:text-4xl mb-2" tabIndex={0}>
           {guide.name}
         </h1>
+        {guide.alternateNames?.length && (
+          <div className="text-sm text-neutral-600 mb-6">
+            {t('nameVariations')}: {guide.alternateNames?.join(', ')}
+          </div>
+        )}
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-2/3">
             <div className="prose" id="#description">
@@ -63,7 +63,9 @@ export default async function GuidePage({params}: Props) {
                           {citation.description}
                           {' — '}
                           <span className="text-sm">
-                            <a href={citation.url}>{citation.url}</a>
+                            <a target="_blank" href={citation.url}>
+                              {citation.url}
+                            </a>
                           </span>
                         </div>
                       </li>
@@ -118,10 +120,42 @@ export default async function GuidePage({params}: Props) {
                   ))}
                 </div>
               )}
+              {guide.contentReferenceTimes &&
+                guide.contentReferenceTimes.length > 0 && (
+                  <div className="bg-consortium-sand-50 rounded px-2 py-4">
+                    <h3 tabIndex={0}>{t('contentReferenceTimes')}</h3>
+                    {guide.contentReferenceTimes.map(time => (
+                      <div key={time.id}>
+                        <DateRange event={time} />
+                      </div>
+                    ))}
+                  </div>
+                )}
             </div>
           </div>
         </div>
       </main>
     </div>
   );
+}
+
+async function DateRange({event}: {event: Event}) {
+  const t = await getTranslations('ResearchGuide');
+
+  if (!event.date?.startDate && !event.date?.endDate) {
+    return t('noDateRange');
+  }
+
+  const startDateFormatted = event.date?.startDate
+    ? event.date.startDate.getFullYear()
+    : t('noStartDate');
+  const endDateFormatted = event.date?.endDate
+    ? event.date.endDate.getFullYear()
+    : t('noEndDate');
+
+  if (startDateFormatted === endDateFormatted) {
+    return startDateFormatted as string;
+  }
+
+  return `${startDateFormatted} – ${endDateFormatted}`;
 }
