@@ -37,11 +37,11 @@ export function sortResearchGuide(topLevel: ResearchGuide): ResearchGuide {
     const sortedSeeAlso =
       guide.seeAlso?.sort((a, b) =>
         (a.name || '').localeCompare(b.name || '')
-      ) || [];
+      ) || undefined;
 
     return {
       ...guide,
-      seeAlso: sortedSeeAlso.map(sortGuides),
+      seeAlso: sortedSeeAlso?.map(sortGuides),
     };
   };
 
