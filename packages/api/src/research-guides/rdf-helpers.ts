@@ -82,6 +82,17 @@ export function createResearchGuide(
     getPropertyValues(researchGuideResource, 'ex:encodingFormat')
   );
 
+  let hasParts: ResearchGuide[] | undefined = undefined;
+
+  // Prevent infinite recursion
+  if (stackSize < 5) {
+    hasParts = createResearchGuides(
+      researchGuideResource,
+      'ex:hasPart',
+      stackSize + 1
+    );
+  }
+
   let seeAlso: ResearchGuide[] | undefined = undefined;
 
   // Prevent infinite recursion
@@ -112,6 +123,7 @@ export function createResearchGuide(
     text,
     encodingFormat,
     contentReferenceTimes,
+    hasParts,
     seeAlso,
     contentLocations,
     keywords,
