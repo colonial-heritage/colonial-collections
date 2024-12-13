@@ -5,10 +5,7 @@ import {Link} from '@/navigation';
 import {ChevronRightIcon} from '@heroicons/react/24/solid';
 import {getLocale, getTranslations} from 'next-intl/server';
 import StringToMarkdown from './string-to-markdown';
-import {
-  filterLevel3Guides,
-  sortResearchGuide,
-} from '@/app/[locale]/research-guide/filterGuides';
+import {sortResearchGuide} from '@/app/[locale]/research-guide/sortGuides';
 
 export default async function Page() {
   const locale = (await getLocale()) as LocaleEnum;
@@ -23,10 +20,9 @@ export default async function Page() {
   const topLevel = topLevels[0];
 
   const sortedGuides = sortResearchGuide(topLevel);
-  const filteredTopLevel = filterLevel3Guides(sortedGuides);
 
-  const firstLevel1Guide = filteredTopLevel.seeAlso?.[0];
-  const nextLevel1Guides = filteredTopLevel.seeAlso?.slice(1) || [];
+  const firstLevel1Guide = sortedGuides.hasParts?.[0];
+  const nextLevel1Guides = sortedGuides.hasParts?.slice(1) || [];
 
   return (
     <>
@@ -45,7 +41,7 @@ export default async function Page() {
               {firstLevel1Guide.name}
             </h2>
             <div className="pb-4 flex flex-col gap-4">
-              {firstLevel1Guide.seeAlso?.map(item => (
+              {firstLevel1Guide.hasParts?.map(item => (
                 <Link
                   key={item.id}
                   href={`/research-guide/${encodeRouteSegment(item.id)}`}
@@ -69,7 +65,7 @@ export default async function Page() {
             {level1Guide.name}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {level1Guide.seeAlso?.map(level2Guides => (
+            {level1Guide.hasParts?.map(level2Guides => (
               <div
                 key={level2Guides.id}
                 className="bg-consortium-sand-100 text-consortium-sand-800 rounded flex flex-col p-4"
@@ -87,7 +83,7 @@ export default async function Page() {
                     </div>
                   </div>
                 </Link>
-                {level2Guides.seeAlso?.map(level3Guides => (
+                {level2Guides.hasParts?.map(level3Guides => (
                   <Link
                     key={level3Guides.id}
                     href={`/research-guide/${encodeRouteSegment(
