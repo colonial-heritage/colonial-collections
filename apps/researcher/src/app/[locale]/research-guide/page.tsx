@@ -5,7 +5,7 @@ import {Link} from '@/navigation';
 import {ChevronRightIcon} from '@heroicons/react/24/solid';
 import {getLocale, getTranslations} from 'next-intl/server';
 import StringToMarkdown from './string-to-markdown';
-import {sortResearchGuide} from '@/app/[locale]/research-guide/sortGuides';
+import {sortResearchGuide} from '@/app/[locale]/research-guide/sort-guides';
 
 export default async function Page() {
   const locale = (await getLocale()) as LocaleEnum;

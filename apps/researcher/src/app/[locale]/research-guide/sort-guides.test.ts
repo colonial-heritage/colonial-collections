@@ -1,5 +1,5 @@
 import {ResearchGuide} from '@colonial-collections/api';
-import {sortResearchGuide} from './sortGuides';
+import {sortResearchGuide} from './sort-guides';
 
 describe('sortResearchGuide', () => {
   it('sorts guides by their names', () => {

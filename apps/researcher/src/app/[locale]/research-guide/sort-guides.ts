@@ -1,6 +1,6 @@
 import {ResearchGuide} from '@colonial-collections/api';
 
-export function sortResearchGuide(topLevel: ResearchGuide): ResearchGuide {
+export function sortResearchGuide(topLevel: ResearchGuide) {
   const sortGuides = (guide: ResearchGuide): ResearchGuide => {
     const sortedParts =
       guide.hasParts?.sort((a, b) =>
