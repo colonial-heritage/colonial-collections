@@ -23,73 +23,51 @@ describe('getTopLevels', () => {
           'Research aides for conducting provenance research into colonial collections',
         text: 'On this page you find various research aides that can assist...',
         encodingFormat: 'text/markdown',
-        seeAlso: [
+        hasParts: [
           {
-            id: 'https://guides.example.org/subset3',
-            name: '3. Name',
-            seeAlso: [
+            id: 'https://guides.example.org/subset2',
+            name: '2. Name',
+            hasParts: [
               {
-                id: 'https://guides.example.org/guide6',
-                name: 'Royal Cabinet of Curiosities',
-                seeAlso: [
+                id: 'https://guides.example.org/guide4',
+                name: 'Military and navy',
+                hasParts: [
                   {
-                    id: 'https://guides.example.org/guide5',
-                    name: 'Trade',
-                    seeAlso: [
-                      {
-                        id: 'https://guides.example.org/guide7',
-                        name: 'Kunsthandel Van Lier',
-                      },
-                    ],
+                    id: 'https://guides.example.org/guide6',
+                    name: 'Royal Cabinet of Curiosities',
                   },
                 ],
               },
               {
-                id: 'https://guides.example.org/guide7',
-                name: 'Kunsthandel Van Lier',
-                seeAlso: [
+                id: 'https://guides.example.org/guide5',
+                name: 'Trade',
+                hasParts: [
                   {
-                    id: 'https://guides.example.org/guide4',
-                    name: 'Military and navy',
-                    seeAlso: [
-                      {
-                        id: 'https://guides.example.org/guide1',
-                        name: 'Doing research',
-                      },
-                      {
-                        id: 'https://guides.example.org/guide6',
-                        name: 'Royal Cabinet of Curiosities',
-                      },
-                    ],
+                    id: 'https://guides.example.org/guide7',
+                    name: 'Kunsthandel Van Lier',
                   },
                 ],
               },
             ],
           },
           {
+            id: 'https://guides.example.org/subset3',
+            name: '3. Name',
+            hasParts: [
+              {
+                id: 'https://guides.example.org/guide6',
+                name: 'Royal Cabinet of Curiosities',
+              },
+              {
+                id: 'https://guides.example.org/guide7',
+                name: 'Kunsthandel Van Lier',
+              },
+            ],
+          },
+          {
             id: 'https://guides.example.org/subset1',
             name: '1. Name',
-            seeAlso: [
-              {
-                id: 'https://guides.example.org/guide1',
-                name: 'Doing research',
-                seeAlso: [
-                  {
-                    id: 'https://guides.example.org/guide4',
-                    name: 'Military and navy',
-                    seeAlso: [
-                      {
-                        id: 'https://guides.example.org/guide1',
-                        name: 'Doing research',
-                      },
-                      {
-                        id: 'https://guides.example.org/guide6',
-                        name: 'Royal Cabinet of Curiosities',
-                      },
-                    ],
-                  },
-                ],
-              },
+            hasParts: [
               {
                 id: 'https://guides.example.org/guide2',
                 name: 'How can I use the data hub for my research?',
@@ -97,66 +75,10 @@ describe('getTopLevels', () => {
               {
                 id: 'https://guides.example.org/guide3',
                 name: 'Sources',
-                seeAlso: [
-                  {
-                    id: 'https://guides.example.org/guide5',
-                    name: 'Trade',
-                    seeAlso: [
-                      {
-                        id: 'https://guides.example.org/guide7',
-                        name: 'Kunsthandel Van Lier',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 'https://guides.example.org/subset2',
-            name: '2. Name',
-            seeAlso: [
-              {
-                id: 'https://guides.example.org/guide4',
-                name: 'Military and navy',
-                seeAlso: [
-                  {
-                    id: 'https://guides.example.org/guide1',
-                    name: 'Doing research',
-                    seeAlso: [
-                      {
-                        id: 'https://guides.example.org/guide4',
-                        name: 'Military and navy',
-                      },
-                    ],
-                  },
-                  {
-                    id: 'https://guides.example.org/guide6',
-                    name: 'Royal Cabinet of Curiosities',
-                    seeAlso: [
-                      {
-                        id: 'https://guides.example.org/guide5',
-                        name: 'Trade',
-                      },
-                    ],
-                  },
-                ],
               },
               {
-                id: 'https://guides.example.org/guide5',
-                name: 'Trade',
-                seeAlso: [
-                  {
-                    id: 'https://guides.example.org/guide7',
-                    name: 'Kunsthandel Van Lier',
-                    seeAlso: [
-                      {
-                        id: 'https://guides.example.org/guide4',
-                        name: 'Military and navy',
-                      },
-                    ],
-                  },
-                ],
+                id: 'https://guides.example.org/guide1',
+                name: 'Doing research',
               },
             ],
           },
@@ -244,6 +166,12 @@ describe('getById', () => {
           },
         },
       ]),
+      hasParts: expect.arrayContaining([
+        {
+          id: 'https://guides.example.org/guide6',
+          name: 'Royal Cabinet of Curiosities',
+        },
+      ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
@@ -301,6 +229,12 @@ describe('get with localized names', () => {
       abstract:
         'Army and Navy personnel who operated in colonized territories collected objects in various ways during the colonial era.',
       text: 'Dutch authority in the [Dutch East Indies](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) and on the [Caribbean Islands](https://www.geonames.org/8505032/netherlands-antilles.html) relied heavily on the use of the military...',
+      hasParts: expect.arrayContaining([
+        {
+          id: 'https://guides.example.org/guide6',
+          name: 'Royal Cabinet of Curiosities',
+        },
+      ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
@@ -344,6 +278,12 @@ describe('get with localized names', () => {
       abstract:
         'Leger- en marinepersoneel dat actief was in gekoloniseerde gebieden, verzamelde op verschillende manieren objecten tijdens het koloniale tijdperk.',
       text: 'Het Nederlandse gezag in [Nederlands-Indië](https://www.geonames.org/1643084/republic-of-indonesia.html), [Suriname](https://www.geonames.org/3382998/republic-of-suriname.html) en op de [Caribische eilanden](https://www.geonames.org/8505032/netherlands-antilles.html) steunde in belangrijke mate op de inzet van het leger.',
+      hasParts: expect.arrayContaining([
+        {
+          id: 'https://guides.example.org/guide6',
+          name: 'Koninklijk Kabinet van Zeldzaamheden',
+        },
+      ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
