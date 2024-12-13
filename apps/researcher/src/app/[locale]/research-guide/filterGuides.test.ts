@@ -15,7 +15,7 @@ describe('filterLevel3Guides', () => {
             },
           ],
         },
-        {id: 'level1-2'},
+        {id: 'level1-2', seeAlso: [{id: 'level2-2'}]},
       ],
     };
 
@@ -31,7 +31,7 @@ describe('filterLevel3Guides', () => {
             },
           ],
         },
-        {id: 'level1-2'},
+        {id: 'level1-2', seeAlso: [{id: 'level2-2', seeAlso: []}]},
       ],
     };
 
@@ -48,7 +48,7 @@ describe('filterLevel3Guides', () => {
           seeAlso: [
             {
               id: 'level2-1',
-              seeAlso: [{id: 'level1-2'}, {id: 'level2-2'}],
+              seeAlso: [{id: 'level1-2'}],
             },
           ],
         },
