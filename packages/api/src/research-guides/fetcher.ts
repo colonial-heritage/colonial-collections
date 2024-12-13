@@ -67,18 +67,18 @@ export class ResearchGuideFetcher {
           ex:abstract ?topSetAbstract ;
           ex:text ?topSetText ;
           ex:encodingFormat ?topSetEncodingFormat ;
-          ex:seeAlso ?subSet .
+          ex:hasPart ?subSet .
 
         ?subSet a ex:CreativeWork ;
           ex:name ?subSetName ;
-          ex:seeAlso ?guide .
+          ex:hasPart ?level1Guide .
 
-        ?guide a ex:CreativeWork ;
-          ex:name ?guideName ;
-          ex:seeAlso ?relatedGuide .
+        ?level1Guide a ex:CreativeWork ;
+          ex:name ?level1GuideName ;
+          ex:hasPart ?level2Guide .
 
-        ?relatedGuide a ex:CreativeWork ;
-          ex:name ?relatedGuideName .
+        ?level2Guide a ex:CreativeWork ;
+          ex:name ?level2GuideName .
       }
       WHERE {
         VALUES ?topSet {
@@ -111,15 +111,15 @@ export class ResearchGuideFetcher {
 
           # Get a selection of information from member guides, if any
           OPTIONAL {
-            ?subSet la:has_member ?guide .
-            ?guide schema:name ?guideName
-            FILTER(LANG(?guideName) = "${options.locale}")
+            ?subSet la:has_member ?level1Guide .
+            ?level1Guide schema:name ?level1GuideName
+            FILTER(LANG(?level1GuideName) = "${options.locale}")
 
-            # Get a selection of information from related guides, if any
+            # Get a selection of information from member guides, if any
             OPTIONAL {
-              ?guide rdfs:seeAlso ?relatedGuide .
-              ?relatedGuide schema:name ?relatedGuideName
-              FILTER(LANG(?relatedGuideName) = "${options.locale}")
+              ?level1Guide la:has_member ?level2Guide .
+              ?level2Guide schema:name ?level2GuideName
+              FILTER(LANG(?level2GuideName) = "${options.locale}")
             }
           }
         }
@@ -137,7 +137,7 @@ export class ResearchGuideFetcher {
       WHERE {
         ?this a la:Set .
         FILTER NOT EXISTS {
-          ?this la:member_of []
+          [] la:has_member ?this
         }
       }
     `;
@@ -163,6 +163,7 @@ export class ResearchGuideFetcher {
 
     const query = `
       PREFIX ex: <https://example.org/>
+      PREFIX la: <https://linked.art/ns/terms/>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX schema: <https://schema.org/>
 
@@ -173,11 +174,15 @@ export class ResearchGuideFetcher {
           ex:abstract ?abstract ;
           ex:text ?text ;
           ex:encodingFormat ?encodingFormat ;
+          ex:hasPart ?memberGuide ;
           ex:seeAlso ?relatedGuide ;
           ex:contentLocation ?spatial ;
           ex:keyword ?keyword ;
           ex:citation ?citation ;
           ex:contentReferenceTime ?contentReferenceTime .
+
+        ?memberGuide a ex:CreativeWork ;
+          ex:name ?memberGuideName .
 
         ?relatedGuide a ex:CreativeWork ;
           ex:name ?relatedGuideName .
@@ -231,10 +236,17 @@ export class ResearchGuideFetcher {
           ?this schema:encodingFormat ?encodingFormat
         }
 
+        # Get a selection of information from member guides, if any
+        OPTIONAL {
+          ?this la:has_member ?memberGuide .
+          ?memberGuide schema:name ?memberGuideName
+          FILTER(LANG(?memberGuideName) = "${options.locale}")
+        }
+
         # Get a selection of information from related guides, if any
         OPTIONAL {
           ?this rdfs:seeAlso ?relatedGuide .
-          ?relatedGuide schema:name ?relatedGuideName .
+          ?relatedGuide schema:name ?relatedGuideName
           FILTER(LANG(?relatedGuideName) = "${options.locale}")
         }
 

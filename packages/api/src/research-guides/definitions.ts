@@ -11,5 +11,6 @@ export type ResearchGuide = Thing & {
   contentLocations?: Place[];
   keywords?: Term[];
   citations?: Citation[];
+  hasParts?: ResearchGuide[];
   seeAlso?: ResearchGuide[];
 };
