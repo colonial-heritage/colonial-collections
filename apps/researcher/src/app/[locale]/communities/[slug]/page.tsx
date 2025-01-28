@@ -21,6 +21,7 @@ import EditCommunityForm from './edit-community-form';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import Protect from '@/lib/community/protect';
 import {InformationCircleIcon} from '@heroicons/react/24/outline';
+import SignedIn from '@/lib/community/signed-in';
 
 interface Props {
   params: {
@@ -236,50 +237,52 @@ export default async function CommunityPage({params}: Props) {
           )}
         </div>
 
-        <aside className="w-full md:w-1/4 self-stretch">
-          <div className="flex justify-between">
-            <h2 className="mb-4 text-xl">{t('membersTitle')}</h2>
-            <div>
-              <Protect
-                communityId={community.id}
-                permission="org:sys_profile:manage"
-              >
-                <ManageMembersButton
+        <SignedIn>
+          <aside className="w-full md:w-1/4 self-stretch">
+            <div className="flex justify-between">
+              <h2 className="mb-4 text-xl">{t('membersTitle')}</h2>
+              <div>
+                <Protect
                   communityId={community.id}
-                  communitySlug={params.slug}
-                />
-              </Protect>
+                  permission="org:sys_profile:manage"
+                >
+                  <ManageMembersButton
+                    communityId={community.id}
+                    communitySlug={params.slug}
+                  />
+                </Protect>
+              </div>
             </div>
-          </div>
-          <ul>
-            {memberships!.map(membership => (
-              <li
-                className="font-normal flex items-center gap-2 mb-3"
-                key={membership.id}
-              >
-                <div className="w-10">
-                  {membership.imageUrl && (
-                    <Image
-                      src={membership.imageUrl}
-                      alt=""
-                      className="w-full rounded-full"
-                      width={40}
-                      height={40}
-                    />
-                  )}
-                </div>
-                <div className="flex flex-col">
-                  <div>
-                    {membership.firstName} {membership.lastName}
+            <ul>
+              {memberships!.map(membership => (
+                <li
+                  className="font-normal flex items-center gap-2 mb-3"
+                  key={membership.id}
+                >
+                  <div className="w-10">
+                    {membership.imageUrl && (
+                      <Image
+                        src={membership.imageUrl}
+                        alt=""
+                        className="w-full rounded-full"
+                        width={40}
+                        height={40}
+                      />
+                    )}
                   </div>
-                  <div className="text-neutral-600">
-                    {/* Place country name here */}
+                  <div className="flex flex-col">
+                    <div>
+                      {membership.firstName} {membership.lastName}
+                    </div>
+                    <div className="text-neutral-600">
+                      {/* Place country name here */}
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </aside>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </SignedIn>
       </div>
     </>
   );
