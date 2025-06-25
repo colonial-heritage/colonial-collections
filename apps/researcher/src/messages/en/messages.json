@@ -133,7 +133,7 @@
     "nameSubTitle": "A title or name given to the object by its current holder.", 
     "descriptionSubTitle": "A description of the object, its features or context.",
     "locationsCreatedSubTitle": "The location, region or part of the world where the object is from.",
-    "materialsSubTitle": "What kind of materials the object consists of. Click on the i of the material to learn more.",
+    "materialsSubTitle": "What kind of materials the object consists of.",
     "typesSubTitle": "A name for the type or kind of object given by the current holder.",
     "techniquesSubTitle": "",
     "creatorsSubTitle": "",
