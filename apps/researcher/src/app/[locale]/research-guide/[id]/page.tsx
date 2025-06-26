@@ -103,21 +103,45 @@ export default async function GuidePage({params}: Props) {
               {guide.keywords && guide.keywords.length > 0 && (
                 <div className="bg-consortium-sand-50 rounded px-2 py-4">
                   <h3 tabIndex={0}>{t('keywords')}</h3>
-                  {guide.keywords.map(keyword => (
-                    <div key={keyword.id} tabIndex={0}>
-                      {keyword.name}
-                    </div>
-                  ))}
+                  <ul className="flex flex-col gap-1">
+                    {guide.keywords
+                      .filter(keyword => keyword.name !== undefined)
+                      .map(keyword => (
+                        <li key={keyword.id}>
+                          <Link
+                            href={`/objects?query=${encodeURIComponent(
+                              keyword.name ?? ''
+                            )}`}
+                            target="_blank"
+                            className="font-normal no-underline border-b border-dashed border-gray-400"
+                            tabIndex={0}
+                          >
+                            {keyword.name}
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
                 </div>
               )}
               {guide.contentLocations && guide.contentLocations.length > 0 && (
                 <div className="bg-consortium-sand-50 rounded px-2 py-4">
                   <h3 tabIndex={0}>{t('contentLocations')}</h3>
-                  {guide.contentLocations.map(location => (
-                    <div key={location.id} tabIndex={0}>
-                      {location.name}
-                    </div>
-                  ))}
+                  <ul className="flex flex-col gap-1">
+                    {guide.contentLocations.map(location => (
+                      <li key={location.id}>
+                        <Link
+                          href={`/objects?query=${encodeURIComponent(
+                            location.name ?? ''
+                          )}`}
+                          target="_blank"
+                          className="font-normal no-underline border-b border-dashed border-gray-400"
+                          tabIndex={0}
+                        >
+                          {location.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
               {guide.contentReferenceTimes &&
