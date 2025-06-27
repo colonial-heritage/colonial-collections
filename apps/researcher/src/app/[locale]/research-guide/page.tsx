@@ -31,7 +31,7 @@ export default async function Page() {
       </h1>
       <div className="my-4 w-full flex flex-col md:flex-row gap-6">
         {topLevel.text && (
-          <div className="flex-1">
+          <div className="flex-1 prose">
             <StringToMarkdown text={topLevel.text} />
           </div>
         )}
@@ -64,11 +64,11 @@ export default async function Page() {
           <h2 className="mb-4" tabIndex={0}>
             {level1Guide.name}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
             {level1Guide.hasParts?.map(level2Guides => (
               <div
                 key={level2Guides.id}
-                className="bg-consortium-sand-100 text-consortium-sand-800 rounded flex flex-col p-4"
+                className="mb-6 break-inside-avoid bg-consortium-sand-100 text-consortium-sand-800 rounded flex flex-col p-4"
               >
                 <Link
                   href={`/research-guide/${encodeRouteSegment(
