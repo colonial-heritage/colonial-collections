@@ -9,6 +9,7 @@ import {Link} from '@/navigation';
 import {ChevronRightIcon, ChevronLeftIcon} from '@heroicons/react/24/solid';
 import StringToMarkdown from '../string-to-markdown';
 import {Event} from '@colonial-collections/api';
+import {MagnifyingGlassIcon} from '@heroicons/react/24/solid';
 
 interface Props {
   params: {id: string};
@@ -101,23 +102,73 @@ export default async function GuidePage({params}: Props) {
             )}
             <div className="flex flex-col gap-4">
               {guide.keywords && guide.keywords.length > 0 && (
-                <div className="bg-consortium-sand-50 rounded px-2 py-4">
+                <div className="py-4">
                   <h3 tabIndex={0}>{t('keywords')}</h3>
-                  {guide.keywords.map(keyword => (
-                    <div key={keyword.id} tabIndex={0}>
-                      {keyword.name}
-                    </div>
-                  ))}
+                  <p className="italic text-neutral-500 my-2">
+                    {t('keywordsNewSearch')}
+                  </p>
+                  <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
+                    {guide.keywords
+                      .filter(keyword => keyword.name !== undefined)
+                      .map(keyword => (
+                        <li
+                          key={keyword.id}
+                          className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
+                        >
+                          {keyword.name}
+                          <Link
+                            href={`/objects?query=${encodeURIComponent(
+                              keyword.name ?? ''
+                            )}`}
+                            target="_blank"
+                            className="no-underline rounded-full px-2 py-1 min-w-28 md:text-sm bg-consortium-blue-100 text-consortiumBlue-800 text-xs flex gap-2 justify-center items-center"
+                            tabIndex={0}
+                          >
+                            <MagnifyingGlassIcon
+                              className="w-3 h-3 stroke-consortiumBlue-800"
+                              aria-label={
+                                t('accessibilitySearch') + keyword.name
+                              }
+                            />
+                            {keyword.name}
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
                 </div>
               )}
               {guide.contentLocations && guide.contentLocations.length > 0 && (
-                <div className="bg-consortium-sand-50 rounded px-2 py-4">
+                <div className="py-4">
                   <h3 tabIndex={0}>{t('contentLocations')}</h3>
-                  {guide.contentLocations.map(location => (
-                    <div key={location.id} tabIndex={0}>
-                      {location.name}
-                    </div>
-                  ))}
+                  <p className="italic text-neutral-500 my-2">
+                    {t('locationsNewSearch')}
+                  </p>
+                  <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
+                    {guide.contentLocations.map(location => (
+                      <li
+                        key={location.id}
+                        className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
+                      >
+                        {location.name}
+                        <Link
+                          href={`/objects?query=${encodeURIComponent(
+                            location.name ?? ''
+                          )}`}
+                          target="_blank"
+                          className="no-underline rounded-full px-2 py-1 min-w-28 md:text-sm bg-consortium-blue-100 text-consortiumBlue-800 text-xs flex gap-2 justify-center items-center"
+                          tabIndex={0}
+                        >
+                          <MagnifyingGlassIcon
+                            className="w-3 h-3 stroke-consortiumBlue-800"
+                            aria-label={
+                              t('accessibilitySearch') + location.name
+                            }
+                          />
+                          {location.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
               {guide.contentReferenceTimes &&
