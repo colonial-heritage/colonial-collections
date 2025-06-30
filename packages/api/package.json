@@ -32,7 +32,7 @@
     "@colonial-collections/eslint-config": "*",
     "@colonial-collections/ts-config": "*",
     "@jest/globals": "29.7.0",
-    "@rdfjs/types": "1.1.0",
+    "@rdfjs/types": "2.0.1",
     "@types/n3": "1.16.4",
     "@types/node": "20.12.12",
     "@types/streamify-string": "1.0.4",
