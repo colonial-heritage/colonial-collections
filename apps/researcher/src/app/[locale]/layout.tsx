@@ -59,7 +59,10 @@ export default async function RootLayout({children, params: {locale}}: Props) {
                   </li>
                 </ul>
               </div>
-              <header className="w-full bg-consortium-blue-900 text-white py-2">
+              <header
+                className="w-full bg-consortium-blue-900 text-white py-2"
+                id="top"
+              >
                 <Navigation datasetBrowserUrl={env['DATASET_BROWSER_URL']!} />
               </header>
               {children}
