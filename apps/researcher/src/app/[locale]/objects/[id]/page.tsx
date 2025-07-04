@@ -3,7 +3,6 @@ import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
-import {InformationCircleIcon} from '@heroicons/react/24/outline';
 import {ObjectIcon} from '@/components/icons';
 import {Metadata} from './metadata';
 import {decodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
@@ -110,10 +109,11 @@ export default async function Details({params}: Props) {
                   </div>
                 ))}
               </div>
-              <div className="text-sm my-4 xl:my-10 text-consortium-blue-100 md:flex gap-1">
+              <div className="text-sm my-4 xl:my-10 text-consortium-blue-100">
                 {organization && (
-                  <>
+                  <div>
                     {t('providerCurrentHolder')}
+                    {': '}
                     <span className="text-white">
                       <a
                         href="#dataprovider"
@@ -121,11 +121,17 @@ export default async function Details({params}: Props) {
                         aria-label={t('providerCurrentHolder')}
                       >
                         {organization.name}
-                        <InformationCircleIcon className="w-4 h-4 stroke-white" />
                       </a>
                     </span>
                     , {organization.address?.addressLocality}
-                  </>
+                  </div>
+                )}
+                {object.identifier && (
+                  <div>
+                    {t('objectId')}
+                    {': '}
+                    <span className="text-white">{object.identifier}</span>
+                  </div>
                 )}
               </div>
             </div>
@@ -133,32 +139,49 @@ export default async function Details({params}: Props) {
         </div>
         <div className="w-full bg-consortium-blue-800 text-consortium-blue-100 sticky top-0 z-30 text-xs shadow-lg border-t border-consortium-blue-600">
           <div className="px-4 sm:px-10 max-w-[1800px] mx-auto flex justify-between items-center">
-            <div className="w-auto sm:flex lg:justify-end relative py-2 ">
-              <button className="peer sm:hidden p-2 w-8">
-                <ChevronDownIcon className='className="w-4 h-4 stroke-white' />
+            <div className="w-auto lg:flex lg:justify-end relative py-2">
+              <button className="peer lg:hidden p-2 w-8">
+                <ChevronDownIcon className="w-4 h-4 stroke-white" />
               </button>
-
-              <div className="hidden peer-hover:flex hover:flex w-[200px] sm:w-auto flex-col sm:flex sm:flex-row gap-3 absolute sm:relative left-0 bg-consortium-blue-800 p-2 sm:p-0">
-                <a className="whitespace-nowrap no-underline" href="#metadata">
+              <div className="hidden peer-hover:flex hover:flex w-[200px] lg:w-auto flex-col lg:flex lg:flex-row items-center gap-3 absolute lg:relative left-0 bg-consortium-blue-800 p-2 lg:p-0">
+                <div className="italic text-sm">
+                  {t('pageNavigationSegments') || 'Page segments:'}
+                </div>
+                <a
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
+                  href="#metadata"
+                >
                   {t('pageNavigationMetadata')}
                 </a>
                 <a
-                  className="whitespace-nowrap no-underline"
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
                   href="#localcontextnotices"
                 >
-                  {t('pageNavigationNotices')}
+                  <span className="hidden xl:inline">
+                    {t('pageNavigationLocalContextLong')}
+                  </span>
+                  <span className="xl:hidden">
+                    {t('pageNavigationLocalContextShort')}
+                  </span>
                 </a>
                 <a
-                  className="whitespace-nowrap no-underline"
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
                   href="#provenance"
                 >
                   {t('pageNavigationProvenance')}
                 </a>
                 <a
-                  className="whitespace-nowrap no-underline"
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
                   href="#dataprovider"
                 >
                   {t('pageNavigationProvider')}
+                </a>
+                <a
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
+                  href="#top"
+                >
+                  {t('pageNavigationTop')}
+                  {' ↑'}
                 </a>
               </div>
             </div>
