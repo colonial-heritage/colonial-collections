@@ -7,7 +7,7 @@ import {
   removeNullish,
 } from '../rdf-helpers';
 import type {Resource} from 'rdf-object';
-import {Citation, ResearchGuide} from './definitions';
+import {Citation, CitationType, ResearchGuide} from './definitions';
 import {Event, Term} from '../definitions';
 
 function createCitation(citationResource: Resource) {
@@ -16,8 +16,18 @@ function createCitation(citationResource: Resource) {
     getPropertyValues(citationResource, 'ex:description')
   );
   const url = onlyOne(getPropertyValues(citationResource, 'ex:url'));
+  const additionalType = onlyOne(
+    getPropertyValues(citationResource, 'ex:additionalType')
+  );
+
+  // The KG, unfortunately, does not use structured data for denoting the
+  // type of the source - we'll need to parse an unstructured literal
+  const type = additionalType?.toLowerCase().includes('secondary source')
+    ? CitationType.SecondarySource
+    : CitationType.PrimarySource;
 
   const citation: Citation = {
+    type,
     id: citationResource.value,
     name,
     description,
