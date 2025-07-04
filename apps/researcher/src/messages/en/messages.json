@@ -102,6 +102,7 @@
     "noEntity": "Object could not be found",
     "object": "Object",
     "providerCurrentHolder": "Data provider object",
+    "objectId": "Reference or object ID",
     "accessibilityProviderCurrentHolder": "More information about the data provider",
     "providerInfo": "More info",
     "contactInfo": "Contact info",
@@ -151,10 +152,13 @@
     "errorObjectRemovedFromList": "There was a problem removing the object from the list. Please try again later.",
     "needAccountToAddNarrativeTitle": "To add your narrative to this object you need to have an account.",
     "needCommunityToAddNarrativeTitle": "To add your narrative to this object you need to be part of a community.",
+    "pageNavigationSegments": "Page segments:",
     "pageNavigationMetadata": "Metadata",
-    "pageNavigationNotices": "Local Contexts Notices",
+    "pageNavigationLocalContextLong": "Local Contexts Notices",
+    "pageNavigationLocalContextShort": "Local Contexts",
     "pageNavigationProvenance": "Provenance",
-    "pageNavigationProvider": "Data provider"
+    "pageNavigationProvider": "Data provider",
+    "pageNavigationTop": "Top"
   },
   "LocalContextsNotices": {
     "attributionIncomplete": "Attribution Incomplete",
