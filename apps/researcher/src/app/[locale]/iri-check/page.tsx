@@ -6,7 +6,10 @@ export default async function IriCheckPage() {
   noStore(); // Disable caching to prevent double updates
 
   let updated = 0;
-  const users = await clerkClient.users.getUserList();
+  const users = await clerkClient.users.getUserList({
+    orderBy: '-created_at',
+    limit: 200,
+  });
 
   await Promise.all(
     users.map(async user => {
