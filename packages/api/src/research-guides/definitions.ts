@@ -1,6 +1,14 @@
 import {Event, Place, Term, Thing} from '../definitions';
 
-export type Citation = Thing & {url?: string};
+export enum CitationType {
+  PrimarySource = 'primary',
+  SecondarySource = 'secondary',
+}
+
+export type Citation = Thing & {
+  type: CitationType;
+  url?: string;
+};
 
 export type ResearchGuide = Thing & {
   alternateNames?: string[];
