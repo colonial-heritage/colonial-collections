@@ -20,7 +20,6 @@ import {env} from 'node:process';
 import Map from './map';
 import {ReadMoreText} from '@/components/read-more-text';
 import LocalContextsNotices from './local-contexts-notices/overview';
-import {ChevronDownIcon} from '@heroicons/react/24/outline';
 
 export const dynamic = 'force-dynamic';
 
