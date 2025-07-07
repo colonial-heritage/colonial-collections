@@ -20,7 +20,6 @@ import {env} from 'node:process';
 import Map from './map';
 import {ReadMoreText} from '@/components/read-more-text';
 import LocalContextsNotices from './local-contexts-notices/overview';
-import {ChevronDownIcon} from '@heroicons/react/24/outline';
 
 export const dynamic = 'force-dynamic';
 
@@ -137,24 +136,21 @@ export default async function Details({params}: Props) {
             </div>
           </div>
         </div>
-        <div className="w-full bg-consortium-blue-800 text-consortium-blue-100 sticky top-0 z-30 text-xs shadow-lg border-t border-consortium-blue-600">
-          <div className="px-4 sm:px-10 max-w-[1800px] mx-auto flex justify-between items-center">
-            <div className="w-auto lg:flex lg:justify-end relative py-2">
-              <button className="peer lg:hidden p-2 w-8">
-                <ChevronDownIcon className="w-4 h-4 stroke-white" />
-              </button>
-              <div className="hidden peer-hover:flex hover:flex w-[200px] lg:w-auto flex-col lg:flex lg:flex-row items-center gap-3 absolute lg:relative left-0 bg-consortium-blue-800 p-2 lg:p-0">
+        <div className="w-full bg-consortium-blue-800 text-consortium-blue-100 sticky top-0 z-30 text-xs shadow-lg border-t border-consortium-blue-600 hidden lg:block">
+          <div className="px-10 max-w-[1800px] mx-auto flex justify-between items-center">
+            <div className="w-auto flex justify-end relative py-2">
+              <div className="w-auto flex flex-row items-center gap-3 relative bg-consortium-blue-800 p-0">
                 <div className="italic text-sm">
                   {t('pageNavigationSegments') || 'Page segments:'}
                 </div>
                 <a
-                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
                   href="#metadata"
                 >
                   {t('pageNavigationMetadata')}
                 </a>
                 <a
-                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
                   href="#localcontextnotices"
                 >
                   <span className="hidden xl:inline">
@@ -165,19 +161,19 @@ export default async function Details({params}: Props) {
                   </span>
                 </a>
                 <a
-                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
                   href="#provenance"
                 >
                   {t('pageNavigationProvenance')}
                 </a>
                 <a
-                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
                   href="#dataprovider"
                 >
                   {t('pageNavigationProvider')}
                 </a>
                 <a
-                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs md:text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
+                  className="whitespace-nowrap no-underline rounded-full px-2 py-1 text-xs bg-consortium-blue-100 hover:bg-consortium-blue-50 text-consortium-blue-800 transition"
                   href="#top"
                 >
                   {t('pageNavigationTop')}
