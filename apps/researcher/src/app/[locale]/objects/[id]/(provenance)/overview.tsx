@@ -73,7 +73,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
             {t('title')}
           </h2>
 
-          <div className="flex justify-between my-6">
+          <div className="flex flex-col lg:flex-row justify-between my-6">
             <div className="flex flex-col lg:flex-row justify-between w-2/3 items-start lg:gap-8 lg:border-r ">
               <p className="text-neutral-600 text-sm max-w-xl mb-6">
                 {t('description')}
@@ -83,7 +83,7 @@ export default async function Provenance({objectId}: {objectId: string}) {
               </div>
             </div>
 
-            <div className="flex gap-1 w-1/3 justify-end items-start">
+            <div className="flex gap-1 w-1/3 lg:justify-end items-start">
               <ToggleViewButtons />
             </div>
           </div>
