@@ -74,11 +74,11 @@ export default async function Provenance({objectId}: {objectId: string}) {
           </h2>
 
           <div className="flex justify-between my-6">
-            <div className="flex flex-col lg:flex-row justify-between w-2/3 items-start lg:gap-8">
+            <div className="flex flex-col lg:flex-row justify-between w-2/3 items-start lg:gap-8 lg:border-r ">
               <p className="text-neutral-600 text-sm max-w-xl mb-6">
                 {t('description')}
               </p>
-              <div className="flex justify-end items-start">
+              <div className="flex justify-end items-start pr-4">
                 <AddProvenanceButton />
               </div>
             </div>
@@ -103,7 +103,7 @@ async function AddProvenanceButton() {
 
   return (
     <SlideOutButton
-      className="mb-4 py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortium-green-200"
+      className="mb-4 py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortium-green-200 whitespace-pre"
       id={slideOutId}
     >
       <ChatBubbleBottomCenterTextIcon className="w-4 h-4 stroke-consortium-blue-800" />
