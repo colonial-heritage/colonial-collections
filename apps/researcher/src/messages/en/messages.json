@@ -191,6 +191,7 @@
   "LocalContextsNoticesOverview": {
     "title": "Local Contexts Notices",
     "description": "The Local Contexts Collections Care (CC) Notices are visible identifiers developed specifically for institutions and repositories to support proper cultural care and stewardship of collections, led and guided by Indigenous protocols and authority. <link> Learn more about the Local Contexts Collections Care Notices.</link>.",
+    "listLabel": "Notices of this object",
     "defaultProvider": "Colonial Collections Consortium",
     "defaultLabel": "This is a standard Notice added to each object to indicate an incomplete, incorrect and/or missing attribution.",
     "addLocalContextsNoticeButton": "Add your Local Context Notice",
