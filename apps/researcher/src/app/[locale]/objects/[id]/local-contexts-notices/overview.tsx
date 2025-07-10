@@ -89,6 +89,9 @@ export default async function LocalContextsNotices() {
       </p>
       <AddLocalContextsNotice />
       <Notifications prefixFilters={['notice.']} />
+      <h3 className="text-xl" tabIndex={0}>
+        {t('listLabel')}
+      </h3>
       <div className="w-full mt-4">
         {noticesToDisplay.map(notice => (
           <div
@@ -97,12 +100,12 @@ export default async function LocalContextsNotices() {
           >
             <div className="w-full xl:w-1/5 border-t border-neutral-400">
               <div className="sticky top-8 py-1">
-                <h3
-                  className="text-lg w-full my-1 flex items-center"
+                <h4
+                  className="text-lg w-full my-1 flex items-center font-semibold"
                   tabIndex={0}
                 >
                   {notice.title}
-                </h3>
+                </h4>
                 <Image
                   height={62}
                   width={62}
@@ -153,17 +156,20 @@ async function AddLocalContextsNotice() {
   const t = await getTranslations('LocalContextsNoticesOverview');
 
   return (
-    <>
-      <SlideOutButton
-        testId="add-local-contexts-notice-button"
-        id="add-local-contexts-notice-form"
-        className="mb-4 py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortium-green-200"
-      >
-        <ChatBubbleBottomCenterTextIcon className="w-4 h-4 stroke-consortium-blue-800" />
-        <div className="whitespace-pre-wrap text-left leading-[.5rem]">
-          {t('addLocalContextsNoticeButton')}
-        </div>
-      </SlideOutButton>
+    <div className="flex flex-col xl:-translate-y-12">
+      <div className="flex xl:justify-end">
+        <SlideOutButton
+          testId="add-local-contexts-notice-button"
+          id="add-local-contexts-notice-form"
+          className="mb-4 py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortium-green-200"
+        >
+          <ChatBubbleBottomCenterTextIcon className="w-4 h-4 stroke-consortium-blue-800" />
+          <div className="whitespace-pre-wrap text-left leading-[.5rem]">
+            {t('addLocalContextsNoticeButton')}
+          </div>
+        </SlideOutButton>
+      </div>
+
       <SignedInWithCommunitySideOut
         slideOutId="add-local-contexts-notice-form"
         needAccountTitle={t('needAccountToAddLocalContextsNotice')}
@@ -181,6 +187,6 @@ async function AddLocalContextsNotice() {
           }
         />
       </SignedInWithCommunitySideOut>
-    </>
+    </div>
   );
 }
