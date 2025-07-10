@@ -42,9 +42,20 @@ beforeAll(async () => {
         ex:sameAs <https://example.org/keyword> ;
       ] ;
       ex:citation [
-        ex:name "Citation" ;
-        ex:description "Citation Description" ;
-        ex:url <https://example.org/citation> ;
+        ex:additionalType "Type of primary source:Publicatie" ;
+        ex:name "Citation 1" ;
+        ex:description "Citation Description 1" ;
+        ex:url <https://example.org/citation1> ;
+      ], [
+        ex:additionalType "Type of secondary source:Publicatie" ;
+        ex:name "Citation 2" ;
+        ex:description "Citation Description 2" ;
+        ex:url <https://example.org/citation2> ;
+      ], [
+        # Missing 'ex:additionalType'
+        ex:name "Citation 3" ;
+        ex:description "Citation Description 3" ;
+        ex:url <https://example.org/citation3> ;
       ] ;
       ex:hasPart ex:researchGuide3 ;
       ex:seeAlso ex:researchGuide3 .
@@ -125,9 +136,24 @@ describe('createCitations', () => {
     expect(citations).toStrictEqual([
       {
         id: expect.any(String),
-        name: 'Citation',
-        description: 'Citation Description',
-        url: 'https://example.org/citation',
+        type: 'primary',
+        name: 'Citation 1',
+        description: 'Citation Description 1',
+        url: 'https://example.org/citation1',
+      },
+      {
+        id: expect.any(String),
+        type: 'secondary',
+        name: 'Citation 2',
+        description: 'Citation Description 2',
+        url: 'https://example.org/citation2',
+      },
+      {
+        id: expect.any(String),
+        type: 'primary',
+        name: 'Citation 3',
+        description: 'Citation Description 3',
+        url: 'https://example.org/citation3',
       },
     ]);
   });
@@ -278,9 +304,24 @@ describe('createResearchGuide', () => {
       citations: [
         {
           id: expect.any(String),
-          name: 'Citation',
-          description: 'Citation Description',
-          url: 'https://example.org/citation',
+          type: 'primary',
+          name: 'Citation 1',
+          description: 'Citation Description 1',
+          url: 'https://example.org/citation1',
+        },
+        {
+          id: expect.any(String),
+          type: 'secondary',
+          name: 'Citation 2',
+          description: 'Citation Description 2',
+          url: 'https://example.org/citation2',
+        },
+        {
+          id: expect.any(String),
+          type: 'primary',
+          name: 'Citation 3',
+          description: 'Citation Description 3',
+          url: 'https://example.org/citation3',
         },
       ],
     });
