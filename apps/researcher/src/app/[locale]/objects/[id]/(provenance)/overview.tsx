@@ -103,7 +103,7 @@ async function AddProvenanceButton() {
 
   return (
     <SlideOutButton
-      className="mb-4 py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortiumBlue-800 transition flex items-center gap-1 hover:bg-consortium-green-200 whitespace-pre"
+      className="mb-4 py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortium-blue-800 transition flex items-center gap-1 hover:bg-consortium-green-200 whitespace-pre"
       id={slideOutId}
     >
       <ChatBubbleBottomCenterTextIcon className="w-4 h-4 stroke-consortium-blue-800" />
