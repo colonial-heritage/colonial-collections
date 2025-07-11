@@ -8,6 +8,7 @@ import {creator} from '@/lib/enricher-instances';
 import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import {enrichmentLicence} from '@/lib/enrichment-licence';
 import type {HeritageObjectEnrichmentType} from '@colonial-collections/enricher';
+import {getIriOfUser} from '@/lib/user/actions';
 
 export async function getCommunityLists(communityId: string, objectId: string) {
   return objectList.getByCommunityId(communityId, {objectIri: objectId});
@@ -63,6 +64,7 @@ export async function addUserEnrichment({
   user,
   community,
 }: AddUserEnrichmentProps) {
+  const iri = await getIriOfUser(user.id);
   const enrichment = await creator.addText({
     type: additionalType,
     description,
@@ -71,7 +73,7 @@ export async function addUserEnrichment({
     about: objectId,
     pubInfo: {
       creator: {
-        id: user.id,
+        id: iri,
         name: user.name,
         isPartOf: community.id ? community : undefined,
       },
