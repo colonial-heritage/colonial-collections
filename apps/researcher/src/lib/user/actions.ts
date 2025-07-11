@@ -2,7 +2,7 @@ import {clerkClient} from '@clerk/nextjs';
 import {createPersistentIri} from '@colonial-collections/iris';
 import {unstable_noStore as noStore} from 'next/cache';
 
-export async function getOrSetIri(userId: string) {
+export async function getIriOfUser(userId: string) {
   noStore();
   const user = await clerkClient.users.getUser(userId);
   if (!user) {
