@@ -100,7 +100,7 @@ export function UserEnrichmentForm({
         objectId,
         user: {
           name: user!.fullName!,
-          id: user!.iri,
+          id: user!.id,
         },
       });
 
