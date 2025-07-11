@@ -74,6 +74,7 @@ export type HeritageObject = Thing & {
   dateCreated?: TimeSpan;
   images?: Image[];
   isPartOf?: Dataset;
+  mainEntityOfPage?: string; // URL of web page
 };
 
 export type Event = {
