@@ -25,19 +25,41 @@ describe('getTopLevels', () => {
         encodingFormat: 'text/markdown',
         hasParts: [
           {
+            id: 'https://guides.example.org/subset3',
+            name: '3. Name',
+            hasParts: [
+              {
+                id: 'https://guides.example.org/guide7',
+                name: 'Kunsthandel Van Lier',
+              },
+              {
+                id: 'https://guides.example.org/guide6',
+                name: 'Royal Cabinet of Curiosities',
+              },
+            ],
+          },
+          {
+            id: 'https://guides.example.org/subset1',
+            name: '1. Name',
+            hasParts: [
+              {
+                id: 'https://guides.example.org/guide3',
+                name: 'Sources',
+              },
+              {
+                id: 'https://guides.example.org/guide1',
+                name: 'Doing research',
+              },
+              {
+                id: 'https://guides.example.org/guide2',
+                name: 'How can I use the data hub for my research?',
+              },
+            ],
+          },
+          {
             id: 'https://guides.example.org/subset2',
             name: '2. Name',
             hasParts: [
-              {
-                id: 'https://guides.example.org/guide4',
-                name: 'Military and navy',
-                hasParts: [
-                  {
-                    id: 'https://guides.example.org/guide6',
-                    name: 'Royal Cabinet of Curiosities',
-                  },
-                ],
-              },
               {
                 id: 'https://guides.example.org/guide5',
                 name: 'Trade',
@@ -48,37 +70,15 @@ describe('getTopLevels', () => {
                   },
                 ],
               },
-            ],
-          },
-          {
-            id: 'https://guides.example.org/subset3',
-            name: '3. Name',
-            hasParts: [
               {
-                id: 'https://guides.example.org/guide6',
-                name: 'Royal Cabinet of Curiosities',
-              },
-              {
-                id: 'https://guides.example.org/guide7',
-                name: 'Kunsthandel Van Lier',
-              },
-            ],
-          },
-          {
-            id: 'https://guides.example.org/subset1',
-            name: '1. Name',
-            hasParts: [
-              {
-                id: 'https://guides.example.org/guide2',
-                name: 'How can I use the data hub for my research?',
-              },
-              {
-                id: 'https://guides.example.org/guide3',
-                name: 'Sources',
-              },
-              {
-                id: 'https://guides.example.org/guide1',
-                name: 'Doing research',
+                id: 'https://guides.example.org/guide4',
+                name: 'Military and navy',
+                hasParts: [
+                  {
+                    id: 'https://guides.example.org/guide6',
+                    name: 'Royal Cabinet of Curiosities',
+                  },
+                ],
               },
             ],
           },
@@ -205,6 +205,7 @@ describe('getById', () => {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
           ),
+          type: 'secondary',
           name: 'Regeeringsalmanak voor Nederlandsch-Indië',
           description:
             'Via Delpher, the editions can be found by selecting the title',

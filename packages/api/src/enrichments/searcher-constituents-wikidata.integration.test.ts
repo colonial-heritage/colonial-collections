@@ -30,9 +30,9 @@ describe('search', () => {
           description: 'fotograaf',
         },
         {
-          id: 'http://www.wikidata.org/entity/Q375926',
-          name: 'Rembrandt Peale',
-          description: 'Amerikaans kunstschilder (1778-1860)',
+          id: 'http://www.wikidata.org/entity/Q105964347',
+          name: 'Rembrandt',
+          description: 'Metaalwarenfabriek Rembrandt BV',
         },
       ],
     });
@@ -53,14 +53,15 @@ describe('search', () => {
           description: "Rembrandt's mother",
         },
         {
-          id: 'http://www.wikidata.org/entity/Q105964347',
-          name: 'Rembrandt',
-          description: 'Metaalwarenfabriek Rembrandt BV',
-        },
-        {
           id: 'http://www.wikidata.org/entity/Q1300641',
           name: 'Rembrandt Bugatti',
           description: 'Italian sculptor (1884–1916)',
+        },
+        {
+          id: 'http://www.wikidata.org/entity/Q17330745',
+          name: "Rembrandt's father",
+          description:
+            "model and member of the Leiden Guild of St. Luke (not Rembrandt's father)",
         },
       ],
     });
