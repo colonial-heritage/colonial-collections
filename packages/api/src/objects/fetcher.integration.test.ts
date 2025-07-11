@@ -158,6 +158,7 @@ describe('getById', () => {
           },
         },
       ]),
+      mainEntityOfPage: 'https://id.rijksmuseum.nl/200112226',
       isPartOf: {
         id: 'https://example.org/datasets/1',
         name: 'Dataset 1',
