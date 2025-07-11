@@ -13,6 +13,7 @@ import {provenanceEventEnrichmentFetcher} from '@/lib/enricher-instances';
 import {SignedInWithCommunitySideOut} from '@/components/slide-outs';
 import {Notifications} from '@colonial-collections/ui';
 import {transformEvents} from './transform-events';
+import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 
 // SSR needs to be false for plugin 'react-headless-timeline'
 const Timeline = dynamic(() => import('./timeline'), {
@@ -71,14 +72,18 @@ export default async function Provenance({objectId}: {objectId: string}) {
           >
             {t('title')}
           </h2>
-          <p className="text-neutral-600 text-sm max-w-2xl mb-6">
-            {t('description')}
-          </p>
-          <div className="flex justify-between items-center my-6">
-            <div>
-              <AddProvenanceButton />
+
+          <div className="flex flex-col lg:flex-row justify-between my-6">
+            <div className="flex flex-col lg:flex-row justify-between w-2/3 items-start lg:gap-8 lg:border-r ">
+              <p className="text-neutral-600 text-sm max-w-xl mb-6">
+                {t('description')}
+              </p>
+              <div className="flex justify-end items-start pr-4">
+                <AddProvenanceButton />
+              </div>
             </div>
-            <div className=" flex gap-1">
+
+            <div className="flex gap-1 w-1/3 lg:justify-end items-start">
               <ToggleViewButtons />
             </div>
           </div>
@@ -98,9 +103,10 @@ async function AddProvenanceButton() {
 
   return (
     <SlideOutButton
-      className="p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
+      className="mb-4 py-2 px-3 p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-consortium-green-300 text-consortium-blue-800 transition flex items-center gap-1 hover:bg-consortium-green-200 whitespace-pre"
       id={slideOutId}
     >
+      <ChatBubbleBottomCenterTextIcon className="w-4 h-4 stroke-consortium-blue-800" />
       {t('addProvenanceButton')}
     </SlideOutButton>
   );
