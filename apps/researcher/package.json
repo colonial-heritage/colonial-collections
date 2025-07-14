@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@clerk/localizations": "1.26.13",
-    "@clerk/nextjs": "4.29.9",
+    "@clerk/nextjs": "6.25.0",
     "@clerk/types": "3.60.0",
     "@colonial-collections/api": "*",
     "@colonial-collections/content": "*",
