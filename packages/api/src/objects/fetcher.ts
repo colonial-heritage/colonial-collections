@@ -78,6 +78,7 @@ export class HeritageObjectFetcher {
           ex:dateCreated ?dateCreatedTimeSpan ;
           ex:locationCreated ?locationCreated ;
           ex:image ?digitalObject ;
+          ex:mainEntityOfPage ?mainEntityOfPage ;
           ex:isPartOf ?dataset .
 
         ?type a ex:DefinedTerm ;
@@ -317,6 +318,17 @@ export class HeritageObjectFetcher {
         }
 
         ####################
+        # Web page of the object
+        ####################
+
+        OPTIONAL {
+          ?this crm:P129i_is_subject_of/la:digitally_carried_by [
+            crm:P2_has_type <http://vocab.getty.edu/aat/300264578> ; # Web page
+            la:access_point ?mainEntityOfPage
+          ]
+        }
+
+        ####################
         # Part of dataset
         ####################
 
@@ -408,6 +420,10 @@ export class HeritageObjectFetcher {
             'ex:locationCreated'
           );
           const images = createImages(rawHeritageObject, 'ex:image');
+          const mainEntityOfPage = getPropertyValue(
+            rawHeritageObject,
+            'ex:mainEntityOfPage'
+          );
           const dataset = onlyOne(
             createDatasets(rawHeritageObject, 'ex:isPartOf')
           );
@@ -426,6 +442,7 @@ export class HeritageObjectFetcher {
             dateCreated,
             locationsCreated,
             images,
+            mainEntityOfPage,
             isPartOf: dataset,
           };
 

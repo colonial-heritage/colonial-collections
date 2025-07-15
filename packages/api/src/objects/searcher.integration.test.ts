@@ -160,6 +160,7 @@ describe('search', () => {
                 'http://images.memorix.nl/rce/thumb/1600x1600/fceac847-88f4-8066-d960-326dc79be0d3.jpg',
             },
           ]),
+          mainEntityOfPage: 'https://id.rijksmuseum.nl/200108369',
           isPartOf: {
             id: 'https://example.org/datasets/1',
             name: 'Dataset 1',
@@ -348,6 +349,7 @@ describe('search', () => {
               },
             },
           ]),
+          mainEntityOfPage: 'https://id.rijksmuseum.nl/200112226',
           isPartOf: {
             id: 'https://example.org/datasets/1',
             name: 'Dataset 1',
