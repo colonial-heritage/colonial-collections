@@ -64,7 +64,7 @@ export function Metadata({
             </div>
           </div>
           <div className="w-full xl:w-4/5 flex flex-col gap-2 border-t border-neutral-400">
-            {isEmptyChildren ? (
+            {isEmptyChildren && metadataEnrichments.length === 0 && (
               <div className="text-neutral-600 italic w-full py-6 text-sm">
                 {t.rich('noData', {
                   subject: () => (
@@ -72,7 +72,8 @@ export function Metadata({
                   ),
                 })}
               </div>
-            ) : (
+            )}
+            {!isEmptyChildren && (
               <MetadataEntry translationKey={translationKey} isCurrentPublisher>
                 {children}
               </MetadataEntry>
