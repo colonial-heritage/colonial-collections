@@ -5,11 +5,13 @@ import {
 } from '@/lib/clerk-route-segment-transformer';
 import researchGuides from '@/lib/research-guides-instance';
 import {getLocale, getTranslations} from 'next-intl/server';
+import GuideNavigationBar from '../GuideNavigationBar';
 import {Link} from '@/navigation';
 import {ChevronRightIcon, ChevronLeftIcon} from '@heroicons/react/24/solid';
 import StringToMarkdown from '../string-to-markdown';
 import {Event} from '@colonial-collections/api';
 import {MagnifyingGlassIcon} from '@heroicons/react/24/solid';
+import {getMarkdownHeaders} from '../linkable-headers';
 
 interface Props {
   params: {id: string};
@@ -25,168 +27,310 @@ export default async function GuidePage({params}: Props) {
     return <div data-testid="no-entity">{t('noEntity')}</div>;
   }
 
+  const pageNavigationHeaders = getMarkdownHeaders(guide.text);
+  const navLinks = [
+    ...pageNavigationHeaders.map(header => ({
+      slug: header.slug,
+      name: header.name,
+    })),
+    {
+      slug: 'resources',
+      name: t('pageNavigationSources'),
+    },
+    {
+      slug: 'relatedItems',
+      name: t('pageNavigationRelatedItems'),
+    },
+    {
+      slug: 'keywords',
+      name: t('pageNavigationKeywords'),
+    },
+  ];
+
   return (
-    <div className="grow">
-      <div className="w-full px-4 sm:px-10 max-w-7xl mx-auto mt-10">
-        <Link
-          href="/research-guide"
-          className="w-fit no-underline p-1 sm:py-2 sm:px-3 rounded-full text-xs bg-neutral-200/50 hover:bg-neutral-300/50 text-neutral-800 transition flex items-center gap-1"
-        >
-          <ChevronLeftIcon className="w-3 h-3 fill-neutral-600" />
-          {t('backButton')}
-        </Link>
-      </div>
-      <main className="w-full px-4 sm:px-10 max-w-7xl mx-auto mt-16 mb-40">
-        <h1 className="text-2xl md:text-4xl mb-2" tabIndex={0}>
-          {guide.name}
-        </h1>
-        {guide.alternateNames?.length && (
-          <div className="text-sm text-neutral-600 mb-6">
-            {t('nameVariations')}: {guide.alternateNames?.join(', ')}
+    <>
+      <div
+        className="bg-consortium-purple-100 text-consortium-blue-800 py-10 lg:py-20"
+        id="top"
+      >
+        <div className="flex flex-col gap-4 w-full max-w-[1500px] mx-auto px-4 sm:px-10">
+          <div className="pb-4">
+            <Link
+              href="/research-guide"
+              className="flex gap-1 items-center text-consortium-blue-800 hover:underline focus:underline focus:outline-none"
+            >
+              <ChevronLeftIcon className="w-3 h-3 fill-neutral-600" />
+              {t('backButton')}
+            </Link>
           </div>
-        )}
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="w-full md:w-2/3">
-            <div className="prose" id="#description">
-              {guide.text && <StringToMarkdown text={guide.text} />}
-              {guide.citations && guide.citations.length > 0 && (
-                <>
-                  <h2 id="citations" tabIndex={0}>
-                    {t('citations')}
-                  </h2>
-                  <ul className="not-prose">
-                    {guide.citations.map(citation => (
-                      <li className="mb-6" key={citation.id}>
-                        <div className="font-semibold" tabIndex={0}>
-                          {citation.name}
-                        </div>
-                        <div>
-                          {citation.description}
-                          {' — '}
-                          <span className="text-sm">
-                            <a target="_blank" href={citation.url}>
-                              {citation.url}
-                            </a>
-                          </span>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+          <h1 className="text-4xl" tabIndex={0}>
+            {guide.name}
+          </h1>
+          {guide.alternateNames?.length ? (
+            <div className="text-consortium-purple-700">
+              <em>{t('nameVariations')}: </em>
+              {guide.alternateNames?.map((name, idx) => (
+                <span key={name}>
+                  {name}
+                  {idx < (guide.alternateNames?.length ?? 0) - 1 && (
+                    <span className="text-consortium-purple-300"> — </span>
+                  )}
+                </span>
+              ))}
             </div>
-          </div>
-          <div className="w-full md:w-1/3">
-            {guide.seeAlso && guide.seeAlso?.length > 0 && (
+          ) : null}
+          {guide.abstract && <p className="max-w-3xl">{guide.abstract}</p>}
+        </div>
+      </div>
+      <GuideNavigationBar links={navLinks} maxWidth="1500px" />
+      <main className="flex flex-col lg:flex-row gap-16 xl:gap-20 w-full max-w-[1500px] mx-auto px-4 sm:px-10  my-20">
+        <div className="w-full lg:w-2/3 xl:w-3/4">
+          <div className="prose !max-w-3xl prose-a:font-normal prose-a:decoration-neutral-400 prose-headings:scroll-mt-20">
+            {guide.text && <StringToMarkdown text={guide.text} />}
+            {guide.citations && guide.citations.length > 0 && (
               <>
-                <h2 className="mb-2" tabIndex={0}>
-                  {t('relatedItems')}
+                <h2 id="resources" className="scroll-mt-20" tabIndex={0}>
+                  {t('citations')}
                 </h2>
-                <div className="flex flex-col gap-2 mb-4">
-                  {guide.seeAlso?.map(item => (
-                    <Link
-                      key={item.id}
-                      href={`/research-guide/${encodeRouteSegment(item.id)}`}
-                      className="bg-consortium-sand-100 text-consortium-sand-800 no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col p-2"
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <div>{item.name}</div>
-                        <div>
-                          <ChevronRightIcon className="w-5 h-5 fill--consortium-sand-900" />
+                {guide.citations.some(c => c.type === 'primary') && (
+                  <>
+                    <h3 className="mt-8 mb-2 text-base font-bold">
+                      {t('primarySources')}
+                    </h3>
+                    {guide.citations
+                      .filter(c => c.type === 'primary')
+                      .map(citation => (
+                        <div className="mb-6" key={citation.id}>
+                          <div className="font-semibold">
+                            {citation.name ?? ''}
+                          </div>
+                          <div>
+                            {citation.description ?? ''}
+                            {citation.url && (
+                              <>
+                                {' — '}
+                                <span className="text-sm">
+                                  <a
+                                    href={citation.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {citation.url}
+                                  </a>
+                                </span>
+                              </>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                      ))}
+                  </>
+                )}
+                {guide.citations.some(c => c.type === 'secondary') && (
+                  <>
+                    <h3 className="mt-8 mb-2 text-base font-bold">
+                      {t('secondarySources')}
+                    </h3>
+                    {guide.citations
+                      .filter(c => c.type === 'secondary')
+                      .map(citation => (
+                        <div className="mb-6" key={citation.id}>
+                          <div className="font-semibold">
+                            {citation.name ?? ''}
+                          </div>
+                          <div>
+                            {citation.description ?? ''}
+                            {citation.url && (
+                              <>
+                                {' — '}
+                                <span className="text-sm">
+                                  <a
+                                    href={citation.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {citation.url}
+                                  </a>
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                  </>
+                )}
               </>
             )}
-            <div className="flex flex-col gap-4">
-              {guide.keywords && guide.keywords.length > 0 && (
-                <div className="py-4">
-                  <h3 tabIndex={0}>{t('keywords')}</h3>
-                  <p className="italic text-neutral-500 my-2">
-                    {t('keywordsNewSearch')}
-                  </p>
-                  <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
-                    {guide.keywords
-                      .filter(keyword => keyword.name !== undefined)
-                      .map(keyword => (
-                        <li
-                          key={keyword.id}
-                          className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
-                        >
-                          {keyword.name}
-                          <Link
-                            href={`/objects?query=${encodeURIComponent(
-                              keyword.name ?? ''
-                            )}`}
-                            target="_blank"
-                            className="no-underline rounded-full px-2 py-1 min-w-28 md:text-sm bg-consortium-blue-100 text-consortiumBlue-800 text-xs flex gap-2 justify-center items-center"
-                            tabIndex={0}
-                          >
-                            <MagnifyingGlassIcon
-                              className="w-3 h-3 stroke-consortiumBlue-800"
-                              aria-label={
-                                t('accessibilitySearch') + keyword.name
-                              }
-                            />
-                            {keyword.name}
-                          </Link>
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              )}
-              {guide.contentLocations && guide.contentLocations.length > 0 && (
-                <div className="py-4">
-                  <h3 tabIndex={0}>{t('contentLocations')}</h3>
-                  <p className="italic text-neutral-500 my-2">
-                    {t('locationsNewSearch')}
-                  </p>
-                  <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
-                    {guide.contentLocations.map(location => (
-                      <li
-                        key={location.id}
-                        className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
-                      >
-                        {location.name}
-                        <Link
-                          href={`/objects?query=${encodeURIComponent(
-                            location.name ?? ''
-                          )}`}
-                          target="_blank"
-                          className="no-underline rounded-full px-2 py-1 min-w-28 md:text-sm bg-consortium-blue-100 text-consortiumBlue-800 text-xs flex gap-2 justify-center items-center"
-                          tabIndex={0}
-                        >
-                          <MagnifyingGlassIcon
-                            className="w-3 h-3 stroke-consortiumBlue-800"
-                            aria-label={
-                              t('accessibilitySearch') + location.name
-                            }
-                          />
-                          {location.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {guide.contentReferenceTimes &&
-                guide.contentReferenceTimes.length > 0 && (
-                  <div className="bg-consortium-sand-50 rounded px-2 py-4">
-                    <h3 tabIndex={0}>{t('contentReferenceTimes')}</h3>
-                    {guide.contentReferenceTimes.map(time => (
-                      <div key={time.id}>
-                        <DateRange event={time} />
-                      </div>
-                    ))}
-                  </div>
-                )}
-            </div>
           </div>
         </div>
+
+        <div className="w-full lg:w-1/3 xl:w-1/4 mt-8 text-neutral-600">
+          {guide.seeAlso && guide.seeAlso?.length > 0 && (
+            <>
+              <h2 className="mb-2 scroll-mt-20" id="relatedItems" tabIndex={0}>
+                {t('relatedItems')}
+              </h2>
+              <div className="flex flex-col gap-2">
+                {guide.seeAlso?.map(item => (
+                  <Link
+                    key={item.id}
+                    href={`/research-guide/${encodeRouteSegment(item.id)}`}
+                    className="bg-none text-consortium-blue-950 no-underline hover:bg-consortium-purple-100 transition rounded flex flex-col -mx-2 px-2"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>{item.name}</div>
+                      <div className="bg-consortium-purple-100 rounded p-2">
+                        <ChevronRightIcon className="w-5 h-5 fill--consortium-sand-900" />
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
+          {((guide.keywords && guide.keywords.length > 0) ||
+            (guide.contentLocations && guide.contentLocations.length > 0) ||
+            (guide.contentReferenceTimes &&
+              guide.contentReferenceTimes.length > 0)) && (
+            <>
+              <h2
+                className="mt-10 text-lg scroll-mt-20"
+                id="keywords"
+                tabIndex={0}
+              >
+                {t('keywords')}
+              </h2>
+
+              <p className="italic text-neutral-500 my-1">
+                {t('keywordsNewSearch')}
+              </p>
+              <div className="flex flex-col gap-4">
+                {guide.keywords && guide.keywords.length > 0 && (
+                  <div className="py-4">
+                    <h3 className="mb-2" tabIndex={0}>
+                      {t('activityAndTypeOfObjects')}
+                    </h3>
+
+                    <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
+                      {guide.keywords
+                        .filter(keyword => keyword.name !== undefined)
+                        .map(keyword => (
+                          <li
+                            key={keyword.id}
+                            className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
+                          >
+                            <div>{keyword.name}</div>
+                            <Link
+                              href={`/objects?query=${encodeURIComponent(
+                                keyword.name ?? ''
+                              )}`}
+                              target="_blank"
+                              className="no-underline rounded-full px-2 py-1 min-w-12 md:text-sm bg-consortium-blue-100 text-consortium-blue-800 text-xs flex gap-2 justify-center items-center"
+                              tabIndex={0}
+                            >
+                              <MagnifyingGlassIcon
+                                className="w-3 h-3 stroke-consortium-blue-800"
+                                aria-label={
+                                  t('accessibilitySearch') + keyword.name
+                                }
+                              />
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                )}
+
+                {guide.contentLocations &&
+                  guide.contentLocations.length > 0 && (
+                    <div className="py-4">
+                      <h3 className="mb-2" tabIndex={0}>
+                        {t('contentLocations')}
+                      </h3>
+                      <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
+                        {guide.contentLocations.map(location => (
+                          <li
+                            key={location.id}
+                            className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
+                          >
+                            <div>{location.name}</div>
+                            <Link
+                              href={`/objects?query=${encodeURIComponent(
+                                location.name ?? ''
+                              )}`}
+                              target="_blank"
+                              className="no-underline rounded-full px-2 py-1 min-w-12 md:text-sm bg-consortium-blue-100 text-consortium-blue-800 text-xs flex gap-2 justify-center items-center"
+                              tabIndex={0}
+                            >
+                              <MagnifyingGlassIcon
+                                className="w-3 h-3 stroke-consortium-blue-800"
+                                aria-label={
+                                  t('accessibilitySearch') + location.name
+                                }
+                              />
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                {guide.contentReferenceTimes &&
+                  guide.contentReferenceTimes.length > 0 && (
+                    <div className="py-4">
+                      <h3 className="mb-2" tabIndex={0}>
+                        {t('contentReferenceTimes')}
+                      </h3>
+                      <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
+                        {guide.contentReferenceTimes.map(time => (
+                          <li
+                            key={time.id}
+                            className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
+                          >
+                            <div>
+                              <DateRange event={time} />
+                            </div>
+                            <Link
+                              href={`/objects?${[
+                                time.date?.startDate
+                                  ? `dateCreatedStart=${time.date.startDate.getFullYear()}`
+                                  : '',
+                                time.date?.endDate
+                                  ? `dateCreatedEnd=${time.date.endDate.getFullYear()}`
+                                  : '',
+                              ]
+                                .filter(Boolean)
+                                .join('&')}`}
+                              target="_blank"
+                              className="no-underline rounded-full px-2 py-1 min-w-12 md:text-sm bg-consortium-blue-100 text-consortium-blue-800 text-xs flex gap-2 justify-center items-center"
+                              tabIndex={0}
+                            >
+                              <MagnifyingGlassIcon
+                                className="w-3 h-3 stroke-consortium-blue-800"
+                                aria-label={
+                                  t('accessibilitySearch') +
+                                  [
+                                    time.date?.startDate
+                                      ? time.date.startDate.getFullYear()
+                                      : '',
+                                    time.date?.endDate
+                                      ? time.date.endDate.getFullYear()
+                                      : '',
+                                  ]
+                                    .filter(Boolean)
+                                    .join('–')
+                                }
+                              />
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+              </div>
+            </>
+          )}
+        </div>
       </main>
-    </div>
+    </>
   );
 }
 

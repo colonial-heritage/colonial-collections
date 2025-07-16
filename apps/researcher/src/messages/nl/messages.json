@@ -556,6 +556,7 @@
       "relatedItems": "Gerelateerde zoekhulpen",
       "keywords": "Trefwoorden",
       "keywordsNewSearch": "Klik op de knop achter het trefwoord om een ​​nieuwe zoekopdracht te starten.",
+      "activityAndTypeOfObjects": "Activiteit en type objecten",
       "contentLocations": "Geografisch",
       "locationsNewSearch": "Klik op de knop achter de locatie om een ​​nieuwe zoekopdracht te starten.",
       "accessibilitySearch": "Start een nieuwe zoekopdracht voor ",
@@ -565,6 +566,15 @@
       "backButton": "Terug naar overzicht",
       "noDateRange": "Geen actieve periode bekend",
       "noStartDate": "Geen startdatum bekend",
-      "noEndDate": "Heden"
+      "noEndDate": "Heden",
+      "pageNavigationTopics": "Onderwerpen",
+      "pageNavigationLocations": "Locaties",
+      "pageNavigationSegments": "Paginasegmenten",
+      "pageNavigationSources": "Bronnen",
+      "pageNavigationRelatedItems": "Gerelateerde items",
+      "pageNavigationKeywords": "Trefwoorden",
+      "pageNavigationTop": "Top",
+      "primarySources": "Primaire bronnen",
+      "secondarySources": "Secundaire bronnen"
     }
 }

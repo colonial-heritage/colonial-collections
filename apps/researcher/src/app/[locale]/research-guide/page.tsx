@@ -4,6 +4,7 @@ import researchGuides from '@/lib/research-guides-instance';
 import {Link} from '@/navigation';
 import {ChevronRightIcon} from '@heroicons/react/24/solid';
 import {getLocale, getTranslations} from 'next-intl/server';
+import GuideNavigationBar from './GuideNavigationBar';
 import StringToMarkdown from './string-to-markdown';
 import {sortResearchGuide} from '@/app/[locale]/research-guide/sort-guides';
 
@@ -24,87 +25,83 @@ export default async function Page() {
   const firstLevel1Guide = sortedGuides.hasParts?.[0];
   const nextLevel1Guides = sortedGuides.hasParts?.slice(1) || [];
 
+  const navLinks = [
+    {slug: 'topics', name: t('pageNavigationTopics')},
+    {slug: 'locations', name: t('pageNavigationLocations')},
+  ];
+
   return (
     <>
-      <h1 className="text-2xl md:text-4xl" tabIndex={0}>
-        {topLevel.name}
-      </h1>
-      <div className="my-4 w-full flex flex-col md:flex-row gap-6">
-        {topLevel.text && (
-          <div className="flex-1 prose">
-            <StringToMarkdown text={topLevel.text} />
-          </div>
-        )}
-        {firstLevel1Guide && (
-          <div className="bg-consortium-sand-100 rounded mt-6 md:mt-0 flex-1">
-            <h2 className="px-4 pt-4" tabIndex={0}>
-              {firstLevel1Guide.name}
-            </h2>
-            <div className="pb-4 flex flex-col gap-4">
-              {firstLevel1Guide.hasParts?.map(item => (
-                <Link
-                  key={item.id}
-                  href={`/research-guide/${encodeRouteSegment(item.id)}`}
-                  className="bg-consortium-sand-100 text-consortium-sand-800 no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col py-2 px-4"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <div>{item.name}</div>
-                    <div>
-                      <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
-                    </div>
-                  </div>
-                </Link>
-              ))}
+      <GuideNavigationBar links={navLinks} />
+      <main
+        className="bg-consortium-purple-100 text-consortium-blue-800 py-10 2xl:py-20"
+        id="top"
+      >
+        <div className="flex flex-col md:flex-row gap-10 xl:gap-20 w-full max-w-[1800px] mx-auto px-4 sm:px-10">
+          <div className="flex flex-col gap-4 w-full md:w-2/3">
+            <h1 className="text-2xl md:text-4xl">{topLevel.name}</h1>
+            <div className="flex flex-col xl:flex-row gap-8 w-full ">
+              <div className="prose max-w-none *:text-consortium-blue-900 columns-1 xl:columns-2 gap-8 w-full prose-h4:mb-5 prose-a:text-consortium-blue-900 prose-img:max-w-96">
+                <StringToMarkdown text={topLevel.text || ''} />
+              </div>
             </div>
           </div>
-        )}
-      </div>
-      {nextLevel1Guides.map(level1Guide => (
-        <div className="mt-10" key={level1Guide.id}>
-          <h2 className="mb-4" tabIndex={0}>
-            {level1Guide.name}
-          </h2>
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
-            {level1Guide.hasParts?.map(level2Guides => (
-              <div
-                key={level2Guides.id}
-                className="mb-6 break-inside-avoid bg-consortium-sand-100 text-consortium-sand-800 rounded flex flex-col p-4"
+          <div className="flex flex-col gap-2 w-full md:w-1/3 pt-6 lg:pt-14">
+            <h2 className="text-xl pb-2">{firstLevel1Guide?.name}</h2>
+            {firstLevel1Guide?.hasParts?.map(item => (
+              <Link
+                key={item.id}
+                href={`/research-guide/${encodeRouteSegment(item.id)}`}
+                className="bg-consortium-purple-200 text-consortium-blue-950 no-underline hover:bg-consortium-purple-100 transition rounded flex flex-col -mx-2 px-2 -ml-2"
               >
-                <Link
-                  href={`/research-guide/${encodeRouteSegment(
-                    level2Guides.id
-                  )}`}
-                  className="no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col p-2"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="font-semibold">{level2Guides.name}</div>
-                    <div>
-                      <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
-                    </div>
+                <div className="flex items-center justify-between">
+                  <div>{item.name}</div>
+                  <div className="bg-consortium-purple-200 rounded p-2">
+                    <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
                   </div>
-                </Link>
-                {level2Guides.hasParts?.map(level3Guides => (
-                  <Link
-                    key={level3Guides.id}
-                    href={`/research-guide/${encodeRouteSegment(
-                      level3Guides.id
-                    )}`}
-                    className="no-underline hover:bg-consortium-sand-200 transition rounded flex flex-col p-2 mt-2"
-                    aria-label={`${level3Guides.name}, item of ${level2Guides.name}`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <div>{level3Guides.name}</div>
-                      <div>
-                        <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
-      ))}
+      </main>
+      <div className="flex flex-col my-4 gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 lg:flex-row ">
+        {nextLevel1Guides.map(level1Guide => (
+          <div className="w-full lg:w-1/2" key={level1Guide.id}>
+            <div className="mt-20 *:text-consortium-blue-800">
+              <h3 className="text-2xl pb-4 scroll-m-16" id="topics">
+                {level1Guide.name}
+              </h3>
+              <div className="columns-1 xl:columns-2 gap-10 w-full">
+                {level1Guide.hasParts?.map(level2Guide => (
+                  <div
+                    key={level2Guide.id}
+                    className="bg-neutral-50 mb-6 break-inside-avoid rounded flex flex-col gap-2 p-4"
+                  >
+                    <h3 className="text-lg pb-2">{level2Guide.name}</h3>
+                    {level2Guide.hasParts?.map(level3Guide => (
+                      <Link
+                        key={level3Guide.id}
+                        href={`/research-guide/${encodeRouteSegment(
+                          level3Guide.id
+                        )}`}
+                        className="bg-none text-consortium-blue-950 no-underline hover:bg-consortium-purple-100 transition rounded flex flex-col -mx-2 px-2 -ml-2"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>{level3Guide.name}</div>
+                          <div className="bg-consortium-purple-100 rounded p-2">
+                            <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
