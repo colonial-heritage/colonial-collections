@@ -239,40 +239,6 @@ export default async function GuidePage({params}: Props) {
                     </ul>
                   </div>
                 )}
-
-                {guide.contentLocations &&
-                  guide.contentLocations.length > 0 && (
-                    <div className="py-4">
-                      <h3 className="mb-2" tabIndex={0}>
-                        {t('contentLocations')}
-                      </h3>
-                      <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
-                        {guide.contentLocations.map(location => (
-                          <li
-                            key={location.id}
-                            className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
-                          >
-                            <div>{location.name}</div>
-                            <Link
-                              href={`/objects?query=${encodeURIComponent(
-                                location.name ?? ''
-                              )}`}
-                              target="_blank"
-                              className="no-underline rounded-full px-2 py-1 min-w-12 md:text-sm bg-consortium-blue-100 text-consortium-blue-800 text-xs flex gap-2 justify-center items-center"
-                              tabIndex={0}
-                            >
-                              <MagnifyingGlassIcon
-                                className="w-3 h-3 stroke-consortium-blue-800"
-                                aria-label={
-                                  t('accessibilitySearch') + location.name
-                                }
-                              />
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
                 {guide.contentReferenceTimes &&
                   guide.contentReferenceTimes.length > 0 && (
                     <div className="py-4">
@@ -317,6 +283,39 @@ export default async function GuidePage({params}: Props) {
                                   ]
                                     .filter(Boolean)
                                     .join('–')
+                                }
+                              />
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                {guide.contentLocations &&
+                  guide.contentLocations.length > 0 && (
+                    <div className="py-4">
+                      <h3 className="mb-2" tabIndex={0}>
+                        {t('contentLocations')}
+                      </h3>
+                      <ul className="flex flex-col gap-2 list-disc border-t border-neutral-100">
+                        {guide.contentLocations.map(location => (
+                          <li
+                            key={location.id}
+                            className="flex gap-2 justify-between items-center border-b border-neutral-100 py-1"
+                          >
+                            <div>{location.name}</div>
+                            <Link
+                              href={`/objects?query=${encodeURIComponent(
+                                location.name ?? ''
+                              )}`}
+                              target="_blank"
+                              className="no-underline rounded-full px-2 py-1 min-w-12 md:text-sm bg-consortium-blue-100 text-consortium-blue-800 text-xs flex gap-2 justify-center items-center"
+                              tabIndex={0}
+                            >
+                              <MagnifyingGlassIcon
+                                className="w-3 h-3 stroke-consortium-blue-800"
+                                aria-label={
+                                  t('accessibilitySearch') + location.name
                                 }
                               />
                             </Link>

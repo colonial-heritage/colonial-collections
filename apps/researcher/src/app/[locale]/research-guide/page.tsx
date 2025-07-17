@@ -32,7 +32,6 @@ export default async function Page() {
 
   return (
     <>
-      <GuideNavigationBar links={navLinks} />
       <main
         className="bg-consortium-purple-100 text-consortium-blue-800 py-10 2xl:py-20"
         id="top"
@@ -65,6 +64,7 @@ export default async function Page() {
           </div>
         </div>
       </main>
+      <GuideNavigationBar links={navLinks} />
       <div className="flex flex-col my-4 gap-16 w-full max-w-[1800px] mx-auto px-4 sm:px-10 lg:flex-row ">
         {nextLevel1Guides.map(level1Guide => (
           <div className="w-full lg:w-1/2" key={level1Guide.id}>
