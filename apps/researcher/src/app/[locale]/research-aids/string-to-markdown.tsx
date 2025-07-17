@@ -36,6 +36,16 @@ const components = {
       {...props}
     />
   ),
+  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const text = extractTextFromChildren(props.children);
+    const id = textToSlug(text);
+    return <h1 id={id} {...props} />;
+  },
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const text = extractTextFromChildren(props.children);
+    const id = textToSlug(text);
+    return <h2 id={id} {...props} />;
+  },
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
     const text = extractTextFromChildren(props.children);
     const id = textToSlug(text);
