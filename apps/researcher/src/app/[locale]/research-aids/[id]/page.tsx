@@ -5,7 +5,7 @@ import {
 } from '@/lib/clerk-route-segment-transformer';
 import researchGuides from '@/lib/research-guides-instance';
 import {getLocale, getTranslations} from 'next-intl/server';
-import GuideNavigationBar from '../GuideNavigationBar';
+import GuideNavigationBar from '../guide-navigation-bar';
 import {Link} from '@/navigation';
 import {ChevronRightIcon, ChevronLeftIcon} from '@heroicons/react/24/solid';
 import StringToMarkdown from '../string-to-markdown';
@@ -62,7 +62,7 @@ export default async function GuidePage({params}: Props) {
         <div className="flex flex-col gap-4 w-full max-w-[1500px] mx-auto px-4 sm:px-10">
           <div className="pb-4">
             <Link
-              href="/research-guide"
+              href="/research-aids"
               className="flex gap-1 items-center text-consortium-blue-800 hover:underline focus:underline focus:outline-none"
             >
               <ChevronLeftIcon className="w-3 h-3 fill-neutral-600" />
@@ -174,7 +174,7 @@ async function RelatedItems({guide}: {guide: ResearchGuide}) {
         {guide.seeAlso.map((item: ResearchGuide) => (
           <Link
             key={item.id}
-            href={`/research-guide/${encodeRouteSegment(item.id)}`}
+            href={`/research-aids/${encodeRouteSegment(item.id)}`}
             className="bg-none text-consortium-blue-950 no-underline hover:bg-consortium-purple-100 transition rounded flex flex-col -mx-2 px-2"
           >
             <div className="flex items-center justify-between">

@@ -4,9 +4,9 @@ import researchGuides from '@/lib/research-guides-instance';
 import {Link} from '@/navigation';
 import {ChevronRightIcon} from '@heroicons/react/24/solid';
 import {getLocale, getTranslations} from 'next-intl/server';
-import GuideNavigationBar from './GuideNavigationBar';
+import GuideNavigationBar from './guide-navigation-bar';
 import StringToMarkdown from './string-to-markdown';
-import {sortResearchGuide} from '@/app/[locale]/research-guide/sort-guides';
+import {sortResearchGuide} from '@/app/[locale]/research-aids/sort-guides';
 
 export default async function Page() {
   const locale = (await getLocale()) as LocaleEnum;
@@ -50,7 +50,7 @@ export default async function Page() {
             {firstLevel1Guide?.hasParts?.map(item => (
               <Link
                 key={item.id}
-                href={`/research-guide/${encodeRouteSegment(item.id)}`}
+                href={`/research-aids/${encodeRouteSegment(item.id)}`}
                 className="bg-consortium-purple-200 text-consortium-blue-950 no-underline hover:bg-consortium-purple-100 transition rounded flex flex-col -mx-2 px-2 -ml-2"
               >
                 <div className="flex items-center justify-between">
@@ -82,7 +82,7 @@ export default async function Page() {
                     {level2Guide.hasParts?.map(level3Guide => (
                       <Link
                         key={level3Guide.id}
-                        href={`/research-guide/${encodeRouteSegment(
+                        href={`/research-aids/${encodeRouteSegment(
                           level3Guide.id
                         )}`}
                         className="bg-none text-consortium-blue-950 no-underline hover:bg-consortium-purple-100 transition rounded flex flex-col -mx-2 px-2 -ml-2"
