@@ -98,35 +98,44 @@ export default async function GuidePage({params}: Props) {
                 <h2 id="resources" className="scroll-mt-20" tabIndex={0}>
                   {t('citations')}
                 </h2>
-                {renderCitationList(
-                  t('primarySources'),
-                  guide.citations.filter(c => c.type === 'primary')
-                )}
-                {renderCitationList(
-                  t('secondarySources'),
-                  guide.citations.filter(c => c.type === 'secondary')
-                )}
+                <CitationList
+                  labelKey="primarySources"
+                  citations={guide.citations.filter(c => c.type === 'primary')}
+                />
+                <CitationList
+                  labelKey="secondarySources"
+                  citations={guide.citations.filter(
+                    c => c.type === 'secondary'
+                  )}
+                />
               </>
             )}
           </div>
         </div>
 
         <div className="w-full lg:w-1/3 xl:w-1/4 mt-8 text-neutral-600">
-          {renderRelatedItems(guide, t)}
-          {renderKeywordsSection(guide, t)}
+          <RelatedItems guide={guide} />
+          <KeywordsSection guide={guide} />
         </div>
       </main>
     </>
   );
 }
 
-function renderCitationList(label: string, citations: Citation[]) {
+async function CitationList({
+  labelKey,
+  citations,
+}: {
+  labelKey: string;
+  citations: Citation[];
+}) {
+  const t = await getTranslations('ResearchGuide');
   if (!citations || citations.length === 0) {
     return null;
   }
   return (
     <div>
-      <h3 className="mt-8 mb-2 text-base font-bold">{label}</h3>
+      <h3 className="mt-8 mb-2 text-base font-bold">{t(labelKey)}</h3>
       {citations.map(citation => (
         <div className="mb-6" key={citation.id}>
           <div className="font-semibold">{citation.name ?? ''}</div>
@@ -153,7 +162,8 @@ function renderCitationList(label: string, citations: Citation[]) {
   );
 }
 
-function renderRelatedItems(guide: ResearchGuide, t: (key: string) => string) {
+async function RelatedItems({guide}: {guide: ResearchGuide}) {
+  const t = await getTranslations('ResearchGuide');
   if (!guide.seeAlso || guide.seeAlso.length === 0) return null;
   return (
     <>
@@ -180,10 +190,8 @@ function renderRelatedItems(guide: ResearchGuide, t: (key: string) => string) {
   );
 }
 
-function renderKeywordsSection(
-  guide: ResearchGuide,
-  t: (key: string) => string
-) {
+async function KeywordsSection({guide}: {guide: ResearchGuide}) {
+  const t = await getTranslations('ResearchGuide');
   const hasKeywords = guide.keywords && guide.keywords.length > 0;
   const hasLocations =
     guide.contentLocations && guide.contentLocations.length > 0;
@@ -197,15 +205,16 @@ function renderKeywordsSection(
       </h2>
       <p className="italic text-neutral-500 my-1">{t('keywordsNewSearch')}</p>
       <div className="flex flex-col gap-4">
-        {hasKeywords && renderKeywords(guide.keywords!, t)}
-        {hasTimes && renderReferenceTimes(guide.contentReferenceTimes!, t)}
-        {hasLocations && renderLocations(guide.contentLocations!, t)}
+        {hasKeywords && <Keywords keywords={guide.keywords!} />}
+        {hasTimes && <ReferenceTimes times={guide.contentReferenceTimes!} />}
+        {hasLocations && <Locations locations={guide.contentLocations!} />}
       </div>
     </>
   );
 }
 
-function renderKeywords(keywords: Term[], t: (key: string) => string) {
+async function Keywords({keywords}: {keywords: Term[]}) {
+  const t = await getTranslations('ResearchGuide');
   return (
     <div className="py-4">
       <h3 className="mb-2" tabIndex={0}>
@@ -240,7 +249,8 @@ function renderKeywords(keywords: Term[], t: (key: string) => string) {
   );
 }
 
-function renderReferenceTimes(times: Event[], t: (key: string) => string) {
+async function ReferenceTimes({times}: {times: Event[]}) {
+  const t = await getTranslations('ResearchGuide');
   return (
     <div className="py-4">
       <h3 className="mb-2" tabIndex={0}>
@@ -292,7 +302,8 @@ function renderReferenceTimes(times: Event[], t: (key: string) => string) {
   );
 }
 
-function renderLocations(locations: Place[], t: (key: string) => string) {
+async function Locations({locations}: {locations: Place[]}) {
+  const t = await getTranslations('ResearchGuide');
   return (
     <div className="py-4">
       <h3 className="mb-2" tabIndex={0}>
