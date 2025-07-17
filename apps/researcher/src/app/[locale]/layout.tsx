@@ -41,8 +41,8 @@ export default async function RootLayout({children, params: {locale}}: Props) {
   return (
     <ClerkProvider localization={clerkLocale}>
       <link rel="icon" href="/favicon.ico" sizes="any" />
-      <html lang={locale}>
-        <body>
+      <html lang={locale} className="scroll-smooth">
+        <body style={{overscrollBehaviorX: 'auto'}}>
           <div className="min-h-screen flex flex-col">
             <AuthHealthCheck />
             <NextIntlClientProvider locale={locale} messages={messages}>

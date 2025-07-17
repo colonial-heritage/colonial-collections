@@ -556,6 +556,7 @@
     "relatedItems": "Related research aids",
     "keywords": "Keywords",
     "keywordsNewSearch": "Click on the button behind the keyword to start a new object search.",
+    "activityAndTypeOfObjects": "Activity and Type of objects",
     "contentLocations": "Geographical",
     "locationsNewSearch": "Click on the button behind the location to start a new object search.",
     "accessibilitySearch": "Start a new search for ",
@@ -565,6 +566,15 @@
     "backButton": "Back to overview",
     "noDateRange": "No activity period known",
     "noStartDate": "No start date known",
-    "noEndDate": "Present"
+    "noEndDate": "Present",
+    "pageNavigationTopics": "Topics",
+    "pageNavigationLocations": "Locations",
+    "pageNavigationSegments": "Page segments",
+    "pageNavigationSources": "Sources",
+    "pageNavigationRelatedItems": "Related items",
+    "pageNavigationKeywords": "Keywords",
+    "pageNavigationTop": "Top",
+    "primarySources": "Primary sources",
+    "secondarySources": "Secondary sources"
   }
 }
