@@ -21,8 +21,8 @@ export default function GuideNavigationBar({
         className="px-4 sm:px-10 mx-auto flex justify-between items-center"
         style={{maxWidth}}
       >
-        <div className="w-auto flex justify-end relative py-2 ">
-          <div className="peer-hover:flex hover:flex lg:w-auto flex flex-row items-center gap-3 relative left-0 bg-consortium-purple-100 p-0">
+        <div className="w-auto flex justify-end relative py-2">
+          <div className="peer-hover:flex hover:flex lg:w-auto flex flex-row items-center gap-3 relative left-0 bg-consortium-purple-100 p-0 flex-wrap">
             <div className="italic text-sm text-consortium-purple-600">
               {t('pageNavigationSegments')}:
             </div>
