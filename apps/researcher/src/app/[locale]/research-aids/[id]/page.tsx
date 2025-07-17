@@ -15,6 +15,7 @@ import {
   Term,
   Place,
   Citation,
+  CitationType,
 } from '@colonial-collections/api';
 import {MagnifyingGlassIcon} from '@heroicons/react/24/solid';
 import {getMarkdownHeaders} from '../linkable-headers';
@@ -78,6 +79,7 @@ export default async function GuidePage({params}: Props) {
               {guide.alternateNames?.map((name, idx) => (
                 <span key={name}>
                   {name}
+                  {/* Show separator, except for the last item */}
                   {idx < (guide.alternateNames?.length ?? 0) - 1 && (
                     <span className="text-consortium-purple-300"> — </span>
                   )}
@@ -100,12 +102,14 @@ export default async function GuidePage({params}: Props) {
                 </h2>
                 <CitationList
                   labelKey="primarySources"
-                  citations={guide.citations.filter(c => c.type === 'primary')}
+                  citations={guide.citations.filter(
+                    c => c.type === CitationType.PrimarySource
+                  )}
                 />
                 <CitationList
                   labelKey="secondarySources"
                   citations={guide.citations.filter(
-                    c => c.type === 'secondary'
+                    c => c.type === CitationType.SecondarySource
                   )}
                 />
               </>
