@@ -4,6 +4,7 @@ import {
   encodeRouteSegment,
 } from '@/lib/clerk-route-segment-transformer';
 import researchGuides from '@/lib/research-guides-instance';
+import {textToSlug} from '../linkable-headers';
 import {getLocale, getTranslations} from 'next-intl/server';
 import GuideNavigationBar from '../guide-navigation-bar';
 import {Link} from '@/navigation';
@@ -35,24 +36,28 @@ export default async function GuidePage({params}: Props) {
   }
 
   const pageNavigationHeaders = getMarkdownHeaders(guide.text);
-  const navLinks = [
-    ...pageNavigationHeaders.map(header => ({
-      slug: header.slug,
-      name: header.name,
-    })),
-    {
-      slug: 'resources',
+  const navLinks = pageNavigationHeaders.map(header => ({
+    slug: header.slug,
+    name: header.name,
+  }));
+  if (guide.citations && guide.citations.length > 0) {
+    navLinks.push({
+      slug: textToSlug(t('pageNavigationSources')),
       name: t('pageNavigationSources'),
-    },
-    {
-      slug: 'relatedItems',
+    });
+  }
+  if (guide.seeAlso && guide.seeAlso.length > 0) {
+    navLinks.push({
+      slug: textToSlug(t('pageNavigationRelatedItems')),
       name: t('pageNavigationRelatedItems'),
-    },
-    {
-      slug: 'keywords',
+    });
+  }
+  if (guide.keywords && guide.keywords.length > 0) {
+    navLinks.push({
+      slug: textToSlug(t('pageNavigationKeywords')),
       name: t('pageNavigationKeywords'),
-    },
-  ];
+    });
+  }
 
   return (
     <>
@@ -97,7 +102,11 @@ export default async function GuidePage({params}: Props) {
             {guide.text && <StringToMarkdown text={guide.text} />}
             {guide.citations && guide.citations.length > 0 && (
               <>
-                <h2 id="resources" className="scroll-mt-20" tabIndex={0}>
+                <h2
+                  id={textToSlug(t('pageNavigationSources'))}
+                  className="scroll-mt-20"
+                  tabIndex={0}
+                >
                   {t('citations')}
                 </h2>
                 <CitationList
@@ -171,7 +180,11 @@ async function RelatedItems({guide}: {guide: ResearchGuide}) {
   if (!guide.seeAlso || guide.seeAlso.length === 0) return null;
   return (
     <>
-      <h2 className="mb-2 scroll-mt-20" id="relatedItems" tabIndex={0}>
+      <h2
+        className="mb-2 scroll-mt-20"
+        id={textToSlug(t('pageNavigationRelatedItems'))}
+        tabIndex={0}
+      >
         {t('relatedItems')}
       </h2>
       <div className="flex flex-col gap-2">
@@ -204,7 +217,11 @@ async function KeywordsSection({guide}: {guide: ResearchGuide}) {
   if (!hasKeywords && !hasLocations && !hasTimes) return null;
   return (
     <>
-      <h2 className="mt-10 text-lg scroll-mt-20" id="keywords" tabIndex={0}>
+      <h2
+        className="mt-10 text-lg scroll-mt-20"
+        id={textToSlug(t('pageNavigationKeywords'))}
+        tabIndex={0}
+      >
         {t('keywords')}
       </h2>
       <p className="italic text-neutral-500 my-1">{t('keywordsNewSearch')}</p>
