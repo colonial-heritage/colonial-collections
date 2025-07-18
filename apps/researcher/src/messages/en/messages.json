@@ -110,7 +110,7 @@
     "dataProviderDescription": "The data of this object is provided by:",
     "websiteLabel": "Website",
     "objectIdLabel": "Reference or object ID by the the data provider",
-    "objectProviderLink": "Object on provider's website",
+    "objectProviderLink": "Link to data provider object page",
     "linkToDatasetBrowser": "More about the dataset (Dataset Browser)",
     "noData": "No <subject></subject> available",
     "identifier": "ID: {identifier}",

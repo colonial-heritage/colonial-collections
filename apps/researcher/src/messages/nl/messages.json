@@ -110,7 +110,7 @@
     "dataProviderDescription": "De gegevens van dit object worden verstrekt door:",
     "websiteLabel": "Website",
     "objectIdLabel": "Referentie- of object-ID door de gegevensverstrekker",
-    "objectProviderLink": "Object op de website van de gegevensverstrekker",
+    "objectProviderLink": "Link naar objectpagina bronhouder",
     "linkToDatasetBrowser": "Meer over de dataset (Dataset Browser)",
     "noData": "Geen <subject></subject> beschikbaar",
     "identifier": "ID: {identifier}",
