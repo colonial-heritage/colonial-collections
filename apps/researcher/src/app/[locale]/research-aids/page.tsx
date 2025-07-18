@@ -56,7 +56,7 @@ export default async function Page() {
                 <div className="flex items-center justify-between">
                   <div>{item.name}</div>
                   <div className="bg-consortium-purple-200 rounded p-2">
-                    <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
+                    <ChevronRightIcon className="w-5 h-5 fill--consortium-purple-900" />
                   </div>
                 </div>
               </Link>
@@ -88,7 +88,7 @@ export default async function Page() {
                         <div className="flex items-center justify-between ">
                           <div className="">{level2Guide.name}</div>
                           <div className="bg-consortium-purple-100 rounded p-2">
-                            <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
+                            <ChevronRightIcon className="w-5 h-5 fill--consortium-purple-900" />
                           </div>
                         </div>
                       </Link>
@@ -104,7 +104,7 @@ export default async function Page() {
                         <div className="flex items-center justify-between">
                           <div>{level3Guide.name}</div>
                           <div className="bg-consortium-purple-100 rounded p-2">
-                            <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
+                            <ChevronRightIcon className="w-5 h-5 fill--consortium-purple-900" />
                           </div>
                         </div>
                       </Link>
