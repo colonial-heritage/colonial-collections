@@ -7,6 +7,7 @@ import {getLocale, getTranslations} from 'next-intl/server';
 import GuideNavigationBar from './guide-navigation-bar';
 import StringToMarkdown from './string-to-markdown';
 import {sortResearchGuide} from '@/app/[locale]/research-aids/sort-guides';
+import {textToSlug} from './linkable-headers';
 
 export default async function Page() {
   const locale = (await getLocale()) as LocaleEnum;
@@ -25,10 +26,12 @@ export default async function Page() {
   const firstLevel1Guide = sortedGuides.hasParts?.[0];
   const nextLevel1Guides = sortedGuides.hasParts?.slice(1) || [];
 
-  const navLinks = [
-    {slug: 'topics', name: t('pageNavigationTopics')},
-    {slug: 'locations', name: t('pageNavigationLocations')},
-  ];
+  const navLinks = nextLevel1Guides
+    .filter(level1Guide => typeof level1Guide.name === 'string')
+    .map(level1Guide => ({
+      slug: textToSlug(level1Guide.name as string),
+      name: level1Guide.name as string,
+    }));
 
   return (
     <>
@@ -69,7 +72,10 @@ export default async function Page() {
         {nextLevel1Guides.map(level1Guide => (
           <div className="w-full lg:w-1/2" key={level1Guide.id}>
             <div className="mt-20 *:text-consortium-blue-800">
-              <h3 className="text-2xl pb-4 scroll-m-16" id="topics">
+              <h3
+                className="text-2xl pb-4 scroll-m-16"
+                id={textToSlug(level1Guide.name)}
+              >
                 {level1Guide.name}
               </h3>
               <div className="columns-1 xl:columns-2 gap-10 w-full">

@@ -1,4 +1,4 @@
-export function textToSlug(text: string): string {
+export function textToSlug(text = ''): string {
   return text
     .toLowerCase()
     .normalize('NFD')
