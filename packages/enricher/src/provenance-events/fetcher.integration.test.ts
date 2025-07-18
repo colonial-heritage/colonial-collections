@@ -1,4 +1,4 @@
-import {NanopubClient} from '../client';
+import {NanopubClient} from '../native-client';
 import {EnrichmentCreator} from '../creator';
 import {ProvenanceEventType} from './definitions';
 import {ProvenanceEventEnrichmentFetcher} from './fetcher';
@@ -9,7 +9,7 @@ import {setTimeout} from 'node:timers/promises';
 
 const nanopubClient = new NanopubClient({
   endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
-  proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
+  privateKey: env.NANOPUB_PRIVATE_KEY as string,
 });
 
 const creator = new EnrichmentCreator({nanopubClient});
