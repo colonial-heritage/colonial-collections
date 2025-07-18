@@ -78,7 +78,21 @@ export default async function Page() {
                     key={level2Guide.id}
                     className="bg-neutral-50 mb-6 break-inside-avoid rounded flex flex-col gap-2 p-4"
                   >
-                    <h3 className="text-lg pb-2">{level2Guide.name}</h3>
+                    <h3 className="text-lg pb-3">
+                      <Link
+                        href={`/research-aids/${encodeRouteSegment(
+                          level2Guide.id
+                        )}`}
+                        className="bg-none text-consortiumBlue-950 no-underline hover:bg-consortium-purple-100 transition rounded flex flex-col -mx-2 px-2 -ml-2"
+                      >
+                        <div className="flex items-center justify-between ">
+                          <div className="">{level2Guide.name}</div>
+                          <div className="bg-consortium-purple-100 rounded p-2">
+                            <ChevronRightIcon className="w-5 h-5 fill--consortiumSand-900" />
+                          </div>
+                        </div>
+                      </Link>
+                    </h3>
                     {level2Guide.hasParts?.map(level3Guide => (
                       <Link
                         key={level3Guide.id}
