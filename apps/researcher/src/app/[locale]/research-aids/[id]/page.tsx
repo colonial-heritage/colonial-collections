@@ -64,7 +64,7 @@ export default async function GuidePage({params}: Props) {
           <div className="pb-4">
             <Link
               href="/research-aids"
-              className="flex gap-1 items-center text-consortium-blue-800 hover:underline focus:underline focus:outline-none"
+              className="flex gap-1 items-center no-underline"
             >
               <ChevronLeftIcon className="w-3 h-3 fill-neutral-600" />
               {t('backButton')}
@@ -139,7 +139,7 @@ async function CitationList({
   }
   return (
     <div>
-      <h3 className="mt-8 mb-2 text-base font-bold">{t(labelKey)}</h3>
+      <h3>{t(labelKey)}</h3>
       {citations.map(citation => (
         <div className="mb-6" key={citation.id}>
           <div className="font-semibold">{citation.name ?? ''}</div>
