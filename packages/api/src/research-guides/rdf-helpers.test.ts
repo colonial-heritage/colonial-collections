@@ -43,16 +43,18 @@ beforeAll(async () => {
       ] ;
       ex:citation [
         ex:additionalType "Type of primary source:Publicatie" ;
+        ex:inLanguage "en" ;
         ex:name "Citation 1" ;
         ex:description "Citation Description 1" ;
         ex:url <https://example.org/citation1> ;
       ], [
         ex:additionalType "Type of secondary source:Publicatie" ;
+        ex:inLanguage "en", "nl" ;
         ex:name "Citation 2" ;
         ex:description "Citation Description 2" ;
         ex:url <https://example.org/citation2> ;
       ], [
-        # Missing 'ex:additionalType'
+        # Missing 'ex:additionalType' and 'ex:inLanguage'
         ex:name "Citation 3" ;
         ex:description "Citation Description 3" ;
         ex:url <https://example.org/citation3> ;
@@ -137,6 +139,7 @@ describe('createCitations', () => {
       {
         id: expect.any(String),
         type: 'primary',
+        inLanguage: ['en'],
         name: 'Citation 1',
         description: 'Citation Description 1',
         url: 'https://example.org/citation1',
@@ -144,6 +147,7 @@ describe('createCitations', () => {
       {
         id: expect.any(String),
         type: 'secondary',
+        inLanguage: ['en', 'nl'],
         name: 'Citation 2',
         description: 'Citation Description 2',
         url: 'https://example.org/citation2',
@@ -151,6 +155,7 @@ describe('createCitations', () => {
       {
         id: expect.any(String),
         type: 'primary',
+        inLanguage: [],
         name: 'Citation 3',
         description: 'Citation Description 3',
         url: 'https://example.org/citation3',
@@ -305,6 +310,7 @@ describe('createResearchGuide', () => {
         {
           id: expect.any(String),
           type: 'primary',
+          inLanguage: ['en'],
           name: 'Citation 1',
           description: 'Citation Description 1',
           url: 'https://example.org/citation1',
@@ -312,6 +318,7 @@ describe('createResearchGuide', () => {
         {
           id: expect.any(String),
           type: 'secondary',
+          inLanguage: ['en', 'nl'],
           name: 'Citation 2',
           description: 'Citation Description 2',
           url: 'https://example.org/citation2',
@@ -319,6 +326,7 @@ describe('createResearchGuide', () => {
         {
           id: expect.any(String),
           type: 'primary',
+          inLanguage: [],
           name: 'Citation 3',
           description: 'Citation Description 3',
           url: 'https://example.org/citation3',

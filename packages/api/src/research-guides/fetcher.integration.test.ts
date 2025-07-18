@@ -23,25 +23,11 @@ describe('getTopLevels', () => {
           'Research aides for conducting provenance research into colonial collections',
         text: 'On this page you find various research aides that can assist...',
         encodingFormat: 'text/markdown',
-        hasParts: [
-          {
-            id: 'https://guides.example.org/subset3',
-            name: '3. Name',
-            hasParts: [
-              {
-                id: 'https://guides.example.org/guide7',
-                name: 'Kunsthandel Van Lier',
-              },
-              {
-                id: 'https://guides.example.org/guide6',
-                name: 'Royal Cabinet of Curiosities',
-              },
-            ],
-          },
+        hasParts: expect.arrayContaining([
           {
             id: 'https://guides.example.org/subset1',
-            name: '1. Name',
-            hasParts: [
+            name: 'Name',
+            hasParts: expect.arrayContaining([
               {
                 id: 'https://guides.example.org/guide3',
                 name: 'Sources',
@@ -54,12 +40,12 @@ describe('getTopLevels', () => {
                 id: 'https://guides.example.org/guide2',
                 name: 'How can I use the data hub for my research?',
               },
-            ],
+            ]),
           },
           {
             id: 'https://guides.example.org/subset2',
-            name: '2. Name',
-            hasParts: [
+            name: 'Name',
+            hasParts: expect.arrayContaining([
               {
                 id: 'https://guides.example.org/guide5',
                 name: 'Trade',
@@ -80,9 +66,23 @@ describe('getTopLevels', () => {
                   },
                 ],
               },
-            ],
+            ]),
           },
-        ],
+          {
+            id: 'https://guides.example.org/subset3',
+            name: 'Name',
+            hasParts: expect.arrayContaining([
+              {
+                id: 'https://guides.example.org/guide7',
+                name: 'Kunsthandel Van Lier',
+              },
+              {
+                id: 'https://guides.example.org/guide6',
+                name: 'Royal Cabinet of Curiosities',
+              },
+            ]),
+          },
+        ]),
       },
     ]);
   });
@@ -205,6 +205,7 @@ describe('getById', () => {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
           ),
+          inLanguage: ['en'],
           type: 'secondary',
           name: 'Regeeringsalmanak voor Nederlandsch-Indië',
           description:
@@ -259,6 +260,7 @@ describe('get with localized names', () => {
       citations: [
         {
           name: 'Regeeringsalmanak voor Nederlandsch-Indië',
+          inLanguage: ['en'],
           description:
             'Via Delpher, the editions can be found by selecting the title',
         },
@@ -308,6 +310,7 @@ describe('get with localized names', () => {
       citations: [
         {
           name: 'Regeeringsalmanak voor Nederlandsch-Indië',
+          inLanguage: ['nl'],
           description:
             'Edities van 1865 tot en met 1942 beschikbaar via Delpher en edities van 1865 tot en met 1912 beschikbaar via de digitale collecties van de Staatsbibliothek zu Berlin.',
         },

@@ -19,6 +19,8 @@ function createCitation(citationResource: Resource) {
   const additionalType = onlyOne(
     getPropertyValues(citationResource, 'ex:additionalType')
   );
+  const inLanguage = getPropertyValues(citationResource, 'ex:inLanguage');
+  const language = Array.isArray(inLanguage) ? inLanguage : [];
 
   // The KG, unfortunately, does not use structured data for denoting the
   // type of the source - we'll need to parse an unstructured literal
@@ -32,6 +34,7 @@ function createCitation(citationResource: Resource) {
     name,
     description,
     url,
+    inLanguage: language,
   };
 
   return citation;

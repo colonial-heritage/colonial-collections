@@ -196,6 +196,7 @@ export class ResearchGuideFetcher {
           ex:sameAs ?keywordSameAs .
 
         ?citation a ex:CreativeWork ;
+          ex:inLanguage ?citationLanguage ;
           ex:additionalType ?citationTypeLabel ;
           ex:name ?citationName ;
           ex:description ?citationDescription ;
@@ -279,6 +280,11 @@ export class ResearchGuideFetcher {
 
         OPTIONAL {
           ?this schema:citation ?citation .
+
+          OPTIONAL {
+            ?citation schema:inLanguage ?citationLanguage
+            FILTER(?citationLanguage = "${options.locale}")
+          }
 
           # E.g. "Type of secondary source:Publicatie"
           OPTIONAL {
