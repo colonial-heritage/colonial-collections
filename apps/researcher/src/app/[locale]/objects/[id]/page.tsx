@@ -327,6 +327,13 @@ export default async function Details({params}: Props) {
                       {t('objectIdLabel')}
                     </div>
                     <div>{object.identifier}</div>
+                    {object.mainEntityOfPage && (
+                      <div className="mt-2">
+                        <a href={object.mainEntityOfPage}>
+                          {t('objectProviderLink')}
+                        </a>
+                      </div>
+                    )}
                     {object.isPartOf && (
                       <div className="mt-4 font-semibold">
                         <a
