@@ -1,4 +1,4 @@
-import {NanopubClient} from '../client';
+import {NanopubClient} from '../native-client';
 import {ProvenanceEventType} from './definitions';
 import {ProvenanceEventEnrichmentStorer} from './storer';
 import {describe, expect, it} from '@jest/globals';
@@ -6,7 +6,7 @@ import {env} from 'node:process';
 
 const nanopubClient = new NanopubClient({
   endpointUrl: env.NANOPUB_WRITE_ENDPOINT_URL as string,
-  proxyEndpointUrl: env.NANOPUB_WRITE_PROXY_ENDPOINT_URL as string,
+  privateKey: env.NANOPUB_PRIVATE_KEY as string,
 });
 
 const storer = new ProvenanceEventEnrichmentStorer({nanopubClient});

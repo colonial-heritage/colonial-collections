@@ -43,8 +43,8 @@ Create the file `apps/researcher/.env.production.local` and set the endpoint URL
     SEARCH_ENDPOINT_URL=
     SPARQL_ENDPOINT_URL=
     NANOPUB_WRITE_ENDPOINT_URL=
-    NANOPUB_WRITE_PROXY_ENDPOINT_URL=
     NANOPUB_SPARQL_ENDPOINT_URL=
+    NANOPUB_PRIVATE_KEY=
     DATASET_BROWSER_URL=
     SENDGRID_API_KEY=
     TO_EMAIL_ADDRESS=
@@ -75,7 +75,7 @@ Add the environment variable `DATABASE_URL` to `apps/researcher/.env.local`. Mor
 
 #### Use the Nanopublications infrastructure for storing and retrieving user enrichments
 
-Add the environment variables `NANOPUB_WRITE_ENDPOINT_URL`, `NANOPUB_WRITE_PROXY_ENDPOINT_URL` and `NANOPUB_SPARQL_ENDPOINT_URL` to `apps/researcher/.env.local`.
+Add the environment variables `NANOPUB_PRIVATE_KEY`, `NANOPUB_WRITE_ENDPOINT_URL` and `NANOPUB_SPARQL_ENDPOINT_URL` to `apps/researcher/.env.local`.
 
 #### Run development server
 
@@ -93,8 +93,8 @@ Create the file `.env.production.local` in the root and set the endpoint URLs:
     SEARCH_ENDPOINT_URL=
     SPARQL_ENDPOINT_URL=
     NANOPUB_WRITE_ENDPOINT_URL=
-    NANOPUB_WRITE_PROXY_ENDPOINT_URL=
     NANOPUB_SPARQL_ENDPOINT_URL=
+    NANOPUB_PRIVATE_KEY=
     DATASET_BROWSER_URL=
     SENDGRID_API_KEY=
     TO_EMAIL_ADDRESS=

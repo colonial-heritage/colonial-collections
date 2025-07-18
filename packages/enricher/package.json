@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@colonial-collections/iris": "*",
+    "@nanopub/sign": "0.1.4",
     "defu": "6.1.4",
     "edtf": "4.6.0",
     "fetch-sparql-endpoint": "4.1.0",

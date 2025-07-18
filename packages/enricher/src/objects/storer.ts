@@ -1,4 +1,4 @@
-import {nanopubId, NanopubClient} from '../client';
+import {nanopubId, NanopubClient} from '../native-client';
 import {ontologyUrl, type BasicEnrichment} from '../definitions';
 import {
   heritageObjectEnrichmentBeingCreatedSchema,
