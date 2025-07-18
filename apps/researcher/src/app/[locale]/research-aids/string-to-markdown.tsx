@@ -1,5 +1,5 @@
 import {MDXRemote} from 'next-mdx-remote/rsc';
-import {AnchorHTMLAttributes} from 'react';
+import {AnchorHTMLAttributes, createElement} from 'react';
 import {textToSlug} from './linkable-headers';
 
 // Escape html characters to be sure the text renders without any issues.
@@ -27,6 +27,17 @@ function extractTextFromChildren(children: React.ReactNode): string {
   return '';
 }
 
+function HeadingComponent({
+  level,
+  ...props
+}: React.HTMLAttributes<HTMLHeadingElement> & {
+  level: number;
+}): React.ReactElement {
+  const text = extractTextFromChildren(props.children);
+  const id = textToSlug(text);
+  return createElement(`h${level}`, {id, ...props});
+}
+
 const components = {
   a: (props: AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
@@ -37,19 +48,13 @@ const components = {
     />
   ),
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
-    const text = extractTextFromChildren(props.children);
-    const id = textToSlug(text);
-    return <h1 id={id} {...props} />;
+    return <HeadingComponent {...props} level={1} />;
   },
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
-    const text = extractTextFromChildren(props.children);
-    const id = textToSlug(text);
-    return <h2 id={id} {...props} />;
+    return <HeadingComponent {...props} level={2} />;
   },
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
-    const text = extractTextFromChildren(props.children);
-    const id = textToSlug(text);
-    return <h3 id={id} {...props} />;
+    return <HeadingComponent {...props} level={3} />;
   },
 };
 
