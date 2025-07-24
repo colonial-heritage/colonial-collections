@@ -82,11 +82,10 @@ function createResearchGuideFromListItem(
     getPropertyValues(listItemResource, 'ex:position')
   );
 
-  // If `position` is missing, use `0` instead
-  const position = rawPosition !== undefined ? parseInt(rawPosition) : 0;
-
-  // The position of the guide within the current list
-  researchGuide.position = position;
+  if (rawPosition !== undefined) {
+    // The position of the guide within the current list
+    researchGuide.position = parseInt(rawPosition);
+  }
 
   return researchGuide;
 }

@@ -313,7 +313,6 @@ describe('createResearchGuide', () => {
           id: 'https://example.org/researchGuide6',
           name: 'Name 6',
           abstract: 'Abstract 6',
-          position: 0,
         },
       ],
       seeAlso: [
@@ -358,7 +357,6 @@ describe('createResearchGuide', () => {
           id: 'https://example.org/researchGuide6',
           name: 'Name 6',
           abstract: 'Abstract 6',
-          position: 0,
         },
       ],
     });
