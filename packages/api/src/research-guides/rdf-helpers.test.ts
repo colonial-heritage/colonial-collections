@@ -54,24 +54,59 @@ beforeAll(async () => {
         ex:description "Citation Description 2" ;
         ex:url <https://example.org/citation2> ;
       ], [
-        # Missing 'ex:additionalType' and 'ex:inLanguage'
+        # Intentionally missing 'ex:additionalType' and 'ex:inLanguage'
         ex:name "Citation 3" ;
         ex:description "Citation Description 3" ;
         ex:url <https://example.org/citation3> ;
       ] ;
-      ex:hasPart ex:researchGuide3 ;
-      ex:seeAlso ex:researchGuide3 .
+      ex:hasPart [
+        a ex:ListItem ;
+        ex:position 1 ;
+        ex:item ex:researchGuide3
+      ], [
+        a ex:ListItem ;
+        # Intentionally not set
+        #ex:position 2 ;
+        ex:item ex:researchGuide6
+      ] ;
+      ex:seeAlso [
+        a ex:ListItem ;
+        ex:position 1 ;
+        ex:item ex:researchGuide3
+      ], [
+        a ex:ListItem ;
+        # Intentionally not set
+        #ex:position 2 ;
+        ex:item ex:researchGuide6
+      ] .
 
     ex:researchGuide3 a ex:CreativeWork ;
       ex:name "Name 3" ;
-      ex:hasPart ex:researchGuide5 ;
-      ex:seeAlso ex:researchGuide5 .
+      ex:hasPart [
+        a ex:ListItem ;
+        ex:position 1 ;
+        ex:item ex:researchGuide5
+      ] ;
+      ex:seeAlso [
+        a ex:ListItem ;
+        ex:position 1 ;
+        ex:item ex:researchGuide5
+      ] .
 
     ex:researchGuide5 a ex:CreativeWork ;
       ex:name "Name 5" ;
       ex:abstract "Abstract 5" ;
-      ex:hasPart ex:researchGuide6 ;
-      ex:seeAlso ex:researchGuide6 .
+      ex:hasPart [
+        a ex:ListItem ;
+        ex:position 1 ;
+        # Intentionally not set
+        #ex:item ex:researchGuide6
+      ] ;
+      ex:seeAlso [
+        a ex:ListItem ;
+        ex:position 1 ;
+        ex:item ex:researchGuide6
+      ] .
 
     ex:researchGuide6 a ex:CreativeWork ;
       ex:name "Name 6" ;
@@ -196,102 +231,6 @@ describe('createResearchGuide', () => {
           },
         },
       ],
-      hasParts: [
-        {
-          id: 'https://example.org/researchGuide3',
-          name: 'Name 3',
-          hasParts: [
-            {
-              id: 'https://example.org/researchGuide5',
-              name: 'Name 5',
-              abstract: 'Abstract 5',
-              hasParts: [
-                {
-                  id: 'https://example.org/researchGuide6',
-                  name: 'Name 6',
-                  abstract: 'Abstract 6',
-                },
-              ],
-              seeAlso: [
-                {
-                  id: 'https://example.org/researchGuide6',
-                  name: 'Name 6',
-                  abstract: 'Abstract 6',
-                },
-              ],
-            },
-          ],
-          seeAlso: [
-            {
-              id: 'https://example.org/researchGuide5',
-              name: 'Name 5',
-              abstract: 'Abstract 5',
-              hasParts: [
-                {
-                  id: 'https://example.org/researchGuide6',
-                  name: 'Name 6',
-                  abstract: 'Abstract 6',
-                },
-              ],
-              seeAlso: [
-                {
-                  id: 'https://example.org/researchGuide6',
-                  name: 'Name 6',
-                  abstract: 'Abstract 6',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      seeAlso: [
-        {
-          id: 'https://example.org/researchGuide3',
-          name: 'Name 3',
-          hasParts: [
-            {
-              id: 'https://example.org/researchGuide5',
-              name: 'Name 5',
-              abstract: 'Abstract 5',
-              hasParts: [
-                {
-                  id: 'https://example.org/researchGuide6',
-                  name: 'Name 6',
-                  abstract: 'Abstract 6',
-                },
-              ],
-              seeAlso: [
-                {
-                  id: 'https://example.org/researchGuide6',
-                  name: 'Name 6',
-                  abstract: 'Abstract 6',
-                },
-              ],
-            },
-          ],
-          seeAlso: [
-            {
-              id: 'https://example.org/researchGuide5',
-              name: 'Name 5',
-              abstract: 'Abstract 5',
-              hasParts: [
-                {
-                  id: 'https://example.org/researchGuide6',
-                  name: 'Name 6',
-                  abstract: 'Abstract 6',
-                },
-              ],
-              seeAlso: [
-                {
-                  id: 'https://example.org/researchGuide6',
-                  name: 'Name 6',
-                  abstract: 'Abstract 6',
-                },
-              ],
-            },
-          ],
-        },
-      ],
       contentLocations: [
         {
           id: expect.any(String),
@@ -330,6 +269,96 @@ describe('createResearchGuide', () => {
           name: 'Citation 3',
           description: 'Citation Description 3',
           url: 'https://example.org/citation3',
+        },
+      ],
+      hasParts: [
+        {
+          id: 'https://example.org/researchGuide3',
+          name: 'Name 3',
+          hasParts: [
+            {
+              id: 'https://example.org/researchGuide5',
+              name: 'Name 5',
+              abstract: 'Abstract 5',
+              seeAlso: [
+                {
+                  id: 'https://example.org/researchGuide6',
+                  name: 'Name 6',
+                  abstract: 'Abstract 6',
+                  position: 1,
+                },
+              ],
+              position: 1,
+            },
+          ],
+          seeAlso: [
+            {
+              id: 'https://example.org/researchGuide5',
+              name: 'Name 5',
+              abstract: 'Abstract 5',
+              seeAlso: [
+                {
+                  id: 'https://example.org/researchGuide6',
+                  name: 'Name 6',
+                  abstract: 'Abstract 6',
+                  position: 1,
+                },
+              ],
+              position: 1,
+            },
+          ],
+          position: 1,
+        },
+        {
+          id: 'https://example.org/researchGuide6',
+          name: 'Name 6',
+          abstract: 'Abstract 6',
+          position: 0,
+        },
+      ],
+      seeAlso: [
+        {
+          id: 'https://example.org/researchGuide3',
+          name: 'Name 3',
+          hasParts: [
+            {
+              id: 'https://example.org/researchGuide5',
+              name: 'Name 5',
+              abstract: 'Abstract 5',
+              seeAlso: [
+                {
+                  id: 'https://example.org/researchGuide6',
+                  name: 'Name 6',
+                  abstract: 'Abstract 6',
+                  position: 1,
+                },
+              ],
+              position: 1,
+            },
+          ],
+          seeAlso: [
+            {
+              id: 'https://example.org/researchGuide5',
+              name: 'Name 5',
+              abstract: 'Abstract 5',
+              seeAlso: [
+                {
+                  id: 'https://example.org/researchGuide6',
+                  name: 'Name 6',
+                  abstract: 'Abstract 6',
+                  position: 1,
+                },
+              ],
+              position: 1,
+            },
+          ],
+          position: 1,
+        },
+        {
+          id: 'https://example.org/researchGuide6',
+          name: 'Name 6',
+          abstract: 'Abstract 6',
+          position: 0,
         },
       ],
     });
