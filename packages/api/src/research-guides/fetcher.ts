@@ -118,8 +118,11 @@ export class ResearchGuideFetcher {
 
         OPTIONAL {
           ?topSet schema:itemListElement ?itemListElementOfTopSet .
-          ?itemListElementOfTopSet schema:item ?subSet ;
-            schema:position ?subSetPosition .
+          ?itemListElementOfTopSet schema:item ?subSet .
+
+          OPTIONAL {
+            ?itemListElementOfTopSet schema:position ?subSetPosition
+          }
 
           ?subSet schema:name ?subSetName
           FILTER(LANG(?subSetName) = "${options.locale}")
