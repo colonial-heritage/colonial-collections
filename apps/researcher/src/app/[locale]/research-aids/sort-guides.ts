@@ -1,9 +1,9 @@
 import {ResearchGuide} from '@colonial-collections/api';
 
-type SortableItem = {
+interface SortableItem {
   position?: number;
   name?: string;
-};
+}
 
 export function sortByPositionAndName<T extends SortableItem>(items: T[]): T[] {
   return items.sort((a, b) => {
