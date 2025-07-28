@@ -22,4 +22,5 @@ export type ResearchGuide = Thing & {
   citations?: Citation[];
   hasParts?: ResearchGuide[];
   seeAlso?: ResearchGuide[];
+  position?: number; // In a list of research guides
 };

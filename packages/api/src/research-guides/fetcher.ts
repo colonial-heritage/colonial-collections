@@ -67,15 +67,27 @@ export class ResearchGuideFetcher {
           ex:abstract ?topSetAbstract ;
           ex:text ?topSetText ;
           ex:encodingFormat ?topSetEncodingFormat ;
-          ex:hasPart ?subSet .
+          ex:hasPart ?itemListElementOfTopSet .
+
+        ?itemListElementOfTopSet a ex:ListItem ;
+          ex:item ?subSet ;
+          ex:position ?subSetPosition .
 
         ?subSet a ex:CreativeWork ;
           ex:name ?subSetName ;
-          ex:hasPart ?level1Guide .
+          ex:hasPart ?itemListElementOfSubSet .
+
+        ?itemListElementOfSubSet a ex:ListItem ;
+          ex:item ?level1Guide ;
+          ex:position ?level1GuidePosition .
 
         ?level1Guide a ex:CreativeWork ;
           ex:name ?level1GuideName ;
-          ex:hasPart ?level2Guide .
+          ex:hasPart ?itemListElementOfLevel1Guide .
+
+        ?itemListElementOfLevel1Guide a ex:ListItem ;
+          ex:item ?level2Guide ;
+          ex:position ?level2GuidePosition .
 
         ?level2Guide a ex:CreativeWork ;
           ex:name ?level2GuideName .
@@ -105,19 +117,37 @@ export class ResearchGuideFetcher {
         }
 
         OPTIONAL {
-          ?topSet la:has_member ?subSet .
+          ?topSet schema:itemListElement ?itemListElementOfTopSet .
+          ?itemListElementOfTopSet schema:item ?subSet .
+
+          OPTIONAL {
+            ?itemListElementOfTopSet schema:position ?subSetPosition
+          }
+
           ?subSet schema:name ?subSetName
           FILTER(LANG(?subSetName) = "${options.locale}")
 
           # Get a selection of information from member guides, if any
           OPTIONAL {
-            ?subSet la:has_member ?level1Guide .
+            ?subSet schema:itemListElement ?itemListElementOfSubSet .
+            ?itemListElementOfSubSet schema:item ?level1Guide .
+
+            OPTIONAL {
+              ?itemListElementOfSubSet schema:position ?level1GuidePosition
+            }
+
             ?level1Guide schema:name ?level1GuideName
             FILTER(LANG(?level1GuideName) = "${options.locale}")
 
             # Get a selection of information from member guides, if any
             OPTIONAL {
-              ?level1Guide la:has_member ?level2Guide .
+              ?level1Guide schema:itemListElement ?itemListElementOfLevel1Guide .
+              ?itemListElementOfLevel1Guide schema:item ?level2Guide .
+
+              OPTIONAL {
+                ?itemListElementOfLevel1Guide schema:position ?level2GuidePosition
+              }
+
               ?level2Guide schema:name ?level2GuideName
               FILTER(LANG(?level2GuideName) = "${options.locale}")
             }
@@ -174,15 +204,23 @@ export class ResearchGuideFetcher {
           ex:abstract ?abstract ;
           ex:text ?text ;
           ex:encodingFormat ?encodingFormat ;
-          ex:hasPart ?memberGuide ;
-          ex:seeAlso ?relatedGuide ;
+          ex:hasPart ?itemListElementOfMemberGuide ;
+          ex:seeAlso ?itemListElementOfRelatedGuide ;
           ex:contentLocation ?spatial ;
           ex:keyword ?keyword ;
           ex:citation ?citation ;
           ex:contentReferenceTime ?contentReferenceTime .
 
+        ?itemListElementOfMemberGuide a ex:ListItem ;
+          ex:item ?memberGuide ;
+          ex:position ?memberGuidePosition .
+
         ?memberGuide a ex:CreativeWork ;
           ex:name ?memberGuideName .
+
+        ?itemListElementOfRelatedGuide a ex:ListItem ;
+          ex:item ?relatedGuide ;
+          ex:position ?relatedGuidePosition .
 
         ?relatedGuide a ex:CreativeWork ;
           ex:name ?relatedGuideName .
@@ -240,14 +278,27 @@ export class ResearchGuideFetcher {
 
         # Get a selection of information from member guides, if any
         OPTIONAL {
-          ?this la:has_member ?memberGuide .
+          ?this schema:itemListElement ?itemListElementOfMemberGuide .
+          ?itemListElementOfMemberGuide schema:item ?memberGuide .
+
+          OPTIONAL {
+            ?itemListElementOfMemberGuide schema:position ?memberGuidePosition
+          }
+
           ?memberGuide schema:name ?memberGuideName
           FILTER(LANG(?memberGuideName) = "${options.locale}")
         }
 
         # Get a selection of information from related guides, if any
         OPTIONAL {
-          ?this rdfs:seeAlso ?relatedGuide .
+          ?this rdfs:seeAlso ?itemListWithRelatedGuides .
+          ?itemListWithRelatedGuides schema:itemListElement ?itemListElementOfRelatedGuide .
+          ?itemListElementOfRelatedGuide schema:item ?relatedGuide .
+
+          OPTIONAL {
+            ?itemListElementOfRelatedGuide schema:position ?relatedGuidePosition
+          }
+
           ?relatedGuide schema:name ?relatedGuideName
           FILTER(LANG(?relatedGuideName) = "${options.locale}")
         }

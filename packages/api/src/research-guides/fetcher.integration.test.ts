@@ -14,7 +14,6 @@ describe('getTopLevels', () => {
   it('returns the top level guides', async () => {
     const researchGuides = await researchGuideFetcher.getTopLevels();
 
-    // The sorting order is undefined and can change - don't use toStrictEqual()
     expect(researchGuides).toMatchObject([
       {
         id: 'https://guides.example.org/topset',
@@ -23,29 +22,50 @@ describe('getTopLevels', () => {
           'Research aides for conducting provenance research into colonial collections',
         text: 'On this page you find various research aides that can assist...',
         encodingFormat: 'text/markdown',
-        hasParts: expect.arrayContaining([
+        hasParts: [
           {
             id: 'https://guides.example.org/subset1',
             name: 'Name',
-            hasParts: expect.arrayContaining([
+            hasParts: [
               {
                 id: 'https://guides.example.org/guide3',
                 name: 'Sources',
+                position: 6,
               },
               {
                 id: 'https://guides.example.org/guide1',
                 name: 'Doing research',
+                position: 4,
               },
               {
                 id: 'https://guides.example.org/guide2',
                 name: 'How can I use the data hub for my research?',
+                position: 5,
               },
-            ]),
+            ],
+            position: 1,
+          },
+          {
+            id: 'https://guides.example.org/subset3',
+            name: 'Name',
+            hasParts: [
+              {
+                id: 'https://guides.example.org/guide6',
+                name: 'Royal Cabinet of Curiosities',
+                position: 9,
+              },
+              {
+                id: 'https://guides.example.org/guide7',
+                name: 'Kunsthandel Van Lier',
+                position: 10,
+              },
+            ],
+            position: 3,
           },
           {
             id: 'https://guides.example.org/subset2',
             name: 'Name',
-            hasParts: expect.arrayContaining([
+            hasParts: [
               {
                 id: 'https://guides.example.org/guide5',
                 name: 'Trade',
@@ -53,8 +73,10 @@ describe('getTopLevels', () => {
                   {
                     id: 'https://guides.example.org/guide7',
                     name: 'Kunsthandel Van Lier',
+                    position: 17,
                   },
                 ],
+                position: 8,
               },
               {
                 id: 'https://guides.example.org/guide4',
@@ -63,26 +85,15 @@ describe('getTopLevels', () => {
                   {
                     id: 'https://guides.example.org/guide6',
                     name: 'Royal Cabinet of Curiosities',
+                    position: 12,
                   },
                 ],
+                position: 7,
               },
-            ]),
+            ],
+            position: 2,
           },
-          {
-            id: 'https://guides.example.org/subset3',
-            name: 'Name',
-            hasParts: expect.arrayContaining([
-              {
-                id: 'https://guides.example.org/guide7',
-                name: 'Kunsthandel Van Lier',
-              },
-              {
-                id: 'https://guides.example.org/guide6',
-                name: 'Royal Cabinet of Curiosities',
-              },
-            ]),
-          },
-        ]),
+        ],
       },
     ]);
   });
@@ -170,16 +181,19 @@ describe('getById', () => {
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+          position: 12,
         },
       ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+          position: 14,
         },
         {
           id: 'https://guides.example.org/guide1',
           name: 'Doing research',
+          position: 13,
         },
       ]),
       contentLocations: expect.arrayContaining([
@@ -235,16 +249,19 @@ describe('get with localized names', () => {
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+          position: 12,
         },
       ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+          position: 14,
         },
         {
           id: 'https://guides.example.org/guide1',
           name: 'Doing research',
+          position: 13,
         },
       ]),
       contentLocations: [
@@ -285,16 +302,19 @@ describe('get with localized names', () => {
         {
           id: 'https://guides.example.org/guide6',
           name: 'Koninklijk Kabinet van Zeldzaamheden',
+          position: 12,
         },
       ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
           name: 'Koninklijk Kabinet van Zeldzaamheden',
+          position: 14,
         },
         {
           id: 'https://guides.example.org/guide1',
           name: 'Onderzoeken',
+          position: 13,
         },
       ]),
       contentLocations: [
