@@ -2,6 +2,7 @@ import {
   createPlaces,
   createThings,
   createTimeSpan,
+  getProperty,
   getPropertyValues,
   onlyOne,
   removeNullish,
@@ -47,19 +48,6 @@ export function createCitations(resource: Resource, propertyName: string) {
   return citations.length > 0 ? citations : undefined;
 }
 
-function createResearchGuides(
-  resource: Resource,
-  propertyName: string,
-  stackSize: number
-) {
-  const properties = resource.properties[propertyName];
-  const researchGuides = properties.map(property =>
-    createResearchGuide(property, stackSize)
-  );
-
-  return researchGuides.length > 0 ? researchGuides : undefined;
-}
-
 function createEvent(eventResource: Resource) {
   const timespan = createTimeSpan(eventResource);
 
@@ -78,11 +66,60 @@ export function createEvents(resource: Resource, propertyName: string) {
   return events.length > 0 ? events : undefined;
 }
 
+function createResearchGuideFromListItem(
+  listItemResource: Resource,
+  stackSize: number
+) {
+  const researchGuideResource = getProperty(listItemResource, 'ex:item');
+
+  if (researchGuideResource === undefined) {
+    return undefined; // Missing `item` property - should not happen
+  }
+
+  const researchGuide = createResearchGuide(researchGuideResource, stackSize);
+
+  const rawPosition = onlyOne(
+    getPropertyValues(listItemResource, 'ex:position')
+  );
+
+  if (rawPosition !== undefined) {
+    // The position of the guide within the current list
+    researchGuide.position = parseInt(rawPosition);
+  }
+
+  return researchGuide;
+}
+
+function createMembers(
+  resource: Resource,
+  propertyName: string,
+  stackSize: number
+) {
+  const properties = resource.properties[propertyName];
+
+  const researchGuides = properties.reduce(
+    (researchGuides: ResearchGuide[], property) => {
+      const researchGuide = createResearchGuideFromListItem(
+        property,
+        stackSize
+      );
+      if (researchGuide !== undefined) {
+        researchGuides.push(researchGuide);
+      }
+      return researchGuides;
+    },
+    []
+  );
+
+  return researchGuides.length > 0 ? researchGuides : undefined;
+}
+
 export function createResearchGuide(
   researchGuideResource: Resource,
   stackSize = 1
 ) {
   const name = onlyOne(getPropertyValues(researchGuideResource, 'ex:name'));
+
   const alternateNames = getPropertyValues(
     researchGuideResource,
     'ex:alternateName'
@@ -95,22 +132,22 @@ export function createResearchGuide(
     getPropertyValues(researchGuideResource, 'ex:encodingFormat')
   );
 
-  let hasParts: ResearchGuide[] | undefined = undefined;
+  let memberResearchGuides: ResearchGuide[] | undefined = undefined;
 
   // Prevent infinite recursion
   if (stackSize < 5) {
-    hasParts = createResearchGuides(
+    memberResearchGuides = createMembers(
       researchGuideResource,
       'ex:hasPart',
       stackSize + 1
     );
   }
 
-  let seeAlso: ResearchGuide[] | undefined = undefined;
+  let relatedResearchGuides: ResearchGuide[] | undefined = undefined;
 
   // Prevent infinite recursion
   if (stackSize < 5) {
-    seeAlso = createResearchGuides(
+    relatedResearchGuides = createMembers(
       researchGuideResource,
       'ex:seeAlso',
       stackSize + 1
@@ -136,8 +173,8 @@ export function createResearchGuide(
     text,
     encodingFormat,
     contentReferenceTimes,
-    hasParts,
-    seeAlso,
+    hasParts: memberResearchGuides,
+    seeAlso: relatedResearchGuides,
     contentLocations,
     keywords,
     citations,
