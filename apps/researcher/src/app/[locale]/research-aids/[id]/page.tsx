@@ -19,6 +19,7 @@ import {
 } from '@colonial-collections/api';
 import {MagnifyingGlassIcon} from '@heroicons/react/24/solid';
 import {getMarkdownHeaders} from '../linkable-headers';
+import {sortByPositionAndName} from '../sort-guides';
 
 interface Props {
   params: {id: string};
@@ -169,13 +170,16 @@ async function CitationList({
 async function RelatedItems({guide}: {guide: ResearchGuide}) {
   const t = await getTranslations('ResearchGuide');
   if (!guide.seeAlso || guide.seeAlso.length === 0) return null;
+
+  const sortedRelatedGuides = sortByPositionAndName(guide.seeAlso);
+
   return (
     <>
       <h2 className="mb-2 scroll-mt-20" id="relatedItems" tabIndex={0}>
         {t('relatedItems')}
       </h2>
       <div className="flex flex-col gap-2">
-        {guide.seeAlso.map((item: ResearchGuide) => (
+        {sortedRelatedGuides.map((item: ResearchGuide) => (
           <Link
             key={item.id}
             href={`/research-aids/${encodeRouteSegment(item.id)}`}
