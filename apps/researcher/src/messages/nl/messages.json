@@ -106,7 +106,7 @@
     "accessibilityProviderCurrentHolder": "Meer informatie over de data provider of huidig object bewaarder",
     "providerInfo": "Meer info",
     "contactInfo": "Contact gegevens",
-    "dataProviderTitle": "Data provider of huidig object bewaarder",
+    "dataProviderTitle": "Data provider",
     "dataProviderDescription": "De gegevens van dit object worden verstrekt door:",
     "websiteLabel": "Website",
     "objectIdLabel": "Referentie- of object-ID door de gegevensverstrekker",
