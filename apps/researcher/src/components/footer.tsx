@@ -60,7 +60,7 @@ export default async function Footer() {
             <ToFilteredListButton baseUrl="/communities">
               {t('communities')}
             </ToFilteredListButton>
-            <Link href="/research-guide">{t('researchGuide')}</Link>
+            <Link href="/research-aids">{t('researchGuide')}</Link>
           </nav>
           <nav className="flex flex-col gap-1 text-sm">
             {secondaryNavigation.map(item => (

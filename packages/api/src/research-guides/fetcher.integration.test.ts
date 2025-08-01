@@ -14,7 +14,6 @@ describe('getTopLevels', () => {
   it('returns the top level guides', async () => {
     const researchGuides = await researchGuideFetcher.getTopLevels();
 
-    // The sorting order is undefined and can change - don't use toStrictEqual()
     expect(researchGuides).toMatchObject([
       {
         id: 'https://guides.example.org/topset',
@@ -25,40 +24,47 @@ describe('getTopLevels', () => {
         encodingFormat: 'text/markdown',
         hasParts: [
           {
-            id: 'https://guides.example.org/subset3',
-            name: '3. Name',
-            hasParts: [
-              {
-                id: 'https://guides.example.org/guide7',
-                name: 'Kunsthandel Van Lier',
-              },
-              {
-                id: 'https://guides.example.org/guide6',
-                name: 'Royal Cabinet of Curiosities',
-              },
-            ],
-          },
-          {
             id: 'https://guides.example.org/subset1',
-            name: '1. Name',
+            name: 'Name',
             hasParts: [
               {
                 id: 'https://guides.example.org/guide3',
                 name: 'Sources',
+                position: 6,
               },
               {
                 id: 'https://guides.example.org/guide1',
                 name: 'Doing research',
+                position: 4,
               },
               {
                 id: 'https://guides.example.org/guide2',
                 name: 'How can I use the data hub for my research?',
+                position: 5,
               },
             ],
+            position: 1,
+          },
+          {
+            id: 'https://guides.example.org/subset3',
+            name: 'Name',
+            hasParts: [
+              {
+                id: 'https://guides.example.org/guide6',
+                name: 'Royal Cabinet of Curiosities',
+                position: 9,
+              },
+              {
+                id: 'https://guides.example.org/guide7',
+                name: 'Kunsthandel Van Lier',
+                position: 10,
+              },
+            ],
+            position: 3,
           },
           {
             id: 'https://guides.example.org/subset2',
-            name: '2. Name',
+            name: 'Name',
             hasParts: [
               {
                 id: 'https://guides.example.org/guide5',
@@ -67,8 +73,10 @@ describe('getTopLevels', () => {
                   {
                     id: 'https://guides.example.org/guide7',
                     name: 'Kunsthandel Van Lier',
+                    position: 17,
                   },
                 ],
+                position: 8,
               },
               {
                 id: 'https://guides.example.org/guide4',
@@ -77,10 +85,13 @@ describe('getTopLevels', () => {
                   {
                     id: 'https://guides.example.org/guide6',
                     name: 'Royal Cabinet of Curiosities',
+                    position: 12,
                   },
                 ],
+                position: 7,
               },
             ],
+            position: 2,
           },
         ],
       },
@@ -170,16 +181,19 @@ describe('getById', () => {
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+          position: 12,
         },
       ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+          position: 14,
         },
         {
           id: 'https://guides.example.org/guide1',
           name: 'Doing research',
+          position: 13,
         },
       ]),
       contentLocations: expect.arrayContaining([
@@ -205,6 +219,7 @@ describe('getById', () => {
           id: expect.stringContaining(
             'https://data.colonialcollections.nl/.well-known/genid/'
           ),
+          inLanguage: ['en'],
           type: 'secondary',
           name: 'Regeeringsalmanak voor Nederlandsch-Indië',
           description:
@@ -234,16 +249,19 @@ describe('get with localized names', () => {
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+          position: 12,
         },
       ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
           name: 'Royal Cabinet of Curiosities',
+          position: 14,
         },
         {
           id: 'https://guides.example.org/guide1',
           name: 'Doing research',
+          position: 13,
         },
       ]),
       contentLocations: [
@@ -259,6 +277,7 @@ describe('get with localized names', () => {
       citations: [
         {
           name: 'Regeeringsalmanak voor Nederlandsch-Indië',
+          inLanguage: ['en'],
           description:
             'Via Delpher, the editions can be found by selecting the title',
         },
@@ -283,16 +302,19 @@ describe('get with localized names', () => {
         {
           id: 'https://guides.example.org/guide6',
           name: 'Koninklijk Kabinet van Zeldzaamheden',
+          position: 12,
         },
       ]),
       seeAlso: expect.arrayContaining([
         {
           id: 'https://guides.example.org/guide6',
           name: 'Koninklijk Kabinet van Zeldzaamheden',
+          position: 14,
         },
         {
           id: 'https://guides.example.org/guide1',
           name: 'Onderzoeken',
+          position: 13,
         },
       ]),
       contentLocations: [
@@ -308,6 +330,7 @@ describe('get with localized names', () => {
       citations: [
         {
           name: 'Regeeringsalmanak voor Nederlandsch-Indië',
+          inLanguage: ['nl'],
           description:
             'Edities van 1865 tot en met 1942 beschikbaar via Delpher en edities van 1865 tot en met 1912 beschikbaar via de digitale collecties van de Staatsbibliothek zu Berlin.',
         },

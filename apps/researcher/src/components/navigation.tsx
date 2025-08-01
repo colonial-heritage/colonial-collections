@@ -87,7 +87,7 @@ export default function Navigation({datasetBrowserUrl}: Props) {
         <ToFilteredListButton baseUrl="/communities">
           {tNavigation('communities')}
         </ToFilteredListButton>
-        <Link href="/research-guide">{tNavigation('researchGuide')}</Link>
+        <Link href="/research-aids">{tNavigation('researchGuide')}</Link>
       </nav>
       <nav className="order-2 lg:order-3 text-sm  grow flex items-center justify-end gap-2">
         <Link href="/" className="flex items-center">

@@ -8,6 +8,7 @@ export enum CitationType {
 export type Citation = Thing & {
   type: CitationType;
   url?: string;
+  inLanguage: string[];
 };
 
 export type ResearchGuide = Thing & {
@@ -21,4 +22,5 @@ export type ResearchGuide = Thing & {
   citations?: Citation[];
   hasParts?: ResearchGuide[];
   seeAlso?: ResearchGuide[];
+  position?: number; // In a list of research guides
 };
