@@ -1,10 +1,11 @@
-import {creatorSchema} from './definitions';
+import {Nanopub as NativeNanopub, NpProfile} from '@nanopub/sign';
 import type * as RDF from '@rdfjs/types';
 import {DataFactory} from 'rdf-data-factory';
 import rdfSerializer from 'rdf-serialize';
 import {RdfStore} from 'rdf-stores';
 import streamToString from 'stream-to-string';
 import {z} from 'zod';
+import {creatorSchema} from './definitions';
 
 const DF = new DataFactory();
 
@@ -18,7 +19,7 @@ const provenanceGraph = DF.namedNode(`${nanopubTempIri}provenance`);
 
 const constructorOptionsSchema = z.object({
   endpointUrl: z.string(),
-  proxyEndpointUrl: z.string(),
+  privateKey: z.string(),
 });
 
 export type NanopubClientConstructorOptions = z.infer<
@@ -41,8 +42,7 @@ const saveOptionsSchema = z.object({
 type SaveOptions = z.infer<typeof saveOptionsSchema>;
 
 const saveResponseSchema = z.object({
-  id: z.string().url(),
-  url: z.string().url(),
+  uri: z.string().url(),
 });
 
 export type Nanopub = {
@@ -51,17 +51,15 @@ export type Nanopub = {
 
 // Low-level client for storing enrichments.
 // You should use the high-level EnrichmentCreator in most cases.
-// This client has been succeeded by `NanopubClient` in `native-client.ts`.
-// The old client can be removed if the new client is working correctly.
 export class NanopubClient {
-  private readonly endpointUrl: string;
-  private readonly proxyEndpointUrl: string;
+  private readonly endpointUrl;
+  private readonly profile;
 
   constructor(options: NanopubClientConstructorOptions) {
     const opts = constructorOptionsSchema.parse(options);
 
     this.endpointUrl = opts.endpointUrl;
-    this.proxyEndpointUrl = opts.proxyEndpointUrl;
+    this.profile = new NpProfile(opts.privateKey);
   }
 
   private async save(options: SaveOptions) {
@@ -73,28 +71,11 @@ export class NanopubClient {
     });
     const data = await streamToString(dataStream);
 
-    const searchParams = new URLSearchParams({
-      'server-url': this.endpointUrl,
-      signer: opts.creator,
-    });
-    const url = `${this.proxyEndpointUrl}/publish?${searchParams.toString()}`;
+    const nanopub = new NativeNanopub(data);
+    const np = await nanopub.publish(this.profile, this.endpointUrl);
 
-    const response = await fetch(url, {
-      method: 'POST',
-      body: data,
-      headers: {'Content-Type': 'application/trig'},
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to store nanopublication: ${response.statusText} (${response.status})`
-      );
-    }
-
-    // TBD: fetch the published nanopub info from location 'responseData.url'?
-    const rawResponseData = await response.json();
-    const responseData = saveResponseSchema.parse(rawResponseData);
-    const nanopubIri = responseData.id;
+    const npInfo = saveResponseSchema.parse(np.info());
+    const nanopubIri = npInfo.uri;
 
     return nanopubIri;
   }

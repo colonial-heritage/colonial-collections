@@ -1,4 +1,4 @@
-import {NanopubClient} from './client';
+import {NanopubClient} from './native-client';
 import {LocalContextsNoticeEnrichmentBeingCreated} from './local-contexts-notices/definitions';
 import {LocalContextsNoticeEnrichmentStorer} from './local-contexts-notices/storer';
 import {
