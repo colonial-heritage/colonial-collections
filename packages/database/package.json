@@ -2,6 +2,9 @@
   "name": "@colonial-collections/database",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "type": "module",
   "main": "./index.ts",
   "types": "./index.ts",
@@ -30,8 +33,12 @@
   "jest": {
     "preset": "ts-jest",
     "testTimeout": 60000,
-    "testMatch": ["<rootDir>/src/**/*.test.ts"],
+    "testMatch": [
+      "<rootDir>/src/**/*.test.ts"
+    ],
     "collectCoverage": true,
-    "collectCoverageFrom": ["<rootDir>/src/**/*.ts"]
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.ts"
+    ]
   }
 }

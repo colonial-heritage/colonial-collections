@@ -2,6 +2,9 @@
   "name": "@colonial-collections/iris",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
