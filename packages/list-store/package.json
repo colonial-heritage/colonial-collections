@@ -24,9 +24,6 @@
     "zod": "3.22.4",
     "zustand": "4.5.2"
   },
-  "engines": {
-    "node": "18.x"
-  },
   "jest": {
     "preset": "ts-jest",
     "testTimeout": 60000,
