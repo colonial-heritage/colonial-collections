@@ -2,45 +2,45 @@ name: End-to-end testing Researcher
 
 on:
   pull_request:
-    branches: ["main"]
+    branches: ['main']
     paths:
-      - "package.json"
-      - "apps/researcher/**"
-      - ".github/workflows/end-to-end-testing-researcher.yml"
-      - "packages/**"
+      - 'package.json'
+      - 'apps/researcher/**'
+      - '.github/workflows/end-to-end-testing-researcher.yml'
+      - 'packages/**'
 
 jobs:
   run-end-to-end-tests:
     timeout-minutes: 15
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Wait for a successful Vercel Preview
-      uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
-      id: waitForVercelPreviewDeployment
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        max_timeout: 600
-        environment: Preview – colonial-collections-researcher
-    - name: Run Playwright tests
-      run: npm run test:e2e:ci -w researcher
-      env:
-        PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
-        DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}
-        SPARQL_ENDPOINT_URL: ${{secrets.SPARQL_ENDPOINT_URL}}
-        SEARCH_ENDPOINT_URL: ${{secrets.SEARCH_ENDPOINT_URL}}
-        CLERK_PUBLISHABLE_KEY: ${{secrets.CLERK_PUBLISHABLE_KEY}}
-        CLERK_SECRET_KEY: ${{secrets.CLERK_SECRET_KEY}}
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: researcher-playwright-report
-        path: apps/researcher/playwright-report/
-        retention-days: 30
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Wait for a successful Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        id: waitForVercelPreviewDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
+          environment: Preview – colonial-collections-researcher
+      - name: Run Playwright tests
+        run: npm run test:e2e:ci -w researcher
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
+          DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}
+          SPARQL_ENDPOINT_URL: ${{secrets.SPARQL_ENDPOINT_URL}}
+          SEARCH_ENDPOINT_URL: ${{secrets.SEARCH_ENDPOINT_URL}}
+          CLERK_PUBLISHABLE_KEY: ${{secrets.CLERK_PUBLISHABLE_KEY}}
+          CLERK_SECRET_KEY: ${{secrets.CLERK_SECRET_KEY}}
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: researcher-playwright-report
+          path: apps/researcher/playwright-report/
+          retention-days: 30

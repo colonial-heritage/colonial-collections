@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "main": "src/index.ts",
   "types": "src/index.ts",

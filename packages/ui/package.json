@@ -1,10 +1,13 @@
 {
   "name": "@colonial-collections/ui",
   "version": "0.0.0",
-  "type":"module",
+  "type": "module",
   "main": "./index.tsx",
   "types": "./index.tsx",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "devDependencies": {
     "@colonial-collections/eslint-config": "*",
     "@colonial-collections/tailwind-config": "*",

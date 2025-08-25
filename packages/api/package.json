@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@colonial-collections/iris": "*",
+    "@smessie/readable-web-to-node-stream": "3.0.3",
     "defu": "6.1.4",
     "edtf": "4.6.0",
     "fetch-sparql-endpoint": "4.1.0",

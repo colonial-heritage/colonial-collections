@@ -5,7 +5,7 @@
   "type": "module",
   "files": [],
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "scripts": {
     "build": "next build",

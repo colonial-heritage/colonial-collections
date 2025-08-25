@@ -1,4 +1,4 @@
-import {Organization, OrganizationMembership} from '@clerk/backend/dist/types';
+import {Organization, OrganizationMembership} from '@clerk/backend';
 import {OrganizationResource} from '@clerk/types';
 import {Community, Membership} from './definitions';
 
@@ -27,8 +27,8 @@ export function organizationToCommunity(
         ? organization.createdAt.getTime()
         : organization.createdAt,
     membershipCount:
-      'members_count' in organization // Organization
-        ? organization.members_count
+      'membersCount' in organization // Organization
+        ? organization.membersCount
         : 'membersCount' in organization // OrganizationResource
           ? organization.membersCount
           : undefined,

@@ -2,6 +2,9 @@
   "name": "@colonial-collections/playwright-config",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "type": "module",
   "devDependencies": {
     "typescript": "5.4.5"

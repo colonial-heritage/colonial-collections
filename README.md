@@ -8,8 +8,8 @@ This repository contains the frontend applications of Colonial Collections
 
 #### Prerequisites
 
-1. Node.js version 18
-1. NPM version 8+
+1. Node.js version 22
+1. NPM version 10+
 
 The following commands will run for all the workspaces. If you want to run a command for one workspace add the `-w` argument. For example, to add a package to the dataset-browser:
 
@@ -63,11 +63,11 @@ Then run:
 
 #### Install packages
 
-    docker run --rm -it -v "$PWD":/app -w /app node:18 npm install --no-progress
+    docker run --rm -it -v "$PWD":/app -w /app node:22 npm install --no-progress
 
 #### Run container
 
-    docker run --rm -it -v "$PWD":/app -w /app --env-file .env.local node:18 /bin/bash
+    docker run --rm -it -v "$PWD":/app -w /app --env-file .env.local node:22 /bin/bash
 
 #### Connect to the MySQL server
 
@@ -79,7 +79,7 @@ Add the environment variables `NANOPUB_WRITE_ENDPOINT_URL`, `NANOPUB_WRITE_PROXY
 
 #### Run development server
 
-    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 -p 3001:3001 node:18 npm run dev
+    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 -p 3001:3001 node:22 npm run dev
 
 Open:
 
@@ -103,8 +103,8 @@ Create the file `.env.production.local` in the root and set the endpoint URLs:
 
 Then run:
 
-    docker run --rm -it -v "$PWD":/app -w /app node:18 npm run build
+    docker run --rm -it -v "$PWD":/app -w /app node:22 npm run build
 
 #### Run production server (for testing locally)
 
-    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 -p 3001:3001 node:18 npm run start
+    docker run --rm -it -v "$PWD":/app -w /app -p 3000:3000 -p 3001:3001 node:22 npm run start

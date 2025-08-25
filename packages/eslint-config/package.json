@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "devDependencies": {
     "eslint-config-next": "14.2.13",
     "eslint-config-turbo": "1.12.4",
