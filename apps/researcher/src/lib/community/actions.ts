@@ -112,7 +112,7 @@ export async function getMyCommunities({
             });
           return organizationToCommunity({
             ...organization,
-            members_count: members.length,
+            membersCount: members.length,
           });
         } catch (err) {
           console.error('Error fetching members count', err);

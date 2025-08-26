@@ -26,7 +26,7 @@ For writing and debugging tests, you can use [UI mode](https://playwright.dev/do
 
     npm run test:e2e:open
 
-### Writing end-t0-end tests
+### Writing end-to-end tests
 
 We use the attribute **data-testid** to make it easier to target elements.
 
