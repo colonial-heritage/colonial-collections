@@ -24,7 +24,7 @@
   "dependencies": {
     "@clerk/backend": "1.2.3",
     "@clerk/localizations": "1.26.13",
-    "@clerk/nextjs": "4.29.9",
+    "@clerk/nextjs": "6.31.4",
     "@clerk/types": "3.60.0",
     "@colonial-collections/api": "*",
     "@colonial-collections/content": "*",
