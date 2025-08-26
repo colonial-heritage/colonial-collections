@@ -5,7 +5,7 @@
   "type": "module",
   "files": [],
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "scripts": {
     "build": "next build",
@@ -17,11 +17,12 @@
     "test:watch": "npm test -- --watchAll",
     "test:integration": "jest --passWithNoTests --testMatch '**/src/**/*.integration.test.ts'",
     "test:integration:watch": "npm run test:integration -- --watchAll",
-    "test:e2e": "dotenv -c -- playwright test",
-    "test:e2e:open": "dotenv -c -- playwright test --ui",
-    "test:e2e:ci": "playwright test"
+    "test:e2e": "NODE_OPTIONS='--no-experimental-strip-types' dotenv -c -- playwright test",
+    "test:e2e:open": "NODE_OPTIONS='--no-experimental-strip-types' dotenv -c -- playwright test --ui",
+    "test:e2e:ci": "NODE_OPTIONS='--no-experimental-strip-types' playwright test"
   },
   "dependencies": {
+    "@clerk/backend": "1.2.3",
     "@clerk/localizations": "1.26.13",
     "@clerk/nextjs": "4.29.9",
     "@clerk/types": "3.60.0",
