@@ -19,6 +19,18 @@ const nextConfig = {
       },
     ],
   },
+  redirects: async () => [
+    {
+      source: '/:locale/research-guide',
+      destination: '/:locale/research-aids',
+      permanent: true,
+    },
+    {
+      source: '/:locale/research-guide/:id',
+      destination: '/:locale/research-aids/:id',
+      permanent: true,
+    },
+  ],
 };
 
 export default withNextIntl(withMDX(nextConfig));
