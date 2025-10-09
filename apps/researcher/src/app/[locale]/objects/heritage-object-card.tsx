@@ -50,7 +50,7 @@ export function HeritageObjectCard({
               alt={heritageObject.name || ''}
               width="0"
               height="0"
-              sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'}
+              sizes={imageFetchMode === ImageFetchMode.Large ? '270px' : '80px'}
               quality={40}
               className={classNames('max-h-72 object-cover object-center', {
                 'w-full max-h-72': imageFetchMode === ImageFetchMode.Large,
@@ -90,7 +90,7 @@ export function HeritageObjectListItem({
                 width="0"
                 height="0"
                 sizes={
-                  imageFetchMode === ImageFetchMode.Large ? '270px' : '90px'
+                  imageFetchMode === ImageFetchMode.Large ? '270px' : '80px'
                 }
                 quality={40}
                 className="w-20 -my-3"

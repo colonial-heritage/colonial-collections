@@ -45,7 +45,7 @@ export default function Gallery({images, organizationName}: Props) {
                     src={image.src}
                     alt={image.alt}
                     className="max-h-[450px] w-auto"
-                    sizes="40vw"
+                    sizes="(min-width: 768px) 40vw, 50vw"
                   />
                   <span className="absolute p-1 md:p-3 bg-consortium-blue-100 hover:bg-consortium-blue-100/80 rounded-full top-2 left-2 transition">
                     <svg
@@ -105,7 +105,7 @@ export default function Gallery({images, organizationName}: Props) {
                         : 'border-consortium-blue-400 hover:border-consortium-blue-100',
                       'w-full border-4 transition'
                     )}
-                    sizes="10vw"
+                    sizes="(min-width: 768px) 10vw, 20vw"
                   />
                 </>
               )}
