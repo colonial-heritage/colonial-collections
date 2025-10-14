@@ -1,411 +1,1110 @@
-// This file is based on https://github.com/clerkinc/javascript/blob/main/packages/localizations/src/en-US.ts
-// With the main difference a rename of 'organization' to 'community'
+// This file is based on https://github.com/clerk/javascript/blob/aaab21703a239d7bdd4866f9d56fd60cd337813c/packages/localizations/src/en-US.ts
+// With the main difference a rename of 'community' to 'community'
 
-import type {LocalizationResource} from '@clerk/types';
-
-const commonTexts = {
-  signIn: {
-    phoneCode: {
-      title: 'Check your phone',
-      subtitle: 'to continue to {{applicationName}}',
-      formTitle: 'Verification code',
-      formSubtitle: 'Enter the verification code sent to your phone number',
-      resendButton: "Didn't receive a code? Resend",
+export default {
+  locale: 'en-US',
+  apiKeys: {
+    action__add: 'Add new key',
+    action__search: 'Search keys',
+    createdAndExpirationStatus__expiresOn:
+      "Created {{ createdDate | shortDate('en-US') }} • Expires {{ expiresDate | longDate('en-US') }}",
+    createdAndExpirationStatus__never:
+      "Created {{ createdDate | shortDate('en-US') }} • Never expires",
+    detailsTitle__emptyRow: 'No API keys found',
+    formButtonPrimary__add: 'Create key',
+    formFieldCaption__expiration__expiresOn: 'Expiring {{ date }}',
+    formFieldCaption__expiration__never: 'This key will never expire',
+    formFieldOption__expiration__180d: '180 Days',
+    formFieldOption__expiration__1d: '1 Day',
+    formFieldOption__expiration__1y: '1 Year',
+    formFieldOption__expiration__30d: '30 Days',
+    formFieldOption__expiration__60d: '60 Days',
+    formFieldOption__expiration__7d: '7 Days',
+    formFieldOption__expiration__90d: '90 Days',
+    formFieldOption__expiration__never: 'Never',
+    formHint:
+      'Provide a name to generate a new key. You’ll be able to revoke it anytime.',
+    formTitle: 'Add new API key',
+    lastUsed__days: '{{days}}d ago',
+    lastUsed__hours: '{{hours}}h ago',
+    lastUsed__minutes: '{{minutes}}m ago',
+    lastUsed__months: '{{months}}mo ago',
+    lastUsed__seconds: '{{seconds}}s ago',
+    lastUsed__years: '{{years}}y ago',
+    menuAction__revoke: 'Revoke key',
+    revokeConfirmation: {
+      confirmationText: 'Revoke',
+      formButtonPrimary__revoke: 'Revoke key',
+      formHint: 'Are you sure you want to delete this Secret key?',
+      formTitle: 'Revoke "{{apiKeyName}}" secret key?',
     },
   },
-} as const;
-
-const LocalizationResource = {
-  locale: 'en-US',
-  socialButtonsBlockButton: 'Continue with {{provider|titleize}}',
-  dividerText: 'or',
-  formFieldLabel__emailAddress: 'Email address',
-  formFieldLabel__emailAddresses: 'Email addresses',
-  formFieldLabel__phoneNumber: 'Phone number',
-  formFieldLabel__username: 'Username',
-  formFieldLabel__emailAddress_phoneNumber: 'Email address or phone number',
-  formFieldLabel__emailAddress_username: 'Email address or username',
-  formFieldLabel__phoneNumber_username: 'phone number or username',
-  formFieldLabel__emailAddress_phoneNumber_username:
-    'Email address, phone number or username',
-  formFieldLabel__password: 'Password',
-  formFieldLabel__currentPassword: 'Current password',
-  formFieldLabel__newPassword: 'New password',
-  formFieldLabel__confirmPassword: 'Confirm password',
-  formFieldLabel__signOutOfOtherSessions: 'Sign out of all other devices',
-  formFieldLabel__firstName: 'First name',
-  formFieldLabel__lastName: 'Last name',
-  formFieldLabel__backupCode: 'Backup code',
-  formFieldLabel__organizationName: 'Community name',
-  formFieldLabel__organizationSlug: 'Slug URL',
-  formFieldLabel__role: 'Role',
-  formFieldInputPlaceholder__emailAddress: '',
-  formFieldInputPlaceholder__emailAddresses:
-    'Enter or paste one or more email addresses, separated by spaces or commas',
-  formFieldInputPlaceholder__phoneNumber: '',
-  formFieldInputPlaceholder__username: '',
-  formFieldInputPlaceholder__emailAddress_phoneNumber: '',
-  formFieldInputPlaceholder__emailAddress_username: '',
-  formFieldInputPlaceholder__phoneNumber_username: '',
-  formFieldInputPlaceholder__emailAddress_phoneNumber_username: '',
-  formFieldInputPlaceholder__password: '',
-  formFieldInputPlaceholder__firstName: '',
-  formFieldInputPlaceholder__lastName: '',
-  formFieldInputPlaceholder__backupCode: '',
-  formFieldInputPlaceholder__organizationName: '',
-  formFieldInputPlaceholder__organizationSlug: '',
-  formFieldError__notMatchingPasswords: "Passwords don't match.",
-  formFieldError__matchingPasswords: 'Passwords match.',
-  formFieldAction__forgotPassword: 'Forgot password?',
-  formFieldHintText__optional: 'Optional',
-  formButtonPrimary: 'Continue',
-  signInEnterPasswordTitle: 'Enter your password',
   backButton: 'Back',
-  footerActionLink__useAnotherMethod: 'Use another method',
-  badge__primary: 'Primary',
-  badge__thisDevice: 'This device',
-  badge__userDevice: 'User device',
-  badge__otherImpersonatorDevice: 'Other impersonator device',
+  badge__activePlan: 'Active',
+  badge__canceledEndsAt: "Canceled • Ends {{ date | shortDate('en-US') }}",
+  badge__currentPlan: 'Current plan',
   badge__default: 'Default',
-  badge__unverified: 'Unverified',
+  badge__endsAt: "Ends {{ date | shortDate('en-US') }}",
+  badge__expired: 'Expired',
+  badge__freeTrial: 'Free trial',
+  badge__otherImpersonatorDevice: 'Other impersonator device',
+  badge__pastDueAt: "Past due {{ date | shortDate('en-US') }}",
+  badge__pastDuePlan: 'Past due',
+  badge__primary: 'Primary',
+  badge__renewsAt: "Renews {{ date | shortDate('en-US') }}",
   badge__requiresAction: 'Requires action',
+  badge__startsAt: "Starts {{ date | shortDate('en-US') }}",
+  badge__thisDevice: 'This device',
+  badge__trialEndsAt: "Trial ends {{ date | shortDate('en-US') }}",
+  badge__unverified: 'Unverified',
+  badge__upcomingPlan: 'Upcoming',
+  badge__userDevice: 'User device',
   badge__you: 'You',
+  commerce: {
+    addPaymentMethod: 'Add payment method',
+    alwaysFree: 'Always free',
+    annually: 'Annually',
+    availableFeatures: 'Available features',
+    billedAnnually: 'Billed annually',
+    billedMonthlyOnly: 'Only billed monthly',
+    cancelFreeTrial: 'Cancel free trial',
+    cancelFreeTrialAccessUntil:
+      "Your trial will stay active until {{ date | longDate('en-US') }}. After that, you'll lose access to trial features. You won't be charged.",
+    cancelFreeTrialTitle: 'Cancel free trial for {{plan}} plan?',
+    cancelSubscription: 'Cancel subscription',
+    cancelSubscriptionAccessUntil:
+      "You can keep using '{{plan}}' features until {{ date | longDate('en-US') }}, after which you will no longer have access.",
+    cancelSubscriptionNoCharge:
+      'You will not be charged for this subscription.',
+    cancelSubscriptionPastDue:
+      'Your subscription will end immediately and you will lose access to all plan features. You will be asked to pay the past due amount on your next subscription.',
+    cancelSubscriptionTitle: 'Cancel {{plan}} Subscription?',
+    cannotSubscribeMonthly:
+      'You cannot subscribe to this plan by paying monthly. To subscribe to this plan, you need to choose to pay annually.',
+    cannotSubscribeUnrecoverable:
+      'You cannot subscribe to this plan. Your existing subscription is more expensive than this plan.',
+    checkout: {
+      description__paymentSuccessful: 'Your payment was successful.',
+      description__subscriptionSuccessful: 'Your new subscription is all set.',
+      downgradeNotice:
+        'You will keep your current subscription and its features until the end of the billing cycle, then you will be switched to this subscription.',
+      emailForm: {
+        subtitle:
+          'Before you can complete your purchase you must add an email address where receipts will be sent.',
+        title: 'Add an email address',
+      },
+      lineItems: {
+        title__freeTrialEndsAt: 'Trial ends on',
+        title__paymentMethod: 'Payment method',
+        title__statementId: 'Statement ID',
+        title__subscriptionBegins: 'Subscription begins',
+        title__totalPaid: 'Total paid',
+      },
+      pastDueNotice:
+        'Your previous subscription was past due, with no payment.',
+      perMonth: 'per month',
+      title: 'Checkout',
+      title__paymentSuccessful: 'Payment was successful!',
+      title__subscriptionSuccessful: 'Success!',
+      title__trialSuccess: 'Trial successfully started!',
+      totalDueAfterTrial: 'Total Due after trial ends in {{days}} days',
+    },
+    credit: 'Credit',
+    creditRemainder: 'Credit for the remainder of your current subscription.',
+    defaultFreePlanActive: "You're currently on the Free plan",
+    free: 'Free',
+    getStarted: 'Get started',
+    keepFreeTrial: 'Keep free trial',
+    keepSubscription: 'Keep subscription',
+    manage: 'Manage',
+    manageSubscription: 'Manage subscription',
+    month: 'Month',
+    monthly: 'Monthly',
+    pastDue: 'Past due',
+    pay: 'Pay {{amount}}',
+    paymentMethods: 'Payment Methods',
+    paymentSource: {
+      applePayDescription: {
+        annual: 'Annual payment',
+        monthly: 'Monthly payment',
+      },
+      dev: {
+        anyNumbers: 'Any numbers',
+        cardNumber: 'Card number',
+        cvcZip: 'CVC, ZIP',
+        developmentMode: 'Development mode',
+        expirationDate: 'Expiration date',
+        testCardInfo: 'Test card information',
+      },
+    },
+    popular: 'Popular',
+    pricingTable: {
+      billingCycle: 'Billing cycle',
+      included: 'Included',
+    },
+    reSubscribe: 'Resubscribe',
+    seeAllFeatures: 'See all features',
+    startFreeTrial: 'Start free trial',
+    startFreeTrial__days: 'Start {{days}}-day free trial',
+    subscribe: 'Subscribe',
+    subscriptionDetails: {
+      beginsOn: 'Begins on',
+      currentBillingCycle: 'Current billing cycle',
+      endsOn: 'Ends on',
+      firstPaymentAmount: 'First payment amount',
+      firstPaymentOn: 'First payment on',
+      nextPaymentAmount: 'Next payment amount',
+      nextPaymentOn: 'Next payment on',
+      pastDueAt: 'Past due on',
+      renewsAt: 'Renews at',
+      subscribedOn: 'Subscribed on',
+      title: 'Subscription',
+      trialEndsOn: 'Trial ends on',
+      trialStartedOn: 'Trial started on',
+    },
+    subtotal: 'Subtotal',
+    switchPlan: 'Switch to this plan',
+    switchToAnnual: 'Switch to annual',
+    switchToAnnualWithAnnualPrice:
+      'Switch to annual {{currency}}{{price}} / year',
+    switchToMonthly: 'Switch to monthly',
+    switchToMonthlyWithPrice: 'Switch to monthly {{currency}}{{price}} / month',
+    totalDue: 'Total due',
+    totalDueToday: 'Total Due Today',
+    viewFeatures: 'View features',
+    viewPayment: 'View payment',
+    year: 'Year',
+  },
+  createOrganization: {
+    formButtonSubmit: 'Create community',
+    invitePage: {
+      formButtonReset: 'Skip',
+    },
+    title: 'Create community',
+  },
+  dates: {
+    lastDay: "Yesterday at {{ date | timeString('en-US') }}",
+    next6Days:
+      "{{ date | weekday('en-US','long') }} at {{ date | timeString('en-US') }}",
+    nextDay: "Tomorrow at {{ date | timeString('en-US') }}",
+    numeric: "{{ date | numeric('en-US') }}",
+    previous6Days:
+      "Last {{ date | weekday('en-US','long') }} at {{ date | timeString('en-US') }}",
+    sameDay: "Today at {{ date | timeString('en-US') }}",
+  },
+  dividerText: 'or',
+  footerActionLink__alternativePhoneCodeProvider: 'Send code via SMS instead',
+  footerActionLink__useAnotherMethod: 'Use another method',
   footerPageLink__help: 'Help',
   footerPageLink__privacy: 'Privacy',
   footerPageLink__terms: 'Terms',
-  paginationButton__previous: 'Previous',
-  paginationButton__next: 'Next',
-  paginationRowText__displaying: 'Displaying',
-  paginationRowText__of: 'of',
+  formButtonPrimary: 'Continue',
+  formButtonPrimary__verify: 'Verify',
+  formFieldAction__forgotPassword: 'Forgot password?',
+  formFieldError__matchingPasswords: 'Passwords match.',
+  formFieldError__notMatchingPasswords: "Passwords don't match.",
+  formFieldError__verificationLinkExpired:
+    'The verification link expired. Please request a new link.',
+  formFieldHintText__optional: 'Optional',
+  formFieldHintText__slug:
+    'A slug is a human-readable ID that must be unique. It’s often used in URLs.',
+  formFieldInputPlaceholder__apiKeyDescription:
+    'Explain why you’re generating this key',
+  formFieldInputPlaceholder__apiKeyExpirationDate: 'Select date',
+  formFieldInputPlaceholder__apiKeyName: 'Enter your secret key name',
+  formFieldInputPlaceholder__backupCode: 'Enter backup code',
+  formFieldInputPlaceholder__confirmDeletionUserAccount: 'Delete account',
+  formFieldInputPlaceholder__emailAddress: 'Enter your email address',
+  formFieldInputPlaceholder__emailAddress_username: 'Enter email or username',
+  formFieldInputPlaceholder__emailAddresses:
+    'example@email.com, example2@email.com',
+  formFieldInputPlaceholder__firstName: 'First name',
+  formFieldInputPlaceholder__lastName: 'Last name',
+  formFieldInputPlaceholder__organizationDomain: 'example.com',
+  formFieldInputPlaceholder__organizationDomainEmailAddress: 'you@example.com',
+  formFieldInputPlaceholder__organizationName: 'Community name',
+  formFieldInputPlaceholder__organizationSlug: 'my-org',
+  formFieldInputPlaceholder__password: 'Enter your password',
+  formFieldInputPlaceholder__phoneNumber: 'Enter your phone number',
+  formFieldInputPlaceholder__username: undefined,
+  formFieldLabel__apiKeyDescription: 'Description',
+  formFieldLabel__apiKeyExpiration: 'Expiration',
+  formFieldLabel__apiKeyName: 'Secret key name',
+  formFieldLabel__automaticInvitations:
+    'Enable automatic invitations for this domain',
+  formFieldLabel__backupCode: 'Backup code',
+  formFieldLabel__confirmDeletion: 'Confirmation',
+  formFieldLabel__confirmPassword: 'Confirm password',
+  formFieldLabel__currentPassword: 'Current password',
+  formFieldLabel__emailAddress: 'Email address',
+  formFieldLabel__emailAddress_username: 'Email address or username',
+  formFieldLabel__emailAddresses: 'Email addresses',
+  formFieldLabel__firstName: 'First name',
+  formFieldLabel__lastName: 'Last name',
+  formFieldLabel__newPassword: 'New password',
+  formFieldLabel__organizationDomain: 'Domain',
+  formFieldLabel__organizationDomainDeletePending:
+    'Delete pending invitations and suggestions',
+  formFieldLabel__organizationDomainEmailAddress: 'Verification email address',
+  formFieldLabel__organizationDomainEmailAddressDescription:
+    'Enter an email address under this domain to receive a code and verify this domain.',
+  formFieldLabel__organizationName: 'Name',
+  formFieldLabel__organizationSlug: 'Slug',
+  formFieldLabel__passkeyName: 'Name of passkey',
+  formFieldLabel__password: 'Password',
+  formFieldLabel__phoneNumber: 'Phone number',
+  formFieldLabel__role: 'Role',
+  formFieldLabel__signOutOfOtherSessions: 'Sign out of all other devices',
+  formFieldLabel__username: 'Username',
+  impersonationFab: {
+    action__signOut: 'Sign out',
+    title: 'Signed in as {{identifier}}',
+  },
+  lastAuthenticationStrategy: 'Last used',
+  maintenanceMode:
+    "We are currently undergoing maintenance, but don't worry, it shouldn't take more than a few minutes.",
   membershipRole__admin: 'Admin',
   membershipRole__basicMember: 'Member',
   membershipRole__guestMember: 'Guest',
-  signUp: {
-    start: {
-      title: 'Create your account',
-      subtitle: 'to continue to {{applicationName}}',
-      actionText: 'Have an account?',
-      actionLink: 'Sign in',
+  organizationList: {
+    action__createOrganization: 'Create community',
+    action__invitationAccept: 'Join',
+    action__suggestionsAccept: 'Request to join',
+    createOrganization: 'Create Community',
+    invitationAcceptedLabel: 'Joined',
+    subtitle: 'to continue to {{applicationName}}',
+    suggestionsAcceptedLabel: 'Pending approval',
+    title: 'Choose an account',
+    titleWithoutPersonal: 'Choose a community',
+  },
+  organizationProfile: {
+    apiKeysPage: {
+      title: 'API keys',
     },
-    emailLink: {
-      title: 'Verify your email',
-      subtitle: 'to continue to {{applicationName}}',
-      formTitle: 'Verification link',
-      formSubtitle: 'Use the verification link sent to your email address',
-      resendButton: "Didn't receive a link? Resend",
-      verified: {
-        title: 'Successfully signed up',
+    badge__automaticInvitation: 'Automatic invitations',
+    badge__automaticSuggestion: 'Automatic suggestions',
+    badge__manualInvitation: 'No automatic enrollment',
+    badge__unverified: 'Unverified',
+    billingPage: {
+      paymentHistorySection: {
+        empty: 'No payment history',
+        notFound: 'Payment attempt not found',
+        tableHeader__amount: 'Amount',
+        tableHeader__date: 'Date',
+        tableHeader__status: 'Status',
       },
-      loading: {
-        title: 'Signing up...',
+      paymentSourcesSection: {
+        actionLabel__default: 'Make default',
+        actionLabel__remove: 'Remove',
+        add: 'Add new payment method',
+        addSubtitle: 'Add a new payment method to your account.',
+        cancelButton: 'Cancel',
+        formButtonPrimary__add: 'Add Payment Method',
+        formButtonPrimary__pay: 'Pay {{amount}}',
+        payWithTestCardButton: 'Pay with test card',
+        removeResource: {
+          messageLine1: '{{identifier}} will be removed from this account.',
+          messageLine2:
+            'You will no longer be able to use this payment source and any recurring subscriptions dependent on it will no longer work.',
+          successMessage:
+            '{{paymentSource}} has been removed from your account.',
+          title: 'Remove payment method',
+        },
+        title: 'Payment methods',
       },
-      verifiedSwitchTab: {
-        title: 'Successfully verified email',
-        subtitle: 'Return to the newly opened tab to continue',
-        subtitleNewTab: 'Return to previous tab to continue',
+      start: {
+        headerTitle__payments: 'Payments',
+        headerTitle__plans: 'Plans',
+        headerTitle__statements: 'Statements',
+        headerTitle__subscriptions: 'Subscription',
       },
+      statementsSection: {
+        empty: 'No statements to display',
+        itemCaption__paidForPlan: 'Paid for {{plan}} {{period}} plan',
+        itemCaption__proratedCredit:
+          'Prorated credit for partial usage of previous subscription',
+        itemCaption__subscribedAndPaidForPlan:
+          'Subscribed and paid for {{plan}} {{period}} plan',
+        notFound: 'Statement not found',
+        tableHeader__amount: 'Amount',
+        tableHeader__date: 'Date',
+        title: 'Statements',
+        totalPaid: 'Total paid',
+      },
+      subscriptionsListSection: {
+        actionLabel__manageSubscription: 'Manage',
+        actionLabel__newSubscription: 'Subscribe to a plan',
+        actionLabel__switchPlan: 'Switch plans',
+        tableHeader__edit: 'Edit',
+        tableHeader__plan: 'Plan',
+        tableHeader__startDate: 'Start date',
+        title: 'Subscription',
+      },
+      subscriptionsSection: {
+        actionLabel__default: 'Manage',
+      },
+      switchPlansSection: {
+        title: 'Switch plans',
+      },
+      title: 'Billing',
+    },
+    createDomainPage: {
+      subtitle:
+        'Add the domain to verify. Users with email addresses at this domain can join the community automatically or request to join.',
+      title: 'Add domain',
+    },
+    invitePage: {
+      detailsTitle__inviteFailed:
+        'The invitations could not be sent. There are already pending invitations for the following email addresses: {{email_addresses}}.',
+      formButtonPrimary__continue: 'Send invitations',
+      selectDropdown__role: 'Select role',
+      subtitle:
+        'Enter or paste one or more email addresses, separated by spaces or commas.',
+      successMessage: 'Invitations successfully sent',
+      title: 'Invite new members',
+    },
+    membersPage: {
+      action__invite: 'Invite',
+      action__search: 'Search',
+      activeMembersTab: {
+        menuAction__remove: 'Remove member',
+        tableHeader__actions: 'Actions',
+        tableHeader__joined: 'Joined',
+        tableHeader__role: 'Role',
+        tableHeader__user: 'User',
+      },
+      detailsTitle__emptyRow: 'No members to display',
+      invitationsTab: {
+        autoInvitations: {
+          headerSubtitle:
+            'Invite users by connecting an email domain with your community. Anyone who signs up with a matching email domain will be able to join the community anytime.',
+          headerTitle: 'Automatic invitations',
+          primaryButton: 'Manage verified domains',
+        },
+        table__emptyRow: 'No invitations to display',
+      },
+      invitedMembersTab: {
+        menuAction__revoke: 'Revoke invitation',
+        tableHeader__invited: 'Invited',
+      },
+      requestsTab: {
+        autoSuggestions: {
+          headerSubtitle:
+            'Users who sign up with a matching email domain, will be able to see a suggestion to request to join your community.',
+          headerTitle: 'Automatic suggestions',
+          primaryButton: 'Manage verified domains',
+        },
+        menuAction__approve: 'Approve',
+        menuAction__reject: 'Reject',
+        tableHeader__requested: 'Requested access',
+        table__emptyRow: 'No requests to display',
+      },
+      start: {
+        headerTitle__invitations: 'Invitations',
+        headerTitle__members: 'Members',
+        headerTitle__requests: 'Requests',
+      },
+    },
+    navbar: {
+      apiKeys: 'API keys',
+      billing: 'Billing',
+      description: 'Manage your community.',
+      general: 'General',
+      members: 'Members',
+      title: 'Community',
+    },
+    plansPage: {
+      alerts: {
+        noPermissionsToManageBilling:
+          'You do not have permissions to manage billing for this community.',
+      },
+      title: 'Plans',
+    },
+    profilePage: {
+      dangerSection: {
+        deleteOrganization: {
+          actionDescription: 'Type "{{organizationName}}" below to continue.',
+          messageLine1: 'Are you sure you want to delete this community?',
+          messageLine2: 'This action is permanent and irreversible.',
+          successMessage: 'You have deleted the community.',
+          title: 'Delete community',
+        },
+        leaveOrganization: {
+          actionDescription: 'Type "{{organizationName}}" below to continue.',
+          messageLine1:
+            'Are you sure you want to leave this community? You will lose access to this community and its applications.',
+          messageLine2: 'This action is permanent and irreversible.',
+          successMessage: 'You have left the community.',
+          title: 'Leave community',
+        },
+        title: 'Danger',
+      },
+      domainSection: {
+        menuAction__manage: 'Manage',
+        menuAction__remove: 'Delete',
+        menuAction__verify: 'Verify',
+        primaryButton: 'Add domain',
+        subtitle:
+          'Allow users to join the community automatically or request to join based on a verified email domain.',
+        title: 'Verified domains',
+      },
+      successMessage: 'The community has been updated.',
+      title: 'Update profile',
+    },
+    removeDomainPage: {
+      messageLine1: 'The email domain {{domain}} will be removed.',
+      messageLine2:
+        'Users won’t be able to join the community automatically after this.',
+      successMessage: '{{domain}} has been removed.',
+      title: 'Remove domain',
+    },
+    start: {
+      headerTitle__general: 'General',
+      headerTitle__members: 'Members',
+      profileSection: {
+        primaryButton: 'Update profile',
+        title: 'Community Profile',
+        uploadAction__title: 'Logo',
+      },
+    },
+    verifiedDomainPage: {
+      dangerTab: {
+        calloutInfoLabel: 'Removing this domain will affect invited users.',
+        removeDomainActionLabel__remove: 'Remove domain',
+        removeDomainSubtitle: 'Remove this domain from your verified domains',
+        removeDomainTitle: 'Remove domain',
+      },
+      enrollmentTab: {
+        automaticInvitationOption__description:
+          'Users are automatically invited to join the community when they sign-up and can join anytime.',
+        automaticInvitationOption__label: 'Automatic invitations',
+        automaticSuggestionOption__description:
+          'Users receive a suggestion to request to join, but must be approved by an admin before they are able to join the community.',
+        automaticSuggestionOption__label: 'Automatic suggestions',
+        calloutInfoLabel:
+          'Changing the enrollment mode will only affect new users.',
+        calloutInvitationCountLabel:
+          'Pending invitations sent to users: {{count}}',
+        calloutSuggestionCountLabel:
+          'Pending suggestions sent to users: {{count}}',
+        manualInvitationOption__description:
+          'Users can only be invited manually to the community.',
+        manualInvitationOption__label: 'No automatic enrollment',
+        subtitle: 'Choose how users from this domain can join the community.',
+      },
+      start: {
+        headerTitle__danger: 'Danger',
+        headerTitle__enrollment: 'Enrollment options',
+      },
+      subtitle:
+        'The domain {{domain}} is now verified. Continue by selecting enrollment mode.',
+      title: 'Update {{domain}}',
+    },
+    verifyDomainPage: {
+      formSubtitle: 'Enter the verification code sent to your email address',
+      formTitle: 'Verification code',
+      resendButton: "Didn't receive a code? Resend",
+      subtitle: 'The domain {{domainName}} needs to be verified via email.',
+      subtitleVerificationCodeScreen:
+        'A verification code was sent to {{emailAddress}}. Enter the code to continue.',
+      title: 'Verify domain',
+    },
+  },
+  organizationSwitcher: {
+    action__createOrganization: 'Create community',
+    action__invitationAccept: 'Join',
+    action__manageOrganization: 'Manage',
+    action__suggestionsAccept: 'Request to join',
+    notSelected: 'No community selected',
+    personalWorkspace: 'Personal account',
+    suggestionsAcceptedLabel: 'Pending approval',
+  },
+  paginationButton__next: 'Next',
+  paginationButton__previous: 'Previous',
+  paginationRowText__displaying: 'Displaying',
+  paginationRowText__of: 'of',
+  reverification: {
+    alternativeMethods: {
+      actionLink: 'Get help',
+      actionText: 'Don’t have any of these?',
+      blockButton__backupCode: 'Use a backup code',
+      blockButton__emailCode: 'Email code to {{identifier}}',
+      blockButton__passkey: 'Use your passkey',
+      blockButton__password: 'Continue with your password',
+      blockButton__phoneCode: 'Send SMS code to {{identifier}}',
+      blockButton__totp: 'Use your authenticator app',
+      getHelp: {
+        blockButton__emailSupport: 'Email support',
+        content:
+          'If you have trouble verifying your account, email us and we will work with you to restore access as soon as possible.',
+        title: 'Get help',
+      },
+      subtitle:
+        'Facing issues? You can use any of these methods for verification.',
+      title: 'Use another method',
+    },
+    backupCodeMfa: {
+      subtitle:
+        'Enter the backup code you received when setting up two-step authentication',
+      title: 'Enter a backup code',
     },
     emailCode: {
-      title: 'Verify your email',
-      subtitle: 'to continue to {{applicationName}}',
       formTitle: 'Verification code',
-      formSubtitle: 'Enter the verification code sent to your email address',
       resendButton: "Didn't receive a code? Resend",
+      subtitle: 'Enter the code sent to your email to continue',
+      title: 'Verification required',
+    },
+    noAvailableMethods: {
+      message:
+        'Cannot proceed with verification. No suitable authentication factor is configured',
+      subtitle: 'An error occurred',
+      title: 'Cannot verify your account',
+    },
+    passkey: {
+      blockButton__passkey: 'Use your passkey',
+      subtitle:
+        'Using your passkey confirms your identity. Your device may ask for your fingerprint, face, or screen lock.',
+      title: 'Use your passkey',
+    },
+    password: {
+      actionLink: 'Use another method',
+      subtitle: 'Enter your current password to continue',
+      title: 'Verification required',
     },
     phoneCode: {
-      title: 'Verify your phone',
-      subtitle: 'to continue to {{applicationName}}',
       formTitle: 'Verification code',
-      formSubtitle: 'Enter the verification code sent to your phone number',
       resendButton: "Didn't receive a code? Resend",
+      subtitle: 'Enter the code sent to your phone to continue',
+      title: 'Verification required',
     },
-    continue: {
-      title: 'Fill in missing fields',
-      subtitle: 'to continue to {{applicationName}}',
-      actionText: 'Have an account?',
-      actionLink: 'Sign in',
+    phoneCodeMfa: {
+      formTitle: 'Verification code',
+      resendButton: "Didn't receive a code? Resend",
+      subtitle: 'Enter the code sent to your phone to continue',
+      title: 'Verification required',
+    },
+    totpMfa: {
+      formTitle: 'Verification code',
+      subtitle:
+        'Enter the code generated by your authenticator app to continue',
+      title: 'Verification required',
     },
   },
   signIn: {
-    start: {
-      title: 'Sign in',
-      subtitle: 'to continue to {{applicationName}}',
-      actionText: 'No account?',
-      actionLink: 'Sign up',
-      actionLink__use_email: 'Use email',
-      actionLink__use_phone: 'Use phone',
-      actionLink__use_username: 'Use username',
-      actionLink__use_email_username: 'Use email or username',
+    accountSwitcher: {
+      action__addAccount: 'Add account',
+      action__signOutAll: 'Sign out of all accounts',
+      subtitle: 'Select the account with which you wish to continue.',
+      title: 'Choose an account',
     },
-    password: {
-      title: 'Enter your password',
-      subtitle: 'to continue to {{applicationName}}',
-      actionLink: 'Use another method',
+    alternativeMethods: {
+      actionLink: 'Get help',
+      actionText: 'Don’t have any of these?',
+      blockButton__backupCode: 'Use a backup code',
+      blockButton__emailCode: 'Email code to {{identifier}}',
+      blockButton__emailLink: 'Email link to {{identifier}}',
+      blockButton__passkey: 'Sign in with your passkey',
+      blockButton__password: 'Sign in with your password',
+      blockButton__phoneCode: 'Send SMS code to {{identifier}}',
+      blockButton__totp: 'Use your authenticator app',
+      getHelp: {
+        blockButton__emailSupport: 'Email support',
+        content:
+          'If you have trouble signing into your account, email us and we will work with you to restore access as soon as possible.',
+        title: 'Get help',
+      },
+      subtitle: 'Facing issues? You can use any of these methods to sign in.',
+      title: 'Use another method',
     },
-    forgotPasswordAlternativeMethods: {
-      title: 'Forgot Password?',
-      label__alternativeMethods: 'Or, sign in with another method.',
-      blockButton__resetPassword: 'Reset your password',
+    alternativePhoneCodeProvider: {
+      formTitle: 'Verification code',
+      resendButton: "Didn't receive a code? Resend",
+      subtitle: 'to continue to {{applicationName}}',
+      title: 'Check your {{provider}}',
+    },
+    backupCodeMfa: {
+      subtitle:
+        'Your backup code is the one you got when setting up two-step authentication.',
+      title: 'Enter a backup code',
+    },
+    emailCode: {
+      formTitle: 'Verification code',
+      resendButton: "Didn't receive a code? Resend",
+      subtitle: 'to continue to {{applicationName}}',
+      title: 'Check your email',
+    },
+    emailLink: {
+      clientMismatch: {
+        subtitle:
+          'To continue, open the verification link on the device and browser from which you initiated the sign-in',
+        title: 'Verification link is invalid for this device',
+      },
+      expired: {
+        subtitle: 'Return to the original tab to continue.',
+        title: 'This verification link has expired',
+      },
+      failed: {
+        subtitle: 'Return to the original tab to continue.',
+        title: 'This verification link is invalid',
+      },
+      formSubtitle: 'Use the verification link sent to your email',
+      formTitle: 'Verification link',
+      loading: {
+        subtitle: 'You will be redirected soon',
+        title: 'Signing in...',
+      },
+      resendButton: "Didn't receive a link? Resend",
+      subtitle: 'to continue to {{applicationName}}',
+      title: 'Check your email',
+      unusedTab: {
+        title: 'You may close this tab',
+      },
+      verified: {
+        subtitle: 'You will be redirected soon',
+        title: 'Successfully signed in',
+      },
+      verifiedSwitchTab: {
+        subtitle: 'Return to original tab to continue',
+        subtitleNewTab: 'Return to the newly opened tab to continue',
+        titleNewTab: 'Signed in on other tab',
+      },
     },
     forgotPassword: {
-      title_email: 'Check your email',
-      title_phone: 'Check your phone',
-      subtitle: 'to reset your password',
       formTitle: 'Reset password code',
-      formSubtitle_email: 'Enter the code sent to your email address',
-      formSubtitle_phone: 'Enter the code sent to your phone number',
       resendButton: "Didn't receive a code? Resend",
+      subtitle: 'to reset your password',
+      subtitle_email: 'First, enter the code sent to your email address',
+      subtitle_phone: 'First, enter the code sent to your phone',
+      title: 'Reset password',
+    },
+    forgotPasswordAlternativeMethods: {
+      blockButton__resetPassword: 'Reset your password',
+      label__alternativeMethods: 'Or, sign in with another method',
+      title: 'Forgot Password?',
+    },
+    noAvailableMethods: {
+      message:
+        "Cannot proceed with sign in. There's no available authentication factor.",
+      subtitle: 'An error occurred',
+      title: 'Cannot sign in',
+    },
+    passkey: {
+      subtitle:
+        "Using your passkey confirms it's you. Your device may ask for your fingerprint, face or screen lock.",
+      title: 'Use your passkey',
+    },
+    password: {
+      actionLink: 'Use another method',
+      subtitle: 'Enter the password associated with your account',
+      title: 'Enter your password',
+    },
+    passwordPwned: {
+      title: 'Password compromised',
+    },
+    phoneCode: {
+      formTitle: 'Verification code',
+      resendButton: "Didn't receive a code? Resend",
+      subtitle: 'to continue to {{applicationName}}',
+      title: 'Check your phone',
+    },
+    phoneCodeMfa: {
+      formTitle: 'Verification code',
+      resendButton: "Didn't receive a code? Resend",
+      subtitle:
+        'To continue, please enter the verification code sent to your phone',
+      title: 'Check your phone',
     },
     resetPassword: {
-      title: 'Reset Password',
       formButtonPrimary: 'Reset Password',
+      requiredMessage:
+        'For security reasons, it is required to reset your password.',
       successMessage:
         'Your password was successfully changed. Signing you in, please wait a moment.',
+      title: 'Set new password',
     },
     resetPasswordMfa: {
       detailsLabel:
         'We need to verify your identity before resetting your password.',
     },
-    emailCode: {
-      title: 'Check your email',
-      subtitle: 'to continue to {{applicationName}}',
-      formTitle: 'Verification code',
-      formSubtitle: 'Enter the verification code sent to your email address',
-      resendButton: "Didn't receive a code? Resend",
+    start: {
+      actionLink: 'Sign up',
+      actionLink__join_waitlist: 'Join waitlist',
+      actionLink__use_email: 'Use email',
+      actionLink__use_email_username: 'Use email or username',
+      actionLink__use_passkey: 'Use passkey instead',
+      actionLink__use_phone: 'Use phone',
+      actionLink__use_username: 'Use username',
+      actionText: 'Don’t have an account?',
+      actionText__join_waitlist: 'Want early access?',
+      alternativePhoneCodeProvider: {
+        actionLink: 'Use another method',
+        label: '{{provider}} phone number',
+        subtitle:
+          'Enter your phone number to get a verification code on {{provider}}.',
+        title: 'Sign in to {{applicationName}} with {{provider}}',
+      },
+      subtitle: 'Welcome back! Please sign in to continue',
+      subtitleCombined: undefined,
+      title: 'Sign in to {{applicationName}}',
+      titleCombined: 'Continue to {{applicationName}}',
     },
-    emailLink: {
-      title: 'Check your email',
-      subtitle: 'to continue to {{applicationName}}',
-      formTitle: 'Verification link',
-      formSubtitle: 'Use the verification link sent to your email',
-      resendButton: "Didn't receive a link? Resend",
-      unusedTab: {
-        title: 'You may close this tab',
-      },
-      verified: {
-        title: 'Successfully signed in',
-        subtitle: 'You will be redirected soon',
-      },
-      verifiedSwitchTab: {
-        subtitle: 'Return to original tab to continue',
-        titleNewTab: 'Signed in on other tab',
-        subtitleNewTab: 'Return to the newly opened tab to continue',
-      },
-      loading: {
-        title: 'Signing in...',
-        subtitle: 'You will be redirected soon',
-      },
-      failed: {
-        title: 'This verification link is invalid',
-        subtitle: 'Return to the original tab to continue.',
-      },
-      expired: {
-        title: 'This verification link has expired',
-        subtitle: 'Return to the original tab to continue.',
-      },
-    },
-    phoneCode: {...commonTexts.signIn.phoneCode},
-    phoneCodeMfa: {...commonTexts.signIn.phoneCode, subtitle: ''},
     totpMfa: {
-      title: 'Two-step verification',
-      subtitle: '',
       formTitle: 'Verification code',
-      formSubtitle:
-        'Enter the verification code generated by your authenticator app',
-    },
-    backupCodeMfa: {
-      title: 'Enter a backup code',
-      subtitle: 'to continue to {{applicationName}}',
-      formTitle: '',
-      formSubtitle: '',
-    },
-    alternativeMethods: {
-      title: 'Use another method',
-      actionLink: 'Get help',
-      blockButton__emailLink: 'Email link to {{identifier}}',
-      blockButton__emailCode: 'Email code to {{identifier}}',
-      blockButton__phoneCode: 'Send SMS code to {{identifier}}',
-      blockButton__password: 'Sign in with your password',
-      blockButton__totp: 'Use your authenticator app',
-      blockButton__backupCode: 'Use a backup code',
-      getHelp: {
-        title: 'Get help',
-        content:
-          'If you’re experiencing difficulty signing into your account, email us and we will work with you to restore access as soon as possible.',
-        blockButton__emailSupport: 'Email support',
-      },
-    },
-    noAvailableMethods: {
-      title: 'Cannot sign in',
-      subtitle: 'An error occurred',
-      message:
-        "Cannot proceed with sign in. There's no available authentication factor.",
+      subtitle:
+        'To continue, please enter the verification code generated by your authenticator app',
+      title: 'Two-step verification',
     },
   },
-  userProfile: {
-    mobileButton__menu: 'Menu',
-    formButtonPrimary__continue: 'Continue',
-    formButtonPrimary__finish: 'Finish',
-    formButtonReset: 'Cancel',
+  signInEnterPasswordTitle: 'Enter your password',
+  signUp: {
+    alternativePhoneCodeProvider: {
+      resendButton: "Didn't receive a code? Resend",
+      subtitle: 'Enter the verification code sent to your {{provider}}',
+      title: 'Verify your {{provider}}',
+    },
+    continue: {
+      actionLink: 'Sign in',
+      actionText: 'Already have an account?',
+      subtitle: 'Please fill in the remaining details to continue.',
+      title: 'Fill in missing fields',
+    },
+    emailCode: {
+      formSubtitle: 'Enter the verification code sent to your email address',
+      formTitle: 'Verification code',
+      resendButton: "Didn't receive a code? Resend",
+      subtitle: 'Enter the verification code sent to your email',
+      title: 'Verify your email',
+    },
+    emailLink: {
+      clientMismatch: {
+        subtitle:
+          'To continue, open the verification link on the device and browser from which you initiated the sign-up',
+        title: 'Verification link is invalid for this device',
+      },
+      formSubtitle: 'Use the verification link sent to your email address',
+      formTitle: 'Verification link',
+      loading: {
+        title: 'Signing up...',
+      },
+      resendButton: "Didn't receive a link? Resend",
+      subtitle: 'to continue to {{applicationName}}',
+      title: 'Verify your email',
+      verified: {
+        title: 'Successfully signed up',
+      },
+      verifiedSwitchTab: {
+        subtitle: 'Return to the newly opened tab to continue',
+        subtitleNewTab: 'Return to previous tab to continue',
+        title: 'Successfully verified email',
+      },
+    },
+    legalConsent: {
+      checkbox: {
+        label__onlyPrivacyPolicy:
+          'I agree to the {{ privacyPolicyLink || link("Privacy Policy") }}',
+        label__onlyTermsOfService:
+          'I agree to the {{ termsOfServiceLink || link("Terms of Service") }}',
+        label__termsOfServiceAndPrivacyPolicy:
+          'I agree to the {{ termsOfServiceLink || link("Terms of Service") }} and {{ privacyPolicyLink || link("Privacy Policy") }}',
+      },
+      continue: {
+        subtitle: 'Please read and accept the terms to continue',
+        title: 'Legal consent',
+      },
+    },
+    phoneCode: {
+      formSubtitle: 'Enter the verification code sent to your phone number',
+      formTitle: 'Verification code',
+      resendButton: "Didn't receive a code? Resend",
+      subtitle: 'Enter the verification code sent to your phone',
+      title: 'Verify your phone',
+    },
+    restrictedAccess: {
+      actionLink: 'Sign in',
+      actionText: 'Already have an account?',
+      blockButton__emailSupport: 'Email support',
+      blockButton__joinWaitlist: 'Join waitlist',
+      subtitle:
+        'Sign ups are currently disabled. If you believe you should have access, please contact support.',
+      subtitleWaitlist:
+        'Sign ups are currently disabled. To be the first to know when we launch, join the waitlist.',
+      title: 'Access restricted',
+    },
     start: {
-      headerTitle__account: 'Account',
-      headerTitle__security: 'Security',
-      headerSubtitle__account: 'Manage your account information',
-      headerSubtitle__security: 'Manage your security preferences',
-      profileSection: {
-        title: 'Profile',
+      actionLink: 'Sign in',
+      actionLink__use_email: 'Use email instead',
+      actionLink__use_phone: 'Use phone instead',
+      actionText: 'Already have an account?',
+      alternativePhoneCodeProvider: {
+        actionLink: 'Use another method',
+        label: '{{provider}} phone number',
+        subtitle:
+          'Enter your phone number to get a verification code on {{provider}}.',
+        title: 'Sign up to {{applicationName}} with {{provider}}',
       },
-      usernameSection: {
-        title: 'Username',
-        primaryButton__changeUsername: 'Change username',
-        primaryButton__setUsername: 'Set username',
+      subtitle: 'Welcome! Please fill in the details to get started.',
+      subtitleCombined: 'Welcome! Please fill in the details to get started.',
+      title: 'Create your account',
+      titleCombined: 'Create your account',
+    },
+  },
+  socialButtonsBlockButton: 'Continue with {{provider|titleize}}',
+  socialButtonsBlockButtonManyInView: '{{provider|titleize}}',
+  taskChooseOrganization: {
+    chooseOrganization: {
+      action__createOrganization: 'Create new community',
+      action__invitationAccept: 'Join',
+      action__suggestionsAccept: 'Request to join',
+      subtitle: 'Join an existing community or create a new one',
+      suggestionsAcceptedLabel: 'Pending approval',
+      title: 'Choose a community',
+    },
+    createOrganization: {
+      formButtonReset: 'Cancel',
+      formButtonSubmit: 'Continue',
+      formFieldInputPlaceholder__name: 'My Community',
+      formFieldInputPlaceholder__slug: 'my-community',
+      formFieldLabel__name: 'Name',
+      formFieldLabel__slug: 'Slug',
+      subtitle: 'Enter your community details to continue',
+      title: 'Setup your community',
+    },
+    signOut: {
+      actionLink: 'Sign out',
+      actionText: 'Signed in as {{identifier}}',
+    },
+  },
+  unstable__errors: {
+    already_a_member_in_organization:
+      '{{email}} is already a member of the community.',
+    captcha_invalid: undefined,
+    captcha_unavailable:
+      'Sign up unsuccessful due to failed bot validation. Please refresh the page to try again or reach out to support for more assistance.',
+    form_code_incorrect: undefined,
+    form_identifier_exists__email_address: undefined,
+    form_identifier_exists__phone_number: undefined,
+    form_identifier_exists__username: undefined,
+    form_identifier_not_found: undefined,
+    form_param_format_invalid: undefined,
+    form_param_format_invalid__email_address: undefined,
+    form_param_format_invalid__phone_number: undefined,
+    form_param_max_length_exceeded__first_name: undefined,
+    form_param_max_length_exceeded__last_name: undefined,
+    form_param_max_length_exceeded__name: undefined,
+    form_param_nil: undefined,
+    form_param_type_invalid: undefined,
+    form_param_type_invalid__email_address: undefined,
+    form_param_type_invalid__phone_number: undefined,
+    form_param_value_invalid: undefined,
+    form_password_incorrect: undefined,
+    form_password_length_too_short:
+      'Your password is too short. It must be at least 8 characters long.',
+    form_password_not_strong_enough: 'Your password is not strong enough.',
+    form_password_pwned:
+      'This password has been found as part of a breach and can not be used, please try another password instead.',
+    form_password_pwned__sign_in:
+      'This password has been found as part of a breach and can not be used, please reset your password.',
+    form_password_size_in_bytes_exceeded: undefined,
+    form_password_validation_failed: undefined,
+    form_username_invalid_character: undefined,
+    form_username_invalid_length:
+      'Your username must be between {{min_length}} and {{max_length}} characters long.',
+    identification_deletion_failed: undefined,
+    not_allowed_access: undefined,
+    organization_domain_blocked: undefined,
+    organization_domain_common: undefined,
+    organization_domain_exists_for_enterprise_connection: undefined,
+    organization_membership_quota_exceeded: undefined,
+    organization_minimum_permissions_needed: undefined,
+    organization_not_found_or_unauthorized:
+      'You are no longer a member of this community. Please choose or create another one.',
+    organization_not_found_or_unauthorized_with_create_organization_disabled:
+      'You are no longer a member of this community. Please choose another one.',
+    passkey_already_exists: 'A passkey is already registered with this device.',
+    passkey_not_supported: 'Passkeys are not supported on this device.',
+    passkey_pa_not_supported:
+      'Registration requires a platform authenticator but the device does not support it.',
+    passkey_registration_cancelled:
+      'Passkey registration was cancelled or timed out.',
+    passkey_retrieval_cancelled:
+      'Passkey verification was cancelled or timed out.',
+    passwordComplexity: {
+      maximumLength: 'less than {{length}} characters',
+      minimumLength: '{{length}} or more characters',
+      requireLowercase: 'a lowercase letter',
+      requireNumbers: 'a number',
+      requireSpecialCharacter: 'a special character',
+      requireUppercase: 'an uppercase letter',
+      sentencePrefix: 'Your password must contain',
+    },
+    phone_number_exists: undefined,
+    session_exists: undefined,
+    web3_missing_identifier:
+      'A Web3 Wallet extension cannot be found. Please install one to continue.',
+    zxcvbn: {
+      couldBeStronger:
+        'Your password works, but could be stronger. Try adding more characters.',
+      goodPassword: 'Your password meets all the necessary requirements.',
+      notEnough: 'Your password is not strong enough.',
+      suggestions: {
+        allUppercase: 'Capitalize some, but not all letters.',
+        anotherWord: 'Add more words that are less common.',
+        associatedYears: 'Avoid years that are associated with you.',
+        capitalization: 'Capitalize more than the first letter.',
+        dates: 'Avoid dates and years that are associated with you.',
+        l33t: "Avoid predictable letter substitutions like '@' for 'a'.",
+        longerKeyboardPattern:
+          'Use longer keyboard patterns and change typing direction multiple times.',
+        noNeed:
+          'You can create strong passwords without using symbols, numbers, or uppercase letters.',
+        pwned: 'If you use this password elsewhere, you should change it.',
+        recentYears: 'Avoid recent years.',
+        repeated: 'Avoid repeated words and characters.',
+        reverseWords: 'Avoid reversed spellings of common words.',
+        sequences: 'Avoid common character sequences.',
+        useWords: 'Use multiple words, but avoid common phrases.',
       },
-      emailAddressesSection: {
-        title: 'Email addresses',
-        primaryButton: 'Add an email address',
-        detailsTitle__primary: 'Primary email address',
-        detailsSubtitle__primary:
-          'This email address is the primary email address',
-        detailsAction__primary: 'Complete verification',
-        detailsTitle__nonPrimary: 'Set as primary email address',
-        detailsSubtitle__nonPrimary:
-          'Set this email address as the primary to receive communications regarding your account.',
-        detailsAction__nonPrimary: 'Set as primary',
-        detailsTitle__unverified: 'Unverified email address',
-        detailsSubtitle__unverified:
-          'This email address has not been verified and may be limited in functionality',
-        detailsAction__unverified: 'Complete verification',
-        destructiveActionTitle: 'Remove',
-        destructiveActionSubtitle:
-          'Delete this email address and remove it from your account',
-        destructiveAction: 'Remove email address',
-      },
-      phoneNumbersSection: {
-        title: 'Phone numbers',
-        primaryButton: 'Add a phone number',
-        detailsTitle__primary: 'Primary phone number',
-        detailsSubtitle__primary:
-          'This phone number is the primary phone number',
-        detailsAction__primary: 'Complete verification',
-        detailsTitle__nonPrimary: 'Set as primary phone number',
-        detailsSubtitle__nonPrimary:
-          'Set this phone number as the primary to receive communications regarding your account.',
-        detailsAction__nonPrimary: 'Set as primary',
-        detailsTitle__unverified: 'Unverified phone number',
-        detailsSubtitle__unverified:
-          'This phone number has not been verified and may be limited in functionality',
-        detailsAction__unverified: 'Complete verification',
-        destructiveActionTitle: 'Remove',
-        destructiveActionSubtitle:
-          'Delete this phone number and remove it from your account',
-        destructiveAction: 'Remove phone number',
-      },
-      connectedAccountsSection: {
-        title: 'Connected accounts',
-        primaryButton: 'Connect account',
-        title__conectionFailed: 'Retry failed connection',
-        title__connectionFailed: 'Retry failed connection',
-        title__reauthorize: 'Reauthorization required',
-        subtitle__reauthorize:
-          'The required scopes have been updated, and you may be experiencing limited functionality. Please re-authorize this application to avoid any issues',
-        actionLabel__conectionFailed: 'Try again',
-        actionLabel__connectionFailed: 'Try again',
-        actionLabel__reauthorize: 'Authorize now',
-        destructiveActionTitle: 'Remove',
-        destructiveActionSubtitle:
-          'Remove this connected account from your account',
-        destructiveActionAccordionSubtitle: 'Remove connected account',
-      },
-      enterpriseAccountsSection: {
-        title: 'Enterprise accounts',
-      },
-      passwordSection: {
-        title: 'Password',
-        primaryButton__changePassword: 'Change password',
-        primaryButton__setPassword: 'Set password',
-      },
-      mfaSection: {
-        title: 'Two-step verification',
-        primaryButton: 'Add two-step verification',
-        phoneCode: {
-          destructiveActionTitle: 'Remove',
-          destructiveActionSubtitle:
-            'Remove this phone number from the two-step verification methods',
-          destructiveActionLabel: 'Remove phone number',
-          title__default: 'Default factor',
-          title__setDefault: 'Set as Default factor',
-          subtitle__default:
-            'This factor will be used as the default two-step verification method when signing in.',
-          subtitle__setDefault:
-            'Set this factor as the default factor to use it as the default two-step verification method when signing in.',
-          actionLabel__setDefault: 'Set as default',
-        },
-        backupCodes: {
-          headerTitle: 'Backup codes',
-          title__regenerate: 'Regenerate backup codes',
-          subtitle__regenerate:
-            'Get a fresh set of secure backup codes. Prior backup codes will be deleted and cannot be used.',
-          actionLabel__regenerate: 'Regenerate codes',
-        },
-        totp: {
-          headerTitle: 'Authenticator application',
-          title: 'Default factor',
-          subtitle:
-            'This factor will be used as the default two-step verification method when signing in.',
-          destructiveActionTitle: 'Remove',
-          destructiveActionSubtitle:
-            'Remove authenticator application from the two-step verification methods',
-          destructiveActionLabel: 'Remove authenticator application',
-        },
-      },
-      activeDevicesSection: {
-        title: 'Active devices',
-        primaryButton: 'Active devices',
-        detailsTitle: 'Current device',
-        detailsSubtitle: 'This is the device you are currently using',
-        destructiveActionTitle: 'Sign out',
-        destructiveActionSubtitle: 'Sign out from your account on this device',
-        destructiveAction: 'Sign out of device',
-      },
-      web3WalletsSection: {
-        title: 'Web3 wallets',
-        primaryButton: 'Web3 wallets',
-        destructiveActionTitle: 'Remove',
-        destructiveActionSubtitle: 'Remove this web3 wallet from your account',
-        destructiveAction: 'Remove wallet',
-      },
-      dangerSection: {
-        title: 'Danger',
-        deleteAccountButton: 'Delete Account',
-        deleteAccountTitle: 'Delete Account',
-        deleteAccountDescription:
-          'Delete your account and all its associated data',
+      warnings: {
+        common: 'This is a commonly used password.',
+        commonNames: 'Common names and surnames are easy to guess.',
+        dates: 'Dates are easy to guess.',
+        extendedRepeat:
+          'Repeated character patterns like "abcabcabc" are easy to guess.',
+        keyPattern: 'Short keyboard patterns are easy to guess.',
+        namesByThemselves: 'Single names or surnames are easy to guess.',
+        pwned: 'Your password was exposed by a data breach on the Internet.',
+        recentYears: 'Recent years are easy to guess.',
+        sequences: 'Common character sequences like "abc" are easy to guess.',
+        similarToCommon: 'This is similar to a commonly used password.',
+        simpleRepeat: 'Repeated characters like "aaa" are easy to guess.',
+        straightRow:
+          'Straight rows of keys on your keyboard are easy to guess.',
+        topHundred: 'This is a frequently used password.',
+        topTen: 'This is a heavily used password.',
+        userInputs: 'There should not be any personal or page related data.',
+        wordByItself: 'Single words are easy to guess.',
       },
     },
-    profilePage: {
-      title: 'Update profile',
-      imageFormTitle: 'Profile image',
-      imageFormSubtitle: 'Upload image',
-      imageFormDestructiveActionSubtitle: 'Remove image',
-      fileDropAreaTitle: 'Drag file here, or...',
-      fileDropAreaAction: 'Select file',
-      fileDropAreaHint:
-        'Upload a JPG, PNG, GIF, or WEBP image smaller than 10 MB',
-      readonly:
-        'Your profile information has been provided by the enterprise connection and cannot be edited.',
-      successMessage: 'Your profile has been updated.',
+  },
+  userButton: {
+    action__addAccount: 'Add account',
+    action__manageAccount: 'Manage account',
+    action__signOut: 'Sign out',
+    action__signOutAll: 'Sign out of all accounts',
+  },
+  userProfile: {
+    apiKeysPage: {
+      title: 'API keys',
     },
-    usernamePage: {
-      title: 'Update username',
-      successMessage: 'Your username has been updated.',
+    backupCodePage: {
+      actionLabel__copied: 'Copied!',
+      actionLabel__copy: 'Copy all',
+      actionLabel__download: 'Download .txt',
+      actionLabel__print: 'Print',
+      infoText1: 'Backup codes will be enabled for this account.',
+      infoText2:
+        'Keep the backup codes secret and store them securely. You may regenerate backup codes if you suspect they have been compromised.',
+      subtitle__codelist: 'Store them securely and keep them secret.',
+      successMessage:
+        'Backup codes are now enabled. You can use one of these to sign in to your account, if you lose access to your authentication device. Each code can only be used once.',
+      successSubtitle:
+        'You can use one of these to sign in to your account, if you lose access to your authentication device.',
+      title: 'Add backup code verification',
+      title__codelist: 'Backup codes',
+    },
+    billingPage: {
+      paymentHistorySection: {
+        empty: 'No payment history',
+        notFound: 'Payment attempt not found',
+        tableHeader__amount: 'Amount',
+        tableHeader__date: 'Date',
+        tableHeader__status: 'Status',
+      },
+      paymentSourcesSection: {
+        actionLabel__default: 'Make default',
+        actionLabel__remove: 'Remove',
+        add: 'Add new payment method',
+        addSubtitle: 'Add a new payment method to your account.',
+        cancelButton: 'Cancel',
+        formButtonPrimary__add: 'Add Payment Method',
+        formButtonPrimary__pay: 'Pay {{amount}}',
+        payWithTestCardButton: 'Pay with test card',
+        removeResource: {
+          messageLine1: '{{identifier}} will be removed from this account.',
+          messageLine2:
+            'You will no longer be able to use this payment source and any recurring subscriptions dependent on it will no longer work.',
+          successMessage:
+            '{{paymentSource}} has been removed from your account.',
+          title: 'Remove payment method',
+        },
+        title: 'Payment methods',
+      },
+      start: {
+        headerTitle__payments: 'Payments',
+        headerTitle__plans: 'Plans',
+        headerTitle__statements: 'Statements',
+        headerTitle__subscriptions: 'Subscription',
+      },
+      statementsSection: {
+        empty: 'No statements to display',
+        itemCaption__paidForPlan: 'Paid for {{plan}} {{period}} plan',
+        itemCaption__proratedCredit:
+          'Prorated credit for partial usage of previous subscription',
+        itemCaption__subscribedAndPaidForPlan:
+          'Subscribed and paid for {{plan}} {{period}} plan',
+        notFound: 'Statement not found',
+        tableHeader__amount: 'Amount',
+        tableHeader__date: 'Date',
+        title: 'Statements',
+        totalPaid: 'Total paid',
+      },
+      subscriptionsListSection: {
+        actionLabel__manageSubscription: 'Manage',
+        actionLabel__newSubscription: 'Subscribe to a plan',
+        actionLabel__switchPlan: 'Switch plans',
+        tableHeader__edit: 'Edit',
+        tableHeader__plan: 'Plan',
+        tableHeader__startDate: 'Start date',
+        title: 'Subscription',
+      },
+      subscriptionsSection: {
+        actionLabel__default: 'Manage',
+      },
+      switchPlansSection: {
+        title: 'Switch plans',
+      },
+      title: 'Billing',
+    },
+    connectedAccountPage: {
+      formHint: 'Select a provider to connect your account.',
+      formHint__noAccounts:
+        'There are no available external account providers.',
+      removeResource: {
+        messageLine1: '{{identifier}} will be removed from this account.',
+        messageLine2:
+          'You will no longer be able to use this connected account and any dependent features will no longer work.',
+        successMessage:
+          '{{connectedAccount}} has been removed from your account.',
+        title: 'Remove connected account',
+      },
+      socialButtonsBlockButton: '{{provider|titleize}}',
+      successMessage: 'The provider has been added to your account',
+      title: 'Add connected account',
+    },
+    deletePage: {
+      actionDescription: 'Type "Delete account" below to continue.',
+      confirm: 'Delete account',
+      messageLine1:
+        'Are you sure you want to delete your account from Clerk? Please contact the application owner to delete your information from their application and other services.',
+      messageLine2: 'This action is permanent and irreversible.',
+      title: 'Delete account',
     },
     emailAddressPage: {
-      title: 'Add email address',
       emailCode: {
         formHint:
           'An email containing a verification code will be sent to this email address.',
-        formTitle: 'Verification code',
         formSubtitle: 'Enter the verification code sent to {{identifier}}',
+        formTitle: 'Verification code',
         resendButton: "Didn't receive a code? Resend",
         successMessage:
           'The email {{identifier}} has been added to your account.',
@@ -413,86 +1112,66 @@ const LocalizationResource = {
       emailLink: {
         formHint:
           'An email containing a verification link will be sent to this email address.',
-        formTitle: 'Verification link',
         formSubtitle:
           'Click on the verification link in the email sent to {{identifier}}',
+        formTitle: 'Verification link',
         resendButton: "Didn't receive a link? Resend",
         successMessage:
           'The email {{identifier}} has been added to your account.',
       },
+      enterpriseSSOLink: {
+        formButton: 'Click to sign-in',
+        formSubtitle: 'Complete the sign-in with {{identifier}}',
+      },
+      formHint:
+        "You'll need to verify this email address before it can be added to your account.",
       removeResource: {
-        title: 'Remove email address',
         messageLine1: '{{identifier}} will be removed from this account.',
         messageLine2:
           'You will no longer be able to sign in using this email address.',
         successMessage: '{{emailAddress}} has been removed from your account.',
+        title: 'Remove email address',
       },
+      title: 'Add email address',
+      verifyTitle: 'Verify email address',
     },
-    phoneNumberPage: {
-      title: 'Add phone number',
-      successMessage: '{{identifier}} has been added to your account.',
-      infoText:
-        'A text message containing a verification link will be sent to this phone number.',
-      infoText__secondary: 'Message and data rates may apply.',
-      removeResource: {
-        title: 'Remove phone number',
-        messageLine1: '{{identifier}} will be removed from this account.',
-        messageLine2:
-          'You will no longer be able to sign in using this phone number.',
-        successMessage: '{{phoneNumber}} has been removed from your account.',
-      },
-    },
-    connectedAccountPage: {
-      title: 'Add connected account',
-      formHint: 'Select a provider to connect your account.',
-      formHint__noAccounts:
-        'There are no available external account providers.',
-      socialButtonsBlockButton: 'Connect {{provider|titleize}} account',
-      successMessage: 'The provider has been added to your account',
-      removeResource: {
-        title: 'Remove connected account',
-        messageLine1: '{{identifier}} will be removed from this account.',
-        messageLine2:
-          'You will no longer be able to use this connected account and any dependent features will no longer work.',
-        successMessage:
-          '{{connectedAccount}} has been removed from your account.',
-      },
-    },
-    web3WalletPage: {
-      title: 'Add web3 wallet',
-      subtitle__availableWallets:
-        'Select a web3 wallet to connect to your account.',
-      subtitle__unavailableWallets: 'There are no available web3 wallets.',
-      successMessage: 'The wallet has been added to your account.',
-      removeResource: {
-        title: 'Remove web3 wallet',
-        messageLine1: '{{identifier}} will be removed from this account.',
-        messageLine2:
-          'You will no longer be able to sign in using this web3 wallet.',
-        successMessage: '{{web3Wallet}} has been removed from your account.',
-      },
-    },
-    passwordPage: {
-      title: 'Set password',
-      changePasswordTitle: 'Change password',
-      readonly:
-        'Your password can currently not be edited because you can sign in only via the enterprise connection.',
-      successMessage: 'Your password has been set.',
-      changePasswordSuccessMessage: 'Your password has been updated.',
-      sessionsSignedOutSuccessMessage:
-        'All other devices have been signed out.',
-    },
+    formButtonPrimary__add: 'Add',
+    formButtonPrimary__continue: 'Continue',
+    formButtonPrimary__finish: 'Finish',
+    formButtonPrimary__remove: 'Remove',
+    formButtonPrimary__save: 'Save',
+    formButtonReset: 'Cancel',
     mfaPage: {
-      title: 'Add two-step verification',
       formHint: 'Select a method to add.',
+      title: 'Add two-step verification',
+    },
+    mfaPhoneCodePage: {
+      backButton: 'Use existing number',
+      primaryButton__addPhoneNumber: 'Add phone number',
+      removeResource: {
+        messageLine1:
+          '{{identifier}} will be no longer receiving verification codes when signing in.',
+        messageLine2:
+          'Your account may not be as secure. Are you sure you want to continue?',
+        successMessage:
+          'SMS code two-step verification has been removed for {{mfaPhoneCode}}',
+        title: 'Remove two-step verification',
+      },
+      subtitle__availablePhoneNumbers:
+        'Select an existing phone number to register for SMS code two-step verification or add a new one.',
+      subtitle__unavailablePhoneNumbers:
+        'There are no available phone numbers to register for SMS code two-step verification, please add a new one.',
+      successMessage1:
+        'When signing in, you will need to enter a verification code sent to this phone number as an additional step.',
+      successMessage2:
+        'Save these backup codes and store them somewhere safe. If you lose access to your authentication device, you can use backup codes to sign in.',
+      successTitle: 'SMS code verification enabled',
+      title: 'Add SMS code verification',
     },
     mfaTOTPPage: {
-      title: 'Add authenticator application',
-      verifyTitle: 'Verification code',
-      verifySubtitle: 'Enter verification code generated by your authenticator',
-      successMessage:
-        'Two-step verification is now enabled. When signing in, you will need to enter a verification code from this authenticator as an additional step.',
       authenticatorApp: {
+        buttonAbleToScan__nonPrimary: 'Scan QR code instead',
+        buttonUnableToScan__nonPrimary: 'Can’t scan QR code?',
         infoText__ableToScan:
           'Set up a new sign-in method in your authenticator app and scan the following QR code to link it to your account.',
         infoText__unableToScan:
@@ -501,228 +1180,200 @@ const LocalizationResource = {
           'Make sure Time-based or One-time passwords is enabled, then finish linking your account.',
         inputLabel__unableToScan2:
           'Alternatively, if your authenticator supports TOTP URIs, you can also copy the full URI.',
-        buttonAbleToScan__nonPrimary: 'Scan QR code instead',
-        buttonUnableToScan__nonPrimary: 'Can’t scan QR code?',
       },
       removeResource: {
-        title: 'Remove two-step verification',
         messageLine1:
           'Verification codes from this authenticator will no longer be required when signing in.',
         messageLine2:
           'Your account may not be as secure. Are you sure you want to continue?',
         successMessage:
           'Two-step verification via authenticator application has been removed.',
-      },
-    },
-    mfaPhoneCodePage: {
-      title: 'Add SMS code verification',
-      primaryButton__addPhoneNumber: 'Add a phone number',
-      subtitle__availablePhoneNumbers:
-        'Select a phone number to register for SMS code two-step verification.',
-      subtitle__unavailablePhoneNumbers:
-        'There are no available phone numbers to register for SMS code two-step verification.',
-      successMessage:
-        'SMS code two-step verification is now enabled for this phone number. When signing in, you will need to enter a verification code sent to this phone number as an additional step.',
-      removeResource: {
         title: 'Remove two-step verification',
-        messageLine1:
-          '{{identifier}} will be no longer receiving verification codes when signing in.',
-        messageLine2:
-          'Your account may not be as secure. Are you sure you want to continue?',
-        successMessage:
-          'SMS code two-step verification has been removed for {{mfaPhoneCode}}',
       },
-    },
-    backupCodePage: {
-      title: 'Add backup code verification',
-      title__codelist: 'Backup codes',
-      subtitle__codelist: 'Store them securely and keep them secret.',
-      infoText1: 'Backup codes will be enabled for this account.',
-      infoText2:
-        'Keep the backup codes secret and store them securely. You may regenerate backup codes if you suspect they have been compromised.',
-      successSubtitle:
-        'You can use one of these to sign in to your account, if you lose access to your authentication device.',
       successMessage:
-        'Backup codes are now enabled. You can use one of these to sign in to your account, if you lose access to your authentication device. Each code can only be used once.',
-      actionLabel__copy: 'Copy all',
-      actionLabel__copied: 'Copied!',
-      actionLabel__download: 'Download .txt',
-      actionLabel__print: 'Print',
+        'Two-step verification is now enabled. When signing in, you will need to enter a verification code from this authenticator as an additional step.',
+      title: 'Add authenticator application',
+      verifySubtitle: 'Enter verification code generated by your authenticator',
+      verifyTitle: 'Verification code',
     },
-    deletePage: {
-      title: 'Delete account',
-      description:
-        'Are you sure you want to delete your account? This action is permanent and irreversible.',
-      confirm: 'Delete account',
+    mobileButton__menu: 'Menu',
+    navbar: {
+      account: 'Profile',
+      apiKeys: 'API keys',
+      billing: 'Billing',
+      description: 'Manage your account info.',
+      security: 'Security',
+      title: 'Account',
     },
-  },
-  userButton: {
-    action__manageAccount: 'Manage account',
-    action__signOut: 'Sign out',
-    action__signOutAll: 'Sign out of all accounts',
-    action__addAccount: 'Add account',
-  },
-  organizationSwitcher: {
-    personalWorkspace: 'Personal Workspace',
-    notSelected: 'No community selected',
-    action__createOrganization: 'Create Community',
-    action__manageOrganization: 'Manage Community',
-  },
-  impersonationFab: {
-    title: 'Signed in as {{identifier}}',
-    action__signOut: 'Sign out',
-  },
-  organizationProfile: {
-    start: {
-      headerTitle__members: 'Members',
-      headerTitle__settings: 'Settings',
-      headerSubtitle__members: 'View and manage community members',
-      headerSubtitle__settings: 'Manage community settings',
+    passkeyScreen: {
+      removeResource: {
+        messageLine1: '{{name}} will be removed from this account.',
+        title: 'Remove passkey',
+      },
+      subtitle__rename:
+        'You can change the passkey name to make it easier to find.',
+      title__rename: 'Rename Passkey',
+    },
+    passwordPage: {
+      checkboxInfoText__signOutOfOtherSessions:
+        'It is recommended to sign out of all other devices which may have used your old password.',
+      readonly:
+        'Your password can currently not be edited because you can sign in only via the enterprise connection.',
+      successMessage__set: 'Your password has been set.',
+      successMessage__signOutOfOtherSessions:
+        'All other devices have been signed out.',
+      successMessage__update: 'Your password has been updated.',
+      title__set: 'Set password',
+      title__update: 'Update password',
+    },
+    phoneNumberPage: {
+      infoText:
+        'A text message containing a verification code will be sent to this phone number. Message and data rates may apply.',
+      removeResource: {
+        messageLine1: '{{identifier}} will be removed from this account.',
+        messageLine2:
+          'You will no longer be able to sign in using this phone number.',
+        successMessage: '{{phoneNumber}} has been removed from your account.',
+        title: 'Remove phone number',
+      },
+      successMessage: '{{identifier}} has been added to your account.',
+      title: 'Add phone number',
+      verifySubtitle: 'Enter the verification code sent to {{identifier}}',
+      verifyTitle: 'Verify phone number',
+    },
+    plansPage: {
+      title: 'Plans',
     },
     profilePage: {
-      title: 'Community Profile',
-      subtitle: 'Manage community profile',
-      successMessage: 'The community has been updated.',
+      fileDropAreaHint: 'Recommended size 1:1, up to 10MB.',
+      imageFormDestructiveActionSubtitle: 'Remove',
+      imageFormSubtitle: 'Upload',
+      imageFormTitle: 'Profile image',
+      readonly:
+        'Your profile information has been provided by the enterprise connection and cannot be edited.',
+      successMessage: 'Your profile has been updated.',
+      title: 'Update profile',
+    },
+    start: {
+      activeDevicesSection: {
+        destructiveAction: 'Sign out of device',
+        title: 'Active devices',
+      },
+      connectedAccountsSection: {
+        actionLabel__connectionFailed: 'Reconnect',
+        actionLabel__reauthorize: 'Authorize now',
+        destructiveActionTitle: 'Remove',
+        primaryButton: 'Connect account',
+        subtitle__disconnected: 'This account has been disconnected.',
+        subtitle__reauthorize:
+          'The required scopes have been updated, and you may be experiencing limited functionality. Please re-authorize this application to avoid any issues',
+        title: 'Connected accounts',
+      },
       dangerSection: {
-        title: 'Danger',
-        leaveOrganization: {
-          title: 'Leave community',
-          messageLine1:
-            'Are you sure you want to leave this community? You will lose access to this community and its applications.',
-          messageLine2: 'This action is permanent and irreversible.',
-          successMessage: 'You have left the community.',
+        deleteAccountButton: 'Delete account',
+        title: 'Delete account',
+      },
+      emailAddressesSection: {
+        destructiveAction: 'Remove email',
+        detailsAction__nonPrimary: 'Set as primary',
+        detailsAction__primary: 'Complete verification',
+        detailsAction__unverified: 'Verify',
+        primaryButton: 'Add email address',
+        title: 'Email addresses',
+      },
+      enterpriseAccountsSection: {
+        title: 'Enterprise accounts',
+      },
+      headerTitle__account: 'Profile details',
+      headerTitle__security: 'Security',
+      mfaSection: {
+        backupCodes: {
+          actionLabel__regenerate: 'Regenerate',
+          headerTitle: 'Backup codes',
+          subtitle__regenerate:
+            'Get a fresh set of secure backup codes. Prior backup codes will be deleted and cannot be used.',
+          title__regenerate: 'Regenerate backup codes',
         },
-        deleteOrganization: {
-          title: 'Delete community',
-          messageLine1: 'Are you sure you want to delete this community?',
-          messageLine2: 'This action is permanent and irreversible.',
-          successMessage: 'You have deleted the community.',
+        phoneCode: {
+          actionLabel__setDefault: 'Set as default',
+          destructiveActionLabel: 'Remove',
+        },
+        primaryButton: 'Add two-step verification',
+        title: 'Two-step verification',
+        totp: {
+          destructiveActionTitle: 'Remove',
+          headerTitle: 'Authenticator application',
         },
       },
+      passkeysSection: {
+        menuAction__destructive: 'Remove',
+        menuAction__rename: 'Rename',
+        primaryButton: 'Add a passkey',
+        title: 'Passkeys',
+      },
+      passwordSection: {
+        primaryButton__setPassword: 'Set password',
+        primaryButton__updatePassword: 'Update password',
+        title: 'Password',
+      },
+      phoneNumbersSection: {
+        destructiveAction: 'Remove phone number',
+        detailsAction__nonPrimary: 'Set as primary',
+        detailsAction__primary: 'Complete verification',
+        detailsAction__unverified: 'Verify phone number',
+        primaryButton: 'Add phone number',
+        title: 'Phone numbers',
+      },
+      profileSection: {
+        primaryButton: 'Update profile',
+        title: 'Profile',
+      },
+      usernameSection: {
+        primaryButton__setUsername: 'Set username',
+        primaryButton__updateUsername: 'Update username',
+        title: 'Username',
+      },
+      web3WalletsSection: {
+        destructiveAction: 'Remove wallet',
+        detailsAction__nonPrimary: 'Set as primary',
+        primaryButton: 'Connect wallet',
+        title: 'Web3 wallets',
+      },
     },
-    invitePage: {
-      title: 'Invite members',
-      subtitle: 'Invite new members to this community',
-      successMessage: 'Invitations successfully sent',
-      detailsTitle__inviteFailed:
-        'The invitations could not be sent. Fix the following and try again:',
-      formButtonPrimary__continue: 'Send invitations',
+    usernamePage: {
+      successMessage: 'Your username has been updated.',
+      title__set: 'Set username',
+      title__update: 'Update username',
     },
-    membersPage: {
-      detailsTitle__emptyRow: 'No members to display',
-      action__invite: 'Invite',
-      start: {
-        headerTitle__active: 'Active',
-        headerTitle__invited: 'Invited',
+    web3WalletPage: {
+      removeResource: {
+        messageLine1: '{{identifier}} will be removed from this account.',
+        messageLine2:
+          'You will no longer be able to sign in using this web3 wallet.',
+        successMessage: '{{web3Wallet}} has been removed from your account.',
+        title: 'Remove web3 wallet',
       },
-      activeMembersTab: {
-        tableHeader__user: 'User',
-        tableHeader__joined: 'Joined',
-        tableHeader__role: 'Role',
-        tableHeader__actions: '',
-        menuAction__remove: 'Remove member',
-      },
-      invitedMembersTab: {
-        tableHeader__invited: 'Invited',
-        menuAction__revoke: 'Revoke invitation',
-      },
+      subtitle__availableWallets:
+        'Select a web3 wallet to connect to your account.',
+      subtitle__unavailableWallets: 'There are no available web3 wallets.',
+      successMessage: 'The wallet has been added to your account.',
+      title: 'Add web3 wallet',
+      web3WalletButtonsBlockButton: '{{provider|titleize}}',
     },
   },
-  createOrganization: {
-    title: 'Create Community',
-    formButtonSubmit: 'Create community',
-    subtitle: 'Set the community profile',
-    invitePage: {
-      formButtonReset: 'Skip',
+  waitlist: {
+    start: {
+      actionLink: 'Sign in',
+      actionText: 'Already have access?',
+      formButton: 'Join the waitlist',
+      subtitle:
+        'Enter your email address and we’ll let you know when your spot is ready',
+      title: 'Join the waitlist',
     },
-  },
-  unstable__errors: {
-    identification_deletion_failed:
-      'You cannot delete your last identification.',
-    phone_number_exists: 'This phone number is taken. Please try another.',
-    form_identifier_not_found: '',
-    captcha_invalid:
-      'Sign up unsuccessful due to failed security validations. Please refresh the page to try again or reach out to support for more assistance.',
-    form_password_pwned:
-      'This password has been found as part of a breach and can not be used, please try another password instead.',
-    form_username_invalid_length: '',
-    form_param_format_invalid: '',
-    form_param_format_invalid__email_address:
-      'Email address must be a valid email address.',
-    form_password_length_too_short: '',
-    form_param_nil: '',
-    form_code_incorrect: '',
-    form_password_incorrect: '',
-    not_allowed_access: '',
-    form_identifier_exists: '',
-    form_password_validation_failed: 'Incorrect Password',
-    form_password_not_strong_enough: 'Your password is not strong enough.',
-    form_password_size_in_bytes_exceeded:
-      'Your password has exceeded the maximum number of bytes allowed, please shorten it or remove some special characters.',
-    passwordComplexity: {
-      sentencePrefix: 'Your password must contain',
-      minimumLength: '{{length}} or more characters',
-      maximumLength: 'less than {{length}} characters',
-      requireNumbers: 'a number',
-      requireLowercase: 'a lowercase letter',
-      requireUppercase: 'an uppercase letter',
-      requireSpecialCharacter: 'a special character',
+    success: {
+      message: 'You will be redirected soon...',
+      subtitle: 'We’ll be in touch when your spot is ready',
+      title: 'Thanks for joining the waitlist!',
     },
-    zxcvbn: {
-      notEnough: 'Your password is not strong enough.',
-      couldBeStronger:
-        'Your password works, but could be stronger. Try adding more characters.',
-      goodPassword: 'Your password meets all the necessary requirements.',
-      warnings: {
-        straightRow:
-          'Straight rows of keys on your keyboard are easy to guess.',
-        keyPattern: 'Short keyboard patterns are easy to guess.',
-        simpleRepeat: 'Repeated characters like "aaa" are easy to guess.',
-        extendedRepeat:
-          'Repeated character patterns like "abcabcabc" are easy to guess.',
-        sequences: 'Common character sequences like "abc" are easy to guess.',
-        recentYears: 'Recent years are easy to guess.',
-        dates: 'Dates are easy to guess.',
-        topTen: 'This is a heavily used password.',
-        topHundred: 'This is a frequently used password.',
-        common: 'This is a commonly used password.',
-        similarToCommon: 'This is similar to a commonly used password.',
-        wordByItself: 'Single words are easy to guess.',
-        namesByThemselves: 'Single names or surnames are easy to guess.',
-        commonNames: 'Common names and surnames are easy to guess.',
-        userInputs: 'There should not be any personal or page related data.',
-        pwned: 'Your password was exposed by a data breach on the Internet.',
-      },
-      suggestions: {
-        l33t: "Avoid predictable letter substitutions like '@' for 'a'.",
-        reverseWords: 'Avoid reversed spellings of common words.',
-        allUppercase: 'Capitalize some, but not all letters.',
-        capitalization: 'Capitalize more than the first letter.',
-        dates: 'Avoid dates and years that are associated with you.',
-        recentYears: 'Avoid recent years.',
-        associatedYears: 'Avoid years that are associated with you.',
-        sequences: 'Avoid common character sequences.',
-        repeated: 'Avoid repeated words and characters.',
-        longerKeyboardPattern:
-          'Use longer keyboard patterns and change typing direction multiple times.',
-        anotherWord: 'Add more words that are less common.',
-        useWords: 'Use multiple words, but avoid common phrases.',
-        noNeed:
-          'You can create strong passwords without using symbols, numbers, or uppercase letters.',
-        pwned: 'If you use this password elsewhere, you should change it.',
-      },
-    },
-  },
-  dates: {
-    previous6Days:
-      "Last {{ date | weekday('en-US','long') }} at {{ date | timeString('en-US') }}",
-    lastDay: "Yesterday at {{ date | timeString('en-US') }}",
-    sameDay: "Today at {{ date | timeString('en-US') }}",
-    nextDay: "Tomorrow at {{ date | timeString('en-US') }}",
-    next6Days:
-      "{{ date | weekday('en-US','long') }} at {{ date | timeString('en-US') }}",
-    numeric: "{{ date | numeric('en-US') }}",
   },
 } as const;
-
-export default LocalizationResource;

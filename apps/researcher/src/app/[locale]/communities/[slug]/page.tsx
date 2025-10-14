@@ -5,7 +5,7 @@ import {getTranslations} from 'next-intl/server';
 import {JoinCommunityButton, ManageMembersButton} from './buttons';
 import {getMemberships, getCommunityBySlug} from '@/lib/community/actions';
 import ErrorMessage from '@/components/error-message';
-import {ClerkAPIResponseError} from '@clerk/shared';
+import {isClerkAPIResponseError} from '@clerk/nextjs/errors';
 import {revalidatePath} from 'next/cache';
 import {objectList} from '@colonial-collections/database';
 import ObjectCard from './object';
@@ -17,6 +17,7 @@ import {
   Notifications,
   LocalizedMarkdown,
 } from '@colonial-collections/ui';
+import CommunityProfileModal from './community-profile-modal';
 import EditCommunityForm from './edit-community-form';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import Protect from '@/lib/community/protect';
@@ -43,8 +44,10 @@ export default async function CommunityPage({params}: Props) {
   try {
     community = await getCommunityBySlug(params.slug);
   } catch (err) {
-    const errorStatus = (err as ClerkAPIResponseError).status;
-    if (errorStatus === 404 || errorStatus === 410) {
+    if (
+      isClerkAPIResponseError(err) &&
+      (err.status === 404 || err.status === 400)
+    ) {
       // This could be a sign of a deleted community in the cache.
       // So, revalidate the communities page.
       revalidatePath('/[locale]/communities', 'page');
@@ -246,10 +249,7 @@ export default async function CommunityPage({params}: Props) {
                   communityId={community.id}
                   permission="org:sys_profile:manage"
                 >
-                  <ManageMembersButton
-                    communityId={community.id}
-                    communitySlug={params.slug}
-                  />
+                  <ManageMembersButton communityId={community.id} />
                 </Protect>
               </div>
             </div>
@@ -284,6 +284,8 @@ export default async function CommunityPage({params}: Props) {
           </aside>
         </SignedIn>
       </div>
+
+      <CommunityProfileModal />
     </>
   );
 }

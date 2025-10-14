@@ -1,5 +1,5 @@
 import createIntlMiddleware from 'next-intl/middleware';
-import {authMiddleware} from '@clerk/nextjs';
+import {clerkMiddleware} from '@clerk/nextjs/server';
 import {locales} from './navigation';
 import {LocaleEnum} from '@/definitions';
 
@@ -19,9 +19,6 @@ const handleI18nRouting = createIntlMiddleware({
   defaultLocale: LocaleEnum.En,
 });
 
-export default authMiddleware({
-  beforeAuth(request) {
-    return handleI18nRouting(request);
-  },
-  publicRoutes: ['/', '/(.*)'],
+export default clerkMiddleware((auth, request) => {
+  return handleI18nRouting(request);
 });

@@ -1,4 +1,4 @@
-import {clerkClient, auth} from '@clerk/nextjs';
+import {clerkClient, auth} from '@clerk/nextjs/server';
 import {unstable_noStore as noStore} from 'next/cache';
 import {
   organizationMembershipToCommunityMembership,
@@ -7,7 +7,8 @@ import {
 import {Community, SortBy} from './definitions';
 
 export async function getCommunityBySlug(slug: string) {
-  const organization = await clerkClient.organizations.getOrganization({
+  const client = await clerkClient();
+  const organization = await client.organizations.getOrganization({
     slug,
   });
 
@@ -15,7 +16,8 @@ export async function getCommunityBySlug(slug: string) {
 }
 
 export async function getCommunityById(id: string) {
-  const organization = await clerkClient.organizations.getOrganization({
+  const client = await clerkClient();
+  const organization = await client.organizations.getOrganization({
     organizationId: id,
   });
 
@@ -23,12 +25,13 @@ export async function getCommunityById(id: string) {
 }
 
 export async function getMemberships(communityId: string) {
+  const client = await clerkClient();
   const organizationMembership =
-    await clerkClient.organizations.getOrganizationMembershipList({
+    await client.organizations.getOrganizationMembershipList({
       organizationId: communityId,
     });
 
-  return organizationMembership.map(
+  return organizationMembership.data.map(
     organizationMembershipToCommunityMembership
   );
 }
@@ -66,7 +69,8 @@ export async function getCommunities({
   offset = 0,
   includeMembersCount = false,
 }: GetCommunitiesProps = {}) {
-  const organizations = await clerkClient.organizations.getOrganizationList({
+  const client = await clerkClient();
+  const {data: organizations} = await client.organizations.getOrganizationList({
     limit,
     offset,
     query,
@@ -93,27 +97,33 @@ export async function getMyCommunities({
   }
 
   const memberships = userId
-    ? await clerkClient.users.getOrganizationMembershipList({
-        userId,
-        limit,
-        offset,
-      })
-    : [];
+    ? await clerkClient().then(client =>
+        client.users.getOrganizationMembershipList({
+          userId,
+          limit,
+          offset,
+        })
+      )
+    : {data: [], totalCount: 0};
 
-  const organizations = memberships.map(membership => membership.organization);
+  const organizations = memberships.data.map(
+    membership => membership.organization
+  );
 
   const communities = await Promise.all(
     organizations.map(async organization => {
       if (includeMembersCount) {
         try {
+          const client = await clerkClient();
           const members =
-            await clerkClient.organizations.getOrganizationMembershipList({
+            await client.organizations.getOrganizationMembershipList({
               organizationId: organization.id,
             });
-          return organizationToCommunity({
+          const organizationWithCount = {
             ...organization,
-            membersCount: members.length,
-          });
+            membersCount: members.data.length,
+          } as typeof organization & {membersCount: number};
+          return organizationToCommunity(organizationWithCount);
         } catch (err) {
           console.error('Error fetching members count', err);
           return organizationToCommunity(organization);
@@ -132,9 +142,8 @@ interface JoinCommunityProps {
 }
 
 export async function joinCommunity({communityId, userId}: JoinCommunityProps) {
-  noStore();
-
-  await clerkClient.organizations.createOrganizationMembership({
+  const client = await clerkClient();
+  await client.organizations.createOrganizationMembership({
     organizationId: communityId,
     userId,
     role: 'basic_member',
@@ -152,19 +161,13 @@ export async function updateCommunity({
   name,
   description,
 }: UpdateCommunityProps) {
-  noStore();
-
-  const community = await getCommunityById(id);
-
-  const organization = await clerkClient.organizations.updateOrganization(id, {
+  const client = await clerkClient();
+  await client.organizations.updateOrganization(id, {
     name,
     publicMetadata: {
-      iri: community.iri,
       description,
     },
   });
-
-  return organizationToCommunity(organization);
 }
 
 interface UpdateCommunityIriProps {
@@ -179,12 +182,15 @@ export async function addIriToCommunity({id, iri}: UpdateCommunityIriProps) {
 
   // Only add the IRI if it is not already set
   if (!community.iri) {
-    const organization =
-      await clerkClient.organizations.updateOrganizationMetadata(id, {
+    const client = await clerkClient();
+    const organization = await client.organizations.updateOrganizationMetadata(
+      id,
+      {
         publicMetadata: {
           iri,
         },
-      });
+      }
+    );
     return organizationToCommunity(organization);
   }
   return community;

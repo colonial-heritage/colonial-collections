@@ -59,7 +59,7 @@ export function ModalButton({
 interface ModalProps {
   id: string;
   children: ReactNode;
-  variant?: 'full' | 'medium' | 'small';
+  variant?: 'full' | 'medium' | 'small' | 'auto';
 }
 
 export function Modal({children, id, variant = 'full'}: ModalProps) {
@@ -87,7 +87,7 @@ export function Modal({children, id, variant = 'full'}: ModalProps) {
         </TransitionChild>
 
         <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="flex min-h-full items-center justify-center p-1 text-center sm:p-0">
             <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
@@ -99,12 +99,14 @@ export function Modal({children, id, variant = 'full'}: ModalProps) {
             >
               <DialogPanel
                 className={classNames(
-                  'relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all my-8 w-full mx-6 text-neutral-800',
+                  'relative transform rounded-lg bg-white pb-4 pt-5 text-left shadow-xl transition-all w-full text-neutral-800',
                   {
-                    'md:h-[80vh] md:max-h-[80vh] h-full max-h-full':
+                    'md:h-[80vh] md:max-h-[80vh] h-full max-h-full mx-6 px-4 my-8':
                       variant === 'full',
-                    'max-w-3xl': variant === 'medium',
-                    'max-w-md': variant === 'small',
+                    'max-w-3xl mx-6 px-4 my-8': variant === 'medium',
+                    'max-w-md mx-6 px-4 my-8': variant === 'small',
+                    'w-auto max-w-fit max-h-[90vh] overflow-y-auto mx-1 md:mx-6 px-2 md:px-4 my-1 md:my-8':
+                      variant === 'auto',
                   }
                 )}
               >

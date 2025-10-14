@@ -74,8 +74,8 @@ export function JoinCommunityButton({communityId, communitySlug}: Props) {
   );
 }
 
-export function ManageMembersButton({communityId, communitySlug}: Props) {
-  const {openProfile} = useCommunityProfile({communitySlug, communityId});
+export function ManageMembersButton({communityId}: {communityId: string}) {
+  const {openProfile} = useCommunityProfile({communityId});
   const t = useTranslations('Community');
 
   const manageMembersClick = () => openProfile('members');

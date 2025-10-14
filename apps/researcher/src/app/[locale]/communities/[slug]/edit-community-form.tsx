@@ -50,7 +50,7 @@ export default function EditCommunityForm({
   const t = useTranslations('Community');
   const {setIsVisible} = useSlideOut();
   const {addNotification} = useNotifications();
-  const {openProfile} = useCommunityProfile({communitySlug: slug, communityId});
+  const {openProfile} = useCommunityProfile({communityId});
 
   const openSettings = () => openProfile('settings');
 

@@ -1,11 +1,12 @@
-import {setupClerkTestingToken} from '@clerk/testing/playwright';
-import {test as base, expect} from '@playwright/test';
+import {clerk, setupClerkTestingToken} from '@clerk/testing/playwright';
+import {test as base} from '@playwright/test';
 import {
   createCommunity,
   createUser,
-  deleteCommunityWithData,
+  deleteCommunity,
+  deleteUser,
 } from './community';
-import {Organization, User} from '@clerk/clerk-sdk-node';
+import type {Organization, User} from '@clerk/backend';
 
 type ExtendedFixtures = {
   gotoSignedIn: (url: string) => Promise<void>;
@@ -24,10 +25,10 @@ type Community = Organization & {slug: string};
 
 const test = base.extend<ExtendedFixtures, ExtendedWorkerFixture>({
   // Inspired by https://playwright.dev/docs/test-parallel#isolate-test-data-between-parallel-workers
+  // Create test user and community for each worker
   account: [
     // eslint-disable-next-line no-empty-pattern
     async ({}, use) => {
-      // Create a unique user for each worker
       const workerIdentifier = `test-${
         test.info().workerIndex
       }-${new Date().getTime()}`;
@@ -40,7 +41,7 @@ const test = base.extend<ExtendedFixtures, ExtendedWorkerFixture>({
       const communityName = `End-2-end Community ${workerIdentifier}`;
       const communitySlug = `test-community-${workerIdentifier}`;
 
-      const user = await createUser({
+      const testUser = await createUser({
         firstName,
         lastName,
         emailAddress,
@@ -48,68 +49,76 @@ const test = base.extend<ExtendedFixtures, ExtendedWorkerFixture>({
         testId: workerIdentifier,
       });
 
-      const community = (await createCommunity({
-        userId: user.id,
-        name: communityName,
-        slug: communitySlug,
-      })) as Community;
+      let community;
+      try {
+        community = (await createCommunity({
+          userId: testUser.id,
+          name: communityName,
+          slug: communitySlug,
+        })) as Community;
+      } catch (error) {
+        // Clean up the user if community creation fails
+        await deleteUser(testUser.id);
+        throw error;
+      }
 
-      await use({community, user, emailAddress, password});
+      await use({community, user: testUser, emailAddress, password});
 
-      // Clean up after the tests are done.
-      await deleteCommunityWithData(community.id);
+      // Cleanup: delete user and community separately
+      try {
+        await deleteUser(testUser.id);
+        await deleteCommunity(community.id);
+      } catch (error) {
+        console.error('Cleanup failed:', error);
+      }
     },
     {scope: 'worker'},
   ],
-  // Inspired by the official Clerk example: https://github.com/clerk/playwright-clerk-nextjs-example/blob/main/e2e/app.spec.ts
-  // Added extra timeouts to make the tests more reliable
-  gotoSignedIn: async ({page, account: {emailAddress, password}}, use) => {
+  // Authenticate using the per-worker created user
+  gotoSignedIn: async ({page, account}, use) => {
     await use(async (url: string) => {
-      // Prevent the test from failing bot detection
-      await setupClerkTestingToken({page});
+      try {
+        // Set up testing token to bypass bot detection
+        await setupClerkTestingToken({page});
 
-      // Sometimes the login page will stay in loading state after clicking the 'continue' button,
-      // retry the login until the password field is visible
-      await expect
-        .poll(
-          async () => {
-            await page.goto('/sign-in');
-            await page.waitForSelector('.cl-signIn-root', {state: 'attached'});
-            await page.locator('input[name=identifier]').fill(emailAddress);
-            await page
-              .getByRole('button', {name: 'Continue', exact: true})
-              .click();
-            try {
-              await page.waitForSelector('.cl-signIn-password', {
-                state: 'attached',
-                timeout: 5000,
-              });
-            } catch (error) {
-              return false;
-            }
-            return true;
+        // Navigate to home page to ensure Clerk loads
+        await page.goto('/');
+        await page.waitForTimeout(2000);
+
+        // Verify Clerk is loaded
+        const clerkLoaded = await page.evaluate(() => {
+          return typeof window.Clerk !== 'undefined';
+        });
+
+        if (!clerkLoaded) {
+          throw new Error(
+            'Clerk is not loaded. Check your Clerk configuration.'
+          );
+        }
+
+        // Sign in programmatically using Clerk helper
+        await clerk.signIn({
+          page,
+          signInParams: {
+            strategy: 'password',
+            identifier: account.emailAddress,
+            password: account.password,
           },
-          {timeout: 21000}
-        )
-        .toBe(true);
+        });
 
-      await page.locator('input[name=password]').fill(password);
-      await page.getByRole('button', {name: 'Continue', exact: true}).click();
+        // Navigate to the target page
+        await page.goto(url);
 
-      // Wait for the user button to appear so we are sure the user is signed in
-      await page.waitForSelector('.cl-userButtonAvatarBox', {
-        state: 'visible',
-        timeout: 50000,
-      });
-
-      // Navigate to the desired page
-      await page.goto(url);
-
-      // Wait again for the user button so we are sure the user is loaded
-      await page.waitForSelector('.cl-userButtonAvatarBox', {
-        state: 'visible',
-        timeout: 50000,
-      });
+        // Wait for authentication to complete
+        await page.waitForSelector('.cl-userButtonAvatarBox', {
+          state: 'visible',
+          timeout: 10000,
+        });
+      } catch (error) {
+        console.error('Authentication failed:', error);
+        await page.screenshot({path: 'debug-auth-failure.png', fullPage: true});
+        throw error;
+      }
     });
   },
 });

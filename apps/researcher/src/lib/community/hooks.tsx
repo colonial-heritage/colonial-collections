@@ -1,5 +1,5 @@
 import {useClerk} from '@clerk/nextjs';
-import {encodeRouteSegment} from '../clerk-route-segment-transformer';
+import {useModal} from '@colonial-collections/ui/modal';
 
 interface UseCommunityProfile {
   communitySlug: string;
@@ -7,32 +7,24 @@ interface UseCommunityProfile {
 }
 
 export function useCommunityProfile({
-  communitySlug,
   communityId,
-}: UseCommunityProfile) {
-  const {openOrganizationProfile, setActive} = useClerk();
+}: Omit<UseCommunityProfile, 'communitySlug'>) {
+  const {setActive} = useClerk();
+  const {show} = useModal();
 
-  async function openProfile(firstPage: 'settings' | 'members') {
-    // Set the active organization to the community so the correct profile is loaded.
+  //  Opens the community profile modal showing specific tab (members or settings)
+  //  CLERK V6 WORKAROUND: Full explanation in community-profile-modal.tsx.
+  async function openProfile(page: 'settings' | 'members') {
+    // Set the active organization to the community so the correct profile is loaded
     await setActive({organization: communityId});
-    // We want to show only one page of the organization's profile.
-    // But it is impossible to load only one page, so the next best thing is to hide the navbar and only show the first page.
-    // We must place all pages in `customPage` to define the page order.
-    // Pages not in `customPages` will load before the custom pages. So, we need to add all pages to control the first loaded page.
-    openOrganizationProfile({
-      afterLeaveOrganizationUrl: `/revalidate/?path=${encodeRouteSegment(
-        `/[locale]/communities/${communitySlug}`
-      )}&redirect=${encodeRouteSegment(`/communities/${communitySlug}`)}`,
-      customPages: ['settings', 'members']
-        .sort((customPageA, customPageB) =>
-          customPageA === firstPage ? -1 : customPageB === firstPage ? 1 : 0
-        )
-        .map(page => ({label: page})),
-      appearance: {
-        elements: {
-          navbar: 'hidden',
-        },
-      },
+
+    // Set hash BEFORE opening modal so that you don't have a flash of the wrong tab
+    const hash = page === 'members' ? '#/organization-members' : '#';
+
+    window.location.hash = hash;
+
+    requestAnimationFrame(() => {
+      show('community-profile-modal');
     });
   }
 

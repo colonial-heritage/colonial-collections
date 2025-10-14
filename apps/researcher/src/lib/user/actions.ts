@@ -1,10 +1,11 @@
-import {clerkClient} from '@clerk/nextjs';
+import {clerkClient} from '@clerk/nextjs/server';
 import {createPersistentIri} from '@colonial-collections/iris';
 import {unstable_noStore as noStore} from 'next/cache';
 
 export async function getIriOfUser(userId: string) {
   noStore();
-  const user = await clerkClient.users.getUser(userId);
+  const client = await clerkClient();
+  const user = await client.users.getUser(userId);
   if (!user) {
     throw new Error(`User with ID ${userId} does not exist`);
   }
@@ -13,7 +14,7 @@ export async function getIriOfUser(userId: string) {
   if (!iri) {
     iri = createPersistentIri();
 
-    await clerkClient.users.updateUserMetadata(userId, {
+    await client.users.updateUserMetadata(userId, {
       unsafeMetadata: {
         ...user.unsafeMetadata,
         iri,

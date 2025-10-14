@@ -32,6 +32,7 @@ jobs:
       - name: Run Playwright tests
         run: npm run test:e2e -w dataset-browser
         env:
+          CI: true
           PLAYWRIGHT_BASE_URL: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

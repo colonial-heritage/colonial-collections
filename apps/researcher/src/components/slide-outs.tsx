@@ -3,7 +3,7 @@ import {ExclamationCircleIcon, XMarkIcon} from '@heroicons/react/24/outline';
 import {SlideOut, SlideOutButton} from '@colonial-collections/ui';
 import {getTranslations} from 'next-intl/server';
 import {PropsWithChildren, ReactNode} from 'react';
-import {auth} from '@clerk/nextjs';
+import {auth} from '@clerk/nextjs/server';
 import {getMyCommunities} from '@/lib/community/actions';
 
 interface Props {
@@ -116,7 +116,7 @@ export async function SignedInWithCommunitySideOut({
   needCommunityTitle,
   children,
 }: SignedInWithCommunitySideOutProps) {
-  const {userId} = auth();
+  const {userId} = await auth();
 
   if (!userId) {
     return (

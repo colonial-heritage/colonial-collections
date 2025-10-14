@@ -22,10 +22,9 @@
     "test:e2e:ci": "NODE_OPTIONS='--no-experimental-strip-types' playwright test"
   },
   "dependencies": {
-    "@clerk/backend": "1.2.3",
-    "@clerk/localizations": "1.26.13",
-    "@clerk/nextjs": "4.29.9",
-    "@clerk/types": "3.60.0",
+    "@clerk/localizations": "3.25.3",
+    "@clerk/nextjs": "6.32.2",
+    "@clerk/types": "4.88.0",
     "@colonial-collections/api": "*",
     "@colonial-collections/content": "*",
     "@colonial-collections/database": "*",
@@ -62,9 +61,8 @@
     "zustand": "4.5.2"
   },
   "devDependencies": {
-    "@clerk/clerk-sdk-node": "5.0.11",
-    "@clerk/shared": "1.3.3",
-    "@clerk/testing": "1.1.5",
+    "@clerk/backend": "2.16.0",
+    "@clerk/testing": "1.13.0",
     "@colonial-collections/eslint-config": "*",
     "@colonial-collections/tailwind-config": "*",
     "@colonial-collections/ts-config": "*",

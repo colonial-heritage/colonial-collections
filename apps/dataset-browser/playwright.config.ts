@@ -4,7 +4,7 @@ import getBaseConfig from '@colonial-collections/playwright-config/index.ts';
 
 //See https://playwright.dev/docs/test-configuration.
 export default defineConfig({
-  ...getBaseConfig({devBaseUrl: 'http://localhost:3001'}),
+  ...getBaseConfig({devBaseUrl: 'http://localhost:3000'}),
   // Configure projects for major browsers
   projects: [
     {

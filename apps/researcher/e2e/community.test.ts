@@ -44,7 +44,7 @@ test.describe('Communities page logged in', () => {
     await page.getByTestId('add-community').click();
     await expect(page.locator('.cl-modalContent')).toBeVisible();
     await expect(page.locator('.cl-headerTitle')).toContainText(
-      'Create Community'
+      'Create community'
     );
   });
 

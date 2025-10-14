@@ -1,4 +1,4 @@
-import {Organization, OrganizationMembership} from '@clerk/backend';
+import {Organization, OrganizationMembership} from '@clerk/nextjs/server';
 import {OrganizationResource} from '@clerk/types';
 import {Community, Membership} from './definitions';
 
@@ -27,11 +27,7 @@ export function organizationToCommunity(
         ? organization.createdAt.getTime()
         : organization.createdAt,
     membershipCount:
-      'membersCount' in organization // Organization
-        ? organization.membersCount
-        : 'membersCount' in organization // OrganizationResource
-          ? organization.membersCount
-          : undefined,
+      'membersCount' in organization ? organization.membersCount : undefined,
   };
 }
 

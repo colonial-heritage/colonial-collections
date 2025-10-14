@@ -12,7 +12,8 @@ export default function getBaseConfig({devBaseUrl}: {devBaseUrl: string}) {
     // Opt out of parallel tests on CI.
     workers: env.CI ? 1 : undefined,
     // Reporter to use. See https://playwright.dev/docs/test-reporters
-    reporter: 'html',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    reporter: (env.CI ? [['list'], ['html', {open: 'never'}]] : 'html') as any,
     // Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions.
     use: {
       // Base URL to use in actions like `await page.goto('/')`.
