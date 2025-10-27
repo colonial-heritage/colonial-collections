@@ -39,7 +39,7 @@ jobs:
           SEARCH_ENDPOINT_URL: ${{secrets.SEARCH_ENDPOINT_URL}}
           CLERK_PUBLISHABLE_KEY: ${{secrets.CLERK_PUBLISHABLE_KEY}}
           CLERK_SECRET_KEY: ${{secrets.CLERK_SECRET_KEY}}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: ${{ !cancelled() }}
         with:
           name: researcher-playwright-report
