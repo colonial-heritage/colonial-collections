@@ -348,8 +348,8 @@ export class HeritageObjectFetcher {
         ####################
         # Publisher of dataset
         ####################
-
-        OPTIONAL {
+        # This optional seems to break things on the virtuoso server that the data-staging env runs. We're investigating why
+        # OPTIONAL {
           ?dataset schema:publisher ?publisher .
           ?publisher schema:name ?publisherName ;
             rdf:type ?publisherTypeTemp .
@@ -361,7 +361,7 @@ export class HeritageObjectFetcher {
             (schema:Person ex:Person)
             (UNDEF UNDEF)
           }
-        }
+        # }
       }
     `;
 
