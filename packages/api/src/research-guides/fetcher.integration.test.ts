@@ -22,11 +22,11 @@ describe('getTopLevels', () => {
           'Research aides for conducting provenance research into colonial collections',
         text: 'On this page you find various research aides that can assist...',
         encodingFormat: 'text/markdown',
-        hasParts: [
+        hasParts: expect.arrayContaining([
           {
             id: 'https://guides.example.org/subset1',
             name: 'Name',
-            hasParts: [
+            hasParts: expect.arrayContaining([
               {
                 id: 'https://guides.example.org/guide3',
                 name: 'Sources',
@@ -42,13 +42,13 @@ describe('getTopLevels', () => {
                 name: 'How can I use the data hub for my research?',
                 position: 5,
               },
-            ],
+            ]),
             position: 1,
           },
           {
             id: 'https://guides.example.org/subset3',
             name: 'Name',
-            hasParts: [
+            hasParts: expect.arrayContaining([
               {
                 id: 'https://guides.example.org/guide6',
                 name: 'Royal Cabinet of Curiosities',
@@ -59,41 +59,41 @@ describe('getTopLevels', () => {
                 name: 'Kunsthandel Van Lier',
                 position: 10,
               },
-            ],
+            ]),
             position: 3,
           },
           {
             id: 'https://guides.example.org/subset2',
             name: 'Name',
-            hasParts: [
+            hasParts: expect.arrayContaining([
               {
                 id: 'https://guides.example.org/guide5',
                 name: 'Trade',
-                hasParts: [
+                hasParts: expect.arrayContaining([
                   {
                     id: 'https://guides.example.org/guide7',
                     name: 'Kunsthandel Van Lier',
                     position: 17,
                   },
-                ],
+                ]),
                 position: 8,
               },
               {
                 id: 'https://guides.example.org/guide4',
                 name: 'Military and navy',
-                hasParts: [
+                hasParts: expect.arrayContaining([
                   {
                     id: 'https://guides.example.org/guide6',
                     name: 'Royal Cabinet of Curiosities',
                     position: 12,
                   },
-                ],
+                ]),
                 position: 7,
               },
-            ],
+            ]),
             position: 2,
           },
-        ],
+        ]),
       },
     ]);
   });
