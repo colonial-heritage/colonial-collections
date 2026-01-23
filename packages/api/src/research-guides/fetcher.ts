@@ -332,10 +332,8 @@ export class ResearchGuideFetcher {
         OPTIONAL {
           ?this schema:citation ?citation .
 
-          OPTIONAL {
-            ?citation schema:inLanguage ?citationLanguage
-            FILTER(?citationLanguage = "${options.locale}")
-          }
+          ?citation schema:inLanguage ?citationLanguage
+          FILTER(?citationLanguage = "${options.locale}")
 
           # E.g. "Type of secondary source:Publicatie"
           OPTIONAL {
