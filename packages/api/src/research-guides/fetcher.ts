@@ -292,6 +292,11 @@ export class ResearchGuideFetcher {
         # Get a selection of information from related guides, if any
         OPTIONAL {
           ?this rdfs:seeAlso ?itemListWithRelatedGuides .
+
+          # only include "pure" ItemLists and not TextDigitalDocuments, which also happen to be ItemLists
+          ?itemListWithRelatedGuides a schema:ItemList .
+          FILTER NOT EXISTS { ?itemListWithRelatedGuides a schema:TextDigitalDocument }
+
           ?itemListWithRelatedGuides schema:itemListElement ?itemListElementOfRelatedGuide .
           ?itemListElementOfRelatedGuide schema:item ?relatedGuide .
 
