@@ -5,6 +5,7 @@ import {encodeRouteSegment} from '@/lib/clerk-route-segment-transformer';
 import ImageWithFallback from '@/components/image-with-fallback';
 import classNames from 'classnames';
 import {ImageFetchMode} from '@colonial-collections/list-store';
+import {useLinkedArtImage} from './use-linked-art-image';
 
 interface Props {
   heritageObject: HeritageObject;
@@ -18,10 +19,15 @@ export function HeritageObjectCard({
   listSettingsLoaded,
 }: Props) {
   const t = useTranslations('HeritageObjectCard');
-  const imageUrl =
+  const kgImageUrl =
     heritageObject.images && heritageObject.images.length > 0
       ? heritageObject.images[0].contentUrl
       : undefined;
+  const linkedArtImageUrl = useLinkedArtImage(
+    heritageObject.mainEntityOfPage,
+    !kgImageUrl && !!heritageObject.mainEntityOfPage
+  );
+  const imageUrl = kgImageUrl ?? linkedArtImageUrl;
 
   return (
     <Link
@@ -69,10 +75,15 @@ export function HeritageObjectListItem({
   listSettingsLoaded,
 }: Props) {
   const t = useTranslations('HeritageObjectCard');
-  const imageUrl =
+  const kgImageUrl =
     heritageObject.images && heritageObject.images.length > 0
       ? heritageObject.images[0].contentUrl
       : undefined;
+  const linkedArtImageUrl = useLinkedArtImage(
+    heritageObject.mainEntityOfPage,
+    !kgImageUrl && !!heritageObject.mainEntityOfPage
+  );
+  const imageUrl = kgImageUrl ?? linkedArtImageUrl;
   return (
     <Link
       href={`/objects/${encodeRouteSegment(heritageObject.id)}`}

@@ -1,4 +1,4 @@
-import {describe, expect, it, jest, beforeEach} from '@jest/globals';
+import {beforeEach, describe, expect, it, jest} from '@jest/globals';
 import {resolveLinkedArtImages} from './resolve-linked-art-images';
 
 // Mock global fetch
@@ -11,9 +11,7 @@ const objectResponse = {
   '@context': 'https://linked.art/ns/v1/linked-art.json',
   id: 'https://id.rijksmuseum.nl/200756632',
   type: 'HumanMadeObject',
-  shows: [
-    {id: 'https://id.rijksmuseum.nl/202756632', type: 'VisualItem'},
-  ],
+  shows: [{id: 'https://id.rijksmuseum.nl/202756632', type: 'VisualItem'}],
 };
 
 const visualItemResponse = {
@@ -179,7 +177,10 @@ describe('resolveLinkedArtImages', () => {
         {
           type: 'Right',
           classified_as: [
-            {id: 'https://creativecommons.org/publicdomain/zero/1.0/', type: 'Type'},
+            {
+              id: 'https://creativecommons.org/publicdomain/zero/1.0/',
+              type: 'Type',
+            },
           ],
         },
       ],
