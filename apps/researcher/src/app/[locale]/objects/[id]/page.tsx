@@ -1,6 +1,7 @@
 import {getTranslations, getLocale} from 'next-intl/server';
 import heritageObjects from '@/lib/heritage-objects-instance';
 import Gallery from './gallery';
+import LinkedArtGallery from './linked-art-gallery';
 import ToFilteredListButton from '@/components/to-filtered-list-button';
 import {ChevronLeftIcon} from '@heroicons/react/24/solid';
 import {ObjectIcon} from '@/components/icons';
@@ -275,14 +276,22 @@ export default async function Details({params}: Props) {
             <LocalContextsNotices />
           </main>
           <aside className="w-full lg:w-1/3 self-stretch flex flex-col justify-start order-1 lg:order-2">
-            {galleryImages.length > 0 && (
+            {galleryImages.length > 0 ? (
               <div className="flex flex-row md:flex-col gap-1 sticky top-8 lg:-mt-72 z-30 md:mx-0 p-4 rounded bg-consortium-blue-400/10">
                 <Gallery
                   images={galleryImages}
                   organizationName={organization?.name}
                 />
               </div>
-            )}
+            ) : object.mainEntityOfPage ? (
+              <div className="flex flex-row md:flex-col gap-1 sticky top-8 lg:-mt-72 z-30 md:mx-0 p-4 rounded bg-consortium-blue-400/10">
+                <LinkedArtGallery
+                  mainEntityOfPage={object.mainEntityOfPage}
+                  objectName={object.name}
+                  organizationName={organization?.name}
+                />
+              </div>
+            ) : null}
           </aside>
         </div>
         <Provenance objectId={id} />
