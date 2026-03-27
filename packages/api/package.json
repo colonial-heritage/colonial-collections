@@ -25,7 +25,7 @@
     "@smessie/readable-web-to-node-stream": "3.0.3",
     "defu": "6.1.4",
     "edtf": "4.6.0",
-    "fetch-sparql-endpoint": "4.1.0",
+    "fetch-sparql-endpoint": "6.2.0",
     "rdf-object": "1.14.0",
     "zod": "3.22.4"
   },
