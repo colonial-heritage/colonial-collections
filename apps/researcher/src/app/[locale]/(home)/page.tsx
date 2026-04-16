@@ -6,7 +6,7 @@ import {SortBy} from '@/lib/community/definitions';
 import {getTranslations} from 'next-intl/server';
 import {SearchFieldHome} from './search-field';
 import {Link} from '@/navigation';
-import Image from 'next/image';
+import Walkthrough from '@/components/walkthrough/walkthrough';
 
 export default async function Home() {
   const t = await getTranslations('Home');
@@ -102,20 +102,12 @@ export default async function Home() {
         </div>
 
         <div className="bg-white" id="how-this-works">
-          <div className=" w-full max-w-6xl px-4 sm:px-10 flex flex-col gap-10 relative pb-10 py-20 text-consortium-blue-800 mx-auto mb-32">
+          <div className="w-full max-w-6xl px-4 sm:px-10 flex flex-col gap-10 relative pb-10 py-20 text-consortium-blue-800 mx-auto mb-32">
             <h2 className="text-5xl" tabIndex={0}>
               {t('howThisWorksTitle')}
             </h2>
             <p className="max-w-md">{t('howThisWorksText')}</p>
-            <div>
-              <Image
-                src="/images/onboarding.gif"
-                alt={t('howThisWorksAlt')}
-                width="900"
-                height="300"
-                className="w-full h-auto"
-              />
-            </div>
+            <Walkthrough />
           </div>
         </div>
       </main>
