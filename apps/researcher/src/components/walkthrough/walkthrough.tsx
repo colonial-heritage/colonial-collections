@@ -1,22 +1,18 @@
-import {readFile} from 'node:fs/promises';
-import {dirname, join} from 'node:path';
-import {fileURLToPath} from 'node:url';
 import {getLocale} from 'next-intl/server';
 import {parseWalkthrough} from './schema';
 import WalkthroughTabs from './walkthrough-tabs';
 
-const moduleDir = dirname(fileURLToPath(import.meta.url));
+// Bundled at build time via webpack asset/source rule
+import enYaml from '../../messages/en/walkthrough.yaml';
+import nlYaml from '../../messages/nl/walkthrough.yaml';
 
-async function loadVideos(locale: string) {
-  const path = join(
-    moduleDir,
-    '..',
-    '..',
-    'messages',
-    locale,
-    'walkthrough.yaml'
-  );
-  const raw = await readFile(path, 'utf-8');
+const yamlByLocale: Record<string, string> = {
+  en: enYaml,
+  nl: nlYaml,
+};
+
+function loadVideos(locale: string) {
+  const raw = yamlByLocale[locale] ?? yamlByLocale.en;
   return parseWalkthrough(raw, {
     onInvalid: (index, issues) => {
       console.warn(
@@ -29,17 +25,7 @@ async function loadVideos(locale: string) {
 
 export default async function Walkthrough() {
   const locale = await getLocale();
-
-  let videos;
-  try {
-    videos = await loadVideos(locale);
-  } catch (error) {
-    console.warn(
-      `[walkthrough] could not load walkthrough for locale "${locale}":`,
-      error
-    );
-    return null;
-  }
+  const videos = loadVideos(locale);
 
   if (videos.length === 0) return null;
 
