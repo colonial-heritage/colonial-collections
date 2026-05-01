@@ -5,6 +5,7 @@ videos:
   - title: Searching objects and belongings
     text: ''
     vimeoId: "1146568055"
+    active: false
   - title: Creating and joining communities
     text: ''
     vimeoId: "1146571219"
