@@ -5,6 +5,7 @@ videos:
   - title: Objecten zoeken
     text: ''
     vimeoId: "1146568055"
+    active: false
   - title: Communities aanmaken en lid worden
     text: ''
     vimeoId: "1146571219"
