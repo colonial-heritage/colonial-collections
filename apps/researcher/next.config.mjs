@@ -12,6 +12,13 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+  webpack: config => {
+    config.module.rules.push({
+      test: /\.yaml$/,
+      type: 'asset/source',
+    });
+    return config;
+  },
   // https://vercel.com/docs/image-optimization
   images: {
     remotePatterns: [{hostname: '**'}],

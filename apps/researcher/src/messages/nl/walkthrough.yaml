@@ -1,0 +1,24 @@
+videos:
+  - title: Introductie van de Datahub
+    text: Deze videotutorial introduceert de kijker aan de Koloniale Collecties Datahub van het Consortium Koloniale Collecties. Het laat zien wat een gebruiker op het platform kan vinden en licht de belangrijkste functionaliteiten toe.
+    vimeoId: "1146519930"
+  - title: Objecten zoeken
+    text: ''
+    vimeoId: "1146568055"
+    active: false
+  - title: Communities aanmaken en lid worden
+    text: ''
+    vimeoId: "1146571219"
+    active: false
+  - title: Verhalen toevoegen
+    text: ''
+    vimeoId: "1146583635"
+    active: false
+  - title: Local Contexts Notices
+    text: ''
+    vimeoId: "1146593863"
+    active: false
+  - title: Zoekhulpen
+    text: ''
+    vimeoId: "1146609367"
+    active: false
