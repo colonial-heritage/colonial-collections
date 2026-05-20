@@ -3,9 +3,9 @@ videos:
     text: This video tutorial introduces the viewer to the Colonial Collections Datahub of the Colonial Collections Consortium. It highlights what a user can find on the platform and explains key features that can be used.
     vimeoId: "1146519930"
   - title: Searching objects and belongings
-    text: ''
+    text: In this video tutorial, we look at how to search for objects using the Search Objects feature in the Research Application of the Datahub. This feature helps the user to answer the questions of what cultural heritage objects from a colonial context are currently present in the Netherlands? And how did they get here?
     vimeoId: "1146568055"
-    active: false
+    active: true
   - title: Creating and joining communities
     text: ''
     vimeoId: "1146571219"
