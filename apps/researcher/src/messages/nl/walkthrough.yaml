@@ -1,24 +1,24 @@
 videos:
   - title: Introductie van de Datahub
     text: Deze videotutorial introduceert de kijker aan de Koloniale Collecties Datahub van het Consortium Koloniale Collecties. Het laat zien wat een gebruiker op het platform kan vinden en licht de belangrijkste functionaliteiten toe.
-    vimeoId: "1146519930"
+    vimeoId: '1146519930'
   - title: Objecten zoeken
-    text: In deze videotutorial bekijken we hoe je objecten kunt zoeken met de optie ‘Objecten zoeken’ in de Onderzoeksapplicatie van de Datahub. Deze functionaliteit helpt gebruikers om antwoord te vinden op vragen als: welke cultureel erfgoed uit een koloniale context bevindt zich momenteel in Nederland? En hoe is dit hier terechtgekomen?
-    vimeoId: "1146568055"
+    text: 'In deze videotutorial bekijken we hoe je objecten kunt zoeken met de optie ‘Objecten zoeken’ in de Onderzoeksapplicatie van de Datahub. Deze functionaliteit helpt gebruikers om antwoord te vinden op vragen als: welke cultureel erfgoed uit een koloniale context bevindt zich momenteel in Nederland? En hoe is dit hier terechtgekomen?'
+    vimeoId: '1146568055'
     active: true
   - title: Communities aanmaken en lid worden
     text: ''
-    vimeoId: "1146571219"
+    vimeoId: '1146571219'
     active: false
   - title: Verhalen toevoegen
     text: ''
-    vimeoId: "1146583635"
+    vimeoId: '1146583635'
     active: false
   - title: Local Contexts Notices
     text: ''
-    vimeoId: "1146593863"
+    vimeoId: '1146593863'
     active: false
   - title: Zoekhulpen
     text: ''
-    vimeoId: "1146609367"
+    vimeoId: '1146609367'
     active: false

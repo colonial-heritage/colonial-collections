@@ -19,7 +19,15 @@ export function parseWalkthrough(
   raw: string,
   {onInvalid}: {onInvalid?: (index: number, issues: unknown) => void} = {}
 ): Video[] {
-  const parsed = WalkthroughSchema.safeParse(yaml.parse(raw));
+  let doc: unknown;
+  try {
+    doc = yaml.parse(raw);
+  } catch (err) {
+    onInvalid?.(-1, err);
+    return [];
+  }
+
+  const parsed = WalkthroughSchema.safeParse(doc);
   if (!parsed.success) {
     onInvalid?.(-1, parsed.error.issues);
     return [];

@@ -1,3 +1,5 @@
+import {readFileSync} from 'node:fs';
+import {join} from 'node:path';
 import {parseWalkthrough} from './schema';
 
 describe('parseWalkthrough', () => {
@@ -89,5 +91,35 @@ videos:
 
     expect(result).toEqual([]);
     expect(onInvalid).toHaveBeenCalledWith(-1, expect.anything());
+  });
+
+  it('does not throw on unparseable YAML and reports via onInvalid', () => {
+    const onInvalid = jest.fn();
+    const broken =
+      'videos:\n  - title: Bad\n    text: a: b\n    vimeoId: "1"\n';
+    const result = parseWalkthrough(broken, {onInvalid});
+
+    expect(result).toEqual([]);
+    expect(onInvalid).toHaveBeenCalledWith(-1, expect.anything());
+  });
+
+  // Guards against shipping a broken translation that would crash the
+  // Walkthrough server component at render time.
+  describe.each(['en', 'nl'])('shipped %s walkthrough.yaml', locale => {
+    const raw = readFileSync(
+      join(__dirname, '..', '..', 'messages', locale, 'walkthrough.yaml'),
+      'utf8'
+    );
+
+    it('parses without falling through to onInvalid(-1, ...)', () => {
+      const onInvalid = jest.fn();
+      const videos = parseWalkthrough(raw, {onInvalid});
+
+      const topLevelFailures = onInvalid.mock.calls.filter(
+        ([index]) => index === -1
+      );
+      expect(topLevelFailures).toEqual([]);
+      expect(videos.length).toBeGreaterThan(0);
+    });
   });
 });
