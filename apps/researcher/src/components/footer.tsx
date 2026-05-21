@@ -15,7 +15,7 @@ export const secondaryNavigation = [
   {translationKey: 'contact', href: '/contact'},
   {
     translationKey: 'consortium',
-    href: 'https://colonialcollections.nl/',
+    href: 'https://www.colonialcollections.nl/',
   },
   {
     translationKey: 'datasetBrowser',

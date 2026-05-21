@@ -30,7 +30,7 @@ export default function Navigation({datasetBrowserUrl}: Props) {
         {name: tNavigation('contact'), href: '/contact'},
         {
           name: tNavigation('consortium'),
-          href: 'https://colonialcollections.nl/',
+          href: 'https://www.colonialcollections.nl/',
         },
         {
           name: tNavigation('datasetBrowser'),
