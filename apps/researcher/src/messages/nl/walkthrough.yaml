@@ -7,9 +7,9 @@ videos:
     vimeoId: '1146568055'
     active: true
   - title: Communities aanmaken en lid worden
-    text: ''
+    text: 'De Koloniale Collecties Datahub is niet alleen voor het zoeken van objecten, maar juist ook om gelijkgestemden te vinden en informatie en kennis met elkaar te delen. Gebruikers kunnen bijvoorbeeld andere onderzoekers vinden met dezelfde culturele achtergrond of hetzelfde onderzoeksonderwerp. Je kunt zelf een community aanmaken of lid worden van bestaande communities.'
     vimeoId: '1146571219'
-    active: false
+    active: true
   - title: Verhalen toevoegen
     text: ''
     vimeoId: '1146583635'
