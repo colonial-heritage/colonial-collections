@@ -7,9 +7,9 @@ videos:
     vimeoId: "1146568055"
     active: true
   - title: Creating and joining communities
-    text: ''
+    text: 'The Colonial Collections Datahub can not only be used to search for objects, but also to find peers to share information and knowledge with. Users can, for example, find other researchers with the same cultural background or the same research subject through the Datahub’s communities. You can make a new community or become a member of an already existing community.'
     vimeoId: "1146571219"
-    active: false
+    active: true
   - title: Adding narratives
     text: ''
     vimeoId: "1146583635"
