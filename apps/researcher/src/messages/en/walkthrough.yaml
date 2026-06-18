@@ -11,9 +11,9 @@ videos:
     vimeoId: "1146571219"
     active: true
   - title: Adding narratives
-    text: ''
+    text: 'A large part of the information about objects in Dutch museum collections that were collected in the colonial period is written and registered from a Eurocentric perspective. This includes the information visible in the Datahub. This is why it is important for collections from colonial contexts that perspectives of communities of origin are added to the objects’ metadata. In this video, you will learn how to add perspectives and missing narratives to the objects, using the Datahub.'
     vimeoId: "1146583635"
-    active: false
+    active: true
   - title: Local context notices
     text: ''
     vimeoId: "1146593863"
