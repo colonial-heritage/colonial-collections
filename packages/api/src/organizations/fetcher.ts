@@ -57,6 +57,18 @@ export class OrganizationFetcher {
         OPTIONAL {
           ?this schema:name ?name
           FILTER(LANG(?name) = "${options.locale}")
+
+          # The KG may have multiple names per language for the same organization
+          # (e.g. one from the NDE Dataset Register and one from the data-registry).
+          # Prefer the NDE Dataset Register name: exclude a name when the NDE register
+          # has a different name in the same language for the same organization.
+          FILTER NOT EXISTS {
+            GRAPH <https://data.colonialcollections.nl/nde-dataset-register> {
+              ?this schema:name ?ndeName .
+              FILTER(LANG(?ndeName) = "${options.locale}")
+              FILTER(?ndeName != ?name)
+            }
+          }
         }
 
         OPTIONAL {
