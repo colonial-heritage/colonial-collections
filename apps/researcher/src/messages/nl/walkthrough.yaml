@@ -15,9 +15,9 @@ videos:
     vimeoId: '1146583635'
     active: true
   - title: Local Contexts Notices
-    text: ''
+    text: 'In deze video tutorial leer je hoe je Local Contexts Notices kunt toevoegen aan de objecten in de Datahub. Deze annotaties zijn een belangrijke toevoeging aan de objecten uit koloniale context, omdat ze ruimte voor culturele gevoeligheden en waarden van herkomstgemeenschappen bieden. Hiermee kunnen Eurocentrische perspectieven aangevuld of gecorrigeerd worden met perspectieven uit de gemeenschappen zelf.'
     vimeoId: '1146593863'
-    active: false
+    active: true
   - title: Zoekhulpen
     text: ''
     vimeoId: '1146609367'

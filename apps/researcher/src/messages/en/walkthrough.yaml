@@ -15,9 +15,9 @@ videos:
     vimeoId: "1146583635"
     active: true
   - title: Local context notices
-    text: ''
+    text: 'In this video tutorial, you will learn how to add Local Contexts Notices to belongings in the Datahub. These Context Notices are an important addition to belongings from colonial contexts, because they offer space for cultural sensitivities and values of communities of origin. With these notices, perspectives from communities of origin are added to Eurocentric perspectives that were used to describe and register these belongings in museum collections.'
     vimeoId: "1146593863"
-    active: false
+    active: true
   - title: Research Aids
     text: ''
     vimeoId: "1146609367"
