@@ -19,6 +19,6 @@ videos:
     vimeoId: "1146593863"
     active: true
   - title: Research Aids
-    text: ''
+    text: 'The NIOD Institute for War, Holocaust and Genocide studies, one of the partens of the Consortium, has created digital research aids for the Datahub. In this last video tutorial you will learn more about how to use them. The digital research aids are one of the three elements of the Datahub and were created to assist in doing provenance research on colonial collections. Some of the research aids include more general information about doing this type of research, while others focus on collectors, institutions or locations.'
     vimeoId: "1146609367"
-    active: false
+    active: true

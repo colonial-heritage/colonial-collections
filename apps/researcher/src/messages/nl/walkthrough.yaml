@@ -19,6 +19,6 @@ videos:
     vimeoId: '1146593863'
     active: true
   - title: Zoekhulpen
-    text: ''
+    text: 'Het NIOD Instituut voor Oorlogs-, Holocaust- en Genocidestudies, één van de Consortiumpartners, heeft digitale zoekhulpen ontwikkeld voor de Datahub en in deze laatste video tutorial leer je hoe je die kunt gebruiken. De digitale zoekhulpen zijn een van de drie onderdelen van de Datahub en zijn ontwikkeld om onderzoekers die herkomstonderzoek doen te ondersteunen. Er zijn zoekhulpen met algemene informatie en zoekhulpen over verschillende categorieën, thema’s, en locaties.'
     vimeoId: '1146609367'
-    active: false
+    active: true
