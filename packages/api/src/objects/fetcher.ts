@@ -126,7 +126,8 @@ export class HeritageObjectFetcher {
           ${iris}
         }
 
-        ?this a crm:E22_Human-Made_Object .
+        ?this a crm:E22_Human-Made_Object;
+              la:member_of ?dataset .
 
         ####################
         # Identifier
@@ -327,12 +328,6 @@ export class HeritageObjectFetcher {
             la:access_point ?mainEntityOfPage
           ]
         }
-
-        ####################
-        # Part of dataset
-        ####################
-
-        ?this la:member_of ?dataset .
 
         ####################
         # Name of dataset
