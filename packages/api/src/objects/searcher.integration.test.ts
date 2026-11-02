@@ -362,6 +362,16 @@ describe('search', () => {
         },
         {
           id: 'https://example.org/objects/4',
+          images: [
+            {
+              id: expect.stringContaining(
+                'https://data.colonialcollections.nl/.well-known/genid/'
+              ),
+              contentUrl:
+                'http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg',
+            },
+          ],
+          mainEntityOfPage: 'https://id.rijksmuseum.nl/200112227',
           isPartOf: {
             id: 'https://example.org/datasets/1',
             name: 'Dataset 1',

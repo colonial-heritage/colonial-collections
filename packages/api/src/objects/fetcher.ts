@@ -284,7 +284,6 @@ export class HeritageObjectFetcher {
 
           # Fallback to unofficial name if official name does not exist
           ?locationCreated gn:name ?unofficialLocationCreatedName .
-          BIND(IF(BOUND(?officialLocationCreatedName), ?officialLocationCreatedName, ?unofficialLocationCreatedName) AS ?locationCreatedName)
 
           # Country of which the location is a part
           OPTIONAL {
@@ -357,6 +356,10 @@ export class HeritageObjectFetcher {
             (UNDEF UNDEF)
           }
         }
+
+        # Virtuoso drops results of later OPTIONALs (e.g. images) if this BIND
+        # is placed inside the 'Location of creation' OPTIONAL
+        BIND(COALESCE(?officialLocationCreatedName, ?unofficialLocationCreatedName) AS ?locationCreatedName)
       }
     `;
 

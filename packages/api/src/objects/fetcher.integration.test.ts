@@ -172,6 +172,28 @@ describe('getById', () => {
   });
 });
 
+describe('Virtuoso regressions', () => {
+  // Virtuoso 26.10 dropped the results of OPTIONALs after the 'Location of
+  // creation' OPTIONAL if the object had no location of creation
+  it('returns images and web page of an object without a location of creation', async () => {
+    const heritageObject = await heritageObjectFetcher.getById({
+      id: 'https://example.org/objects/4',
+    });
+
+    expect(heritageObject).toMatchObject({
+      id: 'https://example.org/objects/4',
+      images: [
+        {
+          contentUrl:
+            'http://images.memorix.nl/rce/thumb/1600x1600/1f3fd6a1-164c-2fe9-c222-3c6dbd32d33d.jpg',
+        },
+      ],
+      mainEntityOfPage: 'https://id.rijksmuseum.nl/200112227',
+    });
+    expect(heritageObject?.locationsCreated).toBeUndefined();
+  });
+});
+
 describe('get with localized names', () => {
   it('returns a heritage object with English names', async () => {
     const heritageObject = await heritageObjectFetcher.getById({
